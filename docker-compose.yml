@@ -1,8 +1,8 @@
 version: '3'
 services:
   nginx:
-    container_name: yii2_nginx
-    image: asatrya/yii2_nginx:latest
+    container_name: yii2_ngx_nginx
+    image: asatrya/yii2_ngx_nginx:1.0
     networks:
       - internal
     volumes:
@@ -18,8 +18,8 @@ services:
       - 443:443
 
   api:
-    container_name: yii2_api
-    image: asatrya/yii2_api:latest
+    container_name: yii2_ngx_api
+    image: asatrya/yii2_ngx_api:1.0
     networks:
       - internal
     env_file:
@@ -28,8 +28,8 @@ services:
       - ./api:/var/www/app
 
   backend:
-    container_name: yii2_backend
-    image: asatrya/yii2_backend:prod
+    container_name: yii2_ngx_backend
+    image: asatrya/yii2_ngx_backend:1.0
     depends_on:
       - api
     networks:
@@ -39,8 +39,8 @@ services:
       - ./backend/src:/app/src
 
   frontend:
-    container_name: yii2_frontend
-    image: asatrya/yii2_frontend:prod
+    container_name: yii2_ngx_frontend
+    image: asatrya/yii2_ngx_frontend:1.0
     depends_on:
       - api
     networks:
@@ -50,7 +50,7 @@ services:
       - ./frontend/src:/app/src
 
   memcached:
-    container_name: yii2_memcached
+    container_name: yii2_ngx_memcached
     image: memcached:latest
     networks:
       - internal
