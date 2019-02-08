@@ -1,127 +1,52 @@
-# PHP Docker image for Yii 2.0 Framework runtime
-# ==============================================
+FROM ubuntu:18.04
 
-FROM php:7.1.9-fpm-alpine
+RUN apt-get update
 
-# Install system packages & PHP extensions required for Yii 2.0 Framework
-# virtual pkg names and ENV $PHPIZE_DEPS are definied in base image
-# C* and LDFlAGS are also definied in base image, so we use these for our custom pecl builds
-# we install (newer) imagick from edge repo due to SEGFAULT bugs
-# hopefully this won't break other things...
-RUN apk add --no-cache --virtual .phpize-deps $PHPIZE_DEPS && \
-    apk add --no-cache --virtual .imagemagick-edge \
-            --repository http://dl-3.alpinelinux.org/alpine/v3.6/main/ \
-            --allow-untrusted \
-        imagemagick \
-        imagemagick-dev && \
-    apk add --update --virtual .pecl-build-deps \
-        icu-dev \
-        curl-dev \
-        freetype-dev \
-        pcre-dev \
-        postgresql-dev \
-        libtool \
-        libmcrypt-dev \
-        libjpeg-turbo-dev \
-        libpng-dev \
-        libxml2-dev && \
-    apk add --no-cache --virtual .build-dependencies $PHPIZE_DEPS \
-        zlib-dev \
-        cyrus-sasl-dev \
-        g++ \
-        libtool \
-        make \
-        pcre-dev && \
-    apk add \
-        git \
-        curl \
-        bash \
-        bash-completion \
-        icu \
-        pcre \
-        freetype \
-        libmcrypt \
-        libintl \
-        libjpeg-turbo \
-        imagemagick \
-        libpng \
-        libltdl \
-        libxml2 \
-        mysql-client \
-        nodejs \
-        postgresql-client \
-        libmemcached-dev && \
-    export CFLAGS="$PHP_CFLAGS" CPPFLAGS="$PHP_CPPFLAGS" LDFLAGS="$PHP_LDFLAGS" && \
-    pecl install \
-        apcu \
-        imagick-3.4.3 \
-        xdebug \
-        memcached && \
-    docker-php-ext-enable imagick && \
-    docker-php-ext-enable apcu && \
-    docker-php-ext-enable memcached && \
-    docker-php-ext-configure gd \
-        --with-gd \
-        --with-freetype-dir=/usr/include/ \
-        --with-png-dir=/usr/include/ \
-        --with-jpeg-dir=/usr/include/ && \
-    docker-php-ext-configure bcmath && \
-    docker-php-ext-install \
-        soap \
-        mcrypt \
-        zip \
-        curl \
-        bcmath \
-        exif \
-        gd \
-        iconv \
-        intl \
-        mbstring \
-        opcache \
-        pdo_mysql \
-        pdo_pgsql && \
-    apk del \
-        .pecl-build-deps .phpize-deps
+# tools
+RUN apt-get install -y git
+RUN apt-get install -y unzip
+RUN apt-get install -y curl
+RUN apt-get install -y nano
 
+# php & extension
+ENV TZ=Asia/Jakarta
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+RUN apt-get install -y php
+RUN apt-get install -y php-curl
+RUN apt-get install -y php-xml
+RUN apt-get install -y phpunit
+RUN apt-get install -y php-imagick
+RUN apt-get install -y php-mysql
+RUN apt-get install -y php-sqlite3
+RUN apt-get install -y php-pgsql
+RUN apt-get install -y php-intl
+RUN apt-get install -y php-memcache
+RUN apt-get install -y php-gd
+RUN apt-get install -y php-memcached
 
-# Configure version constraints
-ENV VERSION_COMPOSER_ASSET_PLUGIN=^1.4.2 \
-    VERSION_PRESTISSIMO_PLUGIN=^0.3.7 \
-    PATH=/app:/app/vendor/bin:/root/.composer/vendor/bin:$PATH \
-    TERM=linux \
-    COMPOSER_ALLOW_SUPERUSER=1
+# composer
+RUN cd ~
+RUN curl -sS https://getcomposer.org/installer -o composer-setup.php
+RUN php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 
-# Add configuration files
-COPY image-files/ /
+# apache & modules
+RUN apt-get install -y apache2
+RUN a2enmod rewrite
 
-# Add GITHUB_API_TOKEN support for composer
+# copy files
+RUN mkdir /var/www/app
+COPY . /var/www/app
+RUN chmod -R 777 /var/www/app
 
-RUN chmod 700 \
-        /usr/local/bin/docker-entrypoint.sh \
-        /usr/local/bin/composer
+# install composer
+WORKDIR /var/www/app
+RUN composer install
 
-# Install composer
-RUN curl -sS https://getcomposer.org/installer | php -- \
-        --filename=composer.phar \
-        --install-dir=/usr/local/bin && \
-    composer global require --optimize-autoloader \
-        "fxp/composer-asset-plugin:${VERSION_COMPOSER_ASSET_PLUGIN}" \
-        "hirak/prestissimo:${VERSION_PRESTISSIMO_PLUGIN}" && \
-    composer global dumpautoload --optimize && \
-    composer clear-cache
+# apache2 config
+COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
 
-# Install nginx
-RUN apk --update add nginx
-
-WORKDIR /srv
-
-COPY composer.* /srv/
-RUN /usr/local/bin/composer install --prefer-dist
-ENV PATH /srv/vendor/bin:${PATH}
-
-COPY . /srv/
-RUN chown -R www-data:www-data /srv/ \
-    && chmod 777 -R /srv/runtime
-
+# Expose Apache
 EXPOSE 80
-CMD ["docker-entrypoint.sh"]
+ 
+# Launch Apache
+CMD ["/usr/sbin/apache2ctl", "-DFOREGROUND"]

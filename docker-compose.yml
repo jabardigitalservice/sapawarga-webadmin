@@ -1,16 +1,14 @@
 version: '3'
 services:
   nginx:
-    container_name: nginx
-    build:
-      context: ./nginx
+    container_name: yii2_nginx
+    image: asatrya/yii2_nginx:latest
     networks:
       - internal
-#    volumes:
-#      - ./nginx/image-files/etc/nginx/nginx.conf:/etc/nginx/nginx.conf
-#      - ./nginx:/etc/nginx/html
+    volumes:
+      - ./nginx/image-files/etc/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx:/etc/nginx/html
     depends_on:
-      - mysql
       - api
       - frontend
       - backend
@@ -20,69 +18,43 @@ services:
       - 443:443
 
   api:
-    container_name: api
-    build:
-      context: ./api
-    depends_on:
-      - mysql
+    container_name: yii2_api
+    image: asatrya/yii2_api:latest
     networks:
       - internal
     env_file:
       - .env
-#    volumes:
-#      - ./api/image-files/etc/nginx/nginx.conf:/etc/nginx/nginx.conf
-#      - ./api:/srv
+    volumes:
+      - ./api:/var/www/app
 
   backend:
-    container_name: backend
-    build:
-      context: ./backend
-      dockerfile: ./Dockerfile.dev       # For development
-    #      dockerfile: ./Dockerfile       # For production
+    container_name: yii2_backend
+    image: asatrya/yii2_backend:prod
     depends_on:
       - api
     networks:
       - internal
-#    volumes:
-#      - ./backend/image-files/etc/nginx/nginx.conf:/etc/nginx/nginx.conf
-#      - ./backend/src:/app/src
+    volumes:
+      - ./backend/image-files/etc/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./backend/src:/app/src
 
   frontend:
-    container_name: frontend
-    build:
-      context: ./frontend
-      dockerfile: ./Dockerfile.dev       # For development
-    #      dockerfile: ./Dockerfile       # For production
+    container_name: yii2_frontend
+    image: asatrya/yii2_frontend:prod
     depends_on:
       - api
     networks:
       - internal
-#    volumes:
-#      - ./frontend/image-files/etc/nginx/nginx.conf:/etc/nginx/nginx.conf
-#      - ./frontend/src:/app/src
+    volumes:
+      - ./frontend/image-files/etc/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./frontend/src:/app/src
 
   memcached:
-    container_name: memcached
+    container_name: yii2_memcached
     image: memcached:latest
     networks:
       - internal
 
-  mysql:
-    container_name: mysql
-    image: mysql:5.6
-    restart: always
-    networks:
-      - internal
-    env_file:
-      - .env
-    ports:
-      - 3308:3306
-    volumes:
-      - mysql_data:/var/lib/mysql
-
 networks:
   internal:
-    driver: bridge
-
-volumes:
-  mysql_data:
+    driver: overlay
