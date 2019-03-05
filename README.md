@@ -1,7 +1,5 @@
 # Yii2 REST API + Angular 6 Boilerplate
 
-[![Build Status](https://travis-ci.org/chrisleekr/yii2-angular-boilerplate.svg?branch=master)](https://travis-ci.org/chrisleekr/yii2-angular-boilerplate)
-
 This is a boilerplate project for future use. The project consists of REST API developed by Yii2 and backend/frontend developed by Angular 6 with Bootstrap 4. Frontend project is compatible to provide server-side rendering(Angular Universal) using [@ng-toolkit/universal](https://github.com/maciejtreder/ng-toolkit).
 
 The project involves:
@@ -14,22 +12,9 @@ The project involves:
     - Angular 6, [@ng-toolkit/universal](https://github.com/maciejtreder/ng-toolkit), Bootstrap 4, JWT (JSON Web 
     Token), *Basic Unit using Karma+Jasmine, Basic E2E test using Protractor+Jasmine*, Moment.js, Sweet Alert
 
-**Demo**
-
-| Service        | Endpoint |
-| ------------- |-------------|
-| Frontend      | [https://boilerplate.chrislee.kr](https://boilerplate.chrislee.kr) | 
-| Backend      | [https://boilerplate-backend.chrislee.kr](https://boilerplate-backend.chrislee.kr)      | 
-| API | [https://boilerplate-api.chrislee.kr](https://boilerplate-api.chrislee.kr/ping)      | 
-
 **Architecture Diagram**
 
 ![Architecture Diagram](screenshots/network-diagram.png)
-
-
-**Frontend - Server-side rendering (Angular Universal)**
-
-![Service Side Rendering](screenshots/universal-server-side-rendering.jpg)
 
 ## Features
 - API
@@ -83,46 +68,89 @@ The project involves:
         - User can change password.
 
 ## How to start
-Currently, the project is not ready for production use. Following steps are suitable for configuring development environment.
 
 To run the application, you will need `docker` and `docker-compose` installed. 
 
 Open the console and execute following commands.
 
+Pull the source code
+
 ```
-$ git clone https://github.com/chrisleekr/yii2-ngx-boilerplate.git
-$ cd yii2-ngx-boilerplate 
-$ cp .env-dist .env
-$ docker-compose up -d
+git clone https://github.com/asatrya/yii2-ngx-boilerplate.git
 ```
 
-With `docker-compose`, following containers will be configured. Please make sure port 80, 443 are available.
+Go to project directory, copy and set environment file
+```
+cd yii2-ngx-boilerplate 
+cp .env-dist .env
+```
 
-1. MySQL database will be configured.
-2. Memcached will be configured.
-3. REST API - Yii 2  
-   - Database migration will be executed which are located in `/api/migrations`.
-   - PHP-FPM and nginx will be running.
-4. Backend - Angular
-    - By default, development mode will be running with nginx.
-5. Frontend - Angular
-    - By default, development mode will be running with nginx.
-    
-Once all containers are finished compiling, then open the browser.
+### Build Docker Image
+
+```
+docker build -t asatrya/yii2_ngx_api:1.0 ./api/
+docker build -t asatrya/yii2_ngx_backend:1.0 ./backend/
+docker build -t asatrya/yii2_ngx_frontend:1.0 ./frontend/
+docker build -t asatrya/yii2_ngx_nginx:1.0 ./nginx/
+```
+
+### Run Docker Container
+
+For production
+
+```
+docker-compose up -d
+```
+
+For development
+
+```
+docker-compose -f docker-compose.dev.yml up -d
+```
+
+### Install modules and Run Database Migration
+
+Access Docker Container's Bash
+```
+docker exec -it yii2_ngx_api bash
+```
+
+Inside the container, run:
+```
+composer install
+```
+
+Make sure your database is accessible form inside the container. Then run migration
+```
+php yii migrate --migrationPath=@yii/rbac/migrations --interactive=0
+php yii migrate/up --interactive=0
+```
+
+### Generate Code
+
+Generate model class
+
+```
+php yii gii/model \
+    --tableName=guitar \
+    --modelClass=Guitar
+```
+
+## Component
 
 * **REST API - Yii 2**: [http://localhost/api/debug](http://localhost/api/debug)
     - To make sure API is working, go to [http://localhost/api/ping](http://localhost/api/ping). You must see `pong` message.
     - To access docker container, use following command:
         ```
-        $ docker exec -it api /bin/sh
+        docker exec -it yii2_ngx_api bash
         ```
     - To run code sniffer, use following command:
         ```
-        $ docker exec api composer run sniff
+        docker exec yii2_ngx_api composer run sniff
         ```
     - To run unit test, use following command:
         ```
-        $ docker exec api composer run test:unit
+        docker exec yii2_ngx_api composer run test:unit
         ```
         
 * **Backend - Angular**: [http://localhost/backend](http://localhost/backend)
@@ -130,41 +158,41 @@ Once all containers are finished compiling, then open the browser.
     - Staff username: `staff`, password: `123456`
     - To see compile process, use following command:
         ```
-        $ docker logs backend --follow
+        docker logs yii2_ngx_backend --follow
         ```
     - To access docker container, use following command:
         ```
-        $ docker exec -it backend /bin/sh
+        docker exec -it yii2_ngx_backend /bin/sh
         ```
     - Note that the **live reloading feature has been disabled** due to restriction. 
     - Please open **Developer Tool** to prevent caching. The changes will be checked every 1s. Please refer `/backend/image-files/usr/local/bin/docker-entrypoint-dev.sh`.
     - To run unit test, use following command:
         ```
-        $ cd frontend
-        $ npm run test
+        cd frontend
+        npm run test
         ``` 
     
 * **Frontend - Angular**: [http://localhost/frontend](http://localhost/frontend)
     - Username: `user`, password `123456`
     - To see compile process, use following command:
         ```
-        $ docker logs frontend --follow
+        docker logs yii2_ngx_frontend --follow
         ```
     - To access docker container, use following command:
         ```
-        $ docker exec -it frontend /bin/sh
+        docker exec -it yii2_ngx_frontend /bin/sh
         ```
     - Note that the **live reloading feature has been disabled** due to restriction. 
     - Please open **Developer Tool** to prevent caching. The changes will be checked every 1s. Please refer `/frontend/image-files/usr/local/bin/docker-entrypoint-dev.sh`.
     - To run unit test, use following command:
         ```
-        $ cd frontend
-        $ npm run test
+        cd frontend
+        npm run test
         ```
     - To run E2E test, use following command:
         ```
-        $ cd frontend
-        $ npm run e2e
+        cd frontend
+        npm run e2e
         ```
 
 ## Files & Folders structures
@@ -180,14 +208,6 @@ Once all containers are finished compiling, then open the browser.
 - **nginx**: Load Balancer
     - `image-files`: contains nginx config
 
-## Setup for production
-
-1. Backend
-    - To run production mode, update `docker-compose.yml` by changing `dockerfile: ./Dockerfile.dev` to `dockerfile: ./Dockerfile`.
-2. Frontend
-    - To run production mode, update `docker-compose.yml` by changing `dockerfile: ./Dockerfile.dev` to `dockerfile: ./Dockerfile`.
-    - Note that production Dockerfile will use [@ng-toolkit/universal](https://github.com/maciejtreder/ng-toolkit) to provide server side rendering, which means you will be able to provide compiled HTML for search engine.
-
 
 ## Troubleshooting
 
@@ -195,15 +215,9 @@ Once all containers are finished compiling, then open the browser.
 
 As mentioned earlier, you have to open `Developer Tool` to prevent cache if you are using Chrome. Or clear browser cache and reload again.
 
-## TODO
-- [X] Enhance user management - send confirmation email 
-- [X] Enhance user authorization with Yii2 RBAC (Role Based Access Control)
-- [X] Develop new customer management section
-- [X] Apply JWT(JSON Web Token) for user authentication
-- [X] Upgrade Angular 4 to Angular 6
-- [X] Dockerize application
-- [X] Apply [server side rendering](https://github.com/maciejtreder/ng-toolkit) for Frontend project
-- [△] Develop more test code
-- [ ] Develop file uploader
- 
+## Cleanup
 
+```
+docker stop yii2_nginx yii2_backend yii2_frontend yii2_memcached yii2_api
+docker rm yii2_nginx yii2_backend yii2_frontend yii2_memcached yii2_api
+```
