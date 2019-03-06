@@ -2,7 +2,7 @@ version: '3'
 services:
   nginx:
     container_name: yii2_ngx_nginx
-    image: asatrya/yii2_ngx_nginx:1.0
+    image: jdsteam/yii2_ngx_nginx:1.0
     networks:
       - internal
     volumes:
@@ -19,17 +19,18 @@ services:
 
   api:
     container_name: yii2_ngx_api
-    image: asatrya/yii2_ngx_api:1.0
+    image: jdsteam/yii2_ngx_api:1.0
     networks:
       - internal
     env_file:
       - .env
     volumes:
-      - ./api:/var/www/app
+      - ./api:/srv
+      - /srv/vendor
 
   backend:
     container_name: yii2_ngx_backend
-    image: asatrya/yii2_ngx_backend:1.0
+    image: jdsteam/yii2_ngx_backend:1.0
     depends_on:
       - api
     networks:
@@ -40,7 +41,7 @@ services:
 
   frontend:
     container_name: yii2_ngx_frontend
-    image: asatrya/yii2_ngx_frontend:1.0-dev
+    image: jdsteam/yii2_ngx_frontend:1.0
     depends_on:
       - api
     networks:
