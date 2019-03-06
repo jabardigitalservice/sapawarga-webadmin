@@ -54,7 +54,8 @@
       "yii\\composer\\Installer::postCreateProject",
       "yii\\composer\\Installer::postInstall"
     ],
-    "sniff": "vendor/bin/phpcs --extensions=php",
+    "sniff": "vendor/bin/phpcs --standard=phpcs.xml --extensions=php",
+    "sniff:fix": "vendor/bin/phpcbf --standard=phpcs.xml --extensions=php",
     "test:unit": "vendor/bin/codecept run unit",
     "test:functional": "vendor/bin/codecept run functional"
   },
