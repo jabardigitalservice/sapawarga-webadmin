@@ -1,0 +1,295 @@
+<template>
+  <flat-pickr
+    class="form-control"
+    :value="value"
+    :config="options"
+    :placeholder="placeholder"
+    @on-change="handleDateChange"></flat-pickr>
+</template>
+
+<script>
+  import flatPickr from 'vue-flatpickr-component'
+  import Locale from "flatpickr/dist/l10n/default"
+
+  const globalDefaults = {
+    locale: Object.assign({}, Locale, {
+      weekdays: {
+        shorthand: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
+      },
+      rangeSeparator: " - "
+    }),
+    disableMobile: true
+  }
+
+  export default {
+    name: 'e-datepicker',
+    components: { flatPickr },
+    props: {
+      config: {
+        type: Object,
+        default: () => new Object()
+      },
+      value: {
+        default: null
+      },
+      placeholder: {
+        type: String,
+        default: ''
+      }
+    },
+    data: function() {
+      return {
+        localDefaults: {},
+        lastValue: this.isValidDatesArray(this.value) || this.isValidDateValue(this.value) ? this.value : []
+      }
+    },
+    computed: {
+      date: function() {
+        return this.lastValue;
+      },
+      isDate: function() {
+        return (this.isValidDatesArray(this.date) && this.date.length) || this.isValidDateValue(this.date)
+      },
+      options: function() {
+        return Object.assign({},
+          globalDefaults,
+          this.localDefaults,
+          this.config
+        )
+      }
+    },
+    methods: {
+      handleDateChange: function(currentDates, dateStr, instance) {
+        let datesNotChanged = true;
+        currentDates.forEach((date, i) => {
+          if (!this.lastValue[i] || date.valueOf() !== this.lastValue[i].valueOf()) {
+            datesNotChanged = false
+          }
+        })
+
+        if (currentDates.length != this.lastValue.length) {
+          datesNotChanged = false
+        }
+
+        if (!datesNotChanged) {
+          this.lastValue = currentDates
+          this.$emit('update:value', currentDates)
+        }
+      },
+      isValidDatesArray: function(dates) {
+        if (dates instanceof Array) {
+          for(var i = 0; i < dates.length; i++) {
+            if (!this.isValidDateValue(dates[i])) {
+              return false
+            }
+          }
+          return true
+        }
+        return false
+      },
+      isValidDateValue: function(date) {
+        return (date instanceof Date) && !isNaN(date.valueOf())
+      }
+    }
+  }
+</script>
+
+<style lang="scss">
+  @import "~flatpickr/dist/flatpickr.css";
+  @import "../../scss/bootstrap/variables";
+
+  $calendar-padding-y: 13px;
+
+  .flatpickr-input {
+    &[readonly] {
+      background-color: transparent;
+    }
+  }
+
+  .flatpickr-calendar {
+    width: 210px;
+    padding: $calendar-padding-y 15px;
+    box-sizing: content-box;
+    box-shadow: none;
+    border: 1px solid $dropdown-border-color;
+    border-radius: $block-border-radius;
+
+    &:before {
+      border-width: 9px;
+      margin: 0 -9px;
+    }
+
+    &:after {
+      border-width: 8px;
+      margin: 0 -8px;
+    }
+
+    &.animate {
+      // transition: transform 150ms ease-out;
+
+      &.open {
+        animation: none;
+      }
+    }
+
+    &.arrowTop {
+      &:before {
+        border-bottom-color: $dropdown-border-color;
+      }
+
+      &.open {
+        transform: translateY(10px);
+      }
+    }
+
+    &.arrowBottom {
+      &:before {
+        border-top-color: $dropdown-border-color;
+      }
+
+      &.open {
+        transform: translateY(- ($calendar-padding-y * 2) - 10px);
+      }
+    }
+
+    &.inline {
+      border-color: transparent;
+      top: 0;
+      margin-left: auto;
+      margin-right: auto;
+
+      &:before, &:after {
+        display: none;
+      }
+    }
+
+    &.hasTime.noCalendar {
+      padding: 5px;
+    }
+
+    .flatpickr-months {
+      position: relative;
+    }
+
+    .flatpickr-month {
+      color: $body-color;
+      fill: $body-color;
+
+      input.cur-year {
+        font-weight: normal;
+      }
+    }
+
+    .flatpickr-prev-month,
+    .flatpickr-next-month {
+      height: auto;
+      padding-top: 6px;
+      padding-bottom: 6px;
+
+      &:hover {
+        svg {
+          fill: rgba(57,57,57,0.4);
+        }
+      }
+    }
+
+    .flatpickr-current-month {
+      font-size: 1rem;
+      line-height: 1.2;
+      height: auto;
+      padding: 6px 0;
+
+      .numInputWrapper {
+        width: 6.5ch;
+        margin-right: -2ch;
+
+        span:after {
+          top: 1px;
+        }
+      }
+    }
+
+    .flatpickr-days {
+      width: 210px;
+    }
+
+    .dayContainer {
+      width: 210px;
+      min-width: 210px;
+      max-width: 210px;
+    }
+
+    span.flatpickr-weekday {
+      font-size: 1rem;
+      color: $body-color;
+    }
+
+    span.flatpickr-day {
+      height: 28px;
+      line-height: 28px;
+      border-radius: 3px;
+      box-shadow: none !important;
+
+      &.inRange {
+        border-radius: 0;
+      }
+
+      &.inRange, &.prevMonthDay.inRange, &.nextMonthDay.inRange, &.today.inRange,
+      &.prevMonthDay.today.inRange, &.nextMonthDay.today.inRange,
+      &:hover, &.prevMonthDay:hover, &.nextMonthDay:hover,
+      &:focus, &.prevMonthDay:focus, &.nextMonthDay:focus {
+        background: $gray-200;
+        border-color: $gray-200;
+      }
+
+      &.selected, &.selected.inRange, &.selected:focus, &.selected:hover,
+      &.selected.prevMonthDay, &.selected.nextMonthDay,
+      &.startRange, &.endRange, &.startRange.inRange, &.endRange.inRange,
+      &.startRange:focus, &.endRange:focus, &.startRange:hover, &.endRange:hover,
+      &.startRange.prevMonthDay, &.endRange.prevMonthDay,
+      &.startRange.nextMonthDay, &.endRange.nextMonthDay {
+        background: map-get($theme-colors, "primary");
+        border-color: map-get($theme-colors, "primary");
+      }
+
+      &.selected.startRange, &.startRange, &.endRange.startRange {
+        border-top-left-radius: 3px;
+        border-bottom-left-radius: 3px;
+      }
+
+      &.selected.endRange, &.startRange.endRange, &.endRange {
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 3px;
+      }
+    }
+
+    .flatpickr-time {
+      box-sizing: content-box;
+      height: 40px;
+    }
+
+    &.hasTime {
+      &.showTimeInput .flatpickr-time {
+        border-top: 0;
+      }
+
+      .flatpickr-innerContainer {
+        padding-bottom: 10px;
+      }
+
+      .flatpickr-innerContainer + .flatpickr-time {
+        padding-top: 10px;
+        border-top: 1px solid #e6e6e6;
+      }
+    }
+  }
+
+  /* ie fixes */
+  @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+     .flatpickr-calendar {
+       span.flatpickr-day {
+         flex-basis: 13.3%;
+       }
+     }
+  }
+</style>

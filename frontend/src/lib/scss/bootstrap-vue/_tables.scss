@@ -1,0 +1,35 @@
+table.b-table {
+  > thead,
+  > tfoot {
+    & > tr > th.sorting {
+      outline: 0;
+      padding-right: 2em;
+    }
+  }
+
+  &.fa-sort-icons,
+  .fa-sort-icons > & {
+    > thead,
+    > tfoot {
+      & > tr > th.sorting {
+        &:before, &:after {
+          font: normal normal normal 14px FontAwesome;
+          right: 0.75em;
+          line-height: 1.5;
+          bottom: 50%;
+          top: 50%;
+          margin-top: -9px;
+          padding: 0;
+        }
+
+        &:before {
+          content: '\f0dd';
+        }
+
+        &:after {
+          content: '\f0de';
+        }
+      }
+    }
+  }
+}

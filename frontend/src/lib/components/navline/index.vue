@@ -1,0 +1,56 @@
+<template>
+  <div class="e-navline" :class="{ 'e-navline--arrow': arrow }">
+    <slot></slot>
+  </div>
+</template>
+
+<script>
+  export default {
+    props: {
+      arrow: {
+        type: Boolean,
+        default: false
+      }
+    }
+  }
+</script>
+
+<style lang="scss">
+  @import "../../scss/bootstrap/variables";
+
+  .e-navline {
+    .nav-item {
+      &:not(:last-child) {
+        margin-right: .3rem;
+      }
+    }
+
+    .nav-link {
+      padding: 1rem 0.5rem;
+      position: relative;
+    }
+
+    &--arrow {
+      .nav {
+        position: relative;
+
+        &:before, &:after {
+          content: '';
+          position: absolute;
+          bottom: -20px;
+          left: 1rem;
+          border: 10px solid transparent;
+        }
+
+        &:before {
+          border-top-color: $block-border-color;
+        }
+
+        &:after {
+          bottom: -19px;
+          border-top-color: $white;
+        }
+      }
+    }
+  }
+</style>
