@@ -8,15 +8,15 @@
 
             <form onsubmit="return false;">
               <div class="form-group row">
-                <label class="col-md-3 col-form-label">Email</label>
+                <label class="col-md-3 col-form-label">Username</label>
                 <div class="col-md-9">
-                  <input type="email" class="form-control" v-model="form.email" placeholder="Email">
+                  <input type="email" class="form-control" v-model="form.username" placeholder="Username">
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-md-3 col-form-label">Password</label>
                 <div class="col-md-9">
-                  <input type="password" class="form-control" v-model="form.password"  placeholder="Password">
+                  <input type="password" class="form-control" v-model="form.password" placeholder="Password">
                 </div>
               </div>
               <hr class="mb-3">
@@ -48,7 +48,7 @@ export default {
   data () {
     return {
       form: new Form({
-        email: null,
+        username: null,
         password: null
       })
     }

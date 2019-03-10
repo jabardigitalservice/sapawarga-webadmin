@@ -6,7 +6,7 @@
 
 import axios from 'axios'
 
-// import * as authService from '@/services/auth.service'
+import authService from '@/services/auth.service'
 
 export default class Http {
   constructor (status) {
@@ -19,25 +19,25 @@ export default class Http {
   }
 
   init () {
-    // if (this.isAuth) {
-    //   this.instance.interceptors.request.use(request => {
-    //     request.headers['token'] = authService.getAccessToken()
-    //     // if access token expired and refreshToken is exist >> go to API and get new access token
-    //     if (authService.isAccessTokenExpired() && authService.getRefreshToken()) {
-    //       return authService.refreshTokens()
-    //         .then(response => {
-    //           request.headers['token'] = response.data.accessToken
-    //           return request
-    //         }).catch(error => Promise.reject(error))
-    //     } else {
-    //       return request
-    //     }
-    //   }, error => {
-    //     return Promise.reject(error)
-    //   })
-    //
-    //   return this.instance
-    // }
+    if (this.isAuth) {
+      this.instance.interceptors.request.use(request => {
+        request.headers['Authorization'] = `Bearer ${authService.getAccessToken()}`
+        // if access token expired and refreshToken is exist >> go to API and get new access token
+        if (authService.isAccessTokenExpired() && authService.getRefreshToken()) {
+          return authService.refreshTokens()
+            .then(response => {
+              request.headers['Authorization'] = `Bearer ${response.data.accessToken}`
+              return request
+            }).catch(error => Promise.reject(error))
+        } else {
+          return request
+        }
+      }, error => {
+        return Promise.reject(error)
+      })
+
+      return this.instance
+    }
     return this.instance
   }
 }
