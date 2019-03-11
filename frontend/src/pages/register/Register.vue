@@ -6,11 +6,11 @@
           <div class="card-body">
             <b-alert variant="danger" dismissible>The password is invalid.</b-alert>
 
-            <form onsubmit="return false;">
+            <form>
               <div class="form-group row">
-                <label class="col-md-3 col-form-label">Name</label>
+                <label class="col-md-3 col-form-label">Username</label>
                 <div class="col-md-9">
-                  <input type="email" class="form-control" v-model="form.name" placeholder="Name">
+                  <input type="text" class="form-control" v-model="form.username" placeholder="Username">
                 </div>
               </div>
               <div class="form-group row">
@@ -60,7 +60,7 @@ export default {
   data () {
     return {
       form: new Form({
-        name: null,
+        username: null,
         email: null,
         password: null,
         password_confirm: null
@@ -71,7 +71,9 @@ export default {
   methods: {
     makeRegister () {
       return this.form.callService(authService, 'makeRegister')
-        .then(() => this.$router.push('/'))
+        .then(() => {
+          alert('Success')
+        })
         .catch(error => alert(error))
     }
   }
