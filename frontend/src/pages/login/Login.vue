@@ -4,19 +4,25 @@
       <div class="col-xs-12 col-sm-6 mx-auto">
         <div class="card">
           <div class="card-body">
-            <b-alert variant="danger" dismissible>The password is invalid.</b-alert>
+            <b-alert variant="danger" :show="form.errors.has('username') || form.errors.has('password')" dismissible>Login failed.</b-alert>
 
             <form onsubmit="return false;">
               <div class="form-group row">
                 <label class="col-md-3 col-form-label">Username</label>
                 <div class="col-md-9">
                   <input type="email" class="form-control" v-model="form.username" placeholder="Username">
+                  <b-form-invalid-feedback :state="! form.errors.has('username')">
+                    {{ form.errors.get('username') }}
+                  </b-form-invalid-feedback>
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-md-3 col-form-label">Password</label>
                 <div class="col-md-9">
                   <input type="password" class="form-control" v-model="form.password" placeholder="Password">
+                  <b-form-invalid-feedback :state="! form.errors.has('password')">
+                    {{ form.errors.get('password') }}
+                  </b-form-invalid-feedback>
                 </div>
               </div>
               <hr class="mb-3">
@@ -58,7 +64,11 @@ export default {
     makeLogin () {
       return this.form.callService(authService, 'makeLogin')
         .then(() => this.$router.push('/'))
-        .catch(error => alert(error))
+        .catch(error => {
+          if (error.status !== 422) {
+            alert(error)
+          }
+        })
     }
   }
 }
