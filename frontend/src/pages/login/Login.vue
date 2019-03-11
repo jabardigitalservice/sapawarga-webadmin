@@ -6,11 +6,11 @@
           <div class="card-body">
             <b-alert variant="danger" :show="form.errors.has('username') || form.errors.has('password')" dismissible>Login failed.</b-alert>
 
-            <form onsubmit="return false;">
+            <form>
               <div class="form-group row">
                 <label class="col-md-3 col-form-label">Username</label>
                 <div class="col-md-9">
-                  <input type="email" class="form-control" v-model="form.username" placeholder="Username">
+                  <b-input type="text" v-model="form.username" placeholder="Username" />
                   <b-form-invalid-feedback :state="! form.errors.has('username')">
                     {{ form.errors.get('username') }}
                   </b-form-invalid-feedback>
@@ -19,7 +19,7 @@
               <div class="form-group row">
                 <label class="col-md-3 col-form-label">Password</label>
                 <div class="col-md-9">
-                  <input type="password" class="form-control" v-model="form.password" placeholder="Password">
+                  <b-input type="password" v-model="form.password" placeholder="Password" />
                   <b-form-invalid-feedback :state="! form.errors.has('password')">
                     {{ form.errors.get('password') }}
                   </b-form-invalid-feedback>
