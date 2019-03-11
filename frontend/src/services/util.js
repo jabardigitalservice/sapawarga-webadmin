@@ -35,10 +35,11 @@ function _getStatusMessage (status) {
 }
 
 function _getResponseErrorMessage (error) {
-  if (error.response && error.response.data) return error.response.data.description
-  if (error.response && error.response.statusText) return error.response.statusText
-  if (error.message) return error.message
-  return '_getResponseErrorMessage can\'t handle error'
+  return error
+  // if (error.response && error.response.data) return error.response.data.description
+  // if (error.response && error.response.statusText) return error.response.statusText
+  // if (error.message) return error.message
+  // return '_getResponseErrorMessage can\'t handle error'
 }
 
 /**
