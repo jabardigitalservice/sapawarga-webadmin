@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 import $store from '@/store'
-import { API_URL } from '@/config'
+import { API_URL, ACCESS_TOKEN_PREFIX } from '@/config'
 import { ResponseWrapper, ErrorWrapper } from './util'
 
 import UsersService from './users.service'
@@ -51,7 +51,7 @@ class AuthService {
   }
 
   getAccessToken () {
-    return localStorage.getItem('accessToken')
+    return localStorage.getItem(`${ACCESS_TOKEN_PREFIX}_accessToken`)
   }
 
   getRefreshToken () {
@@ -79,12 +79,12 @@ function _resetAuthData () {
   // $store.commit('auth/SET_ATOKEN_EXP_DATE', null)
   // reset tokens in localStorage
   // localStorage.setItem('refreshToken', '')
-  localStorage.setItem('accessToken', '')
+  localStorage.setItem(`${ACCESS_TOKEN_PREFIX}_accessToken`, '')
 }
 
 function _setAuthData (response) {
   // localStorage.setItem('refreshToken', response.data.refreshToken)
-  localStorage.setItem('accessToken', response.data.data.access_token)
+  localStorage.setItem(`${ACCESS_TOKEN_PREFIX}_accessToken`, response.data.data.access_token)
   // $store.commit('auth/SET_ATOKEN_EXP_DATE', response.data.expires_in)
 }
 
