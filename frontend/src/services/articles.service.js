@@ -2,7 +2,7 @@ import BaseService from './base.service'
 
 class ArticlesService extends BaseService {
     get entity () {
-        return 'guitars'
+        return 'guitar'
     }
 }
 
