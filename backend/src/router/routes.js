@@ -12,7 +12,7 @@ export const routes = [
   {
     path: '/home',
     component: () => import('@/pages/Home'),
-    meta: { requiresLogin: false, title: 'Home' }
+    meta: { requiresLogin: true, title: 'Home' }
   },
   {
     path: '/articles',
