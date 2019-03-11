@@ -58,7 +58,7 @@ export default {
   methods: {
     logout () {
       return authService.makeLogout()
-        .then(() => this.$router.push('/'))
+        .then(() => this.$router.push('login'))
         .catch(error => alert(error))
     }
   }
