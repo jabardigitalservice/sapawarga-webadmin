@@ -2,12 +2,14 @@ import axios from 'axios'
 
 import $store from '@/store'
 import { API_URL } from '@/config'
+import { ResponseWrapper, ErrorWrapper } from './util'
 
 import UsersService from './users.service'
 
 class AuthService {
   makeLogin (data) {
     return new Promise((resolve, reject) => {
+      // 1. Get Access Token
       axios.post(`${API_URL}/user/login`, {
         LoginForm: {
           username: data.username,
@@ -16,8 +18,10 @@ class AuthService {
       }).then(response => {
         _setAuthData(response)
 
-        const userId = response.data.data.id
+        const newResponse = new ResponseWrapper(response, response.data)
+        const userId = newResponse.data.data.id
 
+        // Get Current User Profile
         UsersService.getCurrent().then(response => {
           $store.commit('auth/SET_CURRENT_USER', {
             id: userId,
@@ -25,9 +29,9 @@ class AuthService {
             email: response.data.email
           })
 
-          resolve(response)
-        }).catch(error => reject(error))
-      }).catch(error => reject(error))
+          resolve(new ResponseWrapper(response, response.data))
+        }).catch(error => reject(new ErrorWrapper(error)))
+      }).catch(error => reject(new ErrorWrapper(error)))
     })
   }
 
