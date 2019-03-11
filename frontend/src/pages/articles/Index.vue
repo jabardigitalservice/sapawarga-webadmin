@@ -20,20 +20,28 @@ export default {
 
   data () {
     return {
+      loading: false,
       items: []
     }
   },
 
+  created () {
+    this.fetchData()
+  },
+
+  watch: {
+    '$route': 'fetchData'
+  },
+
   methods: {
-    getList () {
+    fetchData () {
+      this.loading = true
+
       articlesService.getList().then(response => {
         this.items = response.data
       }).catch(error => alert(error))
+      .finally(() => this.loading = false)
     }
-  },
-
-  mounted() {
-    this.getList()
   }
 }
 </script>
