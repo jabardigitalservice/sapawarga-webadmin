@@ -4,7 +4,7 @@
       <div class="col-xs-12 col-sm-6 mx-auto">
         <div class="card">
           <div class="card-body">
-            <b-alert variant="danger" dismissible>The password is invalid.</b-alert>
+            <b-alert variant="danger" :show="form.errors.has('username') || form.errors.has('email') || form.errors.has('password')" dismissible>Register failed.</b-alert>
 
             <form>
               <div class="form-group row">
@@ -74,7 +74,11 @@ export default {
         .then(() => {
           alert('Success')
         })
-        .catch(error => alert(error))
+        .catch(error => {
+          if (error.status !== 422) {
+            alert(error)
+          }
+        })
     }
   }
 }
