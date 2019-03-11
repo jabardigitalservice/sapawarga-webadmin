@@ -46,10 +46,14 @@ export default class Form {
   }
 
   callService (service, action) {
+    const data = this.data()
+
+    this.validated = false
+
     this.errors.clear()
 
     return new Promise((resolve, reject) => {
-      service[action](this.data())
+      service[action](data)
         .then(({ data }) => {
           this.onSuccess(data)
           resolve(data)
@@ -67,6 +71,8 @@ export default class Form {
     const method = requestType.toLowerCase()
     const data = this.data()
 
+    this.validated = false
+    
     this.errors.clear()
 
     return new Promise((resolve, reject) => {

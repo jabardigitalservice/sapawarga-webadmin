@@ -1,7 +1,7 @@
 <template>
   <layout-default>
     <div class="row">
-      <div class="col-xs-12 col-sm-6 mx-auto">
+      <div class="col-xs-12 col-sm-10 col-md-8 mx-auto">
         <e-panel title="Register">
           <b-alert variant="danger" :show="form.errors.any()" dismissible>Register failed.</b-alert>
           <b-alert variant="success" :show="success" dismissible>Register success, please check your email for confirm.</b-alert>
