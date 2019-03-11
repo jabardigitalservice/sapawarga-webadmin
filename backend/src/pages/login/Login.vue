@@ -1,8 +1,8 @@
 <template>
-  <layout-default>
+  <layout-auth>
     <div class="row">
-      <div class="col-xs-12 col-sm-10 col-md-8 mx-auto">
-        <e-panel title="Login">
+      <div class="col-xs-12 col-sm-4 col-md-4 mx-auto">
+        <e-panel title="Login Admin" style="margin-top: 100px">
           <b-alert variant="danger" :show="form.errors.any()" dismissible>Login failed.</b-alert>
 
           <form>
@@ -35,7 +35,7 @@
         </e-panel>
       </div>
     </div>
-  </layout-default>
+  </layout-auth>
 </template>
 
 <script>
@@ -43,12 +43,12 @@ import Form from '@/lib/Form'
 
 import authService from '@/services/auth.service'
 
-import LayoutDefault from '@/pages/layouts/Default'
+import LayoutAuth from '@/pages/layouts/Auth'
 import EPanel from '@/lib/components/panel'
 
 export default {
   components: {
-    LayoutDefault,
+    LayoutAuth,
     EPanel
   },
 
