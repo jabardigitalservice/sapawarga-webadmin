@@ -21,10 +21,11 @@ class AuthService {
         const newResponse = new ResponseWrapper(response, response.data)
         const userId = newResponse.data.data.id
 
-        // Get Current User Profile
+        // 2. Get Current User Profile
         UsersService.getCurrent().then(response => {
           $store.commit('auth/SET_CURRENT_USER', {
             id: userId,
+            username: response.data.username,
             name: null,
             email: response.data.email
           })
@@ -39,11 +40,6 @@ class AuthService {
     return new Promise((resolve) => {
       setTimeout(() => {
         _resetAuthData()
-
-        $store.commit('auth/SET_CURRENT_USER', {
-          id: null,
-          name: null
-        })
 
         resolve()
       }, 2000)
@@ -88,7 +84,11 @@ class AuthService {
 
 function _resetAuthData () {
   // reset userData in store
-  $store.commit('user/SET_CURRENT_USER', {})
+  $store.commit('user/SET_CURRENT_USER', {
+    id: null,
+    username: null,
+    email: null
+  })
   // $store.commit('auth/SET_ATOKEN_EXP_DATE', null)
   // reset tokens in localStorage
   // localStorage.setItem('refreshToken', '')
