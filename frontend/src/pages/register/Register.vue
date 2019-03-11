@@ -47,6 +47,7 @@
             <div class="form-group row mb-0">
               <div class="col-md-10">
                 <button type="button" class="btn btn-primary" v-promise-btn @click="makeRegister">Register</button>
+                <button type="button" class="btn btn-light" v-promise-btn @click="form.reset()">Reset</button>
               </div>
             </div>
           </form>
