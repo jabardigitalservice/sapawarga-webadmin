@@ -28,7 +28,7 @@
             <div class="form-group row">
               <label class="col-md-3 col-form-label">Password</label>
               <div class="col-md-9">
-                <b-input type="text" :state="form.getInputState('password')" v-model="form.password" placeholder="Password" />
+                <b-input type="password" :state="form.getInputState('password')" v-model="form.password" placeholder="Password" />
                 <b-form-invalid-feedback :state="form.getInputState('password')">
                   {{ form.errors.get('email') }}
                 </b-form-invalid-feedback>
@@ -37,7 +37,7 @@
             <div class="form-group row">
               <label class="col-md-3 col-form-label">Confirm Password</label>
               <div class="col-md-9">
-                <b-input type="text" :state="form.getInputState('password_confirm')" v-model="form.password_confirm" placeholder="Confirm Password" />
+                <b-input type="password" :state="form.getInputState('password_confirm')" v-model="form.password_confirm" placeholder="Confirm Password" />
                 <b-form-invalid-feedback :state="form.getInputState('password_confirm')">
                   {{ form.errors.get('email') }}
                 </b-form-invalid-feedback>
