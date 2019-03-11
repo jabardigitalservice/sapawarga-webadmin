@@ -84,7 +84,7 @@ class AuthService {
 
 function _resetAuthData () {
   // reset userData in store
-  $store.commit('user/SET_CURRENT_USER', {
+  $store.commit('auth/SET_CURRENT_USER', {
     id: null,
     username: null,
     email: null
