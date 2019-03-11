@@ -11,25 +11,37 @@
               <div class="form-group row">
                 <label class="col-md-3 col-form-label">Username</label>
                 <div class="col-md-9">
-                  <input type="text" class="form-control" v-model="form.username" placeholder="Username">
+                  <b-input type="text" :state="form.getInputState('username')" v-model="form.username" placeholder="Username" />
+                  <b-form-invalid-feedback :state="form.getInputState('username')">
+                    {{ form.errors.get('username') }}
+                  </b-form-invalid-feedback>
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-md-3 col-form-label">Email</label>
                 <div class="col-md-9">
-                  <input type="email" class="form-control" v-model="form.email" placeholder="Email">
+                  <b-input type="text" :state="form.getInputState('email')" v-model="form.email" placeholder="Email" />
+                  <b-form-invalid-feedback :state="form.getInputState('email')">
+                    {{ form.errors.get('email') }}
+                  </b-form-invalid-feedback>
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-md-3 col-form-label">Password</label>
                 <div class="col-md-9">
-                  <input type="password" class="form-control" v-model="form.password"  placeholder="Password">
+                  <b-input type="text" :state="form.getInputState('password')" v-model="form.password" placeholder="Password" />
+                  <b-form-invalid-feedback :state="form.getInputState('password')">
+                    {{ form.errors.get('email') }}
+                  </b-form-invalid-feedback>
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-md-3 col-form-label">Confirm Password</label>
                 <div class="col-md-9">
-                  <input type="password" class="form-control" v-model="form.password_confirm"  placeholder="Confirm Password">
+                  <b-input type="text" :state="form.getInputState('password_confirm')" v-model="form.password_confirm" placeholder="Confirm Password" />
+                  <b-form-invalid-feedback :state="form.getInputState('password_confirm')">
+                    {{ form.errors.get('email') }}
+                  </b-form-invalid-feedback>
                 </div>
               </div>
               <hr class="mb-3">
