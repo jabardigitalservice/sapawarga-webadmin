@@ -4,7 +4,7 @@
       <div class="col-xs-12 col-sm-6 mx-auto">
         <div class="card">
           <div class="card-body">
-            <b-alert variant="danger" :show="form.errors.has('username') || form.errors.has('password')" dismissible>Login failed.</b-alert>
+            <b-alert variant="danger" :show="form.errors.any()" dismissible>Login failed.</b-alert>
 
             <form>
               <div class="form-group row">
