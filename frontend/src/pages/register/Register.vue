@@ -5,6 +5,7 @@
         <div class="card">
           <div class="card-body">
             <b-alert variant="danger" :show="form.errors.has('username') || form.errors.has('email') || form.errors.has('password')" dismissible>Register failed.</b-alert>
+            <b-alert variant="success" :show="success" dismissible>Register success, please check your email for confirm.</b-alert>
 
             <form>
               <div class="form-group row">
@@ -64,7 +65,8 @@ export default {
         email: null,
         password: null,
         password_confirm: null
-      })
+      }),
+      success: false
     }
   },
 
@@ -72,7 +74,7 @@ export default {
     makeRegister () {
       return this.form.callService(authService, 'makeRegister')
         .then(() => {
-          alert('Success')
+          this.success = true
         })
         .catch(error => {
           if (error.status !== 422) {
