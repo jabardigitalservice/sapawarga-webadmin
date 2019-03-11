@@ -68,6 +68,17 @@ export default class BaseService {
    * ------------------------------
    */
 
+  getList () {
+    return new Promise((resolve, reject) => {
+      return this.request({ auth: true }).get(`${this.entity}`)
+          .then(response => resolve(this.responseWrapper(response, response.data.data)))
+          .catch(error => {
+            let message = error.response.data ? error.response.data.error : error.response.statusText
+            reject(this.errorWrapper(error, message))
+          })
+    })
+  }
+
   getById (id = window.required()) {
     return new Promise((resolve, reject) => {
       return this.request({ auth: true }).get(`${this.entity}/${id}`)
