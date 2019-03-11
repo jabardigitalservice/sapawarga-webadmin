@@ -34,8 +34,8 @@ function _getStatusMessage (status) {
   return message
 }
 
-function _getResponseErrorMessage (error) {
-  return error
+function _getResponseErrorMessage (error) {  /* eslint-disable-line */
+  return 'Error'
   // if (error.response && error.response.data) return error.response.data.description
   // if (error.response && error.response.statusText) return error.response.statusText
   // if (error.message) return error.message
@@ -72,6 +72,7 @@ export class ErrorWrapper extends Error {
     this.status = error.response ? error.response.status : false
     this.statusMessage = _getStatusMessage(this.status)
     this.message = message || _getResponseErrorMessage(error)
+    this.data = error.response ? error.response.data.data : null
   }
 }
 

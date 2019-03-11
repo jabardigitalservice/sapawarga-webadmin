@@ -54,8 +54,8 @@ export default class Form {
           resolve(data)
         })
         .catch(e => {
-          if (e.response && e.response.status === 422) {
-            this.onError(e.response.data)
+          if (e.status === 422) {
+            this.onError(JSON.parse(e.data.message))
           }
           reject(e)
         })
@@ -75,8 +75,8 @@ export default class Form {
           resolve(data)
         })
         .catch(e => {
-          if (e.response && e.response.status === 422) {
-            this.onError(e.response.data)
+          if (e.status === 422) {
+            this.onError(JSON.parse(e.data.message))
           }
           reject(e)
         })
@@ -88,6 +88,7 @@ export default class Form {
   }
 
   onError (errors) {
+
     this.errors.record(errors)
   }
 
