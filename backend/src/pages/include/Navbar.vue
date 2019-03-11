@@ -4,7 +4,7 @@
       <e-navbar class="navbar border-0 card" :title="'My Application'">
         <div slot="brand">
           <router-link to="/" class="e-logo mx-4">
-            <span>My Application</span>
+            <span>Admin My Application</span>
           </router-link>
         </div>
 
