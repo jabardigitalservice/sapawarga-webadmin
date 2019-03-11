@@ -11,38 +11,38 @@
 </template>
 
 <script>
-  import VMultiselect from 'vue-multiselect'
+import VMultiselect from 'vue-multiselect'
 
-  export default {
-    components: { VMultiselect },
-    props: {
-      options: {
-        type: Array,
-        default: []
-      },
-      value: {
-        default: null
-      },
-      multiple: {
-        type: Boolean,
-        default: false
-      },
-      placeholder: {
-        type: String,
-        default: 'Select'
-      }
+export default {
+  components: { VMultiselect },
+  props: {
+    options: {
+      type: Array,
+      default: []
     },
-    data: function() {
-      return {
-        selected: this.value || null
-      }
+    value: {
+      default: null
     },
-    watch: {
-      selected: function(value) {
-        this.$emit('update:value', value)
-      }
+    multiple: {
+      type: Boolean,
+      default: false
+    },
+    placeholder: {
+      type: String,
+      default: 'Select'
+    }
+  },
+  data: function () {
+    return {
+      selected: this.value || null
+    }
+  },
+  watch: {
+    selected: function (value) {
+      this.$emit('update:value', value)
     }
   }
+}
 </script>
 
 <style lang="scss">

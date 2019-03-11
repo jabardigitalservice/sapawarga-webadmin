@@ -32,12 +32,12 @@
 </template>
 
 <script>
-  import EPanel from '../index'
+import EPanel from '../index'
 
-  export default {
-    components: { EPanel },
-    data: function() {
-      return {}
-    }
+export default {
+  components: { EPanel },
+  data: function () {
+    return {}
   }
+}
 </script>

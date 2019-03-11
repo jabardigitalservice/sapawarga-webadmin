@@ -1,26 +1,26 @@
 <script>
-  import VSlider from 'vue-slider-component'
+import VSlider from 'vue-slider-component'
 
-  export default {
-    extends: VSlider,
-    props: {
-      tooltip: {
-        default: 'hover'
-      },
-      height: {
-        default: 4
-      },
-      width: {
-        default: '100%'
-      },
-      dotSize: {
-        default: 12
-      }
+export default {
+  extends: VSlider,
+  props: {
+    tooltip: {
+      default: 'hover'
     },
-    data: function() {
-      return {}
+    height: {
+      default: 4
+    },
+    width: {
+      default: '100%'
+    },
+    dotSize: {
+      default: 12
     }
+  },
+  data: function () {
+    return {}
   }
+}
 </script>
 
 <style lang="scss">

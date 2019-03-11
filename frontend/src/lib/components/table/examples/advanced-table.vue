@@ -110,130 +110,130 @@
 </template>
 
 <script>
-  import ENavlist from '../../navlist'
+import ENavlist from '../../navlist'
 
-  const items = [
-    { name: 'Adam Cotter',       date: 1512792908, status: true,  bookmark: true  },
-    { name: 'Pauline Noble',     date: 1516977768, status: false, bookmark: true  },
-    { name: 'Sherilyn Metzel',   date: 1517042476, status: true,  bookmark: false },
-    { name: 'Terrie Boaler',     date: 1516439865, status: true,  bookmark: false },
-    { name: 'Rutter Pude',       date: 1515850922, status: false, bookmark: false },
-    { name: 'Clifford Benjamin', date: 1516898701, status: true,  bookmark: false },
-    { name: 'Thedric Romans',    date: 1515707885, status: false, bookmark: false },
-    { name: 'Haily Carthew',     date: 1517056707, status: true,  bookmark: true  },
-    { name: 'Dorothea Joicey',   date: 1513090469, status: true,  bookmark: false },
-    { name: 'Mikaela Pinel',     date: 1512892304, status: false, bookmark: false },
-    { name: 'Donnell Farries',   date: 1512299369, status: true,  bookmark: false },
-    { name: 'Letizia Puncher',   date: 1512769349, status: false, bookmark: false },
-    { name: 'Kania Yallowley',   date: 1515521487, status: true,  bookmark: false },
-    { name: 'Clay De Francesco', date: 1515012234, status: false, bookmark: true  },
-    { name: 'Ina Queree',        date: 1514458367, status: false, bookmark: false },
-    { name: 'Rasia Awty',        date: 1516943842, status: false, bookmark: false },
-    { name: 'Basil Crosham',     date: 1512108299, status: true,  bookmark: false },
-    { name: 'Alexis Dodworth',   date: 1516814115, status: false, bookmark: true  },
-    { name: 'Greg Onyon',        date: 1517071308, status: true,  bookmark: false },
-    { name: 'Barry Carbett',     date: 1515450742, status: true,  bookmark: false },
-    { name: 'Carlyle Adran',     date: 1512498261, status: true,  bookmark: false },
-    { name: 'Guillaume Petel',   date: 1512742913, status: false, bookmark: true  },
-    { name: 'Wendeline Glasner', date: 1513319267, status: false, bookmark: false },
-    { name: 'Sylvia Petrollo',   date: 1516080489, status: false, bookmark: false },
-    { name: 'Meade Quoit',       date: 1513972299, status: true,  bookmark: true  },
-    { name: 'Eugine Planke',     date: 1515488407, status: false, bookmark: false },
-    { name: 'Thoma Drakeley',    date: 1515023660, status: false, bookmark: false },
-    { name: 'Web Margetson',     date: 1513557231, status: true,  bookmark: false },
-    { name: 'Erskine Stivens',   date: 1515233788, status: true,  bookmark: true  },
-    { name: 'Jedidiah Emmer',    date: 1512614842, status: false, bookmark: false },
-    { name: 'Wolfie Drakers',    date: 1512381522, status: false, bookmark: false },
-    { name: 'Allie Quiney',      date: 1515488202, status: true,  bookmark: false }
-  ]
+const items = [
+  { name: 'Adam Cotter', date: 1512792908, status: true, bookmark: true },
+  { name: 'Pauline Noble', date: 1516977768, status: false, bookmark: true },
+  { name: 'Sherilyn Metzel', date: 1517042476, status: true, bookmark: false },
+  { name: 'Terrie Boaler', date: 1516439865, status: true, bookmark: false },
+  { name: 'Rutter Pude', date: 1515850922, status: false, bookmark: false },
+  { name: 'Clifford Benjamin', date: 1516898701, status: true, bookmark: false },
+  { name: 'Thedric Romans', date: 1515707885, status: false, bookmark: false },
+  { name: 'Haily Carthew', date: 1517056707, status: true, bookmark: true },
+  { name: 'Dorothea Joicey', date: 1513090469, status: true, bookmark: false },
+  { name: 'Mikaela Pinel', date: 1512892304, status: false, bookmark: false },
+  { name: 'Donnell Farries', date: 1512299369, status: true, bookmark: false },
+  { name: 'Letizia Puncher', date: 1512769349, status: false, bookmark: false },
+  { name: 'Kania Yallowley', date: 1515521487, status: true, bookmark: false },
+  { name: 'Clay De Francesco', date: 1515012234, status: false, bookmark: true },
+  { name: 'Ina Queree', date: 1514458367, status: false, bookmark: false },
+  { name: 'Rasia Awty', date: 1516943842, status: false, bookmark: false },
+  { name: 'Basil Crosham', date: 1512108299, status: true, bookmark: false },
+  { name: 'Alexis Dodworth', date: 1516814115, status: false, bookmark: true },
+  { name: 'Greg Onyon', date: 1517071308, status: true, bookmark: false },
+  { name: 'Barry Carbett', date: 1515450742, status: true, bookmark: false },
+  { name: 'Carlyle Adran', date: 1512498261, status: true, bookmark: false },
+  { name: 'Guillaume Petel', date: 1512742913, status: false, bookmark: true },
+  { name: 'Wendeline Glasner', date: 1513319267, status: false, bookmark: false },
+  { name: 'Sylvia Petrollo', date: 1516080489, status: false, bookmark: false },
+  { name: 'Meade Quoit', date: 1513972299, status: true, bookmark: true },
+  { name: 'Eugine Planke', date: 1515488407, status: false, bookmark: false },
+  { name: 'Thoma Drakeley', date: 1515023660, status: false, bookmark: false },
+  { name: 'Web Margetson', date: 1513557231, status: true, bookmark: false },
+  { name: 'Erskine Stivens', date: 1515233788, status: true, bookmark: true },
+  { name: 'Jedidiah Emmer', date: 1512614842, status: false, bookmark: false },
+  { name: 'Wolfie Drakers', date: 1512381522, status: false, bookmark: false },
+  { name: 'Allie Quiney', date: 1515488202, status: true, bookmark: false }
+]
 
-  const fields = [
-    { key: 'check' },
-    { key: 'name', sortable: true, thClass: 'max-width', tdClass: 'text-nowrap' },
-    { key: 'date', sortable: true, tdClass: 'text-nowrap' },
-    { key: 'status', tdClass: 'text-center align-middle' },
-    { key: 'bookmark', label: ' ', tdClass: 'align-middle' },
-  ]
+const fields = [
+  { key: 'check' },
+  { key: 'name', sortable: true, thClass: 'max-width', tdClass: 'text-nowrap' },
+  { key: 'date', sortable: true, tdClass: 'text-nowrap' },
+  { key: 'status', tdClass: 'text-center align-middle' },
+  { key: 'bookmark', label: ' ', tdClass: 'align-middle' }
+]
 
-  // filters the given array of objects with a provided text and fields
-  const searchArray = function(array, query, fields = []) {
-    if (!array.length || !String(query)) {
-      return array
-    }
+// filters the given array of objects with a provided text and fields
+const searchArray = function (array, query, fields = []) {
+  if (!array.length || !String(query)) {
+    return array
+  }
 
-    return array.filter(item => {
-      let found = false;
-      for (let key in item) {
-        if (fields.length && fields.indexOf(key) < 0) {
-          continue
-        }
-        if (typeof item[key] == 'string' &&
+  return array.filter(item => {
+    let found = false
+    for (let key in item) {
+      if (fields.length && fields.indexOf(key) < 0) {
+        continue
+      }
+      if (typeof item[key] === 'string' &&
             item[key].toLowerCase().indexOf(query.toLowerCase()) >= 0) {
-          found = true;
-        }
-      }
-      return found;
-    })
-  }
-
-  export default {
-    components: { ENavlist },
-    data: function() {
-      return {
-        items,
-        fields,
-        currentPage: 1,
-        perPage: 5,
-        tab: 'all',
-        filters: {
-          search: '',
-          actives: false,
-        },
-        selectedItems: []
-      }
-    },
-    computed: {
-      all: function() {
-        let items = this.items;
-
-        if (this.filters.search) {
-          items = searchArray(this.items, this.filters.search, ['name'])
-        }
-
-        if (this.filters.actives) {
-          items = items.filter(i => i.status)
-        }
-
-        return items
-      },
-      bookmarks: function() {
-        return this.all.filter(i => i.bookmark)
-      },
-      selected: function() {
-        return this.all.filter(i => this.selectedItems.indexOf(i) > -1)
-      },
-      selectedAll: {
-        get: function() {
-          return this.display.length && this.display.every(i => this.selected.indexOf(i) > -1)
-        },
-        set: function(value) {
-          if (value) {
-            this.selectedItems = [...this.display]
-          } else {
-            this.selectedItems = this.selectedItems.filter(i => this.display.indexOf(i) < 0)
-          }
-        }
-      },
-      display: function() {
-        return this[this.tab] || []
-      }
-    },
-    methods: {
-      clearSearch: function() {
-        this.filters.search = ''
+        found = true
       }
     }
+    return found
+  })
+}
+
+export default {
+  components: { ENavlist },
+  data: function () {
+    return {
+      items,
+      fields,
+      currentPage: 1,
+      perPage: 5,
+      tab: 'all',
+      filters: {
+        search: '',
+        actives: false
+      },
+      selectedItems: []
+    }
+  },
+  computed: {
+    all: function () {
+      let items = this.items
+
+      if (this.filters.search) {
+        items = searchArray(this.items, this.filters.search, ['name'])
+      }
+
+      if (this.filters.actives) {
+        items = items.filter(i => i.status)
+      }
+
+      return items
+    },
+    bookmarks: function () {
+      return this.all.filter(i => i.bookmark)
+    },
+    selected: function () {
+      return this.all.filter(i => this.selectedItems.indexOf(i) > -1)
+    },
+    selectedAll: {
+      get: function () {
+        return this.display.length && this.display.every(i => this.selected.indexOf(i) > -1)
+      },
+      set: function (value) {
+        if (value) {
+          this.selectedItems = [...this.display]
+        } else {
+          this.selectedItems = this.selectedItems.filter(i => this.display.indexOf(i) < 0)
+        }
+      }
+    },
+    display: function () {
+      return this[this.tab] || []
+    }
+  },
+  methods: {
+    clearSearch: function () {
+      this.filters.search = ''
+    }
   }
+}
 </script>
 
 <style lang="scss">

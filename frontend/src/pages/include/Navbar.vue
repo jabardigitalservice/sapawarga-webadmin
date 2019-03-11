@@ -53,7 +53,7 @@ export default {
   computed: {
     loggedIn () {
       return this.$store.state.auth.currentUser.id !== null
-    },
+    }
   },
 
   methods: {

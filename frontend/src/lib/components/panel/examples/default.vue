@@ -5,9 +5,9 @@
 </template>
 
 <script>
-  import EPanel from '../index'
+import EPanel from '../index'
 
-  export default {
-    components: { EPanel }
-  }
+export default {
+  components: { EPanel }
+}
 </script>

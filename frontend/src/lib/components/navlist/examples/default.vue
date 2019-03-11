@@ -28,9 +28,9 @@
 </template>
 
 <script>
-  import ENavlist from '../index'
+import ENavlist from '../index'
 
-  export default {
-    components: { ENavlist }
-  }
+export default {
+  components: { ENavlist }
+}
 </script>

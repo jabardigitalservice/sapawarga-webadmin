@@ -23,9 +23,9 @@
 </template>
 
 <script>
-  import ENavline from '../index'
+import ENavline from '../index'
 
-  export default {
-    components: { ENavline }
-  }
+export default {
+  components: { ENavline }
+}
 </script>

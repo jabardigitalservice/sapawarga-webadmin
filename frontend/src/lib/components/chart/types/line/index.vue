@@ -1,6 +1,6 @@
 <script>
-  import makeChart from '../../base'
-  import { Line } from 'vue-chartjs'
+import makeChart from '../../base'
+import { Line } from 'vue-chartjs'
 
-  export default makeChart(Line)
+export default makeChart(Line)
 </script>

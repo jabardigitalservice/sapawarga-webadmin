@@ -1,15 +1,15 @@
 <script>
-  import EDatepicker from '../../index'
+import EDatepicker from '../../index'
 
-  export default {
-    extends: EDatepicker,
-    data: function() {
-      return {
-        localDefaults: {
-          mode: 'range',
-          dateFormat: 'd M y',
-        }
+export default {
+  extends: EDatepicker,
+  data: function () {
+    return {
+      localDefaults: {
+        mode: 'range',
+        dateFormat: 'd M y'
       }
     }
   }
+}
 </script>

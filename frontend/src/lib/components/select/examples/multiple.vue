@@ -8,15 +8,15 @@
 </template>
 
 <script>
-  import ESelect from '../index'
+import ESelect from '../index'
 
-  export default {
-    components: { ESelect },
-    data: function() {
-      return {
-        options: ['One', 'Two', 'Three'],
-        values: ['One']
-      }
+export default {
+  components: { ESelect },
+  data: function () {
+    return {
+      options: ['One', 'Two', 'Three'],
+      values: ['One']
     }
   }
+}
 </script>

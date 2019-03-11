@@ -6,7 +6,7 @@ import { routes } from './routes'
 
 Vue.use(Router)
 
-const router =  new Router({
+const router = new Router({
   linkActiveClass: 'active',
   routes
 })

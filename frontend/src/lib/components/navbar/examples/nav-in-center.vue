@@ -28,9 +28,9 @@
 </template>
 
 <script>
-  import ENavbar from '../index'
+import ENavbar from '../index'
 
-  export default {
-    components: { ENavbar }
-  }
+export default {
+  components: { ENavbar }
+}
 </script>

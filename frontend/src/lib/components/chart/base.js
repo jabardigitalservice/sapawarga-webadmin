@@ -11,12 +11,12 @@ const baseComponent = {
       }
     }
   },
-  mounted: function() {
+  mounted: function () {
     this.renderChart(this.chartData, Object.assign({}, defaults, this.options))
   }
 }
 
-export default function makeChart(chartType) {
+export default function makeChart (chartType) {
   return Object.assign({}, baseComponent, {
     extends: chartType
   })

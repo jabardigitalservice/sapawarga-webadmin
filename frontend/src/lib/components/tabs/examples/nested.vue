@@ -69,9 +69,9 @@
 </template>
 
 <script>
-  import ETabs from '../index'
+import ETabs from '../index'
 
-  export default {
-    components: { ETabs }
-  }
+export default {
+  components: { ETabs }
+}
 </script>

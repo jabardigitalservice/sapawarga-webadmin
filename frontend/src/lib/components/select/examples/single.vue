@@ -7,15 +7,15 @@
 </template>
 
 <script>
-  import ESelect from '../index'
+import ESelect from '../index'
 
-  export default {
-    components: { ESelect },
-    data: function() {
-      return {
-        options: ['One', 'Two', 'Three'],
-        value: 'One'
-      }
+export default {
+  components: { ESelect },
+  data: function () {
+    return {
+      options: ['One', 'Two', 'Three'],
+      value: 'One'
     }
   }
+}
 </script>

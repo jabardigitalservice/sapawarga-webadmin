@@ -7,14 +7,14 @@
 </template>
 
 <script>
-  import EDatepickerAddons from '../types/addons'
+import EDatepickerAddons from '../types/addons'
 
-  export default {
-    components: { EDatepickerAddons },
-    data: function() {
-      return {
-        date: new Date()
-      }
+export default {
+  components: { EDatepickerAddons },
+  data: function () {
+    return {
+      date: new Date()
     }
   }
+}
 </script>

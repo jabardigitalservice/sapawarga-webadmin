@@ -61,12 +61,12 @@
 </template>
 
 <script>
-  import ENavlist from '../index'
+import ENavlist from '../index'
 
-  export default {
-    components: { ENavlist },
-    props: {
-      noTooltips: Boolean
-    }
+export default {
+  components: { ENavlist },
+  props: {
+    noTooltips: Boolean
   }
+}
 </script>

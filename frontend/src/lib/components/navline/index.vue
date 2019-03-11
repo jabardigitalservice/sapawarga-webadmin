@@ -5,14 +5,14 @@
 </template>
 
 <script>
-  export default {
-    props: {
-      arrow: {
-        type: Boolean,
-        default: false
-      }
+export default {
+  props: {
+    arrow: {
+      type: Boolean,
+      default: false
     }
   }
+}
 </script>
 
 <style lang="scss">

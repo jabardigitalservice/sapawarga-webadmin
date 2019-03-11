@@ -126,7 +126,7 @@ storiesOf('Components/Chart', module)
     `
   }))
 
-  storiesOf('Components/Chart', module)
+storiesOf('Components/Chart', module)
   .addDecorator(withDocsCustom(areaDocs))
   .add('Area', () => ({
     components: { EAreaChart },

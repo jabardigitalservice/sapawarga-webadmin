@@ -26,35 +26,35 @@
 </template>
 
 <script>
-  import EDatepicker from '../../index'
+import EDatepicker from '../../index'
 
-  export default {
-    extends: EDatepicker,
-    props: {
-      prepend: {
-        type: String,
-        default: ''
-      },
-      append: {
-        type: String,
-        default: ''
-      },
-      clear: {
-        type: Boolean,
-        default: false
-      }
+export default {
+  extends: EDatepicker,
+  props: {
+    prepend: {
+      type: String,
+      default: ''
     },
-    data: function() {
-      return {
-        localDefaults: {
-          wrap: true
-        }
-      }
+    append: {
+      type: String,
+      default: ''
     },
-    methods: {
-      clearDate: function() {
-        this.$refs.picker.fp.clear()
+    clear: {
+      type: Boolean,
+      default: false
+    }
+  },
+  data: function () {
+    return {
+      localDefaults: {
+        wrap: true
       }
     }
+  },
+  methods: {
+    clearDate: function () {
+      this.$refs.picker.fp.clear()
+    }
   }
+}
 </script>

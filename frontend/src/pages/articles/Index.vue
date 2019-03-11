@@ -52,7 +52,7 @@ export default {
       articlesService.getList().then(response => {
         this.items = response.data
       }).catch(error => alert(error))
-      .finally(() => this.loading = false)
+        .finally(() => this.loading = false)
     }
   }
 }

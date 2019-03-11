@@ -19,25 +19,25 @@
 </template>
 
 <script>
-  export default {
-    props: {
-      title: {
-        type: String,
-        default: 'Metric'
-      },
-      value: {
-        type: String,
-        default: '0'
-      },
-      icon: {
-        type: String
-      },
-      iconDark: {
-        type: Boolean,
-        default: false
-      }
+export default {
+  props: {
+    title: {
+      type: String,
+      default: 'Metric'
+    },
+    value: {
+      type: String,
+      default: '0'
+    },
+    icon: {
+      type: String
+    },
+    iconDark: {
+      type: Boolean,
+      default: false
     }
   }
+}
 </script>
 
 <style lang="scss">

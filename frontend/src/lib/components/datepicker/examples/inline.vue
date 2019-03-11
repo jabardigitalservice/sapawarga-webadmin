@@ -3,9 +3,9 @@
 </template>
 
 <script>
-  import EDatepickerInline from '../types/inline'
+import EDatepickerInline from '../types/inline'
 
-  export default {
-    components: { EDatepickerInline }
-  }
+export default {
+  components: { EDatepickerInline }
+}
 </script>

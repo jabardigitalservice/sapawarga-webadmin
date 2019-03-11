@@ -3,14 +3,14 @@
 </template>
 
 <script>
-  import EDatepickerDatetime from '../types/datetime'
+import EDatepickerDatetime from '../types/datetime'
 
-  export default {
-    components: { EDatepickerDatetime },
-    data: function() {
-      return {
-        date: null
-      }
+export default {
+  components: { EDatepickerDatetime },
+  data: function () {
+    return {
+      date: null
     }
   }
+}
 </script>

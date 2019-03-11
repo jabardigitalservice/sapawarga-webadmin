@@ -26,27 +26,27 @@
 </template>
 
 <script>
-  export default {
-    props: {
-      title: {
-        type: String,
-        default: ''
-      },
-      navInCenter: {
-        type: Boolean,
-        default: false
-      },
-      brandInCenter: {
-        type: Boolean,
-        default: false
-      }
+export default {
+  props: {
+    title: {
+      type: String,
+      default: ''
     },
-    data: function() {
-      return {
-        id: 'e-navbar-' + String(Date.now()).slice(-4)
-      }
+    navInCenter: {
+      type: Boolean,
+      default: false
+    },
+    brandInCenter: {
+      type: Boolean,
+      default: false
+    }
+  },
+  data: function () {
+    return {
+      id: 'e-navbar-' + String(Date.now()).slice(-4)
     }
   }
+}
 </script>
 
 <style lang="scss">

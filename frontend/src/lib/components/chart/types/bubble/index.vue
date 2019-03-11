@@ -1,6 +1,6 @@
 <script>
-  import makeChart from '../../base'
-  import { Bubble } from 'vue-chartjs'
+import makeChart from '../../base'
+import { Bubble } from 'vue-chartjs'
 
-  export default makeChart(Bubble)
+export default makeChart(Bubble)
 </script>

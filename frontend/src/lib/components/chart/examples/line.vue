@@ -6,41 +6,41 @@
 </template>
 
 <script>
-  import ELineChart from '../types/line'
-  import { colors } from '../options'
+import ELineChart from '../types/line'
+import { colors } from '../options'
 
-  export default {
-    components: { ELineChart },
-    props: {
-      height: {
-        type: Number
-      }
-    },
-    data: function() {
-      return {
-        data: {
-          labels: ['Mon', 'Tue', 'Wed', 'Thu'],
-          datasets: [
+export default {
+  components: { ELineChart },
+  props: {
+    height: {
+      type: Number
+    }
+  },
+  data: function () {
+    return {
+      data: {
+        labels: ['Mon', 'Tue', 'Wed', 'Thu'],
+        datasets: [
+          {
+            label: 'Line',
+            borderColor: colors.green.string(),
+            backgroundColor: 'transparent',
+            data: [3, 12, 3, 12]
+          }
+        ]
+      },
+      options: {
+        scales: {
+          yAxes: [
             {
-              label: 'Line',
-              borderColor: colors.green.string(),
-              backgroundColor: 'transparent',
-              data: [3, 12, 3, 12]
+              ticks: {
+                beginAtZero: true
+              }
             }
           ]
-        },
-        options: {
-          scales: {
-            yAxes: [
-              {
-                ticks: {
-                  beginAtZero: true
-                }
-              }
-            ],
-          },
         }
       }
     }
   }
+}
 </script>

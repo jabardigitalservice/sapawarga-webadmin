@@ -28,6 +28,6 @@ export const routes = [
   {
     path: '*',
     component: () => import('@/pages/404'),
-    meta: { requiresLogin: false, title: 'Page Not Found' },
+    meta: { requiresLogin: false, title: 'Page Not Found' }
   }
 ]

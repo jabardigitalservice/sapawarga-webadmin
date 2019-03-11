@@ -20,20 +20,20 @@
 </template>
 
 <script>
-  export default {
-    props: {
-      title: {
-        type: String
-      },
-      subtitle: {
-        type: String
-      },
-      noHead: {
-        type: Boolean,
-        default: false
-      }
+export default {
+  props: {
+    title: {
+      type: String
+    },
+    subtitle: {
+      type: String
+    },
+    noHead: {
+      type: Boolean,
+      default: false
     }
   }
+}
 </script>
 
 <style lang="scss">

@@ -3,14 +3,14 @@
 </template>
 
 <script>
-  import EDatepickerTime from '../types/time'
+import EDatepickerTime from '../types/time'
 
-  export default {
-    components: { EDatepickerTime },
-    data: function() {
-      return {
-        time: null
-      }
+export default {
+  components: { EDatepickerTime },
+  data: function () {
+    return {
+      time: null
     }
   }
+}
 </script>

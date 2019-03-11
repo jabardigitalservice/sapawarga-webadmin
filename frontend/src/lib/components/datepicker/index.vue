@@ -8,90 +8,90 @@
 </template>
 
 <script>
-  import flatPickr from 'vue-flatpickr-component'
-  import Locale from "flatpickr/dist/l10n/default"
+import flatPickr from 'vue-flatpickr-component'
+import Locale from 'flatpickr/dist/l10n/default'
 
-  const globalDefaults = {
-    locale: Object.assign({}, Locale, {
-      weekdays: {
-        shorthand: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
-      },
-      rangeSeparator: " - "
-    }),
-    disableMobile: true
-  }
+const globalDefaults = {
+  locale: Object.assign({}, Locale, {
+    weekdays: {
+      shorthand: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
+    },
+    rangeSeparator: ' - '
+  }),
+  disableMobile: true
+}
 
-  export default {
-    name: 'e-datepicker',
-    components: { flatPickr },
-    props: {
-      config: {
-        type: Object,
-        default: () => new Object()
-      },
-      value: {
-        default: null
-      },
-      placeholder: {
-        type: String,
-        default: ''
-      }
+export default {
+  name: 'e-datepicker',
+  components: { flatPickr },
+  props: {
+    config: {
+      type: Object,
+      default: () => new Object()
     },
-    data: function() {
-      return {
-        localDefaults: {},
-        lastValue: this.isValidDatesArray(this.value) || this.isValidDateValue(this.value) ? this.value : []
-      }
+    value: {
+      default: null
     },
-    computed: {
-      date: function() {
-        return this.lastValue;
-      },
-      isDate: function() {
-        return (this.isValidDatesArray(this.date) && this.date.length) || this.isValidDateValue(this.date)
-      },
-      options: function() {
-        return Object.assign({},
-          globalDefaults,
-          this.localDefaults,
-          this.config
-        )
-      }
+    placeholder: {
+      type: String,
+      default: ''
+    }
+  },
+  data: function () {
+    return {
+      localDefaults: {},
+      lastValue: this.isValidDatesArray(this.value) || this.isValidDateValue(this.value) ? this.value : []
+    }
+  },
+  computed: {
+    date: function () {
+      return this.lastValue
     },
-    methods: {
-      handleDateChange: function(currentDates, dateStr, instance) {
-        let datesNotChanged = true;
-        currentDates.forEach((date, i) => {
-          if (!this.lastValue[i] || date.valueOf() !== this.lastValue[i].valueOf()) {
-            datesNotChanged = false
-          }
-        })
-
-        if (currentDates.length != this.lastValue.length) {
+    isDate: function () {
+      return (this.isValidDatesArray(this.date) && this.date.length) || this.isValidDateValue(this.date)
+    },
+    options: function () {
+      return Object.assign({},
+        globalDefaults,
+        this.localDefaults,
+        this.config
+      )
+    }
+  },
+  methods: {
+    handleDateChange: function (currentDates, dateStr, instance) {
+      let datesNotChanged = true
+      currentDates.forEach((date, i) => {
+        if (!this.lastValue[i] || date.valueOf() !== this.lastValue[i].valueOf()) {
           datesNotChanged = false
         }
+      })
 
-        if (!datesNotChanged) {
-          this.lastValue = currentDates
-          this.$emit('update:value', currentDates)
-        }
-      },
-      isValidDatesArray: function(dates) {
-        if (dates instanceof Array) {
-          for(var i = 0; i < dates.length; i++) {
-            if (!this.isValidDateValue(dates[i])) {
-              return false
-            }
-          }
-          return true
-        }
-        return false
-      },
-      isValidDateValue: function(date) {
-        return (date instanceof Date) && !isNaN(date.valueOf())
+      if (currentDates.length != this.lastValue.length) {
+        datesNotChanged = false
       }
+
+      if (!datesNotChanged) {
+        this.lastValue = currentDates
+        this.$emit('update:value', currentDates)
+      }
+    },
+    isValidDatesArray: function (dates) {
+      if (dates instanceof Array) {
+        for (var i = 0; i < dates.length; i++) {
+          if (!this.isValidDateValue(dates[i])) {
+            return false
+          }
+        }
+        return true
+      }
+      return false
+    },
+    isValidDateValue: function (date) {
+      return (date instanceof Date) && !isNaN(date.valueOf())
     }
   }
+}
 </script>
 
 <style lang="scss">

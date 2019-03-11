@@ -6,47 +6,47 @@
 </template>
 
 <script>
-  import EBarChart from '../types/bar'
-  import { colors } from '../options'
+import EBarChart from '../types/bar'
+import { colors } from '../options'
 
-  export default {
-    components: { EBarChart },
-    props: {
-      height: {
-        type: Number
-      }
-    },
-    data: function() {
-      return {
-        data: {
-          labels: ['Mon', 'Tue', 'Wed'],
-          datasets: [
+export default {
+  components: { EBarChart },
+  props: {
+    height: {
+      type: Number
+    }
+  },
+  data: function () {
+    return {
+      data: {
+        labels: ['Mon', 'Tue', 'Wed'],
+        datasets: [
+          {
+            label: 'Bar',
+            backgroundColor: colors.green.string(),
+            borderColor: '#ffffff',
+            data: [7, 10, 13]
+          }
+        ]
+      },
+      options: {
+        scales: {
+          yAxes: [
             {
-              label: 'Bar',
-              backgroundColor: colors.green.string(),
-              borderColor: '#ffffff',
-              data: [7, 10, 13]
+              ticks: {
+                beginAtZero: true
+              }
+            }
+          ],
+          xAxes: [
+            {
+              categoryPercentage: 0.6,
+              barPercentage: 0.4
             }
           ]
-        },
-        options: {
-          scales: {
-            yAxes: [
-              {
-                ticks: {
-                  beginAtZero: true
-                }
-              }
-            ],
-            xAxes: [
-              {
-                categoryPercentage: 0.6,
-                barPercentage: 0.4,
-              }
-            ]
-          },
         }
       }
     }
   }
+}
 </script>

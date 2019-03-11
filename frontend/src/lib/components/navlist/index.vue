@@ -28,26 +28,26 @@
 </template>
 
 <script>
-  export default {
-    props: {
-      activeBg: {
-        type: Boolean,
-        default: false
-      },
-      activeBold: {
-        type: Boolean,
-        default: false
-      }
+export default {
+  props: {
+    activeBg: {
+      type: Boolean,
+      default: false
     },
-    data: function() {
-      return {
-        classNames: {
-          'e-navlist--active-bg': this.activeBg,
-          'e-navlist--active-bold': this.activeBold
-        }
+    activeBold: {
+      type: Boolean,
+      default: false
+    }
+  },
+  data: function () {
+    return {
+      classNames: {
+        'e-navlist--active-bg': this.activeBg,
+        'e-navlist--active-bold': this.activeBold
       }
     }
   }
+}
 </script>
 
 <style lang="scss">

@@ -3,14 +3,14 @@
 </template>
 
 <script>
-  import EDatepickerRange from '../types/range'
+import EDatepickerRange from '../types/range'
 
-  export default {
-    components: { EDatepickerRange },
-    data: function() {
-      return {
-        dates: []
-      }
+export default {
+  components: { EDatepickerRange },
+  data: function () {
+    return {
+      dates: []
     }
   }
+}
 </script>
