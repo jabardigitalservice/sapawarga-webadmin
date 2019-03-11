@@ -1,0 +1,20 @@
+.custom-file-input {
+  width: 100%;
+}
+
+.custom-control-nameless {
+  min-height: 1rem;
+  padding-left: 1rem;
+  margin-right: 0;
+
+  .custom-control-label {
+    &:after, &:before {
+      left: -1rem;
+    }
+  }
+}
+
+.custom-control .custom-control-label {
+  cursor: pointer;
+  user-select: none;
+}
