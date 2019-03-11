@@ -10,7 +10,7 @@ $paginationParams = [
 ];
 
 return [
-    'frontendURL' => 'http://localhost/frontend/',
+    'frontendURL' => 'http://localhost/',
     'supportEmail' => 'admin@example.com',
     'adminEmail' => 'admin@example.com',
     'jwtSecretCode' => 'someSecretKey',
