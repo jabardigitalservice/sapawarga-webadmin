@@ -4,6 +4,7 @@ import Errors from '@/lib/Errors'
 export default class Form {
   constructor (data) {
     this.originalData = data
+    this.validated = false
 
     for (let key in data) {
       this[key] = data[key]
@@ -84,19 +85,28 @@ export default class Form {
   }
 
   onSuccess (data) { /* eslint-disable-line */
+    this.validated = true
     this.reset()
   }
 
   onError (errors) {
-
+    this.validated = true
     this.errors.record(errors)
+  }
+
+  getInputState (field) {
+    if (this.validated === false) {
+      return null
+    }
+    return this.errors.has(field) === false
   }
 
   reset () {
     for (let key in this.originalData) {
-      this[key] = this.originalData[ key ]
+      this[key] = this.originalData[key]
     }
 
+    this.validated = false
     this.errors.clear()
   }
 }

@@ -10,8 +10,8 @@
               <div class="form-group row">
                 <label class="col-md-3 col-form-label">Username</label>
                 <div class="col-md-9">
-                  <b-input type="text" v-model="form.username" placeholder="Username" />
-                  <b-form-invalid-feedback :state="! form.errors.has('username')">
+                  <b-input type="text" :state="form.getInputState('username')" v-model="form.username" placeholder="Username" />
+                  <b-form-invalid-feedback :state="form.getInputState('username')">
                     {{ form.errors.get('username') }}
                   </b-form-invalid-feedback>
                 </div>
@@ -19,8 +19,8 @@
               <div class="form-group row">
                 <label class="col-md-3 col-form-label">Password</label>
                 <div class="col-md-9">
-                  <b-input type="password" v-model="form.password" placeholder="Password" />
-                  <b-form-invalid-feedback :state="! form.errors.has('password')">
+                  <b-input type="password" :state="form.getInputState('password')" v-model="form.password" placeholder="Password" />
+                  <b-form-invalid-feedback :state="form.getInputState('password')">
                     {{ form.errors.get('password') }}
                   </b-form-invalid-feedback>
                 </div>
