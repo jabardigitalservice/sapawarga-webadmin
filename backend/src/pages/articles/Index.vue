@@ -1,13 +1,32 @@
 <template>
   <layout-default>
-    <e-panel title="Articles">
-      <b-table class="fa-sort-icons table-rounded mt-3 mb-0"
-               :items="items"
-               :fields="fields"
-               responsive
-               bordered>
-      </b-table>
-    </e-panel>
+    <div class="row flex-lg-nowrap">
+      <div class="col">
+        <e-panel title="Articles">
+          <b-table class="fa-sort-icons table-rounded mt-3 mb-0"
+                   :items="items"
+                   :fields="fields"
+                   :busy="loading"
+                   responsive
+                   bordered
+                   show-empty>
+            <template slot="empty">
+              No data.
+            </template>
+          </b-table>
+        </e-panel>
+      </div>
+
+      <div class="col-12 col-lg-3">
+        <div class="card">
+          <div class="card-body">
+            <div class="text-center px-xl-3">
+              <router-link class="btn btn-success btn-block" to="/articles/create">New Article</router-link>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </layout-default>
 </template>
 
