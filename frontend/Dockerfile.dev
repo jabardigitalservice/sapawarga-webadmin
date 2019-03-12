@@ -8,7 +8,10 @@ RUN mkdir /app
 WORKDIR /app
 
 # Install app dependencies
-RUN npm install -g yarn && yarn global add @vue/cli
+RUN npm install -g yarn && \
+	chmod a+rwx /usr/local/lib/node_modules/yarn/bin/yarn* && \
+	chmod a+rwx  /usr/local/bin/yarn* && \
+	yarn global add @vue/cli
 
 # Add configuration files
 COPY image-files/ /
@@ -18,5 +21,5 @@ RUN chmod 700 /usr/local/bin/docker-entrypoint-dev.sh
 RUN apk --update add nginx
 
 # Expose port 80
-EXPOSE 80
+EXPOSE 80 8080
 ENTRYPOINT ["docker-entrypoint-dev.sh"]
