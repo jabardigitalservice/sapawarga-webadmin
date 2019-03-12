@@ -2,26 +2,33 @@
   <layout-default>
     <div class="row flex-lg-nowrap">
       <div class="col">
-        <e-panel title="Create Article">
+        <e-panel title="Edit Article">
           <b-form>
-            <b-form-group label="Brand:">
-              <b-form-input
-                      type="text"
-                      v-model="form.brand"
-                      placeholder="Brand" />
-            </b-form-group>
+            <div class="row">
+              <div class="col">
+                <b-form-group label="Brand:">
+                  <b-form-input
+                          type="text"
+                          v-model="form.brand"
+                          placeholder="Brand" />
+                </b-form-group>
 
-            <b-form-group label="Model:">
-              <b-form-input
-                      type="text"
-                      v-model="form.model"
-                      placeholder="Model" />
-            </b-form-group>
+                <b-form-group label="Model:">
+                  <b-form-input
+                          type="text"
+                          v-model="form.model"
+                          placeholder="Model" />
+                </b-form-group>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col d-flex justify-content-end">
+                <button type="button" class="btn btn-primary" v-promise-btn @click="submit">Submit</button>
+                <button type="button" class="btn btn-light" @click="form.reset()">Reset</button>
 
-            <b-button type="button" variant="primary" v-promise-btn @click="submit">Submit</b-button>
-            <b-button type="button" variant="danger" @click="form.reset()">Reset</b-button>
-
-            <router-link to="/articles" class="btn btn-light">Cancel</router-link>
+                <router-link to="/articles" class="btn btn-light">Cancel</router-link>
+              </div>
+            </div>
           </b-form>
         </e-panel>
       </div>
@@ -54,17 +61,30 @@ export default {
   },
 
   created () {
-    //
+    this.fetchData()
   },
 
   watch: {
-    // '$route': 'fetchData'
+    '$route': 'fetchData'
   },
 
   methods: {
+    fetchData (to) {
+      this.loading = true
+
+      const id = this.$route.params.id
+
+      return articlesService.getById(id)
+        .then(response => Object.assign(this.form, response.data))
+        .catch(error => alert(error))
+        .finally(() => this.loading = false)
+    },
+
     submit () {
-      return this.form.callService(articlesService, 'create')
-        .then(() => alert('Created.'))
+      const id = this.$route.params.id
+
+      return this.form.callService(articlesService.update(id, this.form.data()))
+        .then(() => alert('Updated.'))
         .catch(error => alert(error))
     }
   }

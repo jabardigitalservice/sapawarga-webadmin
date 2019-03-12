@@ -25,6 +25,11 @@ export const routes = [
     meta: { requiresLogin: true, title: 'Articles' }
   },
   {
+    path: '/articles/:id',
+    component: () => import('@/pages/articles/Edit'),
+    meta: { requiresLogin: true, title: 'Articles' }
+  },
+  {
     path: '*',
     component: () => import('@/pages/404'),
     meta: { requiresLogin: false, title: 'Page Not Found' }
