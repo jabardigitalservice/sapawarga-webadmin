@@ -45,25 +45,21 @@ export default class Form {
     return this.submit('delete', url)
   }
 
-  callService (service, action) {
-    const data = this.data()
-
+  callService (servicePromise) {
     this.validated = false
 
     this.errors.clear()
 
     return new Promise((resolve, reject) => {
-      service[action](data)
-        .then(({ data }) => {
-          this.onSuccess(data)
-          resolve(data)
-        })
-        .catch(e => {
-          if (e.status === 422) {
-            this.onError(JSON.parse(e.data.message))
-          }
-          reject(e)
-        })
+      servicePromise.then(({ data }) => {
+        this.onSuccess(data)
+        resolve(data)
+      }).catch(e => {
+        if (e.status === 422) {
+          this.onError(JSON.parse(e.data.message))
+        }
+        reject(e)
+      })
     })
   }
 
@@ -72,7 +68,7 @@ export default class Form {
     const data = this.data()
 
     this.validated = false
-    
+
     this.errors.clear()
 
     return new Promise((resolve, reject) => {

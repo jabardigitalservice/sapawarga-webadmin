@@ -85,7 +85,7 @@ export default {
 
   methods: {
     makeRegister () {
-      return this.form.callService(authService, 'makeRegister')
+      return this.form.callService(authService.makeRegister(this.form.data()))
         .then(() => {
           this.success = true
         })

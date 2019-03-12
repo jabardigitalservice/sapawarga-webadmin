@@ -63,7 +63,7 @@ export default {
 
   methods: {
     makeLogin () {
-      return this.form.callService(authService, 'makeLogin')
+      return this.form.callService(authService.makeLogin(this.form.data()))
         .then(() => this.$router.push('/'))
         .catch(error => {
           if (error.status !== 422) {
