@@ -60,9 +60,8 @@ services:
       - internal
     ports:
       - 3306:3306
-    environment:
-      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
-      - MYSQL_DATABASE=yii2_boilerplate
+    env_file:
+      - .env
 
   memcached:
     container_name: yii2_ngx_memcached
