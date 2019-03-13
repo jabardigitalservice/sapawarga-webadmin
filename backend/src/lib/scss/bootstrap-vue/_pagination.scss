@@ -1,0 +1,24 @@
+ul.b-pagination .page-item .page-link {
+  &:active {
+    color: $pagination-active-color;
+  }
+
+  &:not([disabled]):not(.disabled) {
+    &:focus {
+      box-shadow: 0 0 0 2px rgba(173, 181, 189,.5);
+      outline: 0;
+      z-index: 1;
+    }
+
+    &:active, &.active {
+      background: $pagination-active-bg;
+      border-color: $pagination-active-border-color;
+
+      &:focus {
+        // box-shadow: 0 0 0 2px rgba(173, 181, 189,.5);
+        // outline: 0;
+        // z-index: 1;
+      }
+    }
+  }
+}

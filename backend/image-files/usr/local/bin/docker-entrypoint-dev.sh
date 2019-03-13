@@ -3,5 +3,10 @@
 printf "Starting nginx...\n\n"
 nginx -g "daemon on;"
 
+printf "Yarn install dependencies...\n\n"
+yarn install
+
 printf "Building and watching app...\n\n"
-npm run build -- --watch --poll=1000 --output-path=/srv
+yarn build-dev
+
+printf "Ready to Development..\n\n"

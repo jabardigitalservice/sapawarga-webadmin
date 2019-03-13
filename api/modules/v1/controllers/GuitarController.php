@@ -72,6 +72,11 @@ class GuitarController extends ActiveController
                     'actions' => ['index', 'view', 'create', 'update', 'delete'],
                     'roles' => ['admin', 'manageSettings'],
                 ],
+                [
+                    'allow' => true,
+                    'actions' => ['index', 'view'],
+                    'roles' => ['user'],
+                ],
             ],
         ];
         
