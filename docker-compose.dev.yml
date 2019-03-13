@@ -59,4 +59,4 @@ services:
 
 networks:
   internal:
-    driver: overlay
+    driver: bridge
