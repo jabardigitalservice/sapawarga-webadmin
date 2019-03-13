@@ -18,20 +18,35 @@ class AuthService {
       }).then(response => {
         _setAuthData(response)
 
-        const newResponse = new ResponseWrapper(response, response.data)
-        const userId = newResponse.data.data.id
-
         // 2. Get Current User Profile
-        UsersService.getCurrent().then(response => {
-          $store.commit('auth/SET_CURRENT_USER', {
-            id: userId,
-            username: response.data.username,
-            name: null,
-            email: response.data.email
-          })
+        resolve(this.getCurrent())
+      }).catch(error => reject(new ErrorWrapper(error)))
+    })
+  }
 
+  loginWithExistingAccessToken () {
+    return new Promise((resolve, reject) => {
+      const token = this.getAccessToken()
+
+      if (token) {
+        this.getCurrent().then(response => {
           resolve(new ResponseWrapper(response, response.data))
         }).catch(error => reject(new ErrorWrapper(error)))
+      }
+    })
+  }
+
+  getCurrent () {
+    return new Promise((resolve, reject) => {
+      UsersService.getCurrent().then(response => {
+        $store.commit('auth/SET_CURRENT_USER', {
+          id: response.data.id,
+          username: response.data.username,
+          name: null,
+          email: response.data.email
+        })
+
+        resolve(new ResponseWrapper(response, response.data))
       }).catch(error => reject(new ErrorWrapper(error)))
     })
   }
