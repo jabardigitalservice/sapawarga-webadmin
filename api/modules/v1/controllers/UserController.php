@@ -411,6 +411,7 @@ class UserController extends ActiveController
             $response->setStatusCode(200);
 
             return [
+                'id' => $user->id,
                 'username' => $user->username,
                 'email' => $user->email,
                 'last_login_at' => $user->last_login_at,
