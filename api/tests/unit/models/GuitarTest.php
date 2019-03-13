@@ -48,10 +48,10 @@ class GuitarTest extends \Codeception\Test\Unit
                 // Initialise Guitar model
                 $guitar = new Guitar();
 
-                // Set value for brand
+                // Set value for model
                 $guitar->model = '0970822106';
 
-                // Verify type of brand
+                // Verify type of model
                 $this->assertInternalType('string', $guitar->model);
 
                 // Verify validation succeed
@@ -74,11 +74,11 @@ class GuitarTest extends \Codeception\Test\Unit
                 $guitar->brand = 'fender';
                 $this->assertTrue($guitar->validate());
 
-                // Set username length as 65
+                // Set brand length to 65
                 $guitar->brand = 'iikochepjtqmylfqukssidfnpzwxpzwomyzrexbxnwsrfgqdpgapvlqrhkbcpwcts';
                 // Verify that validation must be failed
                 $this->assertFalse($guitar->validate());
-                // Verify that username validation contains error message
+                // Verify that brand validation contains error message
                 $this->assertTrue($guitar->hasErrors('brand'));
             }
         );
@@ -88,7 +88,7 @@ class GuitarTest extends \Codeception\Test\Unit
             function () {
                 $guitar = new Guitar();
 
-                // Null value for brand
+                // Null value for model
                 // Verify validation succeed
                 $this->assertTrue($guitar->validate());
 
@@ -98,11 +98,11 @@ class GuitarTest extends \Codeception\Test\Unit
                 $guitar->model = '0970822106';
                 $this->assertTrue($guitar->validate());
 
-                // Set username length as 65
+                // Set model length to 65
                 $guitar->model = '86342742093454017352287799413660443241012033687049443015660497983';
                 // Verify that validation must be failed
                 $this->assertFalse($guitar->validate());
-                // Verify that username validation contains error message
+                // Verify that model validation contains error message
                 $this->assertTrue($guitar->hasErrors('model'));
             }
         );
