@@ -4,6 +4,7 @@ namespace tests\models;
 
 use app\models\Guitar;
 use Codeception\Specify;
+use app\tests\unit\fixtures\GuitarFixture;
 
 class GuitarTest extends \Codeception\Test\Unit
 {
@@ -13,6 +14,14 @@ class GuitarTest extends \Codeception\Test\Unit
      * @var \UnitTester
      */
     protected $tester;
+    public function _fixtures()
+    {
+        return [
+            'guitar' => [
+                'class' => GuitarFixture::className()
+            ]
+        ];
+    }
 
     protected function _before()
     {
