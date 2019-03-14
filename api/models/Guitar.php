@@ -28,6 +28,8 @@ class Guitar extends \yii\db\ActiveRecord
     {
         return [
             [['brand', 'model'], 'string', 'max' => 64],
+            [['brand', 'model'], 'trim'],
+            [['brand', 'model'], 'required'],
         ];
     }
 
