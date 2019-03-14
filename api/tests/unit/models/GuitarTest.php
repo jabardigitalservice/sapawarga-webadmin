@@ -122,4 +122,19 @@ class GuitarTest extends \Codeception\Test\Unit
         \expect_that(Guitar::find()->all());
     }
 
+    public function testCreateNewGuitar()
+    {
+        $guitar_brand = 'Jackson';
+        $guitar_model = 'ESP MII-NT';
+
+        $guitar = new Guitar();
+        $guitar->brand = $guitar_brand;
+        $guitar->model = $guitar_model;
+        $this->tester->assertEquals(true, $guitar->save());
+        $this->tester->assertNotNull($guitar->brand);
+        $this->tester->assertEquals($guitar_brand, $guitar->brand);
+        $this->tester->assertNotNull($guitar->model);
+        $this->tester->assertEquals($guitar_model, $guitar->model);
+        $this->tester->assertNotNull($guitar->id);
+    }
 }
