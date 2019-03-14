@@ -116,4 +116,10 @@ class GuitarTest extends \Codeception\Test\Unit
             }
         );
     }
+
+    public function testFindAllGuitar()
+    {
+        \expect_that(Guitar::find()->all());
+    }
+
 }
