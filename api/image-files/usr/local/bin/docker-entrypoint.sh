@@ -11,6 +11,9 @@ do
     echo "Waiting for database connection ..."
 done
 
+printf "Composer install dependencies...\n\n"
+/usr/local/bin/composer install --prefer-dist
+
 printf "Upgrading database...\n\n"
 ./yii migrate --migrationPath=@yii/rbac/migrations --interactive=0
 ./yii migrate/up --interactive=0
