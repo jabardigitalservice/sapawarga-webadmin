@@ -32,7 +32,6 @@ services:
       - .env
     volumes:
       - ./api:/srv
-      - /srv/vendor
 
   backend:
     build:
