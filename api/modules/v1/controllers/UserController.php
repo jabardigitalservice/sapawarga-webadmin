@@ -264,7 +264,10 @@ class UserController extends ActiveController
             return $responseData;
         } else {
             // Validation error
-            throw new HttpException(422, json_encode($model->errors));
+            $response = \Yii::$app->getResponse();
+            $response->setStatusCode(422);
+
+            return $model->getErrors();
         }
     }
 
@@ -292,7 +295,10 @@ class UserController extends ActiveController
             return $responseData;
         } else {
             // Validation error
-            throw new HttpException(422, json_encode($model->errors));
+            $response = \Yii::$app->getResponse();
+            $response->setStatusCode(422);
+
+            return $model->getErrors();
         }
     }
 

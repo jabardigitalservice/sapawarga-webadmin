@@ -9,15 +9,25 @@
                 <b-form-group label="Brand:">
                   <b-form-input
                           type="text"
+                          :state="form.getInputState('brand')"
                           v-model="form.brand"
                           placeholder="Brand" />
+
+                  <b-form-invalid-feedback :state="form.getInputState('brand')">
+                    {{ form.errors.get('brand') }}
+                  </b-form-invalid-feedback>
                 </b-form-group>
 
                 <b-form-group label="Model:">
                   <b-form-input
                           type="text"
+                          :state="form.getInputState('model')"
                           v-model="form.model"
                           placeholder="Model" />
+
+                  <b-form-invalid-feedback :state="form.getInputState('model')">
+                    {{ form.errors.get('model') }}
+                  </b-form-invalid-feedback>
                 </b-form-group>
               </div>
             </div>

@@ -56,7 +56,7 @@ export default class Form {
         resolve(data)
       }).catch(e => {
         if (e.status === 422) {
-          this.onError(JSON.parse(e.data.message))
+          this.onError(e.data)
         }
         reject(e)
       })
@@ -79,7 +79,7 @@ export default class Form {
         })
         .catch(e => {
           if (e.status === 422) {
-            this.onError(JSON.parse(e.data.message))
+            this.onError(e.data)
           }
           reject(e)
         })
