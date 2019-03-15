@@ -16,7 +16,6 @@ use Yii;
 use yii\filters\AccessControl;
 use yii\filters\auth\CompositeAuth;
 use yii\helpers\Url;
-use yii\rest\ActiveController;
 use yii\web\BadRequestHttpException;
 use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
@@ -149,7 +148,10 @@ class UserController extends ActiveController
             $response->getHeaders()->set('Location', Url::toRoute([$id], true));
         } else {
             // Validation error
-            throw new HttpException(422, json_encode($model->errors));
+            $response = \Yii::$app->getResponse();
+            $response->setStatusCode(422);
+
+            return $model->getErrors();
         }
 
         return $model;
@@ -175,7 +177,10 @@ class UserController extends ActiveController
             $response->setStatusCode(200);
         } else {
             // Validation error
-            throw new HttpException(422, json_encode($model->errors));
+            $response = \Yii::$app->getResponse();
+            $response->setStatusCode(422);
+
+            return $model->getErrors();
         }
 
         return $model;
@@ -264,7 +269,10 @@ class UserController extends ActiveController
             return $responseData;
         } else {
             // Validation error
-            throw new HttpException(422, json_encode($model->errors));
+            $response = \Yii::$app->getResponse();
+            $response->setStatusCode(422);
+
+            return $model->getErrors();
         }
     }
 
@@ -292,7 +300,10 @@ class UserController extends ActiveController
             return $responseData;
         } else {
             // Validation error
-            throw new HttpException(422, json_encode($model->errors));
+            $response = \Yii::$app->getResponse();
+            $response->setStatusCode(422);
+
+            return $model->getErrors();
         }
     }
 
@@ -320,7 +331,10 @@ class UserController extends ActiveController
             return $responseData;
         } else {
             // Validation error
-            throw new HttpException(422, json_encode($model->errors));
+            $response = \Yii::$app->getResponse();
+            $response->setStatusCode(422);
+
+            return $model->getErrors();
         }
     }
 
@@ -344,7 +358,10 @@ class UserController extends ActiveController
             return $responseData;
         } else {
             // Validation error
-            throw new HttpException(422, json_encode($model->errors));
+            $response = \Yii::$app->getResponse();
+            $response->setStatusCode(422);
+
+            return $model->getErrors();
         }
     }
 
@@ -368,7 +385,10 @@ class UserController extends ActiveController
             return $responseData;
         } else {
             // Validation error
-            throw new HttpException(422, json_encode($model->errors));
+            $response = \Yii::$app->getResponse();
+            $response->setStatusCode(422);
+
+            return $model->getErrors();
         }
     }
 
@@ -392,7 +412,10 @@ class UserController extends ActiveController
             return $responseData;
         } else {
             // Validation error
-            throw new HttpException(422, json_encode($model->errors));
+            $response = \Yii::$app->getResponse();
+            $response->setStatusCode(422);
+
+            return $model->getErrors();
         }
     }
 
@@ -448,7 +471,10 @@ class UserController extends ActiveController
                 return $responseData;
             } else {
                 // Validation error
-                throw new HttpException(422, json_encode($model->errors));
+                $response = \Yii::$app->getResponse();
+                $response->setStatusCode(422);
+
+                return $model->getErrors();
             }
         } else {
             // Validation error
