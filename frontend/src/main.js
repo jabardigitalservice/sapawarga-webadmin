@@ -10,6 +10,9 @@ import VueMoment from 'vue-moment'
 import VuePromiseBtn from 'vue-promise-btn'
 import 'vue-promise-btn/dist/vue-promise-btn.css'
 
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+
 setGlobalHelpers()
 Vue.config.productionTip = false
 
