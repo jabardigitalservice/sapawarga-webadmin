@@ -7,6 +7,8 @@ import {
   AlertController,
   LoadingController
 } from '@ionic/angular';
+import { AuthService } from './../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +24,9 @@ export class LoginPage implements OnInit {
     public toastCtrl: ToastController,
     public alertCtrl: AlertController,
     public loadingCtrl: LoadingController,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private auth: AuthService,
+    public router: Router
   ) {}
 
   ionViewWillEnter() {
@@ -34,6 +38,8 @@ export class LoginPage implements OnInit {
       username: [null, Validators.compose([Validators.required])],
       password: [null, Validators.compose([Validators.required])]
     });
+
+    // console.log(this.auth.isAuthenticated());
   }
 
   async forgotPass() {
@@ -82,6 +88,29 @@ export class LoginPage implements OnInit {
     await alert.present();
   }
 
+  async login() {
+    // console.log('sadsa');
+    // this.auth.login('asd').subscribe(result => {
+    //   console.log(result);``
+    // });
+    await this.auth.login(this.onLoginForm.value).subscribe(
+      res => {
+        if (res.success === true) {
+          // console.log(res.data.access_token);
+          this.auth.saveToken(res.data.access_token);
+          this.navCtrl.navigateRoot('/home-results');
+        } else {
+          console.log('login gagal');
+        }
+      },
+      err => {
+        console.log(err);
+        this.showToast('Login', 'Login gagal');
+      }
+    );
+    ``;
+  }
+
   // // //
   goToRegister() {
     this.navCtrl.navigateRoot('/register');
@@ -89,5 +118,13 @@ export class LoginPage implements OnInit {
 
   goToHome() {
     this.navCtrl.navigateRoot('/home-results');
+  }
+
+  async showToast(title: string, msg: string) {
+    const toast = await this.toastCtrl.create({
+      message: msg,
+      duration: 2000
+    });
+    toast.present();
   }
 }

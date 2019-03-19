@@ -2,11 +2,7 @@
   <div class="theme-bg"></div>
   <div class="auth-content">
     <!-- Logo -->
-    <div
-      padding-horizontal
-      text-center
-      class="animated fadeInDown ion-padding-top"
-    >
+    <div padding-horizontal text-center class="animated fadeInDown ion-padding-top">
       <div class="logo"></div>
       <h4 no-margin>
         <ion-text color="light" class="fw700">
@@ -16,26 +12,18 @@
     </div>
 
     <!-- Login form -->
-    <form [formGroup]="onLoginForm" class="list-form">
+    <form [formGroup]="onLoginForm" autocomplete="off" class="list-form">
       <ion-item no-padding class="animated fadeInUp">
         <ion-label position="floating">
           <ion-icon name="person" item-start></ion-icon>
           Nama Pengguna
         </ion-label>
-        <ion-input
-          color="secondary"
-          type="text"
-          formControlName="username"
-        ></ion-input>
+        <ion-input color="secondary" type="text" formControlName="username"></ion-input>
       </ion-item>
-      <p
-        ion-text
-        class="text08"
-        *ngIf="
+      <p ion-text class="text08" *ngIf="
           onLoginForm.get('username').touched &&
           onLoginForm.get('username').hasError('required')
-        "
-      >
+        ">
         <ion-text color="warning">
           Nama Pengguna harus diisi
         </ion-text>
@@ -46,21 +34,12 @@
           <ion-icon name="lock" item-start></ion-icon>
           Kata Sandi
         </ion-label>
-        <ion-input
-          color="secondary"
-          type="password"
-          formControlName="password"
-        ></ion-input>
+        <ion-input color="secondary" type="password" formControlName="password"></ion-input>
       </ion-item>
-      <p
-        ion-text
-        color="warning"
-        class="text08"
-        *ngIf="
+      <p ion-text color="warning" class="text08" *ngIf="
           onLoginForm.get('password').touched &&
           onLoginForm.get('password').hasError('required')
-        "
-      >
+        ">
         <ion-text color="warning">
           Kata Sandi harus diisi
         </ion-text>
@@ -73,18 +52,9 @@
       </ion-text>
     </p> -->
 
-    <div>
-      <ion-button
-        icon-left
-        size="medium"
-        expand="full"
-        shape="round"
-        color="dark"
-        (click)="goToHome()"
-        [disabled]="!onLoginForm.valid"
-        tappable
-        class="ion-margin-top"
-      >
+    <div class="ion-text-end">
+      <ion-button icon-left size="small" shape="round" color="dark" [disabled]="!onLoginForm.valid" tappable class="ion-margin-top"
+        (click)="login()" end>
         <ion-icon name="log-in"></ion-icon>
         Masuk
       </ion-button>
@@ -126,3 +96,9 @@
     </div> -->
   </div>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar color="dark">
+    <ion-title>Footer</ion-title>
+  </ion-toolbar>
+</ion-footer>
