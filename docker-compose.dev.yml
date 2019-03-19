@@ -3,7 +3,6 @@ services:
   nginx:
     build:
       context: ./nginx
-    container_name: yii2_ngx_nginx
     image: jdsteam/yii2_ngx_nginx:1.0
     networks:
       - internal
@@ -22,7 +21,6 @@ services:
   api:
     build:
       context: ./api
-    container_name: yii2_ngx_api
     image: jdsteam/yii2_ngx_api:1.0
     networks:
       - internal
@@ -37,7 +35,6 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile.dev
-    container_name: yii2_ngx_backend
     image: jdsteam/yii2_ngx_backend:1.0
     depends_on:
       - api
@@ -51,7 +48,6 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile.dev
-    container_name: yii2_ngx_frontend
     image: jdsteam/yii2_ngx_frontend:1.0
     depends_on:
       - api
@@ -63,7 +59,6 @@ services:
 
   database:
     image: mysql:5.7
-    container_name: yii2_ngx_database
     networks:
       - internal
     ports:
@@ -72,7 +67,6 @@ services:
       - .env
 
   memcached:
-    container_name: yii2_ngx_memcached
     image: memcached:latest
     networks:
       - internal
