@@ -105,7 +105,7 @@ export class LoginPage implements OnInit {
       },
       err => {
         console.log(err);
-        this.showToast('Login', 'Login gagal');
+        this.showToast('Login', 'Login1 gagal');
       }
     );
     ``;
