@@ -2,7 +2,6 @@
 
 namespace app\models;
 
-use creocoder\nestedsets\NestedSetsBehavior;
 use Yii;
 
 /**
@@ -22,15 +21,6 @@ class City extends \yii\db\ActiveRecord
         return 'cities';
     }
 
-    public function behaviors()
-    {
-        return [
-            'tree' => [
-                'class' => NestedSetsBehavior::className(),
-            ],
-        ];
-    }
-
     /**
      * {@inheritdoc}
      */
@@ -39,7 +29,7 @@ class City extends \yii\db\ActiveRecord
         return [
             ['name', 'string', 'max' => 64],
             ['name', 'trim'],
-            ['name', 'required'],
+            [['parent_id', 'depth', 'name'], 'required'],
         ];
     }
 

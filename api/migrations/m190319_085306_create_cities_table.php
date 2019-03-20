@@ -13,11 +13,12 @@ class m190319_085306_create_cities_table extends Migration
     public function safeUp()
     {
         $this->createTable('cities', [
-            'id' => $this->primaryKey(),
-            'lft' => $this->integer()->notNull(),
-            'rgt' => $this->integer()->notNull(),
-            'depth' => $this->integer()->notNull(),
-            'name' => $this->string()->null(),
+            'id'        => $this->primaryKey(),
+            'parent_id' => $this->integer()->null(),
+            'lft'       => $this->integer()->null(),
+            'rgt'       => $this->integer()->null(),
+            'depth'     => $this->integer()->null(),
+            'name'      => $this->string()->null(),
         ]);
     }
 
