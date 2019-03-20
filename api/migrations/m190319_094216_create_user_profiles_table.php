@@ -1,11 +1,11 @@
 <?php
 
-use yii\db\Migration;
+use app\helpers\MigrationHelper;
 
 /**
  * Class m190319_094216_add_user_profile_table
  */
-class m190319_094216_create_user_profiles_table extends Migration
+class m190319_094216_create_user_profiles_table extends MigrationHelper
 {
     /**
      * {@inheritdoc}
@@ -22,6 +22,8 @@ class m190319_094216_create_user_profiles_table extends Migration
             'kec_id' => $this->integer()->notNull(),
             'kokab_id' => $this->integer()->notNull(),
         ]);
+
+        $this->timestamps('user_profiles');
     }
 
     /**
