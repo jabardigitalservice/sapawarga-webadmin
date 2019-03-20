@@ -1,4 +1,4 @@
-<ion-content padding class="animated fadeIn login auth-page" >
+<ion-content padding class="animated fadeIn login auth-page" color="light">
   <div class="theme-bg"></div>
   <div class="auth-content">
     <!-- Logo -->
@@ -30,11 +30,11 @@
       </p>
 
       <ion-item no-padding class="animated fadeInUp">
-        <ion-label position="floating" color="danger">
+        <ion-label position="floating" color="dark">
           <ion-icon name="lock" item-start color="dark"></ion-icon>
           Password
         </ion-label>
-        <ion-input color="secondary" type="password" formControlName="password"></ion-input>
+        <ion-input class="text-dark" color="dark" type="password" formControlName="password"></ion-input>
       </ion-item>
       <p ion-text color="warning" class="text08" *ngIf="
           onLoginForm.get('password').touched &&
@@ -45,6 +45,7 @@
         </ion-text>
       </p>
     </form>
+
 
     <!-- <p text-right tappable (click)="forgotPass()" class="paz">
       <ion-text color="light">
