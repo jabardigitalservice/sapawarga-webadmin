@@ -18,9 +18,9 @@ class m190319_094216_create_user_profiles_table extends Migration
             'phone' => $this->string(),
             'address' => $this->string(),
             'rw' => $this->string()->notNull(),
-            'kel_id' => $this->string()->notNull(),
-            'kec_id' => $this->string()->notNull(),
-            'kokab_id' => $this->string()->notNull(),
+            'kel_id' => $this->integer()->notNull(),
+            'kec_id' => $this->integer()->notNull(),
+            'kokab_id' => $this->integer()->notNull(),
         ]);
     }
 
@@ -29,6 +29,6 @@ class m190319_094216_create_user_profiles_table extends Migration
      */
     public function safeDown()
     {
-        $this->dropTable('user_profile');
+        $this->dropTable('user_profiles');
     }
 }
