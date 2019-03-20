@@ -10,6 +10,14 @@
     z-index: 10;
 }
 
-ion-item {
-    color: black;
+ion-label {
+    color: #110A3B !important;
 }
+
+ion-footer p {
+    text-align: center;
+    padding: 0; 
+    margin: 5px;
+    font-size: 12px;
+}
+
