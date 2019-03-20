@@ -9,9 +9,10 @@
     width: 100%;
     border-radius: 0;
     background-color: #fff;
+
     ion-card-content {
       padding: 32px;
-      background-color: var(--ion-color-primary);
+      background-color: var(--ion-color-light);
       color: #fff;
       text-align: center;
 
@@ -21,7 +22,7 @@
         border-radius: 50%;
         border: solid 4px #fff;
         display: inline;
-        box-shadow: 0 0 28px rgba(255,255,255, .65);
+        box-shadow: 0 0 28px rgba(255, 255, 255, .65);
       }
 
       h1 {

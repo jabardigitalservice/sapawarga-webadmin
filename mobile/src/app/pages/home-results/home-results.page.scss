@@ -5,7 +5,7 @@
 
     ion-item {
         border-radius: 0;
-        border-bottom: 1px dotted var(--ion-color-medium);
+        border-bottom: 1px solid var(--ion-color-medium);
     }
 
     ion-card {
@@ -13,4 +13,15 @@
             border-radius: 0;
         }
     }
+}
+
+.logo-app {
+    width: 50px;
+    height: 40px;
+}
+
+.label-menu {
+    display: block;
+    font-size: 13px;
+    margin-bottom: 10px;
 }

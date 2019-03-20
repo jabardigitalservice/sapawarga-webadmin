@@ -5,13 +5,15 @@ import {
   MenuController,
   ToastController,
   PopoverController,
-  ModalController } from '@ionic/angular';
+  ModalController
+} from '@ionic/angular';
 
 // Modals
 import { SearchFilterPage } from '../../pages/modal/search-filter/search-filter.page';
 import { ImagePage } from './../modal/image/image.page';
 // Call notifications test by Popover and Custom Component.
 import { NotificationsComponent } from './../../components/notifications/notifications.component';
+import { Pages } from 'src/app/interfaces/pages';
 
 @Component({
   selector: 'app-home-results',
@@ -19,9 +21,11 @@ import { NotificationsComponent } from './../../components/notifications/notific
   styleUrls: ['./home-results.page.scss']
 })
 export class HomeResultsPage {
+  public appPages: Array<Pages>;
   searchKey = '';
   yourLocation = '123 Test Street';
-  themeCover = 'assets/img/ionic4-Start-Theme-cover.jpg';
+  themeCover = 'assets/img/bg-home.jpg';
+  logoApp = 'assets/icon/logo.png';
 
   constructor(
     public navCtrl: NavController,
@@ -31,7 +35,48 @@ export class HomeResultsPage {
     public modalCtrl: ModalController,
     public toastCtrl: ToastController
   ) {
-
+    this.appPages = [
+      {
+        title: 'E-samsat',
+        url: '',
+        icon: 'assets/icon/demo.png'
+      },
+      {
+        title: 'Perizinan',
+        url: '',
+        icon: 'assets/icon/demo.png'
+      },
+      {
+        title: 'Info harga',
+        url: '',
+        icon: 'assets/icon/demo.png'
+      },
+      {
+        title: 'Info lelang',
+        url: '',
+        icon: 'assets/icon/demo.png'
+      },
+      {
+        title: 'Survey',
+        url: '',
+        icon: 'assets/icon/demo.png'
+      },
+      {
+        title: 'Polling',
+        url: '',
+        icon: 'assets/icon/demo.png'
+      },
+      {
+        title: 'Nomor penting',
+        url: '',
+        icon: 'assets/icon/demo.png'
+      },
+      {
+        title: 'Administrasi',
+        url: '',
+        icon: 'assets/icon/demo.png'
+      }
+    ];
   }
 
   ionViewWillEnter() {
@@ -51,7 +96,7 @@ export class HomeResultsPage {
           name: 'location',
           placeholder: 'Enter your new Location',
           type: 'text'
-        },
+        }
       ],
       buttons: [
         {
@@ -62,7 +107,7 @@ export class HomeResultsPage {
         },
         {
           text: 'Change',
-          handler: async (data) => {
+          handler: async data => {
             console.log('Change clicked', data);
             this.yourLocation = data.location;
             const toast = await this.toastCtrl.create({
@@ -81,7 +126,7 @@ export class HomeResultsPage {
     changeLocation.present();
   }
 
-  async searchFilter () {
+  async searchFilter() {
     const modal = await this.modalCtrl.create({
       component: SearchFilterPage
     });
@@ -105,5 +150,4 @@ export class HomeResultsPage {
     });
     return await popover.present();
   }
-
 }

@@ -57,9 +57,9 @@ export class AppComponent {
         this.authService.authenticationState.subscribe(state => {
           console.log(`login ${state}`);
           if (state) {
-            this.navCtrl.navigateRoot('/home-results');
-          } else {
             this.navCtrl.navigateRoot('/');
+          } else {
+            this.navCtrl.navigateRoot('/login');
           }
         });
       })
