@@ -34,7 +34,7 @@ export class AuthService {
 
   login(data): Observable<any> {
     return this.http
-      .post(`${environment.API_URL}user/login`, { LoginForm: data })
+      .post(`${environment.API_URL}/user/login`, { LoginForm: data })
       .pipe(catchError(this.handleError));
   }
 

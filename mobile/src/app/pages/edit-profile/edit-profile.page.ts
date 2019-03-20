@@ -1,21 +1,33 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, LoadingController, ToastController } from '@ionic/angular';
-
+import {
+  NavController,
+  LoadingController,
+  ToastController
+} from '@ionic/angular';
+import { ProfileService } from 'src/app/services/profile.service';
 
 @Component({
   selector: 'app-edit-profile',
   templateUrl: './edit-profile.page.html',
-  styleUrls: ['./edit-profile.page.scss'],
+  styleUrls: ['./edit-profile.page.scss']
 })
 export class EditProfilePage implements OnInit {
-
   constructor(
     public navCtrl: NavController,
     public loadingCtrl: LoadingController,
-    public toastCtrl: ToastController
-    ) { }
+    public toastCtrl: ToastController,
+    private profileService: ProfileService
+  ) {}
 
   ngOnInit() {
+    this.profileService.getProfile().subscribe(
+      res => {
+        console.log(res);
+      },
+      err => {
+        console.log(err);
+      }
+    );
   }
 
   async sendData() {
@@ -37,5 +49,4 @@ export class EditProfilePage implements OnInit {
       this.navCtrl.navigateForward('/home-results');
     });
   }
-
 }

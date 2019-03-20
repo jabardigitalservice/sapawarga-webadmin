@@ -10,12 +10,12 @@
 <ion-content class="profile">
   <ion-card no-margin>
     <ion-card-content class="bg-profile">
-      <img src="assets/img/avatar.jpeg">
-      <h1 class="fw500">João Firmino</h1>
-      <h2 color="light" margin-bottom>Customer</h2>
+      <img src="assets/img/avatar.jpg">
+      <h1 class="fw500">Captain Marvel</h1>
+      <!-- <h2 color="light" margin-bottom>Customer</h2> -->
       <ion-button icon-left color="secondary">
         <ion-icon name="photos"></ion-icon>
-        Edit / Add Avatar
+        Ganti Foto
       </ion-button>
     </ion-card-content>
 
@@ -25,52 +25,52 @@
 
           <ion-list margin-bottom>
             <ion-list-header color="light">
-              <ion-label class="fw700">Form</ion-label>
+              <ion-label class="fw700">Informasi</ion-label>
             </ion-list-header>
 
             <ion-item>
-              <ion-label color="dark" position="stacked">Full Name:</ion-label>
-              <ion-input inputmode="text" placeholder="Ex..: Joe Doe" value="João Firmino"></ion-input>
+              <ion-label color="dark" position="stacked">Nama:</ion-label>
+              <ion-input inputmode="text" placeholder="Masukan nama anda" value="Captain Marvel"></ion-input>
             </ion-item>
 
             <ion-item>
               <ion-label color="dark" position="stacked">Email:</ion-label>
-              <ion-input inputmode="email" placeholder="Ex.: joe@doe.com" value="firminoata@gmail.com"></ion-input>
+              <ion-input inputmode="email" placeholder="Masukan email anda" value="firminoata@gmail.com"></ion-input>
             </ion-item>
 
             <ion-item>
-              <ion-label color="dark" position="stacked">Address:</ion-label>
-              <ion-input inputmode="text" placeholder="Ex.: Abey Road 5"></ion-input>
+              <ion-label color="dark" position="stacked">Telp:</ion-label>
+              <ion-input inputmode="tel" placeholder="Masukan nomor telepon anda"></ion-input>
             </ion-item>
 
             <ion-item>
-              <ion-label color="dark">City</ion-label>
-              <ion-select>
-                <ion-select-option value="nes">New York</ion-select-option>
-                <ion-select-option value="n64">Los Angeles</ion-select-option>
-                <ion-select-option value="ps">London</ion-select-option>
-                <ion-select-option value="genesis">Paris</ion-select-option>
-                <ion-select-option value="saturn">São Paulo</ion-select-option>
-                <ion-select-option value="snes">Tokyo</ion-select-option>
-                <ion-select-option value="snes">New Delhi</ion-select-option>
-              </ion-select>
+              <ion-label color="dark" position="stacked">Alamat:</ion-label>
+              <ion-input inputmode="text" placeholder="Masukan alamat anda"></ion-input>
             </ion-item>
 
             <ion-item>
-              <ion-label color="dark">State</ion-label>
-              <ion-select>
-                <ion-select-option value="nes">NY</ion-select-option>
-                <ion-select-option value="n64">CA</ion-select-option>
-                <ion-select-option value="ps">Greater London</ion-select-option>
-                <ion-select-option value="genesis">Paris</ion-select-option>
-                <ion-select-option value="saturn">SP</ion-select-option>
-                <ion-select-option value="snes">Kantō</ion-select-option>
-                <ion-select-option value="snes">Delhi</ion-select-option>
-              </ion-select>
+              <ion-label color="dark" position="stacked">Rw:</ion-label>
+              <ion-input inputmode="text" placeholder="Masukan Rw"></ion-input>
             </ion-item>
+
+            <ion-item>
+              <ion-label color="dark" position="stacked">Kelurahan:</ion-label>
+              <ion-input inputmode="text" placeholder="Masukan Kelurahan"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label color="dark" position="stacked">Kecamatan:</ion-label>
+              <ion-input inputmode="text" placeholder="Masukan kecamatan"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label color="dark" position="stacked">Kab/Kota:</ion-label>
+              <ion-input inputmode="text" placeholder="Masukan Kab/Kota"></ion-input>
+            </ion-item>
+
           </ion-list>
 
-          <ion-list>
+          <!-- <ion-list>
             <ion-radio-group>
               <ion-list-header color="light">
                 <ion-label class="fw700">User Type</ion-label>
@@ -91,20 +91,13 @@
               <ion-label class="text-1x">Checkbox test</ion-label>
               <ion-checkbox></ion-checkbox>
             </ion-item>
-          </ion-list>
+          </ion-list> -->
 
         </ion-col>
       </ion-row>
     </ion-grid>
 
-    <ion-button size="large" expand="full" color="dark" (click)="sendData()" no-margin>Edit</ion-button>
+    <ion-button size="medium" expand="full" color="dark" (click)="sendData()" class="ion-margin">Simpan
+      perubahan</ion-button>
   </ion-card>
-
-  <div padding>
-    <ion-text color="dark" no-margin>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum odio placeat incidunt nesciunt atque ratione
-      quisquam, fugit
-      omnis maxime adipisci excepturi dignissimos aliquam asperiores itaque unde sequi? Minus, quia, dolore?
-    </ion-text>
-  </div>
 </ion-content>

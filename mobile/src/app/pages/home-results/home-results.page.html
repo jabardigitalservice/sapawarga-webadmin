@@ -5,7 +5,7 @@
       <ion-img [src]="logoApp" class="logo-app"></ion-img>
     </ion-buttons>
     <ion-searchbar placeholder="cari" [(ngModel)]="searchKey"></ion-searchbar>
-    <ion-buttons slot="end">
+    <!-- <ion-buttons slot="end">
       <ion-button size="small" shape="round" color="dark" (click)="notifications()">
         <ion-icon name="mail-open"></ion-icon>
       </ion-button>
@@ -15,12 +15,12 @@
         <ion-icon name="notifications"></ion-icon>
         <ion-badge color="dark" slot="end">2</ion-badge>
       </ion-button>
-    </ion-buttons>
+    </ion-buttons> -->
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-card class="bg-white">
+  <ion-card class="bg-white ion-margin-top">
     <ion-img [src]="themeCover"></ion-img>
     <!-- <ion-button expand="full" color="dark" (click)="presentImage(themeCover)" no-margin>
       Modal 1: Modal Image
@@ -56,7 +56,7 @@
     </ion-label>
   </ion-item>
 
-  <ion-row text-center small class="text-dark ion-margin-top">
+  <ion-row text-center small class="text-dark ion-margin-top" padding>
     <ion-col size="3" class="mt-1" *ngFor="let page of appPages">
       <img class="icon-img" [src]="page.icon" alt="icon" />
       <ion-label class="label-menu" color="dark">{{ page.title }}</ion-label>

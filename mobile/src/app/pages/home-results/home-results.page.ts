@@ -75,6 +75,16 @@ export class HomeResultsPage {
         title: 'Administrasi',
         url: '',
         icon: 'assets/icon/demo.png'
+      },
+      {
+        title: 'Lapor',
+        url: '',
+        icon: 'assets/icon/demo.png'
+      },
+      {
+        title: 'Aspirasi',
+        url: '',
+        icon: 'assets/icon/demo.png'
       }
     ];
   }
