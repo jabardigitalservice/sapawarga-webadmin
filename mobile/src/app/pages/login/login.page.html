@@ -16,7 +16,7 @@
       <ion-item no-padding class="animated fadeInUp">
         <ion-label position="floating" id="username">
           <ion-icon name="person" item-start color="dark"></ion-icon>
-          Username
+          Nama Pengguna
         </ion-label>
         <ion-input color="dark" type="text" formControlName="username"></ion-input>
       </ion-item>
@@ -25,33 +25,35 @@
           onLoginForm.get('username').hasError('required')
         ">
         <ion-text color="danger">
-          Username harus diisi
+          Nama Pengguna harus diisi
         </ion-text>
       </p>
 
       <ion-item no-padding class="animated fadeInUp">
-        <ion-label position="floating" color="dark">
+        <ion-label position="floating" color="dark" stacked>
           <ion-icon name="lock" item-start color="dark"></ion-icon>
-          Password
-        </ion-label>
-        <ion-input class="text-dark" color="dark" type="password" formControlName="password"></ion-input>
+          Kata Sandi
+        </ion-label> 
+        <ion-input type="{{type}}" class="text-dark" color="dark"  formControlName="password"></ion-input>
+        <ion-icon *ngIf="!passwordShown"  color ="medium" (click)="showPassword()" name="eye" slot="end"></ion-icon>
+        <ion-icon *ngIf="passwordShown"  color="dark"   (click)="showPassword()" name="eye" slot="end"></ion-icon>
       </ion-item>
       <p ion-text color="warning" class="text08" *ngIf="
           onLoginForm.get('password').touched &&
           onLoginForm.get('password').hasError('required')
         ">
         <ion-text color="danger">
-          Password harus diisi
+          Kata Sandi harus diisi
         </ion-text>
       </p>
     </form>
 
 
-    <!-- <p text-right tappable (click)="forgotPass()" class="paz">
-      <ion-text color="light">
-        <strong>Forgot Pass?</strong>
+    <p text-right tappable (click)="forgotPass()" class="paz">
+      <ion-text color="dark">
+        <strong>Lupa Kata Sandi?</strong>
       </ion-text>
-    </p> -->
+    </p>
 
     <div class="ion-text-end">
       <ion-button icon-left size="small" shape="round" color="dark" [disabled]="!onLoginForm.valid" tappable class="ion-margin-top"
