@@ -13,7 +13,7 @@ use yii\web\NotFoundHttpException;
 use yii\web\ServerErrorHttpException;
 
 /**
- * GuitarController implements the CRUD actions for UserProfile model.
+ * UserProfileController implements the CRUD actions for UserProfile model.
  */
 class UserProfileController extends ActiveController
 {
@@ -33,10 +33,12 @@ class UserProfileController extends ActiveController
         $behaviors['verbs'] = [
             'class' => \yii\filters\VerbFilter::className(),
             'actions' => [
+                'index' => ['get'],
                 'view' => ['get'],
                 'create' => ['post'],
                 'update' => ['put'],
                 'delete' => ['delete'],
+                'public' => ['get'],
             ],
         ];
 
@@ -58,6 +60,24 @@ class UserProfileController extends ActiveController
         $behaviors['authenticator'] = $auth;
         // avoid authentication on CORS-pre-flight requests (HTTP OPTIONS method)
         $behaviors['authenticator']['except'] = ['options', 'public'];
+
+        // setup access
+        $behaviors['access'] = [
+            'class' => AccessControl::className(),
+            'only' => ['index', 'view', 'create', 'update', 'delete'], //only be applied to
+            'rules' => [
+                [
+                    'allow' => true,
+                    'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                    'roles' => ['admin', 'manageSettings'],
+                ],
+                [
+                    'allow' => true,
+                    'actions' => ['index', 'view'],
+                    'roles' => ['user'],
+                ],
+            ],
+        ];
 
         return $behaviors;
     }
