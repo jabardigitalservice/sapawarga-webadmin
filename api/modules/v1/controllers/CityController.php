@@ -70,7 +70,12 @@ class CityController extends ActiveController
                     'allow' => true,
                     'actions' => ['index', 'view', 'create', 'update', 'delete'],
                     'roles' => ['admin', 'manageSettings'],
-                ]
+                ],
+                [
+                    'allow' => true,
+                    'actions' => ['index', 'view'],
+                    'roles' => ['user'],
+                ],
             ],
         ];
 

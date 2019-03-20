@@ -5,7 +5,7 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "guitar".
+ * This is the model class for table "cities".
  *
  * @property int $id
  * @property string $brand
