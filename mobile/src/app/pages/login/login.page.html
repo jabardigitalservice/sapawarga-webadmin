@@ -30,11 +30,13 @@
       </p>
 
       <ion-item no-padding class="animated fadeInUp">
-        <ion-label position="floating" color="dark">
+        <ion-label position="floating" color="dark" stacked>
           <ion-icon name="lock" item-start color="dark"></ion-icon>
           Password
-        </ion-label>
-        <ion-input class="text-dark" color="dark" type="password" formControlName="password"></ion-input>
+        </ion-label> 
+        <ion-input type="{{type}}" class="text-dark" color="dark"  formControlName="password"></ion-input>
+        <ion-icon *ngIf="!passwordShown"  color ="medium" (click)="showPassword()" name="eye" slot="end"></ion-icon>
+        <ion-icon *ngIf="passwordShown"  color="dark"   (click)="showPassword()" name="eye" slot="end"></ion-icon>
       </ion-item>
       <p ion-text color="warning" class="text08" *ngIf="
           onLoginForm.get('password').touched &&

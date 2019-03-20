@@ -18,6 +18,7 @@ import { Router } from '@angular/router';
 export class LoginPage implements OnInit {
   public onLoginForm: FormGroup;
 
+  
   constructor(
     public navCtrl: NavController,
     public menuCtrl: MenuController,
@@ -29,6 +30,21 @@ export class LoginPage implements OnInit {
     public router: Router
   ) {}
 
+  // show password
+  type: string = 'password';
+  passwordShown: boolean = false;
+
+  public showPassword(){
+    this.passwordShown = !this.passwordShown;
+
+    if(this.passwordShown){
+      this.type = 'text';
+    } else {
+      this.type = 'password';
+    }
+  }
+  // end of show password 
+  
   ionViewWillEnter() {
     this.menuCtrl.enable(false);
   }
@@ -103,7 +119,7 @@ export class LoginPage implements OnInit {
       },
       err => {
         console.log(err);
-        this.showToast('Login', err.data.password[0]);
+        this.showToast('Login', 'Login1 gagal');
       }
     );
   }
@@ -124,4 +140,5 @@ export class LoginPage implements OnInit {
     });
     toast.present();
   }
+    
 }
