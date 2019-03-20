@@ -1,0 +1,22 @@
+#################################
+# Development
+#################################
+FROM node:10.1-alpine as build
+
+# Create app folder
+RUN mkdir /app
+WORKDIR /app
+
+# Install app dependencies
+RUN npm install -g ionic
+
+# Add configuration files
+COPY image-files/ /
+RUN chmod 700 /usr/local/bin/docker-entrypoint-dev.sh
+
+# Install nginx
+RUN apk --update add nginx
+
+# Expose port 80
+EXPOSE 80 8080
+ENTRYPOINT ["docker-entrypoint-dev.sh"]
