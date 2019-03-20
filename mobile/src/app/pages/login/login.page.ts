@@ -90,9 +90,7 @@ export class LoginPage implements OnInit {
 
   async login() {
     // console.log('sadsa');
-    // this.auth.login('asd').subscribe(result => {
-    //   console.log(result);``
-    // });
+    // this.auth.login('asd');
     await this.auth.login(this.onLoginForm.value).subscribe(
       res => {
         if (res.success === true) {
@@ -108,7 +106,6 @@ export class LoginPage implements OnInit {
         this.showToast('Login', 'Login1 gagal');
       }
     );
-    ``;
   }
 
   // // //

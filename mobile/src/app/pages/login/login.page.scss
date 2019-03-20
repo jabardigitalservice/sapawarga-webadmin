@@ -1,10 +1,15 @@
-:host {
-    ion-content {
-        --background: linear-gradient(135deg, var(--ion-color-dark), var(--ion-color-primary));
-    }
-}
+// :host {
+//     ion-content {
+//         --background: linear-gradient(135deg, var(--ion-color-dark), var(--ion-color-primary));
+//         --background: #f5f5f5;
+//     }
+// }
 
 .paz {
     position: relative;
     z-index: 10;
+}
+
+ion-item {
+    color: black;
 }

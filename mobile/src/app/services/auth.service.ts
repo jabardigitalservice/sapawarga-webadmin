@@ -4,6 +4,7 @@ import { map, catchError } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { throwError, Observable, BehaviorSubject } from 'rxjs';
 import { Storage } from '@ionic/storage';
+import { Platform } from '@ionic/angular';
 
 const TOKEN_KEY = 'auth-token';
 
@@ -13,7 +14,15 @@ const TOKEN_KEY = 'auth-token';
 export class AuthService {
   authenticationState = new BehaviorSubject(false);
 
-  constructor(private http: HttpClient, private storage: Storage) {}
+  constructor(
+    private http: HttpClient,
+    private storage: Storage,
+    private plt: Platform
+  ) {
+    this.plt.ready().then(() => {
+      this.checkToken();
+    });
+  }
 
   checkToken() {
     this.storage.get(TOKEN_KEY).then(res => {

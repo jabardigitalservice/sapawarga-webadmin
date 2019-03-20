@@ -55,7 +55,7 @@ export class AppComponent {
         this.splashScreen.hide();
 
         this.authService.authenticationState.subscribe(state => {
-          console.log(state);
+          console.log(`login ${state}`);
           if (state) {
             this.navCtrl.navigateRoot('/home-results');
           } else {
