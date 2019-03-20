@@ -9,6 +9,7 @@ import {
 } from '@ionic/angular';
 import { AuthService } from './../../services/auth.service';
 import { Router } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,7 @@ import { Router } from '@angular/router';
 export class LoginPage implements OnInit {
   public onLoginForm: FormGroup;
 
-  
+  public app_version = environment.VERSION_APP;
   constructor(
     public navCtrl: NavController,
     public menuCtrl: MenuController,
@@ -34,17 +35,17 @@ export class LoginPage implements OnInit {
   type: string = 'password';
   passwordShown: boolean = false;
 
-  public showPassword(){
+  public showPassword() {
     this.passwordShown = !this.passwordShown;
 
-    if(this.passwordShown){
+    if (this.passwordShown) {
       this.type = 'text';
     } else {
       this.type = 'password';
     }
   }
-  // end of show password 
-  
+  // end of show password
+
   ionViewWillEnter() {
     this.menuCtrl.enable(false);
   }
@@ -60,8 +61,8 @@ export class LoginPage implements OnInit {
 
   async forgotPass() {
     const alert = await this.alertCtrl.create({
-      header: 'Forgot Password?',
-      message: 'Enter you email address to send a reset link password.',
+      header: 'Lupa Kata Sandi?',
+      message: 'Masukan email Anda untuk mereset kata sandi.',
       inputs: [
         {
           name: 'email',
@@ -71,15 +72,15 @@ export class LoginPage implements OnInit {
       ],
       buttons: [
         {
-          text: 'Cancel',
-          role: 'cancel',
+          text: 'Batal',
+          role: 'batal',
           cssClass: 'secondary',
           handler: () => {
             console.log('Confirm Cancel');
           }
         },
         {
-          text: 'Confirm',
+          text: 'Konfirmasi',
           handler: async () => {
             const loader = await this.loadingCtrl.create({
               duration: 2000
@@ -119,19 +120,19 @@ export class LoginPage implements OnInit {
       },
       err => {
         console.log(err);
-        this.showToast('Login', 'Login1 gagal');
+        this.showToast('Login', 'Login gagal');
       }
     );
   }
 
   // // //
-  goToRegister() {
-    this.navCtrl.navigateRoot('/register');
-  }
+  // goToRegister() {
+  //   this.navCtrl.navigateRoot('/register');
+  // }
 
-  goToHome() {
-    this.navCtrl.navigateRoot('/home-results');
-  }
+  // goToHome() {
+  //   this.navCtrl.navigateRoot('/home-results');
+  // }
 
   async showToast(title: string, msg: string) {
     const toast = await this.toastCtrl.create({
@@ -140,5 +141,4 @@ export class LoginPage implements OnInit {
     });
     toast.present();
   }
-    
 }

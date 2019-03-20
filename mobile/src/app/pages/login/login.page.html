@@ -7,7 +7,7 @@
       <h4 no-margin>
         <ion-text color="dark" class="fw700">
           Sapa Warga
-        </ion-text> 
+        </ion-text>
       </h4>
     </div>
 
@@ -33,10 +33,10 @@
         <ion-label position="floating" color="dark" stacked>
           <ion-icon name="lock" item-start color="dark"></ion-icon>
           Kata Sandi
-        </ion-label> 
-        <ion-input type="{{type}}" class="text-dark" color="dark"  formControlName="password"></ion-input>
-        <ion-icon *ngIf="!passwordShown"  color ="medium" (click)="showPassword()" name="eye" slot="end"></ion-icon>
-        <ion-icon *ngIf="passwordShown"  color="dark"   (click)="showPassword()" name="eye" slot="end"></ion-icon>
+        </ion-label>
+        <ion-input type="{{type}}" class="text-dark" color="dark" formControlName="password"></ion-input>
+        <ion-icon *ngIf="!passwordShown" color="medium" (click)="showPassword()" name="eye" slot="end"></ion-icon>
+        <ion-icon *ngIf="passwordShown" color="dark" (click)="showPassword()" name="eye" slot="end"></ion-icon>
       </ion-item>
       <p ion-text color="warning" class="text08" *ngIf="
           onLoginForm.get('password').touched &&
@@ -56,10 +56,10 @@
     </p>
 
     <div class="ion-text-end">
-      <ion-button icon-left size="small" shape="round" color="dark" [disabled]="!onLoginForm.valid" tappable class="ion-margin-top"
-        (click)="login()" end>
+      <ion-button icon-left size="small" shape="round" color="dark" [disabled]="!onLoginForm.valid" tappable
+        class="ion-margin-top" (click)="login()" end>
         <ion-icon name="log-in" slot="start"></ion-icon>
-         Masuk
+        Masuk
       </ion-button>
     </div>
 
@@ -72,7 +72,7 @@
 <ion-footer>
   <ion-toolbar color="light">
     <ion-text color="dark">
-      <p>Version 1.0</p>
+      <p>Version {{ app_version }}</p>
       <p>Copy right Jabar Digital Service 2019</p>
     </ion-text>
   </ion-toolbar>
