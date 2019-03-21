@@ -76,6 +76,7 @@ class City extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'parent_id' => 'Parent ID',
             'name' => 'Nama',
         ];
     }
