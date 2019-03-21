@@ -4,22 +4,22 @@ use yii\db\Migration;
 use yii\db\Schema;
 
 /**
- * Handles the creation of table `cities`.
+ * Handles the creation of table `areas`.
  */
-class m190319_085306_create_cities_table extends Migration
+class m190319_085306_create_areas_table extends Migration
 {
     /**
      * {@inheritdoc}
      */
     public function safeUp()
     {
-        $this->createTable('cities', [
+        $this->createTable('areas', [
             'id'         => $this->primaryKey(),
             'parent_id'  => $this->integer()->null(),
             'depth'      => $this->integer()->null(),
             'name'       => $this->string()->null(),
-            'code1'      => $this->string()->null(),
-            'code2'      => $this->string()->null(),
+            'code_bps'   => $this->string()->null(),
+            'code_kemendagri' => $this->string()->null(),
             'latitude'   => $this->string()->null(),
             'longitude'  => $this->string()->null(),
             'meta'       => $this->json()->null(),
@@ -37,6 +37,6 @@ class m190319_085306_create_cities_table extends Migration
      */
     public function safeDown()
     {
-        $this->dropTable('cities');
+        $this->dropTable('areas');
     }
 }

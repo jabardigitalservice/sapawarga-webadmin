@@ -1,4 +1,4 @@
-INSERT INTO `cities` (`id`, `parent_id`, `depth`, `name`, `code1`, `code2`, `latitude`, `longitude`, `meta`, `status`, `created_at`, `updated_at`)
+INSERT INTO `areas` (`id`, `parent_id`, `depth`, `name`, `code_bps`, `code_kemendagri`, `latitude`, `longitude`, `meta`, `status`, `created_at`, `updated_at`)
 VALUES
 	(1,NULL,1,'JAWA BARAT','32','32',NULL,NULL,NULL,1,1553040000,1553040000),
 	(2,1,2,'KAB. BOGOR','3201','32.01','106.56475131829','-6.67926933657128',NULL,1,1553040000,1553040000),
@@ -2126,7 +2126,7 @@ VALUES
 	(2124,153,4,'CISURUPAN','3205160005','32.05.20.2001','107.760223619147','-7.3188878883909',NULL,1,1553040000,1553040000),
 	(2125,153,4,'KRAMATWANGI','3205160006','32.05.20.2010','107.754951851481','-7.31278917418845',NULL,1,1553040000,1553040000);
 
-INSERT INTO `cities` (`id`, `parent_id`, `depth`, `name`, `code1`, `code2`, `latitude`, `longitude`, `meta`, `status`, `created_at`, `updated_at`)
+INSERT INTO `areas` (`id`, `parent_id`, `depth`, `name`, `code_bps`, `code_kemendagri`, `latitude`, `longitude`, `meta`, `status`, `created_at`, `updated_at`)
 VALUES
 	(2126,153,4,'BALEWANGI','3205160007','32.05.20.2007','107.791372390477','-7.3049827504125',NULL,1,1553040000,1553040000),
 	(2127,153,4,'TAMBAKBAYA','3205160008','32.05.20.2013','107.799991037692','-7.2994172631307',NULL,1,1553040000,1553040000),
@@ -4193,7 +4193,7 @@ VALUES
 	(4188,281,4,'SUKASIRNARASA','3211040002','32.11.16.2008','107.829506629207','-6.85719997728304',NULL,1,1553040000,1553040000),
 	(4189,281,4,'PAMEKARAN','3211040008','32.11.16.2006','107.851908332515','-6.84090580867855',NULL,1,1553040000,1553040000);
 
-INSERT INTO `cities` (`id`, `parent_id`, `depth`, `name`, `code1`, `code2`, `latitude`, `longitude`, `meta`, `status`, `created_at`, `updated_at`)
+INSERT INTO `areas` (`id`, `parent_id`, `depth`, `name`, `code_bps`, `code_kemendagri`, `latitude`, `longitude`, `meta`, `status`, `created_at`, `updated_at`)
 VALUES
 	(4190,281,4,'SUKAMAJU','3211040009','32.11.16.2005','107.876950560486','-6.82319847833582',NULL,1,1553040000,1553040000),
 	(4191,281,4,'SUKAHAYU','3211040010','32.11.16.2004','107.865141250723','-6.82308332745091',NULL,1,1553040000,1553040000),
@@ -6255,7 +6255,7 @@ VALUES
 	(6247,455,4,'PERWIRA','3275070003','32.75.03.1002','107.008975814977','-6.20769087301777',NULL,1,1553040000,1553040000),
 	(6248,455,4,'HARAPANBARU','3275070004','32.75.03.1003','107.016595797481','-6.21620624196129',NULL,1,1553040000,1553040000);
 
-INSERT INTO `cities` (`id`, `parent_id`, `depth`, `name`, `code1`, `code2`, `latitude`, `longitude`, `meta`, `status`, `created_at`, `updated_at`)
+INSERT INTO `areas` (`id`, `parent_id`, `depth`, `name`, `code_bps`, `code_kemendagri`, `latitude`, `longitude`, `meta`, `status`, `created_at`, `updated_at`)
 VALUES
 	(6249,455,4,'TELUK PUCUNG','3275070005','32.75.03.1004','107.026606708609','-6.20880682194055',NULL,1,1553040000,1553040000),
 	(6250,455,4,'MARGAMULYA','3275070006','32.75.03.1005','107.002226133705','-6.22567049333342',NULL,1,1553040000,1553040000),
