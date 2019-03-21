@@ -140,7 +140,7 @@ $config = [
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',
-                    'controller' => 'v1/city',
+                    'controller' => 'v1/area',
                     'tokens' => [
                         '{id}' => '<id:\d+>',
                     ],

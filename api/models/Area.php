@@ -6,13 +6,13 @@ use Yii;
 use yii\behaviors\TimestampBehavior;
 
 /**
- * This is the model class for table "cities".
+ * This is the model class for table "areas".
  *
  * @property int $id
  * @property string $brand
  * @property string $model
  */
-class City extends \yii\db\ActiveRecord
+class Area extends \yii\db\ActiveRecord
 {
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 1;
@@ -22,7 +22,7 @@ class City extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'cities';
+        return 'areas';
     }
 
     /**
