@@ -7,9 +7,9 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * CitySearch represents the model behind the search form of `app\models\City`.
+ * AreaSearch represents the model behind the search form of `app\models\Area`.
  */
-class CitySearch extends City
+class AreaSearch extends Area
 {
     /**
      * {@inheritdoc}
@@ -40,7 +40,7 @@ class CitySearch extends City
      */
     public function search($params)
     {
-        $query = City::find();
+        $query = Area::find();
 
         // add conditions that should always apply here
 
