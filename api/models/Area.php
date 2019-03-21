@@ -32,8 +32,8 @@ class Area extends \yii\db\ActiveRecord
     {
         return [
             ['name', 'string', 'max' => 64],
-            [['name', 'code1', 'code2', 'latitude', 'longitude', 'meta'], 'trim'],
-            [['parent_id', 'depth', 'name', 'code1', 'code2', 'status'], 'required'],
+            [['name', 'code_bps', 'code_kemendagri', 'latitude', 'longitude', 'meta'], 'trim'],
+            [['parent_id', 'depth', 'name', 'code_bps', 'code_kemendagri', 'status'], 'required'],
         ];
     }
 
@@ -44,8 +44,8 @@ class Area extends \yii\db\ActiveRecord
             'parent_id',
             'depth',
             'name',
-            'code1',
-            'code2',
+            'code_bps',
+            'code_kemendagri',
             'latitude',
             'longitude',
             'meta',
