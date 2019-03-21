@@ -24,8 +24,8 @@ class m190319_085306_create_cities_table extends Migration
             'longitude'  => $this->string()->null(),
             'meta'       => $this->json()->null(),
             'status'     => $this->boolean(),
-            'created_at' => Schema::TYPE_TIMESTAMP . ' DEFAULT CURRENT_TIMESTAMP',
-            'updated_at' => Schema::TYPE_TIMESTAMP . ' DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP',
+            'created_at' => $this->integer()->null(),
+            'updated_at' => $this->integer()->null(),
         ]);
 
         $sql = file_get_contents(__DIR__ . '/seeder/jawabarat_kabkota_20190320.sql');
