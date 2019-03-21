@@ -1,22 +1,24 @@
 <ion-header>
   <ion-toolbar color="light">
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-icon name="arrow-back" size="large"></ion-icon>
     </ion-buttons>
     <ion-title color="dark">Akun Saya</ion-title>
+    <ion-icon name="more" slot="end" size="large"></ion-icon>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="profile">
+<ion-content class="profile" color="light">
   <ion-card no-margin>
     <ion-card-content class="bg-profile">
       <img src="assets/img/avatar.jpg">
       <h1 class="fw500">Captain Marvel</h1>
-      <!-- <h2 color="light" margin-bottom>Customer</h2> -->
+            
       <ion-button icon-left color="secondary">
         <ion-icon name="photos"></ion-icon>
         Ganti Foto
       </ion-button>
+
     </ion-card-content>
 
     <ion-grid fixed no-padding>
@@ -25,7 +27,7 @@
 
           <ion-list margin-bottom>
             <ion-list-header color="light">
-              <ion-label class="fw700">Informasi</ion-label>
+              <ion-label class="fw700">Profil</ion-label>
             </ion-list-header>
 
             <ion-item>
@@ -70,28 +72,27 @@
 
           </ion-list>
 
-          <!-- <ion-list>
-            <ion-radio-group>
+          <ion-list>
               <ion-list-header color="light">
-                <ion-label class="fw700">User Type</ion-label>
+                <ion-label class="fw700">Media Sosial</ion-label>
               </ion-list-header>
 
               <ion-item>
-                <ion-label color="primary">Customer</ion-label>
-                <ion-radio slot="start" value="customer" checked></ion-radio>
+                <ion-label color="dark" position="stacked">Instagram:</ion-label>
+                <ion-input inputmode="text" placeholder="Masukan akun instagram Anda" ></ion-input>
               </ion-item>
 
               <ion-item>
-                <ion-label color="primary">Owner</ion-label>
-                <ion-radio slot="start" value="agent"></ion-radio>
+                <ion-label color="dark" position="stacked">Facebook:</ion-label>
+                <ion-input inputmode="text" placeholder="Masukan akun facebook Anda" ></ion-input>
               </ion-item>
-            </ion-radio-group>
 
-            <ion-item>
-              <ion-label class="text-1x">Checkbox test</ion-label>
-              <ion-checkbox></ion-checkbox>
-            </ion-item>
-          </ion-list> -->
+              <ion-item>
+                <ion-label color="dark" position="stacked">Twitter:</ion-label>
+                <ion-input inputmode="text" placeholder="Masukan akun Twitter Anda" ></ion-input>
+              </ion-item>
+
+          </ion-list>
 
         </ion-col>
       </ion-row>
