@@ -3,8 +3,8 @@
 namespace app\modules\v1\controllers;
 
 use app\filters\auth\HttpBearerAuth;
-use app\models\City;
-use app\models\CitySearch;
+use app\models\Area;
+use app\models\AreaSearch;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\filters\auth\CompositeAuth;
@@ -14,11 +14,11 @@ use yii\web\NotFoundHttpException;
 use yii\web\ServerErrorHttpException;
 
 /**
- * CityController implements the CRUD actions for City model.
+ * AreaController implements the CRUD actions for Area model.
  */
-class CityController extends ActiveController
+class AreaController extends ActiveController
 {
-    public $modelClass = 'app\models\City';
+    public $modelClass = 'app\models\Area';
 
     public function behaviors()
     {
@@ -92,7 +92,7 @@ class CityController extends ActiveController
 
     public function prepareDataProvider()
     {
-        $search = new CitySearch();
+        $search = new AreaSearch();
 
         return $search->search(\Yii::$app->request->getQueryParams());
     }
