@@ -4,7 +4,7 @@ namespace app\helpers;
 
 use yii\db\Migration;
 
-class MigrationHelper extends Migration
+class CustomMigration extends Migration
 {
     public function timestamps($tableName)
     {
