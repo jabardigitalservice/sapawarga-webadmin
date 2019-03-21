@@ -140,7 +140,7 @@ $config = [
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',
-                    'controller' => 'v1/user_profile',
+                    'controller' => 'v1/user-profile',
                     'pluralize' => false,
                     'tokens' => [
                         '{id}' => '<id:\d+>',

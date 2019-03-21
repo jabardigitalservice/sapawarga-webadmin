@@ -33,7 +33,7 @@ class UserProfile extends \yii\db\ActiveRecord
     {
         return [
             ['name', 'string', 'max' => 64],
-            [['name', 'rw', 'kel_id', 'kec_id', 'kokab_id'], 'required'],
+            [['name', 'phone', 'address', 'rw', 'kel_id', 'kec_id', 'kokab_id'], 'required'],
         ];
     }
 
@@ -46,11 +46,11 @@ class UserProfile extends \yii\db\ActiveRecord
             'id' => 'ID',
             'name' => 'Name',
             'phone' => 'Phone',
-            'address' => 'Address'
-            'rw' => 'RW'
-            'kel_id' => 'Kelurahan'
-            'kec_id' => 'Kecamatan'
-            'kokab_id' => 'Kota/Kabupaten'
+            'address' => 'Address',
+            'rw' => 'RW',
+            'kel_id' => 'Kelurahan',
+            'kec_id' => 'Kecamatan',
+            'kokab_id' => 'Kota/Kabupaten',
         ];
     }
 }
