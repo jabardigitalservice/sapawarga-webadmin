@@ -2,6 +2,10 @@
   ion-content {
     --background: linear-gradient(-135deg, var(--ion-color-medium), var(--ion-color-light))
   }
+
+  .in-item {
+    max-width: 60% !important;
+  }
 }
 
 .profile {
