@@ -48,6 +48,10 @@ class AreaSearch extends Area
             'query' => $query,
         ]);
 
+        if (isset($params['all']) && $params['all'] == true) {
+            $dataProvider->setPagination(false);
+        }
+
         // var_dump($this->load($params)); exit; @TODO parameter tidak terload ke model ?
 
         if (!$this->validate()) {
