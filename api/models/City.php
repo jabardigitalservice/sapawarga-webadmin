@@ -14,6 +14,9 @@ use yii\behaviors\TimestampBehavior;
  */
 class City extends \yii\db\ActiveRecord
 {
+    const STATUS_INACTIVE = 0;
+    const STATUS_ACTIVE = 1;
+
     /**
      * {@inheritdoc}
      */
@@ -29,9 +32,41 @@ class City extends \yii\db\ActiveRecord
     {
         return [
             ['name', 'string', 'max' => 64],
-            ['name', 'trim'],
-            [['parent_id', 'depth', 'name'], 'required'],
+            [['name', 'code1', 'code2', 'latitude', 'longitude', 'meta'], 'trim'],
+            [['parent_id', 'depth', 'name', 'code1', 'code2', 'status'], 'required'],
         ];
+    }
+
+    public function fields()
+    {
+        $fields = [
+            'id',
+            'parent_id',
+            'depth',
+            'name',
+            'code1',
+            'code2',
+            'latitude',
+            'longitude',
+            'meta',
+            'status',
+            'status_label' => function () {
+                $statusLabel = '';
+                switch ($this->status) {
+                    case self::STATUS_ACTIVE:
+                        $statusLabel = Yii::t('app', 'Active');
+                        break;
+                    case self::STATUS_INACTIVE:
+                        $statusLabel = Yii::t('app', 'Not Active');
+                        break;
+                }
+                return $statusLabel;
+            },
+            'created_at',
+            'updated_at',
+        ];
+
+        return $fields;
     }
 
     /**
