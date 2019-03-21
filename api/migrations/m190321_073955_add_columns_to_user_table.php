@@ -11,13 +11,13 @@ class m190321_073955_add_columns_to_user_table extends CustomMigration
      */
     public function safeUp()
     {
-        $this->addColumn('user', 'name', $this->string()->notNull());
+        $this->addColumn('user', 'name', $this->string());
         $this->addColumn('user', 'phone', $this->string());
         $this->addColumn('user', 'address', $this->string());
-        $this->addColumn('user', 'rw', $this->string()->notNull());
-        $this->addColumn('user', 'kel_id', $this->string()->notNull());
-        $this->addColumn('user', 'kec_id', $this->string()->notNull());
-        $this->addColumn('user', 'kabkota_id', $this->string()->notNull());
+        $this->addColumn('user', 'rw', $this->string());
+        $this->addColumn('user', 'kel_id', $this->string());
+        $this->addColumn('user', 'kec_id', $this->string());
+        $this->addColumn('user', 'kabkota_id', $this->string());
     }
 
     /**
