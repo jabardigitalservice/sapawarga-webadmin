@@ -1,11 +1,11 @@
 <?php
 
-use app\helpers\MigrationHelper;
+use app\components\CustomMigration;
 
 /**
  * Class m190319_094216_add_user_profile_table
  */
-class m190319_094216_create_user_profiles_table extends MigrationHelper
+class m190319_094216_create_user_profiles_table extends CustomMigration
 {
     /**
      * {@inheritdoc}
