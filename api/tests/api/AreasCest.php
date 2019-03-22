@@ -52,7 +52,7 @@ class AreasCest
         $I->canSeeResponseCodeIs(200);
         $I->seeResponseIsJson();
 
-        $I->seeHttpHeader('X-Pagination-Total-Count', 29);
+        $I->seeHttpHeader('X-Pagination-Total-Count', 27);
 
         $I->seeResponseContainsJson([
             'success' => true,
