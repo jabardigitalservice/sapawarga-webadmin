@@ -4,7 +4,11 @@
       <!-- <ion-menu-button color="dark"></ion-menu-button> -->
       <ion-img [src]="logoApp" class="logo-app"></ion-img>
     </ion-buttons>
-    <ion-searchbar placeholder="cari" [(ngModel)]="searchKey"></ion-searchbar>
+    <ion-searchbar
+      placeholder="cari"
+      [(ngModel)]="searchKey"
+      animated
+    ></ion-searchbar>
     <!-- <ion-buttons slot="end">
       <ion-button size="small" shape="round" color="dark" (click)="notifications()">
         <ion-icon name="mail-open"></ion-icon>
@@ -21,8 +25,18 @@
 
 <ion-content>
   <ion-card class="bg-white ion-margin-top">
-    <ion-img [src]="themeCover"></ion-img>
-    <!-- <ion-button expand="full" color="dark" (click)="presentImage(themeCover)" no-margin>
+    <ion-slides pager="true" [options]="slideOpts" pager="false">
+      <ion-slide *ngFor="let img of themeCover">
+        <ion-img [src]="img.slide"></ion-img>
+      </ion-slide>
+    </ion-slides>
+
+    <!-- <ion-button
+      expand="full"
+      color="dark"
+      (click)="presentImage(themeCover)"
+      no-margin
+    >
       Modal 1: Modal Image
     </ion-button> -->
   </ion-card>
