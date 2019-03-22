@@ -7,40 +7,38 @@ use Codeception\Specify;
 
 class AreaTest extends \Codeception\Test\Unit
 {
-
     use Specify;
 
-    public function testValidate()
+    public function testValidateAllRequired()
     {
-        // Validation requires method to be set
-        //      The function validateUsername requires Yii::$app->request to determine mode - create or update.
-        //      When request method is POST, then mode is creation.
-        //      When request mode is PUT, the mode is update.
-        $_POST['_method'] = 'post';
+        $model = new Area();
 
-        $this->specify(
-            'input is required',
-            function () {
-                // Initialise User model
-                $model = new Area();
+        $this->assertFalse($model->validate());
 
-                // Verify validation fails as didn't provide any attributes
-                $this->assertFalse($model->validate());
+        $this->assertTrue($model->hasErrors('name'));
 
-                // Verify that the username and password properties are required
-                $this->assertTrue($model->hasErrors('name'));
+        $model->parent_id       = 1;
+        $model->depth           = 1;
+        $model->name            = 'test';
+        $model->code_bps        = 'test';
+        $model->code_kemendagri = 'test';
+        $model->status          = true;
 
-                // Set temporary values data
-                $model->parent_id       = 1;
-                $model->depth           = 1;
-                $model->name            = 'test';
-                $model->code_bps        = 'test';
-                $model->code_kemendagri = 'test';
-                $model->status          = true;
+        $this->assertTrue($model->validate());
+    }
 
-                // Verify validation succeed
-                $this->assertTrue($model->validate());
-            }
-        );
+    public function testValidateEmptyFields()
+    {
+        $model = new Area();
+
+        $model->code_bps        = 'test';
+        $model->code_kemendagri = 'test';
+        $model->status          = true;
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('parent_id'));
+        $this->assertTrue($model->hasErrors('depth'));
+        $this->assertTrue($model->hasErrors('name'));
     }
 }
