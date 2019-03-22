@@ -41,6 +41,7 @@ export class AuthService {
   saveToken(token: string) {
     // console.log(token);
     // this.storage.set('name', 'Max');
+    localStorage.setItem(TOKEN_KEY, token);
     return this.storage.set(TOKEN_KEY, token).then(() => {
       this.authenticationState.next(true);
     });

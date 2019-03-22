@@ -57,6 +57,18 @@ services:
       - ./frontend/image-files/etc/nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./frontend:/app
 
+  mobile:
+    build:
+      context: ./mobile
+      dockerfile: Dockerfile.dev
+    image: jdsteam/yii2_ngx_mobile:1.0
+    depends_on:
+      - api
+    networks:
+      - internal
+    volumes:
+      - ./mobile:/app
+
   database:
     image: mysql:5.7
     networks:

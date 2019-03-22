@@ -25,7 +25,11 @@ const routes: Routes = [
     loadChildren:
       './pages/home-results/home-results.module#HomeResultsPageModule'
   },
-  { path: 'view-profile', loadChildren: './pages/view-profile/view-profile.module#ViewProfilePageModule' }
+  {
+    path: 'view-profile',
+    loadChildren:
+      './pages/view-profile/view-profile.module#ViewProfilePageModule'
+  }
 ];
 
 @NgModule({

@@ -28,7 +28,7 @@ RUN chmod 700 /usr/local/bin/docker-entrypoint.sh
 ENV PATH /usr/local/bin:$PATH
 
 # Expose port 80
-EXPOSE 80
+EXPOSE 8100
 
 # Run entry point
 CMD ["ionic", "run", "serve"]
