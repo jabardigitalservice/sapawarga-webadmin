@@ -424,7 +424,9 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 
             ['permissions', 'validatePermissions'],
             [['access_token', 'permissions'], 'safe'],
-            [['name', 'phone', 'address', 'rw', 'kel_id', 'kec_id', 'kabkota_id'], 'required'],
+            ['phone', 'trim'],
+            [['name', 'phone', 'address'], 'default'],
+            [['rw', 'kel_id', 'kec_id', 'kabkota_id'], 'required'],
         ];
     }
 
