@@ -10,6 +10,7 @@ import {
 import { AuthService } from './../../services/auth.service';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
+import { Network } from '@ionic-native/network/ngx';
 
 @Component({
   selector: 'app-login',
@@ -18,6 +19,10 @@ import { environment } from '../../../environments/environment';
 })
 export class LoginPage implements OnInit {
   public onLoginForm: FormGroup;
+  // show password
+  type: string = 'password';
+  passwordShown: boolean = false;
+  // public onlineOffline: boolean = navigator.onLine;
 
   public app_version = environment.VERSION_APP;
   constructor(
@@ -28,12 +33,9 @@ export class LoginPage implements OnInit {
     public loadingCtrl: LoadingController,
     private formBuilder: FormBuilder,
     private auth: AuthService,
-    public router: Router
+    public router: Router,
+    private network: Network
   ) {}
-
-  // show password
-  type: string = 'password';
-  passwordShown: boolean = false;
 
   public showPassword() {
     this.passwordShown = !this.passwordShown;
@@ -106,21 +108,38 @@ export class LoginPage implements OnInit {
   }
 
   async login() {
-    // console.log('sadsa');
-    // this.auth.login('asd');
+    if (!navigator.onLine) {
+      this.showToast('Offline', 'Tidak ada koneksi internet');
+      return;
+    }
+
+    let disconnectSubscription = this.network.onDisconnect().subscribe(() => {
+      alert('network was disconnected :-(');
+    });
+
+    // stop disconnect watch
+    disconnectSubscription.unsubscribe();
+
+    const loader = await this.loadingCtrl.create({
+      duration: 10000
+    });
+    loader.present();
     await this.auth.login(this.onLoginForm.value).subscribe(
       res => {
         if (res.success === true) {
           // console.log(res.data.access_token);
+          loader.dismiss();
           this.auth.saveToken(res.data.access_token);
           this.navCtrl.navigateRoot('/home-results');
         } else {
+          loader.dismiss();
           console.log('login gagal');
         }
       },
       err => {
+        loader.dismiss();
         console.log(err);
-        this.showToast('Login', 'Login gagal');
+        this.showToast('Login', err.data.password[0]);
       }
     );
   }
