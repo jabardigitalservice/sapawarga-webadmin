@@ -22,10 +22,26 @@ import { Pages } from 'src/app/interfaces/pages';
 })
 export class HomeResultsPage {
   public appPages: Array<Pages>;
+  themeCover = [
+    {
+      slide: 'assets/img/bg-home.jpg'
+    },
+    {
+      slide: 'assets/img/slider.jpg'
+    },
+    {
+      slide: 'assets/img/slider1.jpeg'
+    }
+  ];
   searchKey = '';
   yourLocation = '123 Test Street';
-  themeCover = 'assets/img/bg-home.jpg';
   logoApp = 'assets/icon/logo.png';
+  slideOpts = {
+    effect: 'flip',
+    autoplay: {
+      delay: 3000
+    }
+  };
 
   constructor(
     public navCtrl: NavController,
