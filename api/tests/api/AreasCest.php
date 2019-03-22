@@ -24,7 +24,60 @@ class AreasCest
 
         $I->seeResponseContainsJson([
             'success' => true,
-            'status' => 200,
+            'status'  => 200,
+        ]);
+    }
+
+    public function getListByDepth(ApiTester $I)
+    {
+        $I->haveHttpHeader('Content-Type', 'application/json');
+
+        $I->sendGET('/v1/areas?depth=1');
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $I->seeHttpHeader('X-Pagination-Total-Count', 1);
+
+        $I->seeResponseContainsJson([
+            'success' => true,
+            'status'  => 200,
+        ]);
+    }
+
+    public function getListByDepthInvalid(ApiTester $I)
+    {
+        $I->haveHttpHeader('Content-Type', 'application/json');
+
+        $I->sendGET('/v1/areas?depth=10');
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $I->seeHttpHeader('X-Pagination-Total-Count', 0);
+
+        $I->seeResponseContainsJson([
+            'data'    => [],
+            'success' => true,
+            'status'  => 200,
+        ]);
+    }
+
+    public function getItemTest(ApiTester $I)
+    {
+        $I->haveHttpHeader('Content-Type', 'application/json');
+
+        $I->sendGET('/v1/areas/1');
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $I->seeResponseContainsJson([
+            'data'    => [
+                'id'        => 1,
+                'depth'     => 1,
+                'parent_id' => null,
+                'name'      => 'JAWA BARAT',
+            ],
+            'success' => true,
+            'status'  => 200,
         ]);
     }
 }
