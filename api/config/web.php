@@ -131,15 +131,6 @@ $config = [
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',
-                    'controller' => 'v1/guitar',
-                    'pluralize' => false,
-                    'tokens' => [
-                        '{id}' => '<id:\d+>',
-                    ],
-                    'extraPatterns' => []
-                ],
-                [
-                    'class' => 'yii\rest\UrlRule',
                     'controller' => 'v1/area',
                     'tokens' => [
                         '{id}' => '<id:\d+>',
