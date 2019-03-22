@@ -16,8 +16,6 @@ class AreasCest
 
     public function getListTest(ApiTester $I)
     {
-        $I->haveHttpHeader('Content-Type', 'application/json');
-
         $I->sendGET('/v1/areas');
         $I->canSeeResponseCodeIs(200);
         $I->seeResponseIsJson();
@@ -30,8 +28,6 @@ class AreasCest
 
     public function getListByDepthTest(ApiTester $I)
     {
-        $I->haveHttpHeader('Content-Type', 'application/json');
-
         $I->sendGET('/v1/areas?depth=1');
         $I->canSeeResponseCodeIs(200);
         $I->seeResponseIsJson();
@@ -46,14 +42,10 @@ class AreasCest
 
     public function getListByDepthLevelTwoTest(ApiTester $I)
     {
-        $I->haveHttpHeader('Content-Type', 'application/json');
-
         $I->sendGET('/v1/areas?depth=2');
         $I->canSeeResponseCodeIs(200);
         $I->seeResponseIsJson();
-
-        $I->seeHttpHeader('X-Pagination-Total-Count', 27);
-
+        
         $I->seeResponseContainsJson([
             'success' => true,
             'status'  => 200,
@@ -62,8 +54,6 @@ class AreasCest
 
     public function getListByDepthAllTest(ApiTester $I)
     {
-        $I->haveHttpHeader('Content-Type', 'application/json');
-
         $I->sendGET('/v1/areas?depth=2&all=true');
         $I->canSeeResponseCodeIs(200);
         $I->seeResponseIsJson();
@@ -78,8 +68,6 @@ class AreasCest
 
     public function getListByDepthInvalidTest(ApiTester $I)
     {
-        $I->haveHttpHeader('Content-Type', 'application/json');
-
         $I->sendGET('/v1/areas?depth=10');
         $I->canSeeResponseCodeIs(200);
         $I->seeResponseIsJson();
@@ -93,10 +81,25 @@ class AreasCest
         ]);
     }
 
+    public function getListByParentTest(ApiTester $I)
+    {
+        $I->sendGET('/v1/areas?parent_id=2');
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $I->seeResponseContainsJson([
+            'success' => true,
+            'status'  => 200,
+        ]);
+
+        $I->seeResponseContainsJson([
+            'parent_id' => 2,
+            'depth'     => 3,
+        ]);
+    }
+
     public function getItemTest(ApiTester $I)
     {
-        $I->haveHttpHeader('Content-Type', 'application/json');
-
         $I->sendGET('/v1/areas/1');
         $I->canSeeResponseCodeIs(200);
         $I->seeResponseIsJson();
@@ -115,8 +118,6 @@ class AreasCest
 
     public function getItemNotFoundTest(ApiTester $I)
     {
-        $I->haveHttpHeader('Content-Type', 'application/json');
-
         $I->sendGET('/v1/areas/99999');
         $I->canSeeResponseCodeIs(404); // Not Found
         $I->seeResponseIsJson();
@@ -124,8 +125,6 @@ class AreasCest
 
     public function getItemInvalidParamTest(ApiTester $I)
     {
-        $I->haveHttpHeader('Content-Type', 'application/json');
-
         $I->sendGET('/v1/areas/x');
         $I->canSeeResponseCodeIs(400); // Bad Request
         $I->seeResponseIsJson();
@@ -133,8 +132,6 @@ class AreasCest
 
     public function getItemInvalidParamRandomTest(ApiTester $I)
     {
-        $I->haveHttpHeader('Content-Type', 'application/json');
-
         $I->sendGET('/v1/areas/xsA2#');
         $I->canSeeResponseCodeIs(400); // Bad Request
         $I->seeResponseIsJson();
