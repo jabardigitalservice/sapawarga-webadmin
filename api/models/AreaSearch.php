@@ -5,12 +5,11 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Guitar;
 
 /**
- * Guitarearch represents the model behind the search form of `app\models\Guitar`.
+ * AreaSearch represents the model behind the search form of `app\models\Area`.
  */
-class Guitarearch extends Guitar
+class AreaSearch extends Area
 {
     /**
      * {@inheritdoc}
@@ -19,7 +18,7 @@ class Guitarearch extends Guitar
     {
         return [
             [['id'], 'integer'],
-            [['brand', 'model'], 'safe'],
+            [['name'], 'safe'],
         ];
     }
 
@@ -41,7 +40,7 @@ class Guitarearch extends Guitar
      */
     public function search($params)
     {
-        $query = Guitar::find();
+        $query = Area::find();
 
         // add conditions that should always apply here
 
@@ -49,7 +48,11 @@ class Guitarearch extends Guitar
             'query' => $query,
         ]);
 
-        $this->load($params);
+        if (isset($params['all']) && $params['all'] == true) {
+            $dataProvider->setPagination(false);
+        }
+
+        // var_dump($this->load($params)); exit; @TODO parameter tidak terload ke model ?
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
@@ -62,8 +65,9 @@ class Guitarearch extends Guitar
             'id' => $this->id,
         ]);
 
-        $query->andFilterWhere(['like', 'brand', $this->brand])
-            ->andFilterWhere(['like', 'model', $this->model]);
+        $query->andFilterWhere(['parent_id' => $params['parent_id'] ?? null]);
+        $query->andFilterWhere(['depth' => $params['depth'] ?? null]);
+        $query->andFilterWhere(['like', 'name', $this->name]);
 
         return $dataProvider;
     }

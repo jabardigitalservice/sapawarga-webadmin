@@ -3,7 +3,8 @@
 namespace app\modules\v1\controllers;
 
 use app\filters\auth\HttpBearerAuth;
-use app\models\Guitar;
+use app\models\Area;
+use app\models\AreaSearch;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\filters\auth\CompositeAuth;
@@ -13,11 +14,11 @@ use yii\web\NotFoundHttpException;
 use yii\web\ServerErrorHttpException;
 
 /**
- * GuitarController implements the CRUD actions for Guitar model.
+ * AreaController implements the CRUD actions for Area model.
  */
-class GuitarController extends ActiveController
+class AreaController extends ActiveController
 {
-    public $modelClass = 'app\models\Guitar';
+    public $modelClass = 'app\models\Area';
 
     public function behaviors()
     {
@@ -78,7 +79,21 @@ class GuitarController extends ActiveController
                 ],
             ],
         ];
-        
+
         return $behaviors;
+    }
+
+    public function actions()
+    {
+        $actions = parent::actions();
+        $actions['index']['prepareDataProvider'] = [$this, 'prepareDataProvider'];
+        return $actions;
+    }
+
+    public function prepareDataProvider()
+    {
+        $search = new AreaSearch();
+
+        return $search->search(\Yii::$app->request->getQueryParams());
     }
 }
