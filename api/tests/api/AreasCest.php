@@ -28,7 +28,7 @@ class AreasCest
         ]);
     }
 
-    public function getListByDepth(ApiTester $I)
+    public function getListByDepthTest(ApiTester $I)
     {
         $I->haveHttpHeader('Content-Type', 'application/json');
 
@@ -44,7 +44,7 @@ class AreasCest
         ]);
     }
 
-    public function getListByDepthInvalid(ApiTester $I)
+    public function getListByDepthInvalidTest(ApiTester $I)
     {
         $I->haveHttpHeader('Content-Type', 'application/json');
 
@@ -79,5 +79,32 @@ class AreasCest
             'success' => true,
             'status'  => 200,
         ]);
+    }
+
+    public function getItemNotFoundTest(ApiTester $I)
+    {
+        $I->haveHttpHeader('Content-Type', 'application/json');
+
+        $I->sendGET('/v1/areas/99999');
+        $I->canSeeResponseCodeIs(404); // Not Found
+        $I->seeResponseIsJson();
+    }
+
+    public function getItemInvalidParamTest(ApiTester $I)
+    {
+        $I->haveHttpHeader('Content-Type', 'application/json');
+
+        $I->sendGET('/v1/areas/x');
+        $I->canSeeResponseCodeIs(400); // Bad Request
+        $I->seeResponseIsJson();
+    }
+
+    public function getItemInvalidParamRandomTest(ApiTester $I)
+    {
+        $I->haveHttpHeader('Content-Type', 'application/json');
+
+        $I->sendGET('/v1/areas/xsA2#');
+        $I->canSeeResponseCodeIs(400); // Bad Request
+        $I->seeResponseIsJson();
     }
 }
