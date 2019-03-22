@@ -44,6 +44,38 @@ class AreasCest
         ]);
     }
 
+    public function getListByDepthLevelTwoTest(ApiTester $I)
+    {
+        $I->haveHttpHeader('Content-Type', 'application/json');
+
+        $I->sendGET('/v1/areas?depth=2');
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $I->seeHttpHeader('X-Pagination-Total-Count', 29);
+
+        $I->seeResponseContainsJson([
+            'success' => true,
+            'status'  => 200,
+        ]);
+    }
+
+    public function getListByDepthAllTest(ApiTester $I)
+    {
+        $I->haveHttpHeader('Content-Type', 'application/json');
+
+        $I->sendGET('/v1/areas?depth=2&all=true');
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $I->dontSeeHttpHeader('X-Pagination-Total-Count');
+
+        $I->seeResponseContainsJson([
+            'success' => true,
+            'status'  => 200,
+        ]);
+    }
+
     public function getListByDepthInvalidTest(ApiTester $I)
     {
         $I->haveHttpHeader('Content-Type', 'application/json');
