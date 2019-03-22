@@ -45,7 +45,7 @@ class AreasCest
         $I->sendGET('/v1/areas?depth=2');
         $I->canSeeResponseCodeIs(200);
         $I->seeResponseIsJson();
-        
+
         $I->seeResponseContainsJson([
             'success' => true,
             'status'  => 200,

@@ -9,8 +9,12 @@ use yii\behaviors\TimestampBehavior;
  * This is the model class for table "areas".
  *
  * @property int $id
- * @property string $brand
- * @property string $model
+ * @property int $depth
+ * @property int $parent_id
+ * @property string $name
+ * @property string $code_bps
+ * @property string $code_kemendagri
+ * @property bool $status
  */
 class Area extends \yii\db\ActiveRecord
 {
