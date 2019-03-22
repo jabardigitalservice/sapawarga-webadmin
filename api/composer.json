@@ -59,7 +59,8 @@
     "sniff:fix": "vendor/bin/phpcbf --standard=phpcs.xml --extensions=php",
     "mess": "vendor/bin/phpmd controllers/,models/ text phpmd.xml",
     "test:unit": "vendor/bin/codecept run unit",
-    "test:functional": "vendor/bin/codecept run functional"
+    "test:functional": "vendor/bin/codecept run functional",
+    "test:api": "vendor/bin/codecept run api"
   },
   "extra": {
     "yii\\composer\\Installer::postCreateProject": {
