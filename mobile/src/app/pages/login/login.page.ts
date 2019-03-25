@@ -144,7 +144,7 @@ export class LoginPage implements OnInit {
           // console.log(res.data.access_token);
           loader.dismiss();
           this.auth.saveToken(res.data.access_token);
-          this.navCtrl.navigateRoot('/home-results');
+          this.navCtrl.navigateRoot(['/tabs']['home']);
         } else {
           loader.dismiss();
           console.log('login gagal');
