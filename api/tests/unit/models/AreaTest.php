@@ -40,5 +40,24 @@ class AreaTest extends \Codeception\Test\Unit
         $this->assertTrue($model->hasErrors('parent_id'));
         $this->assertTrue($model->hasErrors('depth'));
         $this->assertTrue($model->hasErrors('name'));
+
+        $this->assertFalse($model->hasErrors('code_bps'));
+        $this->assertFalse($model->hasErrors('code_kemendagri'));
+        $this->assertFalse($model->hasErrors('status'));
+    }
+
+    public function testValidateInvalidInput()
+    {
+        $model = new Area();
+
+        $model->parent_id       = 'invalid value';
+        $model->depth           = 'invalid value';
+        $model->status          = 'invalid value';
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('parent_id'));
+        $this->assertTrue($model->hasErrors('depth'));
+        $this->assertTrue($model->hasErrors('status'));
     }
 }

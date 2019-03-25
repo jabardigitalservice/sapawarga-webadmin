@@ -38,6 +38,8 @@ class Area extends \yii\db\ActiveRecord
             ['name', 'string', 'max' => 64],
             [['name', 'code_bps', 'code_kemendagri', 'latitude', 'longitude', 'meta'], 'trim'],
             [['parent_id', 'depth', 'name', 'code_bps', 'code_kemendagri', 'status'], 'required'],
+            [['parent_id', 'depth'], 'integer'],
+            [['status'], 'boolean'],
         ];
     }
 
