@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ProfileService } from 'src/app/services/profile.service';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, PopoverController } from '@ionic/angular';
 import { Profile } from '../../interfaces/profile';
+import { MenuNavbarComponent } from '../../components/menu-navbar/menu-navbar.component';
 
 @Component({
   selector: 'app-view-profile',
@@ -13,7 +14,8 @@ export class ViewProfilePage implements OnInit {
 
   constructor(
     public loadingCtrl: LoadingController,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    public popoverCtrl: PopoverController
   ) {}
 
   ngOnInit() {
@@ -41,5 +43,16 @@ export class ViewProfilePage implements OnInit {
     setTimeout(() => {
       event.target.complete();
     }, 2000);
+  }
+
+  async navbarMore(ev: any) {
+    const popover = await this.popoverCtrl.create({
+      component: MenuNavbarComponent,
+      event: ev,
+      // animated: true,
+      // showBackdrop: true
+      translucent: true
+    });
+    return await popover.present();
   }
 }

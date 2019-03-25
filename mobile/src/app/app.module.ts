@@ -21,9 +21,10 @@ import { SearchFilterPageModule } from './pages/modal/search-filter/search-filte
 // Components
 import { NotificationsComponent } from './components/notifications/notifications.component';
 import { TokenInterceptor } from './helpers/token.interceptor';
+import { MenuNavbarComponent } from './components/menu-navbar/menu-navbar.component';
 
 @NgModule({
-  declarations: [AppComponent, NotificationsComponent],
+  declarations: [AppComponent, NotificationsComponent, MenuNavbarComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -34,7 +35,7 @@ import { TokenInterceptor } from './helpers/token.interceptor';
     ImagePageModule,
     SearchFilterPageModule
   ],
-  entryComponents: [NotificationsComponent],
+  entryComponents: [NotificationsComponent, MenuNavbarComponent],
   providers: [
     StatusBar,
     SplashScreen,

@@ -7,6 +7,9 @@ import { IonicModule } from '@ionic/angular';
 
 import { ViewProfilePage } from './view-profile.page';
 
+// component
+import { MenuNavbarComponent } from '../../components/menu-navbar/menu-navbar.component';
+
 const routes: Routes = [
   {
     path: '',
@@ -21,6 +24,7 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
+  // entryComponents: [MenuNavbarComponent],
   declarations: [ViewProfilePage]
 })
 export class ViewProfilePageModule {}
