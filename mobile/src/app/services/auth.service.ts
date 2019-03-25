@@ -25,11 +25,15 @@ export class AuthService {
   }
 
   checkToken() {
-    this.storage.get(TOKEN_KEY).then(res => {
-      if (res) {
-        this.authenticationState.next(true);
-      }
-    });
+    console.log(localStorage.getItem(TOKEN_KEY));
+    if (localStorage.getItem(TOKEN_KEY)) {
+      this.authenticationState.next(true);
+    }
+    // this.storage.get(TOKEN_KEY).then(res => {
+    //   if (res) {
+    //     this.authenticationState.next(true);
+    //   }
+    // });
   }
 
   login(data): Observable<any> {
@@ -42,15 +46,18 @@ export class AuthService {
     // console.log(token);
     // this.storage.set('name', 'Max');
     localStorage.setItem(TOKEN_KEY, token);
-    return this.storage.set(TOKEN_KEY, token).then(() => {
-      this.authenticationState.next(true);
-    });
+    this.authenticationState.next(true);
+    // return this.storage.set(TOKEN_KEY, token).then(() => {
+    //   this.authenticationState.next(true);
+    // });
   }
 
   logout() {
-    return this.storage.remove(TOKEN_KEY).then(() => {
-      this.authenticationState.next(false);
-    });
+    localStorage.removeItem(TOKEN_KEY);
+    this.authenticationState.next(false);
+    // return this.storage.remove(TOKEN_KEY).then(() => {
+    //   this.authenticationState.next(false);
+    // });
   }
 
   isAuthenticated() {

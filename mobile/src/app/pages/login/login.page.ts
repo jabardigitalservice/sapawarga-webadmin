@@ -19,6 +19,8 @@ import { Network } from '@ionic-native/network/ngx';
 })
 export class LoginPage implements OnInit {
   public onLoginForm: FormGroup;
+  submitted = false;
+
   // show password
   type: string = 'password';
   passwordShown: boolean = false;
@@ -54,11 +56,16 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {
     this.onLoginForm = this.formBuilder.group({
-      username: [null, Validators.compose([Validators.required])],
-      password: [null, Validators.compose([Validators.required])]
+      username: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(6)]]
     });
 
     // console.log(this.auth.isAuthenticated());
+  }
+
+  // convenience getter for easy access to form fields
+  get f() {
+    return this.onLoginForm.controls;
   }
 
   async forgotPass() {
@@ -108,6 +115,13 @@ export class LoginPage implements OnInit {
   }
 
   async login() {
+    this.submitted = true;
+    // check form if invalid
+    if (this.onLoginForm.invalid) {
+      return;
+    }
+
+    // check internet
     if (!navigator.onLine) {
       this.showToast('Offline', 'Tidak ada koneksi internet');
       return;
@@ -143,15 +157,6 @@ export class LoginPage implements OnInit {
       }
     );
   }
-
-  // // //
-  // goToRegister() {
-  //   this.navCtrl.navigateRoot('/register');
-  // }
-
-  // goToHome() {
-  //   this.navCtrl.navigateRoot('/home-results');
-  // }
 
   async showToast(title: string, msg: string) {
     const toast = await this.toastCtrl.create({
