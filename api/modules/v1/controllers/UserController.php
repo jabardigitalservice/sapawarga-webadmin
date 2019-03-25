@@ -439,6 +439,13 @@ class UserController extends ActiveController
                 'email' => $user->email,
                 'last_login_at' => $user->last_login_at,
                 'last_login_ip' => $user->last_login_ip,
+                'name' => $user->name,
+                'phone' => $user->phone,
+                'address' => $user->address,
+                'rw' => $user->rw,
+                'kel_id' => $user->kel_id,
+                'kec_id' => $user->kec_id,
+                'kabkota_id' => $user->kabkota_id,
             ];
         } else {
             // Validation error
