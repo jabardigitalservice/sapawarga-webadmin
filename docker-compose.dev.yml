@@ -54,6 +54,18 @@ services:
     volumes:
       - ./frontend:/app
 
+  # mobile:
+  #   build:
+  #     context: ./mobile
+  #     dockerfile: Dockerfile.dev
+  #   image: jdsteam/yii2_ngx_mobile:1.0
+  #   depends_on:
+  #     - api
+  #   networks:
+  #     - internal
+  #   volumes:
+  #     - ./mobile:/app
+
   database:
     image: mysql:5.7
     networks:

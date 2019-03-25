@@ -1,132 +1,131 @@
 <ion-header>
-    <ion-toolbar color="light">
-      <ion-buttons slot="start">
-        <ion-icon name="arrow-back" size="large"></ion-icon>
-      </ion-buttons>
-      <ion-title color="dark">Akun Saya</ion-title>
-      <ion-icon name="more" slot="end" size="large"></ion-icon>
-    </ion-toolbar>
-  </ion-header>
-  
-  <ion-content class="profile" color="light">
-    <ion-card no-margin>
-      <ion-card-content class="bg-profile">
-        <img class="profile-image" src="assets/img/avatar.jpg">
-        <h1 class="fw500">Captain Marvel</h1>
+  <ion-toolbar color="light">
+    <ion-title color="dark">Akun Saya</ion-title>
+    <ion-icon name="more" slot="end" size="large"></ion-icon>
+  </ion-toolbar>
+</ion-header>
 
-        <div class="sosial-media">
-          <img src="assets/icon/facebook.png">
-          <img src="assets/icon/instagram.png">
-          <img src="assets/icon/twitter.png" >
-        </div>
-      </ion-card-content>
+<ion-content class="profile" color="light">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-card no-margin>
+    <ion-card-content class="bg-profile">
+      <img class="profile-image" src="assets/img/avatar.jpg">
 
-      <ion-grid fixed no-padding>
-        <ion-row class="ion-padding-start ion-margin-top">
-            <ion-col size="4">
-              <div class="profile-content">
-                <ion-label>Nama <span class="ion-text-right">:</span></ion-label>
-              </div>
-            </ion-col>
-            <ion-col>
-              <div class="profile-data">
-                <ion-label>Capten Marvel</ion-label>
-              </div>
-            </ion-col>
-        </ion-row>
-        <ion-row class="ion-padding-start">
-            <ion-col size="4">
-              <div  class="profile-content">
-                <ion-label>Email <span class="ion-text-right">:</span></ion-label>
-              </div>
-            </ion-col>
-            <ion-col>
-              <div class="profile-data">
-                <ion-label>captain@gmail.com</ion-label>      
-              </div>
-            </ion-col>
-        </ion-row>
-        <ion-row class="ion-padding-start">
-            <ion-col size="4">
-              <div class="profile-content">
-                <ion-label>Telpon <span class="ion-text-right">:</span></ion-label>
-              </div>
-            </ion-col>
-            <ion-col>
-              <div class="profile-data">
-                <ion-label>02569900</ion-label>      
-              </div>
-            </ion-col>
-        </ion-row>
-        <ion-row class="ion-padding-start">
-            <ion-col size="4">
-              <div class="profile-content">
-                <ion-label>Alamat <span class="ion-text-right">:</span></ion-label>
-              </div>
-            </ion-col>
-            <ion-col>
-              <div class="profile-data">
-                <ion-label>Gate way pasteur</ion-label>
-              </div>
-            </ion-col>
-        </ion-row>
-        <ion-row class="ion-padding-start">
-            <ion-col size="4">
-              <div class="profile-content">
-                <ion-label>RW <span class="ion-text-right">:</span></ion-label>
-              </div>
-            </ion-col>
-            <ion-col>
-              <div class="profile-data">
-                <ion-label>11</ion-label>      
-              </div>
-            </ion-col>
-        </ion-row>
-        <ion-row class="ion-padding-start">
-            <ion-col size="4">
-              <div class="profile-content">
-                <ion-label>Kelurahan <span class="ion-text-right">:</span></ion-label>
-              </div>
-            </ion-col>
-            <ion-col>
-              <div class="profile-data">
-                <ion-label>Pasteur</ion-label>
-              </div>
-            </ion-col>
-        </ion-row>
-        <ion-row class="ion-padding-start">
-            <ion-col size="4">
-              <div class="profile-content">
-                <ion-label>Kecamatan <span class="ion-text-right">:</span></ion-label>
-              </div>
-            </ion-col>
-            <ion-col>
-              <div class="profile-data">
-                <ion-label>Cicendo</ion-label>
-              </div>
-            </ion-col>
-        </ion-row>
-        <ion-row class="ion-padding-start">
-            <ion-col size="4">
-              <div class="profile-content">
-                <ion-label>Kab/Kota <span class="ion-text-right">:</span></ion-label>
-              </div>
-            </ion-col>
-            <ion-col>
-              <div class="profile-data">
-                <ion-label>Kota Bandung</ion-label>
-              </div>
-            </ion-col>
-        </ion-row>
-      </ion-grid>
+      <div class="sosial-media">
+        <img src="assets/icon/facebook.png">
+        <img src="assets/icon/instagram.png">
+        <img src="assets/icon/twitter.png">
+      </div>
+    </ion-card-content>
+
+    <ion-grid fixed no-padding *ngIf="dataProfile">
+      <ion-row class="ion-padding-start ion-margin-top">
+        <ion-col size="4">
+          <div class="profile-content">
+            <ion-label>Nama <span class="ion-text-right">:</span></ion-label>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div class="profile-data">
+            <ion-label>Capten Marvel</ion-label>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-padding-start">
+        <ion-col size="4">
+          <div class="profile-content">
+            <ion-label>Email <span class="ion-text-right">:</span></ion-label>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div class="profile-data">
+            <ion-label>{{ dataProfile.email }}</ion-label>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-padding-start">
+        <ion-col size="4">
+          <div class="profile-content">
+            <ion-label>Telpon <span class="ion-text-right">:</span></ion-label>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div class="profile-data">
+            <ion-label>02569900</ion-label>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-padding-start">
+        <ion-col size="4">
+          <div class="profile-content">
+            <ion-label>Alamat <span class="ion-text-right">:</span></ion-label>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div class="profile-data">
+            <ion-label>Gate way pasteur</ion-label>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-padding-start">
+        <ion-col size="4">
+          <div class="profile-content">
+            <ion-label>RW <span class="ion-text-right">:</span></ion-label>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div class="profile-data">
+            <ion-label>11</ion-label>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-padding-start">
+        <ion-col size="4">
+          <div class="profile-content">
+            <ion-label>Kelurahan <span class="ion-text-right">:</span></ion-label>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div class="profile-data">
+            <ion-label>Pasteur</ion-label>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-padding-start">
+        <ion-col size="4">
+          <div class="profile-content">
+            <ion-label>Kecamatan <span class="ion-text-right">:</span></ion-label>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div class="profile-data">
+            <ion-label>Cicendo</ion-label>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-padding-start">
+        <ion-col size="4">
+          <div class="profile-content">
+            <ion-label>Kab/Kota <span class="ion-text-right">:</span></ion-label>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div class="profile-data">
+            <ion-label>Kota Bandung</ion-label>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
 
 
-        <!-- <ion-item>
+    <!-- <ion-item>
           <ion-label>Nama: </ion-label>
           <span>Capten</span>
         </ion-item> -->
-  
-      <!-- <ion-grid fixed no-padding>
+
+    <!-- <ion-grid fixed no-padding>
         <ion-row>
           <ion-col size="12" padding>
   
@@ -200,8 +199,8 @@
           </ion-col>
         </ion-row>
       </ion-grid> -->
-  
-      <!-- <ion-button size="medium" expand="full" color="dark" (click)="sendData()" class="ion-margin">Simpan
+
+    <!-- <ion-button size="medium" expand="full" color="dark" (click)="sendData()" class="ion-margin">Simpan
         perubahan</ion-button> -->
-    </ion-card>
-  </ion-content>
+  </ion-card>
+</ion-content>

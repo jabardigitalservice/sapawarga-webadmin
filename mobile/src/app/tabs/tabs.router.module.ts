@@ -32,7 +32,7 @@ const routes: Routes = [
           {
             path: '',
             loadChildren:
-              '../pages/edit-profile/edit-profile.module#EditProfilePageModule'
+              '../pages/view-profile/view-profile.module#ViewProfilePageModule'
           }
         ]
       },
