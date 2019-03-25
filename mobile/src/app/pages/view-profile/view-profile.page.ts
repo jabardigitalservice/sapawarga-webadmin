@@ -26,13 +26,19 @@ export class ViewProfilePage implements OnInit {
     this.getDataProfile();
   }
 
-  getDataProfile() {
+  async getDataProfile() {
+    const loader = await this.loadingCtrl.create({
+      duration: 10000
+    });
+    loader.present();
     this.profileService.getProfile().subscribe(
       res => {
         this.dataProfile = res['data'];
+        loader.dismiss();
       },
       err => {
         console.log(err);
+        loader.dismiss();
       }
     );
   }
@@ -49,10 +55,13 @@ export class ViewProfilePage implements OnInit {
     const popover = await this.popoverCtrl.create({
       component: MenuNavbarComponent,
       event: ev,
-      // animated: true,
-      // showBackdrop: true
+      animated: true,
+      showBackdrop: true,
       translucent: true
     });
+
+    popover.onDidDismiss();
+
     return await popover.present();
   }
 }
