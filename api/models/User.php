@@ -29,6 +29,13 @@ use yii\web\Request as WebRequest;
  * @property integer $role
  * @property integer $created_at
  * @property integer $updated_at
+ * @property string $name
+ * @property string $phone
+ * @property string $address
+ * @property string $rw
+ * @property string $kel_id
+ * @property string $kec_id
+ * @property string $kabkota_id
  *
  * @package app\models
  */
@@ -301,6 +308,13 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
                 }
                 return $statusLabel;
             },
+            'name',
+            'phone',
+            'address',
+            'rw',
+            'kel_id',
+            'kec_id',
+            'kabkota_id',
             'created_at',
             'updated_at',
         ];
@@ -410,6 +424,8 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 
             ['permissions', 'validatePermissions'],
             [['access_token', 'permissions'], 'safe'],
+            ['phone', 'trim'],
+            [['name', 'phone', 'address', 'rw', 'kel_id', 'kec_id', 'kabkota_id'], 'default'],
         ];
     }
 
