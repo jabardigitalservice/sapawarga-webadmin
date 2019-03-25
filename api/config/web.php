@@ -10,6 +10,8 @@ $config = [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
     ],
+    'sourceLanguage' => 'en-US',
+    'language' => 'id-ID',
     'components' => [
         'request' => [
             'cookieValidationKey' => getenv('COOKIE_VALIDATION_KEY'),
