@@ -1,0 +1,80 @@
+<ion-header>
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <!-- <ion-menu-button color="dark"></ion-menu-button> -->
+      <ion-img [src]="logoApp" class="logo-app"></ion-img>
+    </ion-buttons>
+    <ion-searchbar
+      placeholder="cari"
+      [(ngModel)]="searchKey"
+      animated
+    ></ion-searchbar>
+    <!-- <ion-buttons slot="end">
+      <ion-button size="small" shape="round" color="dark" (click)="notifications()">
+        <ion-icon name="mail-open"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button size="small" shape="round" color="dark" (click)="notifications()">
+        <ion-icon name="notifications"></ion-icon>
+        <ion-badge color="dark" slot="end">2</ion-badge>
+      </ion-button>
+    </ion-buttons> -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card class="bg-white ion-margin-top">
+    <ion-slides pager="true" [options]="slideOpts" pager="false">
+      <ion-slide *ngFor="let img of themeCover">
+        <ion-img [src]="img.slide"></ion-img>
+      </ion-slide>
+    </ion-slides>
+
+    <!-- <ion-button
+      expand="full"
+      color="dark"
+      (click)="presentImage(themeCover)"
+      no-margin
+    >
+      Modal 1: Modal Image
+    </ion-button> -->
+  </ion-card>
+  <!-- <ion-card no-margin class="no-radius" padding>
+    <ion-item lines="none" color="medium">
+      <ion-label>
+        <h2 no-margin class="fw500 no-margin">
+          <ion-text color="dark">Alert / Toast test</ion-text>
+        </h2>
+
+        <p class="text-11x no-margin">
+          <ion-text color="primary">{{yourLocation}}</ion-text>
+        </p>
+      </ion-label>
+      <ion-button shape="round" fill="outline" size="small" color="primary" (click)="alertLocation()">
+        Location
+        <ion-icon name="locate"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-card>
+
+  <ion-button margin shape="round" expand="full" color="secondary" (click)="searchFilter()">
+    Modal 2: Search Filter
+  </ion-button> -->
+
+  <ion-item lines="none" class="ion-margin-start ion-margin-end">
+    <ion-label>
+      <h2 no-margin class="fw500 no-margin">
+        <ion-text color="dark">Layanan Terpadu</ion-text>
+      </h2>
+    </ion-label>
+  </ion-item>
+
+  <ion-row text-center small class="text-dark ion-margin-top" padding>
+    <ion-col size="3" class="mt-1" *ngFor="let page of appPages">
+      <img class="icon-img" [src]="page.icon" alt="icon" />
+      <ion-label class="label-menu" color="dark">{{ page.title }}</ion-label>
+    </ion-col>
+  </ion-row>
+  <!-- <popmenu></popmenu> -->
+</ion-content>
