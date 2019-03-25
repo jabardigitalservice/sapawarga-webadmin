@@ -4,5 +4,5 @@
 * Translation map for id-ID, app/error category
 */
 return [
-    'Incorrect username or password.' => 'Username atau password salah.'
+    'error.login.incorrect' => 'Username atau password salah.'
 ];

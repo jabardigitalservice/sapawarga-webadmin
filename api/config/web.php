@@ -184,8 +184,10 @@ $config = [
         ],
         'i18n' => [
             'translations' => [
-                'app*' => [
+                '*' => [
                     'class' => 'yii\i18n\PhpMessageSource',
+                    'sourceLanguage' => 'key',
+                    'forceTranslation' => true,
                     'fileMap' => [
                         'app' => 'app.php',
                         'app/error' => 'error.php',
