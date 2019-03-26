@@ -65,9 +65,12 @@ class UserEditForm extends Model
             // if user email has been changed, then put the email in unconfirmed_email and set confirmed_at as null
             $updateIndicator = false;
             if ($this->_user->email != $this->email) {
+                // Disable email confirmation for now
                 $this->_user->unconfirmed_email = $this->email;
-                $this->_user->confirmed_at = null;
-                $this->_user->status = User::STATUS_PENDING;
+                $this->_user->email = $this->email;
+                // $this->_user->confirmed_at = null;
+                // $this->_user->status = User::STATUS_PENDING;
+                $this->_user->confirmed_at = Yii::$app->formatter->asTimestamp(date('Y-m-d H:i:s'));
                 $this->_user->generateAuthKey();
                 $updateIndicator = true;
             }
@@ -80,7 +83,7 @@ class UserEditForm extends Model
 
             if ($updateIndicator == true && $this->_user->save(false)) {
                 // Send confirmation email
-                $this->sendConfirmationEmail();
+                // $this->sendConfirmationEmail();
                 return true;
             } elseif ($updateIndicator == false) {
                 // Nothing to update
