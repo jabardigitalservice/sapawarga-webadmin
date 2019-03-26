@@ -46,6 +46,19 @@ class UserEditForm extends Model
                 ],
                 'message' => 'The ID is not valid.'
             ],
+
+            ['username', 'trim'],
+            ['username', 'string', 'length' => [5, 14]],
+            [
+                'username',
+                'unique',
+                'targetClass' => '\app\models\User',
+                'message' => Yii::t('app/error', 'app.error.update.username.taken'),
+                'filter' => function ($query) {
+                    $query->andWhere(['!=', 'id', $this->id]);
+                }
+            ],
+
             ['email', 'trim'],
             ['email', 'required'],
             ['email', 'email'],
@@ -54,7 +67,7 @@ class UserEditForm extends Model
                 'email',
                 'unique',
                 'targetClass' => '\app\models\User',
-                'message' => Yii::t('app', 'This email address has already been taken.'),
+                'message' => Yii::t('app/error', 'app.error.update.email.taken'),
                 'filter' => function ($query) {
                     $query->andWhere(['!=', 'id', $this->id]);
                 }
