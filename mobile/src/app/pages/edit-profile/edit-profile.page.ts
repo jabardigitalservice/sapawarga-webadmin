@@ -27,15 +27,15 @@ export class EditProfilePage implements OnInit {
     this.onEditForm = this.formBuilder.group({
       name: [null, Validators.required],
       email: [null, Validators.required],
-      telp: [null, Validators.required],
+      phone: [null, Validators.required],
       address: [null, Validators.required],
-      kab_kota: [2, Validators.required],
+      kabkota: [2, Validators.required],
       kecamatan: [null, Validators.required],
       kelurahan: [null, Validators.required],
       rw: [null, Validators.required],
       role: [null, Validators.required],
-      ig: [''],
-      fb: [''],
+      instagram: [''],
+      facebook: [''],
       twitter: ['']
     });
   }
