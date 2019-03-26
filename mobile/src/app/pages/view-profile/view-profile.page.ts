@@ -25,9 +25,6 @@ export class ViewProfilePage implements OnInit {
 
   ngOnInit() {
     this.getDataProfile(null);
-    if (this.dataProfile) {
-      this.showToast('Sosial Media', 'Mohon lengkapi akun sosial media anda');
-    }
   }
 
   ionViewDidEnter() {
@@ -45,6 +42,13 @@ export class ViewProfilePage implements OnInit {
       res => {
         this.dataProfile = res['data'];
         loader.dismiss();
+        if (
+          !this.dataProfile.twitter &&
+          !this.dataProfile.facebook &&
+          !this.dataProfile.instagram
+        ) {
+          this.showToast('Mohon lengkapi akun sosial media anda');
+        }
       },
       err => {
         console.log(err);
@@ -83,7 +87,7 @@ export class ViewProfilePage implements OnInit {
     console.log(value);
   }
 
-  async showToast(title: string, msg: string) {
+  async showToast(msg: string) {
     const toast = await this.toastCtrl.create({
       message: msg,
       duration: 2000
