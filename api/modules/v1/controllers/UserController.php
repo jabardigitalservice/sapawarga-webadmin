@@ -444,8 +444,11 @@ class UserController extends ActiveController
                 'address' => $user->address,
                 'rw' => $user->rw,
                 'kel_id' => $user->kel_id,
+                'kelurahan' => $user->kelurahan,
                 'kec_id' => $user->kec_id,
+                'kecamatan' => $user->kecamatan,
                 'kabkota_id' => $user->kabkota_id,
+                'kabkota' => $user->kabkota,
             ];
         } else {
             // Validation error
