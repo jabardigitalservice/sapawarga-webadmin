@@ -396,11 +396,11 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         return [
             ['username', 'trim'],
             ['username', 'required'],
-            ['username', 'string', 'length' => [3, 15]],
+            ['username', 'string', 'length' => [5, 14]],
             [
                 'username',
                 'match',
-                'pattern' => '/^[A-Za-z0-9_-]{3,15}$/',
+                'pattern' => '/^[a-z0-9_.]{5,14}$/',
                 'message' => Yii::t(
                     'app',
                     'Your username can only contain alphanumeric characters, underscores and dashes.'
@@ -409,10 +409,10 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             ['username', 'validateUsername'],
             ['email', 'trim'],
             ['email', 'required'],
-            ['email', 'email'],
             ['email', 'string', 'max' => 255],
+            ['email', 'email'],
             ['email', 'validateEmail'],
-            ['password', 'string', 'min' => 6],
+            ['password', 'string', 'min' => 5],
             ['password', 'validatePasswordSubmit'],
             [['confirmed_at', 'blocked_at', 'last_login_at'], 'datetime', 'format' => 'php:U'],
             [['last_login_ip', 'registration_ip'], 'ip'],
