@@ -195,6 +195,22 @@ $config = [
                 ],
             ],
         ],
+
+        'fileStorage' => [
+            'class' => 'yii2tech\filestorage\local\Storage',
+            'basePath' => '@webroot/storage',
+            'baseUrl' => '@web/storage',
+            'dirPermission' => 0775,
+            'filePermission' => 0755,
+            'buckets' => [
+                'tempFiles' => [
+                    'baseSubPath' => 'temp',
+                ],
+                'imageFiles' => [
+                    'baseSubPath' => 'image',
+                ],
+            ]
+        ],
     ],
     'modules' => [
         'v1' => [
