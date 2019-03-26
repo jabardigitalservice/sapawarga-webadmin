@@ -88,6 +88,7 @@ class UserEditForm extends Model
         if ($this->validate()) {
             $this->getUserByID();
 
+
             if ($this->_user->email != $this->email) {
                 $this->_user->unconfirmed_email = $this->email;
                 $this->_user->email = $this->email;
@@ -100,55 +101,16 @@ class UserEditForm extends Model
                 $this->_user->setPassword($this->password);
             }
 
-            if ($this->username != '') {
-                $this->_user->username = $this->username;
-            }
-
             // Set all the other fields
-
-            if ($this->name != '') {
-                $this->_user->name = $this->name;
+            $attrib_names = $this->attributes();
+            foreach ($attrib_names as $name) {
+                if ($this[$name] != 'email' && $this[$name] != 'password') {
+                    if ($this[$name] != '') {
+                        $this->_user[$name] = $this[$name];
+                    }
+                }
             }
 
-            if ($this->phone != '') {
-                $this->_user->phone = $this->phone;
-            }
-
-            if ($this->address != '') {
-                $this->_user->address = $this->address;
-            }
-
-            if ($this->rw != '') {
-                $this->_user->rw = $this->rw;
-            }
-
-            if ($this->kel_id != '') {
-                $this->_user->kel_id = $this->kel_id;
-            }
-
-            if ($this->kec_id != '') {
-                $this->_user->kec_id = $this->kec_id;
-            }
-
-            if ($this->kabkota_id != '') {
-                $this->_user->kabkota_id = $this->kabkota_id;
-            }
-
-            if ($this->photo_url != '') {
-                $this->_user->photo_url = $this->photo_url;
-            }
-
-            if ($this->facebook != '') {
-                $this->_user->facebook = $this->facebook;
-            }
-
-            if ($this->twitter != '') {
-                $this->_user->twitter = $this->twitter;
-            }
-
-            if ($this->instagram != '') {
-                $this->_user->instagram = $this->instagram;
-            }
 
             if ($this->_user->save(false)) {
                 return true;
