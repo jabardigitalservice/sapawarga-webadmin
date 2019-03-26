@@ -10,9 +10,8 @@ class UserTest extends \Codeception\Test\Unit
 
     use Specify;
 
-    private $username = 'username';
-    private $email = 'email';
-    private $password = 'password';
+    private $_username = 'username';
+    private $_email = 'email';
 
     public function testValidateUserFields()
     {
@@ -33,9 +32,9 @@ class UserTest extends \Codeception\Test\Unit
                 // Verify validation fails as didn't provide any attributes
                 $this->assertFalse($user->validate());
 
-                // Verify that the username and password properties are required
-                $this->assertTrue($user->hasErrors($this->username));
-                $this->assertTrue($user->hasErrors($this->email));
+                // Verify that the username and email properties are required
+                $this->assertTrue($user->hasErrors($this->_username));
+                $this->assertTrue($user->hasErrors($this->_email));
 
                 // Set temporary values for username and email
                 $user->username = 'username';
@@ -55,16 +54,16 @@ class UserTest extends \Codeception\Test\Unit
                 // Set username length as 2
                 $user->username = 'ab';
                 // Verify that validation must be failed
-                $this->assertFalse($user->validate($this->username));
+                $this->assertFalse($user->validate($this->_username));
 
                 // Set username length as 5
                 $user->username = 'abcde';
                 // Verify that validation must be failed
-                $this->assertTrue($user->validate($this->username));
+                $this->assertTrue($user->validate($this->_username));
 
                 // Set username length as 15
                 $user->username = 'abcdefghijklmno';
-                $this->assertFalse($user->validate($this->username));
+                $this->assertFalse($user->validate($this->_username));
             }
         );
 
@@ -72,16 +71,16 @@ class UserTest extends \Codeception\Test\Unit
             $user = new User();
 
             $user->username = 'user-name';
-            $this->assertFalse($user->validate($this->username));
+            $this->assertFalse($user->validate($this->_username));
 
             $user->username = 'user name';
-            $this->assertFalse($user->validate($this->username));
+            $this->assertFalse($user->validate($this->_username));
 
             $user->username = 'userName';
-            $this->assertFalse($user->validate($this->username));
+            $this->assertFalse($user->validate($this->_username));
 
             $user->username = 'my.user_name01';
-            $this->assertTrue($user->validate($this->username));
+            $this->assertTrue($user->validate($this->_username));
         });
 
         $this->specify('username is unique', function () {
@@ -93,26 +92,26 @@ class UserTest extends \Codeception\Test\Unit
             $user = new User();
 
             $user->email = 'test@example.com';
-            $this->assertTrue($user->validate($this->email));
+            $this->assertTrue($user->validate($this->_email));
 
             $user->email = 'user@4koz0713e0irdqhwlq9vo4osgh1dov14ywb6sxdresfu77zfeldz5ftq0w7o6dmerq2stcrqiwvg8ddzh2sjeot4vrqox9mc7px3k6uren0aqgqo3n63lbcn3mqb68a5fncp9xb51jhgqkmmuay0z6sfhrzgvtbeblvt565et7hqr4lqndfxllvprp02u3juljmdltae9vc2vrewrvvfiqmtnr3mdi2w9dghyzhsf5i585pxfjprk9.com';
-            $this->assertFalse($user->validate($this->email));
+            $this->assertFalse($user->validate($this->_email));
         });
 
         $this->specify('email must be valid', function () {
             $user = new User();
 
             $user->email = 'test.example.com';
-            $this->assertFalse($user->validate($this->email));
+            $this->assertFalse($user->validate($this->_email));
 
             $user->email = 'test user@example.com';
-            $this->assertFalse($user->validate($this->email));
+            $this->assertFalse($user->validate($this->_email));
 
             $user->email = 'test@example.com';
-            $this->assertTrue($user->validate($this->email));
+            $this->assertTrue($user->validate($this->_email));
 
             $user->email = 'test-user.name01@example.com';
-            $this->assertTrue($user->validate($this->email));
+            $this->assertTrue($user->validate($this->_email));
         });
 
         $this->specify('email is unique', function () {
