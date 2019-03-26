@@ -9,9 +9,6 @@
 </ion-header>
 
 <ion-content class="profile" color="light">
-  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
   <ion-card no-margin>
     <ion-card-content class="bg-profile">
       <img class="profile-image" src="assets/img/avatar.jpg" />
@@ -24,7 +21,7 @@
       </div>
     </ion-card-content>
 
-    <ion-grid fixed no-padding *ngIf="dataProfile">
+    <ion-grid fixed no-padding>
       <ion-row class="ion-padding-start ion-margin-top">
         <ion-col size="4">
           <div class="profile-content">
@@ -61,7 +58,7 @@
         </ion-col>
         <ion-col>
           <div class="profile-data">
-            <ion-label>{{ dataProfile.email }}</ion-label>
+            <ion-label>captain@gmail.com</ion-label>
           </div>
         </ion-col>
       </ion-row>
