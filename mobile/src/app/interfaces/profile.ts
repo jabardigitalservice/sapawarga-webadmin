@@ -5,20 +5,23 @@ export interface Profile {
   name: string;
   phone: string;
   address: string;
-  kel_id: number;
-  kel_name: string;
-  kec_id: number;
-  kec_name: string;
-  kabkota_id: number;
-  kabkota_name: string;
+  kelurahan: kelurahan;
+  kecamatan: kecamatan;
+  kab_kota: kab_kota;
   rw: number;
 }
 
-// interface areas {
-//   kel_id: number;
-//   kel_name: string;
-//   kec_id: number;
-//   kec_name: string;
-//   kabkota_id: number;
-//   kabkota_name: string;
-// }
+interface kelurahan {
+  id: number;
+  name: string;
+}
+
+interface kecamatan {
+  id: number;
+  name: string;
+}
+
+interface kab_kota {
+  id: number;
+  name: string;
+}

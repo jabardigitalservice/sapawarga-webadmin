@@ -8,7 +8,12 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="profile" color="light">
+<ion-content class="profile" color="light" *ngIf="dataProfile">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
   <ion-card no-margin>
     <ion-card-content class="bg-profile">
       <img class="profile-image" src="assets/img/avatar.jpg" />
@@ -37,16 +42,12 @@
       <ion-row class="ion-padding-start">
         <ion-col size="4">
           <div class="profile-content nama-pengguna">
-            <ion-label
-              >Nama Pengguna<span class="ion-text-right nama-pengguna-span"
-                >:</span
-              ></ion-label
-            >
+            <ion-label>Nama Pengguna<span class="ion-text-right nama-pengguna-span">:</span></ion-label>
           </div>
         </ion-col>
         <ion-col>
           <div class="profile-data">
-            <ion-label>captain.marvel</ion-label>
+            <ion-label>{{ dataProfile.username }}</ion-label>
           </div>
         </ion-col>
       </ion-row>
@@ -58,7 +59,7 @@
         </ion-col>
         <ion-col>
           <div class="profile-data">
-            <ion-label>captain@gmail.com</ion-label>
+            <ion-label>{{ dataProfile.email }}</ion-label>
           </div>
         </ion-col>
       </ion-row>
@@ -101,9 +102,7 @@
       <ion-row class="ion-padding-start">
         <ion-col size="4">
           <div class="profile-content">
-            <ion-label
-              >Kelurahan <span class="ion-text-right">:</span></ion-label
-            >
+            <ion-label>Kelurahan <span class="ion-text-right">:</span></ion-label>
           </div>
         </ion-col>
         <ion-col>
@@ -115,9 +114,7 @@
       <ion-row class="ion-padding-start">
         <ion-col size="4">
           <div class="profile-content">
-            <ion-label
-              >Kecamatan <span class="ion-text-right">:</span></ion-label
-            >
+            <ion-label>Kecamatan <span class="ion-text-right">:</span></ion-label>
           </div>
         </ion-col>
         <ion-col>
@@ -129,9 +126,7 @@
       <ion-row class="ion-padding-start">
         <ion-col size="4">
           <div class="profile-content">
-            <ion-label
-              >Kab/Kota <span class="ion-text-right">:</span></ion-label
-            >
+            <ion-label>Kab/Kota <span class="ion-text-right">:</span></ion-label>
           </div>
         </ion-col>
         <ion-col class="ion-margin-bottom">

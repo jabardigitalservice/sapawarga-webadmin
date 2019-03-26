@@ -25,11 +25,11 @@ export class EditProfilePage implements OnInit {
 
   ngOnInit() {
     this.onEditForm = this.formBuilder.group({
-      nama: [null, Validators.required],
+      name: [null, Validators.required],
       email: [null, Validators.required],
       telp: [null, Validators.required],
-      alamat: [null, Validators.required],
-      kab_kota: [null, Validators.required],
+      address: [null, Validators.required],
+      kab_kota: [2, Validators.required],
       kecamatan: [null, Validators.required],
       kelurahan: [null, Validators.required],
       rw: [null, Validators.required],
@@ -82,4 +82,6 @@ export class EditProfilePage implements OnInit {
       this.navCtrl.navigateForward('/home-results');
     });
   }
+
+  getKabKota() {}
 }
