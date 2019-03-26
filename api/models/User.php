@@ -330,6 +330,10 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             'kel_id',
             'kec_id',
             'kabkota_id',
+            'photo_url',
+            'facebook',
+            'twitter',
+            'instagram',
             'created_at',
             'updated_at',
         ];
@@ -440,7 +444,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             ['permissions', 'validatePermissions'],
             [['access_token', 'permissions'], 'safe'],
             ['phone', 'trim'],
-            [['name', 'phone', 'address', 'rw', 'kel_id', 'kec_id', 'kabkota_id'], 'default'],
+            [['name', 'phone', 'address', 'rw', 'kel_id', 'kec_id', 'kabkota_id', 'photo_url', 'facebook', 'twitter', 'instagram'], 'default'],
         ];
     }
 
