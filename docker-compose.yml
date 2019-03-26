@@ -1,7 +1,7 @@
 version: '3'
 services:
   nginx:
-    image: jdsteam/sapawarga:1.0
+    image: jdsteam/sapawarga-nginx:1.0
     networks:
       - internal
     depends_on:
@@ -14,21 +14,21 @@ services:
       - 443:443
 
   api:
-    image: jdsteam/sapawarga:1.0
+    image: jdsteam/sapawarga-api:1.0
     networks:
       - internal
     env_file:
       - .env
 
   backend:
-    image: jdsteam/sapawarga:1.0
+    image: jdsteam/sapawarga-backend:1.0
     depends_on:
       - api
     networks:
       - internal
 
   frontend:
-    image: jdsteam/sapawarga:1.0
+    image: jdsteam/sapawarga-frontend:1.0
     depends_on:
       - api
     networks:

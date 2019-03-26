@@ -3,7 +3,7 @@ services:
   nginx:
     build:
       context: ./nginx
-    image: jdsteam/sapawarga:1.0
+    image: jdsteam/sapawarga-nginx:1.0
     networks:
       - internal
     volumes:
@@ -20,7 +20,7 @@ services:
   api:
     build:
       context: ./api
-    image: jdsteam/sapawarga:1.0
+    image: jdsteam/sapawarga-api:1.0
     networks:
       - internal
     depends_on:
@@ -34,7 +34,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile.dev
-    image: jdsteam/sapawarga:1.0
+    image: jdsteam/sapawarga-backend:1.0
     depends_on:
       - api
     networks:
@@ -46,7 +46,7 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile.dev
-    image: jdsteam/sapawarga:1.0
+    image: jdsteam/sapawarga-frontend:1.0
     depends_on:
       - api
     networks:
