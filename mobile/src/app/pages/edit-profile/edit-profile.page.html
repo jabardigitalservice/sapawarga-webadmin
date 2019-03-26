@@ -1,33 +1,34 @@
 <ion-header>
   <ion-toolbar color="light">
     <ion-buttons slot="start">
-      <ion-icon name="arrow-back" size="large"></ion-icon>
+      <ion-back-button></ion-back-button>
     </ion-buttons>
     <ion-title color="dark">Akun Saya</ion-title>
     <ion-buttons slot="end">
       <ion-icon name="more" size="large"></ion-icon>
     </ion-buttons>
-
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="profile" color="light">
   <ion-card no-margin>
     <ion-card-content class="bg-profile">
-      <img src="assets/img/avatar.jpg">
+      <img src="../../../assets/img/avatar.jpg" />
       <h1 class="fw500">Captain Marvel</h1>
 
       <ion-button icon-left color="secondary">
         <ion-icon name="photos"></ion-icon>
         Ganti Foto
       </ion-button>
-
     </ion-card-content>
 
     <ion-grid fixed no-padding>
       <ion-row>
         <ion-col size="12" padding>
-          <form [formGroup]="onEditForm" (ngSubmit)="onFormSubmit(onEditForm.value)">
+          <form
+            [formGroup]="onEditForm"
+            (ngSubmit)="onFormSubmit(onEditForm.value)"
+          >
             <ion-list margin-bottom>
               <ion-list-header color="light">
                 <ion-label class="fw700">Profil</ion-label>
@@ -35,27 +36,48 @@
 
               <ion-item>
                 <ion-label color="dark" position="stacked">Nama:</ion-label>
-                <ion-input type="text" formControlName="nama" placeholder="Masukan nama anda"></ion-input>
+                <ion-input
+                  type="text"
+                  formControlName="name"
+                  placeholder="Masukkan nama anda"
+                ></ion-input>
               </ion-item>
 
               <ion-item>
                 <ion-label color="dark" position="stacked">Email:</ion-label>
-                <ion-input type="email" formControlName="email" placeholder="Masukan email anda"></ion-input>
+                <ion-input
+                  type="email"
+                  formControlName="email"
+                  placeholder="Masukkan email anda"
+                ></ion-input>
               </ion-item>
 
               <ion-item>
                 <ion-label color="dark" position="stacked">Telp:</ion-label>
-                <ion-input type="tel" formControlName="telp" placeholder="Masukan nomor telepon anda"></ion-input>
+                <ion-input
+                  type="tel"
+                  formControlName="phone"
+                  placeholder="Masukkan nomor telepon anda"
+                ></ion-input>
               </ion-item>
 
               <ion-item>
                 <ion-label color="dark" position="stacked">Alamat:</ion-label>
-                <ion-input type="text" formControlName="alamat" placeholder="Masukan alamat anda"></ion-input>
+                <ion-input
+                  type="text"
+                  formControlName="address"
+                  placeholder="Masukkan alamat anda"
+                ></ion-input>
               </ion-item>
 
               <ion-item>
                 <ion-label>Kab/Kota:</ion-label>
-                <ion-select formControlName="kab_kota" okText="Pilih" cancelText="Batal" placeholder="Pilih Kab/Kota">
+                <ion-select
+                  formControlName="kab_kota"
+                  okText="Pilih"
+                  cancelText="Batal"
+                  placeholder="Pilih Kab/Kota"
+                >
                   <ion-select-option value="brown">Brown</ion-select-option>
                   <ion-select-option value="blonde">Blonde</ion-select-option>
                 </ion-select>
@@ -63,7 +85,12 @@
 
               <ion-item>
                 <ion-label>Kecamatan:</ion-label>
-                <ion-select formControlName="kecamatan" okText="Pilih" cancelText="Batal" placeholder="Pilih Kecamatan">
+                <ion-select
+                  formControlName="kecamatan"
+                  okText="Pilih"
+                  cancelText="Batal"
+                  placeholder="Pilih Kecamatan"
+                >
                   <ion-select-option value="brown">Brown</ion-select-option>
                   <ion-select-option value="blonde">Blonde</ion-select-option>
                 </ion-select>
@@ -71,7 +98,12 @@
 
               <ion-item>
                 <ion-label>Kelurahan:</ion-label>
-                <ion-select formControlName="kelurahan" okText="Pilih" cancelText="Batal" placeholder="Pilih Kelurahan">
+                <ion-select
+                  formControlName="kelurahan"
+                  okText="Pilih"
+                  cancelText="Batal"
+                  placeholder="Pilih Kelurahan"
+                >
                   <ion-select-option value="brown">Brown</ion-select-option>
                   <ion-select-option value="blonde">Blonde</ion-select-option>
                 </ion-select>
@@ -79,7 +111,12 @@
 
               <ion-item>
                 <ion-label>RW:</ion-label>
-                <ion-select formControlName="rw" okText="Pilih" cancelText="Batal" placeholder="Pilih RW">
+                <ion-select
+                  formControlName="rw"
+                  okText="Pilih"
+                  cancelText="Batal"
+                  placeholder="Pilih RW"
+                >
                   <ion-select-option value="brown">Brown</ion-select-option>
                   <ion-select-option value="blonde">Blonde</ion-select-option>
                 </ion-select>
@@ -87,12 +124,16 @@
 
               <ion-item>
                 <ion-label>Role:</ion-label>
-                <ion-select formControlName="role" okText="Pilih" cancelText="Batal" placeholder="Pilih Role">
+                <ion-select
+                  formControlName="role"
+                  okText="Pilih"
+                  cancelText="Batal"
+                  placeholder="Pilih Role"
+                >
                   <ion-select-option value="brown">Brown</ion-select-option>
                   <ion-select-option value="blonde">Blonde</ion-select-option>
                 </ion-select>
               </ion-item>
-
             </ion-list>
 
             <ion-list>
@@ -101,23 +142,49 @@
               </ion-list-header>
 
               <ion-item>
-                <ion-label color="dark" position="stacked">Instagram:</ion-label>
-                <ion-input type="text" formControlName="ig" placeholder="Masukan akun instagram Anda"></ion-input>
+                <!-- <ion-label color="dark" position="stacked">Instagram:</ion-label> -->
+                <ion-label color="dark" position="stacked"
+                  >Instagram: (contoh: <b>user234</b>)</ion-label
+                >
+                <ion-input
+                  type="text"
+                  formControlName="instagram"
+                  placeholder="masukkan akun instagram anda"
+                >
+                </ion-input>
               </ion-item>
 
               <ion-item>
-                <ion-label color="dark" position="stacked">Facebook:</ion-label>
-                <ion-input type="text" formControlName="fb" placeholder="Masukan akun facebook Anda"></ion-input>
+                <ion-label color="dark" position="stacked"
+                  >Facebook: (contoh: <b>http://facebook.com/user234</b>)
+                </ion-label>
+                <ion-input
+                  type="text"
+                  formControlName="facebook"
+                  placeholder="Masukkan akun facebook Anda"
+                ></ion-input>
               </ion-item>
 
               <ion-item>
-                <ion-label color="dark" position="stacked">Twitter:</ion-label>
-                <ion-input type="text" formControlName="twitter" placeholder="Masukan akun Twitter Anda"></ion-input>
+                <ion-label color="dark" position="stacked"
+                  >Twitter: (contoh: <b>user234</b>)</ion-label
+                >
+                <ion-input
+                  type="text"
+                  formControlName="twitter"
+                  placeholder="Masukkan akun Twitter Anda"
+                ></ion-input>
               </ion-item>
-
             </ion-list>
-            <ion-button size="medium" expand="full" color="dark" type="submit" [disabled]="!onEditForm.valid">Simpan
-              perubahan</ion-button>
+            <ion-button
+              class="ion-margin-top"
+              size="medium"
+              expand="full"
+              color="dark"
+              type="submit"
+              [disabled]="!onEditForm.valid"
+              >Simpan perubahan</ion-button
+            >
           </form>
         </ion-col>
       </ion-row>

@@ -7,6 +7,10 @@ import { IonicModule } from '@ionic/angular';
 
 import { ViewProfilePage } from './view-profile.page';
 
+// Plugin
+import { AppAvailability } from '@ionic-native/app-availability/ngx';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+
 const routes: Routes = [
   {
     path: '',
@@ -21,6 +25,8 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
+  providers: [AppAvailability, InAppBrowser],
+  // entryComponents: [MenuNavbarComponent],
   declarations: [ViewProfilePage]
 })
 export class ViewProfilePageModule {}

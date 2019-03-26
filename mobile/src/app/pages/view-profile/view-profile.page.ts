@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ProfileService } from 'src/app/services/profile.service';
-import { LoadingController } from '@ionic/angular';
+import {
+  LoadingController,
+  PopoverController,
+  ToastController
+} from '@ionic/angular';
 import { Profile } from '../../interfaces/profile';
+import { MenuNavbarComponent } from '../../components/menu-navbar/menu-navbar.component';
 
 @Component({
   selector: 'app-view-profile',
@@ -13,33 +18,80 @@ export class ViewProfilePage implements OnInit {
 
   constructor(
     public loadingCtrl: LoadingController,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    public popoverCtrl: PopoverController,
+    public toastCtrl: ToastController
   ) {}
 
   ngOnInit() {
-    this.getDataProfile();
+    this.getDataProfile(null);
   }
 
   ionViewDidEnter() {
-    this.getDataProfile();
+    this.getDataProfile(null);
   }
 
-  getDataProfile() {
+  async getDataProfile(event) {
+    const loader = await this.loadingCtrl.create({
+      duration: 10000
+    });
+    if (event === null) {
+      loader.present();
+    }
     this.profileService.getProfile().subscribe(
       res => {
         this.dataProfile = res['data'];
+        loader.dismiss();
+        if (
+          !this.dataProfile.twitter &&
+          !this.dataProfile.facebook &&
+          !this.dataProfile.instagram
+        ) {
+          this.showToast('Mohon lengkapi akun sosial media anda');
+        }
       },
       err => {
         console.log(err);
+        loader.dismiss();
       }
     );
   }
 
   doRefresh(event) {
-    this.getDataProfile();
+    this.getDataProfile('loading');
     // event.target.complete();
     setTimeout(() => {
       event.target.complete();
     }, 2000);
+  }
+
+  async navbarMore(ev: any) {
+    // console.log(ev);
+    const popover = await this.popoverCtrl.create({
+      component: MenuNavbarComponent,
+      componentProps: {
+        dataUser: ev
+      },
+      event: ev,
+      animated: true,
+      showBackdrop: true,
+      translucent: true
+    });
+
+    popover.onDidDismiss();
+
+    return await popover.present();
+  }
+
+  goToSosialMedia(value: string) {
+    console.log(value);
+  }
+
+  async showToast(msg: string) {
+    const toast = await this.toastCtrl.create({
+      message: msg,
+      duration: 2000
+    });
+    toast.present();
   }
 }

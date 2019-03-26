@@ -134,24 +134,24 @@ export class LoginPage implements OnInit {
     // stop disconnect watch
     disconnectSubscription.unsubscribe();
 
-    const loader = await this.loadingCtrl.create({
-      duration: 10000
-    });
-    loader.present();
+    // const loader = await this.loadingCtrl.create({
+    //   duration: 10000
+    // });
+    // loader.present();
     await this.auth.login(this.onLoginForm.value).subscribe(
       res => {
         if (res.success === true) {
           // console.log(res.data.access_token);
-          loader.dismiss();
+          // loader.dismiss();
           this.auth.saveToken(res.data.access_token);
           this.navCtrl.navigateRoot(['/tabs']['home']);
         } else {
-          loader.dismiss();
-          console.log('login gagal');
+          // loader.dismiss();
+          // console.log('login gagal');
         }
       },
       err => {
-        loader.dismiss();
+        // loader.dismiss();
         console.log(err);
         this.showToast('Login', err.data.password[0]);
       }
