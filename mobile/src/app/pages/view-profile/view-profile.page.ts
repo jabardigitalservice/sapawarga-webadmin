@@ -138,10 +138,6 @@ export class ViewProfilePage implements OnInit {
     );
   }
 
-  // goToSosialMedia(value: string) {
-  //   console.log(value);
-  // }
-
   doRefresh(event) {
     this.getDataProfile('loading');
     // event.target.complete();
@@ -151,7 +147,6 @@ export class ViewProfilePage implements OnInit {
   }
 
   async navbarMore(ev: any) {
-    // console.log(ev);
     const popover = await this.popoverCtrl.create({
       component: MenuNavbarComponent,
       componentProps: {
