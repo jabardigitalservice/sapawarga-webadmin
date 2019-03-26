@@ -439,6 +439,7 @@ class UserController extends ActiveController
                 'email' => $user->email,
                 'last_login_at' => $user->last_login_at,
                 'last_login_ip' => $user->last_login_ip,
+                'photo_url' => $user->photo_url,
                 'name' => $user->name,
                 'phone' => $user->phone,
                 'address' => $user->address,
@@ -449,6 +450,9 @@ class UserController extends ActiveController
                 'kecamatan' => $user->kecamatan,
                 'kabkota_id' => $user->kabkota_id,
                 'kabkota' => $user->kabkota,
+                'facebook' => $user->facebook,
+                'twitter' => $user->twitter,
+                'instagram' => $user->instagram,
             ];
         } else {
             // Validation error
