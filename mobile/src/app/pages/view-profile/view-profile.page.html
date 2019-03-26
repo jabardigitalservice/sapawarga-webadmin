@@ -1,28 +1,25 @@
 <ion-header>
   <ion-toolbar color="light">
-    <ion-buttons slot="start">
-      <ion-icon name="arrow-back" size="large"></ion-icon>
-    </ion-buttons>
     <ion-title color="dark">Akun Saya</ion-title>
-    <ion-icon name="more" slot="end" size="large" (click)="navbarMore()"></ion-icon>
+    <ion-icon name="more" slot="end" size="large" *ngIf="dataProfile" (click)="navbarMore(dataProfile)"></ion-icon>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="profile" color="light" *ngIf="dataProfile">
+<ion-content class="profile" color="light">
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles"
       refreshingText="Refreshing...">
     </ion-refresher-content>
   </ion-refresher>
-  <ion-card no-margin>
+  <ion-card no-margin *ngIf="dataProfile">
     <ion-card-content class="bg-profile">
-      <img class="profile-image" src="assets/img/avatar.jpg" />
-      <h1 class="fw500">Captain Marvel</h1>
+      <img class="profile-image" src="assets/img/user.png" />
+      <h1 class="fw500">{{ dataProfile.name }}</h1>
 
       <div class="sosial-media">
-        <img src="assets/icon/facebook.png" />
-        <img src="assets/icon/instagram.png" />
-        <img src="assets/icon/twitter.png" />
+        <img src="assets/icon/facebook.png" (click)="goToSosialMedia(dataProfile)" />
+        <img src="assets/icon/instagram.png" (click)="goToSosialMedia(dataProfile)" />
+        <img src="assets/icon/twitter.png" (click)="goToSosialMedia(dataProfile)" />
       </div>
     </ion-card-content>
 
@@ -35,7 +32,7 @@
         </ion-col>
         <ion-col>
           <div class="profile-data">
-            <ion-label>Captain Marvel</ion-label>
+            <ion-label>{{ dataProfile.name }}</ion-label>
           </div>
         </ion-col>
       </ion-row>
@@ -107,7 +104,7 @@
         </ion-col>
         <ion-col>
           <div class="profile-data">
-            <ion-label>Pasteur</ion-label>
+            <ion-label>{{ dataProfile.kelurahan.name }}</ion-label>
           </div>
         </ion-col>
       </ion-row>
@@ -119,7 +116,7 @@
         </ion-col>
         <ion-col>
           <div class="profile-data">
-            <ion-label>Cicendo</ion-label>
+            <ion-label>{{ dataProfile.kecamatan.name }}</ion-label>
           </div>
         </ion-col>
       </ion-row>
@@ -131,7 +128,7 @@
         </ion-col>
         <ion-col class="ion-margin-bottom">
           <div class="profile-data">
-            <ion-label>Kota Bandung</ion-label>
+            <ion-label>{{ dataProfile.kabkota.name }}</ion-label>
           </div>
         </ion-col>
       </ion-row>

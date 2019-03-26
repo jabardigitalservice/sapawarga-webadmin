@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ProfileService } from 'src/app/services/profile.service';
-import { LoadingController, PopoverController } from '@ionic/angular';
+import {
+  LoadingController,
+  PopoverController,
+  ToastController
+} from '@ionic/angular';
 import { Profile } from '../../interfaces/profile';
 import { MenuNavbarComponent } from '../../components/menu-navbar/menu-navbar.component';
 
@@ -15,22 +19,28 @@ export class ViewProfilePage implements OnInit {
   constructor(
     public loadingCtrl: LoadingController,
     private profileService: ProfileService,
-    public popoverCtrl: PopoverController
+    public popoverCtrl: PopoverController,
+    public toastCtrl: ToastController
   ) {}
 
   ngOnInit() {
-    this.getDataProfile();
+    this.getDataProfile(null);
+    if (this.dataProfile) {
+      this.showToast('Sosial Media', 'Mohon lengkapi akun sosial media anda');
+    }
   }
 
   ionViewDidEnter() {
-    this.getDataProfile();
+    this.getDataProfile(null);
   }
 
-  async getDataProfile() {
+  async getDataProfile(event) {
     const loader = await this.loadingCtrl.create({
       duration: 10000
     });
-    loader.present();
+    if (event === null) {
+      loader.present();
+    }
     this.profileService.getProfile().subscribe(
       res => {
         this.dataProfile = res['data'];
@@ -44,7 +54,7 @@ export class ViewProfilePage implements OnInit {
   }
 
   doRefresh(event) {
-    this.getDataProfile();
+    this.getDataProfile('loading');
     // event.target.complete();
     setTimeout(() => {
       event.target.complete();
@@ -52,8 +62,12 @@ export class ViewProfilePage implements OnInit {
   }
 
   async navbarMore(ev: any) {
+    // console.log(ev);
     const popover = await this.popoverCtrl.create({
       component: MenuNavbarComponent,
+      componentProps: {
+        dataUser: ev
+      },
       event: ev,
       animated: true,
       showBackdrop: true,
@@ -63,5 +77,17 @@ export class ViewProfilePage implements OnInit {
     popover.onDidDismiss();
 
     return await popover.present();
+  }
+
+  goToSosialMedia(value: string) {
+    console.log(value);
+  }
+
+  async showToast(title: string, msg: string) {
+    const toast = await this.toastCtrl.create({
+      message: msg,
+      duration: 2000
+    });
+    toast.present();
   }
 }
