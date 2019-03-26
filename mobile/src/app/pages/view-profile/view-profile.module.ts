@@ -7,8 +7,9 @@ import { IonicModule } from '@ionic/angular';
 
 import { ViewProfilePage } from './view-profile.page';
 
-// component
-import { MenuNavbarComponent } from '../../components/menu-navbar/menu-navbar.component';
+// Plugin
+import { AppAvailability } from '@ionic-native/app-availability/ngx';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 const routes: Routes = [
   {
@@ -24,6 +25,7 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
+  providers: [AppAvailability, InAppBrowser],
   // entryComponents: [MenuNavbarComponent],
   declarations: [ViewProfilePage]
 })
