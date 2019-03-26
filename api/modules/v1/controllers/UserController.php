@@ -509,7 +509,7 @@ class UserController extends ActiveController
         $user         = User::findIdentity(\Yii::$app->user->getId());
 
         $model        = new UserPhotoUploadForm();
-        $model->image = UploadedFile::getInstance($model, 'image');
+        $model->image = UploadedFile::getInstanceByName('image');
 
         if ($model->validate()) {
             if ($photoUrl = $model->upload($user)) {

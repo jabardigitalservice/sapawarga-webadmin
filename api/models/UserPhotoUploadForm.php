@@ -20,7 +20,7 @@ class UserPhotoUploadForm extends Model
     {
         return [
             [['image'], 'required'],
-            [['image'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg'],
+            [['image'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg', 'maxSize' => 1024 * 1024 * 2],
         ];
     }
 
