@@ -1,8 +1,7 @@
 version: '3'
 services:
   nginx:
-    container_name: yii2_ngx_nginx
-    image: jdsteam/yii2_ngx_nginx:1.0
+    image: jdsteam/sapawarga:1.0
     networks:
       - internal
     depends_on:
@@ -15,31 +14,27 @@ services:
       - 443:443
 
   api:
-    container_name: yii2_ngx_api
-    image: jdsteam/yii2_ngx_api:1.0
+    image: jdsteam/sapawarga:1.0
     networks:
       - internal
     env_file:
       - .env
 
   backend:
-    container_name: yii2_ngx_backend
-    image: jdsteam/yii2_ngx_backend:1.0
+    image: jdsteam/sapawarga:1.0
     depends_on:
       - api
     networks:
       - internal
 
   frontend:
-    container_name: yii2_ngx_frontend
-    image: jdsteam/yii2_ngx_frontend:1.0
+    image: jdsteam/sapawarga:1.0
     depends_on:
       - api
     networks:
       - internal
 
   memcached:
-    container_name: yii2_ngx_memcached
     image: memcached:latest
     networks:
       - internal
