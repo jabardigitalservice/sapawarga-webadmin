@@ -11,8 +11,20 @@ use yii\base\Model;
 class UserEditForm extends Model
 {
     public $id;
+    public $username;
     public $password;
     public $email;
+    public $name;
+    public $phone;
+    public $address;
+    public $rw;
+    public $kel_id;
+    public $kec_id;
+    public $kabkota_id;
+    public $photo_url;
+    public $facebook;
+    public $twitter;
+    public $instagram;
     /** @var User */
     private $_user = false;
 
@@ -49,6 +61,7 @@ class UserEditForm extends Model
             ],
 
             ['password', 'string', 'min' => 6],
+            [['username', 'name', 'phone', 'address', 'rw', 'kel_id', 'kec_id', 'kabkota_id', 'photo_url', 'facebook', 'twitter', 'instagram'], 'default'],
         ];
     }
 
@@ -62,31 +75,69 @@ class UserEditForm extends Model
         if ($this->validate()) {
             $this->getUserByID();
 
-            // if user email has been changed, then put the email in unconfirmed_email and set confirmed_at as null
-            $updateIndicator = false;
             if ($this->_user->email != $this->email) {
-                // Disable email confirmation for now
                 $this->_user->unconfirmed_email = $this->email;
                 $this->_user->email = $this->email;
-                // $this->_user->confirmed_at = null;
-                // $this->_user->status = User::STATUS_PENDING;
                 $this->_user->confirmed_at = Yii::$app->formatter->asTimestamp(date('Y-m-d H:i:s'));
                 $this->_user->generateAuthKey();
-                $updateIndicator = true;
             }
 
             // If password is not null, then update password
             if ($this->password != '') {
-                $updateIndicator = true;
                 $this->_user->setPassword($this->password);
             }
 
-            if ($updateIndicator == true && $this->_user->save(false)) {
-                // Send confirmation email
-                // $this->sendConfirmationEmail();
-                return true;
-            } elseif ($updateIndicator == false) {
-                // Nothing to update
+            if ($this->username != '') {
+                $this->_user->username = $this->username;
+            }
+
+            // Set all the other fields
+
+            if ($this->name != '') {
+                $this->_user->name = $this->name;
+            }
+
+            if ($this->phone != '') {
+                $this->_user->phone = $this->phone;
+            }
+
+            if ($this->address != '') {
+                $this->_user->address = $this->address;
+            }
+
+            if ($this->rw != '') {
+                $this->_user->rw = $this->rw;
+            }
+
+            if ($this->kel_id != '') {
+                $this->_user->kel_id = $this->kel_id;
+            }
+
+            if ($this->kec_id != '') {
+                $this->_user->kec_id = $this->kec_id;
+            }
+
+            if ($this->kabkota_id != '') {
+                $this->_user->kabkota_id = $this->kabkota_id;
+            }
+
+            if ($this->photo_url != '') {
+                $this->_user->photo_url = $this->photo_url;
+            }
+
+            if ($this->facebook != '') {
+                $this->_user->facebook = $this->facebook;
+            }
+
+            if ($this->twitter != '') {
+                $this->_user->twitter = $this->twitter;
+            }
+
+            if ($this->instagram != '') {
+                $this->_user->instagram = $this->instagram;
+            }
+
+            if ($this->_user->save(false)) {
                 return true;
             } else {
                 $this->addError('generic', Yii::t('app', 'The system could not update the information.'));
