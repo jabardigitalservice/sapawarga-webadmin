@@ -60,7 +60,6 @@ class UserEditForm extends Model
             ],
 
             ['email', 'trim'],
-            ['email', 'required'],
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
             [
