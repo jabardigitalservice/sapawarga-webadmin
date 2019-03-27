@@ -11,8 +11,20 @@ use yii\base\Model;
 class UserEditForm extends Model
 {
     public $id;
+    public $username;
     public $password;
     public $email;
+    public $name;
+    public $phone;
+    public $address;
+    public $rw;
+    public $kel_id;
+    public $kec_id;
+    public $kabkota_id;
+    public $photo_url;
+    public $facebook;
+    public $twitter;
+    public $instagram;
     /** @var User */
     private $_user = false;
 
@@ -34,21 +46,34 @@ class UserEditForm extends Model
                 ],
                 'message' => 'The ID is not valid.'
             ],
+
+            ['username', 'trim'],
+            ['username', 'string', 'length' => [5, 14]],
+            [
+                'username',
+                'unique',
+                'targetClass' => '\app\models\User',
+                'message' => Yii::t('app/error', 'app.error.update.username.taken'),
+                'filter' => function ($query) {
+                    $query->andWhere(['!=', 'id', $this->id]);
+                }
+            ],
+
             ['email', 'trim'],
-            ['email', 'required'],
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
             [
                 'email',
                 'unique',
                 'targetClass' => '\app\models\User',
-                'message' => Yii::t('app', 'This email address has already been taken.'),
+                'message' => Yii::t('app/error', 'app.error.update.email.taken'),
                 'filter' => function ($query) {
                     $query->andWhere(['!=', 'id', $this->id]);
                 }
             ],
 
             ['password', 'string', 'min' => 6],
+            [['username', 'name', 'phone', 'address', 'rw', 'kel_id', 'kec_id', 'kabkota_id', 'photo_url', 'facebook', 'twitter', 'instagram'], 'default'],
         ];
     }
 
@@ -62,28 +87,31 @@ class UserEditForm extends Model
         if ($this->validate()) {
             $this->getUserByID();
 
-            // if user email has been changed, then put the email in unconfirmed_email and set confirmed_at as null
-            $updateIndicator = false;
+
             if ($this->_user->email != $this->email) {
                 $this->_user->unconfirmed_email = $this->email;
-                $this->_user->confirmed_at = null;
-                $this->_user->status = User::STATUS_PENDING;
+                $this->_user->email = $this->email;
+                $this->_user->confirmed_at = Yii::$app->formatter->asTimestamp(date('Y-m-d H:i:s'));
                 $this->_user->generateAuthKey();
-                $updateIndicator = true;
             }
 
             // If password is not null, then update password
             if ($this->password != '') {
-                $updateIndicator = true;
                 $this->_user->setPassword($this->password);
             }
 
-            if ($updateIndicator == true && $this->_user->save(false)) {
-                // Send confirmation email
-                $this->sendConfirmationEmail();
-                return true;
-            } elseif ($updateIndicator == false) {
-                // Nothing to update
+            // Set all the other fields
+            $excluded_attributes = ['email', 'password'];
+            $attribute_names = $this->attributes();
+            $attribute_names = array_diff($attribute_names, $excluded_attributes);
+            foreach ($attribute_names as $name) {
+                if ($this[$name] != '') {
+                    $this->_user[$name] = $this[$name];
+                }
+            }
+
+
+            if ($this->_user->save(false)) {
                 return true;
             } else {
                 $this->addError('generic', Yii::t('app', 'The system could not update the information.'));
