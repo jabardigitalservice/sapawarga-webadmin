@@ -101,12 +101,12 @@ class UserEditForm extends Model
             }
 
             // Set all the other fields
-            $attrib_names = $this->attributes();
-            foreach ($attrib_names as $name) {
-                if ($this[$name] != 'email' && $this[$name] != 'password') {
-                    if ($this[$name] != '') {
-                        $this->_user[$name] = $this[$name];
-                    }
+            $excluded_attributes = ['email', 'password'];
+            $attribute_names = $this->attributes();
+            $attribute_names = array_diff($attribute_names, $excluded_attributes);
+            foreach ($attribute_names as $name) {
+                if ($this[$name] != '') {
+                    $this->_user[$name] = $this[$name];
                 }
             }
 
