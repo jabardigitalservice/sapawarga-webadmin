@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { NavController, NavParams } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-menu-navbar',
@@ -11,9 +12,10 @@ export class MenuNavbarComponent implements OnInit {
   constructor(
     private authService: AuthService,
     public navCtrl: NavController,
-    private navParams: NavParams
+    private navParams: NavParams,
+    private router: Router
   ) {
-    console.log(this.navParams.get('dataUser'));
+    // console.log(this.navParams.get('dataUser'));
   }
 
   ngOnInit() {}
@@ -25,6 +27,13 @@ export class MenuNavbarComponent implements OnInit {
   }
 
   editProfile() {
-    this.navCtrl.navigateForward('/edit-profile');
+    // this.navCtrl.navigateForward(
+    //   ['/edit-profile'],
+    //   this.navParams.get('dataUser')
+    // );
+
+    this.router.navigate(['edit-profile'], {
+      queryParams: this.navParams.get('dataUser')
+    });
   }
 }

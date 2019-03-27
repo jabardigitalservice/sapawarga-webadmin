@@ -5,11 +5,15 @@ export interface Profile {
   name: string;
   phone: string;
   address: string;
+  kel_id: number;
   kelurahan: Kelurahan;
+  kec_id: number;
   kecamatan: Kecamatan;
+  kabkota_id: number;
   kabkota: Kabkota;
   rw: number;
   photo_url: string;
+  role: string;
   facebook: string;
   instagram: string;
   twitter: string;
