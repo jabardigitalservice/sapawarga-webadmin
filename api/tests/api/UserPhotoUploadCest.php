@@ -4,18 +4,13 @@ class UserPhotoUploadCest
 {
     public function _before(ApiTester $I)
     {
-        $I->haveHttpHeader('Content-Type', 'application/json');
-
-        $I->sendPOST('/v1/user/login', '{"LoginForm":{"username": "user","password": "123456"}}');
-
-        $accessToken = $I->grabDataFromResponseByJsonPath('$.data.access_token');
-        $accessToken = $accessToken[0];
-
-        $I->amBearerAuthenticated($accessToken);
+        //
     }
 
     public function postPhotoUploadTest(ApiTester $I)
     {
+        $I->amUser();
+
         $I->deleteHeader('Content-Type');
 
         $filePath = __DIR__ . '/../data/example.jpg';
@@ -41,6 +36,8 @@ class UserPhotoUploadCest
 
     public function postPhotoUploadNoFileTest(ApiTester $I)
     {
+        $I->amUser();
+
         $I->deleteHeader('Content-Type');
 
         $I->sendPOST('/v1/user/photo');
@@ -56,6 +53,8 @@ class UserPhotoUploadCest
 
     public function postPhotoUploadInvalidFileTypeTest(ApiTester $I)
     {
+        $I->amUser();
+
         $I->deleteHeader('Content-Type');
 
         $filePath = __DIR__ . '/../data/example.txt';
@@ -80,6 +79,8 @@ class UserPhotoUploadCest
 
     public function postPhotoUploadInvalidHeaderMimeTest(ApiTester $I)
     {
+        $I->amUser();
+
         $I->deleteHeader('Content-Type');
 
         $filePath = __DIR__ . '/../data/example.txt';
