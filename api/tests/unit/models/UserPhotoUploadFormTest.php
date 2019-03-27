@@ -3,6 +3,7 @@
 namespace tests\models;
 
 use app\models\UserPhotoUploadForm;
+use Spatie\Image\Image;
 use yii\web\UploadedFile;
 
 class UserPhotoUploadFormTest extends \Codeception\Test\Unit
@@ -72,5 +73,17 @@ class UserPhotoUploadFormTest extends \Codeception\Test\Unit
         $this->assertFalse($model->validate());
 
         $this->assertTrue($model->hasErrors('image'));
+    }
+
+    public function testCropAndResize()
+    {
+        $filePath = __DIR__ . '/../../data/hd1080.png';
+
+        $model = new UserPhotoUploadForm();
+
+        $image = $model->cropAndResizePhoto($filePath);
+
+        $this->assertEquals($image->getHeight(), 640);
+        $this->assertEquals($image->getWidth(), 640);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use Intervention\Image\ImageManagerStatic as Image;
 use Yii;
 use yii\base\Model;
 use yii\web\UploadedFile;
@@ -24,14 +25,32 @@ class UserPhotoUploadForm extends Model
         ];
     }
 
+    /**
+     * @param \app\models\User $user
+     *
+     * @return string
+     */
     public function upload(User $user)
     {
-        $bucket = \Yii::$app->fileStorage->getBucket('imageFiles');
+        if ($image = $this->cropAndResizePhoto($this->image->tempName)) {
+            $relativePath = sprintf('user-%s/%s', $user->getId(), $this->image->name);
 
-        $relativePath = sprintf('user-%s/%s', $user->getId(), $this->image->name);
+            $bucket = \Yii::$app->fileStorage->getBucket('imageFiles');
+            $bucket->saveFileContent($relativePath, $image->encode());
 
-        $bucket->saveFileContent($relativePath, file_get_contents($this->image->tempName));
+            return $relativePath;
+        }
 
-        return $relativePath;
+        return false;
+    }
+
+    /**
+     * @param $filePath
+     *
+     * @return \Intervention\Image\Image|\Intervention\Image\ImageManagerStatic
+     */
+    public function cropAndResizePhoto($filePath)
+    {
+        return Image::make($filePath)->fit(640, 640);
     }
 }
