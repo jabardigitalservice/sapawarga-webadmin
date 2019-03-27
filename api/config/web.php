@@ -101,6 +101,8 @@ $config = [
                         'OPTIONS password-reset' => 'options',
                         'GET me' => 'me',
                         'POST me' => 'me-update',
+                        'GET photo' => 'photo',
+                        'POST photo' => 'photo-upload',
                         'OPTIONS me' => 'options',
                     ]
                 ],
@@ -194,6 +196,24 @@ $config = [
                     ],
                 ],
             ],
+        ],
+
+        // Other adapter: Local, SFTP, Amazon, Mongo, dsb,
+        // please read https://github.com/yii2tech/file-storage
+        'fileStorage' => [
+            'class' => 'yii2tech\filestorage\local\Storage',
+            'basePath' => '@webroot/storage',
+            'baseUrl' => '@web/storage',
+            'dirPermission' => 0755,
+            'filePermission' => 0644,
+            'buckets' => [
+                'tempFiles' => [
+                    'baseSubPath' => 'temp',
+                ],
+                'imageFiles' => [
+                    'baseSubPath' => 'image',
+                ],
+            ]
         ],
     ],
     'modules' => [

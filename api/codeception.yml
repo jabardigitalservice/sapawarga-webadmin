@@ -8,6 +8,10 @@ settings:
     bootstrap: _bootstrap.php
     memory_limit: 1024M
     colors: true
+coverage:
+    enabled: true
+    include:
+        - models/*
 modules:
     config:
         Yii2:

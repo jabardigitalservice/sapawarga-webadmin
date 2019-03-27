@@ -11,7 +11,7 @@ class AreasCest
         $accessToken = $I->grabDataFromResponseByJsonPath('$.data.access_token');
         $accessToken = $accessToken[0];
 
-        $I->haveHttpHeader('Authorization', "Bearer $accessToken");
+        $I->amBearerAuthenticated($accessToken);
     }
 
     public function getListTest(ApiTester $I)
