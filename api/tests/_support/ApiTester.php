@@ -20,7 +20,31 @@ class ApiTester extends \Codeception\Actor
 {
     use _generated\ApiTesterActions;
 
-   /**
-    * Define custom actions here
-    */
+    public function amUser()
+    {
+        $I = $this;
+
+        $I->haveHttpHeader('Content-Type', 'application/json');
+
+        $I->sendPOST('/v1/user/login', '{"LoginForm":{"username": "user","password": "123456"}}');
+
+        $accessToken = $I->grabDataFromResponseByJsonPath('$.data.access_token');
+        $accessToken = $accessToken[0];
+
+        $I->amBearerAuthenticated($accessToken);
+    }
+
+    public function amStaff()
+    {
+        $I = $this;
+
+        $I->haveHttpHeader('Content-Type', 'application/json');
+
+        $I->sendPOST('/v1/staff/login', '{"LoginForm":{"username": "admin","password": "123456"}}');
+
+        $accessToken = $I->grabDataFromResponseByJsonPath('$.data.access_token');
+        $accessToken = $accessToken[0];
+
+        $I->amBearerAuthenticated($accessToken);
+    }
 }
