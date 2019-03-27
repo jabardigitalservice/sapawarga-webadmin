@@ -103,4 +103,40 @@ class UserCest
             'status'  => 200,
         ]);
     }
+
+    /**
+     * @before login
+     */
+    public function userGetProfile(ApiTester $I)
+    {
+        $I->sendGET('/v1/user/me');
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $I->seeResponseContainsJson([
+            'success' => true,
+            'status'  => 200,
+        ]);
+
+        $I->seeResponseMatchesJsonType([
+            'id' => 'integer',
+            'username' => 'string|null',
+            'email' => 'string|null',
+            'photo_url' => 'string|null',
+            'name' => 'string|null',
+            'phone' => 'string|null',
+            'address' => 'string|null',
+            'rw' => 'string|null',
+            'kelurahan' => 'array',
+            'kecamatan' => 'array',
+            'kabkota' => 'array',
+            'facebook' => 'string|null',
+            'twitter' => 'string|null',
+            'instagram' => 'string|null',
+        ], '$.data');
+    }
+
+    public function userUpdateProfile(ApiTester $I)
+    {
+    }
 }
