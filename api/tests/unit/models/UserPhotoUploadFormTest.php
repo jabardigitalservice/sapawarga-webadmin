@@ -86,4 +86,16 @@ class UserPhotoUploadFormTest extends \Codeception\Test\Unit
         $this->assertEquals($image->getHeight(), 640);
         $this->assertEquals($image->getWidth(), 640);
     }
+
+    public function testCropAndResizeSmallImage()
+    {
+        $filePath = __DIR__ . '/../../data/qvga.png';
+
+        $model = new UserPhotoUploadForm();
+
+        $image = $model->cropAndResizePhoto($filePath);
+
+        $this->assertEquals($image->getHeight(), 640);
+        $this->assertEquals($image->getWidth(), 640);
+    }
 }
