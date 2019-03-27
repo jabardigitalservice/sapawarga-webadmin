@@ -198,6 +198,8 @@ $config = [
             ],
         ],
 
+        // Other adapter: Local, SFTP, Amazon, Mongo, dsb,
+        // please read https://github.com/yii2tech/file-storage
         'fileStorage' => [
             'class' => 'yii2tech\filestorage\local\Storage',
             'basePath' => '@webroot/storage',
