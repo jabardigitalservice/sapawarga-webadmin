@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
-import { NavController, NavParams } from '@ionic/angular';
+import { NavController, NavParams, PopoverController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
 @Component({
@@ -13,7 +13,8 @@ export class MenuNavbarComponent implements OnInit {
     private authService: AuthService,
     public navCtrl: NavController,
     private navParams: NavParams,
-    private router: Router
+    private router: Router,
+    private popover: PopoverController
   ) {
     // console.log(this.navParams.get('dataUser'));
   }
@@ -24,6 +25,7 @@ export class MenuNavbarComponent implements OnInit {
     console.log('masuk logout');
     this.authService.logout();
     this.navCtrl.navigateRoot('/login');
+    this.popover.dismiss();
   }
 
   editProfile() {
@@ -35,5 +37,6 @@ export class MenuNavbarComponent implements OnInit {
     this.router.navigate(['edit-profile'], {
       queryParams: this.navParams.get('dataUser')
     });
+    this.popover.dismiss();
   }
 }

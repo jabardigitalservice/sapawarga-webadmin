@@ -218,3 +218,9 @@ ion-menu {
     margin-bottom: -2px;
   }
 }
+
+// custom popover
+.popover-content.sc-ion-popover-md {
+  top: 40px !important;
+  left: unset !important;
+}
