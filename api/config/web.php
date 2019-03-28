@@ -101,9 +101,10 @@ $config = [
                         'OPTIONS password-reset' => 'options',
                         'GET me' => 'me',
                         'POST me' => 'me-update',
+                        'OPTIONS me' => 'options',
                         'GET photo' => 'photo',
                         'POST photo' => 'photo-upload',
-                        'OPTIONS me' => 'options',
+                        'OPTIONS photo' => 'options',
                     ]
                 ],
                 [
