@@ -271,7 +271,7 @@ export class EditProfilePage implements OnInit {
     const fileTransfer: FileTransferObject = this.transfer.create();
 
     let options: FileUploadOptions = {
-      fileKey: 'images',
+      fileKey: 'image',
       fileName: 'ionicfile',
       chunkedMode: false,
       mimeType: 'image/jpeg',
@@ -288,11 +288,11 @@ export class EditProfilePage implements OnInit {
         data => {
           // success
           loading.dismiss();
-          alert('success');
+          console.log(data);
         },
         err => {
           // error
-          // alert('error' + JSON.stringify(err));
+          alert('error' + JSON.stringify(err));
           loading.dismiss();
           // console.log(err);
         }
