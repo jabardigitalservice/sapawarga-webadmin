@@ -24,40 +24,30 @@ export class AuthService {
     });
   }
 
+  // check if token true
   checkToken() {
-    console.log(localStorage.getItem(TOKEN_KEY));
     if (localStorage.getItem(TOKEN_KEY)) {
       this.authenticationState.next(true);
     }
-    // this.storage.get(TOKEN_KEY).then(res => {
-    //   if (res) {
-    //     this.authenticationState.next(true);
-    //   }
-    // });
   }
 
+  // call API login
   login(data): Observable<any> {
     return this.http
       .post(`${environment.API_URL}/user/login`, { LoginForm: data })
       .pipe(catchError(this.handleError));
   }
 
+  // save token into local storage
   saveToken(token: string) {
-    // console.log(token);
-    // this.storage.set('name', 'Max');
     localStorage.setItem(TOKEN_KEY, token);
     this.authenticationState.next(true);
-    // return this.storage.set(TOKEN_KEY, token).then(() => {
-    //   this.authenticationState.next(true);
-    // });
   }
 
+  // logout and clear session
   logout() {
     localStorage.removeItem(TOKEN_KEY);
     this.authenticationState.next(false);
-    // return this.storage.remove(TOKEN_KEY).then(() => {
-    //   this.authenticationState.next(false);
-    // });
   }
 
   isAuthenticated() {

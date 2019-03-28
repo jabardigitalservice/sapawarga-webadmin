@@ -2,10 +2,25 @@ import { Component, OnInit } from '@angular/core';
 import {
   NavController,
   LoadingController,
-  ToastController
+  ToastController,
+  ActionSheetController,
+  Platform
 } from '@ionic/angular';
 import { ProfileService } from 'src/app/services/profile.service';
 import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
+import { Profile } from '../../interfaces/profile';
+import { ActivatedRoute } from '@angular/router';
+import { AreasService } from 'src/app/services/areas.service';
+import { Areas } from '../../interfaces/areas';
+
+// plugin
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import {
+  FileTransfer,
+  FileUploadOptions,
+  FileTransferObject
+} from '@ionic-native/file-transfer/ngx';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-edit-profile',
@@ -14,51 +29,112 @@ import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
 })
 export class EditProfilePage implements OnInit {
   onEditForm: FormGroup;
+  dataProfile: Profile;
+  dataKabkota: Areas;
+  dataKecamatan: Areas;
+  dataKelurahan: Areas;
+
+  imageData: any;
+  image: any;
+  imageFileName: any;
 
   constructor(
+    private route: ActivatedRoute,
     public navCtrl: NavController,
     public loadingCtrl: LoadingController,
     public toastCtrl: ToastController,
     private profileService: ProfileService,
-    private formBuilder: FormBuilder
+    private areasService: AreasService,
+    private formBuilder: FormBuilder,
+    private camera: Camera,
+    private transfer: FileTransfer,
+    private platform: Platform,
+    private actionsheetCtrl: ActionSheetController
   ) {}
 
   ngOnInit() {
+    // defined directive form
     this.onEditForm = this.formBuilder.group({
-      name: [null, Validators.required],
-      email: [null, Validators.required],
-      phone: [null, Validators.required],
-      address: [null, Validators.required],
-      kabkota: [2, Validators.required],
-      kecamatan: [null, Validators.required],
-      kelurahan: [null, Validators.required],
-      rw: [null, Validators.required],
-      role: [null, Validators.required],
+      name: ['', Validators.required],
+      email: ['', Validators.required],
+      phone: ['', Validators.required],
+      address: ['', Validators.required],
+      kabkota_id: ['', Validators.required],
+      kec_id: ['', Validators.required],
+      kel_id: ['', Validators.required],
+      rw: ['', Validators.required],
+      role: [{ value: '', disabled: true }],
       instagram: [''],
       facebook: [''],
       twitter: ['']
     });
+
+    // get query param from view profile
+    this.route.queryParamMap.subscribe(params => {
+      this.dataProfile = params['params'];
+    });
+
+    // update data from query param to form input
+    this.onEditForm.patchValue({
+      name: this.dataProfile.name,
+      email: this.dataProfile.email,
+      phone: this.dataProfile.phone,
+      address: this.dataProfile.address,
+      kabkota_id: this.dataProfile.kabkota_id,
+      kec_id: this.dataProfile.kec_id,
+      kel_id: this.dataProfile.kel_id,
+      rw: this.dataProfile.rw,
+      role: this.dataProfile.role,
+      instagram: this.dataProfile.instagram,
+      facebook: this.dataProfile.facebook,
+      twitter: this.dataProfile.twitter
+    });
+
+    this.getKabKota();
+    this.getKecamatan(this.dataProfile.kabkota_id);
+    this.getKelurahan(this.dataProfile.kec_id);
   }
 
-  ionViewDidEnter() {
-    this.profileService.getProfile().subscribe(
-      res => {
-        console.log(res);
-      },
-      err => {
-        console.log(err);
-      }
-    );
+  ionViewDidEnter() {}
+
+  // detect form onchange
+  onChanges(type: string) {
+    switch (type) {
+      case 'kabkota':
+        this.getKecamatan(this.f.kabkota_id.value);
+        // clear old value
+        this.f.kec_id.setValue(0);
+      case 'kecamatan':
+        this.getKelurahan(this.f.kec_id.value);
+        // clear old value
+        this.f.kel_id.setValue(0);
+    }
   }
 
-  onFormSubmit(form: NgForm) {
-    console.log(form);
+  // convenience getter for easy access to form fields
+  get f() {
+    return this.onEditForm.controls;
+  }
+
+  async onFormSubmit(form: NgForm) {
+    const loader = await this.loadingCtrl.create({
+      duration: 10000
+    });
+    loader.present();
     this.profileService.editProfile(form).subscribe(
       res => {
-        console.log(res);
+        if (res.success === true) {
+          this.showToast('Data berhasil tersimpan');
+        } else {
+          this.showToast('Data gagal tersimpan');
+        }
+        loader.dismiss();
       },
       err => {
-        console.log(err);
+        loader.dismiss();
+        this.showToast(
+          'Data gagal tersimpan periksa kembali koneksi internet anda'
+        );
       }
     );
   }
@@ -83,5 +159,150 @@ export class EditProfilePage implements OnInit {
     });
   }
 
-  getKabKota() {}
+  // get data kab/kota
+  async getKabKota() {
+    const loader = await this.loadingCtrl.create({
+      duration: 10000
+    });
+    loader.present();
+
+    this.areasService.getKabKota().subscribe(
+      res => {
+        this.dataKabkota = res['data'];
+        loader.dismiss();
+      },
+      err => {
+        this.showToast(
+          'Terjadi kesalahan periksa kembali koneksi internet anda'
+        );
+        loader.dismiss();
+      }
+    );
+  }
+
+  // get data kecamatan
+  getKecamatan(kabkota: number) {
+    this.areasService.getKecamatan(kabkota).subscribe(
+      res => {
+        this.dataKecamatan = res['data'];
+      },
+      err => {
+        this.showToast(
+          'Terjadi kesalahan periksa kembali koneksi internet anda'
+        );
+      }
+    );
+  }
+
+  // get data kelurahan
+  getKelurahan(kecamatan: number) {
+    this.areasService.getKelurahan(kecamatan).subscribe(
+      res => {
+        this.dataKelurahan = res['data'];
+      },
+      err => {
+        this.showToast(
+          'Terjadi kesalahan periksa kembali koneksi internet anda'
+        );
+      }
+    );
+  }
+
+  async openEditProfile() {
+    const actionSheet = await this.actionsheetCtrl.create({
+      header: 'Pilihan',
+      buttons: [
+        {
+          text: 'Ambil foto',
+          role: 'destructive',
+          icon: 'camera',
+          handler: () => {
+            this.getImage(1);
+          }
+        },
+        {
+          text: 'Ambil dari gallery',
+          icon: 'images',
+          handler: () => {
+            this.getImage(0);
+          }
+        },
+        {
+          text: 'Batal',
+          icon: 'close',
+          role: 'cancel',
+          handler: () => {}
+        }
+      ]
+    });
+    await actionSheet.present();
+  }
+
+  getImage(sourceType: number) {
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      correctOrientation: true,
+      sourceType: sourceType
+    };
+
+    this.camera.getPicture(options).then(
+      imageData => {
+        this.imageData = imageData;
+        this.image = (<any>window).Ionic.WebView.convertFileSrc(imageData);
+        this.uploadImage(imageData);
+        console.log(this.imageData);
+      },
+      err => {
+        console.log(err);
+        // this.presentToast(err);
+      }
+    );
+  }
+
+  async uploadImage(imageData) {
+    const loading = await this.loadingCtrl.create({
+      message: 'Uploading...'
+    });
+    await loading.present();
+
+    const fileTransfer: FileTransferObject = this.transfer.create();
+
+    let options: FileUploadOptions = {
+      fileKey: 'images',
+      fileName: 'ionicfile',
+      chunkedMode: false,
+      mimeType: 'image/jpeg',
+      headers: {
+        Authorization:
+          // tslint:disable-next-line:max-line-length
+          'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NTM3NDMzNzksImlzcyI6Imh0dHA6XC9cLzEwMy4xMjIuNS43MSIsImF1ZCI6Imh0dHA6XC9cLzEwMy4xMjIuNS43MSIsIm5iZiI6MTU1Mzc0MzM3OSwiZXhwIjoxNTUzODI5Nzc5LCJkYXRhIjp7InVzZXJuYW1lIjoidXNlciIsInJvbGVMYWJlbCI6IlVzZXIiLCJsYXN0TG9naW5BdCI6eyJleHByZXNzaW9uIjoiVU5JWF9USU1FU1RBTVAoKSIsInBhcmFtcyI6W119fSwianRpIjozfQ.CtQ7q53OBq0j9R7ev1DLY6NwqN_pazUbeOXK2ia79MI'
+      }
+    };
+
+    fileTransfer
+      .upload(imageData, `http://103.122.5.71/api/v1/user/photo`, options)
+      .then(
+        data => {
+          // success
+          loading.dismiss();
+          alert('success');
+        },
+        err => {
+          // error
+          // alert('error' + JSON.stringify(err));
+          loading.dismiss();
+          // console.log(err);
+        }
+      );
+  }
+  async showToast(msg: string) {
+    const toast = await this.toastCtrl.create({
+      message: msg,
+      duration: 2000
+    });
+    toast.present();
+  }
 }

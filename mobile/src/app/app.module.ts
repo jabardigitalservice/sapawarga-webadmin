@@ -23,6 +23,13 @@ import { NotificationsComponent } from './components/notifications/notifications
 import { TokenInterceptor } from './helpers/token.interceptor';
 import { MenuNavbarComponent } from './components/menu-navbar/menu-navbar.component';
 
+// plugin
+import { Camera } from '@ionic-native/camera/ngx';
+import { File } from '@ionic-native/file/ngx';
+import {
+  FileTransfer,
+  FileTransferObject
+} from '@ionic-native/file-transfer/ngx';
 @NgModule({
   declarations: [AppComponent, NotificationsComponent, MenuNavbarComponent],
   imports: [
@@ -45,7 +52,11 @@ import { MenuNavbarComponent } from './components/menu-navbar/menu-navbar.compon
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
       multi: true
-    }
+    },
+    FileTransfer,
+    FileTransferObject,
+    File,
+    Camera
   ],
   bootstrap: [AppComponent]
 })

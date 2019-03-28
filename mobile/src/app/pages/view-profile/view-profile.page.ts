@@ -150,7 +150,7 @@ export class ViewProfilePage implements OnInit {
     const popover = await this.popoverCtrl.create({
       component: MenuNavbarComponent,
       componentProps: {
-        dataUser: ev
+        dataUser: this.dataProfile
       },
       event: ev,
       cssClass: 'popover_class',
