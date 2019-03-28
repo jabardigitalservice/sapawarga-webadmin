@@ -26,6 +26,10 @@ import { MenuNavbarComponent } from './components/menu-navbar/menu-navbar.compon
 // plugin
 import { Camera } from '@ionic-native/camera/ngx';
 import { File } from '@ionic-native/file/ngx';
+import {
+  FileTransfer,
+  FileTransferObject
+} from '@ionic-native/file-transfer/ngx';
 @NgModule({
   declarations: [AppComponent, NotificationsComponent, MenuNavbarComponent],
   imports: [
@@ -49,8 +53,10 @@ import { File } from '@ionic-native/file/ngx';
       useClass: TokenInterceptor,
       multi: true
     },
-    Camera,
-    File
+    FileTransfer,
+    FileTransferObject,
+    File,
+    Camera
   ],
   bootstrap: [AppComponent]
 })

@@ -13,7 +13,14 @@ import { ActivatedRoute } from '@angular/router';
 import { AreasService } from 'src/app/services/areas.service';
 import { Areas } from '../../interfaces/areas';
 
+// plugin
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import {
+  FileTransfer,
+  FileUploadOptions,
+  FileTransferObject
+} from '@ionic-native/file-transfer/ngx';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-edit-profile',
@@ -27,7 +34,8 @@ export class EditProfilePage implements OnInit {
   dataKecamatan: Areas;
   dataKelurahan: Areas;
 
-  imageURI: any;
+  imageData: any;
+  image: any;
   imageFileName: any;
 
   constructor(
@@ -39,6 +47,7 @@ export class EditProfilePage implements OnInit {
     private areasService: AreasService,
     private formBuilder: FormBuilder,
     private camera: Camera,
+    private transfer: FileTransfer,
     private platform: Platform,
     private actionsheetCtrl: ActionSheetController
   ) {}
@@ -119,12 +128,10 @@ export class EditProfilePage implements OnInit {
         } else {
           this.showToast('Data gagal tersimpan');
         }
-        console.log(res);
         loader.dismiss();
       },
       err => {
         loader.dismiss();
-        console.log(err);
         this.showToast(
           'Data gagal tersimpan periksa kembali koneksi internet anda'
         );
@@ -165,7 +172,9 @@ export class EditProfilePage implements OnInit {
         loader.dismiss();
       },
       err => {
-        console.log(err);
+        this.showToast(
+          'Terjadi kesalahan periksa kembali koneksi internet anda'
+        );
         loader.dismiss();
       }
     );
@@ -178,7 +187,9 @@ export class EditProfilePage implements OnInit {
         this.dataKecamatan = res['data'];
       },
       err => {
-        console.log(err);
+        this.showToast(
+          'Terjadi kesalahan periksa kembali koneksi internet anda'
+        );
       }
     );
   }
@@ -190,7 +201,9 @@ export class EditProfilePage implements OnInit {
         this.dataKelurahan = res['data'];
       },
       err => {
-        console.log(err);
+        this.showToast(
+          'Terjadi kesalahan periksa kembali koneksi internet anda'
+        );
       }
     );
   }
@@ -218,9 +231,7 @@ export class EditProfilePage implements OnInit {
           text: 'Batal',
           icon: 'close',
           role: 'cancel',
-          handler: () => {
-            console.log('Cancel clicked');
-          }
+          handler: () => {}
         }
       ]
     });
@@ -239,8 +250,10 @@ export class EditProfilePage implements OnInit {
 
     this.camera.getPicture(options).then(
       imageData => {
-        this.imageURI = imageData;
-        console.log(this.imageURI);
+        this.imageData = imageData;
+        this.image = (<any>window).Ionic.WebView.convertFileSrc(imageData);
+        this.uploadImage(imageData);
+        console.log(this.imageData);
       },
       err => {
         console.log(err);
@@ -249,6 +262,42 @@ export class EditProfilePage implements OnInit {
     );
   }
 
+  async uploadImage(imageData) {
+    const loading = await this.loadingCtrl.create({
+      message: 'Uploading...'
+    });
+    await loading.present();
+
+    const fileTransfer: FileTransferObject = this.transfer.create();
+
+    let options: FileUploadOptions = {
+      fileKey: 'images',
+      fileName: 'ionicfile',
+      chunkedMode: false,
+      mimeType: 'image/jpeg',
+      headers: {
+        Authorization:
+          // tslint:disable-next-line:max-line-length
+          'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NTM3NDMzNzksImlzcyI6Imh0dHA6XC9cLzEwMy4xMjIuNS43MSIsImF1ZCI6Imh0dHA6XC9cLzEwMy4xMjIuNS43MSIsIm5iZiI6MTU1Mzc0MzM3OSwiZXhwIjoxNTUzODI5Nzc5LCJkYXRhIjp7InVzZXJuYW1lIjoidXNlciIsInJvbGVMYWJlbCI6IlVzZXIiLCJsYXN0TG9naW5BdCI6eyJleHByZXNzaW9uIjoiVU5JWF9USU1FU1RBTVAoKSIsInBhcmFtcyI6W119fSwianRpIjozfQ.CtQ7q53OBq0j9R7ev1DLY6NwqN_pazUbeOXK2ia79MI'
+      }
+    };
+
+    fileTransfer
+      .upload(imageData, `http://103.122.5.71/api/v1/user/photo`, options)
+      .then(
+        data => {
+          // success
+          loading.dismiss();
+          alert('success');
+        },
+        err => {
+          // error
+          // alert('error' + JSON.stringify(err));
+          loading.dismiss();
+          // console.log(err);
+        }
+      );
+  }
   async showToast(msg: string) {
     const toast = await this.toastCtrl.create({
       message: msg,

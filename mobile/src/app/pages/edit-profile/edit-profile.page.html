@@ -10,7 +10,8 @@
 <ion-content class="profile" color="light">
   <ion-card no-margin>
     <ion-card-content class="bg-profile">
-      <img src="../../../assets/img/avatar.jpg" />
+      <img *ngIf="!image" src="../../../assets/img/avatar.jpg" />
+      <img *ngIf="image" src="{{ image }}" />
       <h1 class="fw500" *ngIf="dataProfile">{{ dataProfile.name }}</h1>
 
       <ion-button icon-left color="secondary" (click)="openEditProfile()">
