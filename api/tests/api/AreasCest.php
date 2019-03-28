@@ -156,7 +156,7 @@ class AreasCest
 
         $I->sendPOST('/v1/areas', [
             'parent_id'       => 1,
-            'depth'           => 1,
+            'depth'           => 4,
             'name'            => 'TEST PROVINCE',
             'code_bps'        => 'TEST.CODE.BPS',
             'code_kemendagri' => 'TEST.CODE.KEMENDAGRI',
