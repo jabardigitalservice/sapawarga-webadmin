@@ -24,6 +24,7 @@ use yii\behaviors\TimestampBehavior;
  */
 class PhoneBook extends \yii\db\ActiveRecord
 {
+    const STATUS_DELETED = -1;
     const STATUS_DISABLED = 0;
     const STATUS_ACTIVE = 10;
 
