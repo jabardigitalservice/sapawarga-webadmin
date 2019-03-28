@@ -20,12 +20,12 @@ use yii\behaviors\TimestampBehavior;
  * @property int $seq
  * @property string $cover_image_path
  * @property mixed $meta
- * @property bool $status
+ * @property int $status
  */
 class PhoneBook extends \yii\db\ActiveRecord
 {
-    const STATUS_INACTIVE = 0;
-    const STATUS_ACTIVE = 1;
+    const STATUS_DISABLED = 0;
+    const STATUS_ACTIVE = 10;
 
     /**
      * {@inheritdoc}
@@ -44,8 +44,7 @@ class PhoneBook extends \yii\db\ActiveRecord
             ['name', 'string', 'max' => 64],
             [['name', 'description', 'phone_numbers', 'latitude', 'longitude', 'seq', 'cover_image_path', 'meta'], 'trim'],
             [['name', 'phone_numbers', 'kabkota_id', 'seq', 'status'], 'required'],
-            [['kabkota_id', 'kec_id', 'kel_id', 'seq'], 'integer'],
-            [['status'], 'boolean'],
+            [['kabkota_id', 'kec_id', 'kel_id', 'seq', 'int'], 'integer'],
         ];
     }
 
@@ -68,7 +67,7 @@ class PhoneBook extends \yii\db\ActiveRecord
                     case self::STATUS_ACTIVE:
                         $statusLabel = Yii::t('app', 'status.active');
                         break;
-                    case self::STATUS_INACTIVE:
+                    case self::STATUS_DISABLED:
                         $statusLabel = Yii::t('app', 'status.inactive');
                         break;
                 }
