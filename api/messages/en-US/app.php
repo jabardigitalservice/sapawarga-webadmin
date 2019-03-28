@@ -5,5 +5,8 @@
 */
 return [
     'app.username' => 'Username',
-    'app.password' => 'Password'
+    'app.password' => 'Password',
+
+    'status.active'   => 'Active',
+    'status.inactive' => 'Not Active',
 ];
