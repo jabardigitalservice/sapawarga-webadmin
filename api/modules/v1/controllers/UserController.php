@@ -11,6 +11,7 @@ use app\models\SignupConfirmForm;
 use app\models\SignupForm;
 use app\models\User;
 use app\models\UserEditForm;
+use app\models\UserPhotoUploadForm;
 use app\models\UserSearch;
 use Yii;
 use yii\filters\AccessControl;
@@ -20,6 +21,7 @@ use yii\web\BadRequestHttpException;
 use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\ServerErrorHttpException;
+use yii\web\UploadedFile;
 
 class UserController extends ActiveController
 {
@@ -57,6 +59,7 @@ class UserController extends ActiveController
                 'delete' => ['delete'],
                 'login' => ['post'],
                 'me' => ['get', 'post'],
+                'photo' => ['get', 'post'],
             ],
         ];
 
@@ -99,7 +102,7 @@ class UserController extends ActiveController
                 ],
                 [
                     'allow' => true,
-                    'actions' => ['me'],
+                    'actions' => ['me', 'photo'],
                     'roles' => ['user']
                 ]
             ],
@@ -493,6 +496,40 @@ class UserController extends ActiveController
         } else {
             // Validation error
             throw new NotFoundHttpException('Object not found');
+        }
+    }
+
+    public function actionPhoto()
+    {
+        //
+    }
+
+    public function actionPhotoUpload()
+    {
+        $user         = User::findIdentity(\Yii::$app->user->getId());
+
+        $model        = new UserPhotoUploadForm();
+        $model->image = UploadedFile::getInstanceByName('image');
+
+        if ($model->validate()) {
+            if ($photoUrl = $model->upload($user)) {
+                $bucket = Yii::$app->fileStorage->getBucket('imageFiles');
+
+                $responseData = [
+                    'photo_url' => $bucket->getFileUrl($photoUrl),
+                ];
+
+                return $responseData;
+            } else {
+                $response = \Yii::$app->getResponse();
+                $response->setStatusCode(400);
+            }
+        } else {
+            // Validation error
+            $response = \Yii::$app->getResponse();
+            $response->setStatusCode(422);
+
+            return $model->getErrors();
         }
     }
 

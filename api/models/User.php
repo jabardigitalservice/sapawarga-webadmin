@@ -36,6 +36,10 @@ use yii\web\Request as WebRequest;
  * @property string $kel_id
  * @property string $kec_id
  * @property string $kabkota_id
+ * @property string $photo_url
+ * @property string $facebook
+ * @property string $twitter
+ * @property string $instagram
  *
  * @package app\models
  */
