@@ -37,10 +37,22 @@ class PhoneBookTest extends \Codeception\Test\Unit
         $model->kec_id           = null;
         $model->kel_id           = null;
         $model->seq              = null;
-        $model->cover_image_path = 'test.jpg';
+        $model->cover_image_path = null;
         $model->meta             = null;
-        $model->status           = true;
+        $model->status           = null;
 
         $this->assertFalse($model->validate());
+
+        $this->assertTrue($model->hasErrors('name'));
+        $this->assertTrue($model->hasErrors('description'));
+        $this->assertTrue($model->hasErrors('phone_numbers'));
+        $this->assertTrue($model->hasErrors('kabkota_id'));
+        $this->assertTrue($model->hasErrors('seq'));
+        $this->assertTrue($model->hasErrors('status'));
+
+        $this->assertFalse($model->hasErrors('kec_id'));
+        $this->assertFalse($model->hasErrors('kel_id'));
+        $this->assertFalse($model->hasErrors('cover_image_path'));
+        $this->assertFalse($model->hasErrors('meta'));
     }
 }
