@@ -71,7 +71,7 @@ class PhoneBookController extends ActiveController
                 ],
                 [
                     'allow'   => true,
-                    'actions' => ['index', 'view'],
+                    'actions' => ['index', 'view', 'delete'],
                     'roles'   => ['user'],
                 ],
             ],
@@ -109,9 +109,9 @@ class PhoneBookController extends ActiveController
             throw new NotFoundHttpException("Object not found: $id");
         }
 
-        if ($this->checkAccess) {
-            call_user_func($this->checkAccess, $id, $model);
-        }
+        // if ($this->checkAccess) {
+        //     call_user_func($this->checkAccess, $id, $model);
+        // }
 
         $model->status = PhoneBook::STATUS_DELETED;
 
@@ -139,5 +139,6 @@ class PhoneBookController extends ActiveController
      */
     public function checkAccess($action, $model = null, $params = [])
     {
+        throw new ForbiddenHttpException();
     }
 }
