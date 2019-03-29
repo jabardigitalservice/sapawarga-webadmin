@@ -12,6 +12,7 @@ class UserTest extends \Codeception\Test\Unit
 
     private $_username = 'username';
     private $_email = 'email';
+    private $_password = 'password';
 
     public function testValidateUserFields()
     {
@@ -46,18 +47,18 @@ class UserTest extends \Codeception\Test\Unit
         );
 
         $this->specify(
-            'username length must be between 5 and 14 characters',
+            'username length must be between 4 and 14 characters',
             function () {
                 // Initialise User model
                 $user = new User();
 
-                // Set username length as 2
-                $user->username = 'ab';
+                // Set username length as 3
+                $user->username = 'abc';
                 // Verify that validation must be failed
                 $this->assertFalse($user->validate($this->_username));
 
-                // Set username length as 5
-                $user->username = 'abcde';
+                // Set username length as 4
+                $user->username = 'abcd';
                 // Verify that validation must be failed
                 $this->assertTrue($user->validate($this->_username));
 
@@ -117,7 +118,12 @@ class UserTest extends \Codeception\Test\Unit
         $this->specify('email is unique', function () {
         });
 
-        $this->specify('password is required on POST method', function () {
+        // Tests for 'password' field
+        $this->specify('password must be more than 5 characters', function () {
+            $user = new User();
+
+            $user->password = '123456';
+            $this->assertTrue($user->validate($this->_password));
         });
 
         $this->specify('status must be Active or Disabled', function () {
