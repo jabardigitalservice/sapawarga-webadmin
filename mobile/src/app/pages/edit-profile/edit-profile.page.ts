@@ -22,6 +22,7 @@ import {
 } from '@ionic-native/file-transfer/ngx';
 import { environment } from '../../../environments/environment';
 
+const TOKEN_KEY = 'auth-token';
 @Component({
   selector: 'app-edit-profile',
   templateUrl: './edit-profile.page.html',
@@ -272,18 +273,18 @@ export class EditProfilePage implements OnInit {
 
     let options: FileUploadOptions = {
       fileKey: 'image',
-      fileName: 'ionicfile',
+      fileName: 'image',
       chunkedMode: false,
       mimeType: 'image/jpeg',
       headers: {
         Authorization:
           // tslint:disable-next-line:max-line-length
-          'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NTM3NDMzNzksImlzcyI6Imh0dHA6XC9cLzEwMy4xMjIuNS43MSIsImF1ZCI6Imh0dHA6XC9cLzEwMy4xMjIuNS43MSIsIm5iZiI6MTU1Mzc0MzM3OSwiZXhwIjoxNTUzODI5Nzc5LCJkYXRhIjp7InVzZXJuYW1lIjoidXNlciIsInJvbGVMYWJlbCI6IlVzZXIiLCJsYXN0TG9naW5BdCI6eyJleHByZXNzaW9uIjoiVU5JWF9USU1FU1RBTVAoKSIsInBhcmFtcyI6W119fSwianRpIjozfQ.CtQ7q53OBq0j9R7ev1DLY6NwqN_pazUbeOXK2ia79MI'
+          `Bearer ${localStorage.getItem(TOKEN_KEY)}`
       }
     };
 
     fileTransfer
-      .upload(imageData, `http://103.122.5.71/api/v1/user/photo`, options)
+      .upload(imageData, `${environment.API_URL}/user/photo`, options)
       .then(
         data => {
           // success
@@ -292,7 +293,8 @@ export class EditProfilePage implements OnInit {
         },
         err => {
           // error
-          alert('error' + JSON.stringify(err));
+          // alert('error' + JSON.stringify(err));
+          console.log('error' + JSON.stringify(err));
           loading.dismiss();
           // console.log(err);
         }
