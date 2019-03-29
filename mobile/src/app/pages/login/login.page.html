@@ -19,7 +19,8 @@
           Nama Pengguna
         </ion-label>
         <ion-input color="dark" type="text" formControlName="username"
-          [ngClass]="{ 'is-invalid': submitted && f.username.errors }" (keydown.space)="$event.preventDefault()">
+          [ngClass]="{ 'is-invalid': submitted && f.username.errors }" (keydown.space)="$event.preventDefault()"
+          (keyup.enter)="login()">
         </ion-input>
       </ion-item>
       <div *ngIf="submitted && !!f.username.errors" class="invalid-feedback">
@@ -35,7 +36,7 @@
           <ion-icon name="lock" item-start color="dark"></ion-icon>
           Kata Sandi
         </ion-label>
-        <ion-input type="{{type}}" class="text-dark" color="dark" formControlName="password"
+        <ion-input type="{{type}}" class="text-dark" color="dark" formControlName="password" (keyup.enter)="login()"
           [ngClass]="{ 'is-invalid': submitted && f.password.errors }"></ion-input>
         <ion-icon *ngIf="!passwordShown" color="medium" (click)="showPassword()" name="eye" slot="end"></ion-icon>
         <ion-icon *ngIf="passwordShown" color="dark" (click)="showPassword()" name="eye" slot="end"></ion-icon>
