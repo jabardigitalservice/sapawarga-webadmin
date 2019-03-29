@@ -29,6 +29,11 @@
             Nama Pengguna harus diisi
           </ion-text>
         </p>
+        <p ion-text class="text08" *ngIf="!!f.username.errors.minlength">
+          <ion-text color="danger">
+            Nama Pengguna minimal 4 karakter
+          </ion-text>
+        </p>
       </div>
 
       <ion-item no-padding class="animated fadeInUp">
