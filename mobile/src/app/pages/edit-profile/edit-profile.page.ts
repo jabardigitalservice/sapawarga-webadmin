@@ -3,14 +3,13 @@ import {
   NavController,
   LoadingController,
   ToastController,
-  ActionSheetController,
-  Platform
+  ActionSheetController
 } from '@ionic/angular';
-import { ProfileService } from 'src/app/services/profile.service';
+import { ProfileService } from '../../services/profile.service';
 import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
 import { Profile } from '../../interfaces/profile';
 import { ActivatedRoute } from '@angular/router';
-import { AreasService } from 'src/app/services/areas.service';
+import { AreasService } from '../../services/areas.service';
 import { Areas } from '../../interfaces/areas';
 
 // plugin
@@ -49,7 +48,6 @@ export class EditProfilePage implements OnInit {
     private formBuilder: FormBuilder,
     private camera: Camera,
     private transfer: FileTransfer,
-    private platform: Platform,
     private actionsheetCtrl: ActionSheetController
   ) {}
 
@@ -239,6 +237,7 @@ export class EditProfilePage implements OnInit {
     await actionSheet.present();
   }
 
+  // get native camera / gallery
   getImage(sourceType: number) {
     const options: CameraOptions = {
       quality: 100,
@@ -254,15 +253,14 @@ export class EditProfilePage implements OnInit {
         this.imageData = imageData;
         this.image = (<any>window).Ionic.WebView.convertFileSrc(imageData);
         this.uploadImage(imageData);
-        // console.log(this.imageData);
       },
       err => {
         console.log(err);
-        // this.presentToast(err);
       }
     );
   }
 
+  // upload image to server
   async uploadImage(imageData) {
     const loading = await this.loadingCtrl.create({
       message: 'Uploading...'
@@ -298,12 +296,10 @@ export class EditProfilePage implements OnInit {
           } else {
             this.showToast('File terlalu besar');
           }
-          console.log(response);
         },
         err => {
-          // console.log('error' + JSON.stringify(err));
-          console.log(err);
           loading.dismiss();
+          this.showToast('File terlalu besar');
         }
       );
   }
