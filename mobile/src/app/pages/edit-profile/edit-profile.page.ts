@@ -254,7 +254,7 @@ export class EditProfilePage implements OnInit {
         this.imageData = imageData;
         this.image = (<any>window).Ionic.WebView.convertFileSrc(imageData);
         this.uploadImage(imageData);
-        console.log(this.imageData);
+        // console.log(this.imageData);
       },
       err => {
         console.log(err);
@@ -271,15 +271,18 @@ export class EditProfilePage implements OnInit {
 
     const fileTransfer: FileTransferObject = this.transfer.create();
 
+    // format file name using regex
+    let fileNameFormat = imageData
+      .substr(imageData.lastIndexOf('/') + 1)
+      .split(/[?#]/)[0];
+
     let options: FileUploadOptions = {
       fileKey: 'image',
-      fileName: 'image',
+      fileName: fileNameFormat,
       chunkedMode: false,
       mimeType: 'image/jpeg',
       headers: {
-        Authorization:
-          // tslint:disable-next-line:max-line-length
-          `Bearer ${localStorage.getItem(TOKEN_KEY)}`
+        Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`
       }
     };
 
@@ -287,16 +290,20 @@ export class EditProfilePage implements OnInit {
       .upload(imageData, `${environment.API_URL}/user/photo`, options)
       .then(
         data => {
+          let response = JSON.parse(data.response);
           // success
           loading.dismiss();
-          console.log(data);
+          if (response['success'] === true) {
+            this.showToast('Foto berhasil disimpan');
+          } else {
+            this.showToast('File terlalu besar');
+          }
+          console.log(response);
         },
         err => {
-          // error
-          // alert('error' + JSON.stringify(err));
-          console.log('error' + JSON.stringify(err));
+          // console.log('error' + JSON.stringify(err));
+          console.log(err);
           loading.dismiss();
-          // console.log(err);
         }
       );
   }
