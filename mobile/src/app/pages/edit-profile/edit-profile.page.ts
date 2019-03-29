@@ -3,14 +3,13 @@ import {
   NavController,
   LoadingController,
   ToastController,
-  ActionSheetController,
-  Platform
+  ActionSheetController
 } from '@ionic/angular';
-import { ProfileService } from 'src/app/services/profile.service';
+import { ProfileService } from '../../services/profile.service';
 import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
 import { Profile } from '../../interfaces/profile';
 import { ActivatedRoute } from '@angular/router';
-import { AreasService } from 'src/app/services/areas.service';
+import { AreasService } from '../../services/areas.service';
 import { Areas } from '../../interfaces/areas';
 
 // plugin
@@ -22,6 +21,7 @@ import {
 } from '@ionic-native/file-transfer/ngx';
 import { environment } from '../../../environments/environment';
 
+const TOKEN_KEY = 'auth-token';
 @Component({
   selector: 'app-edit-profile',
   templateUrl: './edit-profile.page.html',
@@ -48,7 +48,6 @@ export class EditProfilePage implements OnInit {
     private formBuilder: FormBuilder,
     private camera: Camera,
     private transfer: FileTransfer,
-    private platform: Platform,
     private actionsheetCtrl: ActionSheetController
   ) {}
 
@@ -238,6 +237,7 @@ export class EditProfilePage implements OnInit {
     await actionSheet.present();
   }
 
+  // get native camera / gallery
   getImage(sourceType: number) {
     const options: CameraOptions = {
       quality: 100,
@@ -253,15 +253,14 @@ export class EditProfilePage implements OnInit {
         this.imageData = imageData;
         this.image = (<any>window).Ionic.WebView.convertFileSrc(imageData);
         this.uploadImage(imageData);
-        console.log(this.imageData);
       },
       err => {
         console.log(err);
-        // this.presentToast(err);
       }
     );
   }
 
+  // upload image to server
   async uploadImage(imageData) {
     const loading = await this.loadingCtrl.create({
       message: 'Uploading...'
@@ -270,31 +269,37 @@ export class EditProfilePage implements OnInit {
 
     const fileTransfer: FileTransferObject = this.transfer.create();
 
+    // format file name using regex
+    let fileNameFormat = imageData
+      .substr(imageData.lastIndexOf('/') + 1)
+      .split(/[?#]/)[0];
+
     let options: FileUploadOptions = {
-      fileKey: 'images',
-      fileName: 'ionicfile',
+      fileKey: 'image',
+      fileName: fileNameFormat,
       chunkedMode: false,
       mimeType: 'image/jpeg',
       headers: {
-        Authorization:
-          // tslint:disable-next-line:max-line-length
-          'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NTM3NDMzNzksImlzcyI6Imh0dHA6XC9cLzEwMy4xMjIuNS43MSIsImF1ZCI6Imh0dHA6XC9cLzEwMy4xMjIuNS43MSIsIm5iZiI6MTU1Mzc0MzM3OSwiZXhwIjoxNTUzODI5Nzc5LCJkYXRhIjp7InVzZXJuYW1lIjoidXNlciIsInJvbGVMYWJlbCI6IlVzZXIiLCJsYXN0TG9naW5BdCI6eyJleHByZXNzaW9uIjoiVU5JWF9USU1FU1RBTVAoKSIsInBhcmFtcyI6W119fSwianRpIjozfQ.CtQ7q53OBq0j9R7ev1DLY6NwqN_pazUbeOXK2ia79MI'
+        Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`
       }
     };
 
     fileTransfer
-      .upload(imageData, `http://103.122.5.71/api/v1/user/photo`, options)
+      .upload(imageData, `${environment.API_URL}/user/photo`, options)
       .then(
         data => {
+          let response = JSON.parse(data.response);
           // success
           loading.dismiss();
-          alert('success');
+          if (response['success'] === true) {
+            this.showToast('Foto berhasil disimpan');
+          } else {
+            this.showToast('File terlalu besar');
+          }
         },
         err => {
-          // error
-          // alert('error' + JSON.stringify(err));
           loading.dismiss();
-          // console.log(err);
+          this.showToast('File terlalu besar');
         }
       );
   }
