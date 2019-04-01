@@ -6,6 +6,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { Pages } from './interfaces/pages';
 import { AuthService } from './services/auth.service';
+import { timer } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +14,7 @@ import { AuthService } from './services/auth.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  showSplash = true; // <-- show animation
   public appPages: Array<Pages>;
 
   constructor(
@@ -53,6 +55,8 @@ export class AppComponent {
       .then(() => {
         this.statusBar.styleDefault();
         this.splashScreen.hide();
+
+        timer(3000).subscribe(() => (this.showSplash = false));
 
         this.authService.authenticationState.subscribe(state => {
           console.log(`login ${state}`);
