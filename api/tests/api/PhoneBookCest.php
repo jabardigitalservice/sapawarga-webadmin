@@ -98,4 +98,46 @@ class PhoneBookCest
             'status'  => 200,
         ]);
     }
+
+    public function userCannotCreateNewTest(ApiTester $I)
+    {
+        $I->amUser();
+
+        $I->sendPOST('/v1/phone-books');
+        $I->canSeeResponseCodeIs(403);
+        $I->seeResponseIsJson();
+
+        $I->seeResponseContainsJson([
+            'success' => false,
+            'status'  => 403,
+        ]);
+    }
+
+    public function userCannotUpdateTest(ApiTester $I)
+    {
+        $I->amUser();
+
+        $I->sendPUT('/v1/phone-books/1');
+        $I->canSeeResponseCodeIs(403);
+        $I->seeResponseIsJson();
+
+        $I->seeResponseContainsJson([
+            'success' => false,
+            'status'  => 403,
+        ]);
+    }
+
+    public function userCannotDeleteTest(ApiTester $I)
+    {
+        $I->amUser();
+
+        $I->sendDELETE('/v1/phone-books/1');
+        $I->canSeeResponseCodeIs(403);
+        $I->seeResponseIsJson();
+
+        $I->seeResponseContainsJson([
+            'success' => false,
+            'status'  => 403,
+        ]);
+    }
 }

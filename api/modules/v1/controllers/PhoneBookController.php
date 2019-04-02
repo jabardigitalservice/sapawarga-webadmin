@@ -74,7 +74,7 @@ class PhoneBookController extends ActiveController
                 ],
                 [
                     'allow'   => true,
-                    'actions' => ['index', 'view', 'delete'],
+                    'actions' => ['index', 'view'],
                     'roles'   => ['user'],
                 ],
             ],
