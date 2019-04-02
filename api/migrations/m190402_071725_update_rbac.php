@@ -59,7 +59,7 @@ class m190402_071725_update_rbac extends CustomMigration
         $manageSettings->description = 'Manage settings';
         $auth->add($manageSettings);
 
-        foreach($auth->getUserIdsByRole('staff') as $staffId) {
+        foreach ($auth->getUserIdsByRole('staff') as $staffId) {
             $auth->assign($manageSettings, $staffId);
         }
     }
