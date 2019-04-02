@@ -46,7 +46,11 @@ use yii\web\Request as WebRequest;
 class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
     const ROLE_USER = 10;
-    const ROLE_STAFF = 50;
+    const ROLE_STAFF_RW = 50;
+    const ROLE_STAFF_KEL = 60;
+    const ROLE_STAFF_KEC = 70;
+    const ROLE_STAFF_KABKOTA = 80;
+    const ROLE_STAFF_PROV = 90;
     const ROLE_ADMIN = 99;
     const STATUS_DELETED = -1;
     const STATUS_DISABLED = 0;
@@ -343,7 +347,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         ];
 
         // If role is staff and admin, then return permissions
-        if ($this->role == self::ROLE_STAFF || $this->role == self::ROLE_ADMIN) {
+        if ($this->role == self::ROLE_STAFF_RW || $this->role == self::ROLE_ADMIN) {
             $fields['permissions'] = function () {
                 $authManager = Yii::$app->authManager;
 
@@ -393,7 +397,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             case self::ROLE_USER:
                 $roleLabel = Yii::t('app', 'User');
                 break;
-            case self::ROLE_STAFF:
+            case self::ROLE_STAFF_RW:
                 $roleLabel = Yii::t('app', 'Staff');
                 break;
             case self::ROLE_ADMIN:
@@ -443,7 +447,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_PENDING, self::STATUS_DISABLED]],
 
             ['role', 'default', 'value' => self::ROLE_USER],
-            ['role', 'in', 'range' => [self::ROLE_USER, self::ROLE_STAFF, self::ROLE_ADMIN]],
+            ['role', 'in', 'range' => [self::ROLE_USER, self::ROLE_STAFF_RW, self::ROLE_ADMIN]],
 
             ['permissions', 'validatePermissions'],
             [['access_token', 'permissions'], 'safe'],
@@ -834,7 +838,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         // ---- Start to process permissions
         if (!empty($this->permissions)) {
             // permissions only allow to be entered if the role is staff
-            if ($this->role == self::ROLE_STAFF) {
+            if ($this->role == self::ROLE_STAFF_RW) {
                 $existingPermissions = $authManager->getPermissionsByUser($this->getId());
                 foreach ($this->permissions as $permissionKey => $permission) {
                     if ($permission['checked'] == true) {
@@ -874,7 +878,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             case self::ROLE_USER:
                 $roleName = 'user';
                 break;
-            case self::ROLE_STAFF:
+            case self::ROLE_STAFF_RW:
                 $roleName = 'staff';
                 break;
             case self::ROLE_ADMIN:
