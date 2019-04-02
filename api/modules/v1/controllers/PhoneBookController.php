@@ -139,6 +139,6 @@ class PhoneBookController extends ActiveController
      */
     public function checkAccess($action, $model = null, $params = [])
     {
-        throw new ForbiddenHttpException();
+        // throw new ForbiddenHttpException();
     }
 }

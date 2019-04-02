@@ -23,7 +23,7 @@ class PhoneBookCest
 
     public function getListAdminTest(ApiTester $I)
     {
-        $I->amUser();
+        $I->amStaff();
 
         $I->sendGET('/v1/phone-books');
         $I->canSeeResponseCodeIs(200);
