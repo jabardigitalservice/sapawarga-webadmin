@@ -10,10 +10,15 @@ import { Pages } from '../../interfaces/pages';
 })
 export class HomeResultsPage {
   public appPages: Array<Pages>;
-  public themeCover = [];
-  searchKey = '';
-  yourLocation = '123 Test Street';
-  logoApp = '';
+  themeCover = [
+    {
+      slide: 'assets/img/banner-01.png'
+    },
+    {
+      slide: 'assets/img/banner-02.png'
+    }
+  ];
+  logoApp = 'assets/icon/logo.png';
   slideOpts = {
     effect: 'flip',
     autoplay: {
@@ -22,70 +27,56 @@ export class HomeResultsPage {
   };
 
   constructor(public navCtrl: NavController, private platform: Platform) {
-    this.logoApp = 'assets/icon/logo.png';
-
-    this.themeCover = [
-      {
-        slide: 'assets/img/bg-home.jpg'
-      },
-      {
-        slide: 'assets/img/slider.jpg'
-      },
-      {
-        slide: 'assets/img/slider1.jpeg'
-      }
-    ];
-
     this.appPages = [
       {
         title: 'E-samsat',
         url: 'id.go.bapenda.sambara',
-        icon: 'assets/icon/demo.png'
+        icon: 'assets/icon/SW-E-samsat.png'
       },
       {
         title: 'Perizinan',
         url: 'https://dpmptsp.jabarprov.go.id/sicantik/main/pendaftaranbaru ',
-        icon: 'assets/icon/demo.png'
+        icon: 'assets/icon/SW-IJIN.png'
       },
       {
         title: 'Info harga',
         url: 'id.bigio.priangan',
-        icon: 'assets/icon/demo.png'
+        icon: 'assets/icon/SW-Info-harga.png'
       },
       {
         title: 'Info lelang',
         url: 'https://lpse.jabarprov.go.id/eproc4',
-        icon: 'assets/icon/demo.png'
+        icon: 'assets/icon/SW-LELANG.png'
       },
       {
         title: 'Survey',
         url: '',
-        icon: 'assets/icon/demo.png'
+        icon: 'assets/icon/SW-SURVEY.png'
       },
       {
         title: 'Polling',
         url: '',
-        icon: 'assets/icon/demo.png'
+        icon: 'assets/icon/SW-POLLING.png'
       },
       {
         title: 'Nomor penting',
         url: '',
-        icon: 'assets/icon/demo.png'
+        icon: 'assets/icon/SW-NOPENTING.png'
       },
       {
         title: 'Administrasi',
         url: '',
-        icon: 'assets/icon/demo.png'
+        icon: 'assets/icon/SW-ADMINISTRASI.png'
       },
       {
         title: 'Lapor',
         url: '',
-        icon: 'assets/icon/demo.png'
+        icon: 'assets/icon/SW-LELANG.png'
       },
       {
         title: 'Aspirasi',
         url: '',
-        icon: 'assets/icon/demo.png'
+        icon: 'assets/icon/SW-LELANG.png'
       }
     ];
   }
