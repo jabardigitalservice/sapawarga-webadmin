@@ -13,6 +13,7 @@ class PhoneBookTest extends \Codeception\Test\Unit
         $this->assertFalse($model->validate());
 
         $model->name             = 'test';
+        $model->address          = 'test';
         $model->description      = 'test';
         $model->phone_numbers    = [
             'name' => 'Rumah Sakit',
@@ -36,6 +37,7 @@ class PhoneBookTest extends \Codeception\Test\Unit
         $model = new PhoneBook();
 
         $model->name             = null;
+        $model->address          = null;
         $model->description      = null;
         $model->phone_numbers    = null;
         $model->kabkota_id       = null;
@@ -51,6 +53,7 @@ class PhoneBookTest extends \Codeception\Test\Unit
         $this->assertFalse($model->validate());
 
         $this->assertTrue($model->hasErrors('name'));
+        $this->assertTrue($model->hasErrors('address'));
         $this->assertTrue($model->hasErrors('phone_numbers'));
         $this->assertTrue($model->hasErrors('kabkota_id'));
         $this->assertTrue($model->hasErrors('seq'));

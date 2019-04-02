@@ -6,10 +6,11 @@ use Yii;
 use yii\behaviors\TimestampBehavior;
 
 /**
- * This is the model class for table "areas".
+ * This is the model class for table "phonebooks".
  *
  * @property int $id
  * @property string $name
+ * @property string $address
  * @property string $description
  * @property mixed $phone_numbers
  * @property int $kabkota_id
@@ -43,8 +44,8 @@ class PhoneBook extends \yii\db\ActiveRecord
     {
         return [
             ['name', 'string', 'max' => 64],
-            [['name', 'description', 'phone_numbers', 'latitude', 'longitude', 'seq', 'cover_image_path', 'meta'], 'trim'],
-            [['name', 'phone_numbers', 'kabkota_id', 'seq', 'status'], 'required'],
+            [['name', 'address', 'description', 'phone_numbers', 'latitude', 'longitude', 'seq', 'cover_image_path', 'meta'], 'trim'],
+            [['name', 'address', 'phone_numbers', 'kabkota_id', 'seq', 'status'], 'required'],
             [['kabkota_id', 'kec_id', 'kel_id', 'seq'], 'integer'],
         ];
     }
@@ -54,6 +55,7 @@ class PhoneBook extends \yii\db\ActiveRecord
         $fields = [
             'id',
             'name',
+            'address',
             'description',
             'phone_numbers',
             'latitude',
