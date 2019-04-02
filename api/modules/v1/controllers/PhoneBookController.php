@@ -4,6 +4,9 @@ namespace app\modules\v1\controllers;
 
 use app\filters\auth\HttpBearerAuth;
 use app\models\PhoneBook;
+use app\models\PhoneBookSearch;
+use app\models\User;
+use Yii;
 use yii\filters\AccessControl;
 use yii\filters\auth\CompositeAuth;
 use yii\web\ForbiddenHttpException;
@@ -87,6 +90,8 @@ class PhoneBookController extends ActiveController
         // Override Delete Action
         unset($actions['delete']);
 
+        $actions['index']['prepareDataProvider'] = [$this, 'prepareDataProvider'];
+
         return $actions;
     }
 
@@ -119,7 +124,7 @@ class PhoneBookController extends ActiveController
             throw new ServerErrorHttpException('Failed to delete the object for unknown reason.');
         }
 
-        $response = \Yii::$app->getResponse();
+        $response = Yii::$app->getResponse();
         $response->setStatusCode(204);
 
         return 'ok';
@@ -140,5 +145,14 @@ class PhoneBookController extends ActiveController
     public function checkAccess($action, $model = null, $params = [])
     {
         // throw new ForbiddenHttpException();
+    }
+
+    public function prepareDataProvider()
+    {
+        $search = new PhoneBookSearch();
+
+        $user = User::findIdentity(Yii::$app->user->getId());
+
+        return $search->search($user, Yii::$app->request->getQueryParams());
     }
 }
