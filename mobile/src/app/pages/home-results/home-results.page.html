@@ -1,7 +1,8 @@
 <ion-header>
   <ion-toolbar color="light">
     <ion-buttons slot="start">
-      <ion-img src="{{logoApp}}" class="logo-app"></ion-img>
+      <!-- <img class="logo-app" src="{{logoApp}}" /> -->
+      <ion-img [src]="logoApp" class="logo-app"></ion-img>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -10,7 +11,7 @@
   <ion-card class="bg-white ion-margin-top">
     <ion-slides pager="true" [options]="slideOpts" pager="false">
       <ion-slide *ngFor="let img of themeCover">
-        <ion-img src="{{img.slide}}"></ion-img>
+        <img src="{{img.slide}}" />
       </ion-slide>
     </ion-slides>
   </ion-card>
@@ -23,7 +24,7 @@
     </ion-label>
   </ion-item>
 
-  <ion-row text-center small class="text-dark ion-margin-top" padding>
+  <ion-row text-center small class="text-dark ion-margin-top">
     <ion-col size="3" class="mt-1" *ngFor="let page of appPages">
       <img class="icon-img" [src]="page.icon" alt="icon" (click)="goToLayanan(page.title, page.url)" />
       <ion-label class="label-menu" color="dark">{{ page.title }}</ion-label>
