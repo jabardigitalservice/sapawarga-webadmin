@@ -6,7 +6,6 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { Pages } from './interfaces/pages';
 import { AuthService } from './services/auth.service';
-import { timer } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -24,28 +23,6 @@ export class AppComponent {
     public navCtrl: NavController,
     private authService: AuthService
   ) {
-    this.appPages = [
-      {
-        title: 'Home',
-        url: '/home-results',
-        direct: 'root',
-        icon: 'home'
-      },
-      {
-        title: 'About',
-        url: '/about',
-        direct: 'forward',
-        icon: 'information-circle-outline'
-      },
-
-      {
-        title: 'App Settings',
-        url: '/settings',
-        direct: 'forward',
-        icon: 'cog'
-      }
-    ];
-
     this.initializeApp();
   }
 
@@ -55,8 +32,6 @@ export class AppComponent {
       .then(() => {
         this.statusBar.styleDefault();
         this.splashScreen.hide();
-
-        timer(3000).subscribe(() => (this.showSplash = false));
 
         this.authService.authenticationState.subscribe(state => {
           console.log(`login ${state}`);
@@ -68,10 +43,6 @@ export class AppComponent {
         });
       })
       .catch(() => {});
-  }
-
-  goToEditProgile() {
-    this.navCtrl.navigateForward('edit-profile');
   }
 
   logout() {
