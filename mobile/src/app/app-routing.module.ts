@@ -29,6 +29,11 @@ const routes: Routes = [
     path: 'view-profile',
     loadChildren:
       './pages/view-profile/view-profile.module#ViewProfilePageModule'
+  },
+  {
+    path: 'nomor-penting',
+    loadChildren:
+      './pages/nomor-penting/nomor-penting.module#NomorPentingPageModule'
   }
 ];
 

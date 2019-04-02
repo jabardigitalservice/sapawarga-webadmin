@@ -1,11 +1,28 @@
 <ion-header>
   <ion-toolbar color="light">
-    <ion-title color="dark">Nomor Telepon Penting</ion-title>
+    <!-- <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title color="dark">Nomor Telepon Penting</ion-title> -->
+
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      <ion-text color="light">
+        <ion-text color="dark">Nomor Telepon Penting</ion-text>
+      </ion-text>
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button shape="round" color="dark">
+        <ion-icon name="search"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding color="light">
-  <ion-grid>
+  <!-- <ion-grid>
     <ion-row>
       <ion-col class="ion-text-center">
         <ion-button expand="block" fill="outline" color="dark">
@@ -18,27 +35,34 @@
         </ion-button>
       </ion-col>
     </ion-row>
-  </ion-grid>
-  <ion-card>
+  </ion-grid> -->
+  <ion-card *ngFor="let nomor_penting of dataNomorPenting">
+    <ion-item>
+      <div>
+        <ion-label>{{ nomor_penting.name }}</ion-label> <br />
+        <ion-label>0265</ion-label>
+      </div>
+      <ion-buttons slot="end">
+        <ion-button shape="round" color="dark">
+          <ion-icon name="call"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+
+      <ion-buttons slot="end">
+        <ion-button shape="round" color="dark">
+          <ion-icon name="mail"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+  </ion-card>
+  <!-- <ion-card>
     <ion-item>
       <div>
         <ion-label>Pemadam Kebakaran</ion-label> <br />
         <ion-label>0265</ion-label>
       </div>
-      <!-- <ion-button fill="outline" slot="end">View</ion-button> -->
       <ion-icon name="call" slot="end" size="large"></ion-icon>
       <ion-icon name="mail" slot="end" size="large"></ion-icon>
     </ion-item>
-  </ion-card>
-  <ion-card>
-    <ion-item>
-      <div>
-        <ion-label>Pemadam Kebakaran</ion-label> <br />
-        <ion-label>0265</ion-label>
-      </div>
-      <!-- <ion-button fill="outline" slot="end">View</ion-button> -->
-      <ion-icon name="call" slot="end" size="large"></ion-icon>
-      <ion-icon name="mail" slot="end" size="large"></ion-icon>
-    </ion-item>
-  </ion-card>
+  </ion-card> -->
 </ion-content>
