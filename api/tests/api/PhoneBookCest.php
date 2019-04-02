@@ -140,4 +140,18 @@ class PhoneBookCest
             'status'  => 403,
         ]);
     }
+
+    public function staffCreateNewTest(ApiTester $I)
+    {
+        $I->amStaff();
+
+        $I->sendPOST('/v1/phone-books');
+        $I->canSeeResponseCodeIs(201);
+        $I->seeResponseIsJson();
+
+        $I->seeResponseContainsJson([
+            'success' => true,
+            'status'  => 201,
+        ]);
+    }
 }

@@ -9,4 +9,5 @@ return [
 
     'status.active'   => 'Aktif',
     'status.inactive' => 'Tidak Aktif',
+    'status.deleted'  => 'Dihapus',
 ];

@@ -55,9 +55,9 @@ class PhoneBookSearch extends PhoneBook
         }
 
         // grid filtering conditions
-        $query->andFilterWhere([
-            'id' => $this->id,
-        ]);
+        $query->andFilterWhere(['id' => $this->id]);
+
+        $query->andFilterWhere(['<>', 'status', PhoneBook::STATUS_DELETED]);
 
         if ($user->role === User::ROLE_USER) {
             $query->andFilterWhere(['kabkota_id' => $user->kabkota_id]);
