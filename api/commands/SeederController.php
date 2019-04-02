@@ -6,6 +6,7 @@ use app\models\PhoneBook;
 use tebazil\yii2seeder\Seeder;
 use Yii;
 use yii\console\Controller;
+use yii\db\JsonExpression;
 
 class SeederController extends Controller
 {
@@ -236,16 +237,16 @@ class SeederController extends Controller
             'name' => $faker->company,
             'description' => $faker->text,
             'address' => $faker->address,
-            'phone_numbers' => [
+            'phone_numbers' => new JsonExpression([
                 [
                     'type' => 'phone',
                     'phone_number' => '022-123456',
                 ],
                 [
-                    'type' => 'phone',
+                    'type' => 'message',
                     'phone_number' => '022-098763',
                 ],
-            ],
+            ]),
             'kabkota_id' => $faker->randomElement($kabKota),
             'status' => PhoneBook::STATUS_ACTIVE,
             'seq' => 1,
