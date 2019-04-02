@@ -14,7 +14,10 @@ class PhoneBookTest extends \Codeception\Test\Unit
 
         $model->name             = 'test';
         $model->description      = 'test';
-        $model->phone_numbers    = [];
+        $model->phone_numbers    = [
+            'name' => 'Rumah Sakit',
+        ];
+
         $model->kabkota_id       = 1;
         $model->kec_id           = 1;
         $model->kel_id           = 1;
@@ -23,7 +26,7 @@ class PhoneBookTest extends \Codeception\Test\Unit
         $model->seq              = 1;
         $model->cover_image_path = 'test.jpg';
         $model->meta             = null;
-        $model->status           = true;
+        $model->status           = 10;
 
         $this->assertTrue($model->validate());
     }

@@ -11,7 +11,7 @@ class PhoneBookCest
     {
         $I->amUser();
 
-        $I->sendGET('/v1/phonebooks');
+        $I->sendGET('/v1/phone-books');
         $I->canSeeResponseCodeIs(200);
         $I->seeResponseIsJson();
 
@@ -23,9 +23,9 @@ class PhoneBookCest
 
     public function getListAdminTest(ApiTester $I)
     {
-        $I->amStaff();
+        $I->amUser();
 
-        $I->sendGET('/v1/phonebooks');
+        $I->sendGET('/v1/phone-books');
         $I->canSeeResponseCodeIs(200);
         $I->seeResponseIsJson();
 
