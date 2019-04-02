@@ -1,19 +1,7 @@
 import { Component } from '@angular/core';
-import {
-  NavController,
-  AlertController,
-  MenuController,
-  ToastController,
-  PopoverController,
-  ModalController
-} from '@ionic/angular';
+import { NavController, Platform } from '@ionic/angular';
 
-// Modals
-import { SearchFilterPage } from '../../pages/modal/search-filter/search-filter.page';
-import { ImagePage } from './../modal/image/image.page';
-// Call notifications test by Popover and Custom Component.
-import { NotificationsComponent } from './../../components/notifications/notifications.component';
-import { Pages } from 'src/app/interfaces/pages';
+import { Pages } from '../../interfaces/pages';
 
 @Component({
   selector: 'app-home-results',
@@ -22,20 +10,10 @@ import { Pages } from 'src/app/interfaces/pages';
 })
 export class HomeResultsPage {
   public appPages: Array<Pages>;
-  themeCover = [
-    {
-      slide: 'assets/img/bg-home.jpg'
-    },
-    {
-      slide: 'assets/img/slider.jpg'
-    },
-    {
-      slide: 'assets/img/slider1.jpeg'
-    }
-  ];
+  public themeCover = [];
   searchKey = '';
   yourLocation = '123 Test Street';
-  logoApp = 'assets/icon/logo.png';
+  logoApp = '';
   slideOpts = {
     effect: 'flip',
     autoplay: {
@@ -43,33 +21,40 @@ export class HomeResultsPage {
     }
   };
 
-  constructor(
-    public navCtrl: NavController,
-    public menuCtrl: MenuController,
-    public popoverCtrl: PopoverController,
-    public alertCtrl: AlertController,
-    public modalCtrl: ModalController,
-    public toastCtrl: ToastController
-  ) {
+  constructor(public navCtrl: NavController, private platform: Platform) {
+    this.logoApp = 'assets/icon/logo.png';
+
+    this.themeCover = [
+      {
+        slide: 'assets/img/bg-home.jpg'
+      },
+      {
+        slide: 'assets/img/slider.jpg'
+      },
+      {
+        slide: 'assets/img/slider1.jpeg'
+      }
+    ];
+
     this.appPages = [
       {
         title: 'E-samsat',
-        url: '',
+        url: 'id.go.bapenda.sambara',
         icon: 'assets/icon/demo.png'
       },
       {
         title: 'Perizinan',
-        url: '',
+        url: 'https://dpmptsp.jabarprov.go.id/sicantik/main/pendaftaranbaru ',
         icon: 'assets/icon/demo.png'
       },
       {
         title: 'Info harga',
-        url: '',
+        url: 'id.bigio.priangan',
         icon: 'assets/icon/demo.png'
       },
       {
         title: 'Info lelang',
-        url: '',
+        url: 'https://lpse.jabarprov.go.id/eproc4',
         icon: 'assets/icon/demo.png'
       },
       {
@@ -105,75 +90,44 @@ export class HomeResultsPage {
     ];
   }
 
-  ionViewWillEnter() {
-    this.menuCtrl.enable(true);
-  }
-
   settings() {
     this.navCtrl.navigateForward('settings');
   }
 
-  async alertLocation() {
-    const changeLocation = await this.alertCtrl.create({
-      header: 'Change Location',
-      message: 'Type your Address.',
-      inputs: [
-        {
-          name: 'location',
-          placeholder: 'Enter your new Location',
-          type: 'text'
+  // Go to layanan
+  goToLayanan(app: string, layananUrl: string) {
+    if (layananUrl) {
+      switch (app) {
+        case 'E-samsat':
+          this.launchApp(layananUrl);
+          break;
+        case 'Perizinan':
+          this.launchApp(layananUrl);
+          break;
+        case 'Info harga':
+          this.launchApp(layananUrl);
+          break;
+        case 'Info lelang':
+          this.launchApp(layananUrl);
+          break;
+        default:
+          break;
+      }
+    }
+  }
+
+  // call function launchApp to open external app
+  private launchApp(appUrl: string) {
+    // check if the platform is ios or android, else open the web url
+    if (this.platform.is('android')) {
+      let appId = appUrl;
+      let appStarter = (window as any).startApp.set({ application: appId });
+      appStarter.start(
+        function(msg) {},
+        function(err) {
+          window.open(`market://details?id=${appId}`, '_system');
         }
-      ],
-      buttons: [
-        {
-          text: 'Cancel',
-          handler: data => {
-            console.log('Cancel clicked');
-          }
-        },
-        {
-          text: 'Change',
-          handler: async data => {
-            console.log('Change clicked', data);
-            this.yourLocation = data.location;
-            const toast = await this.toastCtrl.create({
-              message: 'Location was change successfully',
-              duration: 3000,
-              position: 'top',
-              closeButtonText: 'OK',
-              showCloseButton: true
-            });
-
-            toast.present();
-          }
-        }
-      ]
-    });
-    changeLocation.present();
-  }
-
-  async searchFilter() {
-    const modal = await this.modalCtrl.create({
-      component: SearchFilterPage
-    });
-    return await modal.present();
-  }
-
-  async presentImage(image: any) {
-    const modal = await this.modalCtrl.create({
-      component: ImagePage,
-      componentProps: { value: image }
-    });
-    return await modal.present();
-  }
-
-  async notifications(ev: any) {
-    const popover = await this.popoverCtrl.create({
-      component: NotificationsComponent,
-      event: ev,
-      animated: true,
-      showBackdrop: true
-    });
-    return await popover.present();
+      );
+    }
   }
 }

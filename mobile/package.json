@@ -34,6 +34,7 @@
     "@ionic/angular": "^4.0.0",
     "@ionic/pro": "2.0.4",
     "@ionic/storage": "^2.2.0",
+    "com.lampa.startapp": "6.1.6",
     "cordova-android": "7.1.4",
     "cordova-plugin-appavailability": "0.4.2",
     "cordova-plugin-camera": "4.0.3",
@@ -97,7 +98,8 @@
       "cordova-plugin-appavailability": {},
       "cordova-plugin-camera": {},
       "cordova-plugin-file": {},
-      "cordova-plugin-file-transfer": {}
+      "cordova-plugin-file-transfer": {},
+      "com.lampa.startapp": {}
     }
   }
 }
