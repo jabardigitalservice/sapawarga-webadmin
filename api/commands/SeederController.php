@@ -246,9 +246,12 @@ class SeederController extends Controller
                     'phone_number' => '022-098763',
                 ],
             ],
-            'kabkota_id' => 22,
+            'kabkota_id' => $faker->randomElement($kabKota),
             'status' => PhoneBook::STATUS_ACTIVE,
             'seq' => 1,
+            'latitude' => $faker->latitude('-6.148534', '-7.484602'),
+            'longitude' => $faker->longitude('106.022438', '108.680921'),
+            'cover_image_path' => 'https://dummyimage.com/wsxga',
             'created_at' => time(),
             'updated_at' => time(),
         ])->rowQuantity(50);
