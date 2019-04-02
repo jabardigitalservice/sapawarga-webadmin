@@ -7,9 +7,9 @@ class PhoneBookCest
         //
     }
 
-    public function getListTest(ApiTester $I)
+    public function getListTestBandung(ApiTester $I)
     {
-        $I->amUser();
+        $I->amUser('user.bandung');
 
         $I->sendGET('/v1/phone-books');
         $I->canSeeResponseCodeIs(200);
@@ -18,6 +18,18 @@ class PhoneBookCest
         $I->seeResponseContainsJson([
             'success' => true,
             'status'  => 200,
+        ]);
+
+        $I->seeResponseContainsJson([
+            'kabkota_id' => 22,
+        ]);
+
+        $I->cantSeeResponseContainsJson([
+            'kabkota_id' => 23,
+        ]);
+
+        $I->cantSeeResponseContainsJson([
+            'kabkota_id' => 26,
         ]);
     }
 
