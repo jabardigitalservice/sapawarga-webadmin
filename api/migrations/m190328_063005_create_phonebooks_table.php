@@ -9,7 +9,7 @@ class m190328_063005_create_phonebooks_table extends Migration
         $this->createTable('phonebooks', [
             'id'               => $this->primaryKey(),
             'name'             => $this->string()->null(),
-            'description'      => $this->string()->null(),
+            'description'      => $this->text()->null(),
             'address'          => $this->string()->null(),
             'phone_numbers'    => $this->json()->null(),
             'kabkota_id'       => $this->integer()->null(),

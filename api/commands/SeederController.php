@@ -2,6 +2,8 @@
 
 namespace app\commands;
 
+use app\models\PhoneBook;
+use tebazil\yii2seeder\Seeder;
 use Yii;
 use yii\console\Controller;
 
@@ -217,5 +219,40 @@ class SeederController extends Controller
         $auth->assign($user, 4);
         $auth->assign($user, 5);
         $auth->assign($user, 6);
+    }
+
+    public function actionPhoneBook()
+    {
+        Yii::$app->db->createCommand("TRUNCATE phonebooks")->execute();
+
+        $seeder = new Seeder();
+        $generator = $seeder->getGeneratorConfigurator();
+        $faker = $generator->getFakerConfigurator();
+
+        $kabKota = [22, 23, 26];
+
+        $seeder->table('phonebooks')->columns([
+            'id',
+            'name' => $faker->company,
+            'description' => $faker->text,
+            'address' => $faker->address,
+            'phone_numbers' => [
+                [
+                    'type' => 'phone',
+                    'phone_number' => '022-123456',
+                ],
+                [
+                    'type' => 'phone',
+                    'phone_number' => '022-098763',
+                ],
+            ],
+            'kabkota_id' => 22,
+            'status' => PhoneBook::STATUS_ACTIVE,
+            'seq' => 1,
+            'created_at' => time(),
+            'updated_at' => time(),
+        ])->rowQuantity(50);
+
+        $seeder->refill();
     }
 }
