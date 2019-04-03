@@ -91,6 +91,7 @@ class PhoneBookController extends ActiveController
         unset($actions['delete']);
 
         $actions['index']['prepareDataProvider'] = [$this, 'prepareDataProvider'];
+        $actions['view']['findModel'] = [$this, 'findModel'];
 
         return $actions;
     }
@@ -100,23 +101,15 @@ class PhoneBookController extends ActiveController
      *
      * @param $id
      * @return string
-     * @throws NotFoundHttpException
-     * @throws ServerErrorHttpException
+     * @throws \yii\web\ForbiddenHttpException
+     * @throws \yii\web\NotFoundHttpException
+     * @throws \yii\web\ServerErrorHttpException
      */
     public function actionDelete($id)
     {
-        /**
-         * @var \app\models\PhoneBook $model
-         */
-        $model = PhoneBook::find()->where(['id' => $id])->andWhere(['!=', 'status', PhoneBook::STATUS_DELETED])->one();
+        $model = $this->findModel($id);
 
-        if ($model === null) {
-            throw new NotFoundHttpException("Object not found: $id");
-        }
-
-        // if ($this->checkAccess) {
-        //     call_user_func($this->checkAccess, $id, $model);
-        // }
+        $this->checkAccess('delete', $model, $id);
 
         $model->status = PhoneBook::STATUS_DELETED;
 
@@ -140,11 +133,29 @@ class PhoneBookController extends ActiveController
      * @param string $action the ID of the action to be executed
      * @param object $model the model to be accessed. If null, it means no specific model is being accessed.
      * @param array $params additional parameters
-     * @throws ForbiddenHttpException if the user does not have access
      */
     public function checkAccess($action, $model = null, $params = [])
     {
         // throw new ForbiddenHttpException();
+    }
+
+    /**
+     * @param $id
+     * @return mixed|PhoneBook
+     * @throws \yii\web\NotFoundHttpException
+     */
+    public function findModel($id)
+    {
+        $model = PhoneBook::find()
+            ->where(['id' => $id])
+            ->andWhere(['!=', 'status', PhoneBook::STATUS_DELETED])
+            ->one();
+
+        if ($model === null) {
+            throw new NotFoundHttpException("Object not found: $id");
+        }
+
+        return $model;
     }
 
     public function prepareDataProvider()

@@ -159,6 +159,7 @@ class PhoneBookCest
                     'type' => 'messaging',
                 ]
             ],
+            'meta' => null,
             'kabkota_id' => 22,
             'seq' => 1,
             'status' => 10,
@@ -191,6 +192,7 @@ class PhoneBookCest
                     'type' => 'messaging',
                 ]
             ],
+            'meta' => null,
             'kabkota_id' => 22,
             'seq' => 1,
             'status' => 10,
