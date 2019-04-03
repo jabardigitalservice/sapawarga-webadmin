@@ -145,7 +145,19 @@ class PhoneBookCest
     {
         $I->amStaff();
 
-        $I->sendPOST('/v1/phone-books');
+        $I->sendPOST('/v1/phone-books', [
+            'name' => 'Test Name',
+            'description' => 'Test Description',
+            'address' => 'Ini alamat.',
+            'phone_numbers' => [
+                'phone_number' => '022-1234',
+                'type' => 'phone',
+            ],
+            'kabkota_id' => 22,
+            'seq' => 1,
+            'status' => 10,
+        ]);
+
         $I->canSeeResponseCodeIs(201);
         $I->seeResponseIsJson();
 
@@ -153,5 +165,39 @@ class PhoneBookCest
             'success' => true,
             'status'  => 201,
         ]);
+    }
+
+    public function staffUpdateTest(ApiTester $I)
+    {
+        $I->amStaff();
+
+        $I->sendPUT('/v1/phone-books/1', [
+            'name' => 'Test Name',
+            'description' => 'Test Description',
+            'address' => 'Ini alamat.',
+            'phone_numbers' => [
+                'phone_number' => '022-1234',
+                'type' => 'phone',
+            ],
+            'kabkota_id' => 22,
+            'seq' => 1,
+            'status' => 10,
+        ]);
+
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $I->seeResponseContainsJson([
+            'success' => true,
+            'status'  => 200,
+        ]);
+    }
+
+    public function staffDelete(ApiTester $I)
+    {
+        $I->amStaff();
+
+        $I->sendDELETE('/v1/phone-books/1');
+        $I->canSeeResponseCodeIs(204);
     }
 }
