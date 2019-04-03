@@ -150,8 +150,14 @@ class PhoneBookCest
             'description' => 'Test Description',
             'address' => 'Ini alamat.',
             'phone_numbers' => [
-                'phone_number' => '022-1234',
-                'type' => 'phone',
+                [
+                    'phone_number' => '022-1234',
+                    'type' => 'phone',
+                ],
+                [
+                    'phone_number' => '022-9876',
+                    'type' => 'messaging',
+                ]
             ],
             'kabkota_id' => 22,
             'seq' => 1,
@@ -176,8 +182,14 @@ class PhoneBookCest
             'description' => 'Test Description',
             'address' => 'Ini alamat.',
             'phone_numbers' => [
-                'phone_number' => '022-1234',
-                'type' => 'phone',
+                [
+                    'phone_number' => '022-1234',
+                    'type' => 'phone',
+                ],
+                [
+                    'phone_number' => '022-9876',
+                    'type' => 'messaging',
+                ]
             ],
             'kabkota_id' => 22,
             'seq' => 1,
