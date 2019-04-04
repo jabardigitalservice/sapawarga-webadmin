@@ -124,6 +124,7 @@ class StaffController extends ActiveController
     public function actionCreate()
     {
         $model = new User();
+        $model->scenario = User::SCENARIO_REGISTER;
         $model->load(\Yii::$app->getRequest()->getBodyParams(), '');
 
         if ($model->validate() && $model->save()) {
@@ -304,7 +305,7 @@ class StaffController extends ActiveController
     public function actionLogin()
     {
         $model = new LoginForm();
-
+        $model->scenario = LoginForm::SCENARIO_LOGIN;
         $model->roles = [
             User::ROLE_ADMIN,
             User::ROLE_STAFF_PROV,

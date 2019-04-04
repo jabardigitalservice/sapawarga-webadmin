@@ -45,6 +45,7 @@ use yii\web\Request as WebRequest;
  */
 class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
+    // Constants for User's role and status
     const ROLE_USER = 10;
     const ROLE_STAFF_RW = 50;
     const ROLE_STAFF_KEL = 60;
@@ -56,6 +57,9 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     const STATUS_DISABLED = 0;
     const STATUS_PENDING = 1;
     const STATUS_ACTIVE = 10;
+
+    // Constants for Scenario names
+    const SCENARIO_REGISTER = 'register';
     /**
      * Store JWT token header items.
      * @var array
@@ -416,11 +420,22 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+        $scenarios[self::SCENARIO_REGISTER] = ['username', 'email', 'password', 'role'];
+        return $scenarios;
+    }
+
+    /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
+            [['username', 'email', 'password', 'role'], 'required', 'on' => self::SCENARIO_REGISTER],
             ['username', 'trim'],
             ['username', 'required'],
             ['username', 'string', 'length' => [4, 14]],
@@ -447,7 +462,15 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_PENDING, self::STATUS_DISABLED]],
 
             ['role', 'default', 'value' => self::ROLE_USER],
-            ['role', 'in', 'range' => [self::ROLE_USER, self::ROLE_STAFF_RW, self::ROLE_ADMIN]],
+            ['role', 'in', 'range' => [
+                self::ROLE_USER,
+                self::ROLE_STAFF_RW,
+                self::ROLE_STAFF_KEL,
+                self::ROLE_STAFF_KEC,
+                self::ROLE_STAFF_KABKOTA,
+                self::ROLE_STAFF_PROV,
+                self::ROLE_ADMIN,
+            ]],
 
             ['permissions', 'validatePermissions'],
             [['access_token', 'permissions'], 'safe'],
