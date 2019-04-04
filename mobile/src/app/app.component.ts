@@ -13,6 +13,7 @@ import { AuthService } from './services/auth.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  showSplash = true; // <-- show animation
   public appPages: Array<Pages>;
 
   constructor(
@@ -22,28 +23,6 @@ export class AppComponent {
     public navCtrl: NavController,
     private authService: AuthService
   ) {
-    this.appPages = [
-      {
-        title: 'Home',
-        url: '/home-results',
-        direct: 'root',
-        icon: 'home'
-      },
-      {
-        title: 'About',
-        url: '/about',
-        direct: 'forward',
-        icon: 'information-circle-outline'
-      },
-
-      {
-        title: 'App Settings',
-        url: '/settings',
-        direct: 'forward',
-        icon: 'cog'
-      }
-    ];
-
     this.initializeApp();
   }
 
@@ -64,10 +43,6 @@ export class AppComponent {
         });
       })
       .catch(() => {});
-  }
-
-  goToEditProgile() {
-    this.navCtrl.navigateForward('edit-profile');
   }
 
   logout() {

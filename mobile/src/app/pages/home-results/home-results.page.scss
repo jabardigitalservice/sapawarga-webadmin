@@ -18,19 +18,23 @@
         ion-searchbar {
             display: inline-block;
             width: 100%;
-            
+
         }
 
     }
 }
 
 .logo-app {
-    width: 50px;
-    height: 40px;
+    height: 45px;
 }
+
+.icon-img {
+    max-width: 70%;
+}
+
 
 .label-menu {
     display: block;
-    font-size: 13px;
+    font-size: 10px;
     margin-bottom: 10px;
 }

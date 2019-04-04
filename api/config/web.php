@@ -144,6 +144,14 @@ $config = [
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',
+                    'controller' => 'v1/phone-book',
+                    'tokens' => [
+                        '{id}' => '<id:\d+>',
+                    ],
+                    'extraPatterns' => []
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
                     'controller' => 'v1/page',
                     'pluralize' => false,
                     'tokens' => [
@@ -204,8 +212,8 @@ $config = [
         'fileStorage' => [
             'class' => 'yii2tech\filestorage\local\Storage',
             'basePath' => '@webroot/storage',
-            'baseUrl' => '@web/storage',
-            'dirPermission' => 0755,
+            'baseUrl' => $params['local_storage_base_url'].'/storage',
+            'dirPermission' => 0777,
             'filePermission' => 0644,
             'buckets' => [
                 'tempFiles' => [

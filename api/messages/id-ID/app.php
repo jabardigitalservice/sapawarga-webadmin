@@ -5,5 +5,9 @@
 */
 return [
     'app.username' => 'Nama pengguna',
-    'app.password' => 'Kata sandi'
+    'app.password' => 'Kata sandi',
+
+    'status.active'   => 'Aktif',
+    'status.inactive' => 'Tidak Aktif',
+    'status.deleted'  => 'Dihapus',
 ];

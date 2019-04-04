@@ -19,9 +19,11 @@ class UserPhotoUploadForm extends Model
 
     public function rules()
     {
+        $uploadMaxSize = Yii::$app->params['upload_max_size'];
+
         return [
             [['image'], 'required'],
-            [['image'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg', 'maxSize' => 1024 * 1024 * 2],
+            [['image'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg', 'maxSize' => $uploadMaxSize],
         ];
     }
 

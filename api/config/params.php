@@ -16,4 +16,6 @@ return [
     'jwtSecretCode' => 'someSecretKey',
     'user.passwordResetTokenExpire' => 3600,
     'paginationParams' => $paginationParams,
+    'upload_max_size' => 1024 * 1024 * 5,
+    'local_storage_base_url' => 'http://localhost/api',
 ];

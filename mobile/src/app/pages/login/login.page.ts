@@ -56,11 +56,9 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {
     this.onLoginForm = this.formBuilder.group({
-      username: ['', Validators.required],
+      username: ['', [Validators.required, Validators.minLength(4)]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
-
-    // console.log(this.auth.isAuthenticated());
   }
 
   // convenience getter for easy access to form fields
@@ -71,7 +69,7 @@ export class LoginPage implements OnInit {
   async forgotPass() {
     const alert = await this.alertCtrl.create({
       header: 'Lupa Kata Sandi?',
-      message: 'Masukan email Anda untuk mereset kata sandi.',
+      message: 'Tuliskan email anda untuk mengatur ulang kata sandi',
       inputs: [
         {
           name: 'email',
@@ -84,9 +82,7 @@ export class LoginPage implements OnInit {
           text: 'Batal',
           role: 'batal',
           cssClass: 'secondary',
-          handler: () => {
-            console.log('Confirm Cancel');
-          }
+          handler: () => {}
         },
         {
           text: 'Konfirmasi',
@@ -134,20 +130,13 @@ export class LoginPage implements OnInit {
     // stop disconnect watch
     disconnectSubscription.unsubscribe();
 
-    // const loader = await this.loadingCtrl.create({
-    //   duration: 10000
-    // });
-    // loader.present();
     await this.auth.login(this.onLoginForm.value).subscribe(
       res => {
         if (res.success === true) {
-          // console.log(res.data.access_token);
-          // loader.dismiss();
           this.auth.saveToken(res.data.access_token);
           this.navCtrl.navigateRoot(['/tabs']['home']);
         } else {
-          // loader.dismiss();
-          // console.log('login gagal');
+          this.showToast('Login', 'Pastikan input data terisi dengan benar');
         }
       },
       err => {

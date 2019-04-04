@@ -1,4 +1,8 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { catchError } from 'rxjs/operators';
@@ -27,6 +31,20 @@ export class ProfileService {
   editProfile(data): Observable<any> {
     return this.http
       .post(`${environment.API_URL}/user/me`, { UserEditForm: data })
+      .pipe(catchError(this.handleError));
+  }
+
+  editPhotoProfile(image) {
+    const input = new FormData();
+    input.append('image', image);
+    const HttpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'multipart/form-data'
+      })
+    };
+    // console.log(dataUser);
+    return this.http
+      .post(`${environment.API_URL}/user/photo`, input, HttpOptions)
       .pipe(catchError(this.handleError));
   }
 

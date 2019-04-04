@@ -4,11 +4,6 @@
     <!-- Logo -->
     <div padding-horizontal text-center class="animated fadeInDown ion-padding-top">
       <div class="logo"></div>
-      <h4 no-margin>
-        <ion-text color="dark" class="fw700">
-          Sapa Warga
-        </ion-text>
-      </h4>
     </div>
 
     <!-- Login form -->
@@ -19,13 +14,19 @@
           Nama Pengguna
         </ion-label>
         <ion-input color="dark" type="text" formControlName="username"
-          [ngClass]="{ 'is-invalid': submitted && f.username.errors }" (keydown.space)="$event.preventDefault()">
+          [ngClass]="{ 'is-invalid': submitted && f.username.errors }" (keydown.space)="$event.preventDefault()"
+          (keyup.enter)="login()">
         </ion-input>
       </ion-item>
       <div *ngIf="submitted && !!f.username.errors" class="invalid-feedback">
         <p ion-text class="text08" *ngIf="!!f.username.errors.required">
           <ion-text color="danger">
             Nama Pengguna harus diisi
+          </ion-text>
+        </p>
+        <p ion-text class="text08" *ngIf="!!f.username.errors.minlength">
+          <ion-text color="danger">
+            Nama Pengguna minimal 4 karakter
           </ion-text>
         </p>
       </div>
@@ -35,7 +36,7 @@
           <ion-icon name="lock" item-start color="dark"></ion-icon>
           Kata Sandi
         </ion-label>
-        <ion-input type="{{type}}" class="text-dark" color="dark" formControlName="password"
+        <ion-input type="{{type}}" class="text-dark" color="dark" formControlName="password" (keyup.enter)="login()"
           [ngClass]="{ 'is-invalid': submitted && f.password.errors }"></ion-input>
         <ion-icon *ngIf="!passwordShown" color="medium" (click)="showPassword()" name="eye" slot="end"></ion-icon>
         <ion-icon *ngIf="passwordShown" color="dark" (click)="showPassword()" name="eye" slot="end"></ion-icon>
@@ -48,7 +49,7 @@
         </p>
         <p ion-text class="text08" *ngIf="!!f.password.errors.minlength">
           <ion-text color="danger">
-            Kata Sandi harus lebih dari 6 karakter
+            Kata Sandi minimal 6 karakter
           </ion-text>
         </p>
       </div>
@@ -70,8 +71,6 @@
     </div>
 
   </div>
-
-
 
 </ion-content>
 

@@ -162,11 +162,11 @@ ion-card {
     margin: 0 5%;
 
     .logo {
-      width: 60px;
-      height: 60px;
+      width: 90%;
+      min-height: 125px;
       margin: 20px auto 8px;
       border-radius: 10%;
-      background: url("./assets/img/logo-beta.png") no-repeat;
+      background: url("./assets/icon/logo.png") no-repeat;
       background-size: 100%;
     }
 
