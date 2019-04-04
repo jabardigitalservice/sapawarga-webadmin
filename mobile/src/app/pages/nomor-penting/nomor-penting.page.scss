@@ -12,6 +12,7 @@
     &.no-radius {
       border-radius: 0;
     }
+
     ion-item {
       margin-top: 10px;
     }
@@ -23,4 +24,8 @@
       width: 100%;
     }
   }
+}
+
+.margin-5x {
+  margin-bottom: 5px;
 }

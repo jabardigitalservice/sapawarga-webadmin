@@ -11,9 +11,9 @@ import { NomorPenting } from '../interfaces/nomor-penting';
 export class NomorPentingService {
   constructor(private http: HttpClient) {}
 
-  getNomorPenting(): Observable<NomorPenting[]> {
+  getNomorPenting(page: number): Observable<NomorPenting[]> {
     return this.http
-      .get<NomorPenting[]>(`${environment.API_URL}/phone-books`)
+      .get<NomorPenting[]>(`${environment.API_URL}/phone-books?page=${page}`)
       .pipe(catchError(this.handleError));
   }
 

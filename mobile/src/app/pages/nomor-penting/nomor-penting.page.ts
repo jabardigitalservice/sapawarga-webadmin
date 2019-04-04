@@ -9,34 +9,61 @@ import { NomorPenting } from '../../interfaces/nomor-penting';
   styleUrls: ['./nomor-penting.page.scss']
 })
 export class NomorPentingPage implements OnInit {
+  currentPage = 1;
+  maximumPages: number;
+  dataNomorPenting: NomorPenting[];
+  phone_numbers = [];
+
   constructor(
     private nomorPentingService: NomorPentingService,
     public loadingCtrl: LoadingController
-  ) {}
-
-  dataNomorPenting: NomorPenting;
+  ) {
+    this.dataNomorPenting = [];
+  }
 
   ngOnInit() {
     this.getNomorPenting();
   }
 
-  async getNomorPenting() {
+  // get data nomor penting
+  async getNomorPenting(infiniteScroll?) {
     const loader = await this.loadingCtrl.create({
       duration: 10000
     });
-    if (event === null) {
+    if (!infiniteScroll) {
       loader.present();
     }
-    this.nomorPentingService.getNomorPenting().subscribe(
+
+    this.nomorPentingService.getNomorPenting(this.currentPage).subscribe(
       res => {
-        this.dataNomorPenting = res['data'];
-        console.log(this.dataNomorPenting);
+        this.dataNomorPenting = this.dataNomorPenting.concat(
+          res['data']['items']
+        );
+        // set count page
+        this.maximumPages = res['data']['_meta'].pageCount;
         loader.dismiss();
+        // stop infinite scroll
+        if (infiniteScroll) {
+          infiniteScroll.target.complete();
+        }
       },
       err => {
-        console.log(err);
         loader.dismiss();
       }
     );
+  }
+
+  // infinite scroll
+  doInfinite(event) {
+    // increase page
+    this.currentPage++;
+
+    setTimeout(() => {
+      this.getNomorPenting(event);
+
+      if (this.currentPage === this.maximumPages) {
+        event.target.disabled = true;
+      }
+    }, 2000);
   }
 }
