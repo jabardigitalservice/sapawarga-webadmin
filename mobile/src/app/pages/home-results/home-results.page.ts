@@ -87,24 +87,29 @@ export class HomeResultsPage {
 
   // Go to layanan
   goToLayanan(app: string, layananUrl: string) {
-    if (layananUrl) {
-      switch (app) {
-        case 'E-samsat':
-          this.launchApp(layananUrl);
-          break;
-        case 'Perizinan':
-          this.launchApp(layananUrl);
-          break;
-        case 'Info harga':
-          this.launchApp(layananUrl);
-          break;
-        case 'Info lelang':
-          this.launchApp(layananUrl);
-          break;
-        default:
-          break;
-      }
+    switch (app) {
+      case 'E-samsat':
+        this.launchApp(layananUrl);
+        break;
+      case 'Perizinan':
+        this.launchApp(layananUrl);
+        break;
+      case 'Info harga':
+        this.launchApp(layananUrl);
+        break;
+      case 'Info lelang':
+        this.launchApp(layananUrl);
+        break;
+      case 'Nomor penting':
+        this.goNomorPenting();
+        break;
+      default:
+        break;
     }
+  }
+
+  goNomorPenting() {
+    this.navCtrl.navigateForward('nomor-penting');
   }
 
   // call function launchApp to open external app
