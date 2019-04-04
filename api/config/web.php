@@ -200,8 +200,7 @@ $config = [
                     'sourceLanguage' => 'key',
                     'forceTranslation' => true,
                     'fileMap' => [
-                        'app' => 'app.php',
-                        'app/error' => 'error.php',
+                        'app' => 'app.php'
                     ],
                 ],
             ],
