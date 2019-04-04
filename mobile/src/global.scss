@@ -16,7 +16,7 @@ ion-item {
 
 // backgrounds //
 .bg-white {
-  background-color: #fff;
+  background-color: var(--ion-color-primary-contrast);
 }
 
 .bg-light {
@@ -217,6 +217,11 @@ ion-menu {
   ion-icon {
     margin-bottom: -2px;
   }
+}
+
+// inline flex
+.d-inline-f {
+  display: inline-flex;
 }
 
 // custom popover

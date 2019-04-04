@@ -3,6 +3,7 @@ services:
   nginx:
     build:
       context: ./nginx
+      dockerfile: Dockerfile.dev
     image: jdsteam/sapawarga-nginx:1.0
     networks:
       - internal

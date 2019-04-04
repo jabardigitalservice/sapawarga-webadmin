@@ -59,6 +59,8 @@ class PhoneBookSearch extends PhoneBook
 
         $query->andFilterWhere(['<>', 'status', PhoneBook::STATUS_DELETED]);
 
+        $query->andFilterWhere(['like', 'name', $params['search'] ?? null]);
+
         if ($user->role === User::ROLE_USER) {
             $query->andFilterWhere(['kabkota_id' => $user->kabkota_id]);
         }
