@@ -12,8 +12,8 @@ class SeederController extends Controller
 {
     public function actionUser()
     {
-        Yii::$app->db->createCommand("TRUNCATE auth_assignment")->execute();
-        Yii::$app->db->createCommand("TRUNCATE user")->execute();
+        Yii::$app->db->createCommand('TRUNCATE auth_assignment')->execute();
+        Yii::$app->db->createCommand('TRUNCATE user')->execute();
 
         Yii::$app->db->createCommand()->batchInsert('user', [
             'id',
@@ -224,7 +224,7 @@ class SeederController extends Controller
 
     public function actionPhoneBook()
     {
-        Yii::$app->db->createCommand("TRUNCATE phonebooks")->execute();
+        Yii::$app->db->createCommand('TRUNCATE phonebooks')->execute();
 
         $seeder = new Seeder();
         $generator = $seeder->getGeneratorConfigurator();
