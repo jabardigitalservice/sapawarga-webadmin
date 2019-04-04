@@ -425,7 +425,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function scenarios()
     {
         $scenarios = parent::scenarios();
-        $scenarios[self::SCENARIO_REGISTER] = ['username', 'email', 'password', 'role'];
+        $scenarios[self::SCENARIO_REGISTER] = ['username', 'email', 'role'];
         return $scenarios;
     }
 
@@ -435,7 +435,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function rules()
     {
         return [
-            [['username', 'email', 'password', 'role'], 'required', 'on' => self::SCENARIO_REGISTER],
+            [['username', 'email', 'role'], 'required', 'on' => self::SCENARIO_REGISTER],
             ['username', 'trim'],
             ['username', 'required'],
             ['username', 'string', 'length' => [4, 14]],
@@ -902,7 +902,19 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
                 $roleName = 'user';
                 break;
             case self::ROLE_STAFF_RW:
-                $roleName = 'staff';
+                $roleName = 'staffRW';
+                break;
+            case self::ROLE_STAFF_KEL:
+                $roleName = 'staffKel';
+                break;
+            case self::ROLE_STAFF_KEC:
+                $roleName = 'staffKec';
+                break;
+            case self::ROLE_STAFF_KABKOTA:
+                $roleName = 'staffKabkota';
+                break;
+            case self::ROLE_STAFF_PROV:
+                $roleName = 'staffProv';
                 break;
             case self::ROLE_ADMIN:
                 $roleName = 'admin';
