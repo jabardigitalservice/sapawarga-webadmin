@@ -28,8 +28,10 @@ router.render = (req, res) => {
 }
 
 server.use(jsonServer.rewriter({
-  '/api/v1/:resource': '/:resource',
-  '/api/v1/:resource/:id': '/:resource/:id'
+  '/api/v1/aspirasi/categories': '/aspirasi-categories',
+  '/api/v1/aspirasi/categories/:id': '/aspirasi-categories/:id',
+  '/api/v1/aspirasi': '/aspirasi',
+  '/api/v1/aspirasi/:id': '/aspirasi/:id'
 }))
 
 server.use(middlewares)

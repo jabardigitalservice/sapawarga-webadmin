@@ -32,6 +32,24 @@
         "id": 1,
         "name": "Infrastruktur"
       },
+      "attachments": [
+        {
+          "type": "photo",
+          "url": "https://dummyimage.com/wsxga"
+        },
+        {
+          "type": "photo",
+          "url": "https://dummyimage.com/wsxga"
+        },
+        {
+          "type": "photo",
+          "url": "https://dummyimage.com/wsxga"
+        },
+        {
+          "type": "photo",
+          "url": "https://dummyimage.com/wsxga"
+        }
+      ],
       "created_at": 1554076800,
       "updated_at": 1554076800
     },
@@ -67,6 +85,24 @@
         "id": 1,
         "name": "Infrastruktur"
       },
+      "attachments": [
+        {
+          "type": "photo",
+          "url": "https://dummyimage.com/wsxga"
+        },
+        {
+          "type": "photo",
+          "url": "https://dummyimage.com/wsxga"
+        },
+        {
+          "type": "photo",
+          "url": "https://dummyimage.com/wsxga"
+        },
+        {
+          "type": "photo",
+          "url": "https://dummyimage.com/wsxga"
+        }
+      ],
       "created_at": 1554076800,
       "updated_at": 1554076800
     },
@@ -102,6 +138,24 @@
         "id": 1,
         "name": "Infrastruktur"
       },
+      "attachments": [
+        {
+          "type": "photo",
+          "url": "https://dummyimage.com/wsxga"
+        },
+        {
+          "type": "photo",
+          "url": "https://dummyimage.com/wsxga"
+        },
+        {
+          "type": "photo",
+          "url": "https://dummyimage.com/wsxga"
+        },
+        {
+          "type": "photo",
+          "url": "https://dummyimage.com/wsxga"
+        }
+      ],
       "created_at": 1554076800,
       "updated_at": 1554076800
     },
@@ -137,6 +191,24 @@
         "id": 1,
         "name": "Infrastruktur"
       },
+      "attachments": [
+        {
+          "type": "photo",
+          "url": "https://dummyimage.com/wsxga"
+        },
+        {
+          "type": "photo",
+          "url": "https://dummyimage.com/wsxga"
+        },
+        {
+          "type": "photo",
+          "url": "https://dummyimage.com/wsxga"
+        },
+        {
+          "type": "photo",
+          "url": "https://dummyimage.com/wsxga"
+        }
+      ],
       "created_at": 1554076800,
       "updated_at": 1554076800
     },
@@ -172,8 +244,36 @@
         "id": 1,
         "name": "Infrastruktur"
       },
+      "attachments": [
+        {
+          "type": "photo",
+          "url": "https://dummyimage.com/wsxga"
+        },
+        {
+          "type": "photo",
+          "url": "https://dummyimage.com/wsxga"
+        },
+        {
+          "type": "photo",
+          "url": "https://dummyimage.com/wsxga"
+        },
+        {
+          "type": "photo",
+          "url": "https://dummyimage.com/wsxga"
+        }
+      ],
       "created_at": 1554076800,
       "updated_at": 1554076800
+    }
+  ],
+  "aspirasi-categories": [
+    {
+      "id": 1,
+      "name": "Infrastruktur"
+    },
+    {
+      "id": 2,
+      "name": "Transportasi"
     }
   ]
 }
