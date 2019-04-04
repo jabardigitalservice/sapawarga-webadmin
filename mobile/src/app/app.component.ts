@@ -36,7 +36,7 @@ export class AppComponent {
         this.authService.authenticationState.subscribe(state => {
           console.log(`login ${state}`);
           if (state) {
-            this.navCtrl.navigateRoot('/nomor-penting');
+            this.navCtrl.navigateRoot('/');
           } else {
             this.navCtrl.navigateRoot('/login');
           }
