@@ -4,6 +4,34 @@ class StaffCest
 {
     private $endpoint = '/v1/staff/login';
 
+    protected function login(ApiTester $I)
+    {
+        $I->sendPOST($this->endpoint, [
+            'LoginForm' => [
+                'username' => 'admin',
+                'password' => '123456',
+            ]
+        ]);
+
+        $I->seeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $I->seeResponseContainsJson([
+            'success' => true,
+            'status' => 200,
+        ]);
+
+        $I->seeResponseMatchesJsonType([
+            'id' => 'integer',
+            'access_token' => 'string',
+        ], '$.data');
+
+        $token = $I->grabDataFromResponseByJsonPath('$..data.access_token');
+        $token = $token[0];
+
+        $I->amBearerAuthenticated($token);
+    }
+
     public function staffLoginInvalidFields(ApiTester $I)
     {
         $I->sendPOST($this->endpoint);
@@ -63,31 +91,10 @@ class StaffCest
         ]);
     }
 
+    /**
+     * @before login
+     */
     public function staffLogin(ApiTester $I)
     {
-        $I->sendPOST($this->endpoint, [
-            'LoginForm' => [
-                'username' => 'admin',
-                'password' => '123456',
-            ]
-        ]);
-
-        $I->seeResponseCodeIs(200);
-        $I->seeResponseIsJson();
-
-        $I->seeResponseContainsJson([
-            'success' => true,
-            'status' => 200,
-        ]);
-
-        $I->seeResponseMatchesJsonType([
-            'id' => 'integer',
-            'access_token' => 'string',
-        ], '$.data');
-
-        $token = $I->grabDataFromResponseByJsonPath('$..data.access_token');
-        $token = $token[0];
-
-        $I->amBearerAuthenticated($token);
     }
 }
