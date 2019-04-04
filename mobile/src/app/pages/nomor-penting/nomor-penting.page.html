@@ -5,7 +5,7 @@
     </ion-buttons>
     <ion-title>
       <ion-text color="light">
-        <ion-text color="dark">Nomor Telepon Penting</ion-text>
+        <ion-title color="dark">Nomor Telepon Penting</ion-title>
       </ion-text>
     </ion-title>
     <ion-buttons slot="end">
@@ -24,15 +24,28 @@
     <ion-item>
       <div class="ion-margin-top ion-margin-bottom">
         <ion-label>{{ nomor_penting.name }}</ion-label> <br />
-        <ion-label
-          class="margin-5x"
-          *ngFor="let phone of nomor_penting.phone_numbers"
-          >- {{ phone.phone_number }}
-        </ion-label>
+        <!-- <ion-label class="margin-5x" *ngFor="let phone of nomor_penting.phone_numbers">- {{ phone.phone_number }}
+        </ion-label> -->
+        <!-- <div class="d-inline-f" slot="start"> -->
+        <div class="d-inline-f">
+          <ion-buttons>
+            <ion-button shape="round" color="dark" class="icon-alamat">
+              <ion-icon name="business"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+
+          <ion-note>{{ nomor_penting.address }}</ion-note>
+        </div>
+
+        <!-- </div> -->
       </div>
       <div class="d-inline-f" slot="end">
         <ion-buttons>
-          <ion-button shape="round" color="dark">
+          <ion-button
+            shape="round"
+            color="dark"
+            (click)="openPhone(nomor_penting.phone_numbers)"
+          >
             <ion-icon name="call"></ion-icon>
           </ion-button>
         </ion-buttons>

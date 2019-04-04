@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NomorPentingService } from '../../services/nomor-penting.service';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, ActionSheetController } from '@ionic/angular';
 import { NomorPenting } from '../../interfaces/nomor-penting';
 
 @Component({
@@ -9,14 +9,15 @@ import { NomorPenting } from '../../interfaces/nomor-penting';
   styleUrls: ['./nomor-penting.page.scss']
 })
 export class NomorPentingPage implements OnInit {
-  currentPage = 1;
+  currentPage = 0;
   maximumPages: number;
   dataNomorPenting: NomorPenting[];
   phone_numbers = [];
 
   constructor(
     private nomorPentingService: NomorPentingService,
-    public loadingCtrl: LoadingController
+    public loadingCtrl: LoadingController,
+    public actionSheetController: ActionSheetController
   ) {
     this.dataNomorPenting = [];
   }
@@ -65,5 +66,52 @@ export class NomorPentingPage implements OnInit {
         event.target.disabled = true;
       }
     }, 2000);
+  }
+
+  async openPhone(phone: object) {
+    console.log(phone);
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Nomor Telepon',
+      buttons: [
+        {
+          text: 'Delete',
+          role: 'destructive',
+          icon: 'call',
+          handler: () => {
+            console.log('Delete clicked');
+          }
+        },
+        {
+          text: 'Share',
+          icon: 'call',
+          handler: () => {
+            console.log('Share clicked');
+          }
+        },
+        {
+          text: 'Play (open modal)',
+          icon: 'call',
+          handler: () => {
+            console.log('Play clicked');
+          }
+        },
+        {
+          text: 'Favorite',
+          icon: 'call',
+          handler: () => {
+            console.log('Favorite clicked');
+          }
+        },
+        {
+          text: 'Cancel',
+          icon: 'close',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+      ]
+    });
+    await actionSheet.present();
   }
 }
