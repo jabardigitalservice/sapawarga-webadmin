@@ -322,7 +322,7 @@ class StaffController extends ActiveController
             $id = implode(',', array_values($user->getPrimaryKey(true)));
 
             $responseData = [
-                'id' => $id,
+                'id' => (int)$id,
                 'access_token' => $user->access_token,
             ];
 

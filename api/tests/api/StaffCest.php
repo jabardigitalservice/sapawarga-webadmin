@@ -2,9 +2,70 @@
 
 class StaffCest
 {
-    protected function loginStaff(ApiTester $I)
+    private $endpoint = '/v1/staff/login';
+
+    public function staffLoginInvalidFields(ApiTester $I)
     {
-        $I->sendPOST('/v1/staff/login', [
+        $I->sendPOST($this->endpoint);
+
+        $I->seeResponseCodeIs(422);
+        $I->seeResponseIsJson();
+
+        $I->seeResponseContainsJson([
+            'success' => false,
+            'status' => 422,
+        ]);
+
+        $I->sendPOST($this->endpoint, [
+            'LoginForm' => [
+                'username' => 'admin',
+            ]
+        ]);
+
+        $I->seeResponseCodeIs(422);
+        $I->seeResponseIsJson();
+
+        $I->seeResponseContainsJson([
+            'success' => false,
+            'status' => 422,
+        ]);
+
+        $I->sendPOST($this->endpoint, [
+            'LoginForm' => [
+                'password' => '123456',
+            ]
+        ]);
+
+        $I->seeResponseCodeIs(422);
+        $I->seeResponseIsJson();
+
+        $I->seeResponseContainsJson([
+            'success' => false,
+            'status' => 422,
+        ]);
+    }
+
+    public function staffLoginInvalidCredentials(ApiTester $I)
+    {
+        $I->sendPOST($this->endpoint, [
+            'LoginForm' => [
+                'username' => 'admin',
+                'password' => '1234567',
+            ]
+        ]);
+
+        $I->seeResponseCodeIs(422);
+        $I->seeResponseIsJson();
+
+        $I->seeResponseContainsJson([
+            'success' => false,
+            'status' => 422,
+        ]);
+    }
+
+    public function staffLogin(ApiTester $I)
+    {
+        $I->sendPOST($this->endpoint, [
             'LoginForm' => [
                 'username' => 'admin',
                 'password' => '123456',
