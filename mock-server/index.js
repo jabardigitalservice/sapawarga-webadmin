@@ -4,11 +4,27 @@ const router = jsonServer.router('db.json')
 const middlewares = jsonServer.defaults()
 
 router.render = (req, res) => {
-  res.json({
-  	status: 200,
-  	success: true,
-    data: res.locals.data
-  })
+  if (Array.isArray(res.locals.data)) {
+    res.json({
+    	status: 200,
+    	success: true,
+      data: {
+      	items: res.locals.data,
+        _meta: {
+          totalCount: 100,
+          pageCount: 5,
+          currentPage: 1,
+          perPage: 20
+        }
+      }
+    })
+  } else {
+    res.json({
+      status: 200,
+      success: true,
+      data: res.locals.data
+    })
+  }
 }
 
 server.use(jsonServer.rewriter({
