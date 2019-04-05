@@ -3,11 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>
-      <ion-text color="light">
-        <ion-title color="dark">Nomor Telepon Penting</ion-title>
-      </ion-text>
-    </ion-title>
+    <ion-title>Nomor Telepon Penting</ion-title>
     <ion-buttons slot="end">
       <ion-button shape="round" color="dark">
         <ion-icon name="search"></ion-icon>
@@ -17,16 +13,18 @@
 </ion-header>
 
 <ion-content>
-  <ion-card
-    class="ion-margin-top bg-white"
-    *ngFor="let nomor_penting of dataNomorPenting"
-  >
+  <ion-item>
+    <ion-label>Filter</ion-label>
+    <ion-select (ionChange)="filterAreas($event.detail.value)">
+      <ion-select-option value="kabkota_id {{ kabkota_id }}" selected>Kab/Kota</ion-select-option>
+      <ion-select-option value="kec_id {{ kecamatan_id }}">Kecamatan</ion-select-option>
+      <ion-select-option value="kel_id {{ kelurahan_id }}">Kelurahan</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-card class="ion-margin-top bg-white" *ngFor="let nomor_penting of dataNomorPenting">
     <ion-item>
       <div class="ion-margin-top ion-margin-bottom">
         <ion-label>{{ nomor_penting.name }}</ion-label> <br />
-        <!-- <ion-label class="margin-5x" *ngFor="let phone of nomor_penting.phone_numbers">- {{ phone.phone_number }}
-        </ion-label> -->
-        <!-- <div class="d-inline-f" slot="start"> -->
         <div class="d-inline-f">
           <ion-buttons>
             <ion-button shape="round" color="dark" class="icon-alamat">
@@ -36,16 +34,10 @@
 
           <ion-note>{{ nomor_penting.address }}</ion-note>
         </div>
-
-        <!-- </div> -->
       </div>
       <div class="d-inline-f" slot="end">
         <ion-buttons>
-          <ion-button
-            shape="round"
-            color="dark"
-            (click)="openPhone(nomor_penting.phone_numbers)"
-          >
+          <ion-button shape="round" color="dark" (click)="openPhone(nomor_penting.phone_numbers)">
             <ion-icon name="call"></ion-icon>
           </ion-button>
         </ion-buttons>
@@ -57,13 +49,11 @@
         </ion-buttons>
       </div>
     </ion-item>
+
   </ion-card>
 
   <ion-infinite-scroll threshold="100px" (ionInfinite)="doInfinite($event)">
-    <ion-infinite-scroll-content
-      loadingSpinner="bubbles"
-      loadingText="Sedang mengambil data..."
-    >
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Sedang mengambil data...">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
 </ion-content>

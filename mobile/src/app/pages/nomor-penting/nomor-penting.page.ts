@@ -13,6 +13,9 @@ export class NomorPentingPage implements OnInit {
   maximumPages: number;
   dataNomorPenting: NomorPenting[];
   phone_numbers = [];
+  kabkota_id: number;
+  kecamatan_id: number;
+  kelurahan_id: number;
 
   constructor(
     private nomorPentingService: NomorPentingService,
@@ -20,6 +23,10 @@ export class NomorPentingPage implements OnInit {
     public actionSheetController: ActionSheetController
   ) {
     this.dataNomorPenting = [];
+    // get data kabkota
+    this.kabkota_id = JSON.parse(localStorage.getItem('PROFILE')).kabkota_id;
+    this.kecamatan_id = JSON.parse(localStorage.getItem('PROFILE')).kec_id;
+    this.kelurahan_id = JSON.parse(localStorage.getItem('PROFILE')).kel_id;
   }
 
   ngOnInit() {
@@ -54,17 +61,94 @@ export class NomorPentingPage implements OnInit {
     );
   }
 
+  // get data nomor penting
+  async filterNomorPenting(type: string, id: number) {
+    const loader = await this.loadingCtrl.create({
+      duration: 10000
+    });
+    loader.present();
+
+    this.nomorPentingService.filterNomorPenting(type, id).subscribe(
+      res => {
+        this.dataNomorPenting = res['data']['items'];
+        loader.dismiss();
+      },
+      err => {
+        loader.dismiss();
+      }
+    );
+  }
+
+  filterAreas(data) {
+    /*
+      split berdasarkan type.
+      dataArea[0] = type area
+      dataArea[1] = id area
+    */
+    let dataArea = data.split(' ');
+    let typeArea = dataArea[0];
+    let idArea = dataArea[1];
+
+    this.filterNomorPenting(typeArea, idArea);
+  }
+
+  async openPhone(phone: object) {
+    console.log(phone);
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Nomor Telepon',
+      buttons: [
+        {
+          text: 'Delete',
+          role: 'destructive',
+          icon: 'call',
+          handler: () => {
+            console.log('Delete clicked');
+          }
+        },
+        {
+          text: 'Share',
+          icon: 'call',
+          handler: () => {
+            console.log('Share clicked');
+          }
+        },
+        {
+          text: 'Play (open modal)',
+          icon: 'call',
+          handler: () => {
+            console.log('Play clicked');
+          }
+        },
+        {
+          text: 'Favorite',
+          icon: 'call',
+          handler: () => {
+            console.log('Favorite clicked');
+          }
+        },
+        {
+          text: 'Cancel',
+          icon: 'close',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+      ]
+    });
+    await actionSheet.present();
+  }
+
   // infinite scroll
   doInfinite(event) {
+    if (this.currentPage === this.maximumPages) {
+      event.target.disabled = true;
+    }
     // increase page
     this.currentPage++;
 
     setTimeout(() => {
       this.getNomorPenting(event);
-
-      if (this.currentPage === this.maximumPages) {
-        event.target.disabled = true;
-      }
     }, 2000);
   }
 
