@@ -425,7 +425,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function scenarios()
     {
         $scenarios = parent::scenarios();
-        $scenarios[self::SCENARIO_REGISTER] = ['username', 'email', 'role', 'kabkota_id', 'kec_id', 'kel_id', 'rw'];
+        $scenarios[self::SCENARIO_REGISTER] = ['username', 'email', 'password', 'role', 'kabkota_id', 'kec_id', 'kel_id', 'rw'];
         return $scenarios;
     }
 
@@ -934,8 +934,8 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         return $roleName;
     }
 
-    // public function getPassword()
-    // {
-    //     return '';
-    // }
+    public function getPassword()
+    {
+        return '';
+    }
 }
