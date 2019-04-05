@@ -425,7 +425,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function scenarios()
     {
         $scenarios = parent::scenarios();
-        $scenarios[self::SCENARIO_REGISTER] = ['username', 'email', 'role'];
+        $scenarios[self::SCENARIO_REGISTER] = ['username', 'email', 'role', 'kabkota_id', 'kec_id', 'kel_id', 'rw'];
         return $scenarios;
     }
 
@@ -475,6 +475,9 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             ['permissions', 'validatePermissions'],
             [['access_token', 'permissions'], 'safe'],
             ['phone', 'trim'],
+            ['kabkota_id', 'required', 'when' => function ($model) {
+                return $model->role <= self::ROLE_STAFF_KABKOTA;
+            }],
             [['name', 'phone', 'address', 'rw', 'kel_id', 'kec_id', 'kabkota_id', 'photo_url', 'facebook', 'twitter', 'instagram'], 'default'],
         ];
     }
@@ -814,6 +817,9 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             $this->unconfirmed_email = $this->email;
         }
 
+        // Set confirmed_at with current timestamp, since there's no 'confirmation email' feature yet
+        $this->confirmed_at = Yii::$app->formatter->asTimestamp(date('Y-m-d H:i:s'));
+
         // Fill registration ip with current ip address if empty
         if ($this->registration_ip == '') {
             $this->registration_ip = Yii::$app->request->userIP;
@@ -822,6 +828,11 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         // Fill auth key if empty
         if ($this->auth_key == '') {
             $this->generateAuthKey();
+        }
+
+        // Set password if not null
+        if ($this->password != '') {
+            $this->setPassword($this->password);
         }
 
         return parent::beforeSave($insert);
@@ -923,8 +934,8 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         return $roleName;
     }
 
-    public function getPassword()
-    {
-        return '';
-    }
+    // public function getPassword()
+    // {
+    //     return '';
+    // }
 }
