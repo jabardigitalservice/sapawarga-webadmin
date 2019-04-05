@@ -61,8 +61,16 @@ class PhoneBookSearch extends PhoneBook
 
         $query->andFilterWhere(['like', 'name', $params['search'] ?? null]);
 
-        if ($user->role === User::ROLE_USER) {
+        $isCustomFilter = isset($params['kabkota_id']);
+
+        if ($isCustomFilter === false && $user->role === User::ROLE_USER) {
             $query->andFilterWhere(['kabkota_id' => $user->kabkota_id]);
+        }
+
+        if ($isCustomFilter) {
+            $query->andFilterWhere(['kabkota_id' => $params['kabkota_id'] ?? null]);
+            $query->andFilterWhere(['kec_id' => $params['kec_id'] ?? null]);
+            $query->andFilterWhere(['kel_id' => $params['kel_id'] ?? null]);
         }
 
         return $dataProvider;
