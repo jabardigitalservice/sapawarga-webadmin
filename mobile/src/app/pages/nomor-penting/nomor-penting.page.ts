@@ -30,7 +30,6 @@ export class NomorPentingPage implements OnInit {
 
   ngOnInit() {
     this.getNomorPenting();
-    // console.log(JSON.parse(localStorage.getItem('PROFILE')));
   }
 
   // get data nomor penting
