@@ -1,7 +1,7 @@
 #################################
 # Development
 #################################
-FROM node:8-alpine as build
+FROM node:10.1-alpine as build
 
 # Create app folder
 RUN mkdir /app
