@@ -5,7 +5,6 @@
 
   ion-item {
     border-radius: 0;
-    border-bottom: 1px solid var(--ion-color-medium);
   }
 
   ion-card {
@@ -23,6 +22,11 @@
       display: inline-block;
       width: 100%;
     }
+  }
+
+  .item-interactive,
+  .item-lines-full {
+    --border-width: 0 0 0 0 !important;
   }
 }
 

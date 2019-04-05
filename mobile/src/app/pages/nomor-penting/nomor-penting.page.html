@@ -3,11 +3,16 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>
-      <ion-text color="light">
-        <ion-text color="dark">Nomor Telepon Penting</ion-text>
-      </ion-text>
-    </ion-title>
+    <ion-title>Nomor Telepon Penting</ion-title>
+    <!-- <ion-title color="dark">
+      Nomor Telepon Penting
+    </ion-title> -->
+    <!-- <ion-item slot="end">
+      <ion-select placeholder="One">
+        <ion-select-option value="f">Female</ion-select-option>
+        <ion-select-option value="m">Male</ion-select-option>
+      </ion-select>
+    </ion-item> -->
     <ion-buttons slot="end">
       <ion-button shape="round" color="dark">
         <ion-icon name="search"></ion-icon>
@@ -17,6 +22,20 @@
 </ion-header>
 
 <ion-content>
+  <ion-item>
+    <ion-label>Filter</ion-label>
+    <ion-select (ionChange)="filterAreas($event.detail.value)">
+      <ion-select-option value="kabkota_id {{ kabkota_id }}" selected
+        >Kab/Kota</ion-select-option
+      >
+      <ion-select-option value="kec_id {{ kecamatan_id }}"
+        >Kecamatan</ion-select-option
+      >
+      <ion-select-option value="kel_id {{ kelurahan_id }}"
+        >Kelurahan</ion-select-option
+      >
+    </ion-select>
+  </ion-item>
   <ion-card
     class="ion-margin-top bg-white"
     *ngFor="let nomor_penting of dataNomorPenting"

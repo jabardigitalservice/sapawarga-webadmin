@@ -13,16 +13,24 @@ export class NomorPentingPage implements OnInit {
   maximumPages: number;
   dataNomorPenting: NomorPenting[];
   phone_numbers = [];
+  kabkota_id: number;
+  kecamatan_id: number;
+  kelurahan_id: number;
 
   constructor(
     private nomorPentingService: NomorPentingService,
     public loadingCtrl: LoadingController
   ) {
     this.dataNomorPenting = [];
+    // get data kabkota
+    this.kabkota_id = JSON.parse(localStorage.getItem('PROFILE')).kabkota_id;
+    this.kecamatan_id = JSON.parse(localStorage.getItem('PROFILE')).kec_id;
+    this.kelurahan_id = JSON.parse(localStorage.getItem('PROFILE')).kel_id;
   }
 
   ngOnInit() {
     this.getNomorPenting();
+    // console.log(JSON.parse(localStorage.getItem('PROFILE')));
   }
 
   // get data nomor penting
@@ -53,17 +61,47 @@ export class NomorPentingPage implements OnInit {
     );
   }
 
+  // get data nomor penting
+  async filterNomorPenting(type: string, id: number) {
+    const loader = await this.loadingCtrl.create({
+      duration: 10000
+    });
+    loader.present();
+
+    this.nomorPentingService.filterNomorPenting(type, id).subscribe(
+      res => {
+        this.dataNomorPenting = res['data']['items'];
+        loader.dismiss();
+      },
+      err => {
+        loader.dismiss();
+      }
+    );
+  }
+
+  filterAreas(data) {
+    /*
+      split berdasarkan type.
+      dataArea[0] = type area
+      dataArea[1] = id area
+    */
+    let dataArea = data.split(' ');
+    let typeArea = dataArea[0];
+    let idArea = dataArea[1];
+
+    this.filterNomorPenting(typeArea, idArea);
+  }
+
   // infinite scroll
   doInfinite(event) {
+    if (this.currentPage === this.maximumPages) {
+      event.target.disabled = true;
+    }
     // increase page
     this.currentPage++;
 
     setTimeout(() => {
       this.getNomorPenting(event);
-
-      if (this.currentPage === this.maximumPages) {
-        event.target.disabled = true;
-      }
     }, 2000);
   }
 }
