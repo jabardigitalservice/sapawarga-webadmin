@@ -1,0 +1,31 @@
+:host {
+  ion-content {
+    --background: var(--ion-color-light);
+  }
+
+  ion-item {
+    border-radius: 0;
+    border-bottom: 1px solid var(--ion-color-medium);
+  }
+
+  ion-card {
+    &.no-radius {
+      border-radius: 0;
+    }
+
+    ion-item {
+      margin-top: 10px;
+    }
+  }
+
+  ion-toolbar {
+    ion-searchbar {
+      display: inline-block;
+      width: 100%;
+    }
+  }
+}
+
+.margin-5x {
+  margin-bottom: 5px;
+}
