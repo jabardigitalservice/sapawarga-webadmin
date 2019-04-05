@@ -53,7 +53,7 @@ class UserEditForm extends Model
                 'username',
                 'unique',
                 'targetClass' => '\app\models\User',
-                'message' => Yii::t('app', 'app.error.username.taken'),
+                'message' => Yii::t('app', 'error.username.taken'),
                 'filter' => function ($query) {
                     $query->andWhere(['!=', 'id', $this->id]);
                 }
@@ -66,7 +66,7 @@ class UserEditForm extends Model
                 'email',
                 'unique',
                 'targetClass' => '\app\models\User',
-                'message' => Yii::t('app', 'app.error.email.taken'),
+                'message' => Yii::t('app', 'error.email.taken'),
                 'filter' => function ($query) {
                     $query->andWhere(['!=', 'id', $this->id]);
                 }
