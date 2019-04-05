@@ -351,7 +351,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         ];
 
         // If role is staff and admin, then return permissions
-        if ($this->role == self::ROLE_STAFF_RW || $this->role == self::ROLE_ADMIN) {
+        if ($this->role >= self::ROLE_STAFF_RW && $this->role <= self::ROLE_ADMIN) {
             $fields['permissions'] = function () {
                 $authManager = Yii::$app->authManager;
 
@@ -477,6 +477,15 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             ['phone', 'trim'],
             ['kabkota_id', 'required', 'when' => function ($model) {
                 return $model->role <= self::ROLE_STAFF_KABKOTA;
+            }],
+            ['kec_id', 'required', 'when' => function ($model) {
+                return $model->role <= self::ROLE_STAFF_KEC;
+            }],
+            ['kel_id', 'required', 'when' => function ($model) {
+                return $model->role <= self::ROLE_STAFF_KEL;
+            }],
+            ['rw', 'required', 'when' => function ($model) {
+                return $model->role <= self::ROLE_STAFF_RW;
             }],
             [['name', 'phone', 'address', 'rw', 'kel_id', 'kec_id', 'kabkota_id', 'photo_url', 'facebook', 'twitter', 'instagram'], 'default'],
         ];
@@ -872,7 +881,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         // ---- Start to process permissions
         if (!empty($this->permissions)) {
             // permissions only allow to be entered if the role is staff
-            if ($this->role == self::ROLE_STAFF_RW) {
+            if ($this->role >= self::ROLE_STAFF_RW) {
                 $existingPermissions = $authManager->getPermissionsByUser($this->getId());
                 foreach ($this->permissions as $permissionKey => $permission) {
                     if ($permission['checked'] == true) {
