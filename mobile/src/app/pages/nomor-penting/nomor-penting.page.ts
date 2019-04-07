@@ -92,51 +92,41 @@ export class NomorPentingPage implements OnInit {
     this.filterNomorPenting(typeArea, idArea);
   }
 
-  async openPhone(phone: object) {
-    console.log(phone);
+  // open action sheet open phone number
+  async openPhone(type:string, phone: any) {
     const actionSheet = await this.actionSheetController.create({
       header: 'Nomor Telepon',
-      buttons: [
-        {
-          text: 'Delete',
-          role: 'destructive',
-          icon: 'call',
-          handler: () => {
-            console.log('Delete clicked');
-          }
-        },
-        {
-          text: 'Share',
-          icon: 'call',
-          handler: () => {
-            console.log('Share clicked');
-          }
-        },
-        {
-          text: 'Play (open modal)',
-          icon: 'call',
-          handler: () => {
-            console.log('Play clicked');
-          }
-        },
-        {
-          text: 'Favorite',
-          icon: 'call',
-          handler: () => {
-            console.log('Favorite clicked');
-          }
-        },
-        {
-          text: 'Cancel',
-          icon: 'close',
-          role: 'cancel',
-          handler: () => {
-            console.log('Cancel clicked');
-          }
-        }
-      ]
+      buttons: this.createButtons(type, phone)
     });
     await actionSheet.present();
+  }
+
+  // create dynamic phone numbers
+  createButtons(type:string ,data: any) {
+    let buttons = [];
+    for (var index in data) {
+      // selection get only type phone
+      if(type === 'call' && data[index].type === 'phone') {
+        let button = {
+          text: data[index].phone_number,
+          icon: 'call',
+          handler: () => {
+            return true;
+          }
+        }
+        buttons.push(button);
+      } else if(type === 'message' && data[index].type === 'message') { // selection get only type message
+        let button = {
+          text: data[index].phone_number,
+          icon: 'mail',
+          handler: () => {
+            return true;
+          }
+        }
+        buttons.push(button);
+      } 
+    }
+    return buttons;
   }
 
   // infinite scroll
