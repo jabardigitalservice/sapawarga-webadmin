@@ -3,7 +3,7 @@ services:
   nginx:
     build:
       context: ./nginx
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     image: jdsteam/sapawarga-nginx:1.0
     networks:
       - internal
@@ -34,38 +34,26 @@ services:
   backend:
     build:
       context: ./backend
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     image: jdsteam/sapawarga-backend:1.0
     depends_on:
       - api
     networks:
       - internal
-    volumes:
-      - ./backend:/app
+    # volumes:
+    #   - ./backend:/app
 
   frontend:
     build:
       context: ./frontend
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     image: jdsteam/sapawarga-frontend:1.0
     depends_on:
       - api
     networks:
       - internal
-    volumes:
-      - ./frontend:/app
-
-  # mobile:
-  #   build:
-  #     context: ./mobile
-  #     dockerfile: Dockerfile.dev
-  #   image: jdsteam/sapawarga:1.0
-  #   depends_on:
-  #     - api
-  #   networks:
-  #     - internal
-  #   volumes:
-  #     - ./mobile:/app
+    # volumes:
+    #   - ./frontend:/app
 
   database:
     image: mysql:5.7
