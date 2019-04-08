@@ -24,7 +24,7 @@
     </ion-label>
   </ion-item>
 
-  <ion-row text-center small class="text-dark ion-margin-top">
+  <ion-row text-center small class="text-dark">
     <ion-col size="3" class="mt-1" *ngFor="let page of appPages">
       <img class="icon-img" [src]="page.icon" alt="icon" (click)="goToLayanan(page.title, page.url)" />
       <ion-label class="label-menu" color="dark">{{ page.title }}</ion-label>
