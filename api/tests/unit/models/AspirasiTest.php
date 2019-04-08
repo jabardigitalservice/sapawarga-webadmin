@@ -97,4 +97,59 @@ class AspirasiTest extends \Codeception\Test\Unit
 
         $this->assertTrue($model->hasErrors('title'));
     }
+
+    public function testDescriptionValid()
+    {
+        $model = new Aspirasi();
+
+        $model->description = 'Ini adalah deskripsi aspirasi';
+
+        $model->validate();
+
+        $this->assertFalse($model->hasErrors('description'));
+    }
+
+    public function testDescriptionNotEmpty()
+    {
+        $model = new Aspirasi();
+
+        $model->description = '';
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('description'));
+    }
+
+    public function testDescriptionTooLong()
+    {
+        $model = new Aspirasi();
+
+        $model->description = file_get_contents(__DIR__ . '/../../data/1000chars.txt');
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('description'));
+    }
+
+    public function testDescriptionMinCharacters()
+    {
+        $model = new Aspirasi();
+
+        $model->description = 'Coba';
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('description'));
+    }
+
+    public function testDescriptionNotSafe()
+    {
+        $model = new Aspirasi();
+
+        $model->description = '<script>alert()</script>';
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('description'));
+    }
 }
