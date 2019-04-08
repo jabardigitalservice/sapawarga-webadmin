@@ -440,7 +440,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function rules()
     {
         return [
-            [['username', 'password', 'email', 'role'], 'required', 'on' => self::SCENARIO_REGISTER],
+            [['username', 'email', 'role'], 'required', 'on' => self::SCENARIO_REGISTER],
             ['username', 'trim'],
             ['username', 'required'],
             ['username', 'string', 'length' => [4, 14]],
@@ -476,6 +476,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
                 self::ROLE_STAFF_PROV,
                 self::ROLE_ADMIN,
             ]],
+            ['role', 'validateRolePermission'],
 
             ['permissions', 'validatePermissions'],
             [['access_token', 'permissions'], 'safe'],
@@ -917,6 +918,19 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 
         // ---- Start to process permissions
         return parent::afterSave($insert, $changedAttributes);
+    }
+
+    /**
+     * Validate if authenticated user has permission to assign a specific role
+     *
+     * @param $attribute
+     * @param $params
+     */
+    public function validateRolePermission($attribute, $params) {
+        $currentUser = User::findIdentity(\Yii::$app->user->getId());
+        if ($currentUser->role < self::ROLE_ADMIN && $currentUser->role <= $this->$attribute) {
+            $this->addError($attribute, Yii::t('app', 'error.role.permission'));
+        }
     }
 
     private function getRoleName()

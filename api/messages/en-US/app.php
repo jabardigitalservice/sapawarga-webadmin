@@ -17,6 +17,7 @@ return [
     'error.email.taken' => 'This email address has already been taken.',
     'error.username.taken' => 'This username has already been taken.',
     'error.username.pattern' => 'Username can only contain lowercase alphanumeric characters, underscores, and periods.',
+    'error.role.permission' => 'You are not allowed to perform this action.',
 
     'status.active'   => 'Active',
     'status.inactive' => 'Not Active',

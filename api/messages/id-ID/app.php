@@ -17,6 +17,7 @@ return [
     'error.email.taken' => 'Alamat email sudah digunakan.',
     'error.username.taken' => 'Nama pengguna sudah digunakan.',
     'error.username.pattern' => 'Nama pengguna hanya boleh menggunakan karakter alfanumerik, underscore, dan titik.',
+    'error.role.permission' => 'Anda tidak diperbolehkan untuk melakukan aksi ini.',
 
     'status.active'   => 'Aktif',
     'status.inactive' => 'Tidak Aktif',
