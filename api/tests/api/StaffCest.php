@@ -90,34 +90,35 @@ class StaffCest
         $I->seeResponseIsJson();
 
         $I->seeResponseContainsJson([
-            'success' => false,
-            'status'  => 422,
+            'success'=> false,
+            'status'=> 422,
+            'data'=> [
+                'username' => [],
+                'email' => [],
+                'role' => [],
+                'kabkota_id' => [],
+                'kec_id' => [],
+                'kel_id' => [],
+                'rw' => []
+            ]
         ]);
 
         $I->sendPOST($this->endpointCreate, [
-            'username' => 'staff.prov.1',
-        ]);
-
-        $I->seeResponseCodeIs(422);
-        $I->seeResponseIsJson();
-
-        $I->seeResponseContainsJson([
-            'success' => false,
-            'status'  => 422,
-        ]);
-
-        $I->sendPOST($this->endpointCreate, [
-            'username' => 'staff.prov.1',
-            'email' => 'staff.prov.1@jabarprov.go.id',
+            'username' => 'staff.kabkota.2',
+            'email' => 'staff.kabkota.2@jabarprov.go.id',
             'password' => '123456',
+            'role' => '80'
         ]);
 
         $I->seeResponseCodeIs(422);
         $I->seeResponseIsJson();
 
         $I->seeResponseContainsJson([
-            'success' => false,
-            'status'  => 422,
+            'success'=> false,
+            'status'=> 422,
+            'data'=> [
+                'kabkota_id' => []
+            ]
         ]);
     }
 
