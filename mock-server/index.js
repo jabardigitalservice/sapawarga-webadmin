@@ -27,9 +27,20 @@ router.render = (req, res) => {
   }
 }
 
+server.use(jsonServer.bodyParser)
+server.use((req, res, next) => {
+  if (req.method === 'POST') {
+    req.body.created_at = 1554076800
+    req.body.updated_at = 1554076800
+  }
+  // Continue to JSON Server router
+  next()
+})
+
 server.use(jsonServer.rewriter({
   '/api/v1/aspirasi/categories': '/aspirasi-categories',
   '/api/v1/aspirasi/categories/:id': '/aspirasi-categories/:id',
+  '/api/v1/aspirasi/me': '/aspirasi',
   '/api/v1/aspirasi': '/aspirasi',
   '/api/v1/aspirasi/:id': '/aspirasi/:id'
 }))
