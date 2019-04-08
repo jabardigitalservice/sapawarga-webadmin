@@ -8,6 +8,7 @@ import {
 } from '@ionic/angular';
 import { NomorPenting } from '../../interfaces/nomor-penting';
 import { CallNumber } from '@ionic-native/call-number/ngx';
+import { SMS } from '@ionic-native/sms/ngx';
 
 @Component({
   selector: 'app-nomor-penting',
@@ -29,6 +30,7 @@ export class NomorPentingPage implements OnInit {
     public actionSheetController: ActionSheetController,
     private platform: Platform,
     private callNumber: CallNumber,
+    private sms: SMS,
     public toastCtrl: ToastController
   ) {
     this.dataNomorPenting = [];
@@ -130,7 +132,7 @@ export class NomorPentingPage implements OnInit {
           text: data[index].phone_number,
           icon: 'mail',
           handler: () => {
-            return true;
+            this.goToSMS(data[index].phone_number);
           }
         };
         buttons.push(button);
@@ -148,6 +150,25 @@ export class NomorPentingPage implements OnInit {
           .callNumber(phone, true)
           .then()
           .catch(err => this.showToast('Terjadi kesalahan'));
+      })
+      .catch(() => {
+        this.showToast('Silahkan periksa kembali permission anda');
+      });
+  }
+
+  // direct to native SMS
+  goToSMS(phone: string) {
+    const options = {
+      replaceLineBreaks: false,
+      android: {
+        intent: 'INTENT'
+      }
+    };
+    this.platform
+      .ready()
+      .then(() => {
+        // Send a text message using default options
+        this.sms.send(phone, '', options);
       })
       .catch(() => {
         this.showToast('Silahkan periksa kembali permission anda');
