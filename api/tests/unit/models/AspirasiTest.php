@@ -307,13 +307,39 @@ class AspirasiTest extends \Codeception\Test\Unit
         $this->assertFalse($model->hasErrors('status'));
     }
 
+    public function testStatusInputAllowedInteger()
+    {
+        $model = new Aspirasi();
+
+        // Status = DRAFT
+        $model->status = 1;
+
+        $model->validate();
+
+        $this->assertFalse($model->hasErrors('status'));
+
+        // Status = PENDING APPROVAL
+        $model->status = 2;
+
+        $model->validate();
+
+        $this->assertFalse($model->hasErrors('status'));
+
+        // Status = APPROVED
+        $model->status = 10;
+
+        $model->validate();
+
+        $this->assertFalse($model->hasErrors('status'));
+    }
+
     /**
      * Make sure user cannot override status to approved
      */
     public function testCreateScenarioUser()
     {
         $model           = new Aspirasi();
-        $model->scenario = Aspirasi::SCENARIO_CREATE_USER;
+        $model->scenario = Aspirasi::SCENARIO_DEFAULT;
 
         $model->status = 10;
 
