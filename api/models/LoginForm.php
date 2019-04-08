@@ -13,6 +13,9 @@ use yii\base\Model;
  */
 class LoginForm extends Model
 {
+    // Constants for Scenario names
+    const SCENARIO_LOGIN = 'login';
+
     public $username;
     public $password;
     public $roles = [];
@@ -27,6 +30,16 @@ class LoginForm extends Model
             'username' => Yii::t('app', \Yii::t('app', 'app.username')),
             'password' => Yii::t('app', \Yii::t('app', 'app.password')),
         ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+        $scenarios[self::SCENARIO_LOGIN] = ['username', 'password'];
+        return $scenarios;
     }
 
     /**
@@ -57,7 +70,7 @@ class LoginForm extends Model
             $user = $this->getUserByUsername();
 
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, \Yii::t('app/error', 'app.error.login.incorrect'));
+                $this->addError($attribute, \Yii::t('app', 'error.login.incorrect'));
             }
         }
     }

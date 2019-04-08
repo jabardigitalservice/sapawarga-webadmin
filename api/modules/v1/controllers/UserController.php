@@ -142,6 +142,7 @@ class UserController extends ActiveController
     public function actionCreate()
     {
         $model = new User();
+        $model->scenario = User::SCENARIO_REGISTER;
         $model->load(\Yii::$app->getRequest()->getBodyParams(), '');
 
         if ($model->validate() && $model->save()) {
@@ -253,6 +254,7 @@ class UserController extends ActiveController
     public function actionLogin()
     {
         $model = new LoginForm();
+        $model->scenario = LoginForm::SCENARIO_LOGIN;
         $model->roles = [
             User::ROLE_USER,
         ];
@@ -442,6 +444,7 @@ class UserController extends ActiveController
                 'email' => $user->email,
                 'last_login_at' => $user->last_login_at,
                 'last_login_ip' => $user->last_login_ip,
+                'role' => $user->role,
                 'photo_url' => $user->photo_url,
                 'name' => $user->name,
                 'phone' => $user->phone,

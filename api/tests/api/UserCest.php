@@ -2,9 +2,12 @@
 
 class UserCest
 {
+    private $endpointLogin = '/v1/user/login';
+    private $endpointViewProfile = '/v1/user/me';
+
     protected function login(ApiTester $I)
     {
-        $I->sendPOST('/v1/user/login', [
+        $I->sendPOST($this->endpointLogin, [
             'LoginForm' => [
                 'username' => 'user',
                 'password' => '123456',
@@ -32,7 +35,7 @@ class UserCest
 
     public function userLoginInvalidFields(ApiTester $I)
     {
-        $I->sendPOST('/v1/user/login');
+        $I->sendPOST($this->endpointLogin);
 
         $I->seeResponseCodeIs(422);
         $I->seeResponseIsJson();
@@ -42,7 +45,7 @@ class UserCest
             'status' => 422,
         ]);
 
-        $I->sendPOST('/v1/user/login', [
+        $I->sendPOST($this->endpointLogin, [
             'LoginForm' => [
                 'username' => 'user',
             ]
@@ -56,7 +59,7 @@ class UserCest
             'status' => 422,
         ]);
 
-        $I->sendPOST('/v1/user/login', [
+        $I->sendPOST($this->endpointLogin, [
             'LoginForm' => [
                 'password' => '123456',
             ]
@@ -73,7 +76,7 @@ class UserCest
 
     public function userLoginInvalidCredentials(ApiTester $I)
     {
-        $I->sendPOST('/v1/user/login', [
+        $I->sendPOST($this->endpointLogin, [
             'LoginForm' => [
                 'username' => 'user',
                 'password' => '1234567',
@@ -94,14 +97,6 @@ class UserCest
      */
     public function userLogin(ApiTester $I)
     {
-        $I->sendGET('/v1/user/me');
-        $I->canSeeResponseCodeIs(200);
-        $I->seeResponseIsJson();
-
-        $I->seeResponseContainsJson([
-            'success' => true,
-            'status'  => 200,
-        ]);
     }
 
     /**
@@ -109,7 +104,7 @@ class UserCest
      */
     public function userGetProfile(ApiTester $I)
     {
-        $I->sendGET('/v1/user/me');
+        $I->sendGET($this->endpointViewProfile);
         $I->canSeeResponseCodeIs(200);
         $I->seeResponseIsJson();
 
