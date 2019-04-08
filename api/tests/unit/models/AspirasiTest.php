@@ -265,8 +265,8 @@ class AspirasiTest extends \Codeception\Test\Unit
         $model->attachments = [
             [
                 'type' => 'photo',
-                'url'  => '#',
-            ]
+                'url' => '#',
+            ],
         ];
 
         $model->validate();
@@ -301,6 +301,33 @@ class AspirasiTest extends \Codeception\Test\Unit
         $model = new Aspirasi();
 
         $model->status = 1;
+
+        $model->validate();
+
+        $this->assertFalse($model->hasErrors('status'));
+    }
+
+    /**
+     * Make sure user cannot override status to approved
+     */
+    public function testCreateScenarioUser()
+    {
+        $model           = new Aspirasi();
+        $model->scenario = Aspirasi::SCENARIO_CREATE_USER;
+
+        $model->status = 10;
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('status'));
+    }
+
+    public function testCreateScenarioStaff()
+    {
+        $model           = new Aspirasi();
+        $model->scenario = Aspirasi::SCENARIO_CREATE_STAFF;
+
+        $model->status = 10;
 
         $model->validate();
 
