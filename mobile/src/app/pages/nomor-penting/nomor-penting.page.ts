@@ -1,7 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { NomorPentingService } from '../../services/nomor-penting.service';
-import { LoadingController, ActionSheetController } from '@ionic/angular';
+import {
+  LoadingController,
+  ActionSheetController,
+  Platform,
+  ToastController
+} from '@ionic/angular';
 import { NomorPenting } from '../../interfaces/nomor-penting';
+import { CallNumber } from '@ionic-native/call-number/ngx';
 
 @Component({
   selector: 'app-nomor-penting',
@@ -9,7 +15,7 @@ import { NomorPenting } from '../../interfaces/nomor-penting';
   styleUrls: ['./nomor-penting.page.scss']
 })
 export class NomorPentingPage implements OnInit {
-  currentPage = 0;
+  currentPage = 1;
   maximumPages: number;
   dataNomorPenting: NomorPenting[];
   phone_numbers = [];
@@ -20,7 +26,10 @@ export class NomorPentingPage implements OnInit {
   constructor(
     private nomorPentingService: NomorPentingService,
     public loadingCtrl: LoadingController,
-    public actionSheetController: ActionSheetController
+    public actionSheetController: ActionSheetController,
+    private platform: Platform,
+    private callNumber: CallNumber,
+    public toastCtrl: ToastController
   ) {
     this.dataNomorPenting = [];
     // get data kabkota
@@ -93,7 +102,7 @@ export class NomorPentingPage implements OnInit {
   }
 
   // open action sheet open phone number
-  async openPhone(type:string, phone: any) {
+  async openPhone(type: string, phone: any) {
     const actionSheet = await this.actionSheetController.create({
       header: 'Nomor Telepon',
       buttons: this.createButtons(type, phone)
@@ -102,37 +111,54 @@ export class NomorPentingPage implements OnInit {
   }
 
   // create dynamic phone numbers
-  createButtons(type:string ,data: any) {
+  createButtons(type: string, data: any) {
     let buttons = [];
     for (var index in data) {
       // selection get only type phone
-      if(type === 'call' && data[index].type === 'phone') {
+      if (type === 'call' && data[index].type === 'phone') {
         let button = {
           text: data[index].phone_number,
           icon: 'call',
           handler: () => {
-            return true;
+            this.phoneCall(data[index].phone_number);
           }
-        }
+        };
         buttons.push(button);
-      } else if(type === 'message' && data[index].type === 'message') { // selection get only type message
+      } else if (type === 'message' && data[index].type === 'message') {
+        // selection get only type message
         let button = {
           text: data[index].phone_number,
           icon: 'mail',
           handler: () => {
             return true;
           }
-        }
+        };
         buttons.push(button);
-      } 
+      }
     }
     return buttons;
+  }
+
+  // call number direct to native
+  phoneCall(phone: string) {
+    this.platform
+      .ready()
+      .then(() => {
+        this.callNumber
+          .callNumber(phone, true)
+          .then()
+          .catch(err => this.showToast('Terjadi kesalahan'));
+      })
+      .catch(() => {
+        this.showToast('Silahkan periksa kembali permission anda');
+      });
   }
 
   // infinite scroll
   doInfinite(event) {
     if (this.currentPage === this.maximumPages) {
       event.target.disabled = true;
+      return;
     }
     // increase page
     this.currentPage++;
@@ -142,50 +168,11 @@ export class NomorPentingPage implements OnInit {
     }, 2000);
   }
 
-  async openPhone(phone: object) {
-    console.log(phone);
-    const actionSheet = await this.actionSheetController.create({
-      header: 'Nomor Telepon',
-      buttons: [
-        {
-          text: 'Delete',
-          role: 'destructive',
-          icon: 'call',
-          handler: () => {
-            console.log('Delete clicked');
-          }
-        },
-        {
-          text: 'Share',
-          icon: 'call',
-          handler: () => {
-            console.log('Share clicked');
-          }
-        },
-        {
-          text: 'Play (open modal)',
-          icon: 'call',
-          handler: () => {
-            console.log('Play clicked');
-          }
-        },
-        {
-          text: 'Favorite',
-          icon: 'call',
-          handler: () => {
-            console.log('Favorite clicked');
-          }
-        },
-        {
-          text: 'Cancel',
-          icon: 'close',
-          role: 'cancel',
-          handler: () => {
-            console.log('Cancel clicked');
-          }
-        }
-      ]
+  async showToast(msg: string) {
+    const toast = await this.toastCtrl.create({
+      message: msg,
+      duration: 2000
     });
-    await actionSheet.present();
+    toast.present();
   }
 }
