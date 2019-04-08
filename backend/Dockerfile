@@ -1,34 +1,39 @@
+#################################
+# Production
+#################################
 FROM node:10.1-alpine as build
 
 # Create app folder
 RUN mkdir /app
 WORKDIR /app
 
-# Add path
-ENV PATH /app/node_modules/.bin:$PATH
+RUN apk update && apk upgrade && \
+	apk add --no-cache git
+
+RUN npm install -g yarn && \
+	chmod a+rwx /usr/local/lib/node_modules/yarn/bin/yarn* && \
+	chmod a+rwx  /usr/local/bin/yarn* && \
+	yarn global add @vue/cli
 
 # Copy package*.json to app folder
-COPY package.json package-lock.json /app/
+COPY package.json yarn.lock /app/
 
 # Install app dependencies
-RUN npm set progress=false
-RUN npm install
+RUN yarn install
 
 # Copy all files to app folder
 COPY . /app
 
 # Build the app
-RUN npm run build:prod
+RUN yarn build
 
 # Add configuration files
 COPY image-files/ /
 RUN chmod 700 /usr/local/bin/docker-entrypoint.sh
 
-# Add path
-ENV PATH /usr/local/bin:$PATH
+# Install nginx
+RUN apk --update add nginx
 
 # Expose port 80
 EXPOSE 80
-
-# Run entry point
-CMD ["npm", "run", "server"]
+ENTRYPOINT ["docker-entrypoint.sh"]
