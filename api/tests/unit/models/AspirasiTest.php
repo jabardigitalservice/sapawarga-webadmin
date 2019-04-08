@@ -30,6 +30,7 @@ class AspirasiTest extends \Codeception\Test\Unit
 
         $model->validate();
 
+        // Mandatory
         $this->assertTrue($model->hasErrors('title'));
         $this->assertTrue($model->hasErrors('description'));
         $this->assertTrue($model->hasErrors('status'));
@@ -38,6 +39,7 @@ class AspirasiTest extends \Codeception\Test\Unit
         $this->assertTrue($model->hasErrors('kel_id'));
         $this->assertTrue($model->hasErrors('author_id'));
         $this->assertTrue($model->hasErrors('category_id'));
+        $this->assertTrue($model->hasErrors('attachments'));
     }
 
     public function testTitleValid()
@@ -151,5 +153,157 @@ class AspirasiTest extends \Codeception\Test\Unit
         $model->validate();
 
         $this->assertTrue($model->hasErrors('description'));
+    }
+
+    public function testAreaMustInteger()
+    {
+        $model = new Aspirasi();
+
+        $model->kabkota_id = 'test';
+        $model->kec_id     = 'test';
+        $model->kel_id     = 'test';
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('kabkota_id'));
+        $this->assertTrue($model->hasErrors('kec_id'));
+        $this->assertTrue($model->hasErrors('kel_id'));
+
+        $model->kabkota_id = 1;
+        $model->kec_id     = 1;
+        $model->kel_id     = 1;
+
+        $model->validate();
+
+        $this->assertFalse($model->hasErrors('kabkota_id'));
+        $this->assertFalse($model->hasErrors('kec_id'));
+        $this->assertFalse($model->hasErrors('kel_id'));
+    }
+
+    public function testCategoryIdMustInteger()
+    {
+        $model = new Aspirasi();
+
+        $model->category_id = 'test';
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('category_id'));
+
+        $model->category_id = 1;
+
+        $model->validate();
+
+        $this->assertFalse($model->hasErrors('category_id'));
+    }
+
+    public function testAuthorIdMustInteger()
+    {
+        $model = new Aspirasi();
+
+        $model->author_id = 'test';
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('author_id'));
+
+        $model->author_id = 1;
+
+        $model->validate();
+
+        $this->assertFalse($model->hasErrors('author_id'));
+    }
+
+    public function testAttachmentsInputString()
+    {
+        $model = new Aspirasi();
+
+        $model->attachments = 'test';
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('attachments'));
+    }
+
+    public function testAttachmentsInputEmpty()
+    {
+        $model = new Aspirasi();
+
+        $model->attachments = '';
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('attachments'));
+    }
+
+    public function testAttachmentsInputInteger()
+    {
+        $model = new Aspirasi();
+
+        $model->attachments = 1;
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('attachments'));
+    }
+
+    public function testAttachmentsInputInvalidJson()
+    {
+        $model = new Aspirasi();
+
+        $model->attachments = 'xxxxx';
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('attachments'));
+    }
+
+    public function testAttachmentsInputJson()
+    {
+        $model = new Aspirasi();
+
+        $model->attachments = [
+            [
+                'type' => 'photo',
+                'url'  => '#',
+            ]
+        ];
+
+        $model->validate();
+
+        $this->assertFalse($model->hasErrors('attachments'));
+    }
+
+    public function testStatusInputString()
+    {
+        $model = new Aspirasi();
+
+        $model->status = 'OK';
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('status'));
+    }
+
+    public function testStatusInputEmpty()
+    {
+        $model = new Aspirasi();
+
+        $model->status = '';
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('status'));
+    }
+
+    public function testStatusInputInteger()
+    {
+        $model = new Aspirasi();
+
+        $model->status = 1;
+
+        $model->validate();
+
+        $this->assertFalse($model->hasErrors('status'));
     }
 }
