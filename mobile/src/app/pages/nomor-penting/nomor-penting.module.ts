@@ -9,6 +9,7 @@ import { NomorPentingPage } from './nomor-penting.page';
 
 // plugin
 import { CallNumber } from '@ionic-native/call-number/ngx';
+import { SMS } from '@ionic-native/sms/ngx';
 
 const routes: Routes = [
   {
@@ -24,7 +25,7 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  providers: [CallNumber],
+  providers: [CallNumber, SMS],
   declarations: [NomorPentingPage]
 })
 export class NomorPentingPageModule {}
