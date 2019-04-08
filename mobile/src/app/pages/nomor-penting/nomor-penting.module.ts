@@ -7,6 +7,9 @@ import { IonicModule } from '@ionic/angular';
 
 import { NomorPentingPage } from './nomor-penting.page';
 
+// plugin
+import { CallNumber } from '@ionic-native/call-number/ngx';
+
 const routes: Routes = [
   {
     path: '',
@@ -21,6 +24,7 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
+  providers: [CallNumber],
   declarations: [NomorPentingPage]
 })
 export class NomorPentingPageModule {}
