@@ -277,11 +277,16 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function attributeLabels()
     {
         return [
-            'username' => Yii::t('app', 'Username'),
+            'username' => Yii::t('app', \Yii::t('app', 'app.username')),
             'email' => Yii::t('app', 'Email'),
+            'password' => Yii::t('app', \Yii::t('app', 'app.password')),
+            'role' => Yii::t('app', 'app.role'),
+            'rw' => Yii::t('app', 'app.rw'),
+            'kel_id' => Yii::t('app', 'app.kel_id'),
+            'kec_id' => Yii::t('app', 'app.kec_id'),
+            'kabkota_id' => Yii::t('app', 'app.kabkota_id'),
             'registration_ip' => Yii::t('app', 'Registration ip'),
             'unconfirmed_email' => Yii::t('app', 'New email'),
-            'password' => Yii::t('app', 'Password'),
             'created_at' => Yii::t('app', 'Registration time'),
             'confirmed_at' => Yii::t('app', 'Confirmation time'),
         ];
@@ -435,7 +440,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function rules()
     {
         return [
-            [['username', 'email', 'role'], 'required', 'on' => self::SCENARIO_REGISTER],
+            [['username', 'password', 'email', 'role'], 'required', 'on' => self::SCENARIO_REGISTER],
             ['username', 'trim'],
             ['username', 'required'],
             ['username', 'string', 'length' => [4, 14]],
@@ -575,7 +580,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
                 ->where(['username' => $this->$attribute])
                 ->count();
             if ($existingUser > 0) {
-                $this->addError($attribute, Yii::t('app', 'The username has already been taken.'));
+                $this->addError($attribute, Yii::t('app', 'error.username.taken'));
             }
         } elseif ($request->isPut) {
             // get current user
@@ -589,7 +594,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
                     ->andWhere(['!=', 'id', $this->id])
                     ->count();
                 if ($existingUser > 0) {
-                    $this->addError($attribute, Yii::t('app', 'The username has already been taken.'));
+                    $this->addError($attribute, Yii::t('app', 'error.username.taken'));
                 }
             }
         } else {
@@ -625,7 +630,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
                 ->count();
 
             if ($existingUser > 0) {
-                $this->addError($attribute, Yii::t('app', 'The email has already been taken.'));
+                $this->addError($attribute, Yii::t('app', 'error.email.taken'));
             }
         } elseif ($request->isPut) {
             // get current user
@@ -640,7 +645,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
                     ->andWhere(['!=', 'id', $this->id])
                     ->count();
                 if ($existingUser > 0) {
-                    $this->addError($attribute, Yii::t('app', 'The email has already been taken.'));
+                    $this->addError($attribute, Yii::t('app', 'error.email.taken'));
                 }
             }
         } else {

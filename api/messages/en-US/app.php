@@ -5,7 +5,13 @@
 */
 return [
     'app.username' => 'Username',
+    'app.email' => 'Email',
     'app.password' => 'Password',
+    'app.role' => 'Role',
+    'app.rw' => 'RW',
+    'app.kel_id' => 'Kelurahan',
+    'app.kec_id' => 'Kecamatan',
+    'app.kabkota_id' => 'Kabupaten/Kota',
 
     'error.login.incorrect' => 'Incorrect username or password.',
     'error.email.taken' => 'This email address has already been taken.',
