@@ -9,6 +9,7 @@ import {
 import { NomorPenting } from '../../interfaces/nomor-penting';
 import { CallNumber } from '@ionic-native/call-number/ngx';
 import { SMS } from '@ionic-native/sms/ngx';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nomor-penting',
@@ -31,7 +32,8 @@ export class NomorPentingPage implements OnInit {
     private platform: Platform,
     private callNumber: CallNumber,
     private sms: SMS,
-    public toastCtrl: ToastController
+    public toastCtrl: ToastController,
+    private router: Router
   ) {
     this.dataNomorPenting = [];
     // get data kabkota
@@ -187,6 +189,13 @@ export class NomorPentingPage implements OnInit {
     setTimeout(() => {
       this.getNomorPenting(event);
     }, 2000);
+  }
+
+  goToDetail(id: number) {
+    console.log(id);
+    this.router.navigate(['detail-nomor-penting'], {
+      queryParams: { id: id }
+    });
   }
 
   async showToast(msg: string) {
