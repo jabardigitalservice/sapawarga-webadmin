@@ -21,7 +21,7 @@
         <el-input
           ref="username"
           v-model="loginForm.username"
-          :placeholder="$t('login.username')"
+          placeholder="Nama Pengguna"
           name="username"
           type="text"
           auto-complete="on"
@@ -37,7 +37,7 @@
           ref="password"
           v-model="loginForm.password"
           :type="passwordType"
-          :placeholder="$t('login.password')"
+          placeholder="Kata sandi"
           name="password"
           auto-complete="on"
           @keyup.enter.native="handleLogin"
@@ -52,7 +52,7 @@
         type="primary"
         style="width:100%;margin-bottom:30px;"
         @click.native.prevent="handleLogin"
-      >{{ $t('login.logIn') }}</el-button>
+      >Masuk</el-button>
     </el-form>
   </div>
 </template>
