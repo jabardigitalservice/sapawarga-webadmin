@@ -488,21 +488,21 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
                 self::ROLE_STAFF_PROV,
                 self::ROLE_ADMIN,
             ]],
-            ['role', 'validateRolePermission'],
+            ['role', 'validateRolePermission', 'on' => self::SCENARIO_REGISTER],
 
             ['permissions', 'validatePermissions'],
             [['access_token', 'permissions'], 'safe'],
             ['phone', 'trim'],
-            ['kabkota_id', 'required', 'when' => function ($model) {
+            ['kabkota_id', 'required', 'on' => self::SCENARIO_REGISTER, 'when' => function ($model) {
                 return $model->role <= self::ROLE_STAFF_KABKOTA;
             }],
-            ['kec_id', 'required', 'when' => function ($model) {
+            ['kec_id', 'required', 'on' => self::SCENARIO_REGISTER, 'when' => function ($model) {
                 return $model->role <= self::ROLE_STAFF_KEC;
             }],
-            ['kel_id', 'required', 'when' => function ($model) {
+            ['kel_id', 'required', 'on' => self::SCENARIO_REGISTER, 'when' => function ($model) {
                 return $model->role <= self::ROLE_STAFF_KEL;
             }],
-            ['rw', 'required', 'when' => function ($model) {
+            ['rw', 'required', 'on' => self::SCENARIO_REGISTER, 'when' => function ($model) {
                 return $model->role <= self::ROLE_STAFF_RW;
             }],
             [['name', 'phone', 'address', 'rw', 'kel_id', 'kec_id', 'kabkota_id', 'photo_url', 'facebook', 'twitter', 'instagram'], 'default'],
