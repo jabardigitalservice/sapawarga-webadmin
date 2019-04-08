@@ -404,13 +404,25 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         $roleLabel = '';
         switch ($this->role) {
             case self::ROLE_USER:
-                $roleLabel = Yii::t('app', 'User');
+                $roleLabel = Yii::t('app', 'role.user');
                 break;
             case self::ROLE_STAFF_RW:
-                $roleLabel = Yii::t('app', 'Staff');
+                $roleLabel = Yii::t('app', 'role.staffRW');
+                break;
+            case self::ROLE_STAFF_KEL:
+                $roleLabel = Yii::t('app', 'role.staffKel');
+                break;
+            case self::ROLE_STAFF_KEC:
+                $roleLabel = Yii::t('app', 'role.staffKec');
+                break;
+            case self::ROLE_STAFF_KABKOTA:
+                $roleLabel = Yii::t('app', 'role.staffKabkota');
+                break;
+            case self::ROLE_STAFF_PROV:
+                $roleLabel = Yii::t('app', 'role.staffProv');
                 break;
             case self::ROLE_ADMIN:
-                $roleLabel = Yii::t('app', 'Administrator');
+                $roleLabel = Yii::t('app', 'role.admin');
                 break;
         }
         return $roleLabel;
@@ -926,7 +938,8 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      * @param $attribute
      * @param $params
      */
-    public function validateRolePermission($attribute, $params) {
+    public function validateRolePermission($attribute, $params)
+    {
         $currentUser = User::findIdentity(\Yii::$app->user->getId());
         if ($currentUser->role < self::ROLE_ADMIN && $currentUser->role <= $this->$attribute) {
             $this->addError($attribute, Yii::t('app', 'error.role.permission'));

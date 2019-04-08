@@ -19,6 +19,14 @@ return [
     'error.username.pattern' => 'Username can only contain lowercase alphanumeric characters, underscores, and periods.',
     'error.role.permission' => 'You are not allowed to perform this action.',
 
+    'role.admin' => 'Administrator',
+    'role.staffProv' => 'Staff Provinsi',
+    'role.staffKabkota' => 'Staff Kabupaten/Kota',
+    'role.staffKec' => 'Staff Kecamatan',
+    'role.staffKel' => 'Staff Kelurahan',
+    'role.staffRW' => 'RW',
+    'role.user' => 'User',
+
     'status.active'   => 'Active',
     'status.inactive' => 'Not Active',
     'status.deleted'  => 'Deleted',

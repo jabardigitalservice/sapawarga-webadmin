@@ -19,6 +19,14 @@ return [
     'error.username.pattern' => 'Nama pengguna hanya boleh menggunakan karakter alfanumerik, underscore, dan titik.',
     'error.role.permission' => 'Anda tidak diperbolehkan untuk melakukan aksi ini.',
 
+    'role.admin' => 'Administrator',
+    'role.staffProv' => 'Staf Provinsi',
+    'role.staffKabkota' => 'Staf Kabupaten/Kota',
+    'role.staffKec' => 'Staf Kecamatan',
+    'role.staffKel' => 'Staf Kelurahan',
+    'role.staffRW' => 'RW',
+    'role.user' => 'Pengguna',
+
     'status.active'   => 'Aktif',
     'status.inactive' => 'Tidak Aktif',
     'status.deleted'  => 'Dihapus',
