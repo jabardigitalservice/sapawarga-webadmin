@@ -37,13 +37,13 @@
       </div>
       <div class="d-inline-f" slot="end">
         <ion-buttons>
-          <ion-button shape="round" color="dark" (click)="openPhone(nomor_penting.phone_numbers)">
+          <ion-button shape="round" color="dark" (click)="openPhone('call', nomor_penting.phone_numbers)">
             <ion-icon name="call"></ion-icon>
           </ion-button>
         </ion-buttons>
 
         <ion-buttons>
-          <ion-button shape="round" color="dark">
+          <ion-button shape="round" color="dark"  (click)="openPhone('message', nomor_penting.phone_numbers)">
             <ion-icon name="mail"></ion-icon>
           </ion-button>
         </ion-buttons>
