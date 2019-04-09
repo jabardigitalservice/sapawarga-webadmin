@@ -41,7 +41,7 @@ class AspirasiUserCest
 
         $data = [];
 
-        $I->sendPOST('/v1/aspirasi/', $data);
+        $I->sendPOST('/v1/aspirasi', $data);
         $I->canSeeResponseCodeIs(403);
         $I->seeResponseIsJson();
 
