@@ -54,15 +54,12 @@ const actions = {
       getInfo(state.token)
         .then(response => {
           let { data } = response;
-          console.log(data.photo_url);
 
           if (!data) {
             reject('Verification failed, please Login again.');
           }
 
           const { name, photo_url, introduction } = data;
-
-          console.log(photo_url);
 
           const roles = ['admin'];
 
