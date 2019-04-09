@@ -43,7 +43,6 @@ export class DetailNomorPentingPage implements OnInit {
     this.nomorPentingService.getDetailNomorPenting(this.id).subscribe(
       res => {
         this.dataNomorPenting = res['data'];
-        console.log(this.dataNomorPenting);
         loader.dismiss();
       },
       err => {
