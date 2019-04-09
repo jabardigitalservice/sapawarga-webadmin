@@ -23,10 +23,9 @@
   </ion-item>
 
   <div class="ion-text-center" *ngIf="!dataNomorPenting.length">Data tidak ditemukan</div>
-  <ion-card class="ion-margin-top bg-white" *ngFor="let nomor_penting of dataNomorPenting"
-    (click)="goToDetail(nomor_penting.id)">
+  <ion-card class="ion-margin-top bg-white" *ngFor="let nomor_penting of dataNomorPenting">
     <ion-item>
-      <div class="ion-margin-top ion-margin-bottom">
+      <div class="ion-margin-top ion-margin-bottom" (click)="goToDetail(nomor_penting.id)">
         <ion-label>{{ nomor_penting.name }}</ion-label> <br />
         <div class="d-inline-f">
           <ion-buttons>
