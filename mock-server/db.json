@@ -104,12 +104,16 @@
     {
       "id": 1,
       "name": "Layanan Kesehatan",
+      "status": 10,
+      "status_label": "Aktif",
       "created_at": 1554076800,
       "updated_at": 1554076800
     },
     {
       "id": 2,
       "name": "Layanan Ekonomi",
+      "status": 10,
+      "status_label": "Aktif",
       "created_at": 1554076800,
       "updated_at": 1554076800
     }
@@ -455,12 +459,16 @@
     {
       "id": 1,
       "name": "Infrastruktur",
+      "status": 10,
+      "status_label": "Aktif",
       "created_at": 1554076800,
       "updated_at": 1554076800
     },
     {
       "id": 2,
       "name": "Transportasi",
+      "status": 10,
+      "status_label": "Aktif",
       "created_at": 1554076800,
       "updated_at": 1554076800
     }
