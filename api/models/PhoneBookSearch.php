@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use Illuminate\Support\Arr;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -42,8 +43,6 @@ class PhoneBookSearch extends PhoneBook
     {
         $query = PhoneBook::find();
 
-        // add conditions that should always apply here
-
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -61,18 +60,61 @@ class PhoneBookSearch extends PhoneBook
 
         $query->andFilterWhere(['like', 'name', $params['search'] ?? null]);
 
-        $isCustomFilter = isset($params['kabkota_id']);
-
-        if ($isCustomFilter === false && $user->role === User::ROLE_USER) {
-            $query->andFilterWhere(['kabkota_id' => $user->kabkota_id]);
+        // Jika User
+        if ($user->role === User::ROLE_USER) {
+            return $this->getQueryRoleUser($user, $query, $params);
         }
 
-        if ($isCustomFilter) {
-            $query->andFilterWhere(['kabkota_id' => $params['kabkota_id'] ?? null]);
-            $query->andFilterWhere(['kec_id' => $params['kec_id'] ?? null]);
-            $query->andFilterWhere(['kel_id' => $params['kel_id'] ?? null]);
+        // Else Has Admin Role
+        return $this->getQueryRoleAdmin($query, $params);
+    }
+
+    protected function getQueryRoleUser($user, $query, $params)
+    {
+        // Jika memilih custom filter, akan override semua parameter default
+        if ($this->isCustomFilter($params) === true) {
+            $this->filterByArea($query, $params);
+        } else {
+            // Jika tidak memilih custom filter,
+            // by default tampilkan daftar instansi di Kab/Kota dimana user tersebut tinggal
+            $params['kabkota_id'] = Arr::get($user, 'kabkota_id');
+
+            $this->filterByArea($query, $params);
         }
 
-        return $dataProvider;
+        return new ActiveDataProvider([
+            'query' => $query,
+        ]);
+    }
+
+    protected function getQueryRoleAdmin($query, $params)
+    {
+        $this->filterByArea($query, $params);
+
+        return new ActiveDataProvider([
+            'query' => $query,
+        ]);
+    }
+
+    protected function isCustomFilter($params)
+    {
+        return Arr::has($params, 'kabkota_id') || Arr::has($params, 'kec_id') || Arr::has($params, 'kel_id');
+    }
+
+    protected function filterByArea(&$query, $params)
+    {
+        if (Arr::has($params, 'kabkota_id')) {
+            $query->andFilterWhere(['kabkota_id' => $params['kabkota_id']]);
+        }
+
+        if (Arr::has($params, 'kec_id')) {
+            $query->andFilterWhere(['kec_id' => $params['kec_id']]);
+        }
+
+        if (Arr::has($params, 'kel_id')) {
+            $query->andFilterWhere(['kel_id' => $params['kel_id']]);
+        }
+
+        return $query;
     }
 }

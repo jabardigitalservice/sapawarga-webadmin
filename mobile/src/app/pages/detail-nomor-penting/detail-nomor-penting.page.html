@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Detail Nomor Penting</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="dataNomorPenting">
+  <img *ngIf="!dataNomorPenting.cover_image_path" src="../../../assets/img/placeholder_image.png" />
+  <img *ngIf="dataNomorPenting.cover_image_path" src="{{ dataNomorPenting.cover_image_path }}" />
+
+  <ion-item>
+    <div class="ion-margin-top ion-margin-bottom">
+      <ion-label>{{ dataNomorPenting.name }}</ion-label> <br />
+      <div *ngFor="let nomor of dataNomorPenting.phone_numbers">
+        <ion-note>{{ nomor.phone_number }}</ion-note>
+      </div>
+    </div>
+    <div slot="end">
+      <ion-buttons (click)="goToMap(dataNomorPenting.latitude, dataNomorPenting.longitude)">
+        <ion-button shape="round" color="dark">
+          <ion-icon name="pin"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </div>
+  </ion-item>
+
+  <ion-card class="ion-margin-top bg-white">
+    <ion-card-header>
+      <ion-card-title>Alamat</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content color="dark">
+      {{ dataNomorPenting.address }}
+    </ion-card-content>
+
+  </ion-card>
+</ion-content>

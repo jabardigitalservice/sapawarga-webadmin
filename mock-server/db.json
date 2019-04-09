@@ -1,4 +1,123 @@
 {
+  "phone-books": [
+    {
+      "id": 1,
+      "name": "Glover-Little",
+      "address": "8151 Tillman Ville Suite 964\nEast Delphiamouth, RI 19885",
+      "description": "Qui ut magni odit dolor ut. Quia ea sed eum quisquam. Consectetur sed quis voluptatum harum ut accusamus sint. Voluptatibus tempore quibusdam esse sit repellat porro deleniti.",
+      "phone_numbers": [
+        {
+          "type": "phone",
+          "phone_number": "022-123456"
+        },
+        {
+          "type": "message",
+          "phone_number": "022-098763"
+        }
+      ],
+      "category_id": 1,
+      "category": {
+        "id": 1,
+        "name": "Test Category"
+      },
+      "kabkota_id": 26,
+      "kec_id": null,
+      "kel_id": null,
+      "latitude": "-7.024593",
+      "longitude": "108.629882",
+      "seq": 1,
+      "cover_image_path": "https://dummyimage.com/wsxga",
+      "meta": null,
+      "status": 10,
+      "status_label": "Aktif",
+      "created_at": 1554706345,
+      "updated_at": 1554706345
+    },
+    {
+      "id": 2,
+      "name": "Glover-Little",
+      "address": "8151 Tillman Ville Suite 964\nEast Delphiamouth, RI 19885",
+      "description": "Qui ut magni odit dolor ut. Quia ea sed eum quisquam. Consectetur sed quis voluptatum harum ut accusamus sint. Voluptatibus tempore quibusdam esse sit repellat porro deleniti.",
+      "phone_numbers": [
+        {
+          "type": "phone",
+          "phone_number": "022-123456"
+        },
+        {
+          "type": "message",
+          "phone_number": "022-098763"
+        }
+      ],
+      "category_id": 1,
+      "category": {
+        "id": 1,
+        "name": "Test Category"
+      },
+      "kabkota_id": 26,
+      "kec_id": null,
+      "kel_id": null,
+      "latitude": "-7.024593",
+      "longitude": "108.629882",
+      "seq": 1,
+      "cover_image_path": "https://dummyimage.com/wsxga",
+      "meta": null,
+      "status": 10,
+      "status_label": "Aktif",
+      "created_at": 1554706345,
+      "updated_at": 1554706345
+    },
+    {
+      "id": 3,
+      "name": "Glover-Little",
+      "address": "8151 Tillman Ville Suite 964\nEast Delphiamouth, RI 19885",
+      "description": "Qui ut magni odit dolor ut. Quia ea sed eum quisquam. Consectetur sed quis voluptatum harum ut accusamus sint. Voluptatibus tempore quibusdam esse sit repellat porro deleniti.",
+      "phone_numbers": [
+        {
+          "type": "phone",
+          "phone_number": "022-123456"
+        },
+        {
+          "type": "message",
+          "phone_number": "022-098763"
+        }
+      ],
+      "category_id": 1,
+      "category": {
+        "id": 1,
+        "name": "Test Category"
+      },
+      "kabkota_id": 26,
+      "kec_id": null,
+      "kel_id": null,
+      "latitude": "-7.024593",
+      "longitude": "108.629882",
+      "seq": 1,
+      "cover_image_path": "https://dummyimage.com/wsxga",
+      "meta": null,
+      "status": 10,
+      "status_label": "Aktif",
+      "created_at": 1554706345,
+      "updated_at": 1554706345
+    }
+  ],
+  "phone-books-categories": [
+    {
+      "id": 1,
+      "name": "Layanan Kesehatan",
+      "status": 10,
+      "status_label": "Aktif",
+      "created_at": 1554076800,
+      "updated_at": 1554076800
+    },
+    {
+      "id": 2,
+      "name": "Layanan Ekonomi",
+      "status": 10,
+      "status_label": "Aktif",
+      "created_at": 1554076800,
+      "updated_at": 1554076800
+    }
+  ],
   "aspirasi": [
     {
       "id": 1,
@@ -22,6 +141,16 @@
       "status": 10,
       "status_label": "Dipublikasikan",
       "likes_counts": 10,
+      "likes_users": [
+        {
+          "id": 1,
+          "name": "User A"
+        },
+        {
+          "id": 2,
+          "name": "User B"
+        }
+      ],
       "author_id": 3,
       "author": {
         "id": 1,
@@ -35,18 +164,22 @@
       "attachments": [
         {
           "type": "photo",
+          "description": "Lorem ipsum",
           "url": "https://dummyimage.com/wsxga"
         },
         {
           "type": "photo",
+          "description": "Lorem ipsum",
           "url": "https://dummyimage.com/wsxga"
         },
         {
           "type": "photo",
+          "description": "Lorem ipsum",
           "url": "https://dummyimage.com/wsxga"
         },
         {
           "type": "photo",
+          "description": "Lorem ipsum",
           "url": "https://dummyimage.com/wsxga"
         }
       ],
@@ -75,6 +208,16 @@
       "status": 10,
       "status_label": "Dipublikasikan",
       "likes_counts": 10,
+      "likes_users": [
+        {
+          "id": 1,
+          "name": "User A"
+        },
+        {
+          "id": 2,
+          "name": "User B"
+        }
+      ],
       "author_id": 3,
       "author": {
         "id": 1,
@@ -88,18 +231,22 @@
       "attachments": [
         {
           "type": "photo",
+          "description": "Lorem ipsum",
           "url": "https://dummyimage.com/wsxga"
         },
         {
           "type": "photo",
+          "description": "Lorem ipsum",
           "url": "https://dummyimage.com/wsxga"
         },
         {
           "type": "photo",
+          "description": "Lorem ipsum",
           "url": "https://dummyimage.com/wsxga"
         },
         {
           "type": "photo",
+          "description": "Lorem ipsum",
           "url": "https://dummyimage.com/wsxga"
         }
       ],
@@ -128,6 +275,16 @@
       "status": 10,
       "status_label": "Dipublikasikan",
       "likes_counts": 10,
+      "likes_users": [
+        {
+          "id": 1,
+          "name": "User A"
+        },
+        {
+          "id": 2,
+          "name": "User B"
+        }
+      ],
       "author_id": 3,
       "author": {
         "id": 1,
@@ -141,18 +298,22 @@
       "attachments": [
         {
           "type": "photo",
+          "description": "Lorem ipsum",
           "url": "https://dummyimage.com/wsxga"
         },
         {
           "type": "photo",
+          "description": "Lorem ipsum",
           "url": "https://dummyimage.com/wsxga"
         },
         {
           "type": "photo",
+          "description": "Lorem ipsum",
           "url": "https://dummyimage.com/wsxga"
         },
         {
           "type": "photo",
+          "description": "Lorem ipsum",
           "url": "https://dummyimage.com/wsxga"
         }
       ],
@@ -181,6 +342,16 @@
       "status": 10,
       "status_label": "Dipublikasikan",
       "likes_counts": 10,
+      "likes_users": [
+        {
+          "id": 1,
+          "name": "User A"
+        },
+        {
+          "id": 2,
+          "name": "User B"
+        }
+      ],
       "author_id": 3,
       "author": {
         "id": 1,
@@ -194,18 +365,22 @@
       "attachments": [
         {
           "type": "photo",
+          "description": "Lorem ipsum",
           "url": "https://dummyimage.com/wsxga"
         },
         {
           "type": "photo",
+          "description": "Lorem ipsum",
           "url": "https://dummyimage.com/wsxga"
         },
         {
           "type": "photo",
+          "description": "Lorem ipsum",
           "url": "https://dummyimage.com/wsxga"
         },
         {
           "type": "photo",
+          "description": "Lorem ipsum",
           "url": "https://dummyimage.com/wsxga"
         }
       ],
@@ -234,6 +409,16 @@
       "status": 10,
       "status_label": "Dipublikasikan",
       "likes_counts": 10,
+      "likes_users": [
+        {
+          "id": 1,
+          "name": "User A"
+        },
+        {
+          "id": 2,
+          "name": "User B"
+        }
+      ],
       "author_id": 3,
       "author": {
         "id": 1,
@@ -247,18 +432,22 @@
       "attachments": [
         {
           "type": "photo",
+          "description": "Lorem ipsum",
           "url": "https://dummyimage.com/wsxga"
         },
         {
           "type": "photo",
+          "description": "Lorem ipsum",
           "url": "https://dummyimage.com/wsxga"
         },
         {
           "type": "photo",
+          "description": "Lorem ipsum",
           "url": "https://dummyimage.com/wsxga"
         },
         {
           "type": "photo",
+          "description": "Lorem ipsum",
           "url": "https://dummyimage.com/wsxga"
         }
       ],
@@ -269,11 +458,19 @@
   "aspirasi-categories": [
     {
       "id": 1,
-      "name": "Infrastruktur"
+      "name": "Infrastruktur",
+      "status": 10,
+      "status_label": "Aktif",
+      "created_at": 1554076800,
+      "updated_at": 1554076800
     },
     {
       "id": 2,
-      "name": "Transportasi"
+      "name": "Transportasi",
+      "status": 10,
+      "status_label": "Aktif",
+      "created_at": 1554076800,
+      "updated_at": 1554076800
     }
   ]
 }

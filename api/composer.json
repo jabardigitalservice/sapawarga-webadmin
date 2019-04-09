@@ -28,7 +28,7 @@
     "yiisoft/yii2-swiftmailer": "~2.0.0"
   },
   "require-dev": {
-    "codeception/base": "^2.2.3",
+    "codeception/codeception": "^2.5.5",
     "codeception/mockery-module": "^0.2.3",
     "codeception/specify": "~0.4.3",
     "codeception/verify": "~0.3.1",

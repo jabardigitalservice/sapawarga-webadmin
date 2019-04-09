@@ -52,6 +52,10 @@ server.use((req, res, next) => {
 })
 
 server.use(jsonServer.rewriter({
+  '/api/v1/phone-books/categories': '/phone-books-categories',
+  '/api/v1/phone-books/categories/:id': '/phone-books-categories/:id',
+  '/api/v1/phone-books': '/phone-books',
+  '/api/v1/phone-books/:id': '/phone-books/:id',
   '/api/v1/aspirasi/categories': '/aspirasi-categories',
   '/api/v1/aspirasi/categories/:id': '/aspirasi-categories/:id',
   '/api/v1/aspirasi/me': '/aspirasi',
