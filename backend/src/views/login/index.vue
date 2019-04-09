@@ -71,7 +71,7 @@ export default {
       if (value.length < 1) {
         callback(new Error("Nama Pengguna harus diisi"));
       } else if (value.length < 4) {
-        callback(new Error("Nama Pengguna minimal 4 karakter"));
+        callback(new Error("Nama Pengguna salah"));
       }
       // else if (!validUsername(value)) {
       //   callback(new Error("Nama pengguna Anda salah"));
@@ -84,7 +84,7 @@ export default {
       if (value.length < 1) {
         callback(new Error("Kata sandi harus diisi"));
       } else if (value.length < 6) {
-        callback(new Error("Kata sandi minimal 6 karakter"));
+        callback(new Error("Kata sandi salah"));
       }
       // else if (!validPassword(value)) {
       //   callback(new Error("Kata sandi Anda salah"));

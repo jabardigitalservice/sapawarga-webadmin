@@ -31,22 +31,19 @@ const mutations = {
 const actions = {
   // user login
   login({ commit }, userInfo) {
-    console.log('jalan');
     const { username, password } = userInfo;
 
     return new Promise((resolve, reject) => {
       login({ LoginForm: { username: username.trim(), password: password } })
         .then(response => {
           const { data } = response;
-          console.log('terkirim');
           commit('SET_TOKEN', data.access_token);
           setToken(data.access_token);
-          console.log(data.access_token);
           resolve();
         })
         .catch(error => {
-          console.log(error);
-          //reject(error);
+          error;
+          reject();
         });
     });
   },
@@ -56,13 +53,18 @@ const actions = {
     return new Promise((resolve, reject) => {
       getInfo(state.token)
         .then(response => {
-          const { data } = response;
+          let { data } = response;
+          console.log(data.photo_url);
 
           if (!data) {
             reject('Verification failed, please Login again.');
           }
 
-          const { roles, name, avatar, introduction } = data;
+          const { name, photo_url, introduction } = data;
+
+          console.log(photo_url);
+
+          const roles = ['admin'];
 
           // roles must be a non-empty array
           if (!roles || roles.length <= 0) {
@@ -71,8 +73,17 @@ const actions = {
 
           commit('SET_ROLES', roles);
           commit('SET_NAME', name);
-          commit('SET_AVATAR', avatar);
-          commit('SET_INTRODUCTION', introduction);
+          if (photo_url == null) {
+            commit(
+              'SET_AVATAR',
+              'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif'
+            );
+          } else {
+            commit('SET_AVATAR', photo_url);
+          }
+
+          // commit('SET_INTRODUCTION', introduction);
+          data = roles;
           resolve(data);
         })
         .catch(error => {
@@ -82,19 +93,13 @@ const actions = {
   },
 
   // user logout
-  logout({ commit, state }) {
+  logout({ commit }) {
     return new Promise((resolve, reject) => {
-      logout(state.token)
-        .then(() => {
-          commit('SET_TOKEN', '');
-          commit('SET_ROLES', []);
-          removeToken();
-          resetRouter();
-          resolve();
-        })
-        .catch(error => {
-          reject(error);
-        });
+      commit('SET_TOKEN', '');
+      commit('SET_ROLES', []);
+      removeToken();
+      resetRouter();
+      resolve();
     });
   },
 
