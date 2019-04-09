@@ -17,6 +17,9 @@ export class HomeResultsPage {
     },
     {
       slide: 'assets/img/banner-02.png'
+    },
+    {
+      slide: 'assets/img/banner-03.png'
     }
   ];
   logoApp = 'assets/icon/logo.png';
@@ -77,12 +80,12 @@ export class HomeResultsPage {
       {
         title: 'Lapor',
         url: '',
-        icon: 'assets/icon/SW-LELANG.png'
+        icon: 'assets/icon/SW-LAPOR.png'
       },
       {
         title: 'Aspirasi',
         url: '',
-        icon: 'assets/icon/SW-LELANG.png'
+        icon: 'assets/icon/SW-ASPIRASI.png'
       }
     ];
 
