@@ -3,12 +3,15 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>Nomor Telepon Penting</ion-title>
-    <ion-buttons slot="end">
+    <ion-title *ngIf="!openSearch">Nomor Telepon Penting</ion-title>
+    <ion-buttons slot="end" (click)="openSearchbar(true)" *ngIf="!openSearch">
       <ion-button shape="round" color="dark">
         <ion-icon name="search"></ion-icon>
       </ion-button>
     </ion-buttons>
+    <ion-searchbar *ngIf="openSearch" debounce="500" debounced-input (ionChange)="CariAreas($event.srcElement.value)"
+      (ionClear)="openSearchbar(false)" placeholder="Cari">
+    </ion-searchbar>
   </ion-toolbar>
 </ion-header>
 

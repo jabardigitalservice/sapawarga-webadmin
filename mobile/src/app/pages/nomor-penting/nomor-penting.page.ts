@@ -25,6 +25,8 @@ export class NomorPentingPage implements OnInit {
   kecamatan_id: number;
   kelurahan_id: number;
 
+  openSearch = false;
+
   constructor(
     private nomorPentingService: NomorPentingService,
     public loadingCtrl: LoadingController,
@@ -189,6 +191,31 @@ export class NomorPentingPage implements OnInit {
     setTimeout(() => {
       this.getNomorPenting(event);
     }, 2000);
+  }
+
+  openSearchbar(value: boolean) {
+    this.openSearch = value;
+  }
+
+  CariAreas(event: string) {
+    console.log(event);
+    // if the value is an empty string
+    if (!event) {
+      return;
+    }
+
+    // get data nomor penting
+    this.nomorPentingService.CariNomorPenting(event).subscribe(
+      res => {
+        if (res['status'] === 200) {
+          this.dataNomorPenting = [];
+          this.dataNomorPenting = res['data']['items'];
+        }
+      },
+      err => {
+        this.showToast('Terjadi Kesalahan');
+      }
+    );
   }
 
   goToDetail(id: number) {
