@@ -23,6 +23,12 @@ export class NomorPentingService {
       .pipe(catchError(this.handleError));
   }
 
+  getDetailNomorPenting(id: number): Observable<NomorPenting> {
+    return this.http
+      .get<NomorPenting>(`${environment.API_URL}/phone-books/${id}`)
+      .pipe(catchError(this.handleError));
+  }
+
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.

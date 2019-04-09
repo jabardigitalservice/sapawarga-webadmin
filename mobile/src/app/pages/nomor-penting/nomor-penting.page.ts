@@ -192,10 +192,7 @@ export class NomorPentingPage implements OnInit {
   }
 
   goToDetail(id: number) {
-    console.log(id);
-    this.router.navigate(['detail-nomor-penting'], {
-      queryParams: { id: id }
-    });
+    this.router.navigate(['/nomor-penting', id]);
   }
 
   async showToast(msg: string) {

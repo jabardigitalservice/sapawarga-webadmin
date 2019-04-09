@@ -167,7 +167,7 @@ export class EditProfilePage implements OnInit {
 
     this.areasService.getKabKota().subscribe(
       res => {
-        this.dataKabkota = res['data'];
+        this.dataKabkota = res['data']['items'];
         loader.dismiss();
       },
       err => {
@@ -183,7 +183,7 @@ export class EditProfilePage implements OnInit {
   getKecamatan(kabkota: number) {
     this.areasService.getKecamatan(kabkota).subscribe(
       res => {
-        this.dataKecamatan = res['data'];
+        this.dataKecamatan = res['data']['items'];
       },
       err => {
         this.showToast(
@@ -197,7 +197,7 @@ export class EditProfilePage implements OnInit {
   getKelurahan(kecamatan: number) {
     this.areasService.getKelurahan(kecamatan).subscribe(
       res => {
-        this.dataKelurahan = res['data'];
+        this.dataKelurahan = res['data']['items'];
       },
       err => {
         this.showToast(

@@ -36,7 +36,7 @@ const routes: Routes = [
       './pages/nomor-penting/nomor-penting.module#NomorPentingPageModule'
   },
   {
-    path: 'detail-nomor-penting',
+    path: 'nomor-penting/:id',
     loadChildren:
       './pages/detail-nomor-penting/detail-nomor-penting.module#DetailNomorPentingPageModule'
   }
