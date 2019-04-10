@@ -46,7 +46,7 @@ export class AuthService {
 
   // logout and clear session
   logout() {
-    localStorage.removeItem(TOKEN_KEY);
+    localStorage.clear();
     this.authenticationState.next(false);
   }
 
