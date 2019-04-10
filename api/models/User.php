@@ -325,15 +325,10 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             'id',
             'username',
             'email',
-            'unconfirmed_email',
-            'role',
+            'role_id',
             'role_label' => function () {
                 return $this->getRoleLabel();
             },
-            'last_login_at',
-            'last_login_ip',
-            'confirmed_at',
-            'blocked_at',
             'status',
             'status_label' => function () {
                 $statusLabel = '';
