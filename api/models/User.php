@@ -59,7 +59,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     const STATUS_ACTIVE = 10;
 
     // Mapping User role's id type (string to integer)
-    const roleMap = array(
+    const roleMap = [
         'admin' => self::ROLE_ADMIN,
         'staffProv' => self::ROLE_STAFF_PROV,
         'staffKabkota' => self::ROLE_STAFF_KABKOTA,
@@ -67,10 +67,11 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         'staffKel' => self::ROLE_STAFF_KEL,
         'staffRW' => self::ROLE_STAFF_RW,
         'user' => self::ROLE_USER,
-    );
+    ];
 
     // Constants for Scenario names
     const SCENARIO_REGISTER = 'register';
+    const SCENARIO_UPDATE = 'update';
     /**
      * Store JWT token header items.
      * @var array
@@ -490,7 +491,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             ['role_id', 'in', 'range' => array_keys(self::roleMap)],
             ['role_id', 'validateRolePermission', 'on' => self::SCENARIO_REGISTER],
 
-            ['permissions', 'validatePermissions'],
+            ['permissions', 'validatePermissions',  'on' => self::SCENARIO_UPDATE],
             [['access_token', 'permissions'], 'safe'],
             ['phone', 'trim'],
             ['kabkota_id', 'required', 'on' => self::SCENARIO_REGISTER, 'when' => function ($model) {
@@ -897,9 +898,21 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         // ---- Finish to process role
 
         // ---- Start to process permissions
-        if (!empty($this->permissions)) {
+        if ($this->scenario == self::SCENARIO_REGISTER) {
+            // Assign default permissions based on role
+            if ($this->role >= self::ROLE_STAFF_RW && $this->role < self::ROLE_ADMIN) {
+                $authItem = $authManager->getPermission('manageUsers');
+                $authManager->assign($authItem, $this->getId());
+                // Only assign 'manageStaffs' when role is higher than staffRW
+                if ($this->role > self::ROLE_STAFF_RW) {
+                    $authItem = $authManager->getPermission('manageStaffs');
+                    $authManager->assign($authItem, $this->getId());
+                }
+            }
+        }
+        else if (!empty($this->permissions)) {
             // permissions only allow to be entered if the role is staff
-            if ($this->role >= self::ROLE_STAFF_RW) {
+            if ($this->role >= self::ROLE_STAFF_RW && $this->role < self::ROLE_ADMIN) {
                 $existingPermissions = $authManager->getPermissionsByUser($this->getId());
                 foreach ($this->permissions as $permissionKey => $permission) {
                     if ($permission['checked'] == true) {
