@@ -36,18 +36,12 @@
 }
 
 .icon-img {
-    max-width: 90%;
+    max-width: 88%;
 }
 
 
 .label-menu {
     display: block;
-    font-size: 12px;
+    font-size: 13px;
     margin-bottom: 10px;
-}
-
-@media only screen and (max-height: 815px) {
-    .icon-img {
-        max-width: 63%;
-    }
 }
