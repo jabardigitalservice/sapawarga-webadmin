@@ -14,12 +14,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { IonicStorageModule } from '@ionic/storage';
 
-// Modal Pages
-import { ImagePageModule } from './pages/modal/image/image.module';
-import { SearchFilterPageModule } from './pages/modal/search-filter/search-filter.module';
-
 // Components
-import { NotificationsComponent } from './components/notifications/notifications.component';
 import { TokenInterceptor } from './helpers/token.interceptor';
 import { MenuNavbarComponent } from './components/menu-navbar/menu-navbar.component';
 
@@ -31,18 +26,16 @@ import {
   FileTransferObject
 } from '@ionic-native/file-transfer/ngx';
 @NgModule({
-  declarations: [AppComponent, NotificationsComponent, MenuNavbarComponent],
+  declarations: [AppComponent, MenuNavbarComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     IonicModule.forRoot(),
     AppRoutingModule,
     IonicStorageModule.forRoot(),
-    HttpClientModule,
-    ImagePageModule,
-    SearchFilterPageModule
+    HttpClientModule
   ],
-  entryComponents: [NotificationsComponent, MenuNavbarComponent],
+  entryComponents: [MenuNavbarComponent],
   providers: [
     StatusBar,
     SplashScreen,

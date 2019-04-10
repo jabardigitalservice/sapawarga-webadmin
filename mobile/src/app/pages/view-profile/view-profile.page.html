@@ -1,7 +1,10 @@
 <ion-header>
   <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
     <ion-title color="dark">Akun Saya</ion-title>
-    <ion-icon name="more" slot="end" size="large" (click)="navbarMore()"></ion-icon>
+    <ion-icon name="more" slot="end" size="large" (click)="navbarMore($event)"></ion-icon>
   </ion-toolbar>
 </ion-header>
 
