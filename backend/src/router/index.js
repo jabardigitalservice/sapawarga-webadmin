@@ -92,7 +92,7 @@ export const constantRoutes = [
   {
     path: '/user',
     component: Layout,
-    redirect: '/user/user-list',
+    // redirect: '/user/user-list',
     name: 'user',
     meta: {
       title: 'User',
@@ -104,7 +104,7 @@ export const constantRoutes = [
         component: () => import('@/views/user/list'),
         name: 'userList',
         meta: {
-          title: 'User List'
+          title: 'UserList'
         }
       },
       {
