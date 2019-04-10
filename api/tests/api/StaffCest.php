@@ -2,8 +2,8 @@
 
 class StaffCest
 {
+    private $endpointStaff = '/v1/staff';
     private $endpointLogin = '/v1/staff/login';
-    private $endpointCreate = '/v1/staff';
 
     public function staffLoginInvalidFields(ApiTester $I)
     {
@@ -84,7 +84,7 @@ class StaffCest
     {
         $I->amStaff();
 
-        $I->sendPOST($this->endpointCreate);
+        $I->sendPOST($this->endpointStaff);
 
         $I->seeResponseCodeIs(422);
         $I->seeResponseIsJson();
@@ -103,7 +103,7 @@ class StaffCest
             ]
         ]);
 
-        $I->sendPOST($this->endpointCreate, [
+        $I->sendPOST($this->endpointStaff, [
             'username' => 'staff.kabkota.2',
             'email' => 'staff.kabkota.2@jabarprov.go.id',
             'password' => '123456',
@@ -126,7 +126,7 @@ class StaffCest
     {
         $I->amStaff();
 
-        $I->sendPOST($this->endpointCreate, [
+        $I->sendPOST($this->endpointStaff, [
             'username' => 'staff.prov.1',
             'email' => 'staff.prov.1@jabarprov.go.id',
             'password' => '123456',
@@ -135,5 +135,74 @@ class StaffCest
 
         $I->canSeeResponseCodeIs(201);
         $I->seeResponseIsJson();
+    }
+
+    public function getList(ApiTester $I)
+    {
+        $I->amStaff();
+
+        $I->sendGET($this->endpointStaff);
+
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $I->seeResponseContainsJson([
+            'success' => true,
+            'status'  => 200,
+        ]);
+    }
+
+    public function getListByName(ApiTester $I)
+    {
+        $I->amStaff();
+
+        $I->sendGET($this->endpointStaff . '?q=Staff');
+
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $I->seeResponseContainsJson([
+            'success' => true,
+            'status'  => 200,
+            'data' => [
+                "items" => [],
+            ]
+        ]);
+    }
+
+    public function getListByRole(ApiTester $I)
+    {
+        $I->amStaff();
+
+        $I->sendGET($this->endpointStaff . '?q=RW');
+
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $I->seeResponseContainsJson([
+            'success' => true,
+            'status'  => 200,
+            'data' => [
+                "items" => [],
+            ]
+        ]);
+    }
+
+    public function getListByPhone(ApiTester $I)
+    {
+        $I->amStaff();
+
+        $I->sendGET($this->endpointStaff . '?q=080989999');
+
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $I->seeResponseContainsJson([
+            'success' => true,
+            'status'  => 200,
+            'data' => [
+                "items" => [],
+            ]
+        ]);
     }
 }
