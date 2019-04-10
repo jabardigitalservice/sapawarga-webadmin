@@ -59,7 +59,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     const STATUS_ACTIVE = 10;
 
     // Mapping User role's id type (string to integer)
-    const roleMap = [
+    const ROLE_MAP = [
         'admin' => self::ROLE_ADMIN,
         'staffProv' => self::ROLE_STAFF_PROV,
         'staffKabkota' => self::ROLE_STAFF_KABKOTA,
@@ -488,7 +488,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_PENDING, self::STATUS_DISABLED]],
 
             ['role_id', 'default', 'value' => 'user'],
-            ['role_id', 'in', 'range' => array_keys(self::roleMap)],
+            ['role_id', 'in', 'range' => array_keys(self::ROLE_MAP)],
             ['role_id', 'validateRolePermission', 'on' => self::SCENARIO_REGISTER],
 
             ['permissions', 'validatePermissions',  'on' => self::SCENARIO_UPDATE],
@@ -909,8 +909,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
                     $authManager->assign($authItem, $this->getId());
                 }
             }
-        }
-        else if (!empty($this->permissions)) {
+        } elseif (!empty($this->permissions)) {
             // permissions only allow to be entered if the role is staff
             if ($this->role >= self::ROLE_STAFF_RW && $this->role < self::ROLE_ADMIN) {
                 $existingPermissions = $authManager->getPermissionsByUser($this->getId());
@@ -953,7 +952,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      */
     public function validateRolePermission($attribute, $params)
     {
-        $this->role = self::roleMap[$this->$attribute];
+        $this->role = self::ROLE_MAP[$this->$attribute];
 
         $currentUser = User::findIdentity(\Yii::$app->user->getId());
         if ($currentUser->role < self::ROLE_ADMIN && $currentUser->role <= $this->role) {
