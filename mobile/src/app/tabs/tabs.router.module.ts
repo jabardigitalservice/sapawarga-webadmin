@@ -27,16 +27,6 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'akun',
-        children: [
-          {
-            path: '',
-            loadChildren:
-              '../pages/view-profile/view-profile.module#ViewProfilePageModule'
-          }
-        ]
-      },
-      {
         path: '',
         redirectTo: '/tabs/home',
         pathMatch: 'full'
