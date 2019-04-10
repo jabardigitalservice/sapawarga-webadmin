@@ -22,7 +22,6 @@ service.interceptors.request.use(
   },
   error => {
     // Do something with request error
-    console.log(error); // for debug
     Promise.reject(error);
   }
 );
@@ -74,7 +73,6 @@ service.interceptors.response.use(
     }
   },
   error => {
-    // console.log('err' + error); // for debug
     Message({
       message: 'Nama pengguna atau kata sandi salah',
       type: 'error',

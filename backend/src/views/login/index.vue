@@ -94,7 +94,7 @@ export default {
       }
     };
     return {
-      logo: require("/home/cc14/project/sapawarga-app/backend/src/assets/logo.png"),
+      logo: require("@/assets/logo.png"),
       loginForm: {
         username: "",
         password: ""

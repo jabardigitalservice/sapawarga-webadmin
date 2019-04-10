@@ -7,7 +7,8 @@ const state = {
   name: '',
   avatar: '',
   introduction: '',
-  roles: []
+  roles: [],
+  dummy_image: require('@/assets/user.png')
 };
 
 const mutations = {
@@ -54,12 +55,13 @@ const actions = {
       getInfo(state.token)
         .then(response => {
           let { data } = response;
+          let dummy_image = state.dummy_image;
 
           if (!data) {
             reject('Verification failed, please Login again.');
           }
 
-          const { name, photo_url, introduction } = data;
+          const { name, photo_url } = data;
 
           const roles = ['admin'];
 
@@ -71,15 +73,10 @@ const actions = {
           commit('SET_ROLES', roles);
           commit('SET_NAME', name);
           if (photo_url == null) {
-            commit(
-              'SET_AVATAR',
-              'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif'
-            );
+            commit('SET_AVATAR', dummy_image);
           } else {
             commit('SET_AVATAR', photo_url);
           }
-
-          // commit('SET_INTRODUCTION', introduction);
           data = roles;
           resolve(data);
         })
