@@ -99,10 +99,22 @@ class StaffController extends ActiveController
      */
     public function actionIndex()
     {
+        $roles = [];
+        $currentUser = User::findIdentity(\Yii::$app->user->getId());
+        $role = $currentUser->role;
+        // Admins can see other admins, while staffs can only see staffs one level below them
+        $maxRoleRange = ($role == User::ROLE_ADMIN) ? ($role) : ($role - 1);
+
         $search = new UserSearch();
         $search->load(\Yii::$app->request->get());
-        $search->in_roles = [User::ROLE_STAFF_RW, User::ROLE_ADMIN];
+        $search->range_roles = [0, $maxRoleRange];
         $search->not_in_status = [User::STATUS_DELETED];
+
+        $search->kabkota_id = $currentUser->kabkota_id;
+        $search->kec_id = $currentUser->kec_id;
+        $search->kel_id = $currentUser->kel_id;
+        $search->rw = $currentUser->rw;
+
         if (!$search->validate()) {
             throw new BadRequestHttpException(
                 'Invalid parameters: ' . json_encode($search->getErrors())

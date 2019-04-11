@@ -10,8 +10,13 @@ class UserSearch extends Model
     public $q;
     public $page = 1;
     public $per_page = 20;
-    public $in_roles = [];
+    public $range_roles = [];
     public $not_in_status = [];
+
+    public $kabkota_id;
+    public $kec_id;
+    public $kel_id;
+    public $rw;
 
     public function rules()
     {
@@ -31,7 +36,21 @@ class UserSearch extends Model
         $queryParams = [];
         $query = User::find()
             ->where(['not in', 'user.status', $this->not_in_status])
-            ->andWhere(['in', 'role', $this->in_roles]);
+            ->andWhere(['between', 'user.role', $this->range_roles[0], $this->range_roles[1]]);
+
+        // Limit search based on user role's authorized area
+        if ($this->kabkota_id) {
+            $query->andWhere(['kabkota_id' => $this->kabkota_id]);
+        }
+        if ($this->kec_id) {
+            $query->andWhere(['kec_id' => $this->kec_id]);
+        }
+        if ($this->kel_id) {
+            $query->andWhere(['kel_id' => $this->kel_id]);
+        }
+        if ($this->rw) {
+            $query->andWhere(['rw' => $this->rw]);
+        }
 
         if ($this->q) {
             $query->andWhere([
