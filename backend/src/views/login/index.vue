@@ -70,26 +70,14 @@ export default {
     const validateUsername = (rule, value, callback) => {
       if (value.length < 1) {
         callback(new Error("Nama Pengguna harus diisi"));
-      } else if (value.length < 4) {
-        callback(new Error("Nama Pengguna salah"));
-      }
-      // else if (!validUsername(value)) {
-      //   callback(new Error("Nama pengguna Anda salah"));
-      // }
-      else {
+      } else {
         callback();
       }
     };
     const validatePassword = (rule, value, callback) => {
       if (value.length < 1) {
         callback(new Error("Kata sandi harus diisi"));
-      } else if (value.length < 6) {
-        callback(new Error("Kata sandi salah"));
-      }
-      // else if (!validPassword(value)) {
-      //   callback(new Error("Kata sandi Anda salah"));
-      // }
-      else {
+      } else {
         callback();
       }
     };
