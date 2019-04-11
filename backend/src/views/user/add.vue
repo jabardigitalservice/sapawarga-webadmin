@@ -5,12 +5,7 @@
     <el-row :gutter="10">
       <!-- Left colomn -->
       <el-col :sm="24" :lg="8" :xl="8" class="grid-content">
-        <el-upload
-          class="upload-demo"
-          drag
-          action="https://jsonplaceholder.typicode.com/posts/"
-          multiple
-        >
+        <el-upload class="upload-demo" drag multiple v-model="user.photo" action>
           <i class="el-icon-upload"></i>
           <div class="el-upload__text">
             Unggah foto disini
@@ -19,16 +14,17 @@
           <!-- <div class="el-upload__tip" slot="tip">jpg/png files with a size less than 500kb</div> -->
         </el-upload>
       </el-col>
+
       <!-- Center colomn -->
       <el-col :sm="24" :lg="15" :xl="14" class="grid-content">
         <el-form
           :model="user"
+          ref="user"
           status-icon
           label-width="150px"
           label-position="left"
           class="demo-ruleForm"
           :rules="rules"
-          ref="user"
         >
           <el-form-item label="Nama Pengguna" prop="username">
             <el-input type="text" v-model="user.username"></el-input>
@@ -36,6 +32,7 @@
           <el-form-item label="Nama" prop="nama">
             <el-input type="text" v-model="user.nama"></el-input>
           </el-form-item>
+
           <el-form-item label="Email" prop="email">
             <el-input type="email" v-model="user.email"></el-input>
           </el-form-item>
@@ -52,14 +49,14 @@
             <el-col :span="12">
               <el-form-item label="Kab/Kota" prop="kota">
                 <el-select v-model="user.kota" placeholder="Pilih Kota/Kab">
-                  <el-option label value></el-option>
+                  <el-option v-for="item in opsiKota" :value="item.value" :key="item.value"></el-option>
                 </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="RW" prop="rw">
                 <el-select v-model="user.rw" placeholder="Pilih RW">
-                  <el-option label value></el-option>
+                  <el-option v-for="item in opsiRW" :value="item.value" :key="item.value"></el-option>
                 </el-select>
               </el-form-item>
             </el-col>
@@ -68,14 +65,14 @@
             <el-col :span="12">
               <el-form-item label="Kecamatan" prop="kecamatan">
                 <el-select v-model="user.kecamatan" placeholder="Pilih Kecamatan">
-                  <el-option label value></el-option>
+                  <el-option v-for="item in opsiKecamatan" :value="item.value" :key="item.value"></el-option>
                 </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="RT" prop="rt">
                 <el-select v-model="user.rt" placeholder="Pilih RT">
-                  <el-option label value></el-option>
+                  <el-option v-for="item in opsiRT" :value="item.value" :key="item.value"></el-option>
                 </el-select>
               </el-form-item>
             </el-col>
@@ -84,14 +81,14 @@
             <el-col :span="12">
               <el-form-item label="Kelurahan" prop="kelurahan">
                 <el-select v-model="user.kelurahan" placeholder="Pilih Kelurahan">
-                  <el-option label value></el-option>
+                  <el-option v-for="item in opsiKelurahan" :value="item.value" :key="item.value"></el-option>
                 </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="Peran" prop="peran">
-                <el-select v-model="user.role" placeholder="Pilih Peran">
-                  <el-option label value></el-option>
+                <el-select v-model="user.peran" placeholder="Pilih Peran">
+                  <el-option v-for="item in opsiPeran" :value="item.value" :key="item.value"></el-option>
                 </el-select>
               </el-form-item>
             </el-col>
@@ -106,6 +103,9 @@
           <el-form-item label="Instagram" prop="instagram">
             <el-input type="text" v-model="user.instagram"></el-input>
           </el-form-item>
+          <el-form-item label="Photo">
+            <el-input type="text" v-model="user.photo"></el-input>
+          </el-form-item>
           <!-- <el-form-item label="Confirm" prop="checkPass">
               <el-input type="password" v-model="ruleForm2.checkPass" autocomplete="off"></el-input>
             </el-form-item>
@@ -113,8 +113,8 @@
               <el-input v-model.number="ruleForm2.age"></el-input>
           </el-form-item>-->
           <el-form-item>
-            <el-button type="primary" @click="submitForm(user)">Tambah Pengguna</el-button>
-            <el-button @click="resetForm(user)">Batal</el-button>
+            <el-button type="primary" @click="submitForm('user')">Tambah Pengguna</el-button>
+            <el-button @click="resetForm('user')">Batal</el-button>
           </el-form-item>
         </el-form>
       </el-col>
@@ -179,6 +179,55 @@ export default {
         instagram: "",
         photo: ""
       },
+      opsiKota: [
+        {
+          value: "Bandung"
+        },
+        {
+          value: "Cimahi"
+        }
+      ],
+      opsiKecamatan: [
+        {
+          value: "Bandung"
+        },
+        {
+          value: "Cimahi"
+        }
+      ],
+      opsiKelurahan: [
+        {
+          value: "Bandung"
+        },
+        {
+          value: "Cimahi"
+        }
+      ],
+      opsiRW: [
+        {
+          value: "001"
+        },
+        {
+          value: "002"
+        }
+      ],
+      opsiRT: [
+        {
+          value: "01"
+        },
+        {
+          value: "002"
+        }
+      ],
+      opsiPeran: [
+        {
+          value: "Admin"
+        },
+        {
+          value: "User"
+        }
+      ],
+
       // validation
       rules: {
         username: [
@@ -424,24 +473,26 @@ export default {
     };
   },
   methods: {
-    submitForm(user) {
-      // this.$refs[formName].validate(valid => {
-      //   if (valid) {
-      //     alert("submit!");
-      //   } else {
-      //     console.log("error submit!!");
-      //     return false;
-      //   }
-      // });
-      console.log(user);
+    submitForm(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          alert("submit!");
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
     },
-    resetForm(user) {
+    resetForm(formName) {
       this.$refs[formName].resetFields();
     }
   }
 };
 </script>
 <style lang="scss" scoped>
+.upload-demo {
+  margin: 10px auto;
+}
 .grid-content:first-child {
   margin-bottom: 20px;
 }
