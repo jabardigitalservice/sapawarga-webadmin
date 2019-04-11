@@ -1,8 +1,12 @@
 <ion-header>
   <ion-toolbar color="light">
     <ion-buttons slot="start">
-      <!-- <img class="logo-app" src="{{logoApp}}" /> -->
-      <ion-img [src]="logoApp" class="logo-app"></ion-img>
+      <img [src]="logoApp" class="logo-app" />
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button shape="round" color="dark">
+        <ion-icon name="notifications"></ion-icon>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -24,10 +28,10 @@
     </ion-label>
   </ion-item>
 
-  <ion-row text-center small class="text-dark ion-margin-top">
-    <ion-col size="3" class="mt-1" *ngFor="let page of appPages">
+  <ion-row text-center small class="text-dark">
+    <ion-col size="3" class="mt-1 ion-no-padding" no-padding *ngFor="let page of appPages">
       <img class="icon-img" [src]="page.icon" alt="icon" (click)="goToLayanan(page.title, page.url)" />
-      <ion-label class="label-menu" color="dark">{{ page.title }}</ion-label>
+      <ion-text class="label-menu" color="dark">{{ page.title }}</ion-text>
     </ion-col>
   </ion-row>
 </ion-content>

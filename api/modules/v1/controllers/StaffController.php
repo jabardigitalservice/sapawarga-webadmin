@@ -101,7 +101,7 @@ class StaffController extends ActiveController
     {
         $search = new UserSearch();
         $search->load(\Yii::$app->request->get());
-        $search->in_roles = [User::ROLE_STAFF, User::ROLE_ADMIN];
+        $search->in_roles = [User::ROLE_STAFF_RW, User::ROLE_ADMIN];
         $search->not_in_status = [User::STATUS_DELETED];
         if (!$search->validate()) {
             throw new BadRequestHttpException(
@@ -124,6 +124,7 @@ class StaffController extends ActiveController
     public function actionCreate()
     {
         $model = new User();
+        $model->scenario = User::SCENARIO_REGISTER;
         $model->load(\Yii::$app->getRequest()->getBodyParams(), '');
 
         if ($model->validate() && $model->save()) {
@@ -256,7 +257,7 @@ class StaffController extends ActiveController
             [
                 'in',
                 'role',
-                [User::ROLE_STAFF, User::ROLE_ADMIN]
+                [User::ROLE_STAFF_RW, User::ROLE_ADMIN]
             ]
         )->one();
         if ($staff) {
@@ -304,10 +305,14 @@ class StaffController extends ActiveController
     public function actionLogin()
     {
         $model = new LoginForm();
-
+        $model->scenario = LoginForm::SCENARIO_LOGIN;
         $model->roles = [
             User::ROLE_ADMIN,
-            User::ROLE_STAFF
+            User::ROLE_STAFF_PROV,
+            User::ROLE_STAFF_KABKOTA,
+            User::ROLE_STAFF_KEC,
+            User::ROLE_STAFF_KEL,
+            User::ROLE_STAFF_RW
         ];
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             $user = $model->getUser();
@@ -318,7 +323,7 @@ class StaffController extends ActiveController
             $id = implode(',', array_values($user->getPrimaryKey(true)));
 
             $responseData = [
-                'id' => $id,
+                'id' => (int)$id,
                 'access_token' => $user->access_token,
             ];
 

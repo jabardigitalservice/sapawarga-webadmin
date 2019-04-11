@@ -200,8 +200,7 @@ $config = [
                     'sourceLanguage' => 'key',
                     'forceTranslation' => true,
                     'fileMap' => [
-                        'app' => 'app.php',
-                        'app/error' => 'error.php',
+                        'app' => 'app.php'
                     ],
                 ],
             ],
@@ -212,7 +211,7 @@ $config = [
         'fileStorage' => [
             'class' => 'yii2tech\filestorage\local\Storage',
             'basePath' => '@webroot/storage',
-            'baseUrl' => $params['local_storage_base_url'].'/storage',
+            'baseUrl' => $params['local_storage_base_url'] . '/storage',
             'dirPermission' => 0777,
             'filePermission' => 0644,
             'buckets' => [

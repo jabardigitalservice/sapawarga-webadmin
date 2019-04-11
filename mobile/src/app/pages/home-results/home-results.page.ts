@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController, Platform } from '@ionic/angular';
+import { NavController, Platform, LoadingController } from '@ionic/angular';
 
 import { Pages } from '../../interfaces/pages';
+import { ProfileService } from 'src/app/services/profile.service';
 
 @Component({
   selector: 'app-home-results',
@@ -16,6 +17,9 @@ export class HomeResultsPage {
     },
     {
       slide: 'assets/img/banner-02.png'
+    },
+    {
+      slide: 'assets/img/banner-03.png'
     }
   ];
   logoApp = 'assets/icon/logo.png';
@@ -26,7 +30,12 @@ export class HomeResultsPage {
     }
   };
 
-  constructor(public navCtrl: NavController, private platform: Platform) {
+  constructor(
+    public navCtrl: NavController,
+    private platform: Platform,
+    private profileService: ProfileService,
+    public loadingCtrl: LoadingController
+  ) {
     this.appPages = [
       {
         title: 'E-samsat',
@@ -71,14 +80,18 @@ export class HomeResultsPage {
       {
         title: 'Lapor',
         url: '',
-        icon: 'assets/icon/SW-LELANG.png'
+        icon: 'assets/icon/SW-LAPOR.png'
       },
       {
         title: 'Aspirasi',
         url: '',
-        icon: 'assets/icon/SW-LELANG.png'
+        icon: 'assets/icon/SW-ASPIRASI.png'
       }
     ];
+
+    if (!localStorage.getItem('PROFILE')) {
+      this.getDataProfile();
+    }
   }
 
   settings() {
@@ -125,5 +138,23 @@ export class HomeResultsPage {
         }
       );
     }
+  }
+
+  async getDataProfile() {
+    const loader = await this.loadingCtrl.create({
+      duration: 10000
+    });
+    loader.present();
+    this.profileService.getProfile().subscribe(
+      res => {
+        // save to local storage
+        localStorage.setItem('PROFILE', JSON.stringify(res['data']));
+        loader.dismiss();
+      },
+      err => {
+        console.log(err);
+        loader.dismiss();
+      }
+    );
   }
 }

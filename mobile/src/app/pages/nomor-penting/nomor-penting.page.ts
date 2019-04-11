@@ -1,7 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { NomorPentingService } from '../../services/nomor-penting.service';
-import { LoadingController } from '@ionic/angular';
+import {
+  LoadingController,
+  ActionSheetController,
+  Platform,
+  ToastController
+} from '@ionic/angular';
 import { NomorPenting } from '../../interfaces/nomor-penting';
+import { CallNumber } from '@ionic-native/call-number/ngx';
+import { SMS } from '@ionic-native/sms/ngx';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nomor-penting',
@@ -13,12 +21,27 @@ export class NomorPentingPage implements OnInit {
   maximumPages: number;
   dataNomorPenting: NomorPenting[];
   phone_numbers = [];
+  kabkota_id: number;
+  kecamatan_id: number;
+  kelurahan_id: number;
+
+  openSearch = false;
 
   constructor(
     private nomorPentingService: NomorPentingService,
-    public loadingCtrl: LoadingController
+    public loadingCtrl: LoadingController,
+    public actionSheetController: ActionSheetController,
+    private platform: Platform,
+    private callNumber: CallNumber,
+    private sms: SMS,
+    public toastCtrl: ToastController,
+    private router: Router
   ) {
     this.dataNomorPenting = [];
+    // get data kabkota
+    this.kabkota_id = JSON.parse(localStorage.getItem('PROFILE')).kabkota_id;
+    this.kecamatan_id = JSON.parse(localStorage.getItem('PROFILE')).kec_id;
+    this.kelurahan_id = JSON.parse(localStorage.getItem('PROFILE')).kel_id;
   }
 
   ngOnInit() {
@@ -53,17 +76,157 @@ export class NomorPentingPage implements OnInit {
     );
   }
 
+  // get data nomor penting
+  async filterNomorPenting(type: string, id: number) {
+    const loader = await this.loadingCtrl.create({
+      duration: 10000
+    });
+    loader.present();
+
+    this.nomorPentingService.filterNomorPenting(type, id).subscribe(
+      res => {
+        this.dataNomorPenting = res['data']['items'];
+        loader.dismiss();
+      },
+      err => {
+        loader.dismiss();
+      }
+    );
+  }
+
+  filterAreas(data) {
+    /*
+      split berdasarkan type.
+      dataArea[0] = type area
+      dataArea[1] = id area
+    */
+    let dataArea = data.split(' ');
+    let typeArea = dataArea[0];
+    let idArea = dataArea[1];
+
+    this.filterNomorPenting(typeArea, idArea);
+  }
+
+  // open action sheet open phone number
+  async openPhone(type: string, phone: any) {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Nomor Telepon',
+      buttons: this.createButtons(type, phone)
+    });
+    await actionSheet.present();
+  }
+
+  // create dynamic phone numbers
+  createButtons(type: string, data: any) {
+    let buttons = [];
+    for (var index in data) {
+      // selection get only type phone
+      if (type === 'call' && data[index].type === 'phone') {
+        let button = {
+          text: data[index].phone_number,
+          icon: 'call',
+          handler: () => {
+            this.phoneCall(data[index].phone_number);
+          }
+        };
+        buttons.push(button);
+      } else if (type === 'message' && data[index].type === 'message') {
+        // selection get only type message
+        let button = {
+          text: data[index].phone_number,
+          icon: 'mail',
+          handler: () => {
+            this.goToSMS(data[index].phone_number);
+          }
+        };
+        buttons.push(button);
+      }
+    }
+    return buttons;
+  }
+
+  // call number direct to native
+  phoneCall(phone: string) {
+    this.platform
+      .ready()
+      .then(() => {
+        this.callNumber
+          .callNumber(phone, true)
+          .then()
+          .catch(err => this.showToast('Terjadi kesalahan'));
+      })
+      .catch(() => {
+        this.showToast('Silahkan periksa kembali permission anda');
+      });
+  }
+
+  // direct to native SMS
+  goToSMS(phone: string) {
+    const options = {
+      replaceLineBreaks: false,
+      android: {
+        intent: 'INTENT'
+      }
+    };
+    this.platform
+      .ready()
+      .then(() => {
+        // Send a text message using default options
+        this.sms.send(phone, '', options);
+      })
+      .catch(() => {
+        this.showToast('Silahkan periksa kembali permission anda');
+      });
+  }
+
   // infinite scroll
   doInfinite(event) {
+    if (this.currentPage === this.maximumPages) {
+      event.target.disabled = true;
+      return;
+    }
     // increase page
     this.currentPage++;
 
     setTimeout(() => {
       this.getNomorPenting(event);
-
-      if (this.currentPage === this.maximumPages) {
-        event.target.disabled = true;
-      }
     }, 2000);
+  }
+
+  openSearchbar(value: boolean) {
+    this.openSearch = value;
+  }
+
+  CariAreas(event: string) {
+    console.log(event);
+    // if the value is an empty string
+    if (!event) {
+      return;
+    }
+
+    // get data nomor penting
+    this.nomorPentingService.CariNomorPenting(event).subscribe(
+      res => {
+        if (res['status'] === 200) {
+          this.dataNomorPenting = [];
+          this.dataNomorPenting = res['data']['items'];
+        }
+      },
+      err => {
+        this.showToast('Terjadi Kesalahan');
+      }
+    );
+  }
+
+  goToDetail(id: number) {
+    this.router.navigate(['/nomor-penting', id]);
+  }
+
+  async showToast(msg: string) {
+    const toast = await this.toastCtrl.create({
+      message: msg,
+      duration: 2000
+    });
+    toast.present();
   }
 }

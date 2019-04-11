@@ -2,14 +2,15 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
+
 import { IonicModule } from '@ionic/angular';
 
-import { SettingsPage } from './settings.page';
+import { DetailNomorPentingPage } from './detail-nomor-penting.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: SettingsPage
+    component: DetailNomorPentingPage
   }
 ];
 
@@ -20,6 +21,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [SettingsPage]
+  declarations: [DetailNomorPentingPage]
 })
-export class SettingsPageModule {}
+export class DetailNomorPentingPageModule {}

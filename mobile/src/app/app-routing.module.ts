@@ -5,15 +5,7 @@ import { AuthGuard } from './guards/auth.guard';
 const routes: Routes = [
   { path: 'login', loadChildren: './pages/login/login.module#LoginPageModule' },
   { path: '', loadChildren: './tabs/tabs.module#TabsPageModule' },
-  {
-    path: 'register',
-    loadChildren: './pages/register/register.module#RegisterPageModule'
-  },
   { path: 'about', loadChildren: './pages/about/about.module#AboutPageModule' },
-  {
-    path: 'settings',
-    loadChildren: './pages/settings/settings.module#SettingsPageModule'
-  },
   {
     path: 'edit-profile',
     loadChildren:
@@ -34,6 +26,11 @@ const routes: Routes = [
     path: 'nomor-penting',
     loadChildren:
       './pages/nomor-penting/nomor-penting.module#NomorPentingPageModule'
+  },
+  {
+    path: 'nomor-penting/:id',
+    loadChildren:
+      './pages/detail-nomor-penting/detail-nomor-penting.module#DetailNomorPentingPageModule'
   }
 ];
 
