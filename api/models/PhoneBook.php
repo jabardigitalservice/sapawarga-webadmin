@@ -50,7 +50,7 @@ class PhoneBook extends \yii\db\ActiveRecord
         return [
             ['name', 'string', 'max' => 64],
             [['name', 'address', 'description', 'phone_numbers', 'latitude', 'longitude', 'seq', 'cover_image_path', 'meta'], 'trim'],
-            [['name', 'address', 'phone_numbers', 'kabkota_id', 'seq', 'status'], 'required'],
+            [['name', 'phone_numbers', 'seq', 'status'], 'required'],
             [['category_id', 'kabkota_id', 'kec_id', 'kel_id', 'seq'], 'integer'],
         ];
     }
