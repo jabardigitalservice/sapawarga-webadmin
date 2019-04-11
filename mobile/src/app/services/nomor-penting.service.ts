@@ -5,6 +5,7 @@ import { Observable, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { NomorPenting } from '../interfaces/nomor-penting';
 
+const NOMORPENTING = 'nomor-penting';
 @Injectable({
   providedIn: 'root'
 })
@@ -33,6 +34,18 @@ export class NomorPentingService {
     return this.http
       .get<NomorPenting>(`${environment.API_URL}/phone-books?search=${value}`)
       .pipe(catchError(this.handleError));
+  }
+
+  // save token into local storage
+  saveLocalNomoPenting(data: object) {
+    localStorage.setItem(NOMORPENTING, JSON.stringify(data));
+  }
+
+  // get token into local storage
+  getLocalNomorPenting() {
+    return localStorage.getItem(NOMORPENTING)
+      ? localStorage.getItem(NOMORPENTING)
+      : '';
   }
 
   private handleError(error: HttpErrorResponse) {

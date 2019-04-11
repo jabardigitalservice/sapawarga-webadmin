@@ -31,11 +31,6 @@ const routes: Routes = [
     path: 'nomor-penting/:id',
     loadChildren:
       './pages/detail-nomor-penting/detail-nomor-penting.module#DetailNomorPentingPageModule'
-  },
-  {
-    path: 'akun',
-    loadChildren:
-      './pages/view-profile/view-profile.module#ViewProfilePageModule'
   }
 ];
 

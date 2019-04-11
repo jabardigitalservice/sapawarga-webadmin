@@ -95,7 +95,7 @@ class StaffCest
             'data'=> [
                 'username' => [],
                 'email' => [],
-                'role' => [],
+                'role_id' => [],
                 'kabkota_id' => [],
                 'kec_id' => [],
                 'kel_id' => [],
@@ -107,7 +107,7 @@ class StaffCest
             'username' => 'staff.kabkota.2',
             'email' => 'staff.kabkota.2@jabarprov.go.id',
             'password' => '123456',
-            'role' => '80'
+            'role_id' => 'staffKabkota'
         ]);
 
         $I->seeResponseCodeIs(422);
@@ -130,7 +130,7 @@ class StaffCest
             'username' => 'staff.prov.1',
             'email' => 'staff.prov.1@jabarprov.go.id',
             'password' => '123456',
-            'role' => 90,
+            'role_id' => 'staffProv'
         ]);
 
         $I->canSeeResponseCodeIs(201);
