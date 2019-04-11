@@ -25,11 +25,12 @@
     </ion-select>
   </ion-item>
 
-  <div class="ion-text-center" *ngIf="!dataNomorPenting.length">Data tidak ditemukan</div>
+  <div class="ion-text-center" *ngIf="dataEmpty">Data tidak ditemukan</div>
+
   <ion-card class="ion-margin-top bg-white" *ngFor="let nomor_penting of dataNomorPenting">
     <ion-item>
       <div class="ion-margin-top ion-margin-bottom" (click)="goToDetail(nomor_penting.id)">
-        <ion-label>{{ nomor_penting.name }}</ion-label> <br />
+        <ion-text class="txt-subtitle">{{ nomor_penting.name }}</ion-text> <br />
         <div class="d-inline-f">
           <ion-buttons>
             <ion-button shape="round" color="dark" class="icon-alamat">
@@ -41,13 +42,13 @@
         </div>
       </div>
       <div class="d-inline-f" slot="end">
-        <ion-buttons>
+        <ion-buttons *ngIf="checkcount('phone', nomor_penting.phone_numbers)">
           <ion-button shape="round" color="dark" (click)="openPhone('call', nomor_penting.phone_numbers)">
             <ion-icon name="call"></ion-icon>
           </ion-button>
         </ion-buttons>
 
-        <ion-buttons>
+        <ion-buttons *ngIf="checkcount('message', nomor_penting.phone_numbers)">
           <ion-button shape="round" color="dark" (click)="openPhone('message', nomor_penting.phone_numbers)">
             <ion-icon name="mail"></ion-icon>
           </ion-button>
