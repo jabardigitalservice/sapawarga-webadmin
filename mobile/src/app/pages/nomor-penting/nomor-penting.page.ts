@@ -53,7 +53,7 @@ export class NomorPentingPage implements OnInit {
   async getNomorPenting(infiniteScroll?) {
     // check internet
     if (!navigator.onLine) {
-      alert('Tidak ada koneksi internet');
+      alert('Tidak ada jaringan internet');
       return;
     }
 
@@ -93,7 +93,7 @@ export class NomorPentingPage implements OnInit {
   async filterNomorPenting(type: string, id: number) {
     // check internet
     if (!navigator.onLine) {
-      alert('Tidak ada koneksi internet');
+      alert('Tidak ada jaringan internet');
       return;
     }
 
@@ -228,7 +228,7 @@ export class NomorPentingPage implements OnInit {
   CariAreas(event: string) {
     // check internet
     if (!navigator.onLine) {
-      alert('Tidak ada koneksi internet');
+      alert('Tidak ada jaringan internet');
       return;
     }
 
