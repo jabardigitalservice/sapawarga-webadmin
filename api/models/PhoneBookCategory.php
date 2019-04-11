@@ -6,24 +6,14 @@ use Yii;
 use yii\behaviors\TimestampBehavior;
 
 /**
- * This is the model class for table "phonebooks".
+ * This is the model class for table "phonebooks_categories".
  *
  * @property int $id
  * @property string $name
- * @property string $address
- * @property string $description
- * @property mixed $phone_numbers
- * @property int $kabkota_id
- * @property int $kec_id
- * @property int $kel_id
- * @property string $latitude
- * @property string $longitude
- * @property int $seq
- * @property string $cover_image_path
  * @property mixed $meta
  * @property int $status
  */
-class PhoneBook extends \yii\db\ActiveRecord
+class PhoneBookCategory extends \yii\db\ActiveRecord
 {
     const STATUS_DELETED = -1;
     const STATUS_DISABLED = 0;
@@ -34,12 +24,7 @@ class PhoneBook extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'phonebooks';
-    }
-
-    public function getCategory()
-    {
-        return $this->hasOne(PhoneBookCategory::class, ['id' => 'category_id']);
+        return 'phonebooks_categories';
     }
 
     /**
@@ -49,9 +34,6 @@ class PhoneBook extends \yii\db\ActiveRecord
     {
         return [
             ['name', 'string', 'max' => 64],
-            [['name', 'address', 'description', 'phone_numbers', 'latitude', 'longitude', 'seq', 'cover_image_path', 'meta'], 'trim'],
-            [['name', 'address', 'phone_numbers', 'kabkota_id', 'seq', 'status'], 'required'],
-            [['category_id', 'kabkota_id', 'kec_id', 'kel_id', 'seq'], 'integer'],
         ];
     }
 
@@ -60,18 +42,6 @@ class PhoneBook extends \yii\db\ActiveRecord
         $fields = [
             'id',
             'name',
-            'category_id',
-            'category',
-            'address',
-            'description',
-            'phone_numbers',
-            'kabkota_id',
-            'kec_id',
-            'kel_id',
-            'latitude',
-            'longitude',
-            'seq',
-            'cover_image_path',
             'meta',
             'status',
             'status_label' => function () {
