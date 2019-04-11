@@ -10,6 +10,26 @@ use yii\db\JsonExpression;
 
 class SeederController extends Controller
 {
+    public function actionIndex()
+    {
+        echo "Seeding Areas..." . PHP_EOL;
+        $this->actionArea();
+
+        echo "Seeding Users..." . PHP_EOL;
+        $this->actionUser();
+
+        echo "Seeding Phonebooks..." . PHP_EOL;
+        $this->actionPhoneBook();
+    }
+
+    public function actionArea()
+    {
+        Yii::$app->db->createCommand('TRUNCATE areas')->execute();
+
+        $sql = file_get_contents(__DIR__ . '/../migrations/seeder/jawabarat_kabkota_20190320.sql');
+        Yii::$app->db->createCommand($sql)->execute();
+    }
+
     public function actionUser()
     {
         Yii::$app->db->createCommand('TRUNCATE auth_assignment')->execute();
