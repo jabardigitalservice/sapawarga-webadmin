@@ -65,8 +65,8 @@ class PhoneBookSearch extends PhoneBook
             return $this->getQueryRoleUser($user, $query, $params);
         }
 
-        // Else Has Admin Role
-        return $this->getQueryRoleAdmin($query, $params);
+        // Else Has Admin Role, tampilkan semua
+        return $this->getQueryAll($query, $params);
     }
 
     protected function getQueryRoleUser($user, $query, $params)
@@ -82,17 +82,25 @@ class PhoneBookSearch extends PhoneBook
             $this->filterByArea($query, $params);
         }
 
+        $query->orWhere(['and',
+            ['kabkota_id' => null],
+            ['kec_id' => null],
+            ['kel_id' => null],
+        ]);
+
         return new ActiveDataProvider([
             'query' => $query,
+            'sort'=> ['defaultOrder' => ['seq' => SORT_DESC]],
         ]);
     }
 
-    protected function getQueryRoleAdmin($query, $params)
+    protected function getQueryAll($query, $params)
     {
         $this->filterByArea($query, $params);
 
         return new ActiveDataProvider([
             'query' => $query,
+            'sort'=> ['defaultOrder' => ['seq' => SORT_DESC]],
         ]);
     }
 
