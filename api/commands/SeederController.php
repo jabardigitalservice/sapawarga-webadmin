@@ -2,6 +2,7 @@
 
 namespace app\commands;
 
+use app\models\Area;
 use app\models\PhoneBook;
 use tebazil\yii2seeder\Seeder;
 use Yii;
@@ -509,9 +510,11 @@ class SeederController extends Controller
             'category_id' => $faker->randomElement([1, 2, 3, 4]),
             'created_at' => time(),
             'updated_at' => time(),
-        ])->rowQuantity(50);
+        ])->rowQuantity(500);
 
         $seeder->refill();
+
+        $this->setRandomKecamatan();
 
         // Khusus Call Center
         Yii::$app->db->createCommand()->batchInsert('phonebooks', [
@@ -562,5 +565,21 @@ class SeederController extends Controller
                 time(),
             ],
         ])->execute();
+    }
+
+    protected function setRandomKecamatan()
+    {
+        echo "Set Phonebooks - Kecamatan..." . PHP_EOL;
+        
+        $phonebooks = PhoneBook::find()->all();
+
+        foreach ($phonebooks as $phonebook) {
+            $kecamatan = Area::find()->where(['parent_id' => $phonebook->kabkota_id])
+                ->orderBy(new \yii\db\Expression('rand()'))
+                ->one();
+
+            $phonebook->kec_id = $kecamatan->id;
+            $phonebook->save(false);
+        }
     }
 }
