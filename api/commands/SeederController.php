@@ -512,5 +512,55 @@ class SeederController extends Controller
         ])->rowQuantity(50);
 
         $seeder->refill();
+
+        // Khusus Call Center
+        Yii::$app->db->createCommand()->batchInsert('phonebooks', [
+            'name',
+            'phone_numbers',
+            'status',
+            'seq',
+            'created_at',
+            'updated_at',
+        ], [
+            [
+                '112 Kepolisian',
+                new JsonExpression([
+                    [
+                        'type' => 'phone',
+                        'phone_number' => '022-112',
+                    ],
+                ]),
+                10,
+                1000,
+                time(),
+                time(),
+            ],
+            [
+                '119 Quick Response',
+                new JsonExpression([
+                    [
+                        'type' => 'phone',
+                        'phone_number' => '022-110',
+                    ],
+                ]),
+                10,
+                1000,
+                time(),
+                time(),
+            ],
+            [
+                '123 Pemadam Kebakaran',
+                new JsonExpression([
+                    [
+                        'type' => 'phone',
+                        'phone_number' => '022-123',
+                    ],
+                ]),
+                10,
+                1000,
+                time(),
+                time(),
+            ],
+        ])->execute();
     }
 }
