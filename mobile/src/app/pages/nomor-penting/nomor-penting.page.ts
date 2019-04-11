@@ -51,6 +51,12 @@ export class NomorPentingPage implements OnInit {
 
   // get data nomor penting
   async getNomorPenting(infiniteScroll?) {
+    // check internet
+    if (!navigator.onLine) {
+      alert('Tidak ada koneksi internet');
+      return;
+    }
+
     const loader = await this.loadingCtrl.create({
       duration: 10000
     });
@@ -85,6 +91,12 @@ export class NomorPentingPage implements OnInit {
 
   // get data nomor penting
   async filterNomorPenting(type: string, id: number) {
+    // check internet
+    if (!navigator.onLine) {
+      alert('Tidak ada koneksi internet');
+      return;
+    }
+
     const loader = await this.loadingCtrl.create({
       duration: 10000
     });
@@ -215,18 +227,12 @@ export class NomorPentingPage implements OnInit {
 
   CariAreas(event: string) {
     // check internet
-    // if (!navigator.onLine) {
-    //   this.showToast('Tidak ada koneksi internet');
-    //   return;
-    // }
+    if (!navigator.onLine) {
+      alert('Tidak ada koneksi internet');
+      return;
+    }
 
-    // let disconnectSubscription = this.network.onDisconnect().subscribe(() => {
-    //   alert('network was disconnected :-(');
-    // });
-
-    // // stop disconnect watch
-    // disconnectSubscription.unsubscribe();
-    // if the value is an empty string
+    // handle if data empty
     if (!event) {
       return;
     }
