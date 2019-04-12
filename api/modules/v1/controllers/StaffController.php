@@ -110,6 +110,7 @@ class StaffController extends ActiveController
         $search->range_roles = [0, $maxRoleRange];
         $search->not_in_status = [User::STATUS_DELETED];
 
+        // If search parameters are null, use current user's area ids
         $search->kabkota_id = $search->kabkota_id ?? $currentUser->kabkota_id;
         $search->kec_id = $search->kec_id ?? $currentUser->kec_id;
         $search->kel_id = $search->kel_id ?? $currentUser->kel_id;

@@ -11,6 +11,7 @@ class UserSearch extends Model
     public $range_roles = [];
     public $not_in_status = [];
 
+    public $role_id;
     public $kabkota_id;
     public $kec_id;
     public $kel_id;
@@ -20,7 +21,7 @@ class UserSearch extends Model
     {
         return [
             [['search'], 'string', 'max' => 50],
-            [['kabkota_id', 'kec_id', 'kel_id', 'rw'], 'string'],
+            [['role_id', 'kabkota_id', 'kec_id', 'kel_id', 'rw'], 'string'],
         ];
     }
 
@@ -35,7 +36,12 @@ class UserSearch extends Model
             ->where(['not in', 'user.status', $this->not_in_status])
             ->andWhere(['between', 'user.role', $this->range_roles[0], $this->range_roles[1]]);
 
-        // Limit search based on user role's authorized area
+        // Filter by role
+        if ($this->role_id) {
+            $query->andWhere(['role' => User::ROLE_MAP[$this->role_id]]);
+        }
+
+        // Filter by area id
         if ($this->kabkota_id) {
             $query->andWhere(['kabkota_id' => $this->kabkota_id]);
         }

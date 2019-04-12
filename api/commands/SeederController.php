@@ -12,13 +12,13 @@ class SeederController extends Controller
 {
     public function actionIndex()
     {
-        echo "Seeding Areas..." . PHP_EOL;
+        echo 'Seeding Areas...' . PHP_EOL;
         $this->actionArea();
 
-        echo "Seeding Users..." . PHP_EOL;
+        echo 'Seeding Users...' . PHP_EOL;
         $this->actionUser();
 
-        echo "Seeding Phonebooks..." . PHP_EOL;
+        echo 'Seeding Phonebooks...' . PHP_EOL;
         $this->actionPhoneBook();
     }
 
