@@ -8,8 +8,6 @@ use yii\data\ActiveDataProvider;
 class UserSearch extends Model
 {
     public $search;
-    public $page = 1;
-    public $per_page = 20;
     public $range_roles = [];
     public $not_in_status = [];
 
@@ -21,7 +19,6 @@ class UserSearch extends Model
     public function rules()
     {
         return [
-            [['page', 'per_page'], 'integer'],
             [['search'], 'string', 'max' => 50],
         ];
     }
@@ -33,7 +30,6 @@ class UserSearch extends Model
 
     public function getDataProvider()
     {
-        $queryParams = [];
         $query = User::find()
             ->where(['not in', 'user.status', $this->not_in_status])
             ->andWhere(['between', 'user.role', $this->range_roles[0], $this->range_roles[1]]);
@@ -58,44 +54,12 @@ class UserSearch extends Model
                 ['like', 'user.name', $this->search],
                 ['like', 'user.phone', $this->search],
             ]);
-            $queryParams['q'] = $this->search;
         }
-
-        $page = $this->page > 0 ? ($this->page - 1) : 0;
-        $pageSize = (int)$this->per_page;
 
         $provider = new ActiveDataProvider([
             'query' => $query,
-            'pagination' => [
-                'forcePageParam' => true,
-                'page' => $page,
-                'pageParam' => 'page',
-                'defaultPageSize' => $pageSize,
-                'pageSizeLimit' => [10, 50, 100],
-                'pageSizeParam' => 'per_page',
-                'validatePage' => true,
-                'params' => $queryParams,
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'id' => SORT_DESC,
-                ]
-            ]
         ]);
 
-        $rows = $provider->getModels();
-        $pagination = array_intersect_key(
-            (array)$provider->pagination,
-            array_flip(
-                \Yii::$app->params['paginationParams']
-            )
-        );
-
-        $pagination['firstRowNo'] = $pagination['totalCount'] - ($page * $pageSize);
-
-        return [
-            'rows' => $rows,
-            'pagination' => $pagination,
-        ];
+        return $provider;
     }
 }
