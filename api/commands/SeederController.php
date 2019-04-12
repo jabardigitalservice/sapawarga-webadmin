@@ -412,12 +412,27 @@ class SeederController extends Controller
         $staff = $auth->getRole('staff');
         $auth->assign($staff, 2);
 
-        $user = $auth->getRole('user');
+        $staff = $auth->getRole('staffProv');
+        $auth->assign($staff, 3);
 
-        $auth->assign($user, 3);
-        $auth->assign($user, 4);
-        $auth->assign($user, 5);
-        $auth->assign($user, 6);
+        $staff = $auth->getRole('staffKabkota');
+        $auth->assign($staff, 4);
+
+        $staff = $auth->getRole('staffKec');
+        $auth->assign($staff, 5);
+
+        $staff = $auth->getRole('staffKel');
+        $auth->assign($staff, 6);
+        $auth->assign($staff, 7);
+
+        $staff = $auth->getRole('staffRW');
+        $auth->assign($staff, 8);
+
+        $user = $auth->getRole('user');
+        $auth->assign($user, 9);
+        $auth->assign($user, 10);
+        $auth->assign($user, 11);
+        $auth->assign($user, 12);
     }
 
     public function actionPhoneBook()
