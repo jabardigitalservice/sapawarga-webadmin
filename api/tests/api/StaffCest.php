@@ -152,29 +152,27 @@ class StaffCest
         ]);
     }
 
+    public function getListInvalidSearch(ApiTester $I)
+    {
+        $I->amStaff();
+
+        $I->sendGET($this->endpointStaff . '?search=MZG2gnGQkRZ5XOIYqJz94qHMuRM0P41zAKpdFNHVnDoE1fl2tlA');
+
+        $I->canSeeResponseCodeIs(400);
+        $I->seeResponseIsJson();
+
+        $I->seeResponseContainsJson([
+            'success' => false,
+            'status'  => 400,
+            'data' => []
+        ]);
+    }
+
     public function getListByName(ApiTester $I)
     {
         $I->amStaff();
 
-        $I->sendGET($this->endpointStaff . '?q=Staff');
-
-        $I->canSeeResponseCodeIs(200);
-        $I->seeResponseIsJson();
-
-        $I->seeResponseContainsJson([
-            'success' => true,
-            'status'  => 200,
-            'data' => [
-                "items" => [],
-            ]
-        ]);
-    }
-
-    public function getListByRole(ApiTester $I)
-    {
-        $I->amStaff();
-
-        $I->sendGET($this->endpointStaff . '?q=RW');
+        $I->sendGET($this->endpointStaff . '?search=Staff');
 
         $I->canSeeResponseCodeIs(200);
         $I->seeResponseIsJson();
@@ -192,7 +190,43 @@ class StaffCest
     {
         $I->amStaff();
 
-        $I->sendGET($this->endpointStaff . '?q=080989999');
+        $I->sendGET($this->endpointStaff . '?search=080989999');
+
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $I->seeResponseContainsJson([
+            'success' => true,
+            'status'  => 200,
+            'data' => [
+                "items" => [],
+            ]
+        ]);
+    }
+
+    public function getListByRole(ApiTester $I)
+    {
+        $I->amStaff();
+
+        $I->sendGET($this->endpointStaff . '?role_id=staffRW');
+
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $I->seeResponseContainsJson([
+            'success' => true,
+            'status'  => 200,
+            'data' => [
+                "items" => [],
+            ]
+        ]);
+    }
+
+    public function getListByArea(ApiTester $I)
+    {
+        $I->amStaff();
+
+        $I->sendGET($this->endpointStaff . '?kabkota_id=22&kec_id=431&kel_id=6093&rw=1');
 
         $I->canSeeResponseCodeIs(200);
         $I->seeResponseIsJson();
