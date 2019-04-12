@@ -7,7 +7,7 @@ use yii\data\ActiveDataProvider;
 
 class UserSearch extends Model
 {
-    public $q;
+    public $search;
     public $page = 1;
     public $per_page = 20;
     public $range_roles = [];
@@ -22,7 +22,7 @@ class UserSearch extends Model
     {
         return [
             [['page', 'per_page'], 'integer'],
-            [['q'], 'string', 'max' => 50],
+            [['search'], 'string', 'max' => 50],
         ];
     }
 
@@ -52,15 +52,13 @@ class UserSearch extends Model
             $query->andWhere(['rw' => $this->rw]);
         }
 
-        if ($this->q) {
+        if ($this->search) {
             $query->andWhere([
                 'or',
-                ['like', 'user.username', $this->q],
-                ['like', 'user.email', $this->q],
-                ['like', 'user.registration_ip', $this->q],
-                ['like', 'user.last_login_ip', $this->q],
+                ['like', 'user.name', $this->search],
+                ['like', 'user.phone', $this->search],
             ]);
-            $queryParams['q'] = $this->q;
+            $queryParams['q'] = $this->search;
         }
 
         $page = $this->page > 0 ? ($this->page - 1) : 0;
