@@ -20,6 +20,7 @@ class UserSearch extends Model
     {
         return [
             [['search'], 'string', 'max' => 50],
+            [['kabkota_id', 'kec_id', 'kel_id', 'rw'], 'string'],
         ];
     }
 
