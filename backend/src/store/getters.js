@@ -1,3 +1,5 @@
+import { stat } from 'fs';
+
 const getters = {
   sidebar: state => state.app.sidebar,
   language: state => state.app.language,
@@ -12,6 +14,8 @@ const getters = {
   roles: state => state.user.roles,
   permission_routes: state => state.permission.routes,
   addRoutes: state => state.permission.addRoutes,
-  errorLogs: state => state.errorLog.logs
-}
-export default getters
+  errorLogs: state => state.errorLog.logs,
+  USER: state => state.addUser.user,
+  AREAS: state => state.addUser.areas
+};
+export default getters;

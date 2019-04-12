@@ -48,15 +48,20 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="Kab/Kota" prop="kota">
-                <el-select v-model="user.kota" placeholder="Pilih Kota/Kab">
-                  <el-option v-for="item in opsiKota" :value="item.value" :key="item.value"></el-option>
+                <el-select
+                  @change="pilihKota()"
+                  v-model="user.opsiKota"
+                  placeholder="Pilih Kota/Kab"
+                >
+                  <el-option v-for="item in AREAS" :key="item.id" :value="item.name"></el-option>
                 </el-select>
               </el-form-item>
+              {{user.opsiKota.name}} || {{user.opsiKota.id}} || {{user.opsiKota.depth}}
             </el-col>
             <el-col :span="12">
               <el-form-item label="RW" prop="rw">
                 <el-select v-model="user.rw" placeholder="Pilih RW">
-                  <el-option v-for="item in opsiRW" :value="item.value" :key="item.value"></el-option>
+                  <!-- <el-option v-for="item in opsiKota" :key="item.id" :value="item.name"></el-option> -->
                 </el-select>
               </el-form-item>
             </el-col>
@@ -117,12 +122,14 @@
             <el-button @click="resetForm('user')">Batal</el-button>
           </el-form-item>
         </el-form>
+        <div v-for="item in USER" :key="item.username">{{item.username}} {{item.nama}}</div>
       </el-col>
       <!-- right colomn -->
     </el-row>
   </div>
 </template>
 <script>
+import { mapGetters } from "vuex";
 export default {
   data() {
     // var checkAge = (rule, value, callback) => {
@@ -168,7 +175,14 @@ export default {
         password: "",
         telepon: "",
         alamat: "",
-        kota: "",
+        opsiKota: [
+          // {
+          //   id: "",
+          //   parent_id: "",
+          //   depth: "",
+          //   name: ""
+          // }
+        ],
         kecamatan: "",
         kelurahan: "",
         rw: "",
@@ -177,16 +191,15 @@ export default {
         twitter: "",
         facebook: "",
         instagram: "",
-        photo: ""
+        photo: "",
+        kota: ""
       },
-      opsiKota: [
-        {
-          value: "Bandung"
-        },
-        {
-          value: "Cimahi"
-        }
-      ],
+      // opsiKota: [
+      //   {
+      //     id: "",
+      //     name: ""
+      //   }
+      // ],
       opsiKecamatan: [
         {
           value: "Bandung"
@@ -476,7 +489,25 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          alert("submit!");
+          console.log(this.user.username);
+          // this.$store
+          //   .dispatch("addUser/tambah", {
+          //     username: this.user.username,
+          //     name: this.user.nama,
+          //     email: this.user.email,
+          //     password: this.user.password,
+          //     role_id: this.user.peran,
+          //     phone: this.user.telepon,
+          //     twitter: this.user.twitter,
+          //     facebook: this.user.facebook,
+          //     instagram: this.user.instagram,
+          //   })
+          //   .then(() => {
+          //     console.log("data berhasil ditambah");
+          //   })
+          //   .catch(() => {
+          //     console.log("data gagal");
+          //   });
         } else {
           console.log("error submit!!");
           return false;
@@ -485,7 +516,18 @@ export default {
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
+    },
+    pilihKota() {
+      this.$store.dispatch("addUser/pilihKota");
+    },
+    pilihKecamatan() {
+      this.$store.dispatch("addUser/pilihKecamatan");
     }
+  },
+  computed: {
+    ...mapGetters(["USER"]),
+
+    ...mapGetters(["AREAS"])
   }
 };
 </script>

@@ -16,9 +16,20 @@ export function getInfo(token) {
   });
 }
 
-export function logout() {
+export function getRegion() {
   return request({
-    url: '/user/logout',
-    method: 'post'
+    url: 'areas',
+    method: 'get',
+    params: {
+      parent_id: 1,
+      depth: 2
+    }
   });
 }
+
+// export function logout() {
+//   return request({
+//     url: '/user/logout',
+//     method: 'post'
+//   });
+// }
