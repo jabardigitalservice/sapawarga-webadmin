@@ -59,7 +59,7 @@ class UserController extends ActiveController
                 'delete' => ['delete'],
                 'login' => ['post'],
                 'me' => ['get', 'post'],
-                'photo' => ['get', 'post'],
+                'me-photo' => ['get', 'post'],
             ],
         ];
 
@@ -102,7 +102,7 @@ class UserController extends ActiveController
                 ],
                 [
                     'allow' => true,
-                    'actions' => ['me', 'photo'],
+                    'actions' => ['me', 'me-photo'],
                     'roles' => ['user']
                 ]
             ],
@@ -500,6 +500,19 @@ class UserController extends ActiveController
             // Validation error
             throw new NotFoundHttpException('Object not found');
         }
+    }
+
+    public function actionMePhoto()
+    {
+        $user = User::findIdentity(\Yii::$app->user->getId());
+
+        $bucket = Yii::$app->fileStorage->getBucket('imageFiles');
+
+        $responseData = [
+            'photo_url' => $bucket->getFileUrl($user->photo_url),
+        ];
+
+        return $responseData;
     }
 
     public function actionMePhotoUpload()
