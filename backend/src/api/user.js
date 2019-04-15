@@ -27,6 +27,28 @@ export function getRegion() {
   });
 }
 
+export function getKecamatan(id) {
+  return request({
+    url: 'areas',
+    method: 'get',
+    params: {
+      parent_id: id,
+      depth: 3
+    }
+  });
+}
+
+export function getKelurahan(id) {
+  return request({
+    url: 'areas',
+    method: 'get',
+    params: {
+      parent_id: id,
+      depth: 4
+    }
+  });
+}
+
 // export function logout() {
 //   return request({
 //     url: '/user/logout',

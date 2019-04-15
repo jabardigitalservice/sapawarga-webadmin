@@ -1,6 +1,6 @@
 import Axios from 'axios';
 import getters from '../getters';
-import { getRegion } from '../../api/user';
+import { getRegion, getKecamatan, getKelurahan } from '../../api/user';
 import { resolve } from 'url';
 import { rejects } from 'assert';
 
@@ -44,6 +44,22 @@ const state = {
       parent_id: '',
       depth: ''
     }
+  ],
+  kecamatan: [
+    {
+      id: '',
+      name: '',
+      parent_id: '',
+      depth: ''
+    }
+  ],
+  kelurahan: [
+    {
+      id: '',
+      name: '',
+      parent_id: '',
+      depth: ''
+    }
   ]
 };
 
@@ -53,22 +69,28 @@ const mutations = {
   },
   AREAS: (state, payload) => {
     state.areas = payload;
-    console.log('mutation berhasil dipanggil');
+  },
+  KECAMATAN: (state, payload) => {
+    state.kecamatan = payload;
+    console.log('Mutation kecamatan');
+  },
+  KELURAHAN: (state, payload) => {
+    state.kelurahan = payload;
+    console.log('Mutation kelurahan');
   }
 };
 const actions = {
-  tambah({ commit }, payload) {
-    // let { data } = await Axios.post();
-    commit('ADD_USER', payload);
-    console.log('action berhasil dipanggil');
-  },
+  // tambah({ commit }, payload) {
+  //   // let { data } = await Axios.post();
+  //   commit('ADD_USER', payload);
+  //   console.log('action berhasil dipanggil');
+  // },
   pilihKota: async ({ commit }) => {
     return new Promise((resolve, rejects) => {
       getRegion()
         .then(response => {
           const { data } = response;
           commit('AREAS', data.items);
-          console.log('action berhasil dipanggil');
           resolve();
         })
         .catch(error => {
@@ -77,18 +99,31 @@ const actions = {
         });
     });
   },
-  pilihKecamatan: async ({ commit }) => {
+  pilihKecamatan: async ({ commit }, payload) => {
     return new Promise((resolve, rejects) => {
-      getRegion()
+      getKecamatan(payload)
         .then(response => {
           const { data } = response;
-          commit('AREAS', data.items);
-          console.log('action berhasil dipanggil');
+          commit('KECAMATAN', data.items);
           resolve();
         })
         .catch(error => {
           error;
-          rejects();
+          rejects('failed');
+        });
+    });
+  },
+  pilihKelurahan: async ({ commit }, payload) => {
+    return new Promise((resolve, rejects) => {
+      getKelurahan(payload)
+        .then(response => {
+          const { data } = response;
+          commit('KELURAHAN', data.items);
+          resolve();
+        })
+        .catch(error => {
+          error;
+          rejects('failed');
         });
     });
   }

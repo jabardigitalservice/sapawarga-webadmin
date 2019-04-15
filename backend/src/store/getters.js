@@ -16,6 +16,8 @@ const getters = {
   addRoutes: state => state.permission.addRoutes,
   errorLogs: state => state.errorLog.logs,
   USER: state => state.addUser.user,
-  AREAS: state => state.addUser.areas
+  AREAS: state => state.addUser.areas,
+  KECAMATAN: state => state.addUser.kecamatan,
+  KELURAHAN: state => state.addUser.kelurahan
 };
 export default getters;

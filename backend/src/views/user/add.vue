@@ -49,14 +49,20 @@
             <el-col :span="12">
               <el-form-item label="Kab/Kota" prop="kota">
                 <el-select
-                  @change="pilihKota()"
+                  v-bind="pilihKota"
                   v-model="user.opsiKota"
-                  placeholder="Pilih Kota/Kab"
+                  placeholder="Pilih Kab/Kota"
+                  @change="pilihKecamatan"
                 >
-                  <el-option v-for="item in AREAS" :key="item.id" :value="item.name"></el-option>
+                  <el-option
+                    v-for="item in AREAS"
+                    :key="item.id"
+                    :value="item"
+                    :label="user.opsiKota.name"
+                  >{{item.name}}</el-option>
                 </el-select>
               </el-form-item>
-              {{user.opsiKota.name}} || {{user.opsiKota.id}} || {{user.opsiKota.depth}}
+              {{user.opsiKota.name}} || {{user.opsiKota.id}} || {{user.opsiKota.depth}} || {{user.opsiKota.parent_id}}
             </el-col>
             <el-col :span="12">
               <el-form-item label="RW" prop="rw">
@@ -69,10 +75,20 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="Kecamatan" prop="kecamatan">
-                <el-select v-model="user.kecamatan" placeholder="Pilih Kecamatan">
-                  <el-option v-for="item in opsiKecamatan" :value="item.value" :key="item.value"></el-option>
+                <el-select
+                  v-model="user.kecamatan"
+                  placeholder="Pilih Kecamatan"
+                  @change="pilihKelurahan"
+                >
+                  <el-option
+                    v-for="item in KECAMATAN"
+                    :value="item"
+                    :key="item.id"
+                    :label="user.kecamatan.name"
+                  >{{item.name}}</el-option>
                 </el-select>
               </el-form-item>
+              {{user.kecamatan.name}} || id: {{user.kecamatan.id}} || depth: {{user.kecamatan.depth}} || {{user.kecamatan.parent_id}}
             </el-col>
             <el-col :span="12">
               <el-form-item label="RT" prop="rt">
@@ -86,9 +102,15 @@
             <el-col :span="12">
               <el-form-item label="Kelurahan" prop="kelurahan">
                 <el-select v-model="user.kelurahan" placeholder="Pilih Kelurahan">
-                  <el-option v-for="item in opsiKelurahan" :value="item.value" :key="item.value"></el-option>
+                  <el-option
+                    v-for="item in KELURAHAN"
+                    :value="item"
+                    :key="item.id"
+                    :label="user.kelurahan.name"
+                  >{{item.name}}</el-option>
                 </el-select>
               </el-form-item>
+              {{user.kelurahan.name}} || id: {{user.kelurahan.id}} || depth: {{user.kelurahan.depth}} || {{user.kelurahan.parent_id}}
             </el-col>
             <el-col :span="12">
               <el-form-item label="Peran" prop="peran">
@@ -130,43 +152,9 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
+import { mapActions } from "vuex";
 export default {
   data() {
-    // var checkAge = (rule, value, callback) => {
-    //   if (!value) {
-    //     return callback(new Error("Please input the age"));
-    //   }
-    //   setTimeout(() => {
-    //     if (!Number.isInteger(value)) {
-    //       callback(new Error("Please input digits"));
-    //     } else {
-    //       if (value < 18) {
-    //         callback(new Error("Age must be greater than 18"));
-    //       } else {
-    //         callback();
-    //       }
-    //     }
-    //   }, 1000);
-    // };
-    // var validatePass = (rule, value, callback) => {
-    //   if (value === "") {
-    //     callback(new Error("Please input the password"));
-    //   } else {
-    //     if (this.ruleForm2.checkPass !== "") {
-    //       this.$refs.ruleForm2.validateField("checkPass");
-    //     }
-    //     callback();
-    //   }
-    // };
-    // var validatePass2 = (rule, value, callback) => {
-    //   if (value === "") {
-    //     callback(new Error("Please input the password again"));
-    //   } else if (value !== this.ruleForm2.pass) {
-    //     callback(new Error("Two inputs don't match!"));
-    //   } else {
-    //     callback();
-    //   }
-    // };
     return {
       user: {
         username: "",
@@ -176,15 +164,29 @@ export default {
         telepon: "",
         alamat: "",
         opsiKota: [
-          // {
-          //   id: "",
-          //   parent_id: "",
-          //   depth: "",
-          //   name: ""
-          // }
+          {
+            id: "",
+            parent_id: "",
+            depth: "",
+            name: ""
+          }
         ],
-        kecamatan: "",
-        kelurahan: "",
+        kecamatan: [
+          {
+            id: "",
+            parent_id: "",
+            depth: "",
+            name: ""
+          }
+        ],
+        kelurahan: [
+          {
+            id: "",
+            parent_id: "",
+            depth: "",
+            name: ""
+          }
+        ],
         rw: "",
         rt: "",
         peran: "",
@@ -517,17 +519,21 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields();
     },
-    pilihKota() {
-      this.$store.dispatch("addUser/pilihKota");
+    pilihKecamatan: function() {
+      this.$store.dispatch("addUser/pilihKecamatan", this.user.opsiKota.id);
     },
-    pilihKecamatan() {
-      this.$store.dispatch("addUser/pilihKecamatan");
+    pilihKelurahan: function() {
+      this.$store.dispatch("addUser/pilihKelurahan", this.user.kecamatan.id);
     }
   },
   computed: {
-    ...mapGetters(["USER"]),
-
-    ...mapGetters(["AREAS"])
+    ...mapGetters(["USER", "AREAS", "KECAMATAN", "KELURAHAN"]),
+    pilihKota() {
+      this.$store
+        .dispatch("addUser/pilihKota")
+        .then(() => {})
+        .catch(err => {});
+    }
   }
 };
 </script>
