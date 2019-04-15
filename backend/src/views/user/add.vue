@@ -36,9 +36,18 @@
           <el-form-item label="Email" prop="email">
             <el-input type="email" v-model="user.email"></el-input>
           </el-form-item>
-          <el-form-item label="Password" prop="password">
-            <el-input type="password" v-model="user.password"></el-input>
-          </el-form-item>
+          <el-row>
+            <el-col :span="20">
+              <el-form-item label="Password" prop="password">
+                <el-input type="text" v-model="user.password"></el-input>
+              </el-form-item>
+            </el-col>
+
+            <el-col :span="3" style="margin-left:5px">
+              <el-button type="success" @click="generate">Generate</el-button>
+            </el-col>
+          </el-row>
+
           <el-form-item label="Telepon" prop="telepon">
             <el-input type="number" v-model="user.telepon"></el-input>
           </el-form-item>
@@ -154,7 +163,6 @@
           <el-form-item>
             <el-button type="primary" @click="submitForm('user')">Tambah Pengguna</el-button>
             <el-button @click="resetForm('user')">Batal</el-button>
-            <el-button @click="open">open</el-button>
           </el-form-item>
         </el-form>
       </el-col>
@@ -422,11 +430,6 @@ export default {
     };
   },
   methods: {
-    open() {
-      this.$alert("Pengguna berhasil ditambahkan", {
-        callback: action => {}
-      });
-    },
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
@@ -484,6 +487,21 @@ export default {
     },
     pilihKelurahan: function() {
       this.$store.dispatch("addUser/pilihKelurahan", this.user.kecamatan.id);
+    },
+    // Generate password
+    randomPassword(length) {
+      var chars =
+        "abcdefghijklmnopqrstuvwxyz!@#$%^&*()-+<>ABCDEFGHIJKLMNOP1234567890";
+      var pass = "";
+      for (var x = 0; x < length; x++) {
+        var i = Math.floor(Math.random() * chars.length);
+        pass += chars.charAt(i);
+      }
+      return pass;
+    },
+
+    generate() {
+      this.user.password = this.randomPassword(8);
     }
   },
   computed: {
@@ -514,8 +532,18 @@ p {
 .app-container {
   padding: 5px 20px;
 }
+
+#password {
+  .el-row {
+    margin-right: 10px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
 .el-row {
-  margin-left: 20px;
+  margin-left: 0px;
   &:last-child {
     margin-bottom: 0;
   }
