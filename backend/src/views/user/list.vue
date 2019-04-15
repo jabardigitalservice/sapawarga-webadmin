@@ -31,10 +31,10 @@
         </template>
       </el-table-column>
 
-      <el-table-column class-name="status-col" label="Status" width="110">
+      <el-table-column class-name="status-col" label="Status" width="200">
         <template slot-scope="{row}">
           <el-tag :type="row.status | statusFilter">
-            {{ row.status }}
+            {{ row.status_label }}
           </el-tag>
         </template>
       </el-table-column>
@@ -64,9 +64,9 @@ export default {
   filters: {
     statusFilter(status) {
       const statusMap = {
-        10: 'success',
-        1: 'info',
-        0: 'danger'
+        '10': 'success',
+        '1': 'info',
+        '-1': 'danger'
       }
       return statusMap[status]
     }
