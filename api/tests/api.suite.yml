@@ -1,6 +1,7 @@
 actor: ApiTester
 modules:
     enabled:
+        - Asserts
         - REST:
             url: http://localhost
             depends: PhpBrowser
