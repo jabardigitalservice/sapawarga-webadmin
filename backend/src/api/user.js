@@ -16,13 +16,22 @@ export function getInfo(token) {
   });
 }
 
+export function addUser(data) {
+  return request({
+    url: 'staff',
+    method: 'post',
+    data
+  });
+}
+
 export function getRegion() {
   return request({
     url: 'areas',
     method: 'get',
     params: {
       parent_id: 1,
-      depth: 2
+      depth: 2,
+      all: true
     }
   });
 }
@@ -33,7 +42,8 @@ export function getKecamatan(id) {
     method: 'get',
     params: {
       parent_id: id,
-      depth: 3
+      depth: 3,
+      all: true
     }
   });
 }
@@ -44,7 +54,8 @@ export function getKelurahan(id) {
     method: 'get',
     params: {
       parent_id: id,
-      depth: 4
+      depth: 4,
+      all: true
     }
   });
 }

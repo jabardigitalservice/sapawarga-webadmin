@@ -1,6 +1,6 @@
 import Axios from 'axios';
 import getters from '../getters';
-import { getRegion, getKecamatan, getKelurahan } from '../../api/user';
+import { getRegion, getKecamatan, getKelurahan, addUser } from '../../api/user';
 import { resolve } from 'url';
 import { rejects } from 'assert';
 
@@ -33,8 +33,22 @@ import { rejects } from 'assert';
 const state = {
   user: [
     {
-      username: 'maruf',
-      nama: 'harsono'
+      username: '',
+      nama: '',
+      email: '',
+      password: '',
+      telepon: '',
+      alamat: '',
+      kota: '',
+      kecamatan: '',
+      kelurahan: '',
+      rw: '',
+      rt: '',
+      peran: '',
+      twitter: '',
+      facebook: '',
+      instagram: '',
+      photo: ''
     }
   ],
   areas: [
@@ -72,19 +86,12 @@ const mutations = {
   },
   KECAMATAN: (state, payload) => {
     state.kecamatan = payload;
-    console.log('Mutation kecamatan');
   },
   KELURAHAN: (state, payload) => {
     state.kelurahan = payload;
-    console.log('Mutation kelurahan');
   }
 };
 const actions = {
-  // tambah({ commit }, payload) {
-  //   // let { data } = await Axios.post();
-  //   commit('ADD_USER', payload);
-  //   console.log('action berhasil dipanggil');
-  // },
   pilihKota: async ({ commit }) => {
     return new Promise((resolve, rejects) => {
       getRegion()
@@ -119,6 +126,20 @@ const actions = {
         .then(response => {
           const { data } = response;
           commit('KELURAHAN', data.items);
+          resolve();
+        })
+        .catch(error => {
+          error;
+          rejects('failed');
+        });
+    });
+  },
+  tambahUser: async ({ commit }, payload) => {
+    return new Promise((resolve, rejects) => {
+      addUser(payload)
+        .then(response => {
+          const { data } = response;
+          commit('ADD_USER', payload);
           resolve();
         })
         .catch(error => {

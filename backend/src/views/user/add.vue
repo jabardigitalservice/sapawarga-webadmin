@@ -45,12 +45,27 @@
           <el-form-item label="Alamat" prop="alamat">
             <el-input type="text" v-model="user.alamat"></el-input>
           </el-form-item>
+          <el-form-item label="Peran" prop="peran">
+            <el-select v-model="user.peran" placeholder="Pilih Peran">
+              <el-option
+                v-for="item in opsiPeran"
+                :value="item.value"
+                :key="item.value"
+                :label="user.peran.value"
+              ></el-option>
+            </el-select>
+            {{user.peran}}
+          </el-form-item>
           <el-row>
             <el-col :span="12">
-              <el-form-item label="Kab/Kota" prop="kota">
+              <el-form-item
+                label="Kab/Kota"
+                prop="kota"
+                v-if="(!(this.user.peran == 'admin') && !(this.user.peran == 'staffProv'))"
+              >
                 <el-select
                   v-bind="pilihKota"
-                  v-model="user.opsiKota"
+                  v-model="user.kota"
                   placeholder="Pilih Kab/Kota"
                   @change="pilihKecamatan"
                 >
@@ -58,23 +73,28 @@
                     v-for="item in AREAS"
                     :key="item.id"
                     :value="item"
-                    :label="user.opsiKota.name"
+                    :label="user.kota.name"
                   >{{item.name}}</el-option>
                 </el-select>
               </el-form-item>
-              {{user.opsiKota.name}} || {{user.opsiKota.id}} || {{user.opsiKota.depth}} || {{user.opsiKota.parent_id}}
             </el-col>
             <el-col :span="12">
-              <el-form-item label="RW" prop="rw">
-                <el-select v-model="user.rw" placeholder="Pilih RW">
-                  <!-- <el-option v-for="item in opsiKota" :key="item.id" :value="item.name"></el-option> -->
-                </el-select>
+              <el-form-item
+                label="RW"
+                prop="rw"
+                v-if="(!(this.user.peran == 'admin') && !(this.user.peran == 'staffProv'))"
+              >
+                <el-input type="number" v-model="user.rw" placeholder="Masukan RW"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="12">
-              <el-form-item label="Kecamatan" prop="kecamatan">
+              <el-form-item
+                label="Kecamatan"
+                prop="kecamatan"
+                v-if="(!(this.user.peran == 'admin') && !(this.user.peran == 'staffProv'))"
+              >
                 <el-select
                   v-model="user.kecamatan"
                   placeholder="Pilih Kecamatan"
@@ -88,19 +108,24 @@
                   >{{item.name}}</el-option>
                 </el-select>
               </el-form-item>
-              {{user.kecamatan.name}} || id: {{user.kecamatan.id}} || depth: {{user.kecamatan.depth}} || {{user.kecamatan.parent_id}}
             </el-col>
             <el-col :span="12">
-              <el-form-item label="RT" prop="rt">
-                <el-select v-model="user.rt" placeholder="Pilih RT">
-                  <el-option v-for="item in opsiRT" :value="item.value" :key="item.value"></el-option>
-                </el-select>
+              <el-form-item
+                label="RT"
+                prop="rt"
+                v-if="(!(this.user.peran == 'admin') && !(this.user.peran == 'staffProv'))"
+              >
+                <el-input type="number" v-model="user.rt" placeholder="Masukan RT"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="12">
-              <el-form-item label="Kelurahan" prop="kelurahan">
+              <el-form-item
+                label="Kelurahan"
+                prop="kelurahan"
+                v-if="(!(this.user.peran == 'admin') && !(this.user.peran == 'staffProv'))"
+              >
                 <el-select v-model="user.kelurahan" placeholder="Pilih Kelurahan">
                   <el-option
                     v-for="item in KELURAHAN"
@@ -110,19 +135,12 @@
                   >{{item.name}}</el-option>
                 </el-select>
               </el-form-item>
-              {{user.kelurahan.name}} || id: {{user.kelurahan.id}} || depth: {{user.kelurahan.depth}} || {{user.kelurahan.parent_id}}
             </el-col>
-            <el-col :span="12">
-              <el-form-item label="Peran" prop="peran">
-                <el-select v-model="user.peran" placeholder="Pilih Peran">
-                  <el-option v-for="item in opsiPeran" :value="item.value" :key="item.value"></el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
+            <el-col :span="12"></el-col>
           </el-row>
           <p class="warn-content">Media Sosial</p>
           <el-form-item label="Twitter" prop="twitter">
-            <el-input type="text" v-model="user.twitter"></el-input>
+            <el-input type="text" v-model="user.twitter" disabled="false"></el-input>
           </el-form-item>
           <el-form-item label="Facebook" prop="facebook">
             <el-input type="text" v-model="user.facebook"></el-input>
@@ -133,18 +151,11 @@
           <el-form-item label="Photo">
             <el-input type="text" v-model="user.photo"></el-input>
           </el-form-item>
-          <!-- <el-form-item label="Confirm" prop="checkPass">
-              <el-input type="password" v-model="ruleForm2.checkPass" autocomplete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="Age" prop="age">
-              <el-input v-model.number="ruleForm2.age"></el-input>
-          </el-form-item>-->
           <el-form-item>
             <el-button type="primary" @click="submitForm('user')">Tambah Pengguna</el-button>
             <el-button @click="resetForm('user')">Batal</el-button>
           </el-form-item>
         </el-form>
-        <div v-for="item in USER" :key="item.username">{{item.username}} {{item.nama}}</div>
       </el-col>
       <!-- right colomn -->
     </el-row>
@@ -163,7 +174,7 @@ export default {
         password: "",
         telepon: "",
         alamat: "",
-        opsiKota: [
+        kota: [
           {
             id: "",
             parent_id: "",
@@ -189,57 +200,35 @@ export default {
         ],
         rw: "",
         rt: "",
-        peran: "",
+        peran: [],
         twitter: "",
         facebook: "",
         instagram: "",
-        photo: "",
-        kota: ""
+        photo: ""
       },
-      // opsiKota: [
-      //   {
-      //     id: "",
-      //     name: ""
-      //   }
-      // ],
-      opsiKecamatan: [
-        {
-          value: "Bandung"
-        },
-        {
-          value: "Cimahi"
-        }
-      ],
-      opsiKelurahan: [
-        {
-          value: "Bandung"
-        },
-        {
-          value: "Cimahi"
-        }
-      ],
-      opsiRW: [
-        {
-          value: "001"
-        },
-        {
-          value: "002"
-        }
-      ],
-      opsiRT: [
-        {
-          value: "01"
-        },
-        {
-          value: "002"
-        }
-      ],
+      opsiPeran1: ["admin", "staffProv"],
+
       opsiPeran: [
         {
-          value: "Admin"
+          value: "admin"
         },
         {
-          value: "User"
+          value: "staffProv"
+        },
+        {
+          value: "staffKabkota"
+        },
+        {
+          value: "staffKec"
+        },
+        {
+          value: "staffKel"
+        },
+        {
+          value: "staffRW"
+        },
+        {
+          value: "user"
         }
       ],
 
@@ -492,24 +481,19 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           console.log(this.user.username);
-          // this.$store
-          //   .dispatch("addUser/tambah", {
-          //     username: this.user.username,
-          //     name: this.user.nama,
-          //     email: this.user.email,
-          //     password: this.user.password,
-          //     role_id: this.user.peran,
-          //     phone: this.user.telepon,
-          //     twitter: this.user.twitter,
-          //     facebook: this.user.facebook,
-          //     instagram: this.user.instagram,
-          //   })
-          //   .then(() => {
-          //     console.log("data berhasil ditambah");
-          //   })
-          //   .catch(() => {
-          //     console.log("data gagal");
-          //   });
+          this.$store
+            .dispatch("addUser/tambahUser", {
+              username: this.user.username,
+              email: this.user.email,
+              password: this.user.password,
+              role_id: this.user.peran
+            })
+            .then(() => {
+              console.log("data berhasil ditambah");
+            })
+            .catch(() => {
+              console.log("data gagal");
+            });
         } else {
           console.log("error submit!!");
           return false;
@@ -520,14 +504,14 @@ export default {
       this.$refs[formName].resetFields();
     },
     pilihKecamatan: function() {
-      this.$store.dispatch("addUser/pilihKecamatan", this.user.opsiKota.id);
+      this.$store.dispatch("addUser/pilihKecamatan", this.user.kota.id);
     },
     pilihKelurahan: function() {
       this.$store.dispatch("addUser/pilihKelurahan", this.user.kecamatan.id);
     }
   },
   computed: {
-    ...mapGetters(["USER", "AREAS", "KECAMATAN", "KELURAHAN"]),
+    ...mapGetters(["AREAS", "KECAMATAN", "KELURAHAN"]),
     pilihKota() {
       this.$store
         .dispatch("addUser/pilihKota")
