@@ -1,42 +1,92 @@
 <template>
-  <el-row>
-    <h1>hello</h1>
-    <el-col :span="8">
-      <div class="grid-content bg-purple"></div>
-    </el-col>
-    <el-col :span="8">
-      <div class="grid-content bg-purple-light"></div>
-    </el-col>
-    <el-col :span="8">
-      <div class="grid-content bg-purple"></div>
-    </el-col>
-  </el-row>
+  <div class="app-container">
+    <el-table v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%">
+      <el-table-column align="center" label="ID" width="80">
+        <template slot-scope="scope">
+          <span>{{ scope.row.id }}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column label="Author">
+        <template slot-scope="scope">
+          <span>{{ scope.row.name }}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column min-width="300px" label="Title">
+        <template slot-scope="{row}">
+          <router-link :to="'/example/edit/'+row.id" class="link-type">
+            <span>{{ row.title }}</span>
+          </router-link>
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center" label="Actions" width="120">
+        <template slot-scope="scope">
+          <router-link :to="'/example/edit/'+scope.row.id">
+            <el-button type="primary" size="small" icon="el-icon-edit">
+              Edit
+            </el-button>
+          </router-link>
+        </template>
+      </el-table-column>
+    </el-table>
+
+    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
+  </div>
 </template>
-<style lang="scss" scoped>
-.el-row {
-  margin-bottom: 20px;
-  &:last-child {
-    margin-bottom: 0;
+
+<script>
+import { fetchList } from '@/api/staff'
+import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
+
+export default {
+  name: 'ArticleList',
+  components: { Pagination },
+  filters: {
+    statusFilter(status) {
+      const statusMap = {
+        published: 'success',
+        draft: 'info',
+        deleted: 'danger'
+      }
+      return statusMap[status]
+    }
+  },
+  data() {
+    return {
+      list: null,
+      total: 0,
+      listLoading: true,
+      listQuery: {
+        page: 1,
+        limit: 20
+      }
+    }
+  },
+  created() {
+    this.getList()
+  },
+  methods: {
+    getList() {
+      this.listLoading = true
+      fetchList(this.listQuery).then(response => {
+        this.list = response.data.items
+        this.total = response.data._meta.totalCount
+        this.listLoading = false
+      })
+    }
   }
 }
-.el-col {
-  border-radius: 4px;
-}
-.bg-purple-dark {
-  background: #99a9bf;
-}
-.bg-purple {
-  background: #d3dce6;
-}
-.bg-purple-light {
-  background: #e5e9f2;
-}
-.grid-content {
-  border-radius: 4px;
-  min-height: 36px;
-}
-.row-bg {
-  padding: 10px 0;
-  background-color: #f9fafc;
-}
+</script>
+
+<style scoped>
+  .edit-input {
+    padding-right: 100px;
+  }
+  .cancel-btn {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+  }
 </style>
