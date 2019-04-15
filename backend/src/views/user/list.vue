@@ -7,17 +7,35 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="Author">
+      <el-table-column label="Name">
         <template slot-scope="scope">
           <span>{{ scope.row.name }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column min-width="300px" label="Title">
+      <el-table-column label="Kedudukan">
+        <template slot-scope="scope">
+          <span>{{ scope.row.address }}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column label="Telp">
+        <template slot-scope="scope">
+          <span>{{ scope.row.phone }}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column label="Role">
+        <template slot-scope="scope">
+          <span>{{ scope.row.role_label }}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column class-name="status-col" label="Status" width="110">
         <template slot-scope="{row}">
-          <router-link :to="'/example/edit/'+row.id" class="link-type">
-            <span>{{ row.title }}</span>
-          </router-link>
+          <el-tag :type="row.status | statusFilter">
+            {{ row.status }}
+          </el-tag>
         </template>
       </el-table-column>
 
@@ -46,9 +64,9 @@ export default {
   filters: {
     statusFilter(status) {
       const statusMap = {
-        published: 'success',
-        draft: 'info',
-        deleted: 'danger'
+        10: 'success',
+        1: 'info',
+        0: 'danger'
       }
       return statusMap[status]
     }
@@ -60,7 +78,7 @@ export default {
       listLoading: true,
       listQuery: {
         page: 1,
-        limit: 20
+        limit: 10
       }
     }
   },
