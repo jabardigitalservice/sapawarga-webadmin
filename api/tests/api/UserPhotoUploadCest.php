@@ -105,6 +105,8 @@ class UserPhotoUploadCest
 
     public function postMePhotoUploadSetProfileTest(ApiTester $I)
     {
+        $I->updateInDatabase('user', ['photo_url' => null], ['id' => 9]);
+
         $I->amUser();
 
         $I->sendGET('/v1/user/me');
