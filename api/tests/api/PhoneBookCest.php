@@ -85,6 +85,26 @@ class PhoneBookCest
         ]);
     }
 
+    public function getListCallCenterTest(ApiTester $I)
+    {
+        $I->amUser('user.bandung');
+
+        $I->sendGET('/v1/phone-books');
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $I->seeResponseContainsJson([
+            'success' => true,
+            'status' => 200,
+        ]);
+
+        $I->seeResponseContainsJson([
+            'kabkota_id' => null,
+            'kec_id'     => null,
+            'kel_id'     => null,
+        ]);
+    }
+
     public function getListFilterBandungTest(ApiTester $I)
     {
         $I->amUser('user.tasikmalaya');

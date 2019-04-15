@@ -20,7 +20,7 @@
         "id": 1,
         "name": "Test Category"
       },
-      "kabkota_id": 26,
+      "kabkota_id": null,
       "kec_id": null,
       "kel_id": null,
       "latitude": "-7.024593",
