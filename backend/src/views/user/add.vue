@@ -138,6 +138,7 @@
             <el-col :span="12"></el-col>
           </el-row>
           <p class="warn-content">Media Sosial</p>
+
           <el-form-item label="Twitter" prop="twitter">
             <el-input type="text" v-model="user.twitter"></el-input>
           </el-form-item>
@@ -153,6 +154,7 @@
           <el-form-item>
             <el-button type="primary" @click="submitForm('user')">Tambah Pengguna</el-button>
             <el-button @click="resetForm('user')">Batal</el-button>
+            <el-button @click="open">open</el-button>
           </el-form-item>
         </el-form>
       </el-col>
@@ -420,23 +422,50 @@ export default {
     };
   },
   methods: {
+    open() {
+      this.$alert("Pengguna berhasil ditambahkan", {
+        callback: action => {}
+      });
+    },
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          console.log(this.user.username);
           this.$store
             .dispatch("addUser/tambahUser", {
               username: this.user.username,
+              name: this.user.name,
               email: this.user.email,
               password: this.user.password,
+              phone: this.user.telepon,
+              address: this.user.alamat,
               role_id: this.user.peran,
               kabkota_id: this.user.kota.id,
               kec_id: this.user.kecamatan.id,
               kel_id: this.user.kelurahan.id,
-              rw: this.user.rw
+              rw: this.user.rw,
+              facebook: this.user.facebook,
+              twitter: this.user.twitter,
+              instagram: this.user.instagram
             })
             .then(() => {
-              console.log("data berhasil ditambah");
+              this.$alert("Pengguna berhasil ditambahkan", {
+                callback: action => {}
+              });
+
+              this.user.username = "";
+              this.user.name = "";
+              this.user.email = "";
+              this.user.password = "";
+              this.user.peran = "";
+              this.user.kota.id = "";
+              this.user.kecamatan.id = "";
+              this.user.kelurahan.id = "";
+              this.user.rw = "";
+              this.user.facebook = "";
+              this.user.twitter = "";
+              this.user.instagram = "";
+              this.user.telepon = "";
+              this.user.alamat = "";
             })
             .catch(() => {
               console.log("data gagal");
