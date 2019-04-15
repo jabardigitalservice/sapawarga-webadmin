@@ -51,10 +51,9 @@
                 v-for="item in opsiPeran"
                 :value="item.value"
                 :key="item.value"
-                :label="user.peran.value"
-              ></el-option>
+                :label="item.label"
+              >{{item.label}}</el-option>
             </el-select>
-            {{user.peran}}
           </el-form-item>
           <el-row>
             <el-col :span="12">
@@ -82,7 +81,7 @@
               <el-form-item
                 label="RW"
                 prop="rw"
-                v-if="(!(this.user.peran == 'admin') && !(this.user.peran == 'staffProv'))"
+                v-if="(!(this.user.peran == 'admin') && !(this.user.peran == 'staffProv') && !(this.user.peran == 'staffKabkota') && !(this.user.peran == 'staffKec') && !(this.user.peran == 'staffKel'))"
               >
                 <el-input type="number" v-model="user.rw" placeholder="Masukan RW"></el-input>
               </el-form-item>
@@ -93,7 +92,7 @@
               <el-form-item
                 label="Kecamatan"
                 prop="kecamatan"
-                v-if="(!(this.user.peran == 'admin') && !(this.user.peran == 'staffProv'))"
+                v-if="(!(this.user.peran == 'admin') && !(this.user.peran == 'staffProv') && !(this.user.peran == 'staffKabkota'))"
               >
                 <el-select
                   v-model="user.kecamatan"
@@ -113,7 +112,7 @@
               <el-form-item
                 label="RT"
                 prop="rt"
-                v-if="(!(this.user.peran == 'admin') && !(this.user.peran == 'staffProv'))"
+                v-if="(!(this.user.peran == 'admin') && !(this.user.peran == 'staffProv') && !(this.user.peran == 'staffKabkota') && !(this.user.peran == 'staffKec') && !(this.user.peran == 'staffKel'))"
               >
                 <el-input type="number" v-model="user.rt" placeholder="Masukan RT"></el-input>
               </el-form-item>
@@ -124,7 +123,7 @@
               <el-form-item
                 label="Kelurahan"
                 prop="kelurahan"
-                v-if="(!(this.user.peran == 'admin') && !(this.user.peran == 'staffProv'))"
+                v-if="(!(this.user.peran == 'admin') && !(this.user.peran == 'staffProv') && !(this.user.peran == 'staffKabkota') && !(this.user.peran == 'staffKec'))"
               >
                 <el-select v-model="user.kelurahan" placeholder="Pilih Kelurahan">
                   <el-option
@@ -140,7 +139,7 @@
           </el-row>
           <p class="warn-content">Media Sosial</p>
           <el-form-item label="Twitter" prop="twitter">
-            <el-input type="text" v-model="user.twitter" disabled="false"></el-input>
+            <el-input type="text" v-model="user.twitter"></el-input>
           </el-form-item>
           <el-form-item label="Facebook" prop="facebook">
             <el-input type="text" v-model="user.facebook"></el-input>
@@ -210,26 +209,30 @@ export default {
 
       opsiPeran: [
         {
+          label: "Admin",
           value: "admin"
         },
         {
+          label: "Admin Provinsi",
           value: "staffProv"
         },
         {
+          label: "Admin Kab/kota",
           value: "staffKabkota"
         },
         {
+          label: "Admin Kecamatan",
           value: "staffKec"
         },
         {
+          label: "Admin kelurahan",
           value: "staffKel"
         },
         {
+          label: "RW",
           value: "staffRW"
         },
-        {
-          value: "user"
-        }
+        { label: "Pengguna", value: "user" }
       ],
 
       // validation
@@ -341,37 +344,12 @@ export default {
             required: true,
             message: "Kota harus diisi",
             trigger: "blur"
-          },
-          {
-            max: 25,
-            message: "Kota/Kab maksimal 25 kota",
-            trigger: "blur"
-          },
-          {
-            pattern: /^[a-zA-Z\s]+$/,
-            message: "Karakter Kota/Kab tidak sesuai",
-            trigger: "blur"
           }
         ],
         kecamatan: [
           {
             required: true,
             message: "Kecamatan harus diisi",
-            trigger: "blur"
-          },
-          {
-            min: 4,
-            message: "Kecamatan minimal 4 karakter",
-            trigger: "blur"
-          },
-          {
-            max: 50,
-            message: "Kecamatan maksimal 50 karakter",
-            trigger: "blur"
-          },
-          {
-            pattern: /^[a-zA-Z\s]+$/,
-            message: "Karakter Kecamatan tidak sesuai",
             trigger: "blur"
           }
         ],
@@ -380,37 +358,12 @@ export default {
             required: true,
             message: "Kelurahan harus diisi",
             trigger: "blur"
-          },
-          {
-            min: 4,
-            message: "Kelurahan minimal 4 karakter",
-            trigger: "blur"
-          },
-          {
-            max: 50,
-            message: "Kelurahan maksimal 50 karakter",
-            trigger: "blur"
-          },
-          {
-            pattern: /^[a-zA-Z\s]+$/,
-            message: "Karakter Kelurahan tidak sesuai",
-            trigger: "blur"
           }
         ],
         rw: [
           {
             required: true,
             message: "RW harus diisi",
-            trigger: "blur"
-          },
-          {
-            min: 3,
-            message: "masukan 3 angka",
-            trigger: "blur"
-          },
-          {
-            min: 3,
-            message: "Masukan 3 angka",
             trigger: "blur"
           },
           {
@@ -423,16 +376,6 @@ export default {
           {
             required: true,
             message: "RT harus diisi",
-            trigger: "blur"
-          },
-          {
-            min: 3,
-            message: "masukan 3 angka",
-            trigger: "blur"
-          },
-          {
-            min: 3,
-            message: "Masukan 3 angka",
             trigger: "blur"
           },
           {
@@ -486,7 +429,11 @@ export default {
               username: this.user.username,
               email: this.user.email,
               password: this.user.password,
-              role_id: this.user.peran
+              role_id: this.user.peran,
+              kabkota_id: this.user.kota.id,
+              kec_id: this.user.kecamatan.id,
+              kel_id: this.user.kelurahan.id,
+              rw: this.user.rw
             })
             .then(() => {
               console.log("data berhasil ditambah");
