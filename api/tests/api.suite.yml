@@ -6,3 +6,7 @@ modules:
             url: http://localhost
             depends: PhpBrowser
             part: Json
+        - Db:
+            dsn: "mysql:host=%MYSQL_HOST%;dbname=%MYSQL_DATABASE%"
+            user: "%MYSQL_USER%"
+            password: "%MYSQL_PASSWORD%"

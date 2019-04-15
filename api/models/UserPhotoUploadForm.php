@@ -40,7 +40,7 @@ class UserPhotoUploadForm extends Model
             $bucket = \Yii::$app->fileStorage->getBucket('imageFiles');
             $bucket->saveFileContent($relativePath, $image->encode());
 
-            return $relativePath;
+            return $this->setUserProfilePhoto($user, $relativePath);
         }
 
         return false;
@@ -54,5 +54,18 @@ class UserPhotoUploadForm extends Model
     public function cropAndResizePhoto($filePath)
     {
         return Image::make($filePath)->fit(640, 640);
+    }
+
+    /**
+     * @param $user
+     * @param $relativePath
+     * @return string
+     */
+    protected function setUserProfilePhoto($user, $relativePath)
+    {
+        $user->photo_url = $relativePath;
+        $user->save(false);
+
+        return $relativePath;
     }
 }

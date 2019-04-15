@@ -102,9 +102,9 @@ $config = [
                         'GET me' => 'me',
                         'POST me' => 'me-update',
                         'OPTIONS me' => 'options',
-                        'GET photo' => 'photo',
-                        'POST photo' => 'photo-upload',
-                        'OPTIONS photo' => 'options',
+                        'GET me/photo' => 'me-photo',
+                        'POST me/photo' => 'me-photo-upload',
+                        'OPTIONS me/photo' => 'options',
                     ]
                 ],
                 [
