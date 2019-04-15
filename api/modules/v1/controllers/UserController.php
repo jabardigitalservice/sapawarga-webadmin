@@ -502,12 +502,7 @@ class UserController extends ActiveController
         }
     }
 
-    public function actionPhoto()
-    {
-        //
-    }
-
-    public function actionPhotoUpload()
+    public function actionMePhotoUpload()
     {
         $user         = User::findIdentity(\Yii::$app->user->getId());
 
