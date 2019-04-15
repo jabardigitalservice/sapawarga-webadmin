@@ -102,9 +102,9 @@ $config = [
                         'GET me' => 'me',
                         'POST me' => 'me-update',
                         'OPTIONS me' => 'options',
-                        'GET photo' => 'photo',
-                        'POST photo' => 'photo-upload',
-                        'OPTIONS photo' => 'options',
+                        'GET me/photo' => 'me-photo',
+                        'POST me/photo' => 'me-photo-upload',
+                        'OPTIONS me/photo' => 'options',
                     ]
                 ],
                 [
@@ -145,6 +145,14 @@ $config = [
                 [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => 'v1/phone-book',
+                    'tokens' => [
+                        '{id}' => '<id:\d+>',
+                    ],
+                    'extraPatterns' => []
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'v1/phone-books-category',
                     'tokens' => [
                         '{id}' => '<id:\d+>',
                     ],
