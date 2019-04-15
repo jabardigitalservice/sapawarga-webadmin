@@ -7,17 +7,21 @@ use yii\data\ActiveDataProvider;
 
 class UserSearch extends Model
 {
-    public $q;
-    public $page = 1;
-    public $per_page = 20;
-    public $in_roles = [];
+    public $search;
+    public $range_roles = [];
     public $not_in_status = [];
+
+    public $role_id;
+    public $kabkota_id;
+    public $kec_id;
+    public $kel_id;
+    public $rw;
 
     public function rules()
     {
         return [
-            [['page', 'per_page'], 'integer'],
-            [['q'], 'string', 'max' => 50],
+            [['search'], 'string', 'max' => 50],
+            [['role_id', 'kabkota_id', 'kec_id', 'kel_id', 'rw'], 'string'],
         ];
     }
 
@@ -28,57 +32,41 @@ class UserSearch extends Model
 
     public function getDataProvider()
     {
-        $queryParams = [];
         $query = User::find()
             ->where(['not in', 'user.status', $this->not_in_status])
-            ->andWhere(['in', 'role', $this->in_roles]);
+            ->andWhere(['between', 'user.role', $this->range_roles[0], $this->range_roles[1]]);
 
-        if ($this->q) {
-            $query->andWhere([
-                'or',
-                ['like', 'user.username', $this->q],
-                ['like', 'user.email', $this->q],
-                ['like', 'user.registration_ip', $this->q],
-                ['like', 'user.last_login_ip', $this->q],
-            ]);
-            $queryParams['q'] = $this->q;
+        // Filter by role
+        if ($this->role_id) {
+            $query->andWhere(['role' => User::ROLE_MAP[$this->role_id]]);
         }
 
-        $page = $this->page > 0 ? ($this->page - 1) : 0;
-        $pageSize = (int)$this->per_page;
+        // Filter by area id
+        if ($this->kabkota_id) {
+            $query->andWhere(['kabkota_id' => $this->kabkota_id]);
+        }
+        if ($this->kec_id) {
+            $query->andWhere(['kec_id' => $this->kec_id]);
+        }
+        if ($this->kel_id) {
+            $query->andWhere(['kel_id' => $this->kel_id]);
+        }
+        if ($this->rw) {
+            $query->andWhere(['rw' => $this->rw]);
+        }
+
+        if ($this->search) {
+            $query->andWhere([
+                'or',
+                ['like', 'user.name', $this->search],
+                ['like', 'user.phone', $this->search],
+            ]);
+        }
 
         $provider = new ActiveDataProvider([
             'query' => $query,
-            'pagination' => [
-                'forcePageParam' => true,
-                'page' => $page,
-                'pageParam' => 'page',
-                'defaultPageSize' => $pageSize,
-                'pageSizeLimit' => [10, 50, 100],
-                'pageSizeParam' => 'per_page',
-                'validatePage' => true,
-                'params' => $queryParams,
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'id' => SORT_DESC,
-                ]
-            ]
         ]);
 
-        $rows = $provider->getModels();
-        $pagination = array_intersect_key(
-            (array)$provider->pagination,
-            array_flip(
-                \Yii::$app->params['paginationParams']
-            )
-        );
-
-        $pagination['firstRowNo'] = $pagination['totalCount'] - ($page * $pageSize);
-
-        return [
-            'rows' => $rows,
-            'pagination' => $pagination,
-        ];
+        return $provider;
     }
 }

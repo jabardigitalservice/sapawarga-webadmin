@@ -1,6 +1,6 @@
 <?php
 
-namespace tests\models;
+namespace tests\unit\models;
 
 use app\models\PhoneBook;
 
@@ -53,13 +53,13 @@ class PhoneBookTest extends \Codeception\Test\Unit
         $this->assertFalse($model->validate());
 
         $this->assertTrue($model->hasErrors('name'));
-        $this->assertTrue($model->hasErrors('address'));
         $this->assertTrue($model->hasErrors('phone_numbers'));
-        $this->assertTrue($model->hasErrors('kabkota_id'));
         $this->assertTrue($model->hasErrors('seq'));
         $this->assertTrue($model->hasErrors('status'));
 
+        $this->assertFalse($model->hasErrors('address'));
         $this->assertFalse($model->hasErrors('description'));
+        $this->assertFalse($model->hasErrors('kabkota_id'));
         $this->assertFalse($model->hasErrors('kec_id'));
         $this->assertFalse($model->hasErrors('kel_id'));
         $this->assertFalse($model->hasErrors('latitude'));

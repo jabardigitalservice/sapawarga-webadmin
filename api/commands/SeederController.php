@@ -2,6 +2,7 @@
 
 namespace app\commands;
 
+use app\models\Area;
 use app\models\PhoneBook;
 use tebazil\yii2seeder\Seeder;
 use Yii;
@@ -10,6 +11,29 @@ use yii\db\JsonExpression;
 
 class SeederController extends Controller
 {
+    public function actionIndex()
+    {
+        echo 'Seeding Areas...' . PHP_EOL;
+        $this->actionArea();
+
+        echo 'Seeding Users...' . PHP_EOL;
+        $this->actionUser();
+
+        echo 'Seeding Phonebooks Categories...' . PHP_EOL;
+        $this->actionPhoneBookCategories();
+
+        echo 'Seeding Phonebooks...' . PHP_EOL;
+        $this->actionPhoneBook();
+    }
+
+    public function actionArea()
+    {
+        Yii::$app->db->createCommand('TRUNCATE areas')->execute();
+
+        $sql = file_get_contents(__DIR__ . '/../migrations/seeder/jawabarat_kabkota_20190320.sql');
+        Yii::$app->db->createCommand($sql)->execute();
+    }
+
     public function actionUser()
     {
         Yii::$app->db->createCommand('TRUNCATE auth_assignment')->execute();
@@ -32,7 +56,14 @@ class SeederController extends Controller
             'status',
             'role',
             'created_at',
-            'updated_at'
+            'updated_at',
+            'name',
+            'phone',
+            'address',
+            'rw',
+            'kel_id',
+            'kec_id',
+            'kabkota_id'
         ], [
             [
                 1,
@@ -51,7 +82,14 @@ class SeederController extends Controller
                 10,
                 99,
                 time(),
-                time()
+                time(),
+                'Administrator',
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
             ],
             [
                 2,
@@ -70,8 +108,172 @@ class SeederController extends Controller
                 10,
                 50,
                 time(),
-                time()
+                time(),
+                'Staff',
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
             ],
+            [
+                3,
+                'staffprov',
+                'E3sUYMd9eNe4uiGlq12Bof3LmQVZCdlb',
+                '2017-05-30 20:30:31',
+                '$2y$13$UF1u00zQepfWOyhRcjrvIefJ5f6PI5tRTxyOP9Zw6OFBLfo8H8tIu',
+                null,
+                'staffprov@jabarprov.go.id',
+                'staffprov@jabarprov.go.id',
+                time(),
+                '172.25.0.7',
+                time(),
+                '172.25.0.7',
+                null,
+                10,
+                90,
+                time(),
+                time(),
+                'Staff Provinsi Jawa Barat',
+                '080989999',
+                'Jl. Alamat Provinsi Jawa Barat',
+                null,
+                null,
+                null,
+                null
+            ],
+            [
+                4,
+                'staffkabkota',
+                'jL6imKYpV5M5UJAiMA-ioRPqdf8jVqRZ',
+                '2017-05-30 20:30:31',
+                '$2y$13$ccsrOaUhEabiYQrAtQMkyerNwDir.PvV/V0apzJ0nvz5mJio4KRUG',
+                null,
+                'staffkabkota@jabarprov.go.id',
+                'staffkabkota@jabarprov.go.id',
+                time(),
+                '172.25.0.7',
+                time(),
+                '172.25.0.7',
+                null,
+                10,
+                80,
+                time(),
+                time(),
+                'Staff Kota Bandung',
+                '080989999',
+                'Jl. Alamat Kota Bandung',
+                null,
+                null,
+                null,
+                '22'
+            ],
+            [
+                5,
+                'staffkec',
+                '0zQ5yPvvcT9UUZOSHTawAU-LtyhY9G-b',
+                '2017-05-30 20:30:31',
+                '$2y$13$PTAepuWNE9bM4IgBFhZdqelBX1FHkoNzOv4iv/6gBQ/.gsnxgOwSm',
+                null,
+                'staffkec@jabarprov.go.id',
+                'staffkec@jabarprov.go.id',
+                time(),
+                '172.25.0.7',
+                time(),
+                '172.25.0.7',
+                null,
+                10,
+                70,
+                time(),
+                time(),
+                'Staff Kecamatan Coblong',
+                '080989999',
+                'Jl. Kecamatan Coblong',
+                null,
+                null,
+                '431',
+                '22'
+            ],
+            [
+                6,
+                'staffkel',
+                'Z9Zbtp9e0RGMlAPcPEyYvfytKXJbXdnb',
+                '2017-05-30 20:30:31',
+                '$2y$13$KBcgAn9Mk6WM7AbJ/.aeFeigBEVZMyXn7JqjTAUMq6fiT/wOEKRZ2',
+                null,
+                'staffkel@jabarprov.go.id',
+                'staffkel@jabarprov.go.id',
+                time(),
+                '172.25.0.7',
+                time(),
+                '172.25.0.7',
+                null,
+                10,
+                60,
+                time(),
+                time(),
+                'Staff Kelurahan Dago',
+                '080989999',
+                'Jl. Kelurahan Dago',
+                null,
+                '6093',
+                '431',
+                '22'
+            ],
+            [
+                7,
+                'staffkel2',
+                'vUAwdIpFC1D1YMkUO2P9g-R3hk8DJhkr',
+                '2017-05-30 20:30:31',
+                '$2y$13$wEaZRyZ5D.CWQsisMB58Ku0qLvw20TKdpnCYPAwMOIm19qTPC.VF2',
+                null,
+                'staffkel2@jabarprov.go.id',
+                'staffkel2@jabarprov.go.id',
+                time(),
+                '172.25.0.7',
+                time(),
+                '172.25.0.7',
+                null,
+                10,
+                60,
+                time(),
+                time(),
+                'Staff Kelurahan Lebak Siliwangi',
+                '080989999',
+                'Jl. Kelurahan Lebak Siliwangi',
+                null,
+                '6094',
+                '431',
+                '22'
+            ],
+            [
+                8,
+                'rw01',
+                'vucpmr46v-NmsUevzJYNdb7x5VjWyvrR',
+                '2017-05-30 20:30:31',
+                '$2y$13$uN8pFkdO6PiybzA7giIY8eZrVBaD1vUJOCMdBBYKH2659U7yvXipu',
+                null,
+                'rw01@jabarprov.go.id',
+                'rw01@jabarprov.go.id',
+                time(),
+                '172.25.0.7',
+                time(),
+                '172.25.0.7',
+                null,
+                10,
+                50,
+                time(),
+                time(),
+                'RW 01 Kelurahan Dago',
+                '080989999',
+                'Jl. RW 01 Kelurahan Dago',
+                '1',
+                '6093',
+                '431',
+                '22'
+            ],
+
         ])->execute();
 
         Yii::$app->db->createCommand()->batchInsert('user', [
@@ -101,7 +303,7 @@ class SeederController extends Controller
             'kabkota_id',
         ], [
             [
-                3,
+                9,
                 'user',
                 'rNXSqIas_43RdpG0e5_7d1W06iK8pXJ8',
                 '2017-06-04 00:13:02',
@@ -127,7 +329,7 @@ class SeederController extends Controller
                 22,
             ],
             [
-                4,
+                10,
                 'user.bandung',
                 'rNXSqIas_43RdpG0e5_7d1W06iK8pXJ8',
                 '2017-06-04 00:13:02',
@@ -153,7 +355,7 @@ class SeederController extends Controller
                 22,
             ],
             [
-                5,
+                11,
                 'user.bekasi',
                 'rNXSqIas_43RdpG0e5_7d1W06iK8pXJ8',
                 '2017-06-04 00:13:02',
@@ -179,7 +381,7 @@ class SeederController extends Controller
                 23,
             ],
             [
-                6,
+                12,
                 'user.tasikmalaya',
                 'rNXSqIas_43RdpG0e5_7d1W06iK8pXJ8',
                 '2017-06-04 00:13:02',
@@ -214,15 +416,67 @@ class SeederController extends Controller
         $staff = $auth->getRole('staff');
         $auth->assign($staff, 2);
 
-        $user = $auth->getRole('user');
+        $staff = $auth->getRole('staffProv');
+        $auth->assign($staff, 3);
 
-        $auth->assign($user, 3);
-        $auth->assign($user, 4);
-        $auth->assign($user, 5);
-        $auth->assign($user, 6);
+        $staff = $auth->getRole('staffKabkota');
+        $auth->assign($staff, 4);
+
+        $staff = $auth->getRole('staffKec');
+        $auth->assign($staff, 5);
+
+        $staff = $auth->getRole('staffKel');
+        $auth->assign($staff, 6);
+        $auth->assign($staff, 7);
+
+        $staff = $auth->getRole('staffRW');
+        $auth->assign($staff, 8);
+
+        $user = $auth->getRole('user');
+        $auth->assign($user, 9);
+        $auth->assign($user, 10);
+        $auth->assign($user, 11);
+        $auth->assign($user, 12);
     }
 
-    public function actionPhoneBook()
+    public function actionPhoneBookCategories()
+    {
+        Yii::$app->db->createCommand('TRUNCATE phonebooks_categories')->execute();
+
+        Yii::$app->db->createCommand()->batchInsert('phonebooks_categories', [
+            'name',
+            'status',
+            'created_at',
+            'updated_at',
+        ], [
+            [
+                'Kesehatan',
+                10,
+                time(),
+                time(),
+            ],
+            [
+                'Ekonomi',
+                10,
+                time(),
+                time(),
+            ],
+            [
+                'Keamanan',
+                10,
+                time(),
+                time(),
+            ],
+            [
+                'Transportasi',
+                10,
+                time(),
+                time(),
+            ],
+        ])->execute();
+    }
+
+        public function actionPhoneBook()
     {
         Yii::$app->db->createCommand('TRUNCATE phonebooks')->execute();
 
@@ -252,11 +506,80 @@ class SeederController extends Controller
             'seq' => 1,
             'latitude' => $faker->latitude('-6.148534', '-7.484602'),
             'longitude' => $faker->longitude('106.022438', '108.680921'),
-            'cover_image_path' => 'https://dummyimage.com/wsxga',
+            'cover_image_path' => $faker->optional()->imageUrl(800, 480, 'city'),
+            'category_id' => $faker->randomElement([1, 2, 3, 4]),
             'created_at' => time(),
             'updated_at' => time(),
-        ])->rowQuantity(50);
+        ])->rowQuantity(500);
 
         $seeder->refill();
+
+        $this->setRandomKecamatan();
+
+        // Khusus Call Center
+        Yii::$app->db->createCommand()->batchInsert('phonebooks', [
+            'name',
+            'phone_numbers',
+            'status',
+            'seq',
+            'created_at',
+            'updated_at',
+        ], [
+            [
+                '112 Kepolisian',
+                new JsonExpression([
+                    [
+                        'type' => 'phone',
+                        'phone_number' => '022-112',
+                    ],
+                ]),
+                10,
+                1000,
+                time(),
+                time(),
+            ],
+            [
+                '119 Quick Response',
+                new JsonExpression([
+                    [
+                        'type' => 'phone',
+                        'phone_number' => '022-110',
+                    ],
+                ]),
+                10,
+                1000,
+                time(),
+                time(),
+            ],
+            [
+                '123 Pemadam Kebakaran',
+                new JsonExpression([
+                    [
+                        'type' => 'phone',
+                        'phone_number' => '022-123',
+                    ],
+                ]),
+                10,
+                1000,
+                time(),
+                time(),
+            ],
+        ])->execute();
+    }
+
+    protected function setRandomKecamatan()
+    {
+        echo "Set Phonebooks - Kecamatan..." . PHP_EOL;
+        
+        $phonebooks = PhoneBook::find()->all();
+
+        foreach ($phonebooks as $phonebook) {
+            $kecamatan = Area::find()->where(['parent_id' => $phonebook->kabkota_id])
+                ->orderBy(new \yii\db\Expression('rand()'))
+                ->one();
+
+            $phonebook->kec_id = $kecamatan->id;
+            $phonebook->save(false);
+        }
     }
 }

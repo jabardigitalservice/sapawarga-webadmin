@@ -469,10 +469,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
                 'username',
                 'match',
                 'pattern' => '/^[a-z0-9_.]{4,14}$/',
-                'message' => Yii::t(
-                    'app',
-                    'Your username can only contain alphanumeric characters, underscores and dashes.'
-                )
+                'message' => Yii::t('app', 'error.username.pattern')
             ],
             ['username', 'validateUsername'],
             ['email', 'trim'],
