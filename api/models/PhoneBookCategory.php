@@ -34,6 +34,9 @@ class PhoneBookCategory extends \yii\db\ActiveRecord
     {
         return [
             ['name', 'string', 'max' => 64],
+            [['name'], 'trim'],
+            [['name'], 'safe'],
+            [['name', 'status'], 'required'],
         ];
     }
 
