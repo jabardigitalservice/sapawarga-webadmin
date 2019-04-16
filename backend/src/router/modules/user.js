@@ -13,7 +13,8 @@ const userRouter = {
   },
   children: [
     {
-      path: 'user-list/kabkota',
+      name: 'user-list-kabkota',
+      path: 'user-kabkota',
       component: () => import('@/views/user/list'),
       props: {
         roleId: 'staffKabkota'
@@ -23,7 +24,8 @@ const userRouter = {
       }
     },
     {
-      path: 'user-list/kecamatan',
+      name: 'user-list-kecamatan',
+      path: 'user-kecamatan',
       component: () => import('@/views/user/list'),
       props: {
         roleId: 'staffKec'
@@ -33,7 +35,8 @@ const userRouter = {
       }
     },
     {
-      path: 'user-list/kelurahan',
+      name: 'user-list-kelurahan',
+      path: 'user-kelurahan',
       component: () => import('@/views/user/list'),
       props: {
         roleId: 'staffKel'
@@ -43,7 +46,8 @@ const userRouter = {
       }
     },
     {
-      path: 'user-list/rw',
+      name: 'user-list-rw',
+      path: 'user-rw',
       component: () => import('@/views/user/list'),
       props: {
         roleId: 'staffRW'
@@ -53,11 +57,20 @@ const userRouter = {
       }
     },
     {
-      path: 'user-add',
-      component: () => import('@/views/user/add'),
-      name: 'userAdd',
+      name: 'user-edit',
+      path: 'edit/:id',
+      component: () => import('@/views/user/add'), // @TODO ganti ke edit
+      hidden: true,
       meta: {
-        title: 'User Add'
+        title: 'Edit'
+      }
+    },
+    {
+      name: 'create',
+      path: 'create',
+      component: () => import('@/views/user/add'),
+      meta: {
+        title: 'Tambah Pengguna Baru'
       }
     }
   ]
