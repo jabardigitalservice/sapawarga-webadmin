@@ -239,4 +239,37 @@ class StaffCest
             ]
         ]);
     }
+
+    public function getItemInvalidParam(ApiTester $I)
+    {
+        $I->amStaff();
+
+        $I->sendGET($this->endpointStaff . '/xsA2#');
+        $I->canSeeResponseCodeIs(400); // Bad Request
+        $I->seeResponseIsJson();
+    }
+
+    public function getItemNotFound(ApiTester $I)
+    {
+        $I->amStaff();
+
+        $I->sendGET($this->endpointStaff . '/' . PHP_INT_MAX);
+        $I->canSeeResponseCodeIs(404); // Not Found
+        $I->seeResponseIsJson();
+    }
+
+    public function getItem(ApiTester $I)
+    {
+        $I->amStaff();
+
+        $I->sendGET($this->endpointStaff . '/1');
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $I->seeResponseContainsJson([
+            'success' => true,
+            'status'  => 200,
+            'data' => [],
+        ]);
+    }
 }
