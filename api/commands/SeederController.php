@@ -410,27 +410,45 @@ class SeederController extends Controller
 
         $auth = Yii::$app->authManager;
 
+        // Assign roles and permissions
         $admin = $auth->getRole('admin');
         $auth->assign($admin, 1);
 
+        $manageStaffs = $auth->getPermission('manageStaffs');
+        $manageUsers = $auth->getPermission('manageUsers');
+
         $staff = $auth->getRole('staff');
         $auth->assign($staff, 2);
+        $auth->assign($manageStaffs, 2);
+        $auth->assign($manageUsers, 2);
 
         $staff = $auth->getRole('staffProv');
         $auth->assign($staff, 3);
+        $auth->assign($manageStaffs, 3);
+        $auth->assign($manageUsers, 3);
 
         $staff = $auth->getRole('staffKabkota');
         $auth->assign($staff, 4);
+        $auth->assign($manageStaffs, 4);
+        $auth->assign($manageUsers, 4);
 
         $staff = $auth->getRole('staffKec');
         $auth->assign($staff, 5);
+        $auth->assign($manageStaffs, 5);
+        $auth->assign($manageUsers, 5);
 
         $staff = $auth->getRole('staffKel');
         $auth->assign($staff, 6);
+        $auth->assign($manageStaffs, 6);
+        $auth->assign($manageUsers, 6);
+
         $auth->assign($staff, 7);
+        $auth->assign($manageStaffs, 7);
+        $auth->assign($manageUsers, 7);
 
         $staff = $auth->getRole('staffRW');
         $auth->assign($staff, 8);
+        $auth->assign($manageUsers, 8);
 
         $user = $auth->getRole('user');
         $auth->assign($user, 9);
@@ -570,7 +588,7 @@ class SeederController extends Controller
     protected function setRandomKecamatan()
     {
         echo "Set Phonebooks - Kecamatan..." . PHP_EOL;
-        
+
         $phonebooks = PhoneBook::find()->all();
 
         foreach ($phonebooks as $phonebook) {
