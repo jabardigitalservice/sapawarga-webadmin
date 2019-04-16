@@ -26,11 +26,27 @@
           class="demo-ruleForm"
           :rules="rules"
         >
+          <!-- upload photo profile -->
+          <el-upload
+            action="https://jsonplaceholder.typicode.com/posts/"
+            list-type="picture-card"
+            :on-preview="handlePictureCardPreview"
+            :on-remove="handleRemove"
+            v-on:change="handleFileUpload()"
+            ref="photo"
+          >
+            <i class="el-icon-plus"></i>
+          </el-upload>
+          <el-dialog :visible.sync="dialogVisible">
+            <img width="100%" :src="dialogImageUrl" alt>
+          </el-dialog>
+          <!-- form -->
+
           <el-form-item label="Nama Pengguna" prop="username">
             <el-input type="text" v-model="user.username"></el-input>
           </el-form-item>
-          <el-form-item label="Nama" prop="nama">
-            <el-input type="text" v-model="user.nama"></el-input>
+          <el-form-item label="Nama" prop="name">
+            <el-input type="text" v-model="user.name"></el-input>
           </el-form-item>
 
           <el-form-item label="Email" prop="email">
@@ -49,13 +65,13 @@
           </el-row>
 
           <el-form-item label="Telepon" prop="telepon">
-            <el-input type="number" v-model="user.telepon"></el-input>
+            <el-input type="number" v-model="user.phone"></el-input>
           </el-form-item>
           <el-form-item label="Alamat" prop="alamat">
-            <el-input type="text" v-model="user.alamat"></el-input>
+            <el-input type="text" v-model="user.address"></el-input>
           </el-form-item>
-          <el-form-item label="Peran" prop="peran">
-            <el-select v-model="user.peran" placeholder="Pilih Peran">
+          <el-form-item label="role" prop="role">
+            <el-select v-model="user.role" placeholder="Pilih Peran">
               <el-option
                 v-for="item in opsiPeran"
                 :value="item.value"
@@ -68,12 +84,12 @@
             <el-col :span="12">
               <el-form-item
                 label="Kab/Kota"
-                prop="kota"
-                v-if="(!(this.user.peran == 'admin') && !(this.user.peran == 'staffProv'))"
+                prop="kabkota"
+                v-if="(!(this.user.role == 'admin') && !(this.user.role == 'staffProv'))"
               >
                 <el-select
                   v-bind="pilihKota"
-                  v-model="user.kota"
+                  v-model="user.kabkota"
                   placeholder="Pilih Kab/Kota"
                   @change="pilihKecamatan"
                 >
@@ -81,7 +97,7 @@
                     v-for="item in AREAS"
                     :key="item.id"
                     :value="item"
-                    :label="user.kota.name"
+                    :label="user.kabkota.name"
                   >{{item.name}}</el-option>
                 </el-select>
               </el-form-item>
@@ -90,7 +106,7 @@
               <el-form-item
                 label="RW"
                 prop="rw"
-                v-if="(!(this.user.peran == 'admin') && !(this.user.peran == 'staffProv') && !(this.user.peran == 'staffKabkota') && !(this.user.peran == 'staffKec') && !(this.user.peran == 'staffKel'))"
+                v-if="(!(this.user.role == 'admin') && !(this.user.role == 'staffProv') && !(this.user.role == 'staffKabkota') && !(this.user.role == 'staffKec') && !(this.user.role == 'staffKel'))"
               >
                 <el-input type="number" v-model="user.rw" placeholder="Masukan RW"></el-input>
               </el-form-item>
@@ -101,7 +117,7 @@
               <el-form-item
                 label="Kecamatan"
                 prop="kecamatan"
-                v-if="(!(this.user.peran == 'admin') && !(this.user.peran == 'staffProv') && !(this.user.peran == 'staffKabkota'))"
+                v-if="(!(this.user.role == 'admin') && !(this.user.role == 'staffProv') && !(this.user.role == 'staffKabkota'))"
               >
                 <el-select
                   v-model="user.kecamatan"
@@ -121,7 +137,7 @@
               <el-form-item
                 label="RT"
                 prop="rt"
-                v-if="(!(this.user.peran == 'admin') && !(this.user.peran == 'staffProv') && !(this.user.peran == 'staffKabkota') && !(this.user.peran == 'staffKec') && !(this.user.peran == 'staffKel'))"
+                v-if="(!(this.user.role == 'admin') && !(this.user.role == 'staffProv') && !(this.user.role == 'staffKabkota') && !(this.user.role == 'staffKec') && !(this.user.role == 'staffKel'))"
               >
                 <el-input type="number" v-model="user.rt" placeholder="Masukan RT"></el-input>
               </el-form-item>
@@ -132,7 +148,7 @@
               <el-form-item
                 label="Kelurahan"
                 prop="kelurahan"
-                v-if="(!(this.user.peran == 'admin') && !(this.user.peran == 'staffProv') && !(this.user.peran == 'staffKabkota') && !(this.user.peran == 'staffKec'))"
+                v-if="(!(this.user.role == 'admin') && !(this.user.role == 'staffProv') && !(this.user.role == 'staffKabkota') && !(this.user.role == 'staffKec'))"
               >
                 <el-select v-model="user.kelurahan" placeholder="Pilih Kelurahan">
                   <el-option
@@ -178,12 +194,12 @@ export default {
     return {
       user: {
         username: "",
-        nama: "",
+        name: "",
         email: "",
         password: "",
-        telepon: "",
-        alamat: "",
-        kota: [
+        phone: "",
+        address: "",
+        kabkota: [
           {
             id: "",
             parent_id: "",
@@ -209,7 +225,7 @@ export default {
         ],
         rw: "",
         rt: "",
-        peran: [],
+        role: [],
         twitter: "",
         facebook: "",
         instagram: "",
@@ -244,6 +260,8 @@ export default {
         },
         { label: "Pengguna", value: "user" }
       ],
+      dialogImageUrl: "",
+      dialogVisible: false,
 
       // validation
       rules: {
@@ -269,7 +287,7 @@ export default {
             trigger: "blur"
           }
         ],
-        nama: [
+        name: [
           {
             required: true,
             message: "Nama harus diisi",
@@ -349,7 +367,7 @@ export default {
             trigger: "blur"
           }
         ],
-        kota: [
+        kabkota: [
           {
             required: true,
             message: "Kota harus diisi",
@@ -394,7 +412,7 @@ export default {
             trigger: "blur"
           }
         ],
-        peran: [
+        role: [
           {
             required: true,
             message: "Peran harus diisi",
@@ -439,10 +457,10 @@ export default {
               name: this.user.name,
               email: this.user.email,
               password: this.user.password,
-              phone: this.user.telepon,
-              address: this.user.alamat,
-              role_id: this.user.peran,
-              kabkota_id: this.user.kota.id,
+              phone: this.user.phone,
+              address: this.user.address,
+              role_id: this.user.role,
+              kabkota_id: this.user.kabkota.id,
               kec_id: this.user.kecamatan.id,
               kel_id: this.user.kelurahan.id,
               rw: this.user.rw,
@@ -459,20 +477,18 @@ export default {
               this.user.name = "";
               this.user.email = "";
               this.user.password = "";
-              this.user.peran = "";
-              this.user.kota.id = "";
+              this.user.role = "";
+              this.user.kabkota.id = "";
               this.user.kecamatan.id = "";
               this.user.kelurahan.id = "";
               this.user.rw = "";
               this.user.facebook = "";
               this.user.twitter = "";
               this.user.instagram = "";
-              this.user.telepon = "";
-              this.user.alamat = "";
+              this.user.phone = "";
+              this.user.address = "";
             })
-            .catch(() => {
-              console.log("data gagal");
-            });
+            .catch(() => {});
         } else {
           console.log("error submit!!");
           return false;
@@ -483,7 +499,7 @@ export default {
       this.$refs[formName].resetFields();
     },
     pilihKecamatan: function() {
-      this.$store.dispatch("addUser/pilihKecamatan", this.user.kota.id);
+      this.$store.dispatch("addUser/pilihKecamatan", this.user.kabkota.id);
     },
     pilihKelurahan: function() {
       this.$store.dispatch("addUser/pilihKelurahan", this.user.kecamatan.id);
@@ -499,9 +515,16 @@ export default {
       }
       return pass;
     },
-
     generate() {
       this.user.password = this.randomPassword(8);
+    },
+    // upload photo
+    handleRemove(file, fileList) {
+      console.log(file, fileList);
+    },
+    handlePictureCardPreview(file) {
+      this.dialogImageUrl = file.url;
+      this.dialogVisible = true;
     }
   },
   computed: {
