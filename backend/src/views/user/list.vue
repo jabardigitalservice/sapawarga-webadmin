@@ -59,6 +59,7 @@ import { fetchList } from '@/api/staff'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 
 export default {
+
   name: 'ArticleList',
   components: { Pagination },
   filters: {
@@ -71,12 +72,19 @@ export default {
       return statusMap[status]
     }
   },
+  props: {
+    roleId: {
+      type: String,
+      default: null
+    }
+  },
   data() {
     return {
       list: null,
       total: 0,
       listLoading: true,
       listQuery: {
+        role_id: this.role_id,
         page: 1,
         limit: 10
       }
