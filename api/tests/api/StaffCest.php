@@ -181,7 +181,7 @@ class StaffCest
             'success' => true,
             'status'  => 200,
             'data' => [
-                "items" => [],
+                'items' => [],
             ]
         ]);
     }
@@ -199,7 +199,7 @@ class StaffCest
             'success' => true,
             'status'  => 200,
             'data' => [
-                "items" => [],
+                'items' => [],
             ]
         ]);
     }
@@ -217,7 +217,7 @@ class StaffCest
             'success' => true,
             'status'  => 200,
             'data' => [
-                "items" => [],
+                'items' => [],
             ]
         ]);
     }
@@ -235,7 +235,7 @@ class StaffCest
             'success' => true,
             'status'  => 200,
             'data' => [
-                "items" => [],
+                'items' => [],
             ]
         ]);
     }
@@ -263,6 +263,48 @@ class StaffCest
         $I->amStaff();
 
         $I->sendGET($this->endpointStaff . '/1');
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $I->seeResponseContainsJson([
+            'success' => true,
+            'status'  => 200,
+            'data' => [],
+        ]);
+    }
+
+    public function staffUpdateProfileInvalidFields(ApiTester $I)
+    {
+        $I->amStaff();
+
+        $I->sendPUT($this->endpointStaff . '/1', [
+            'username' => '@D3',
+            'email' => 'invalid email@example_.com',
+            'status' => 1000,
+            'role_id' => 'invalidRole'
+        ]);
+        $I->canSeeResponseCodeIs(422);
+        $I->seeResponseIsJson();
+
+        $I->seeResponseContainsJson([
+            'success' => false,
+            'status'  => 422,
+            'data' => [
+                'username' => [],
+                'email' => [],
+                'status' => [],
+                'role_id' => []
+            ],
+        ]);
+    }
+
+    public function staffUpdateProfile(ApiTester $I)
+    {
+        $I->amStaff();
+
+        $I->sendPUT($this->endpointStaff . '/1', [
+            'username' => 'admin.edited',
+        ]);
         $I->canSeeResponseCodeIs(200);
         $I->seeResponseIsJson();
 
