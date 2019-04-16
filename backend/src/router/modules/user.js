@@ -8,13 +8,16 @@ const userRouter = {
   redirect: 'noredirect',
   name: 'User',
   meta: {
-    title: 'User Managemennt',
+    title: 'User Management',
     icon: 'user'
   },
   children: [
     {
       path: 'user-list/kabkota',
       component: () => import('@/views/user/list'),
+      props: {
+        role: 'staffKabkota'
+      },
       meta: {
         title: 'Kabupaten / Kota'
       }
@@ -22,6 +25,9 @@ const userRouter = {
     {
       path: 'user-list/kecamatan',
       component: () => import('@/views/user/list'),
+      props: {
+        role: 'staffKec'
+      },
       meta: {
         title: 'Kecamatan'
       }
@@ -29,6 +35,9 @@ const userRouter = {
     {
       path: 'user-list/kelurahan',
       component: () => import('@/views/user/list'),
+      props: {
+        role: 'staffKel'
+      },
       meta: {
         title: 'Kelurahan'
       }
@@ -36,6 +45,9 @@ const userRouter = {
     {
       path: 'user-list/rw',
       component: () => import('@/views/user/list'),
+      props: {
+        role: 'staffRW'
+      },
       meta: {
         title: 'User Tingkat RW'
       }
