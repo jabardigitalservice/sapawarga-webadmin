@@ -6,6 +6,9 @@ Vue.use(Router)
 /* Layout */
 import Layout from '@/layout'
 
+/* Router Modules */
+import userRouter from './modules/user'
+
 /** note: sub-menu only appear when children.length>=1
  *  detail see  https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
  **/
@@ -81,35 +84,6 @@ export const constantRoutes = [
         }
       }
     ]
-  },
-
-  {
-    path: '/user',
-    component: Layout,
-    // redirect: '/user/user-list',
-    name: 'user',
-    meta: {
-      title: 'User',
-      icon: 'user'
-    },
-    children: [
-      {
-        path: 'user-list',
-        component: () => import('@/views/user/list'),
-        name: 'userList',
-        meta: {
-          title: 'List User'
-        }
-      },
-      {
-        path: 'user-add',
-        component: () => import('@/views/user/add'),
-        name: 'userAdd',
-        meta: {
-          title: 'User Add'
-        }
-      }
-    ]
   }
 ]
 
@@ -118,6 +92,9 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
+
+  userRouter,
+
   {
     path: '/permission',
     component: Layout,
