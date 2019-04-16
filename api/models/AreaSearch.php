@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use Illuminate\Support\Arr;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -46,6 +47,9 @@ class AreaSearch extends Area
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                'pageSize' => Arr::get($params, 'limit'),
+            ],
         ]);
 
         if (isset($params['all']) && $params['all'] == true) {

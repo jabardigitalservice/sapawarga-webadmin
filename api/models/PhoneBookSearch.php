@@ -101,6 +101,9 @@ class PhoneBookSearch extends PhoneBook
         return new ActiveDataProvider([
             'query' => $query,
             'sort'=> ['defaultOrder' => ['seq' => SORT_DESC]],
+            'pagination' => [
+                'pageSize' => Arr::get($params, 'limit'),
+            ],
         ]);
     }
 
