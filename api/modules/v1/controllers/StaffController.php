@@ -273,10 +273,9 @@ class StaffController extends ActiveController
             ]
         )->andWhere(
             [
-                'between',
-                'role',
-                0,
-                $maxRoleRange
+                'or',
+                ['between', 'role', 0, $maxRoleRange],
+                $id . '=' . (string) $currentUser->id
             ]
         )->one();
         if ($staff) {
