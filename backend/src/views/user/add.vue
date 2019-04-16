@@ -186,32 +186,11 @@ export default {
         name: "",
         email: "",
         password: "",
-        phone: " ",
+        phone: "",
         address: "",
-        kabkota: [
-          {
-            id: "",
-            parent_id: "",
-            depth: "",
-            name: ""
-          }
-        ],
-        kecamatan: [
-          {
-            id: "",
-            parent_id: "",
-            depth: "",
-            name: ""
-          }
-        ],
-        kelurahan: [
-          {
-            id: "",
-            parent_id: "",
-            depth: "",
-            name: ""
-          }
-        ],
+        kabkota: [],
+        kecamatan: [],
+        kelurahan: [],
         rw: "",
         rt: "",
         role: [],
@@ -220,8 +199,6 @@ export default {
         instagram: "",
         photo: ""
       },
-      opsiPeran1: ["admin", "staffProv"],
-
       opsiPeran: [
         {
           label: "Admin",
@@ -249,12 +226,9 @@ export default {
         },
         { label: "Pengguna", value: "user" }
       ],
-      dialogImageUrl: "",
-      dialogVisible: false,
 
       // validation
       rules: {
-        photo: [],
         username: [
           {
             required: true,
@@ -468,9 +442,10 @@ export default {
               this.user.email = "";
               this.user.password = "";
               this.user.role = "";
-              this.user.kabkota.id = "";
-              this.user.kecamatan.id = "";
-              this.user.kelurahan.id = "";
+              this.user.kabkota = "";
+              this.user.kecamatan = "";
+              this.user.kelurahan = "";
+              this.user.rt = "";
               this.user.rw = "";
               this.user.facebook = "";
               this.user.twitter = "";
@@ -480,7 +455,6 @@ export default {
             })
             .catch(() => {});
         } else {
-          console.log("error submit!!");
           return false;
         }
       });
@@ -508,17 +482,9 @@ export default {
     generate() {
       this.user.password = this.randomPassword(8);
     },
-    // upload photo
-    handleRemove(file, fileList) {
-      console.log(file, fileList);
-    },
-    handlePictureCardPreview(file) {
-      this.dialogImageUrl = file.url;
-      this.dialogVisible = true;
-    },
+    // Upload image
     onFileSelected(event) {
       this.photo = event.target.files[0];
-      console.log(this.photo);
     }
   },
   computed: {
@@ -539,9 +505,7 @@ export default {
 .grid-content:first-child {
   margin-bottom: 20px;
 }
-.upload-demo {
-  // padding: 20px;
-}
+
 p {
   color: #42b983;
   font-weight: 600;
