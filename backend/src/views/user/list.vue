@@ -7,12 +7,15 @@
       <el-col :span="24">
 
         <el-row style="margin: 10px 0px">
-          <el-col :span="24">
+          <el-col :span="12">
             <router-link :to="{ path: '/user/create', query: { role_id: roleId }}">
               <el-button type="primary" size="small" icon="el-icon-plus">
                 Tambah Pengguna Baru
               </el-button>
             </router-link>
+          </el-col>
+          <el-col :span="12">
+            <input-filter-area />
           </el-col>
         </el-row>
 
@@ -62,10 +65,11 @@
 <script>
 import { fetchList } from '@/api/staff'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
+import InputFilterArea from '@/components/InputFilterArea'
 
 export default {
 
-  components: { Pagination },
+  components: { Pagination, InputFilterArea },
   filters: {
     statusFilter(status) {
       const statusMap = {
