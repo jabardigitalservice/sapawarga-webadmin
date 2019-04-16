@@ -16,7 +16,7 @@ const userRouter = {
       path: 'user-list/kabkota',
       component: () => import('@/views/user/list'),
       props: {
-        role_id: 'staffKabkota'
+        roleId: 'staffKabkota'
       },
       meta: {
         title: 'Kabupaten / Kota'
@@ -26,7 +26,7 @@ const userRouter = {
       path: 'user-list/kecamatan',
       component: () => import('@/views/user/list'),
       props: {
-        role_id: 'staffKec'
+        roleId: 'staffKec'
       },
       meta: {
         title: 'Kecamatan'
@@ -36,7 +36,7 @@ const userRouter = {
       path: 'user-list/kelurahan',
       component: () => import('@/views/user/list'),
       props: {
-        role_id: 'staffKel'
+        roleId: 'staffKel'
       },
       meta: {
         title: 'Kelurahan'
@@ -46,7 +46,7 @@ const userRouter = {
       path: 'user-list/rw',
       component: () => import('@/views/user/list'),
       props: {
-        role_id: 'staffRW'
+        roleId: 'staffRW'
       },
       meta: {
         title: 'User Tingkat RW'

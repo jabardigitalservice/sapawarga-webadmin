@@ -84,7 +84,7 @@ export default {
       total: 0,
       listLoading: true,
       listQuery: {
-        role_id: this.role_id,
+        role_id: this.roleId,
         page: 1,
         limit: 10
       }
