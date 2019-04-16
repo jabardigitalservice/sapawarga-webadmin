@@ -41,7 +41,9 @@
             <img width="100%" :src="dialogImageUrl" alt>
           </el-dialog>
           <!-- form -->
-
+          <el-form-item label="Photo" prop="username">
+            <input type="file" @change="onFileSelected">
+          </el-form-item>
           <el-form-item label="Nama Pengguna" prop="username">
             <el-input type="text" v-model="user.username"></el-input>
           </el-form-item>
@@ -525,6 +527,10 @@ export default {
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
+    },
+    onFileSelected(event) {
+      this.photo = event.target.files[0];
+      console.log(this.photo);
     }
   },
   computed: {
