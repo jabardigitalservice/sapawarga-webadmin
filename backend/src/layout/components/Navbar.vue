@@ -7,27 +7,19 @@
       @toggleClick="toggleSideBar"
     />
 
-    <breadcrumb id="breadcrumb-container" class="breadcrumb-container"/>
+    <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
 
     <div class="right-menu">
       <template v-if="device!=='mobile'">
-        <search id="header-search" class="right-menu-item"/>
 
-        <error-log class="errLog-container right-menu-item hover-effect"/>
+        <error-log class="errLog-container right-menu-item hover-effect" />
 
-        <screenfull id="screenfull" class="right-menu-item hover-effect"/>
-
-        <el-tooltip :content="$t('navbar.size')" effect="dark" placement="bottom">
-          <size-select id="size-select" class="right-menu-item hover-effect"/>
-        </el-tooltip>
-
-        <lang-select class="right-menu-item hover-effect"/>
       </template>
 
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
           <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
-          <i class="el-icon-caret-bottom"/>
+          <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown">
           <router-link to="/">
@@ -46,38 +38,30 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import Breadcrumb from "@/components/Breadcrumb";
-import Hamburger from "@/components/Hamburger";
-import ErrorLog from "@/components/ErrorLog";
-import Screenfull from "@/components/Screenfull";
-import SizeSelect from "@/components/SizeSelect";
-import LangSelect from "@/components/LangSelect";
-import Search from "@/components/HeaderSearch";
+import { mapGetters } from 'vuex'
+import Breadcrumb from '@/components/Breadcrumb'
+import Hamburger from '@/components/Hamburger'
+import ErrorLog from '@/components/ErrorLog'
 
 export default {
   components: {
     Breadcrumb,
     Hamburger,
-    ErrorLog,
-    Screenfull,
-    SizeSelect,
-    LangSelect,
-    Search
+    ErrorLog
   },
   computed: {
-    ...mapGetters(["sidebar", "name", "avatar", "device"])
+    ...mapGetters(['sidebar', 'name', 'avatar', 'device'])
   },
   methods: {
     toggleSideBar() {
-      this.$store.dispatch("app/toggleSideBar");
+      this.$store.dispatch('app/toggleSideBar')
     },
     async logout() {
-      await this.$store.dispatch("user/logout");
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`);
+      await this.$store.dispatch('user/logout')
+      this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
