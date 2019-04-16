@@ -494,7 +494,7 @@ class SeederController extends Controller
         ])->execute();
     }
 
-        public function actionPhoneBook()
+    public function actionPhoneBook()
     {
         Yii::$app->db->createCommand('TRUNCATE phonebooks')->execute();
 
@@ -587,7 +587,7 @@ class SeederController extends Controller
 
     protected function setRandomKecamatan()
     {
-        echo "Set Phonebooks - Kecamatan..." . PHP_EOL;
+        echo 'Set Phonebooks - Kecamatan...' . PHP_EOL;
 
         $phonebooks = PhoneBook::find()->all();
 
