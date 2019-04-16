@@ -4,15 +4,13 @@
     <p class="warn-content">Profile Pengguna</p>
     <el-row :gutter="10">
       <!-- Left colomn -->
-      <el-col :sm="24" :lg="8" :xl="8" class="grid-content">
-        <el-upload class="upload-demo" drag multiple v-model="user.photo" action>
-          <i class="el-icon-upload"></i>
-          <div class="el-upload__text">
-            Unggah foto disini
-            <em>Klik untuk mengunggah</em>
-          </div>
-          <!-- <div class="el-upload__tip" slot="tip">jpg/png files with a size less than 500kb</div> -->
-        </el-upload>
+      <el-col :sm="24" :lg="6" :xl="6" class="grid-content">
+        <el-form :model="user" ref="user" :rules="rules">
+          <el-form-item label="Photo" prop="photo">
+            <input type="file" @change="onFileSelected">
+            <el-button type="primary" size="small" style="margin-left:50px">Unggah</el-button>
+          </el-form-item>
+        </el-form>
       </el-col>
 
       <!-- Center colomn -->
@@ -26,24 +24,8 @@
           class="demo-ruleForm"
           :rules="rules"
         >
-          <!-- upload photo profile -->
-          <el-upload
-            action="https://jsonplaceholder.typicode.com/posts/"
-            list-type="picture-card"
-            :on-preview="handlePictureCardPreview"
-            :on-remove="handleRemove"
-            v-on:change="handleFileUpload()"
-            ref="photo"
-          >
-            <i class="el-icon-plus"></i>
-          </el-upload>
-          <el-dialog :visible.sync="dialogVisible">
-            <img width="100%" :src="dialogImageUrl" alt>
-          </el-dialog>
           <!-- form -->
-          <el-form-item label="Photo" prop="username">
-            <input type="file" @change="onFileSelected">
-          </el-form-item>
+
           <el-form-item label="Nama Pengguna" prop="username">
             <el-input type="text" v-model="user.username"></el-input>
           </el-form-item>
@@ -66,10 +48,10 @@
             </el-col>
           </el-row>
 
-          <el-form-item label="Telepon" prop="telepon">
-            <el-input type="number" v-model="user.phone"></el-input>
+          <el-form-item label="Telepon" prop="phone">
+            <el-input type="number" v-model="user.phone" placeholder="contoh: 081254332233"></el-input>
           </el-form-item>
-          <el-form-item label="Alamat" prop="alamat">
+          <el-form-item label="Alamat" prop="address">
             <el-input type="text" v-model="user.address"></el-input>
           </el-form-item>
           <el-form-item label="role" prop="role">
@@ -167,16 +149,21 @@
           <p class="warn-content">Media Sosial</p>
 
           <el-form-item label="Twitter" prop="twitter">
-            <el-input type="text" v-model="user.twitter"></el-input>
+            <el-input type="text" v-model="user.twitter" placeholder="Contoh: @jabardigitalservice"></el-input>
           </el-form-item>
           <el-form-item label="Facebook" prop="facebook">
-            <el-input type="text" v-model="user.facebook"></el-input>
+            <el-input
+              type="text"
+              v-model="user.facebook"
+              placeholder="Contoh: https://www.facebook.com/jabardigitalservice/"
+            ></el-input>
           </el-form-item>
           <el-form-item label="Instagram" prop="instagram">
-            <el-input type="text" v-model="user.instagram"></el-input>
-          </el-form-item>
-          <el-form-item label="Photo">
-            <el-input type="text" v-model="user.photo"></el-input>
+            <el-input
+              type="text"
+              v-model="user.instagram"
+              placeholder="Contoh: @jabardigitalservice"
+            ></el-input>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="submitForm('user')">Tambah Pengguna</el-button>
@@ -199,7 +186,7 @@ export default {
         name: "",
         email: "",
         password: "",
-        phone: "",
+        phone: " ",
         address: "",
         kabkota: [
           {
@@ -267,6 +254,7 @@ export default {
 
       // validation
       rules: {
+        photo: [],
         username: [
           {
             required: true,
@@ -340,7 +328,7 @@ export default {
             trigger: "blur"
           }
         ],
-        telepon: [
+        phone: [
           {
             required: true,
             message: "Nomor telepon harus diisi",
@@ -357,7 +345,7 @@ export default {
             trigger: "blur"
           }
         ],
-        alamat: [
+        address: [
           {
             required: true,
             message: "Alamat harus diisi",
@@ -426,7 +414,7 @@ export default {
             required: false
           },
           {
-            pattern: /^[a-z0-9._]+$/,
+            pattern: /^[a-z0-9.@_]+$/,
             message: "Karakter tidak sesuai",
             trigger: "blur"
           }
@@ -441,7 +429,7 @@ export default {
             required: false
           },
           {
-            pattern: /^[a-z0-9._]+$/,
+            pattern: /^[a-z0-9.@_]+$/,
             message: "Karakter tidak sesuai",
             trigger: "blur"
           }
