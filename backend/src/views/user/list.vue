@@ -1,11 +1,10 @@
 <template>
   <div class="app-container">
-    <el-row :gutter="20">
-      <el-col :span="6">
-        Components Statistik Pengguna
-      </el-col>
 
-      <el-col :span="18">
+    <!-- STATISTIK TAMPILKAN DI ATAS COY -->
+
+    <el-row :gutter="20">
+      <el-col :span="24">
 
         <el-row style="margin: 10px 0px">
           <el-col :span="24">
@@ -18,25 +17,21 @@
         </el-row>
 
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%">
-          <el-table-column align="center" label="ID" width="80">
-            <template slot-scope="scope">
-              <span>{{ scope.row.id }}</span>
-            </template>
-          </el-table-column>
+          <el-table-column type="index" width="50" align="center" />
 
-          <el-table-column label="Name">
+          <el-table-column sortable label="Name">
             <template slot-scope="scope">
               <span>{{ scope.row.name }}</span>
             </template>
           </el-table-column>
 
-          <el-table-column label="Kedudukan">
+          <el-table-column sortable label="Kedudukan">
             <template slot-scope="scope">
               <span>{{ scope.row.address }}</span>
             </template>
           </el-table-column>
 
-          <el-table-column label="Telp">
+          <el-table-column sortable label="Telp">
             <template slot-scope="scope">
               <span>{{ scope.row.phone }}</span>
             </template>
@@ -48,7 +43,7 @@
             </template>
           </el-table-column>
 
-          <el-table-column class-name="status-col" label="Status" width="150px">
+          <el-table-column sortable class-name="status-col" label="Status" width="150px">
             <template slot-scope="{row}">
               <el-tag :type="row.status | statusFilter">
                 {{ row.status_label }}
@@ -56,11 +51,21 @@
             </template>
           </el-table-column>
 
-          <el-table-column align="center" label="Actions" width="120">
+          <el-table-column align="center" label="Actions" width="250px">
             <template slot-scope="scope">
+              <router-link :to="'/user/show/'+scope.row.id">
+                <el-button type="white" size="mini">
+                  View
+                </el-button>
+              </router-link>
               <router-link :to="'/user/edit/'+scope.row.id">
-                <el-button type="primary" size="small" icon="el-icon-edit">
+                <el-button type="white" size="mini">
                   Edit
+                </el-button>
+              </router-link>
+              <router-link :to="'/user/edit/'+scope.row.id">
+                <el-button type="danger" size="mini">
+                  Deactivate
                 </el-button>
               </router-link>
             </template>
