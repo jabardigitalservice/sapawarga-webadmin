@@ -30,13 +30,13 @@ describe('PanelGroup User', () => {
     expect(wrapper.html()).toMatchSnapshot()
   })
 
-  /* it('renders main components', () => {
+  it('renders main elements', () => {
     // arrange
-    const { avatar, name, bio } = build()
-    // assert
+    const { cardColumn, cardIcon, cardNumber } = build()
 
-    expect(name().exists()).toBe(true)
-    expect(name().text()).toBe(props.user.name)
-  }) */
+    // assert
+    expect(cardColumn().exists()).toBe(true)
+    // expect(name().text()).toBe(props.user.name)
+  })
 
 })
