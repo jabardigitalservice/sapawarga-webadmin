@@ -16,34 +16,15 @@
           </el-col>
         </el-row>
 
-        <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%">
+        <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%" @sort-change="changeSort">
           <el-table-column type="index" width="50" align="center" />
 
-          <el-table-column sortable label="Name">
-            <template slot-scope="scope">
-              <span>{{ scope.row.name }}</span>
-            </template>
-          </el-table-column>
+          <el-table-column prop="name" sortable="custom" label="Name" />
+          <el-table-column prop="address" sortable="custom" label="Kedudukan" />
+          <el-table-column prop="phone" sortable="custom" label="Telp" />
+          <el-table-column prop="role_label" label="Role" />
 
-          <el-table-column sortable label="Kedudukan">
-            <template slot-scope="scope">
-              <span>{{ scope.row.address }}</span>
-            </template>
-          </el-table-column>
-
-          <el-table-column sortable label="Telp">
-            <template slot-scope="scope">
-              <span>{{ scope.row.phone }}</span>
-            </template>
-          </el-table-column>
-
-          <el-table-column label="Role">
-            <template slot-scope="scope">
-              <span>{{ scope.row.role_label }}</span>
-            </template>
-          </el-table-column>
-
-          <el-table-column sortable class-name="status-col" label="Status" width="150px">
+          <el-table-column prop="status" sortable="custom" class-name="status-col" label="Status" width="150px">
             <template slot-scope="{row}">
               <el-tag :type="row.status | statusFilter">
                 {{ row.status_label }}
@@ -84,7 +65,6 @@ import Pagination from '@/components/Pagination' // Secondary package based on e
 
 export default {
 
-  name: 'ArticleList',
   components: { Pagination },
   filters: {
     statusFilter(status) {
@@ -109,6 +89,8 @@ export default {
       listLoading: true,
       listQuery: {
         role_id: this.roleId,
+        sortBy: 'name',
+        sortOrder: 'ascending',
         page: 1,
         limit: 10
       }
@@ -125,6 +107,12 @@ export default {
         this.total = response.data._meta.totalCount
         this.listLoading = false
       })
+    },
+
+    changeSort(e) {
+      this.listQuery.sortBy = e.prop
+      this.listQuery.sortOrder = e.order
+      this.getList()
     }
   }
 }
