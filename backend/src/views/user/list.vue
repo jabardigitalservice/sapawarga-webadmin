@@ -2,6 +2,7 @@
   <div class="app-container">
 
     <!-- STATISTIK TAMPILKAN DI ATAS COY -->
+    <panel-group :totalAllUser="1000" />
 
     <el-row :gutter="20">
       <el-col :span="24">
