@@ -273,7 +273,7 @@ class StaffCest
         ]);
     }
 
-    public function staffUpdateInvalidFields(ApiTester $I)
+    public function staffUpdateStaffInvalidFields(ApiTester $I)
     {
         $I->amStaff();
 
@@ -298,7 +298,7 @@ class StaffCest
         ]);
     }
 
-    public function staffUpdate(ApiTester $I)
+    public function staffUpdateStaff(ApiTester $I)
     {
         $I->amStaff();
 
@@ -313,5 +313,13 @@ class StaffCest
             'status'  => 200,
             'data' => [],
         ]);
+    }
+
+    public function staffDeleteStaff(ApiTester $I)
+    {
+        $I->amStaff();
+
+        $I->sendDELETE($this->endpointStaff . '/2');
+        $I->canSeeResponseCodeIs(204);
     }
 }
