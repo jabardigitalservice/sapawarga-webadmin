@@ -356,7 +356,11 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             'kel_id',
             'kec_id',
             'kabkota_id',
-            'photo_url',
+            'photo_url' => function () {
+                $bucket = Yii::$app->fileStorage->getBucket('imageFiles');
+
+                return $this->photo_url !== null ? $bucket->getFileUrl($this->photo_url) : null;
+            },
             'facebook',
             'twitter',
             'instagram',
