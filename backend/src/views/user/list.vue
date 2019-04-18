@@ -78,7 +78,7 @@ import PanelGroup from "./components/PanelGroup";
 
 export default {
 
-  components: { Pagination, InputFilterArea },
+  components: { Pagination, InputFilterArea, PanelGroup },
   filters: {
     statusFilter(status) {
       const statusMap = {
