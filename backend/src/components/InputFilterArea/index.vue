@@ -38,6 +38,8 @@
 </template>
 
 <script>
+import { getKabkotaList, getKecamatanList, getKelurahanList } from '@/api/areas'
+
 export default {
   props: {
     //
@@ -48,42 +50,70 @@ export default {
       kabkota_selected: null,
       kecamatan_selected: null,
       kelurahan_selected: null,
-      kabkota_options: [
-        {
-          value: 1,
-          label: 'Kota Bandung'
-        },
-        {
-          value: 2,
-          label: 'Kabupaten Bandung'
-        }
-      ],
-      kecamatan_options: [
-        {
-          value: 1,
-          label: 'Kota Bandung'
-        },
-        {
-          value: 2,
-          label: 'Kabupaten Bandung'
-        }
-      ],
-      kelurahan_options: [
-        {
-          value: 1,
-          label: 'Kota Bandung'
-        },
-        {
-          value: 2,
-          label: 'Kabupaten Bandung'
-        }
-      ]
+      kabkota_options: [],
+      kecamatan_options: [],
+      kelurahan_options: []
     }
+  },
+
+  mounted() {
+    this.init()
   },
 
   methods: {
     changeSelection(value, type) {
+      if (type === 'changeKabkota') {
+        this.getKecamatanOptions(value)
+      }
+
+      if (type === 'changeKecamatan') {
+        this.getKelurahanOptions(value)
+      }
+
       this.$emit(type, value)
+    },
+
+    async getKabkotaOptions() {
+      this.kabkota_options = []
+
+      const { data } = await getKabkotaList(true)
+
+      this.kabkota_options = data.items.map(item => {
+        return {
+          value: item.id,
+          label: item.name
+        }
+      })
+    },
+
+    async getKecamatanOptions(parentId) {
+      this.kecamatan_options = []
+
+      const { data } = await getKecamatanList(parentId, true)
+
+      this.kecamatan_options = data.items.map(item => {
+        return {
+          value: item.id,
+          label: item.name
+        }
+      })
+    },
+
+    async getKelurahanOptions(parentId) {
+      this.kelurahan_options = []
+
+      const { data } = await getKelurahanList(parentId, true)
+
+      this.kelurahan_options = data.items.map(item => {
+        return {
+          value: item.id,
+          label: item.name
+        }
+      })
+    },
+
+    init() {
+      this.getKabkotaOptions()
     }
   }
 }
