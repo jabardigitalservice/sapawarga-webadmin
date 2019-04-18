@@ -27,8 +27,8 @@
             </template>
           </el-table-column>
 
-          <el-table-column prop="phone" sortable="custom" label="Telp" />
-          <el-table-column prop="role_label" label="Role" />
+          <el-table-column prop="phone" width="150" sortable="custom" label="Telp" />
+          <el-table-column prop="role_label" width="150" label="Role" />
 
           <el-table-column prop="status" sortable="custom" class-name="status-col" label="Status" width="150px">
             <template slot-scope="{row}">
@@ -66,6 +66,8 @@
 </template>
 
 <script>
+import _ from 'lodash'
+
 import { fetchList } from '@/api/staff'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 
@@ -116,20 +118,25 @@ export default {
     },
 
     getKedudukan(user) {
+      const rw = _.get(user, 'rw', 'N/A')
+      const kelurahan = _.get(user, 'kelurahan.name', 'N/A')
+      const kecamatan = _.get(user, 'kecamatan.name')
+      const kabkota = _.get(user, 'kabkota.name')
+
       if (this.roleId === 'staffRW') {
-        return `RW ${user.rw}, Kelurahan ${user.kelurahan}, Kecamatan ${user.kecamatan}, ${user.kabkota}`
+        return `RW ${rw}, Kelurahan ${kelurahan}, Kecamatan ${kecamatan}, ${kabkota}`
       }
 
       if (this.roleId === 'staffKel') {
-        return `Kelurahan ${user.kelurahan}, Kecamatan ${user.kecamatan}, ${user.kabkota}`
+        return `Kelurahan ${kelurahan}, Kecamatan ${kecamatan}, ${kabkota}`
       }
 
       if (this.roleId === 'staffKec') {
-        return `Kecamatan ${user.kecamatan}, ${user.kabkota}`
+        return `Kecamatan ${kecamatan}, ${kabkota}`
       }
 
       if (this.roleId === 'staffKabkota') {
-        return `${user.kabkota}, Provinsi Jawa Barat`
+        return `${kabkota}, Provinsi Jawa Barat`
       }
 
       if (this.roleId === 'staffProv') {
