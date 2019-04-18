@@ -15,7 +15,7 @@
             </router-link>
           </el-col>
           <el-col :span="12">
-            <input-filter-area />
+            <input-filter-area @changeKabkota="changeKabkota" @changeKecamatan="changeKecamatan" @changeKelurahan="changeKelurahan" />
           </el-col>
         </el-row>
 
@@ -92,6 +92,9 @@ export default {
       total: 0,
       listLoading: true,
       listQuery: {
+        kabkota_id: null,
+        kec_id: null,
+        kel_id: null,
         role_id: this.roleId,
         sortBy: 'name',
         sortOrder: 'ascending',
@@ -116,6 +119,21 @@ export default {
     changeSort(e) {
       this.listQuery.sortBy = e.prop
       this.listQuery.sortOrder = e.order
+      this.getList()
+    },
+
+    changeKabkota(id) {
+      this.listQuery.kabkota_id = id
+      this.getList()
+    },
+
+    changeKecamatan(id) {
+      this.listQuery.kec_id = id
+      this.getList()
+    },
+
+    changeKelurahan(id) {
+      this.listQuery.kel_id = id
       this.getList()
     }
   }
