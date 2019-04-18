@@ -273,7 +273,7 @@ class StaffCest
         ]);
     }
 
-    public function staffUpdateProfileInvalidFields(ApiTester $I)
+    public function staffUpdateInvalidFields(ApiTester $I)
     {
         $I->amStaff();
 
@@ -298,12 +298,12 @@ class StaffCest
         ]);
     }
 
-    public function staffUpdateProfile(ApiTester $I)
+    public function staffUpdate(ApiTester $I)
     {
         $I->amStaff();
 
         $I->sendPUT($this->endpointStaff . '/1', [
-            'username' => 'admin.edited',
+            'email' => 'admin@example.com',
         ]);
         $I->canSeeResponseCodeIs(200);
         $I->seeResponseIsJson();

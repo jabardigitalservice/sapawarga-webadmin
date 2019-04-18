@@ -205,7 +205,7 @@ class StaffController extends ActiveController
     public function actionUpdate($id)
     {
         $model = $this->actionView($id);
-
+        $model->scenario = User::SCENARIO_UPDATE;
         $model->load(\Yii::$app->getRequest()->getBodyParams(), '');
 
         if ($model->validate() && $model->save()) {
