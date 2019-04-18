@@ -2,7 +2,15 @@
   <div>
     <el-row :gutter="10" type="flex" justify="end">
       <el-col :span="8">
-        <el-select v-model="kabkota_selected" clearable filterable placeholder="Pilih Kabupaten/Kota" style="width: 100%" @change="changeSelection($event, 'changeKabkota')">
+        <el-select
+          v-model="kabkota_selected"
+          clearable
+          filterable
+          placeholder="Pilih Kabupaten/Kota"
+          style="width: 100%"
+          @change="changeSelection($event, 'changeKabkota')"
+          @clear="clearSelection('clearKabkota')"
+        >
           <el-option
             v-for="item in kabkota_options"
             :key="item.value"
@@ -61,6 +69,10 @@ export default {
   },
 
   methods: {
+    clearSelection(type) {
+
+    },
+
     changeSelection(value, type) {
       if (type === 'changeKabkota') {
         this.getKecamatanOptions(value)
