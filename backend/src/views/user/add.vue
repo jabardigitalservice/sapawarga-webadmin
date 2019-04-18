@@ -183,6 +183,16 @@
 import { mapGetters } from 'vuex'
 export default {
   data() {
+    const checkPhone = (rule, value, callback) => {
+      console.log(value.toString())
+      const phoneStringFormat = value.toString()
+      const checkStringPhone = phoneStringFormat.startsWith('0')
+      if (!checkStringPhone) {
+        callback(new Error('Nomor telepon harus dimulai dari 0'))
+      } else {
+        callback()
+      }
+    }
     return {
       user: {
         username: '',
@@ -326,6 +336,10 @@ export default {
             pattern: /^[0-9]+$/,
             message: 'Nomor telepon hanya boleh menggunakan angka',
             trigger: 'blur'
+          },
+          {
+            validator: checkPhone,
+            trigger: 'blur'
           }
         ],
         address: [
@@ -431,6 +445,7 @@ export default {
     //     .catch();
     // }
   },
+
   methods: {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
