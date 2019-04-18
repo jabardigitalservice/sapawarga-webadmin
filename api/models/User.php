@@ -361,6 +361,8 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             'kel_id',
             'kec_id',
             'kabkota_id',
+            'lat',
+            'lon',
             'photo_url' => function () {
                 $bucket = Yii::$app->fileStorage->getBucket('imageFiles');
 
@@ -460,8 +462,9 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function scenarios()
     {
         $scenarios = parent::scenarios();
-        $scenarios[self::SCENARIO_REGISTER] = ['username', 'email', 'password', 'role_id', 'kabkota_id', 'kec_id', 'kel_id', 'rw', 'rt', 'lat', 'lon', 'permissions', 'name', 'phone', 'address', 'photo_url', 'facebook', 'twitter', 'instagram'];
-        $scenarios[self::SCENARIO_UPDATE] = ['username', 'email', 'password', 'status', 'role_id', 'kabkota_id', 'kec_id', 'kel_id', 'rw', 'rt', 'lat', 'lon', 'permissions', 'name', 'phone', 'address', 'photo_url', 'facebook', 'twitter', 'instagram'];
+        $attributes = ['username', 'email', 'password', 'status', 'role_id', 'kabkota_id', 'kec_id', 'kel_id', 'rw', 'rt', 'lat', 'lon', 'permissions', 'name', 'phone', 'address', 'photo_url', 'facebook', 'twitter', 'instagram'];
+        $scenarios[self::SCENARIO_REGISTER] = $attributes;
+        $scenarios[self::SCENARIO_UPDATE] = $attributes;
         return $scenarios;
     }
 
