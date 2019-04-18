@@ -74,6 +74,7 @@ import _ from 'lodash'
 import { fetchList } from '@/api/staff'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 import InputFilterArea from '@/components/InputFilterArea'
+import PanelGroup from "./components/PanelGroup";
 
 export default {
 
