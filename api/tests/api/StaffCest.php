@@ -181,7 +181,7 @@ class StaffCest
             'success' => true,
             'status'  => 200,
             'data' => [
-                "items" => [],
+                'items' => [],
             ]
         ]);
     }
@@ -199,7 +199,7 @@ class StaffCest
             'success' => true,
             'status'  => 200,
             'data' => [
-                "items" => [],
+                'items' => [],
             ]
         ]);
     }
@@ -217,7 +217,7 @@ class StaffCest
             'success' => true,
             'status'  => 200,
             'data' => [
-                "items" => [],
+                'items' => [],
             ]
         ]);
     }
@@ -235,8 +235,91 @@ class StaffCest
             'success' => true,
             'status'  => 200,
             'data' => [
-                "items" => [],
+                'items' => [],
             ]
         ]);
+    }
+
+    public function getItemInvalidParam(ApiTester $I)
+    {
+        $I->amStaff();
+
+        $I->sendGET($this->endpointStaff . '/xsA2#');
+        $I->canSeeResponseCodeIs(400); // Bad Request
+        $I->seeResponseIsJson();
+    }
+
+    public function getItemNotFound(ApiTester $I)
+    {
+        $I->amStaff();
+
+        $I->sendGET($this->endpointStaff . '/' . PHP_INT_MAX);
+        $I->canSeeResponseCodeIs(404); // Not Found
+        $I->seeResponseIsJson();
+    }
+
+    public function getItem(ApiTester $I)
+    {
+        $I->amStaff();
+
+        $I->sendGET($this->endpointStaff . '/1');
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $I->seeResponseContainsJson([
+            'success' => true,
+            'status'  => 200,
+            'data' => [],
+        ]);
+    }
+
+    public function staffUpdateStaffInvalidFields(ApiTester $I)
+    {
+        $I->amStaff();
+
+        $I->sendPUT($this->endpointStaff . '/1', [
+            'username' => '@D3',
+            'email' => 'invalid email@example_.com',
+            'status' => 1000,
+            'role_id' => 'invalidRole'
+        ]);
+        $I->canSeeResponseCodeIs(422);
+        $I->seeResponseIsJson();
+
+        $I->seeResponseContainsJson([
+            'success' => false,
+            'status'  => 422,
+            'data' => [
+                'username' => [],
+                'email' => [],
+                'status' => [],
+                'role_id' => []
+            ],
+        ]);
+    }
+
+    public function staffUpdateStaff(ApiTester $I)
+    {
+        $I->amStaff();
+
+        $I->sendPUT($this->endpointStaff . '/1', [
+            'email' => 'admin@example.com',
+        ]);
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $I->seeResponseContainsJson([
+            'success' => true,
+            'status'  => 200,
+            'data' => [],
+        ]);
+    }
+
+    public function staffDeleteStaff(ApiTester $I)
+    {
+        $I->amStaff();
+
+        $I->sendDELETE($this->endpointStaff . '/2');
+        $I->canSeeResponseCodeIs(204);
     }
 }

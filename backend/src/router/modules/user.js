@@ -13,6 +13,17 @@ const userRouter = {
   },
   children: [
     {
+      name: 'user-list-provinsi',
+      path: 'user-provinsi',
+      component: () => import('@/views/user/list'),
+      props: {
+        roleId: 'staffProv'
+      },
+      meta: {
+        title: 'Provinsi'
+      }
+    },
+    {
       name: 'user-list-kabkota',
       path: 'user-kabkota',
       component: () => import('@/views/user/list'),

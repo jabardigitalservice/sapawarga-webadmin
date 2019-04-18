@@ -354,9 +354,16 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             'address',
             'rw',
             'kel_id',
+            'kelurahan',
             'kec_id',
+            'kecamatan',
             'kabkota_id',
-            'photo_url',
+            'kabkota',
+            'photo_url' => function () {
+                $bucket = Yii::$app->fileStorage->getBucket('imageFiles');
+
+                return $this->photo_url !== null ? $bucket->getFileUrl($this->photo_url) : null;
+            },
             'facebook',
             'twitter',
             'instagram',
@@ -452,6 +459,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
         $scenarios = parent::scenarios();
         $scenarios[self::SCENARIO_REGISTER] = ['username', 'email', 'password', 'role_id', 'kabkota_id', 'kec_id', 'kel_id', 'rw', 'permissions'];
+        $scenarios[self::SCENARIO_UPDATE] = ['username', 'email', 'password', 'status', 'role_id', 'kabkota_id', 'kec_id', 'kel_id', 'rw', 'permissions', 'name', 'phone', 'address', 'photo_url', 'facebook', 'twitter', 'instagram'];
         return $scenarios;
     }
 
