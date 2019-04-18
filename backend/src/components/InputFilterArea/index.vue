@@ -21,7 +21,15 @@
       </el-col>
 
       <el-col :span="8">
-        <el-select v-model="kecamatan_selected" clearable filterable placeholder="Pilih Kecamatan" style="width: 100%" @change="changeSelection($event, 'changeKecamatan')">
+        <el-select
+          v-model="kecamatan_selected"
+          clearable
+          filterable
+          placeholder="Pilih Kecamatan"
+          style="width: 100%"
+          @change="changeSelection($event, 'changeKecamatan')"
+          @clear="clearSelection('clearKecamatan')"
+        >
           <el-option
             v-for="item in kecamatan_options"
             :key="item.value"
@@ -70,15 +78,27 @@ export default {
 
   methods: {
     clearSelection(type) {
+      if (type === 'clearKabkota') {
+        this.kecamatan_selected = null
+        this.kelurahan_selected = null
 
+        this.kecamatan_options = []
+        this.kelurahan_options = []
+      }
+
+      if (type === 'clearKecamatan') {
+        this.kelurahan_selected = null
+
+        this.kelurahan_options = []
+      }
     },
 
     changeSelection(value, type) {
-      if (type === 'changeKabkota') {
+      if (type === 'changeKabkota' && value !== '') {
         this.getKecamatanOptions(value)
       }
 
-      if (type === 'changeKecamatan') {
+      if (type === 'changeKecamatan' && value !== '') {
         this.getKelurahanOptions(value)
       }
 

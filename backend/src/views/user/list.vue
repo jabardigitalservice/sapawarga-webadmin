@@ -158,16 +158,34 @@ export default {
     },
 
     changeKabkota(id) {
+      // Jika clear selection, pastikan query juga reset
+      if (id === '') {
+        this.listQuery.kabkota_id = null
+        this.listQuery.kec_id = null
+        this.listQuery.kel_id = null
+      }
+
       this.listQuery.kabkota_id = id
       this.getList()
     },
 
     changeKecamatan(id) {
+      // Jika clear selection, pastikan query juga reset
+      if (id === '') {
+        this.listQuery.kec_id = null
+        this.listQuery.kel_id = null
+      }
+
       this.listQuery.kec_id = id
       this.getList()
     },
 
     changeKelurahan(id) {
+      // Jika clear selection, pastikan query juga reset
+      if (id === '') {
+        this.listQuery.kel_id = null
+      }
+
       this.listQuery.kel_id = id
       this.getList()
     }
