@@ -361,8 +361,11 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             'rt',
             'rw',
             'kel_id',
+            'kelurahan',
             'kec_id',
+            'kecamatan',
             'kabkota_id',
+            'kabkota',
             'lat',
             'lon',
             'photo_url' => function () {

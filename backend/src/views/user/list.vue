@@ -7,12 +7,15 @@
       <el-col :span="24">
 
         <el-row style="margin: 10px 0px">
-          <el-col :span="24">
+          <el-col :span="12">
             <router-link :to="{ path: '/user/create', query: { role_id: roleId }}">
               <el-button type="primary" size="small" icon="el-icon-plus">
                 Tambah Pengguna Baru
               </el-button>
             </router-link>
+          </el-col>
+          <el-col :span="12">
+            <input-filter-area @changeKabkota="changeKabkota" @changeKecamatan="changeKecamatan" @changeKelurahan="changeKelurahan" />
           </el-col>
         </el-row>
 
@@ -20,9 +23,15 @@
           <el-table-column type="index" width="50" align="center" />
 
           <el-table-column prop="name" sortable="custom" label="Name" />
-          <el-table-column prop="address" sortable="custom" label="Kedudukan" />
-          <el-table-column prop="phone" sortable="custom" label="Telp" />
-          <el-table-column prop="role_label" label="Role" />
+
+          <el-table-column label="Kedudukan">
+            <template slot-scope="{row}">
+              {{ getKedudukan(row) }}
+            </template>
+          </el-table-column>
+
+          <el-table-column prop="phone" width="150" sortable="custom" label="Telp" />
+          <el-table-column prop="role_label" width="150" label="Role" />
 
           <el-table-column prop="status" sortable="custom" class-name="status-col" label="Status" width="150px">
             <template slot-scope="{row}">
@@ -60,12 +69,15 @@
 </template>
 
 <script>
+import _ from 'lodash'
+
 import { fetchList } from '@/api/staff'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
+import InputFilterArea from '@/components/InputFilterArea'
 
 export default {
 
-  components: { Pagination },
+  components: { Pagination, InputFilterArea },
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -88,6 +100,9 @@ export default {
       total: 0,
       listLoading: true,
       listQuery: {
+        kabkota_id: null,
+        kec_id: null,
+        kel_id: null,
         role_id: this.roleId,
         sortBy: 'name',
         sortOrder: 'ascending',
@@ -109,22 +124,53 @@ export default {
       })
     },
 
+    getKedudukan(user) {
+      const rw = _.get(user, 'rw', 'N/A')
+      const kelurahan = _.get(user, 'kelurahan.name', 'N/A')
+      const kecamatan = _.get(user, 'kecamatan.name')
+      const kabkota = _.get(user, 'kabkota.name')
+
+      if (this.roleId === 'staffRW') {
+        return `RW ${rw}, Kelurahan ${kelurahan}, Kecamatan ${kecamatan}, ${kabkota}`
+      }
+
+      if (this.roleId === 'staffKel') {
+        return `Kelurahan ${kelurahan}, Kecamatan ${kecamatan}, ${kabkota}`
+      }
+
+      if (this.roleId === 'staffKec') {
+        return `Kecamatan ${kecamatan}, ${kabkota}`
+      }
+
+      if (this.roleId === 'staffKabkota') {
+        return `${kabkota}, Provinsi Jawa Barat`
+      }
+
+      if (this.roleId === 'staffProv') {
+        return `Provinsi Jawa Barat`
+      }
+    },
+
     changeSort(e) {
       this.listQuery.sortBy = e.prop
       this.listQuery.sortOrder = e.order
+      this.getList()
+    },
+
+    changeKabkota(id) {
+      this.listQuery.kabkota_id = id
+      this.getList()
+    },
+
+    changeKecamatan(id) {
+      this.listQuery.kec_id = id
+      this.getList()
+    },
+
+    changeKelurahan(id) {
+      this.listQuery.kel_id = id
       this.getList()
     }
   }
 }
 </script>
-
-<style scoped>
-  .edit-input {
-    padding-right: 100px;
-  }
-  .cancel-btn {
-    position: absolute;
-    right: 15px;
-    top: 10px;
-  }
-</style>
