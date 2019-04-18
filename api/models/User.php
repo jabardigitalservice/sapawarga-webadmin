@@ -330,7 +330,9 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             'id',
             'username',
             'email',
-            'role_id',
+            'role_id' => function () {
+                return array_search($this->role, self::ROLE_MAP);
+            },
             'role_label' => function () {
                 return $this->getRoleLabel();
             },
@@ -339,16 +341,16 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
                 $statusLabel = '';
                 switch ($this->status) {
                     case self::STATUS_ACTIVE:
-                        $statusLabel = Yii::t('app', 'Active');
+                        $statusLabel = Yii::t('app', 'status.active');
                         break;
                     case self::STATUS_PENDING:
                         $statusLabel = Yii::t('app', 'Waiting Confirmation');
                         break;
                     case self::STATUS_DISABLED:
-                        $statusLabel = Yii::t('app', 'Disabled');
+                        $statusLabel = Yii::t('app', 'status.inactive');
                         break;
                     case self::STATUS_DELETED:
-                        $statusLabel = Yii::t('app', 'Deleted');
+                        $statusLabel = Yii::t('app', 'status.deleted');
                         break;
                 }
                 return $statusLabel;
