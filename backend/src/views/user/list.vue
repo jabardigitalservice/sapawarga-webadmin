@@ -1,11 +1,10 @@
 <template>
   <div class="app-container">
-    <el-row :gutter="20">
-      <el-col :span="6">
-        Components Statistik Pengguna
-      </el-col>
 
-      <el-col :span="18">
+    <!-- STATISTIK TAMPILKAN DI ATAS COY -->
+
+    <el-row :gutter="20">
+      <el-col :span="24">
 
         <el-row style="margin: 10px 0px">
           <el-col :span="24">
@@ -17,38 +16,15 @@
           </el-col>
         </el-row>
 
-        <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%">
-          <el-table-column align="center" label="ID" width="80">
-            <template slot-scope="scope">
-              <span>{{ scope.row.id }}</span>
-            </template>
-          </el-table-column>
+        <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%" @sort-change="changeSort">
+          <el-table-column type="index" width="50" align="center" />
 
-          <el-table-column label="Name">
-            <template slot-scope="scope">
-              <span>{{ scope.row.name }}</span>
-            </template>
-          </el-table-column>
+          <el-table-column prop="name" sortable="custom" label="Name" />
+          <el-table-column prop="address" sortable="custom" label="Kedudukan" />
+          <el-table-column prop="phone" sortable="custom" label="Telp" />
+          <el-table-column prop="role_label" label="Role" />
 
-          <el-table-column label="Kedudukan">
-            <template slot-scope="scope">
-              <span>{{ scope.row.address }}</span>
-            </template>
-          </el-table-column>
-
-          <el-table-column label="Telp">
-            <template slot-scope="scope">
-              <span>{{ scope.row.phone }}</span>
-            </template>
-          </el-table-column>
-
-          <el-table-column label="Role">
-            <template slot-scope="scope">
-              <span>{{ scope.row.role_label }}</span>
-            </template>
-          </el-table-column>
-
-          <el-table-column class-name="status-col" label="Status" width="150px">
+          <el-table-column prop="status" sortable="custom" class-name="status-col" label="Status" width="150px">
             <template slot-scope="{row}">
               <el-tag :type="row.status | statusFilter">
                 {{ row.status_label }}
@@ -56,11 +32,21 @@
             </template>
           </el-table-column>
 
-          <el-table-column align="center" label="Actions" width="120">
+          <el-table-column align="center" label="Actions" width="250px">
             <template slot-scope="scope">
+              <router-link :to="'/user/show/'+scope.row.id">
+                <el-button type="white" size="mini">
+                  View
+                </el-button>
+              </router-link>
               <router-link :to="'/user/edit/'+scope.row.id">
-                <el-button type="primary" size="small" icon="el-icon-edit">
+                <el-button type="white" size="mini">
                   Edit
+                </el-button>
+              </router-link>
+              <router-link :to="'/user/edit/'+scope.row.id">
+                <el-button type="danger" size="mini">
+                  Deactivate
                 </el-button>
               </router-link>
             </template>
@@ -79,7 +65,6 @@ import Pagination from '@/components/Pagination' // Secondary package based on e
 
 export default {
 
-  name: 'ArticleList',
   components: { Pagination },
   filters: {
     statusFilter(status) {
@@ -104,6 +89,8 @@ export default {
       listLoading: true,
       listQuery: {
         role_id: this.roleId,
+        sortBy: 'name',
+        sortOrder: 'ascending',
         page: 1,
         limit: 10
       }
@@ -120,6 +107,12 @@ export default {
         this.total = response.data._meta.totalCount
         this.listLoading = false
       })
+    },
+
+    changeSort(e) {
+      this.listQuery.sortBy = e.prop
+      this.listQuery.sortOrder = e.order
+      this.getList()
     }
   }
 }
