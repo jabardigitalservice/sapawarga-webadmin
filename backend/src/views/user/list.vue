@@ -125,28 +125,30 @@ export default {
     },
 
     getKedudukan(user) {
+      const userRole = _.get(user, 'role_id')
+
       const rw = _.get(user, 'rw', 'N/A')
       const kelurahan = _.get(user, 'kelurahan.name', 'N/A')
       const kecamatan = _.get(user, 'kecamatan.name')
       const kabkota = _.get(user, 'kabkota.name')
 
-      if (this.roleId === 'staffRW') {
+      if (userRole === 'staffRW') {
         return `RW ${rw}, Kelurahan ${kelurahan}, Kecamatan ${kecamatan}, ${kabkota}`
       }
 
-      if (this.roleId === 'staffKel') {
+      if (userRole === 'staffKel') {
         return `Kelurahan ${kelurahan}, Kecamatan ${kecamatan}, ${kabkota}`
       }
 
-      if (this.roleId === 'staffKec') {
+      if (userRole === 'staffKec') {
         return `Kecamatan ${kecamatan}, ${kabkota}`
       }
 
-      if (this.roleId === 'staffKabkota') {
+      if (userRole === 'staffKabkota') {
         return `${kabkota}, Provinsi Jawa Barat`
       }
 
-      if (this.roleId === 'staffProv') {
+      if (userRole === 'staffProv') {
         return `Provinsi Jawa Barat`
       }
     },
