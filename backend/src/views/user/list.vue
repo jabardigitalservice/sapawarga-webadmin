@@ -23,9 +23,15 @@
           <el-table-column type="index" width="50" align="center" />
 
           <el-table-column prop="name" sortable="custom" label="Name" />
-          <el-table-column prop="address" sortable="custom" label="Kedudukan" />
-          <el-table-column prop="phone" sortable="custom" label="Telp" />
-          <el-table-column prop="role_label" label="Role" />
+
+          <el-table-column label="Kedudukan">
+            <template slot-scope="{row}">
+              {{ getKedudukan(row) }}
+            </template>
+          </el-table-column>
+
+          <el-table-column prop="phone" width="150" sortable="custom" label="Telp" />
+          <el-table-column prop="role_label" width="150" label="Role" />
 
           <el-table-column prop="status" sortable="custom" class-name="status-col" label="Status" width="150px">
             <template slot-scope="{row}">
@@ -63,6 +69,8 @@
 </template>
 
 <script>
+import _ from 'lodash'
+
 import { fetchList } from '@/api/staff'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 import InputFilterArea from '@/components/InputFilterArea'
@@ -116,6 +124,33 @@ export default {
       })
     },
 
+    getKedudukan(user) {
+      const rw = _.get(user, 'rw', 'N/A')
+      const kelurahan = _.get(user, 'kelurahan.name', 'N/A')
+      const kecamatan = _.get(user, 'kecamatan.name')
+      const kabkota = _.get(user, 'kabkota.name')
+
+      if (this.roleId === 'staffRW') {
+        return `RW ${rw}, Kelurahan ${kelurahan}, Kecamatan ${kecamatan}, ${kabkota}`
+      }
+
+      if (this.roleId === 'staffKel') {
+        return `Kelurahan ${kelurahan}, Kecamatan ${kecamatan}, ${kabkota}`
+      }
+
+      if (this.roleId === 'staffKec') {
+        return `Kecamatan ${kecamatan}, ${kabkota}`
+      }
+
+      if (this.roleId === 'staffKabkota') {
+        return `${kabkota}, Provinsi Jawa Barat`
+      }
+
+      if (this.roleId === 'staffProv') {
+        return `Provinsi Jawa Barat`
+      }
+    },
+
     changeSort(e) {
       this.listQuery.sortBy = e.prop
       this.listQuery.sortOrder = e.order
@@ -139,14 +174,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-  .edit-input {
-    padding-right: 100px;
-  }
-  .cancel-btn {
-    position: absolute;
-    right: 15px;
-    top: 10px;
-  }
-</style>
