@@ -59,6 +59,12 @@
 import CountTo from 'vue-count-to'
 
 export default {
+  name: 'PanelGroupUser',
+  props: {
+    totalAllUser: {
+      type: Number,
+    }
+  },
   components: {
     CountTo
   }
