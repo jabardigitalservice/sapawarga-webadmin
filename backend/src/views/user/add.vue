@@ -4,7 +4,7 @@
     <p class="warn-content">Profile Pengguna</p>
     <el-row :gutter="10">
       <!-- Left colomn -->
-      <el-col :sm="24" :lg="6" :xl="6" class="grid-content">
+      <el-col :sm="24" :lg="8" :xl="6" class="grid-content">
         <el-form ref="user" :model="user" :rules="rules">
           <el-form-item label="Photo" prop="photo">
             <input type="file" @change="onFileSelected">
@@ -54,7 +54,7 @@
           <el-form-item label="Alamat" prop="address">
             <el-input v-model="user.address" type="text" />
           </el-form-item>
-          <el-form-item label="role" prop="role">
+          <el-form-item label="Peran" prop="role">
             <el-select v-model="user.role" placeholder="Pilih Peran">
               <el-option
                 v-for="item in opsiPeran"
@@ -86,7 +86,7 @@
                 </el-select>
               </el-form-item>
             </el-col>
-            <el-col :span="12">
+            <el-col :span="12" class="form-right-side">
               <el-form-item
                 v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffKec') && !(user.role == 'staffKel'))"
                 label="RW"
@@ -117,7 +117,7 @@
                 </el-select>
               </el-form-item>
             </el-col>
-            <el-col :span="12">
+            <el-col :span="12" class="form-right-side">
               <el-form-item
                 v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffKec') && !(user.role == 'staffKel'))"
                 label="RT"
@@ -298,7 +298,7 @@ export default {
           {
             required: true,
             message: 'Kata sandi harus diisi',
-            trigger: 'blur'
+            trigger: 'change'
           },
           {
             max: 255,
@@ -312,7 +312,8 @@ export default {
           },
           {
             pattern: /^[a-zA-Z0-9\w\S]+$/,
-            message: 'Karakter kata sandi tidak sesuai',
+            message:
+              'Karakter kata hanya boleh menggunakan huruf, angka dan spesial karakter',
             trigger: 'blur'
           }
         ],
@@ -434,16 +435,11 @@ export default {
       }
     }
   },
+  created() {
+    this.pilihKota()
+  },
   computed: {
     ...mapGetters(['AREAS', 'KECAMATAN', 'KELURAHAN'])
-
-    // ini kode yg kena hook
-    // pilihKota: function() {
-    //   return this.$store
-    //     .dispatch("addUser/pilihKota")
-    //     .then(() => {})
-    //     .catch();
-    // }
   },
 
   methods: {
@@ -497,6 +493,12 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields()
     },
+    pilihKota: function() {
+      return this.$store
+        .dispatch('addUser/pilihKota')
+        .then(() => {})
+        .catch()
+    },
     pilihKecamatan: function() {
       this.$store.dispatch('addUser/pilihKecamatan', this.user.kabkota.id)
     },
@@ -547,6 +549,10 @@ p {
       margin-bottom: 0;
     }
   }
+}
+
+.form-right-side {
+  padding-left: 10px;
 }
 
 .el-row {
