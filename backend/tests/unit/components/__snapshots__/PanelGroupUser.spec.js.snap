@@ -2,57 +2,108 @@
 
 exports[`PanelGroup User renders the component 1`] = `
 <el-row gutter="40" class="panel-group" totalusersummary="[object Object]">
-  <el-col xs="12" sm="12" lg="6" class="card-panel-col">
-    <div class="card-panel">
-      <div class="card-panel-icon-wrapper icon-people">
-        <svg-icon icon-class="peoples" class-name="card-panel-icon"></svg-icon>
-      </div>
-      <div class="card-panel-description">
-        <div class="card-panel-text">
-          Total Pengguna
+  <el-card class="box-card">
+    <div slot="header" class="clearfix"><span>Total user per:</span></div>
+    <div style="margin-bottom: 50px;">
+      <el-col xs="12" sm="12" lg="6" class="card-panel-col">
+        <div class="card-panel">
+          <div class="card-panel-icon-wrapper icon-people-all">
+            <svg-icon icon-class="peoples" class-name="card-panel-icon"></svg-icon>
+          </div>
+          <div class="card-panel-description">
+            <div class="card-panel-text">
+              Semua
+            </div> <span class="card-panel-num">
+  0
+</span>
+          </div>
         </div>
-        <count-to-stub startval="0" endval="357968" duration="2600" autoplay="true" decimals="0" decimal="." separator="," prefix="" suffix="" useeasing="true" easingfn="function(t,e,i,n){return i*(1-Math.pow(2,-10*t/n))*1024/1023+e}" class="card-panel-num"></count-to-stub>
-      </div>
-    </div>
-  </el-col>
-  <el-col xs="12" sm="12" lg="6" class="card-panel-col">
-    <div class="card-panel">
-      <div class="card-panel-icon-wrapper icon-message">
-        <svg-icon icon-class="message" class-name="card-panel-icon"></svg-icon>
-      </div>
-      <div class="card-panel-description">
-        <div class="card-panel-text">
-          Messages
+      </el-col>
+      <el-col xs="12" sm="12" lg="6" class="card-panel-col">
+        <div class="card-panel">
+          <div class="card-panel-icon-wrapper icon-people-province">
+            <svg-icon icon-class="peoples" class-name="card-panel-icon"></svg-icon>
+          </div>
+          <div class="card-panel-description">
+            <div class="card-panel-text">
+              Provinsi
+            </div> <span class="card-panel-num">
+  0
+</span>
+          </div>
         </div>
-        <count-to-stub startval="0" endval="81212" duration="3000" autoplay="true" decimals="0" decimal="." separator="," prefix="" suffix="" useeasing="true" easingfn="function(t,e,i,n){return i*(1-Math.pow(2,-10*t/n))*1024/1023+e}" class="card-panel-num"></count-to-stub>
-      </div>
-    </div>
-  </el-col>
-  <el-col xs="12" sm="12" lg="6" class="card-panel-col">
-    <div class="card-panel">
-      <div class="card-panel-icon-wrapper icon-money">
-        <svg-icon icon-class="money" class-name="card-panel-icon"></svg-icon>
-      </div>
-      <div class="card-panel-description">
-        <div class="card-panel-text">
-          Purchases
+      </el-col>
+      <el-col xs="12" sm="12" lg="6" class="card-panel-col">
+        <div class="card-panel">
+          <div class="card-panel-icon-wrapper icon-people-kota">
+            <svg-icon icon-class="peoples" class-name="card-panel-icon"></svg-icon>
+          </div>
+          <div class="card-panel-description">
+            <div class="card-panel-text">
+              Purchases
+            </div> <span class="card-panel-num">
+  0
+</span>
+          </div>
         </div>
-        <count-to-stub startval="0" endval="9280" duration="3200" autoplay="true" decimals="0" decimal="." separator="," prefix="" suffix="" useeasing="true" easingfn="function(t,e,i,n){return i*(1-Math.pow(2,-10*t/n))*1024/1023+e}" class="card-panel-num"></count-to-stub>
-      </div>
-    </div>
-  </el-col>
-  <el-col xs="12" sm="12" lg="6" class="card-panel-col">
-    <div class="card-panel">
-      <div class="card-panel-icon-wrapper icon-shopping">
-        <svg-icon icon-class="shopping" class-name="card-panel-icon"></svg-icon>
-      </div>
-      <div class="card-panel-description">
-        <div class="card-panel-text">
-          Shoppings
+      </el-col>
+      <el-col xs="12" sm="12" lg="6" class="card-panel-col">
+        <div class="card-panel">
+          <div class="card-panel-icon-wrapper icon-people-kec">
+            <svg-icon icon-class="peoples" class-name="card-panel-icon"></svg-icon>
+          </div>
+          <div class="card-panel-description">
+            <div class="card-panel-text">
+              Shoppings
+            </div> <span class="card-panel-num">
+  0
+</span>
+          </div>
         </div>
-        <count-to-stub startval="0" endval="13600" duration="3600" autoplay="true" decimals="0" decimal="." separator="," prefix="" suffix="" useeasing="true" easingfn="function(t,e,i,n){return i*(1-Math.pow(2,-10*t/n))*1024/1023+e}" class="card-panel-num"></count-to-stub>
-      </div>
+      </el-col>
+      <el-col xs="12" sm="12" lg="6" class="card-panel-col">
+        <div class="card-panel">
+          <div class="card-panel-icon-wrapper icon-people-all">
+            <svg-icon icon-class="peoples" class-name="card-panel-icon"></svg-icon>
+          </div>
+          <div class="card-panel-description">
+            <div class="card-panel-text">
+              Kel
+            </div> <span class="card-panel-num">
+  0
+</span>
+          </div>
+        </div>
+      </el-col>
+      <el-col xs="12" sm="12" lg="6" class="card-panel-col">
+        <div class="card-panel">
+          <div class="card-panel-icon-wrapper icon-people-all">
+            <svg-icon icon-class="peoples" class-name="card-panel-icon"></svg-icon>
+          </div>
+          <div class="card-panel-description">
+            <div class="card-panel-text">
+              Rw
+            </div> <span class="card-panel-num">
+  0
+</span>
+          </div>
+        </div>
+      </el-col>
+      <el-col xs="12" sm="12" lg="6" class="card-panel-col">
+        <div class="card-panel">
+          <div class="card-panel-icon-wrapper icon-people-all">
+            <svg-icon icon-class="peoples" class-name="card-panel-icon"></svg-icon>
+          </div>
+          <div class="card-panel-description">
+            <div class="card-panel-text">
+              RT
+            </div> <span class="card-panel-num">
+  0
+</span>
+          </div>
+        </div>
+      </el-col>
     </div>
-  </el-col>
+  </el-card>
 </el-row>
 `;
