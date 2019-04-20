@@ -12,7 +12,7 @@ describe('PanelGroup User', () => {
     return {
       wrapper,
       cardColumn: () => wrapper.find('.card-panel-col'),
-      cardIcon: () => wrapper.find('.card-panel-icon-wrapper.icon-people'),
+      cardIcon: () => wrapper.find('.card-panel-icon-wrapper.icon-people-all'),
       cardNumber: () => wrapper.find('.card-panel-description')
     }
   }
@@ -20,7 +20,8 @@ describe('PanelGroup User', () => {
   beforeEach(() => {
     props = {
       totalUserSummary: totalUser,
-      totalAllUser: totalUser.totalUser
+      totalAllUser: totalUser.totalUser,
+      duration: 1
     }
   })
 
@@ -32,7 +33,7 @@ describe('PanelGroup User', () => {
     expect(wrapper.html()).toMatchSnapshot()
   })
 
-  it('renders main elements', () => {
+  it('renders main elements', (done) => {
     // arrange
     const { cardColumn, cardIcon, cardNumber, wrapper } = build()
 
@@ -40,9 +41,16 @@ describe('PanelGroup User', () => {
     expect(cardColumn().exists()).toBe(true)
     expect(cardIcon().exists()).toBe(true)
     expect(cardNumber().exists()).toBe(true)
-    // expect(cardNumber().text()).toContain('357968')
-    // expect(wrapper.props('totalUserSummary').exists()).toBe(true)
-    expect(wrapper.props().totalAllUser).toBe(357968)
+
+    expect(cardNumber().text()).toContain('0')
+
+    setTimeout(() => {
+      expect(wrapper.text()).toContain('Semua')
+      expect(wrapper.text()).toContain('99')
+      done()
+    }, 1100)
+
+    expect(wrapper.props().totalAllUser).toBe(totalUser.totalUser)
     // expect(name().text()).toBe(props.user.name)
   })
 })
