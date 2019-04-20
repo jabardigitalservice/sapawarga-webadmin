@@ -40,7 +40,7 @@ exports[`PanelGroup User renders the component 1`] = `
           </div>
           <div class="card-panel-description">
             <div class="card-panel-text">
-              Purchases
+              Kota/Kab
             </div> <span class="card-panel-num">
   0
 </span>
@@ -54,7 +54,7 @@ exports[`PanelGroup User renders the component 1`] = `
           </div>
           <div class="card-panel-description">
             <div class="card-panel-text">
-              Shoppings
+              Kecamatan
             </div> <span class="card-panel-num">
   0
 </span>
@@ -63,12 +63,12 @@ exports[`PanelGroup User renders the component 1`] = `
       </el-col>
       <el-col xs="12" sm="12" lg="6" class="card-panel-col">
         <div class="card-panel">
-          <div class="card-panel-icon-wrapper icon-people-all">
+          <div class="card-panel-icon-wrapper icon-people-kel">
             <svg-icon icon-class="peoples" class-name="card-panel-icon"></svg-icon>
           </div>
           <div class="card-panel-description">
             <div class="card-panel-text">
-              Kel
+              Kelurahan
             </div> <span class="card-panel-num">
   0
 </span>
@@ -77,12 +77,12 @@ exports[`PanelGroup User renders the component 1`] = `
       </el-col>
       <el-col xs="12" sm="12" lg="6" class="card-panel-col">
         <div class="card-panel">
-          <div class="card-panel-icon-wrapper icon-people-all">
+          <div class="card-panel-icon-wrapper icon-people-rw">
             <svg-icon icon-class="peoples" class-name="card-panel-icon"></svg-icon>
           </div>
           <div class="card-panel-description">
             <div class="card-panel-text">
-              Rw
+              RW
             </div> <span class="card-panel-num">
   0
 </span>
@@ -91,7 +91,7 @@ exports[`PanelGroup User renders the component 1`] = `
       </el-col>
       <el-col xs="12" sm="12" lg="6" class="card-panel-col">
         <div class="card-panel">
-          <div class="card-panel-icon-wrapper icon-people-all">
+          <div class="card-panel-icon-wrapper icon-people-rt">
             <svg-icon icon-class="peoples" class-name="card-panel-icon"></svg-icon>
           </div>
           <div class="card-panel-description">
