@@ -1,4 +1,4 @@
-import { shallowMount } from '@vue/test-utils'
+import { shallowMount, mount } from '@vue/test-utils'
 import PanelGroup from '@/views/user/components/PanelGroup'
 import totalUser from '../fixtures/totalUser'
 
@@ -6,7 +6,7 @@ describe('PanelGroup User', () => {
   let props
 
   const build = () => {
-    const wrapper = shallowMount(PanelGroup, {
+    const wrapper = mount(PanelGroup, {
       propsData: props
     })
     return {
