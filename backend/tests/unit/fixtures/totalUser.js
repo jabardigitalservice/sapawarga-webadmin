@@ -1,8 +1,8 @@
 export default {
-  totalUser: 357968,
+  totalUser: 99,
   totalUserProvince: 2,
   totalUserKoKab: 27,
-  totalUserKec: 627,
-  totalUserKel: 5312,
-  totalUserRw: 325000
+  totalUserKec: 60,
+  totalUserKel: 70,
+  totalUserRw: 80
 }
