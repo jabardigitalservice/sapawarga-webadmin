@@ -91,12 +91,28 @@ const actions = {
           resolve();
         })
         .catch(error => {
-          Message({
-            message: 'Nama pengguna atau email sudah digunakan',
-            type: 'error',
-            duration: 5 * 1000
-          });
-          reject(error);
+          let usernameError = error.response.data.data.username;
+          let emailError = error.response.data.data.email;
+          if (!emailError) {
+            Message({
+              message: usernameError[0],
+              type: 'error',
+              duration: 5 * 1000
+            });
+          } else if (!usernameError) {
+            Message({
+              message: emailError[0],
+              type: 'error',
+              duration: 5 * 1000
+            });
+          } else {
+            Message({
+              message: 'Nama pengguna dan alamat email sudah digunakan',
+              type: 'error',
+              duration: 5 * 1000
+            });
+          }
+          rejects(error);
         });
     });
   }

@@ -465,24 +465,11 @@ export default {
               this.$alert("Pengguna berhasil ditambahkan", {
                 callback: action => {}
               });
-
-              this.user.username = "";
-              this.user.name = "";
-              this.user.email = "";
-              this.user.password = "";
-              this.user.role = "";
-              this.user.kabkota = "";
-              this.user.kecamatan = "";
-              this.user.kelurahan = "";
-              this.user.rt = "";
-              this.user.rw = "";
-              this.user.facebook = "";
-              this.user.twitter = "";
-              this.user.instagram = "";
-              this.user.phone = "";
-              this.user.address = "";
+              this.$refs[formName].resetFields();
             })
-            .catch(() => {});
+            .catch(() => {
+              this.$refs[formName].resetFields();
+            });
         } else {
           return false;
         }
