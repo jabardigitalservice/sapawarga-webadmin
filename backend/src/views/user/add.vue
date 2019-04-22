@@ -67,7 +67,7 @@
           <el-row>
             <el-col :span="12">
               <el-form-item
-                v-if="(!(user.role == 'admin') && !(user.role == 'staffProv'))"
+                v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && checkPermission(['admin', 'staffProv']))"
                 label="Kab/Kota"
                 prop="kabkota"
               >
@@ -98,7 +98,7 @@
           <el-row>
             <el-col :span="12">
               <el-form-item
-                v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota'))"
+                v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && checkPermission(['admin', 'staffProv', 'staffKabkota']))"
                 label="Kecamatan"
                 prop="kecamatan"
               >
@@ -129,7 +129,7 @@
           <el-row>
             <el-col :span="12">
               <el-form-item
-                v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffKec'))"
+                v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffKec') && ! checkPermission(['staffKel']))"
                 label="Kelurahan"
                 prop="kelurahan"
               >
@@ -180,6 +180,7 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
+import checkPermission from "@/utils/permission";
 export default {
   data() {
     const checkPhone = (rule, value, callback) => {
@@ -441,6 +442,7 @@ export default {
   },
 
   methods: {
+    checkPermission,
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {

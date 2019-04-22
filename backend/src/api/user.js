@@ -1,11 +1,11 @@
-import request from '@/utils/request'
+import request from '@/utils/request';
 
 export function login(data) {
   return request({
     url: 'staff/login',
     method: 'post',
     data
-  })
+  });
 }
 
 export function getInfo(token) {
@@ -13,7 +13,7 @@ export function getInfo(token) {
     url: '/user/me',
     method: 'get'
     // params: { token }
-  })
+  });
 }
 
 export function addUser(data) {
@@ -21,7 +21,7 @@ export function addUser(data) {
     url: 'staff',
     method: 'post',
     data
-  })
+  });
 }
 
 export function getRegion() {
@@ -33,7 +33,7 @@ export function getRegion() {
       depth: 2,
       all: true
     }
-  })
+  });
 }
 
 export function getKecamatan(id) {
@@ -45,7 +45,7 @@ export function getKecamatan(id) {
       depth: 3,
       all: true
     }
-  })
+  });
 }
 
 export function getKelurahan(id) {
@@ -57,7 +57,7 @@ export function getKelurahan(id) {
       depth: 4,
       all: true
     }
-  })
+  });
 }
 
 // export function logout() {
