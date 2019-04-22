@@ -15,6 +15,14 @@ class StaffGetCountCest
         $I->seeResponseContainsJson([
             'success' => true,
             'status'  => 200,
+            'data' => [
+                'items' => [
+                    [
+                        'id' => 1,
+                        'level' => 'all',
+                    ],
+                ],
+            ],
         ]);
     }
 }
