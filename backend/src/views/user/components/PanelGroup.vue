@@ -5,7 +5,7 @@
         <span>Total user per:</span>
       </div>
       <div style="margin-bottom:50px;">
-        <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
+        <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col total-all">
           <div class="card-panel">
             <div class="card-panel-icon-wrapper icon-people-all">
               <svg-icon icon-class="peoples" class-name="card-panel-icon" />
@@ -18,7 +18,7 @@
             </div>
           </div>
         </el-col>
-        <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
+        <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col total-province">
           <div class="card-panel">
             <div class="card-panel-icon-wrapper icon-people-province">
               <svg-icon icon-class="peoples" class-name="card-panel-icon" />
@@ -27,11 +27,11 @@
               <div class="card-panel-text">
                 Provinsi
               </div>
-              <count-to :start-val="0" :end-val="81212" :duration="3000" class="card-panel-num" />
+              <count-to :start-val="0" :end-val="totalUserProvince" :duration="duration" class="card-panel-num" />
             </div>
           </div>
         </el-col>
-        <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
+        <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col total-kota">
           <div class="card-panel">
             <div class="card-panel-icon-wrapper icon-people-kota">
               <svg-icon icon-class="peoples" class-name="card-panel-icon" />
@@ -40,11 +40,11 @@
               <div class="card-panel-text">
                 Kota/Kab
               </div>
-              <count-to :start-val="0" :end-val="9280" :duration="3200" class="card-panel-num" />
+              <count-to :start-val="0" :end-val="9280" :duration="duration" class="card-panel-num" />
             </div>
           </div>
         </el-col>
-        <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
+        <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col total-kec">
           <div class="card-panel">
             <div class="card-panel-icon-wrapper icon-people-kec">
               <svg-icon icon-class="peoples" class-name="card-panel-icon" />
@@ -53,11 +53,11 @@
               <div class="card-panel-text">
                 Kecamatan
               </div>
-              <count-to :start-val="0" :end-val="13600" :duration="3600" class="card-panel-num" />
+              <count-to :start-val="0" :end-val="13600" :duration="duration" class="card-panel-num" />
             </div>
           </div>
         </el-col>
-        <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
+        <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col total-kel">
           <div class="card-panel">
             <div class="card-panel-icon-wrapper icon-people-kel">
               <svg-icon icon-class="peoples" class-name="card-panel-icon" />
@@ -66,11 +66,11 @@
               <div class="card-panel-text">
                 Kelurahan
               </div>
-              <count-to :start-val="0" :end-val="13600" :duration="3600" class="card-panel-num" />
+              <count-to :start-val="0" :end-val="13600" :duration="duration" class="card-panel-num" />
             </div>
           </div>
         </el-col>
-        <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
+        <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col total-rw">
           <div class="card-panel">
             <div class="card-panel-icon-wrapper icon-people-rw">
               <svg-icon icon-class="peoples" class-name="card-panel-icon" />
@@ -79,11 +79,11 @@
               <div class="card-panel-text">
                 RW
               </div>
-              <count-to :start-val="0" :end-val="13600" :duration="3600" class="card-panel-num" />
+              <count-to :start-val="0" :end-val="13600" :duration="duration" class="card-panel-num" />
             </div>
           </div>
         </el-col>
-        <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
+        <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col total-rt">
           <div class="card-panel">
             <div class="card-panel-icon-wrapper icon-people-rt">
               <svg-icon icon-class="peoples" class-name="card-panel-icon" />
@@ -92,7 +92,7 @@
               <div class="card-panel-text">
                 RT
               </div>
-              <count-to :start-val="0" :end-val="13600" :duration="3600" class="card-panel-num" />
+              <count-to :start-val="0" :end-val="13600" :duration="duration" class="card-panel-num" />
             </div>
           </div>
         </el-col>
@@ -121,7 +121,12 @@ export default {
   },
   props: {
     totalAllUser: {
-      type: Number
+      type: Number,
+      default: 0
+    },
+    totalUserProvince: {
+      type: Number,
+      default: 0
     },
     duration: {
       type: Number,

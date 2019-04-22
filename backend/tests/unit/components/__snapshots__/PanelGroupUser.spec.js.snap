@@ -1,11 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`PanelGroup User renders the component 1`] = `
-<el-row gutter="40" class="panel-group" totalusersummary="[object Object]">
+<el-row gutter="40" class="panel-group" totalusersummary="[object Object]" totaluserkokab="27" totaluserkec="60" totaluserkel="70" totaluserrw="80" totaluserrt="50">
   <el-card class="box-card">
     <div slot="header" class="clearfix"><span>Total user per:</span></div>
     <div style="margin-bottom: 50px;">
-      <el-col xs="12" sm="12" lg="6" class="card-panel-col">
+      <el-col xs="12" sm="12" lg="6" class="card-panel-col total-all">
         <div class="card-panel">
           <div class="card-panel-icon-wrapper icon-people-all">
             <svg-icon icon-class="peoples" class-name="card-panel-icon"></svg-icon>
@@ -19,7 +19,7 @@ exports[`PanelGroup User renders the component 1`] = `
           </div>
         </div>
       </el-col>
-      <el-col xs="12" sm="12" lg="6" class="card-panel-col">
+      <el-col xs="12" sm="12" lg="6" class="card-panel-col total-province">
         <div class="card-panel">
           <div class="card-panel-icon-wrapper icon-people-province">
             <svg-icon icon-class="peoples" class-name="card-panel-icon"></svg-icon>
@@ -33,7 +33,7 @@ exports[`PanelGroup User renders the component 1`] = `
           </div>
         </div>
       </el-col>
-      <el-col xs="12" sm="12" lg="6" class="card-panel-col">
+      <el-col xs="12" sm="12" lg="6" class="card-panel-col total-kota">
         <div class="card-panel">
           <div class="card-panel-icon-wrapper icon-people-kota">
             <svg-icon icon-class="peoples" class-name="card-panel-icon"></svg-icon>
@@ -47,7 +47,7 @@ exports[`PanelGroup User renders the component 1`] = `
           </div>
         </div>
       </el-col>
-      <el-col xs="12" sm="12" lg="6" class="card-panel-col">
+      <el-col xs="12" sm="12" lg="6" class="card-panel-col total-kec">
         <div class="card-panel">
           <div class="card-panel-icon-wrapper icon-people-kec">
             <svg-icon icon-class="peoples" class-name="card-panel-icon"></svg-icon>
@@ -61,7 +61,7 @@ exports[`PanelGroup User renders the component 1`] = `
           </div>
         </div>
       </el-col>
-      <el-col xs="12" sm="12" lg="6" class="card-panel-col">
+      <el-col xs="12" sm="12" lg="6" class="card-panel-col total-kel">
         <div class="card-panel">
           <div class="card-panel-icon-wrapper icon-people-kel">
             <svg-icon icon-class="peoples" class-name="card-panel-icon"></svg-icon>
@@ -75,7 +75,7 @@ exports[`PanelGroup User renders the component 1`] = `
           </div>
         </div>
       </el-col>
-      <el-col xs="12" sm="12" lg="6" class="card-panel-col">
+      <el-col xs="12" sm="12" lg="6" class="card-panel-col total-rw">
         <div class="card-panel">
           <div class="card-panel-icon-wrapper icon-people-rw">
             <svg-icon icon-class="peoples" class-name="card-panel-icon"></svg-icon>
@@ -89,7 +89,7 @@ exports[`PanelGroup User renders the component 1`] = `
           </div>
         </div>
       </el-col>
-      <el-col xs="12" sm="12" lg="6" class="card-panel-col">
+      <el-col xs="12" sm="12" lg="6" class="card-panel-col total-rt">
         <div class="card-panel">
           <div class="card-panel-icon-wrapper icon-people-rt">
             <svg-icon icon-class="peoples" class-name="card-panel-icon"></svg-icon>
