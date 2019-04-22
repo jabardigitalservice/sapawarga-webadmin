@@ -68,7 +68,7 @@ class UserSearch extends Model
             ]);
         }
 
-        $this->sort_by = $this->sort_by ?? 'username';
+        $this->sort_by = $this->sort_by ?? 'name';
         $this->sort_order = $this->getSortOrder($this->sort_order);
 
         $provider = new ActiveDataProvider([
