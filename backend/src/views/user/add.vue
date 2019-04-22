@@ -436,9 +436,24 @@ export default {
   },
   created() {
     this.pilihKota();
+    this.pilihKecamatan();
+    this.pilihKelurahan();
+    this.parentId;
   },
   computed: {
-    ...mapGetters(["AREAS", "KECAMATAN", "KELURAHAN"])
+    ...mapGetters(["AREAS", "KECAMATAN", "KELURAHAN"]),
+    parentId() {
+      const authUser = this.$store.state.user;
+
+      if (checkPermission(["staffKabkota"])) {
+        return parseInt(authUser.kabkota_id);
+      }
+      if (checkPermission(["staffKec"])) {
+        return parseInt(authUser.kec_id);
+      }
+
+      return null;
+    }
   },
 
   methods: {
@@ -487,10 +502,16 @@ export default {
         .catch();
     },
     pilihKecamatan: function() {
-      this.$store.dispatch("addUser/pilihKecamatan", this.user.kabkota.id);
+      this.$store.dispatch("addUser/pilihKecamatan", this.parentId);
     },
     pilihKelurahan: function() {
-      this.$store.dispatch("addUser/pilihKelurahan", this.user.kecamatan.id);
+      // let id = this.user.kecamatan.id;
+      // if (id == "") {
+      //   id = this.parentId;
+      // } else {
+      //   id = this.user.kecamatan.id;
+      // }
+      this.$store.dispatch("addUser/pilihKelurahan", this.parentId);
     },
     // Generate password
     randomPassword(length) {
