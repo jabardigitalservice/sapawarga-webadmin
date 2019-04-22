@@ -16,6 +16,7 @@
           </el-col>
           <el-col :span="12">
             <input-filter-area
+              v-if="! checkPermission(['staffKel'])"
               :enable-kabkota="checkPermission(['admin', 'staffProv'])"
               :enable-kecamatan="checkPermission(['admin', 'staffProv', 'staffKabkota'])"
               :enable-kelurahan="checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec'])"
