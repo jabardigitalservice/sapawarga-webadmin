@@ -15,7 +15,16 @@
             </router-link>
           </el-col>
           <el-col :span="12">
-            <input-filter-area @changeKabkota="changeKabkota" @changeKecamatan="changeKecamatan" @changeKelurahan="changeKelurahan" />
+            <input-filter-area
+              v-if="! checkPermission(['staffKel'])"
+              :enable-kabkota="checkPermission(['admin', 'staffProv'])"
+              :enable-kecamatan="checkPermission(['admin', 'staffProv', 'staffKabkota'])"
+              :enable-kelurahan="checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec'])"
+              :parent-id="filterAreaParentId"
+              @changeKabkota="changeKabkota"
+              @changeKecamatan="changeKecamatan"
+              @changeKelurahan="changeKelurahan"
+            />
           </el-col>
         </el-row>
 
@@ -74,6 +83,7 @@ import _ from 'lodash'
 import { fetchList } from '@/api/staff'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 import InputFilterArea from '@/components/InputFilterArea'
+import checkPermission from '@/utils/permission'
 
 export default {
 
@@ -111,10 +121,27 @@ export default {
       }
     }
   },
+  computed: {
+    filterAreaParentId() {
+      const authUser = this.$store.state.user
+
+      if (checkPermission(['staffKabkota'])) {
+        return parseInt(authUser.kabkota_id)
+      }
+
+      if (checkPermission(['staffKec'])) {
+        return parseInt(authUser.kec_id)
+      }
+
+      return null
+    }
+  },
   created() {
     this.getList()
   },
   methods: {
+    checkPermission,
+
     getList() {
       this.listLoading = true
       fetchList(this.listQuery).then(response => {

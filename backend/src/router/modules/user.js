@@ -44,7 +44,7 @@ const userRouter = {
       },
       meta: {
         title: 'Kabupaten / Kota',
-        roles: ['admin', 'staffProv', 'staffKabkota']
+        roles: ['admin', 'staffProv']
       }
     },
     {
