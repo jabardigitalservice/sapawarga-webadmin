@@ -170,7 +170,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
         /** @var User $user */
         $user = static::find()->where([
-            'username' => $username,
+            'BINARY(`username`)' => $username,
             'status' => self::STATUS_ACTIVE,
 
         ])->andWhere(['in', 'role', $roles])->one();
