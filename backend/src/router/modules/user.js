@@ -56,7 +56,7 @@ const userRouter = {
       },
       meta: {
         title: 'Kecamatan',
-        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec']
+        roles: ['admin', 'staffProv', 'staffKabkota']
       }
     },
     {
@@ -68,7 +68,7 @@ const userRouter = {
       },
       meta: {
         title: 'Kelurahan',
-        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']
+        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec']
       }
     },
     {
@@ -79,7 +79,8 @@ const userRouter = {
         roleId: 'staffRW'
       },
       meta: {
-        title: 'User Tingkat RW'
+        title: 'User Tingkat RW',
+        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']
       }
     },
     {
