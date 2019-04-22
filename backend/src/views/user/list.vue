@@ -13,6 +13,9 @@
                 Tambah Pengguna Baru
               </el-button>
             </router-link>
+
+            <el-button type="primary" size="small" @click="dialogAdvancedSearchVisible = true">Pencarian</el-button>
+
           </el-col>
           <el-col :span="12">
             <input-filter-area
@@ -73,6 +76,23 @@
         <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
       </el-col>
     </el-row>
+
+    <el-dialog title="Pencarian" :visible.sync="dialogAdvancedSearchVisible">
+      <el-form>
+        <el-form-item label="Nama Pengguna">
+          <el-input autocomplete="off" />
+        </el-form-item>
+
+        <el-form-item label="Nomor Telepon">
+          <el-input autocomplete="off" />
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogAdvancedSearchVisible = false">Cancel</el-button>
+        <el-button type="primary" @click="dialogAdvancedSearchVisible = false">Confirm</el-button>
+      </span>
+    </el-dialog>
+
   </div>
 </template>
 
@@ -105,6 +125,7 @@ export default {
   },
   data() {
     return {
+      dialogAdvancedSearchVisible: false,
       list: null,
       total: 0,
       listLoading: true,
