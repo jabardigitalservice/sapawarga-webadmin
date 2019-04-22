@@ -52,6 +52,7 @@ class StaffController extends ActiveController
                 'update' => ['put'],
                 'delete' => ['delete'],
                 'login' => ['post'],
+                'count' => ['get'],
                 'getPermissions' => ['get'],
             ],
         ];
@@ -82,7 +83,7 @@ class StaffController extends ActiveController
             'rules' => [
                 [
                     'allow' => true,
-                    'actions' => ['index', 'view', 'create', 'update', 'delete', 'getPermissions'],
+                    'actions' => ['index', 'view', 'create', 'update', 'delete', 'count', 'getPermissions'],
                     'roles' => ['admin', 'manageStaffs'],
                 ],
             ],
@@ -353,6 +354,17 @@ class StaffController extends ActiveController
 
             return $model->getErrors();
         }
+    }
+
+    public function actionCount()
+    {
+        $currentUser = User::findIdentity(\Yii::$app->user->getId());
+        $role = $currentUser->role;
+
+        $items = [];
+        $val = User::find()->where(['<=', 'role', $role])->count();
+
+        return ['items' => $val];
     }
 
     /**
