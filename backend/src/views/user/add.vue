@@ -27,19 +27,19 @@
           <!-- form -->
 
           <el-form-item label="Nama Pengguna" prop="username">
-            <el-input v-model="user.username" type="text" />
+            <el-input v-model="user.username" type="text"/>
           </el-form-item>
           <el-form-item label="Nama" prop="name">
-            <el-input v-model="user.name" type="text" />
+            <el-input v-model="user.name" type="text"/>
           </el-form-item>
 
           <el-form-item label="Email" prop="email">
-            <el-input v-model="user.email" type="email" />
+            <el-input v-model="user.email" type="email"/>
           </el-form-item>
           <el-row>
             <el-col :span="20">
               <el-form-item label="Password" prop="password">
-                <el-input v-model="user.password" type="text" />
+                <el-input v-model="user.password" type="text"/>
               </el-form-item>
             </el-col>
 
@@ -49,10 +49,10 @@
           </el-row>
 
           <el-form-item label="Telepon" prop="phone">
-            <el-input v-model="user.phone" type="text" placeholder="contoh: 081254332233" />
+            <el-input v-model="user.phone" type="text" placeholder="contoh: 081254332233"/>
           </el-form-item>
           <el-form-item label="Alamat" prop="address">
-            <el-input v-model="user.address" type="text" />
+            <el-input v-model="user.address" type="text"/>
           </el-form-item>
           <el-form-item label="Peran" prop="role">
             <el-select v-model="user.role" placeholder="Pilih Peran">
@@ -73,7 +73,6 @@
               >
                 <el-select
                   v-model="user.kabkota"
-                  v-bind="pilihKota"
                   placeholder="Pilih Kab/Kota"
                   @change="pilihKecamatan"
                 >
@@ -92,7 +91,7 @@
                 label="RW"
                 prop="rw"
               >
-                <el-input v-model="user.rw" type="number" placeholder="Masukan RW" />
+                <el-input v-model="user.rw" type="number" placeholder="Masukan RW"/>
               </el-form-item>
             </el-col>
           </el-row>
@@ -123,7 +122,7 @@
                 label="RT"
                 prop="rt"
               >
-                <el-input v-model="user.rt" type="number" placeholder="Masukan RT" />
+                <el-input v-model="user.rt" type="number" placeholder="Masukan RT"/>
               </el-form-item>
             </el-col>
           </el-row>
@@ -144,7 +143,7 @@
                 </el-select>
               </el-form-item>
             </el-col>
-            <el-col :span="12" />
+            <el-col :span="12"/>
           </el-row>
           <p class="warn-content">Media Sosial</p>
 
@@ -180,64 +179,63 @@
   </div>
 </template>
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from "vuex";
 export default {
   data() {
     const checkPhone = (rule, value, callback) => {
-      console.log(value.toString())
-      const phoneStringFormat = value.toString()
-      const checkStringPhone = phoneStringFormat.startsWith('0')
+      const phoneStringFormat = value.toString();
+      const checkStringPhone = phoneStringFormat.startsWith("0");
       if (!checkStringPhone) {
-        callback(new Error('Nomor telepon harus dimulai dari 0'))
+        callback(new Error("Nomor telepon harus dimulai dari 0"));
       } else {
-        callback()
+        callback();
       }
-    }
+    };
     return {
       user: {
-        username: '',
-        name: '',
-        email: '',
-        password: '',
-        phone: '',
-        address: '',
+        username: "",
+        name: "",
+        email: "",
+        password: "",
+        phone: "",
+        address: "",
         kabkota: [],
         kecamatan: [],
         kelurahan: [],
-        rw: '',
-        rt: '',
+        rw: "",
+        rt: "",
         role: [],
-        twitter: '',
-        facebook: '',
-        instagram: '',
-        photo: ''
+        twitter: "",
+        facebook: "",
+        instagram: "",
+        photo: ""
       },
       opsiPeran: [
         {
-          label: 'Admin',
-          value: 'admin'
+          label: "Admin",
+          value: "admin"
         },
         {
-          label: 'Admin Provinsi',
-          value: 'staffProv'
+          label: "Admin Provinsi",
+          value: "staffProv"
         },
         {
-          label: 'Admin Kab/kota',
-          value: 'staffKabkota'
+          label: "Admin Kab/kota",
+          value: "staffKabkota"
         },
         {
-          label: 'Admin Kecamatan',
-          value: 'staffKec'
+          label: "Admin Kecamatan",
+          value: "staffKec"
         },
         {
-          label: 'Admin kelurahan',
-          value: 'staffKel'
+          label: "Admin kelurahan",
+          value: "staffKel"
         },
         {
-          label: 'RW',
-          value: 'staffRW'
+          label: "RW",
+          value: "staffRW"
         },
-        { label: 'Pengguna', value: 'user' }
+        { label: "Pengguna", value: "user" }
       ],
 
       // validation
@@ -245,166 +243,166 @@ export default {
         username: [
           {
             required: true,
-            message: 'Nama pengguna harus diisi',
-            trigger: 'blur'
+            message: "Nama pengguna harus diisi",
+            trigger: "blur"
           },
           {
             min: 4,
-            message: 'Nama pengguna minimal 4 karakter',
-            trigger: 'blur'
+            message: "Nama pengguna minimal 4 karakter",
+            trigger: "blur"
           },
           {
             max: 14,
-            message: 'Nama pengguna maksimal 14 karakter',
-            trigger: 'blur'
+            message: "Nama pengguna maksimal 14 karakter",
+            trigger: "blur"
           },
           {
             pattern: /^[a-z0-9_.]+$/,
             message:
-              'Nama pengguna hanya boleh menggunakan huruf, angka, underscore dan titik',
-            trigger: 'blur'
+              "Nama pengguna hanya boleh menggunakan huruf, angka, underscore dan titik",
+            trigger: "blur"
           }
         ],
         name: [
           {
             required: true,
-            message: 'Nama harus diisi',
-            trigger: 'blur'
+            message: "Nama harus diisi",
+            trigger: "blur"
           },
           {
             max: 255,
-            message: 'Nama pengguna maksimal 255 karakter',
-            trigger: 'blur'
+            message: "Nama pengguna maksimal 255 karakter",
+            trigger: "blur"
           },
           {
             pattern: /^[a-zA-Z.'\s]+$/,
-            message: 'Nama hanya boleh menggunakan huruf, aposthrope dan titik',
-            trigger: 'blur'
+            message: "Nama hanya boleh menggunakan huruf, aposthrope dan titik",
+            trigger: "blur"
           }
         ],
         email: [
           {
             required: true,
-            message: 'Email harus diisi',
-            trigger: 'blur'
+            message: "Email harus diisi",
+            trigger: "blur"
           },
           {
-            type: 'email',
-            message: 'Format email yang Anda masukan salah',
-            trigger: 'blur'
+            type: "email",
+            message: "Format email yang Anda masukan salah",
+            trigger: "blur"
           }
         ],
         password: [
           {
             required: true,
-            message: 'Kata sandi harus diisi',
-            trigger: 'change'
+            message: "Kata sandi harus diisi",
+            trigger: "change"
           },
           {
             max: 255,
-            message: 'Kata sandi maksimal 255 karakter',
-            trigger: 'blur'
+            message: "Kata sandi maksimal 255 karakter",
+            trigger: "blur"
           },
           {
             min: 5,
-            message: 'Kata sandi minimal 5 karakter',
-            trigger: 'blur'
+            message: "Kata sandi minimal 5 karakter",
+            trigger: "blur"
           },
           {
             pattern: /^[a-zA-Z0-9\w\S]+$/,
             message:
-              'Karakter kata hanya boleh menggunakan huruf, angka dan spesial karakter',
-            trigger: 'blur'
+              "Karakter kata hanya boleh menggunakan huruf, angka dan spesial karakter",
+            trigger: "blur"
           }
         ],
         phone: [
           {
             required: true,
-            message: 'Nomor telepon harus diisi',
-            trigger: 'blur'
+            message: "Nomor telepon harus diisi",
+            trigger: "blur"
           },
           {
             min: 3,
-            message: 'Nomor telepon minimal 3 karakter',
-            trigger: 'blur'
+            message: "Nomor telepon minimal 3 karakter",
+            trigger: "blur"
           },
           {
             max: 13,
-            message: 'Nomor telepon maksimal 13 karakter',
-            trigger: 'blur'
+            message: "Nomor telepon maksimal 13 karakter",
+            trigger: "blur"
           },
           {
             pattern: /^[0-9]+$/,
-            message: 'Nomor telepon hanya boleh menggunakan angka',
-            trigger: 'blur'
+            message: "Nomor telepon hanya boleh menggunakan angka",
+            trigger: "blur"
           },
           {
             validator: checkPhone,
-            trigger: 'blur'
+            trigger: "blur"
           }
         ],
         address: [
           {
             required: true,
-            message: 'Alamat harus diisi',
-            trigger: 'blur'
+            message: "Alamat harus diisi",
+            trigger: "blur"
           },
           {
             max: 255,
-            message: 'Alamat maksimal 255 karakter',
-            trigger: 'blur'
+            message: "Alamat maksimal 255 karakter",
+            trigger: "blur"
           }
         ],
         kabkota: [
           {
             required: true,
-            message: 'Kota harus diisi',
-            trigger: 'blur'
+            message: "Kota harus diisi",
+            trigger: "blur"
           }
         ],
         kecamatan: [
           {
             required: true,
-            message: 'Kecamatan harus diisi',
-            trigger: 'blur'
+            message: "Kecamatan harus diisi",
+            trigger: "blur"
           }
         ],
         kelurahan: [
           {
             required: true,
-            message: 'Kelurahan harus diisi',
-            trigger: 'blur'
+            message: "Kelurahan harus diisi",
+            trigger: "blur"
           }
         ],
         rw: [
           {
             required: true,
-            message: 'RW harus diisi',
-            trigger: 'blur'
+            message: "RW harus diisi",
+            trigger: "blur"
           },
           {
             pattern: /^[0-9]+$/,
-            message: 'Karakter RW tidak sesuai',
-            trigger: 'blur'
+            message: "Karakter RW tidak sesuai",
+            trigger: "blur"
           }
         ],
         rt: [
           {
             required: true,
-            message: 'RT harus diisi',
-            trigger: 'blur'
+            message: "RT harus diisi",
+            trigger: "blur"
           },
           {
             pattern: /^[0-9]+$/,
-            message: 'Karakter RT tidak sesuai',
-            trigger: 'blur'
+            message: "Karakter RT tidak sesuai",
+            trigger: "blur"
           }
         ],
         role: [
           {
             required: true,
-            message: 'Peran harus diisi',
-            trigger: 'blur'
+            message: "Peran harus diisi",
+            trigger: "blur"
           }
         ],
         twitter: [
@@ -413,8 +411,8 @@ export default {
           },
           {
             pattern: /^[a-z0-9.@_]+$/,
-            message: 'Karakter tidak sesuai',
-            trigger: 'blur'
+            message: "Karakter tidak sesuai",
+            trigger: "blur"
           }
         ],
         facebook: [
@@ -428,18 +426,18 @@ export default {
           },
           {
             pattern: /^[a-z0-9.@_]+$/,
-            message: 'Karakter tidak sesuai',
-            trigger: 'blur'
+            message: "Karakter tidak sesuai",
+            trigger: "blur"
           }
         ]
       }
-    }
+    };
   },
   created() {
-    this.pilihKota()
+    this.pilihKota();
   },
   computed: {
-    ...mapGetters(['AREAS', 'KECAMATAN', 'KELURAHAN'])
+    ...mapGetters(["AREAS", "KECAMATAN", "KELURAHAN"])
   },
 
   methods: {
@@ -447,7 +445,7 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.$store
-            .dispatch('addUser/tambahUser', {
+            .dispatch("addUser/tambahUser", {
               username: this.user.username,
               name: this.user.name,
               email: this.user.email,
@@ -464,67 +462,67 @@ export default {
               instagram: this.user.instagram
             })
             .then(() => {
-              this.$alert('Pengguna berhasil ditambahkan', {
+              this.$alert("Pengguna berhasil ditambahkan", {
                 callback: action => {}
-              })
+              });
 
-              this.user.username = ''
-              this.user.name = ''
-              this.user.email = ''
-              this.user.password = ''
-              this.user.role = ''
-              this.user.kabkota = ''
-              this.user.kecamatan = ''
-              this.user.kelurahan = ''
-              this.user.rt = ''
-              this.user.rw = ''
-              this.user.facebook = ''
-              this.user.twitter = ''
-              this.user.instagram = ''
-              this.user.phone = ''
-              this.user.address = ''
+              this.user.username = "";
+              this.user.name = "";
+              this.user.email = "";
+              this.user.password = "";
+              this.user.role = "";
+              this.user.kabkota = "";
+              this.user.kecamatan = "";
+              this.user.kelurahan = "";
+              this.user.rt = "";
+              this.user.rw = "";
+              this.user.facebook = "";
+              this.user.twitter = "";
+              this.user.instagram = "";
+              this.user.phone = "";
+              this.user.address = "";
             })
-            .catch(() => {})
+            .catch(() => {});
         } else {
-          return false
+          return false;
         }
-      })
+      });
     },
     resetForm(formName) {
-      this.$refs[formName].resetFields()
+      this.$refs[formName].resetFields();
     },
     pilihKota: function() {
       return this.$store
-        .dispatch('addUser/pilihKota')
+        .dispatch("addUser/pilihKota")
         .then(() => {})
-        .catch()
+        .catch();
     },
     pilihKecamatan: function() {
-      this.$store.dispatch('addUser/pilihKecamatan', this.user.kabkota.id)
+      this.$store.dispatch("addUser/pilihKecamatan", this.user.kabkota.id);
     },
     pilihKelurahan: function() {
-      this.$store.dispatch('addUser/pilihKelurahan', this.user.kecamatan.id)
+      this.$store.dispatch("addUser/pilihKelurahan", this.user.kecamatan.id);
     },
     // Generate password
     randomPassword(length) {
       var chars =
-        'abcdefghijklmnopqrstuvwxyz!@#$%^&*()-+<>ABCDEFGHIJKLMNOP1234567890'
-      var pass = ''
+        "abcdefghijklmnopqrstuvwxyz!@#$%^&*()-+<>ABCDEFGHIJKLMNOP1234567890";
+      var pass = "";
       for (var x = 0; x < length; x++) {
-        var i = Math.floor(Math.random() * chars.length)
-        pass += chars.charAt(i)
+        var i = Math.floor(Math.random() * chars.length);
+        pass += chars.charAt(i);
       }
-      return pass
+      return pass;
     },
     generate() {
-      this.user.password = this.randomPassword(8)
+      this.user.password = this.randomPassword(8);
     },
     // Upload image
     onFileSelected(event) {
-      this.photo = event.target.files[0]
+      this.photo = event.target.files[0];
     }
   }
-}
+};
 </script>
 <style lang="scss" scoped>
 .upload-demo {
