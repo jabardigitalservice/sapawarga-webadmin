@@ -1,54 +1,39 @@
 <template>
   <div class="app-container">
-    <el-row :gutter="20">
-      <el-col :span="6">
-        Components Statistik Pengguna
-      </el-col>
 
-      <el-col :span="18">
+    <!-- STATISTIK TAMPILKAN DI ATAS COY -->
+
+    <el-row :gutter="20">
+      <el-col :span="24">
 
         <el-row style="margin: 10px 0px">
-          <el-col :span="24">
+          <el-col :span="12">
             <router-link :to="{ path: '/user/create', query: { role_id: roleId }}">
               <el-button type="primary" size="small" icon="el-icon-plus">
                 Tambah Pengguna Baru
               </el-button>
             </router-link>
           </el-col>
+          <el-col :span="12">
+            <input-filter-area @changeKabkota="changeKabkota" @changeKecamatan="changeKecamatan" @changeKelurahan="changeKelurahan" />
+          </el-col>
         </el-row>
 
-        <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%">
-          <el-table-column align="center" label="ID" width="80">
-            <template slot-scope="scope">
-              <span>{{ scope.row.id }}</span>
-            </template>
-          </el-table-column>
+        <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%" @sort-change="changeSort">
+          <el-table-column type="index" width="50" align="center" />
 
-          <el-table-column label="Name">
-            <template slot-scope="scope">
-              <span>{{ scope.row.name }}</span>
-            </template>
-          </el-table-column>
+          <el-table-column prop="name" sortable="custom" label="Name" />
 
           <el-table-column label="Kedudukan">
-            <template slot-scope="scope">
-              <span>{{ scope.row.address }}</span>
+            <template slot-scope="{row}">
+              {{ getKedudukan(row) }}
             </template>
           </el-table-column>
 
-          <el-table-column label="Telp">
-            <template slot-scope="scope">
-              <span>{{ scope.row.phone }}</span>
-            </template>
-          </el-table-column>
+          <el-table-column prop="phone" width="150" sortable="custom" label="Telp" />
+          <el-table-column prop="role_label" width="150" label="Role" />
 
-          <el-table-column label="Role">
-            <template slot-scope="scope">
-              <span>{{ scope.row.role_label }}</span>
-            </template>
-          </el-table-column>
-
-          <el-table-column class-name="status-col" label="Status" width="150px">
+          <el-table-column prop="status" sortable="custom" class-name="status-col" label="Status" width="150px">
             <template slot-scope="{row}">
               <el-tag :type="row.status | statusFilter">
                 {{ row.status_label }}
@@ -56,11 +41,21 @@
             </template>
           </el-table-column>
 
-          <el-table-column align="center" label="Actions" width="120">
+          <el-table-column align="center" label="Actions" width="250px">
             <template slot-scope="scope">
+              <router-link :to="'/user/show/'+scope.row.id">
+                <el-button type="white" size="mini">
+                  View
+                </el-button>
+              </router-link>
               <router-link :to="'/user/edit/'+scope.row.id">
-                <el-button type="primary" size="small" icon="el-icon-edit">
+                <el-button type="white" size="mini">
                   Edit
+                </el-button>
+              </router-link>
+              <router-link :to="'/user/edit/'+scope.row.id">
+                <el-button type="danger" size="mini">
+                  Deactivate
                 </el-button>
               </router-link>
             </template>
@@ -74,13 +69,15 @@
 </template>
 
 <script>
+import _ from 'lodash'
+
 import { fetchList } from '@/api/staff'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
+import InputFilterArea from '@/components/InputFilterArea'
 
 export default {
 
-  name: 'ArticleList',
-  components: { Pagination },
+  components: { Pagination, InputFilterArea },
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -103,7 +100,12 @@ export default {
       total: 0,
       listLoading: true,
       listQuery: {
+        kabkota_id: null,
+        kec_id: null,
+        kel_id: null,
         role_id: this.roleId,
+        sortBy: 'name',
+        sortOrder: 'ascending',
         page: 1,
         limit: 10
       }
@@ -120,18 +122,75 @@ export default {
         this.total = response.data._meta.totalCount
         this.listLoading = false
       })
+    },
+
+    getKedudukan(user) {
+      const userRole = _.get(user, 'role_id')
+
+      const rw = _.get(user, 'rw', 'N/A')
+      const kelurahan = _.get(user, 'kelurahan.name', 'N/A')
+      const kecamatan = _.get(user, 'kecamatan.name')
+      const kabkota = _.get(user, 'kabkota.name')
+
+      if (userRole === 'staffRW') {
+        return `RW ${rw}, Kelurahan ${kelurahan}, Kecamatan ${kecamatan}, ${kabkota}`
+      }
+
+      if (userRole === 'staffKel') {
+        return `Kelurahan ${kelurahan}, Kecamatan ${kecamatan}, ${kabkota}`
+      }
+
+      if (userRole === 'staffKec') {
+        return `Kecamatan ${kecamatan}, ${kabkota}`
+      }
+
+      if (userRole === 'staffKabkota') {
+        return `${kabkota}, Provinsi Jawa Barat`
+      }
+
+      if (userRole === 'staffProv') {
+        return `Provinsi Jawa Barat`
+      }
+    },
+
+    changeSort(e) {
+      this.listQuery.sortBy = e.prop
+      this.listQuery.sortOrder = e.order
+      this.getList()
+    },
+
+    changeKabkota(id) {
+      // Jika clear selection, pastikan query juga reset
+      if (id === '') {
+        this.listQuery.kabkota_id = null
+        this.listQuery.kec_id = null
+        this.listQuery.kel_id = null
+      }
+
+      this.listQuery.kabkota_id = id
+      this.getList()
+    },
+
+    changeKecamatan(id) {
+      // Jika clear selection, pastikan query juga reset
+      if (id === '') {
+        this.listQuery.kec_id = null
+        this.listQuery.kel_id = null
+      }
+
+      this.listQuery.kec_id = id
+      this.getList()
+    },
+
+    changeKelurahan(id) {
+      // Jika clear selection, pastikan query juga reset
+      if (id === '') {
+        this.listQuery.kel_id = null
+      }
+
+      this.listQuery.kel_id = id
+      this.getList()
     }
   }
 }
 </script>
-
-<style scoped>
-  .edit-input {
-    padding-right: 100px;
-  }
-  .cancel-btn {
-    position: absolute;
-    right: 15px;
-    top: 10px;
-  }
-</style>

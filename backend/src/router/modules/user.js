@@ -13,6 +13,29 @@ const userRouter = {
   },
   children: [
     {
+      name: 'user-list',
+      path: 'user-all',
+      component: () => import('@/views/user/list'),
+      props: {
+        //
+      },
+      meta: {
+        title: 'Semua Pengguna'
+      }
+    },
+    {
+      name: 'user-list-provinsi',
+      path: 'user-provinsi',
+      component: () => import('@/views/user/list'),
+      props: {
+        roleId: 'staffProv'
+      },
+      meta: {
+        title: 'Provinsi',
+        roles: ['admin', 'staffProv']
+      }
+    },
+    {
       name: 'user-list-kabkota',
       path: 'user-kabkota',
       component: () => import('@/views/user/list'),
@@ -20,7 +43,8 @@ const userRouter = {
         roleId: 'staffKabkota'
       },
       meta: {
-        title: 'Kabupaten / Kota'
+        title: 'Kabupaten / Kota',
+        roles: ['admin', 'staffProv', 'staffKabkota']
       }
     },
     {
@@ -31,7 +55,8 @@ const userRouter = {
         roleId: 'staffKec'
       },
       meta: {
-        title: 'Kecamatan'
+        title: 'Kecamatan',
+        roles: ['admin', 'staffProv', 'staffKabkota']
       }
     },
     {
@@ -42,7 +67,8 @@ const userRouter = {
         roleId: 'staffKel'
       },
       meta: {
-        title: 'Kelurahan'
+        title: 'Kelurahan',
+        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec']
       }
     },
     {
@@ -53,7 +79,8 @@ const userRouter = {
         roleId: 'staffRW'
       },
       meta: {
-        title: 'User Tingkat RW'
+        title: 'User Tingkat RW',
+        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']
       }
     },
     {

@@ -32,10 +32,13 @@ use yii\web\Request as WebRequest;
  * @property string $name
  * @property string $phone
  * @property string $address
+ * @property string $rt
  * @property string $rw
  * @property string $kel_id
  * @property string $kec_id
  * @property string $kabkota_id
+ * @property string $lat
+ * @property string $lon
  * @property string $photo_url
  * @property string $facebook
  * @property string $twitter
@@ -295,6 +298,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             'email' => Yii::t('app', 'Email'),
             'password' => Yii::t('app', \Yii::t('app', 'app.password')),
             'role_id' => Yii::t('app', 'app.role'),
+            'rt' => Yii::t('app', 'app.rt'),
             'rw' => Yii::t('app', 'app.rw'),
             'kel_id' => Yii::t('app', 'app.kel_id'),
             'kec_id' => Yii::t('app', 'app.kec_id'),
@@ -326,7 +330,9 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             'id',
             'username',
             'email',
-            'role_id',
+            'role_id' => function () {
+                return array_search($this->role, self::ROLE_MAP);
+            },
             'role_label' => function () {
                 return $this->getRoleLabel();
             },
@@ -335,16 +341,16 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
                 $statusLabel = '';
                 switch ($this->status) {
                     case self::STATUS_ACTIVE:
-                        $statusLabel = Yii::t('app', 'Active');
+                        $statusLabel = Yii::t('app', 'status.active');
                         break;
                     case self::STATUS_PENDING:
                         $statusLabel = Yii::t('app', 'Waiting Confirmation');
                         break;
                     case self::STATUS_DISABLED:
-                        $statusLabel = Yii::t('app', 'Disabled');
+                        $statusLabel = Yii::t('app', 'status.inactive');
                         break;
                     case self::STATUS_DELETED:
-                        $statusLabel = Yii::t('app', 'Deleted');
+                        $statusLabel = Yii::t('app', 'status.deleted');
                         break;
                 }
                 return $statusLabel;
@@ -352,11 +358,21 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             'name',
             'phone',
             'address',
+            'rt',
             'rw',
             'kel_id',
+            'kelurahan',
             'kec_id',
+            'kecamatan',
             'kabkota_id',
-            'photo_url',
+            'kabkota',
+            'lat',
+            'lon',
+            'photo_url' => function () {
+                $bucket = Yii::$app->fileStorage->getBucket('imageFiles');
+
+                return $this->photo_url !== null ? $bucket->getFileUrl($this->photo_url) : null;
+            },
             'facebook',
             'twitter',
             'instagram',
@@ -451,7 +467,9 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function scenarios()
     {
         $scenarios = parent::scenarios();
-        $scenarios[self::SCENARIO_REGISTER] = ['username', 'email', 'password', 'role_id', 'kabkota_id', 'kec_id', 'kel_id', 'rw', 'permissions'];
+        $attributes = ['username', 'email', 'password', 'status', 'role_id', 'kabkota_id', 'kec_id', 'kel_id', 'rw', 'rt', 'lat', 'lon', 'permissions', 'name', 'phone', 'address', 'photo_url', 'facebook', 'twitter', 'instagram'];
+        $scenarios[self::SCENARIO_REGISTER] = $attributes;
+        $scenarios[self::SCENARIO_UPDATE] = $attributes;
         return $scenarios;
     }
 
@@ -503,7 +521,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             ['rw', 'required', 'on' => self::SCENARIO_REGISTER, 'when' => function ($model) {
                 return $model->role <= self::ROLE_STAFF_RW;
             }],
-            [['name', 'phone', 'address', 'rw', 'kel_id', 'kec_id', 'kabkota_id', 'photo_url', 'facebook', 'twitter', 'instagram'], 'default'],
+            [['name', 'phone', 'address', 'rt', 'rw', 'kel_id', 'kec_id', 'kabkota_id', 'lat', 'lon', 'photo_url', 'facebook', 'twitter', 'instagram'], 'default'],
         ];
     }
 

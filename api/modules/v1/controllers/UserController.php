@@ -13,6 +13,7 @@ use app\models\User;
 use app\models\UserEditForm;
 use app\models\UserPhotoUploadForm;
 use app\models\UserSearch;
+use Illuminate\Support\Arr;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\auth\CompositeAuth;
@@ -438,28 +439,14 @@ class UserController extends ActiveController
             $response = \Yii::$app->getResponse();
             $response->setStatusCode(200);
 
-            return [
-                'id' => $user->id,
-                'username' => $user->username,
-                'email' => $user->email,
-                'last_login_at' => $user->last_login_at,
-                'last_login_ip' => $user->last_login_ip,
-                'role' => $user->role,
-                'photo_url' => $user->photo_url,
-                'name' => $user->name,
-                'phone' => $user->phone,
-                'address' => $user->address,
-                'rw' => $user->rw,
-                'kel_id' => $user->kel_id,
-                'kelurahan' => $user->kelurahan,
-                'kec_id' => $user->kec_id,
-                'kecamatan' => $user->kecamatan,
-                'kabkota_id' => $user->kabkota_id,
-                'kabkota' => $user->kabkota,
-                'facebook' => $user->facebook,
-                'twitter' => $user->twitter,
-                'instagram' => $user->instagram,
-            ];
+            $userArray = $user->toArray();
+
+            return Arr::only($userArray, [
+                'id', 'username', 'role_id', 'email', 'last_login_at', 'last_login_ip',
+                'role', 'name', 'phone', 'address', 'rw', 'kel_id', 'kelurahan',
+                'kec_id', 'kecamatan', 'kabkota_id', 'kabkota',
+                'facebook', 'twitter', 'instagram', 'photo_url',
+            ]);
         } else {
             // Validation error
             throw new NotFoundHttpException('Object not found');

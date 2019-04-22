@@ -205,7 +205,7 @@ class StaffController extends ActiveController
     public function actionUpdate($id)
     {
         $model = $this->actionView($id);
-
+        $model->scenario = User::SCENARIO_UPDATE;
         $model->load(\Yii::$app->getRequest()->getBodyParams(), '');
 
         if ($model->validate() && $model->save()) {
@@ -256,6 +256,11 @@ class StaffController extends ActiveController
      */
     public function actionView($id)
     {
+        $currentUser = User::findIdentity(\Yii::$app->user->getId());
+        $role = $currentUser->role;
+        // Admins can see other admins, while staffs can only see staffs one level below them
+        $maxRoleRange = ($role == User::ROLE_ADMIN) ? ($role) : ($role - 1);
+
         $staff = User::find()->where(
             [
                 'id' => $id
@@ -264,13 +269,13 @@ class StaffController extends ActiveController
             [
                 '!=',
                 'status',
-                -1
+                User::STATUS_DELETED
             ]
         )->andWhere(
             [
-                'in',
-                'role',
-                [User::ROLE_STAFF_RW, User::ROLE_ADMIN]
+                'or',
+                ['between', 'role', 0, $maxRoleRange],
+                $id . '=' . (string) $currentUser->id
             ]
         )->one();
         if ($staff) {
