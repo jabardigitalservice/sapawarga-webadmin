@@ -17,11 +17,16 @@ class UserSearch extends Model
     public $kel_id;
     public $rw;
 
+    public $limit;
+    public $sort_by;
+    public $sort_order;
+
     public function rules()
     {
         return [
             [['search'], 'string', 'max' => 50],
-            [['role_id', 'kabkota_id', 'kec_id', 'kel_id', 'rw'], 'string'],
+            [['limit'], 'integer'],
+            [['role_id', 'kabkota_id', 'kec_id', 'kel_id', 'rw', 'sort_by', 'sort_order'], 'string'],
         ];
     }
 
@@ -63,10 +68,30 @@ class UserSearch extends Model
             ]);
         }
 
+        $this->sort_by = $this->sort_by ?? 'name';
+        $this->sort_order = $this->getSortOrder($this->sort_order);
+
         $provider = new ActiveDataProvider([
             'query' => $query,
+            'sort'=> ['defaultOrder' => [$this->sort_by => $this->sort_order]],
+            'pagination' => [
+                'pageSize' => $this->limit,
+            ],
         ]);
 
         return $provider;
+    }
+
+    protected function getSortOrder($sortOrder)
+    {
+        switch ($sortOrder) {
+            case 'descending':
+                return SORT_DESC;
+                break;
+            case 'ascending':
+            default:
+                return SORT_ASC;
+                break;
+        }
     }
 }
