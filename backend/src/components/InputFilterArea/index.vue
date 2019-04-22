@@ -71,6 +71,11 @@ export default {
     enableKelurahan: {
       type: Boolean,
       default: true
+    },
+
+    parentId: {
+      type: Number,
+      default: null
     }
   },
 
@@ -159,6 +164,14 @@ export default {
 
     init() {
       this.getKabkotaOptions()
+
+      if (this.enableKabkota === false) {
+        this.getKecamatanOptions(this.parentId)
+      }
+
+      if (this.enableKecamatan === false) {
+        this.getKelurahanOptions(this.parentId)
+      }
     }
   }
 }

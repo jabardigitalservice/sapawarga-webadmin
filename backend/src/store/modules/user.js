@@ -8,6 +8,9 @@ const state = {
   avatar: '',
   introduction: '',
   roles: [],
+  kel_id: null,
+  kec_id: null,
+  kabkota_id: null,
   dummy_image: require('@/assets/user.png')
 }
 
@@ -26,6 +29,11 @@ const mutations = {
   },
   SET_ROLES: (state, roles) => {
     state.roles = roles
+  },
+  SET_AREA: (state, data) => {
+    state.kel_id = data.kel_id
+    state.kec_id = data.kec_id
+    state.kabkota_id = data.kabkota_id
   }
 }
 
@@ -77,6 +85,15 @@ const actions = {
           } else {
             commit('SET_AVATAR', photo_url)
           }
+
+          const { kel_id, kec_id, kabkota_id } = data
+
+          commit('SET_AREA', {
+            kel_id: kel_id,
+            kec_id: kec_id,
+            kabkota_id: kabkota_id
+          })
+
           data = roles
           resolve(data)
         })

@@ -16,9 +16,10 @@
           </el-col>
           <el-col :span="12">
             <input-filter-area
-              :enable-kabkota="checkPermission(['staffProv'])"
-              :enable-kecamatan="checkPermission(['staffProv', 'staffKabkota'])"
-              :enable-kelurahan="checkPermission(['staffProv', 'staffKabkota', 'staffKec'])"
+              :enable-kabkota="checkPermission(['admin', 'staffProv'])"
+              :enable-kecamatan="checkPermission(['admin', 'staffProv', 'staffKabkota'])"
+              :enable-kelurahan="checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec'])"
+              :parent-id="filterAreaParentId"
               @changeKabkota="changeKabkota"
               @changeKecamatan="changeKecamatan"
               @changeKelurahan="changeKelurahan"
@@ -117,6 +118,21 @@ export default {
         page: 1,
         limit: 10
       }
+    }
+  },
+  computed: {
+    filterAreaParentId() {
+      const authUser = this.$store.state.user
+
+      if (checkPermission(['staffKabkota'])) {
+        return parseInt(authUser.kabkota_id)
+      }
+
+      if (checkPermission(['staffKec'])) {
+        return parseInt(authUser.kec_id)
+      }
+
+      return null
     }
   },
   created() {
