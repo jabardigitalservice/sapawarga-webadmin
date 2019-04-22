@@ -23,6 +23,7 @@
       <el-col v-if="enableKecamatan" :span="8">
         <el-select
           v-model="kecamatan_selected"
+          :disabled="enableKabkota === true && (kabkota_selected === '' || kabkota_selected === null)"
           clearable
           filterable
           placeholder="Pilih Kecamatan"
@@ -40,7 +41,15 @@
       </el-col>
 
       <el-col v-if="enableKelurahan" :span="8">
-        <el-select v-model="kelurahan_selected" clearable filterable placeholder="Pilih Kelurahan" style="width: 100%" @change="changeSelection($event, 'changeKelurahan')">
+        <el-select
+          v-model="kelurahan_selected"
+          :disabled="enableKecamatan === true && (kecamatan_selected === '' || kecamatan_selected === null)"
+          clearable
+          filterable
+          placeholder="Pilih Kelurahan"
+          style="width: 100%"
+          @change="changeSelection($event, 'changeKelurahan')"
+        >
           <el-option
             v-for="item in kelurahan_options"
             :key="item.value"
