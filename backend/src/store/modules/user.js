@@ -61,9 +61,9 @@ const actions = {
             reject('Verification failed, please Login again.')
           }
 
-          const { name, photo_url } = data
+          const { name, role_id, photo_url } = data
 
-          const roles = ['admin']
+          const roles = [role_id] // @TODO sebaiknya bisa multiple dan switch roles
 
           // roles must be a non-empty array
           if (!roles || roles.length <= 0) {

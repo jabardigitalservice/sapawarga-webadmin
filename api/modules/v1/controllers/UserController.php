@@ -442,7 +442,7 @@ class UserController extends ActiveController
             $userArray = $user->toArray();
 
             return Arr::only($userArray, [
-                'id', 'username' ,'email', 'last_login_at', 'last_login_ip',
+                'id', 'username', 'role_id', 'email', 'last_login_at', 'last_login_ip',
                 'role', 'name', 'phone', 'address', 'rw', 'kel_id', 'kelurahan',
                 'kec_id', 'kecamatan', 'kabkota_id', 'kabkota',
                 'facebook', 'twitter', 'instagram', 'photo_url',

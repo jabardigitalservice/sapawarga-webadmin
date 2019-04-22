@@ -31,7 +31,8 @@ const userRouter = {
         roleId: 'staffProv'
       },
       meta: {
-        title: 'Provinsi'
+        title: 'Provinsi',
+        roles: ['admin', 'staffProv']
       }
     },
     {
@@ -42,7 +43,8 @@ const userRouter = {
         roleId: 'staffKabkota'
       },
       meta: {
-        title: 'Kabupaten / Kota'
+        title: 'Kabupaten / Kota',
+        roles: ['admin', 'staffProv', 'staffKabkota']
       }
     },
     {
@@ -53,7 +55,8 @@ const userRouter = {
         roleId: 'staffKec'
       },
       meta: {
-        title: 'Kecamatan'
+        title: 'Kecamatan',
+        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec']
       }
     },
     {
@@ -64,7 +67,8 @@ const userRouter = {
         roleId: 'staffKel'
       },
       meta: {
-        title: 'Kelurahan'
+        title: 'Kelurahan',
+        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']
       }
     },
     {
