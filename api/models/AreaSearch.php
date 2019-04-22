@@ -45,10 +45,17 @@ class AreaSearch extends Area
 
         // add conditions that should always apply here
 
+        $sortBy    = Arr::get($params, 'sortBy', 'name');
+        $sortOrder = Arr::get($params, 'sortOrder', 'ascending');
+        $sortOrder = $this->getSortOrder($sortOrder);
+
+        $pageLimit = Arr::get($params, 'limit');
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort'=> ['defaultOrder' => [$sortBy => $sortOrder]],
             'pagination' => [
-                'pageSize' => Arr::get($params, 'limit'),
+                'pageSize' => $pageLimit,
             ],
         ]);
 
@@ -74,5 +81,18 @@ class AreaSearch extends Area
         $query->andFilterWhere(['like', 'name', $this->name]);
 
         return $dataProvider;
+    }
+
+    protected function getSortOrder($sortOrder)
+    {
+        switch ($sortOrder) {
+            case 'descending':
+                return SORT_DESC;
+                break;
+            case 'ascending':
+            default:
+                return SORT_ASC;
+                break;
+        }
     }
 }

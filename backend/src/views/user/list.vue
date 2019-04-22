@@ -2,7 +2,7 @@
   <div class="app-container">
 
     <!-- STATISTIK TAMPILKAN DI ATAS COY -->
-    <panel-group :totalAllUser="1000" />
+    <panel-group :total-all-user="1000" />
 
     <el-row :gutter="20">
       <el-col :span="24">
@@ -16,7 +16,15 @@
             </router-link>
           </el-col>
           <el-col :span="12">
-            <input-filter-area @changeKabkota="changeKabkota" @changeKecamatan="changeKecamatan" @changeKelurahan="changeKelurahan" />
+            <input-filter-area
+              :enable-kabkota="checkPermission(['admin', 'staffProv'])"
+              :enable-kecamatan="checkPermission(['admin', 'staffProv', 'staffKabkota'])"
+              :enable-kelurahan="checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec'])"
+              :parent-id="filterAreaParentId"
+              @changeKabkota="changeKabkota"
+              @changeKecamatan="changeKecamatan"
+              @changeKelurahan="changeKelurahan"
+            />
           </el-col>
         </el-row>
 
@@ -75,7 +83,8 @@ import _ from 'lodash'
 import { fetchList } from '@/api/staff'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 import InputFilterArea from '@/components/InputFilterArea'
-import PanelGroup from "./components/PanelGroup";
+import PanelGroup from './components/PanelGroup'
+import checkPermission from '@/utils/permission'
 
 export default {
 
@@ -113,10 +122,27 @@ export default {
       }
     }
   },
+  computed: {
+    filterAreaParentId() {
+      const authUser = this.$store.state.user
+
+      if (checkPermission(['staffKabkota'])) {
+        return parseInt(authUser.kabkota_id)
+      }
+
+      if (checkPermission(['staffKec'])) {
+        return parseInt(authUser.kec_id)
+      }
+
+      return null
+    }
+  },
   created() {
     this.getList()
   },
   methods: {
+    checkPermission,
+
     getList() {
       this.listLoading = true
       fetchList(this.listQuery).then(response => {
@@ -127,28 +153,30 @@ export default {
     },
 
     getKedudukan(user) {
+      const userRole = _.get(user, 'role_id')
+
       const rw = _.get(user, 'rw', 'N/A')
       const kelurahan = _.get(user, 'kelurahan.name', 'N/A')
       const kecamatan = _.get(user, 'kecamatan.name')
       const kabkota = _.get(user, 'kabkota.name')
 
-      if (this.roleId === 'staffRW') {
+      if (userRole === 'staffRW') {
         return `RW ${rw}, Kelurahan ${kelurahan}, Kecamatan ${kecamatan}, ${kabkota}`
       }
 
-      if (this.roleId === 'staffKel') {
+      if (userRole === 'staffKel') {
         return `Kelurahan ${kelurahan}, Kecamatan ${kecamatan}, ${kabkota}`
       }
 
-      if (this.roleId === 'staffKec') {
+      if (userRole === 'staffKec') {
         return `Kecamatan ${kecamatan}, ${kabkota}`
       }
 
-      if (this.roleId === 'staffKabkota') {
+      if (userRole === 'staffKabkota') {
         return `${kabkota}, Provinsi Jawa Barat`
       }
 
-      if (this.roleId === 'staffProv') {
+      if (userRole === 'staffProv') {
         return `Provinsi Jawa Barat`
       }
     },
@@ -160,16 +188,34 @@ export default {
     },
 
     changeKabkota(id) {
+      // Jika clear selection, pastikan query juga reset
+      if (id === '') {
+        this.listQuery.kabkota_id = null
+        this.listQuery.kec_id = null
+        this.listQuery.kel_id = null
+      }
+
       this.listQuery.kabkota_id = id
       this.getList()
     },
 
     changeKecamatan(id) {
+      // Jika clear selection, pastikan query juga reset
+      if (id === '') {
+        this.listQuery.kec_id = null
+        this.listQuery.kel_id = null
+      }
+
       this.listQuery.kec_id = id
       this.getList()
     },
 
     changeKelurahan(id) {
+      // Jika clear selection, pastikan query juga reset
+      if (id === '') {
+        this.listQuery.kel_id = null
+      }
+
       this.listQuery.kel_id = id
       this.getList()
     }

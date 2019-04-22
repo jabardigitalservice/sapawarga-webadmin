@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row :gutter="10" type="flex" justify="end">
-      <el-col :span="8">
+      <el-col v-if="enableKabkota" :span="8">
         <el-select
           v-model="kabkota_selected"
           clearable
@@ -20,8 +20,17 @@
         </el-select>
       </el-col>
 
-      <el-col :span="8">
-        <el-select v-model="kecamatan_selected" clearable filterable placeholder="Pilih Kecamatan" style="width: 100%" @change="changeSelection($event, 'changeKecamatan')">
+      <el-col v-if="enableKecamatan" :span="8">
+        <el-select
+          v-model="kecamatan_selected"
+          :disabled="enableKabkota === true && (kabkota_selected === '' || kabkota_selected === null)"
+          clearable
+          filterable
+          placeholder="Pilih Kecamatan"
+          style="width: 100%"
+          @change="changeSelection($event, 'changeKecamatan')"
+          @clear="clearSelection('clearKecamatan')"
+        >
           <el-option
             v-for="item in kecamatan_options"
             :key="item.value"
@@ -31,8 +40,16 @@
         </el-select>
       </el-col>
 
-      <el-col :span="8">
-        <el-select v-model="kelurahan_selected" clearable filterable placeholder="Pilih Kelurahan" style="width: 100%" @change="changeSelection($event, 'changeKelurahan')">
+      <el-col v-if="enableKelurahan" :span="8">
+        <el-select
+          v-model="kelurahan_selected"
+          :disabled="enableKecamatan === true && (kecamatan_selected === '' || kecamatan_selected === null)"
+          clearable
+          filterable
+          placeholder="Pilih Kelurahan"
+          style="width: 100%"
+          @change="changeSelection($event, 'changeKelurahan')"
+        >
           <el-option
             v-for="item in kelurahan_options"
             :key="item.value"
@@ -50,7 +67,25 @@ import { getKabkotaList, getKecamatanList, getKelurahanList } from '@/api/areas'
 
 export default {
   props: {
-    //
+    enableKabkota: {
+      type: Boolean,
+      default: true
+    },
+
+    enableKecamatan: {
+      type: Boolean,
+      default: true
+    },
+
+    enableKelurahan: {
+      type: Boolean,
+      default: true
+    },
+
+    parentId: {
+      type: Number,
+      default: null
+    }
   },
 
   data() {
@@ -70,15 +105,27 @@ export default {
 
   methods: {
     clearSelection(type) {
+      if (type === 'clearKabkota') {
+        this.kecamatan_selected = null
+        this.kelurahan_selected = null
 
+        this.kecamatan_options = []
+        this.kelurahan_options = []
+      }
+
+      if (type === 'clearKecamatan') {
+        this.kelurahan_selected = null
+
+        this.kelurahan_options = []
+      }
     },
 
     changeSelection(value, type) {
-      if (type === 'changeKabkota') {
+      if (type === 'changeKabkota' && value !== '') {
         this.getKecamatanOptions(value)
       }
 
-      if (type === 'changeKecamatan') {
+      if (type === 'changeKecamatan' && value !== '') {
         this.getKelurahanOptions(value)
       }
 
@@ -112,6 +159,11 @@ export default {
     },
 
     async getKelurahanOptions(parentId) {
+      // Jika parentId null, skip request, karena akan timeout (terlalu banyak data)
+      if (parentId === null) {
+        return false
+      }
+
       this.kelurahan_options = []
 
       const { data } = await getKelurahanList(parentId, true)
@@ -126,6 +178,14 @@ export default {
 
     init() {
       this.getKabkotaOptions()
+
+      if (this.enableKabkota === false) {
+        this.getKecamatanOptions(this.parentId)
+      }
+
+      if (this.enableKecamatan === false) {
+        this.getKelurahanOptions(this.parentId)
+      }
     }
   }
 }
