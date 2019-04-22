@@ -159,6 +159,11 @@ export default {
     },
 
     async getKelurahanOptions(parentId) {
+      // Jika parentId null, skip request, karena akan timeout (terlalu banyak data)
+      if (parentId === null) {
+        return false
+      }
+
       this.kelurahan_options = []
 
       const { data } = await getKelurahanList(parentId, true)
