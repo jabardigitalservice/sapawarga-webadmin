@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row :gutter="10" type="flex" justify="end">
-      <el-col :span="8">
+      <el-col v-if="enableKabkota" :span="8">
         <el-select
           v-model="kabkota_selected"
           clearable
@@ -20,7 +20,7 @@
         </el-select>
       </el-col>
 
-      <el-col :span="8">
+      <el-col v-if="enableKecamatan" :span="8">
         <el-select
           v-model="kecamatan_selected"
           clearable
@@ -39,7 +39,7 @@
         </el-select>
       </el-col>
 
-      <el-col :span="8">
+      <el-col v-if="enableKelurahan" :span="8">
         <el-select v-model="kelurahan_selected" clearable filterable placeholder="Pilih Kelurahan" style="width: 100%" @change="changeSelection($event, 'changeKelurahan')">
           <el-option
             v-for="item in kelurahan_options"
@@ -58,7 +58,20 @@ import { getKabkotaList, getKecamatanList, getKelurahanList } from '@/api/areas'
 
 export default {
   props: {
-    //
+    enableKabkota: {
+      type: Boolean,
+      default: true
+    },
+
+    enableKecamatan: {
+      type: Boolean,
+      default: true
+    },
+
+    enableKelurahan: {
+      type: Boolean,
+      default: true
+    }
   },
 
   data() {

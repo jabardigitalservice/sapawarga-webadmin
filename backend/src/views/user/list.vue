@@ -15,7 +15,14 @@
             </router-link>
           </el-col>
           <el-col :span="12">
-            <input-filter-area @changeKabkota="changeKabkota" @changeKecamatan="changeKecamatan" @changeKelurahan="changeKelurahan" />
+            <input-filter-area
+              :enable-kabkota="checkPermission(['staffProv'])"
+              :enable-kecamatan="checkPermission(['staffProv', 'staffKabkota'])"
+              :enable-kelurahan="checkPermission(['staffProv', 'staffKabkota', 'staffKec'])"
+              @changeKabkota="changeKabkota"
+              @changeKecamatan="changeKecamatan"
+              @changeKelurahan="changeKelurahan"
+            />
           </el-col>
         </el-row>
 
@@ -74,6 +81,7 @@ import _ from 'lodash'
 import { fetchList } from '@/api/staff'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 import InputFilterArea from '@/components/InputFilterArea'
+import checkPermission from '@/utils/permission'
 
 export default {
 
@@ -115,6 +123,8 @@ export default {
     this.getList()
   },
   methods: {
+    checkPermission,
+
     getList() {
       this.listLoading = true
       fetchList(this.listQuery).then(response => {
