@@ -95,7 +95,6 @@ export default {
   },
   data() {
     return {
-      dialogAdvancedSearchVisible: false,
       list: null,
       total: 0,
       listLoading: true,
