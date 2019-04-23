@@ -7,3 +7,10 @@ export function fetchList(query) {
     params: query
   })
 }
+
+export function countUser() {
+  return request({
+    url: '/staff/count',
+    method: 'get'
+  })
+}
