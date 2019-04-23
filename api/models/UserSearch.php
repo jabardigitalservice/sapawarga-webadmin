@@ -23,15 +23,18 @@ class UserSearch extends Model
     public $status;
 
     public $limit;
-    public $sortBy;
-    public $sortOrder;
+    public $sort_by;
+    public $sort_order;
 
     public function rules()
     {
         return [
             [['search'], 'string', 'max' => 50],
             [['limit'], 'integer'],
-            [['name', 'phone', 'role_id', 'kabkota_id', 'kec_id', 'kel_id', 'rw', 'status', 'sortBy', 'sortOrder'], 'string'],
+            [
+                ['name', 'phone', 'role_id', 'kabkota_id', 'kec_id', 'kel_id', 'rw', 'status', 'sort_by', 'sort_order'],
+                'string'
+            ],
         ];
     }
 
@@ -85,12 +88,12 @@ class UserSearch extends Model
             $query->andWhere(['user.status' => $this->status]);
         }
 
-        $this->sortBy = $this->sortBy ?? 'name';
-        $this->sortOrder = $this->getSortOrder($this->sortOrder);
+        $this->sort_by = $this->sortBy ?? 'name';
+        $this->sort_order = $this->getSortOrder($this->sort_order);
 
         $provider = new ActiveDataProvider([
             'query' => $query,
-            'sort'=> ['defaultOrder' => [$this->sortBy => $this->sortOrder]],
+            'sort'=> ['defaultOrder' => [$this->sort_by => $this->sort_order]],
             'pagination' => [
                 'pageSize' => $this->limit,
             ],

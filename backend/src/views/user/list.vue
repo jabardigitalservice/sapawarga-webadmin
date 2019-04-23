@@ -106,8 +106,8 @@ export default {
         kec_id: null,
         kel_id: null,
         role_id: this.roleId,
-        sortBy: 'name',
-        sortOrder: 'ascending',
+        sort_by: 'name',
+        sort_order: 'ascending',
         page: 1,
         limit: 10
       }
@@ -164,8 +164,8 @@ export default {
     },
 
     changeSort(e) {
-      this.listQuery.sortBy = e.prop
-      this.listQuery.sortOrder = e.order
+      this.listQuery.sort_by = e.prop
+      this.listQuery.sort_order = e.order
       this.getList()
     }
   }
