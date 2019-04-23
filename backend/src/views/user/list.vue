@@ -15,55 +15,7 @@
           </el-col>
         </el-row>
 
-        <el-card class="box-card" style="margin-bottom: 10px">
-          <el-form>
-            <el-row :gutter="10" type="flex">
-              <el-col :span="4">
-                <el-form-item style="margin-bottom: 0">
-                  <el-input placeholder="Nama Pengguna" />
-                </el-form-item>
-              </el-col>
-              <el-col :span="4">
-                <el-form-item style="margin-bottom: 0">
-                  <el-input placeholder="Nomor Telepon" />
-                </el-form-item>
-              </el-col>
-              <el-col :span="4">
-                <el-form-item style="margin-bottom: 0">
-                  <el-select
-                    clearable
-                    filterable
-                    placeholder="Pilih Status"
-                    style="width: 100%"
-                  >
-                    <el-option value="10" label="Aktif" />
-                    <el-option value="1" label="Tidak Aktif" />
-                    <el-option value="0" label="Pending" />
-                  </el-select>
-                </el-form-item>
-              </el-col>
-              <el-col :span="8">
-                <input-filter-area
-                  :enable-kabkota="checkPermission(['admin', 'staffProv'])"
-                  :enable-kecamatan="checkPermission(['admin', 'staffProv', 'staffKabkota'])"
-                  :enable-kelurahan="checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec'])"
-                  :parent-id="filterAreaParentId"
-                  @changeKabkota="changeKabkota"
-                  @changeKecamatan="changeKecamatan"
-                  @changeKelurahan="changeKelurahan"
-                />
-              </el-col>
-              <el-col :span="4">
-                <el-button type="primary" size="small" icon="el-icon-plus">
-                  Cari
-                </el-button>
-                <el-button type="primary" size="small" icon="el-icon-plus">
-                  Reset
-                </el-button>
-              </el-col>
-            </el-row>
-          </el-form>
-        </el-card>
+        <ListFilter :list-query.sync="listQuery" @submit-search="getList" />
 
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%" @sort-change="changeSort">
           <el-table-column type="index" width="50" align="center" />
@@ -119,12 +71,12 @@ import _ from 'lodash'
 
 import { fetchList } from '@/api/staff'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
-import InputFilterArea from '@/components/InputFilterArea'
-import checkPermission from '@/utils/permission'
+
+import ListFilter from './_listfilter'
 
 export default {
 
-  components: { Pagination, InputFilterArea },
+  components: { Pagination, ListFilter },
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -148,6 +100,9 @@ export default {
       total: 0,
       listLoading: true,
       listQuery: {
+        name: null,
+        phone: null,
+        status: null,
         kabkota_id: null,
         kec_id: null,
         kel_id: null,
@@ -159,27 +114,12 @@ export default {
       }
     }
   },
-  computed: {
-    filterAreaParentId() {
-      const authUser = this.$store.state.user
 
-      if (checkPermission(['staffKabkota'])) {
-        return parseInt(authUser.kabkota_id)
-      }
-
-      if (checkPermission(['staffKec'])) {
-        return parseInt(authUser.kec_id)
-      }
-
-      return null
-    }
-  },
   created() {
     this.getList()
   },
-  methods: {
-    checkPermission,
 
+  methods: {
     getList() {
       this.listLoading = true
       fetchList(this.listQuery).then(response => {
@@ -221,39 +161,6 @@ export default {
     changeSort(e) {
       this.listQuery.sortBy = e.prop
       this.listQuery.sortOrder = e.order
-      this.getList()
-    },
-
-    changeKabkota(id) {
-      // Jika clear selection, pastikan query juga reset
-      if (id === '') {
-        this.listQuery.kabkota_id = null
-        this.listQuery.kec_id = null
-        this.listQuery.kel_id = null
-      }
-
-      this.listQuery.kabkota_id = id
-      this.getList()
-    },
-
-    changeKecamatan(id) {
-      // Jika clear selection, pastikan query juga reset
-      if (id === '') {
-        this.listQuery.kec_id = null
-        this.listQuery.kel_id = null
-      }
-
-      this.listQuery.kec_id = id
-      this.getList()
-    },
-
-    changeKelurahan(id) {
-      // Jika clear selection, pastikan query juga reset
-      if (id === '') {
-        this.listQuery.kel_id = null
-      }
-
-      this.listQuery.kel_id = id
       this.getList()
     }
   }
