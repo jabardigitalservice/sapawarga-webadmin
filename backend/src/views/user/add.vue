@@ -54,18 +54,21 @@
           <el-form-item label="Alamat" prop="address">
             <el-input v-model="user.address" type="text"/>
           </el-form-item>
-          <el-form-item label="Peran" prop="role">
-            <el-select v-model="user.role" placeholder="Pilih Peran">
-              <el-option
-                v-for="item in opsiPeran"
-                :key="item.value"
-                :value="item.value"
-                :label="item.label"
-              >{{ item.label }}</el-option>
-            </el-select>
-          </el-form-item>
+
           <el-row>
             <el-col :span="12">
+              <el-form-item label="Peran" prop="role">
+                <el-select v-model="user.role" placeholder="Pilih Peran">
+                  <el-option
+                    v-for="item in opsiPeran"
+                    :key="item.value"
+                    :value="item.value"
+                    :label="item.label"
+                  >{{ item.label }}</el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12" class="form-right-side">
               <el-form-item
                 v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && checkPermission(['admin', 'staffProv']))"
                 label="Kab/Kota"
@@ -83,15 +86,6 @@
                     :label="user.kabkota.name"
                   >{{ item.name }}</el-option>
                 </el-select>
-              </el-form-item>
-            </el-col>
-            <el-col :span="12" class="form-right-side">
-              <el-form-item
-                v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffKec') && !(user.role == 'staffKel'))"
-                label="RW"
-                prop="rw"
-              >
-                <el-input v-model="user.rw" type="number" placeholder="Masukan RW"/>
               </el-form-item>
             </el-col>
           </el-row>
@@ -118,17 +112,6 @@
             </el-col>
             <el-col :span="12" class="form-right-side">
               <el-form-item
-                v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffKec') && !(user.role == 'staffKel'))"
-                label="RT"
-                prop="rt"
-              >
-                <el-input v-model="user.rt" type="number" placeholder="Masukan RT"/>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="12">
-              <el-form-item
                 v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffKec') && ! checkPermission(['staffKel']))"
                 label="Kelurahan"
                 prop="kelurahan"
@@ -143,7 +126,26 @@
                 </el-select>
               </el-form-item>
             </el-col>
-            <el-col :span="12"/>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item
+                v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffKec') && !(user.role == 'staffKel'))"
+                label="RW"
+                prop="rw"
+              >
+                <el-input v-model="user.rw" type="number" placeholder="Masukan RW"/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12" class="form-right-side">
+              <el-form-item
+                v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffKec') && !(user.role == 'staffKel'))"
+                label="RT"
+                prop="rt"
+              >
+                <el-input v-model="user.rt" type="number" placeholder="Masukan RT"/>
+              </el-form-item>
+            </el-col>
           </el-row>
           <p class="warn-content">Media Sosial</p>
 
@@ -450,7 +452,6 @@ export default {
     ...mapGetters(["AREAS", "KECAMATAN", "KELURAHAN"]),
     parentId() {
       const authUser = this.$store.state.user;
-
       if (checkPermission(["staffKabkota"])) {
         return parseInt(authUser.kabkota_id);
       }
@@ -458,7 +459,6 @@ export default {
         // this.pilihKelurahan();
         return parseInt(authUser.kec_id);
       }
-
       return null;
     }
   },
