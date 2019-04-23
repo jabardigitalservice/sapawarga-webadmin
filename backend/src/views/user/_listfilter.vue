@@ -89,9 +89,7 @@ export default {
     },
 
     resetFilter() {
-      Object.assign(this.$data, this.$options.data())
-
-      this.$emit('submit-search')
+      this.$emit('reset-search')
     },
 
     changeKabkota(id) {

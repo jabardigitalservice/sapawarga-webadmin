@@ -15,7 +15,7 @@
           </el-col>
         </el-row>
 
-        <ListFilter :list-query.sync="listQuery" @submit-search="getList" />
+        <ListFilter :list-query.sync="listQuery" @submit-search="getList" @reset-search="resetFilter" />
 
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%" @sort-change="changeSort">
           <el-table-column type="index" width="50" align="center" />
@@ -127,6 +127,12 @@ export default {
         this.total = response.data._meta.totalCount
         this.listLoading = false
       })
+    },
+
+    resetFilter() {
+      Object.assign(this.$data, this.$options.data())
+
+      this.getList()
     },
 
     getKedudukan(user) {
