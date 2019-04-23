@@ -303,7 +303,7 @@ class StaffCest
         $I->amStaff();
 
         $I->sendPUT($this->endpointStaff . '/1', [
-            'email' => 'admin@example.com',
+            'email' => 'admin@example.com'
         ]);
         $I->canSeeResponseCodeIs(200);
         $I->seeResponseIsJson();

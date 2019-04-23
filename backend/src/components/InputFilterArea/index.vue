@@ -1,15 +1,13 @@
 <template>
   <div>
-    <el-row :gutter="10" type="flex" justify="end">
+    <el-row :gutter="10">
       <el-col v-if="enableKabkota" :span="8">
         <el-select
           v-model="kabkota_selected"
-          clearable
           filterable
           placeholder="Pilih Kabupaten/Kota"
           style="width: 100%"
           @change="changeSelection($event, 'changeKabkota')"
-          @clear="clearSelection('clearKabkota')"
         >
           <el-option
             v-for="item in kabkota_options"
@@ -24,12 +22,10 @@
         <el-select
           v-model="kecamatan_selected"
           :disabled="enableKabkota === true && (kabkota_selected === '' || kabkota_selected === null)"
-          clearable
           filterable
           placeholder="Pilih Kecamatan"
           style="width: 100%"
           @change="changeSelection($event, 'changeKecamatan')"
-          @clear="clearSelection('clearKecamatan')"
         >
           <el-option
             v-for="item in kecamatan_options"
@@ -44,7 +40,6 @@
         <el-select
           v-model="kelurahan_selected"
           :disabled="enableKecamatan === true && (kecamatan_selected === '' || kecamatan_selected === null)"
-          clearable
           filterable
           placeholder="Pilih Kelurahan"
           style="width: 100%"
@@ -82,6 +77,21 @@ export default {
       default: true
     },
 
+    kabkotaId: {
+      type: Number,
+      default: null
+    },
+
+    kecId: {
+      type: Number,
+      default: null
+    },
+
+    kelId: {
+      type: Number,
+      default: null
+    },
+
     parentId: {
       type: Number,
       default: null
@@ -99,33 +109,50 @@ export default {
     }
   },
 
+  watch: {
+    kabkotaId: {
+      handler: function(value) {
+        this.kabkota_selected = value
+      },
+      immediate: true
+    },
+
+    kecId: {
+      handler: function(value) {
+        this.kecamatan_selected = value
+      },
+      immediate: true
+    },
+
+    kelId: {
+      handler: function(value) {
+        this.kelurahan_selected = value
+      },
+      immediate: true
+    }
+  },
+
   mounted() {
     this.init()
   },
 
   methods: {
-    clearSelection(type) {
-      if (type === 'clearKabkota') {
+    changeSelection(value, type) {
+      if (type === 'changeKabkota' && value !== '') {
         this.kecamatan_selected = null
         this.kelurahan_selected = null
 
         this.kecamatan_options = []
         this.kelurahan_options = []
-      }
 
-      if (type === 'clearKecamatan') {
-        this.kelurahan_selected = null
-
-        this.kelurahan_options = []
-      }
-    },
-
-    changeSelection(value, type) {
-      if (type === 'changeKabkota' && value !== '') {
         this.getKecamatanOptions(value)
       }
 
       if (type === 'changeKecamatan' && value !== '') {
+        this.kelurahan_selected = null
+
+        this.kelurahan_options = []
+
         this.getKelurahanOptions(value)
       }
 
@@ -146,6 +173,11 @@ export default {
     },
 
     async getKecamatanOptions(parentId) {
+      // Jika parentId null, skip request, karena akan timeout (terlalu banyak data)
+      if (parentId === null) {
+        return false
+      }
+
       this.kecamatan_options = []
 
       const { data } = await getKecamatanList(parentId, true)
@@ -159,6 +191,11 @@ export default {
     },
 
     async getKelurahanOptions(parentId) {
+      // Jika parentId null, skip request, karena akan timeout (terlalu banyak data)
+      if (parentId === null) {
+        return false
+      }
+
       this.kelurahan_options = []
 
       const { data } = await getKelurahanList(parentId, true)

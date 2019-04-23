@@ -45,8 +45,8 @@ class AreaSearch extends Area
 
         // add conditions that should always apply here
 
-        $sortBy    = Arr::get($params, 'sortBy', 'name');
-        $sortOrder = Arr::get($params, 'sortOrder', 'ascending');
+        $sortBy    = Arr::get($params, 'sort_by', 'name');
+        $sortOrder = Arr::get($params, 'sort_order', 'ascending');
         $sortOrder = $this->getSortOrder($sortOrder);
 
         $pageLimit = Arr::get($params, 'limit');
