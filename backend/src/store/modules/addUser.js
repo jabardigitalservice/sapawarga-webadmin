@@ -1,5 +1,5 @@
-import { getRegion, getKecamatan, getKelurahan, addUser } from '../../api/user';
-import { Message } from 'element-ui';
+import { getRegion, getKecamatan, getKelurahan, addUser } from '../../api/user'
+import { Message } from 'element-ui'
 const state = {
   user: [
     {
@@ -24,7 +24,7 @@ const state = {
   areas: [],
   kecamatan: [],
   kelurahan: []
-};
+}
 
 const mutations = {
   ADD_USER: (state, payload) => {
@@ -87,34 +87,34 @@ const actions = {
     return new Promise((resolve, rejects) => {
       addUser(payload)
         .then(() => {
-          commit('ADD_USER', payload);
-          resolve();
+          commit('ADD_USER', payload)
+          resolve()
         })
         .catch(error => {
-          let usernameError = error.response.data.data.username;
-          let emailError = error.response.data.data.email;
+          const usernameError = error.response.data.data.username
+          const emailError = error.response.data.data.email
           if (!emailError) {
             Message({
               message: usernameError[0],
               type: 'error',
               duration: 5 * 1000
-            });
+            })
           } else if (!usernameError) {
             Message({
               message: emailError[0],
               type: 'error',
               duration: 5 * 1000
-            });
+            })
           } else {
             Message({
               message: 'Nama pengguna dan alamat email sudah digunakan',
               type: 'error',
               duration: 5 * 1000
-            });
+            })
           }
-          rejects(error);
-        });
-    });
+          rejects(error)
+        })
+    })
   }
 }
 

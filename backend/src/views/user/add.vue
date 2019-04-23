@@ -76,7 +76,6 @@
               >
                 <el-select
                   v-model="user.kabkota"
-                  v-bind="pilihKota"
                   placeholder="Pilih Kab/Kota"
                   @change="pilihKecamatan"
                 >
@@ -136,7 +135,7 @@
                 label="RW"
                 prop="rw"
               >
-                <el-input v-model="user.rw" type="number" placeholder="Masukan RW"/>
+                <el-input v-model="user.rw" type="number" placeholder="Masukan RW" />
               </el-form-item>
             </el-col>
             <el-col :span="12" class="form-right-side">
@@ -145,7 +144,7 @@
                 label="RT"
                 prop="rt"
               >
-                <el-input v-model="user.rt" type="number" placeholder="Masukan RT"/>
+                <el-input v-model="user.rt" type="number" placeholder="Masukan RT" />
               </el-form-item>
             </el-col>
           </el-row>
@@ -153,11 +152,6 @@
 
           <el-form-item label="Twitter" prop="twitter">
             <el-input v-model="user.twitter" type="text" placeholder="Contoh: @jabardigitalservice" />
-            <el-input
-              v-model="user.twitter"
-              type="text"
-              placeholder="Contoh: @jabardigitalservice"
-            />
           </el-form-item>
           <el-form-item label="Facebook" prop="facebook">
             <el-input
@@ -184,19 +178,19 @@
   </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
-import checkPermission from "@/utils/permission";
+import { mapGetters } from 'vuex'
+import checkPermission from '@/utils/permission'
 export default {
   data() {
     const checkPhone = (rule, value, callback) => {
-      const phoneStringFormat = value.toString();
-      const checkStringPhone = phoneStringFormat.startsWith("0");
+      const phoneStringFormat = value.toString()
+      const checkStringPhone = phoneStringFormat.startsWith('0')
       if (!checkStringPhone) {
-        callback(new Error("Nomor telepon harus dimulai dari 0"));
+        callback(new Error('Nomor telepon harus dimulai dari 0'))
       } else {
-        callback();
+        callback()
       }
-    };
+    }
     return {
       user: {
         username: '',
@@ -243,8 +237,8 @@ export default {
         },
         { label: 'Pengguna', value: 'user' }
       ],
-      id_kabkota: "",
-      id_kec: "",
+      id_kabkota: '',
+      id_kec: '',
 
       // validation
       rules: {
@@ -267,8 +261,8 @@ export default {
           {
             pattern: /^[a-z0-9_.]+$/,
             message:
-              "Nama pengguna hanya boleh menggunakan huruf, angka, underscore dan titik",
-            trigger: "blur"
+              'Nama pengguna hanya boleh menggunakan huruf, angka, underscore dan titik',
+            trigger: 'blur'
           }
         ],
         name: [
@@ -284,8 +278,8 @@ export default {
           },
           {
             pattern: /^[a-zA-Z.'\s]+$/,
-            message: "Nama hanya boleh menggunakan huruf, aposthrope dan titik",
-            trigger: "blur"
+            message: 'Nama hanya boleh menggunakan huruf, aposthrope dan titik',
+            trigger: 'blur'
           }
         ],
         email: [
@@ -303,8 +297,8 @@ export default {
         password: [
           {
             required: true,
-            message: "Kata sandi harus diisi",
-            trigger: "change"
+            message: 'Kata sandi harus diisi',
+            trigger: 'change'
           },
           {
             max: 255,
@@ -319,8 +313,8 @@ export default {
           {
             pattern: /^[a-zA-Z0-9\w\S]+$/,
             message:
-              "Karakter kata hanya boleh menggunakan huruf, angka dan spesial karakter",
-            trigger: "blur"
+              'Karakter kata hanya boleh menggunakan huruf, angka dan spesial karakter',
+            trigger: 'blur'
           }
         ],
         phone: [
@@ -336,17 +330,17 @@ export default {
           },
           {
             max: 13,
-            message: "Nomor telepon maksimal 13 karakter",
-            trigger: "blur"
+            message: 'Nomor telepon maksimal 13 karakter',
+            trigger: 'blur'
           },
           {
             pattern: /^[0-9]+$/,
-            message: "Nomor telepon hanya boleh menggunakan angka",
-            trigger: "blur"
+            message: 'Nomor telepon hanya boleh menggunakan angka',
+            trigger: 'blur'
           },
           {
             validator: checkPhone,
-            trigger: "blur"
+            trigger: 'blur'
           }
         ],
         address: [
@@ -441,28 +435,28 @@ export default {
       }
     }
   },
-  created() {
-    this.pilihKota();
-    this.parentId;
-    if (checkPermission(["staffKabkota"])) {
-      this.pilihKecamatan();
-    }
-    if (checkPermission(["staffKec"])) {
-      this.pilihKelurahan();
+
+  computed: {
+    ...mapGetters(['AREAS', 'KECAMATAN', 'KELURAHAN']),
+    parentId() {
+      const authUser = this.$store.state.user
+      if (checkPermission(['staffKabkota'])) {
+        return parseInt(authUser.kabkota_id)
+      }
+      if (checkPermission(['staffKec'])) {
+        return parseInt(authUser.kec_id)
+      }
+      return null
     }
   },
-  computed: {
-    ...mapGetters(["AREAS", "KECAMATAN", "KELURAHAN"]),
-    parentId() {
-      const authUser = this.$store.state.user;
-      if (checkPermission(["staffKabkota"])) {
-        return parseInt(authUser.kabkota_id);
-      }
-      if (checkPermission(["staffKec"])) {
-        // this.pilihKelurahan();
-        return parseInt(authUser.kec_id);
-      }
-      return null;
+  created() {
+    this.pilihKota()
+    this.parentId
+    if (checkPermission(['staffKabkota'])) {
+      this.pilihKecamatan()
+    }
+    if (checkPermission(['staffKec'])) {
+      this.pilihKelurahan()
     }
   },
 
@@ -491,12 +485,12 @@ export default {
             .then(() => {
               this.$alert('Pengguna berhasil ditambahkan', {
                 callback: action => {}
-              });
-              this.$refs[formName].resetFields();
+              })
+              this.$refs[formName].resetFields()
             })
             .catch(() => {
-              this.$refs[formName].resetFields();
-            });
+              this.$refs[formName].resetFields()
+            })
         } else {
           return false
         }
@@ -507,25 +501,25 @@ export default {
     },
     pilihKota: function() {
       return this.$store
-        .dispatch("addUser/pilihKota")
+        .dispatch('addUser/pilihKota')
         .then(() => {})
-        .catch();
+        .catch()
     },
     pilihKecamatan: function() {
       if (!(this.user.kabkota.id == null)) {
-        this.id_kabkota = this.user.kabkota.id;
+        this.id_kabkota = this.user.kabkota.id
       } else {
-        this.id_kabkota = this.parentId;
+        this.id_kabkota = this.parentId
       }
-      this.$store.dispatch("addUser/pilihKecamatan", this.id_kabkota);
+      this.$store.dispatch('addUser/pilihKecamatan', this.id_kabkota)
     },
     pilihKelurahan: function() {
       if (!(this.user.kecamatan.id == null)) {
-        this.id_kec = this.user.kecamatan.id;
+        this.id_kec = this.user.kecamatan.id
       } else {
-        this.id_kec = this.parentId;
+        this.id_kec = this.parentId
       }
-      this.$store.dispatch("addUser/pilihKelurahan", this.id_kec);
+      this.$store.dispatch('addUser/pilihKelurahan', this.id_kec)
     },
     // Generate password
     randomPassword(length) {
