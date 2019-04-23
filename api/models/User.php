@@ -48,6 +48,8 @@ use yii\web\Request as WebRequest;
  */
 class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
+    const MAX_LENGTH = 255;
+
     // Constants for User's role and status
     const ROLE_USER = 10;
     const ROLE_STAFF_RW = 50;
@@ -492,10 +494,10 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             ['username', 'validateUsername'],
             ['email', 'trim'],
             ['email', 'required'],
-            ['email', 'string', 'max' => 255],
+            ['email', 'string', 'max' => self::MAX_LENGTH],
             ['email', 'email'],
             ['email', 'validateEmail'],
-            ['password', 'string', 'min' => 5],
+            ['password', 'string', 'length' => [5, self::MAX_LENGTH]],
             ['password', 'validatePasswordSubmit'],
             [['confirmed_at', 'blocked_at', 'last_login_at'], 'datetime', 'format' => 'php:U'],
             [['last_login_ip', 'registration_ip'], 'ip'],
@@ -522,6 +524,8 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
                 return $model->role <= self::ROLE_STAFF_RW;
             }],
             [['name', 'phone', 'address', 'rt', 'rw', 'kel_id', 'kec_id', 'kabkota_id', 'lat', 'lon', 'photo_url', 'facebook', 'twitter', 'instagram'], 'default'],
+            [['name', 'address'], 'string', 'max' => self::MAX_LENGTH],
+            ['phone', 'string', 'length' => [3, 13]],
         ];
     }
 
