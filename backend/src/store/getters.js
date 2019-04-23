@@ -1,5 +1,3 @@
-import { stat } from 'fs';
-
 const getters = {
   sidebar: state => state.app.sidebar,
   language: state => state.app.language,
@@ -19,5 +17,5 @@ const getters = {
   AREAS: state => state.addUser.areas,
   KECAMATAN: state => state.addUser.kecamatan,
   KELURAHAN: state => state.addUser.kelurahan
-};
-export default getters;
+}
+export default getters

@@ -48,7 +48,13 @@ class UserEditForm extends Model
             ],
 
             ['username', 'trim'],
-            ['username', 'string', 'length' => [5, 14]],
+            ['username', 'string', 'length' => [4, 14]],
+            [
+                'username',
+                'match',
+                'pattern' => '/^[a-z0-9_.]{4,14}$/',
+                'message' => Yii::t('app', 'error.username.pattern')
+            ],
             [
                 'username',
                 'unique',
@@ -61,7 +67,7 @@ class UserEditForm extends Model
 
             ['email', 'trim'],
             ['email', 'email'],
-            ['email', 'string', 'max' => 255],
+            ['email', 'string', 'max' => User::MAX_LENGTH],
             [
                 'email',
                 'unique',
@@ -72,7 +78,7 @@ class UserEditForm extends Model
                 }
             ],
 
-            ['password', 'string', 'min' => 6],
+            ['password', 'string', 'length' => [5, User::MAX_LENGTH]],
             [['username', 'name', 'phone', 'address', 'rw', 'kel_id', 'kec_id', 'kabkota_id', 'photo_url', 'facebook', 'twitter', 'instagram'], 'default'],
         ];
     }
