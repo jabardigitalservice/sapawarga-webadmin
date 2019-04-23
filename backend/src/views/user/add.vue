@@ -60,7 +60,7 @@
               <el-form-item label="Peran" prop="role">
                 <el-select v-model="user.role" placeholder="Pilih Peran">
                   <el-option
-                    v-for="item in opsiPeran"
+                    v-for="item in filterRole"
                     :key="item.value"
                     :value="item.value"
                     :label="item.label"
@@ -448,6 +448,25 @@ export default {
         return parseInt(authUser.kec_id)
       }
       return null
+    },
+    filterRole(){
+      let ruleOptions = this.opsiPeran
+      if(checkPermission(['admin'])){
+        return ruleOptions
+      }
+      if(checkPermission(['staffProv'])){
+        return ruleOptions.slice(1, ruleOptions.length)
+      }
+      if(checkPermission(['staffKabkota'])){
+        return ruleOptions.slice(2, ruleOptions.length)
+      }
+      if(checkPermission(['staffKec'])){
+        return ruleOptions.slice(3, ruleOptions.length)
+      }
+      if(checkPermission(['staffKel'])){
+        return ruleOptions.slice(4, ruleOptions.length)
+      }
+      return ruleOptions
     }
   },
   created() {
