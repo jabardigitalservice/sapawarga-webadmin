@@ -80,7 +80,7 @@ const userRouter = {
       },
       meta: {
         title: 'User Tingkat RW',
-        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']
+        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec']
       }
     },
     {
