@@ -81,7 +81,8 @@ export default {
     statusFilter(status) {
       const statusMap = {
         '10': 'success',
-        '1': 'info',
+        '1': 'warning',
+        '0': 'info',
         '-1': 'danger'
       }
       return statusMap[status]
