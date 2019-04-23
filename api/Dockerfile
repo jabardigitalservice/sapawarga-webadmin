@@ -119,6 +119,8 @@ COPY . /srv/
 RUN chown -R www-data:www-data /srv/ \
     && chmod 777 -R /srv/runtime
 
+RUN /usr/local/bin/composer install --prefer-dist
+
 EXPOSE 80
 
 CMD ["docker-entrypoint.sh"]
