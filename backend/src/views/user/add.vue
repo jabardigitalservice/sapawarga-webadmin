@@ -99,6 +99,7 @@
                 <el-select
                   v-model="user.kecamatan"
                   placeholder="Pilih Kecamatan"
+                  :disabled="user.kabkota == '' && checkPermission(['admin', 'staffProv'])"
                   @change="pilihKelurahan"
                 >
                   <el-option
@@ -116,7 +117,7 @@
                 label="Kelurahan"
                 prop="kelurahan"
               >
-                <el-select v-model="user.kelurahan" placeholder="Pilih Kelurahan">
+                <el-select v-model="user.kelurahan" placeholder="Pilih Kelurahan" :disabled="user.kecamatan == '' && checkPermission(['admin', 'staffProv', 'staffKabkota'])">
                   <el-option
                     v-for="item in KELURAHAN"
                     :key="item.id"
@@ -135,7 +136,7 @@
                 label="RW"
                 prop="rw"
               >
-                <el-input v-model="user.rw" type="number" placeholder="Masukan RW" />
+                <el-input v-model="user.rw" type="number" placeholder="Masukan RW" :disabled="user.kelurahan == '' && checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec'])" />
               </el-form-item>
             </el-col>
             <el-col :span="12" class="form-right-side">
@@ -144,7 +145,7 @@
                 label="RT"
                 prop="rt"
               >
-                <el-input v-model="user.rt" type="number" placeholder="Masukan RT" />
+                <el-input v-model="user.rt" type="number" placeholder="Masukan RT" :disabled="user.rw == '' && checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec'])" />
               </el-form-item>
             </el-col>
           </el-row>
