@@ -1,35 +1,5 @@
-import Axios from 'axios'
-import getters from '../getters'
 import { getRegion, getKecamatan, getKelurahan, addUser } from '../../api/user'
-import { resolve } from 'url'
-import { rejects } from 'assert'
-
-// (state = {
-//   // todos: null
-// }),
-//   (getters = {
-//     TODOS: state => {
-//       return state.todos;
-//     }
-//   }),
-//   (mutations = {
-//     SET_TODO: (state, payload) => {
-//       state.todos = payload;
-//     },
-//     ADD_TODO: (state, payload) => {
-//       state.todos.push(payload);
-//     }
-//   }),
-//   (actions = {
-//     GET_TODO: async (context, payload) => {
-//       let { data } = await Axios.get('http://yourwebsite.com/api/todo');
-//       context.commit('SET_TODO', data);
-//     },
-//     SAVE_TODO: async (context, payload) => {
-//       let { data } = await Axios.post('http://yourwebsite.com/api/todo');
-//       context.commit('ADD_TODO', payload);
-//     }
-//   });
+import { Message } from 'element-ui'
 const state = {
   user: [
     {
@@ -51,30 +21,9 @@ const state = {
       photo: ''
     }
   ],
-  areas: [
-    {
-      id: '',
-      name: '',
-      parent_id: '',
-      depth: ''
-    }
-  ],
-  kecamatan: [
-    {
-      id: '',
-      name: '',
-      parent_id: '',
-      depth: ''
-    }
-  ],
-  kelurahan: [
-    {
-      id: '',
-      name: '',
-      parent_id: '',
-      depth: ''
-    }
-  ]
+  areas: [],
+  kecamatan: [],
+  kelurahan: []
 }
 
 const mutations = {
@@ -92,7 +41,7 @@ const mutations = {
   }
 }
 const actions = {
-  pilihKota: async({ commit }) => {
+  pilihKota({ commit }) {
     return new Promise((resolve, rejects) => {
       getRegion()
         .then(response => {
@@ -137,14 +86,33 @@ const actions = {
   tambahUser: async({ commit }, payload) => {
     return new Promise((resolve, rejects) => {
       addUser(payload)
-        .then(response => {
-          const { data } = response
+        .then(() => {
           commit('ADD_USER', payload)
           resolve()
         })
         .catch(error => {
-          error
-          rejects('failed')
+          const usernameError = error.response.data.data.username
+          const emailError = error.response.data.data.email
+          if (!emailError) {
+            Message({
+              message: usernameError[0],
+              type: 'error',
+              duration: 5 * 1000
+            })
+          } else if (!usernameError) {
+            Message({
+              message: emailError[0],
+              type: 'error',
+              duration: 5 * 1000
+            })
+          } else {
+            Message({
+              message: 'Nama pengguna dan alamat email sudah digunakan',
+              type: 'error',
+              duration: 5 * 1000
+            })
+          }
+          rejects(error)
         })
     })
   }
