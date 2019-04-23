@@ -25,7 +25,7 @@
           </el-dropdown-item>
           <el-dropdown-item>Peran: {{ roles[0] }}</el-dropdown-item>
           <router-link to="/">
-            <el-dropdown-item>{{ $t('Lihat profil') }}</el-dropdown-item>
+            <el-dropdown-item>{{ $t('navbar.profile') }}</el-dropdown-item>
           </router-link>
           <el-dropdown-item divided>
             <span style="display:block;" @click="logout">{{ $t('navbar.logOut') }}</span>
