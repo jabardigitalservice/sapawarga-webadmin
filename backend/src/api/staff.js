@@ -7,3 +7,23 @@ export function fetchList(query) {
     params: query
   })
 }
+
+export function activate(id) {
+  return request({
+    url: `/staff/${id}`,
+    method: 'put',
+    data: {
+      status: 10
+    }
+  })
+}
+
+export function deactivate(id) {
+  return request({
+    url: `/staff/${id}`,
+    method: 'put',
+    data: {
+      status: 0
+    }
+  })
+}
