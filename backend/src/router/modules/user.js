@@ -32,7 +32,7 @@ const userRouter = {
       },
       meta: {
         title: 'Provinsi',
-        roles: ['admin', 'staffProv']
+        roles: ['admin']
       }
     },
     {
