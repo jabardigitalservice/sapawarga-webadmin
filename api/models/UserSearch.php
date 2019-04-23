@@ -88,7 +88,7 @@ class UserSearch extends Model
             $query->andWhere(['user.status' => $this->status]);
         }
 
-        $this->sort_by = $this->sortBy ?? 'name';
+        $this->sort_by = $this->sort_by ?? 'name';
         $this->sort_order = $this->getSortOrder($this->sort_order);
 
         $provider = new ActiveDataProvider([
