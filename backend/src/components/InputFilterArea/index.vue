@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-row :gutter="10" type="flex" justify="end">
+    <el-row :gutter="10">
       <el-col v-if="enableKabkota" :span="8">
         <el-select
           v-model="kabkota_selected"

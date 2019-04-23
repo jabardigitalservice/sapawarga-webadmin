@@ -5,7 +5,6 @@
 
     <el-row :gutter="20">
       <el-col :span="24">
-
         <el-row style="margin: 10px 0px">
           <el-col :span="12">
             <router-link :to="{ path: '/user/create', query: { role_id: roleId }}">
@@ -13,27 +12,63 @@
                 Tambah Pengguna Baru
               </el-button>
             </router-link>
-
-            <el-button type="primary" size="small" @click="dialogAdvancedSearchVisible = true">Pencarian</el-button>
-
-          </el-col>
-          <el-col :span="12">
-            <input-filter-area
-              :enable-kabkota="checkPermission(['admin', 'staffProv'])"
-              :enable-kecamatan="checkPermission(['admin', 'staffProv', 'staffKabkota'])"
-              :enable-kelurahan="checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec'])"
-              :parent-id="filterAreaParentId"
-              @changeKabkota="changeKabkota"
-              @changeKecamatan="changeKecamatan"
-              @changeKelurahan="changeKelurahan"
-            />
           </el-col>
         </el-row>
+
+        <el-card class="box-card" style="margin-bottom: 10px">
+          <el-form>
+            <el-row :gutter="10" type="flex">
+              <el-col :span="4">
+                <el-form-item style="margin-bottom: 0">
+                  <el-input placeholder="Nama Pengguna" />
+                </el-form-item>
+              </el-col>
+              <el-col :span="4">
+                <el-form-item style="margin-bottom: 0">
+                  <el-input placeholder="Nomor Telepon" />
+                </el-form-item>
+              </el-col>
+              <el-col :span="4">
+                <el-form-item style="margin-bottom: 0">
+                  <el-select
+                    clearable
+                    filterable
+                    placeholder="Pilih Status"
+                    style="width: 100%"
+                  >
+                    <el-option value="10" label="Aktif" />
+                    <el-option value="1" label="Tidak Aktif" />
+                    <el-option value="0" label="Pending" />
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <input-filter-area
+                  :enable-kabkota="checkPermission(['admin', 'staffProv'])"
+                  :enable-kecamatan="checkPermission(['admin', 'staffProv', 'staffKabkota'])"
+                  :enable-kelurahan="checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec'])"
+                  :parent-id="filterAreaParentId"
+                  @changeKabkota="changeKabkota"
+                  @changeKecamatan="changeKecamatan"
+                  @changeKelurahan="changeKelurahan"
+                />
+              </el-col>
+              <el-col :span="4">
+                <el-button type="primary" size="small" icon="el-icon-plus">
+                  Cari
+                </el-button>
+                <el-button type="primary" size="small" icon="el-icon-plus">
+                  Reset
+                </el-button>
+              </el-col>
+            </el-row>
+          </el-form>
+        </el-card>
 
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%" @sort-change="changeSort">
           <el-table-column type="index" width="50" align="center" />
 
-          <el-table-column prop="name" sortable="custom" label="Name" />
+          <el-table-column prop="name" sortable="custom" label="Nama Pengguna" />
 
           <el-table-column label="Kedudukan">
             <template slot-scope="{row}">
@@ -76,23 +111,6 @@
         <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
       </el-col>
     </el-row>
-
-    <el-dialog title="Pencarian" :visible.sync="dialogAdvancedSearchVisible">
-      <el-form>
-        <el-form-item label="Nama Pengguna">
-          <el-input autocomplete="off" />
-        </el-form-item>
-
-        <el-form-item label="Nomor Telepon">
-          <el-input autocomplete="off" />
-        </el-form-item>
-      </el-form>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogAdvancedSearchVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="dialogAdvancedSearchVisible = false">Confirm</el-button>
-      </span>
-    </el-dialog>
-
   </div>
 </template>
 
