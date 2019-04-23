@@ -22,8 +22,8 @@
               style="width: 100%"
             >
               <el-option value="10" label="Aktif" />
-              <el-option value="1" label="Tidak Aktif" />
-              <el-option value="0" label="Pending" />
+              <el-option value="1" label="Pending" />
+              <el-option value="0" label="Tidak Aktif" />
             </el-select>
           </el-form-item>
         </el-col>
@@ -33,6 +33,9 @@
             :enable-kecamatan="checkPermission(['admin', 'staffProv', 'staffKabkota'])"
             :enable-kelurahan="checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec'])"
             :parent-id="filterAreaParentId"
+            :kabkota-id="listQuery.kabkota_id"
+            :kec-id="listQuery.kec_id"
+            :kel-id="listQuery.kel_id"
             @changeKabkota="changeKabkota"
             @changeKecamatan="changeKecamatan"
             @changeKelurahan="changeKelurahan"
