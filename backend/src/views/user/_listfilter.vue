@@ -64,6 +64,7 @@ export default {
 
   props: {
     listQuery: {
+      type: Object,
       default: null
     }
   },
