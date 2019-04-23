@@ -1,0 +1,19 @@
+image: docker:latest
+
+services:
+  - docker:dind
+
+before_script:
+  - apk add --no-cache py-pip python-dev libffi-dev openssl-dev gcc libc-dev make
+  - pip install docker-compose
+
+stages:
+  - build
+
+build_test_api:
+  stage: build
+  script:
+    - docker-compose -f docker-compose.dev.yml up -d --build
+    - sleep 30
+    - docker-compose -f docker-compose.dev.yml exec -T api php yii seeder
+    - docker-compose -f docker-compose.dev.yml exec -T api composer run test
