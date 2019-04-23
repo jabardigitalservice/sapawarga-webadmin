@@ -2,7 +2,7 @@
   <div class="app-container">
 
     <!-- STATISTIK TAMPILKAN DI ATAS COY -->
-    <panel-group :total-all-user="1000" />
+    <panel-group :role-id="roleId" :total-all-user="1000" :total-user-province="20" :total-user-kota="27" :total-user-kec="627" :total-user-kel="22" :total-user-rw="111" />
 
     <el-row :gutter="20">
       <el-col :span="24">
