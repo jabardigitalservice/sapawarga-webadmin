@@ -175,7 +175,7 @@ export default {
 
     async activateUser(id) {
       try {
-        await this.$confirm('Anda yakin ingin mengaktifkan pengguna ini?', 'Warning', {
+        await this.$confirm(this.$t('crud.deactivate-confirm'), 'Warning', {
           confirmButtonText: 'Ya',
           cancelButtonText: 'Batal',
           type: 'warning'
@@ -198,7 +198,7 @@ export default {
 
     async deactivateUser(id) {
       try {
-        await this.$confirm('Anda yakin ingin menonaktifkan pengguna ini?', 'Warning', {
+        await this.$confirm(this.$t('crud.deactivate-confirm'), 'Warning', {
           confirmButtonText: 'Ya',
           cancelButtonText: 'Batal',
           type: 'warning'
