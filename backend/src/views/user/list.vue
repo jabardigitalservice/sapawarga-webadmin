@@ -140,12 +140,12 @@ export default {
 
     getTotalUser() {
       totalUser().then(response => {
-        this.totalAllUser = _.find(response.data.items, ["level", "all"]).value
-        this.totalUserProvince = _.find(response.data.items, ["level", "prov"]).value
-        this.totalUserKabKota = _.find(response.data.items, ["level", "kabkota"]).value
-        this.totalUserKec = _.find(response.data.items, ["level", "kec"]).value
-        this.totalUserKel = _.find(response.data.items, ["level", "kel"]).value
-        this.totalUserRw = _.find(response.data.items, ["level", "rw"]).value
+        this.totalAllUser = _.find(response.data.items, ['level', 'all']).value
+        this.totalUserProvince = _.find(response.data.items, ['level', 'prov']).value
+        this.totalUserKabKota = _.find(response.data.items, ['level', 'kabkota']).value
+        this.totalUserKec = _.find(response.data.items, ['level', 'kec']).value
+        this.totalUserKel = _.find(response.data.items, ['level', 'kel']).value
+        this.totalUserRw = _.find(response.data.items, ['level', 'rw']).value
       })
     },
 
