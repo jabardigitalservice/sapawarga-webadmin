@@ -257,6 +257,7 @@ class UserController extends ActiveController
         $model = new LoginForm();
         $model->scenario = LoginForm::SCENARIO_LOGIN;
         $model->roles = [
+            User::ROLE_STAFF_RW,
             User::ROLE_USER,
         ];
         if ($model->load(Yii::$app->request->post()) && $model->login()) {

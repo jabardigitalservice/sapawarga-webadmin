@@ -61,7 +61,7 @@ class PhoneBookCest
 
     public function getListTasikmalayaTest(ApiTester $I)
     {
-        $I->amUser('user.tasikmalaya');
+        $I->amUser('user.tasik');
 
         $I->sendGET('/v1/phone-books');
         $I->canSeeResponseCodeIs(200);
@@ -107,7 +107,7 @@ class PhoneBookCest
 
     public function getListFilterBandungTest(ApiTester $I)
     {
-        $I->amUser('user.tasikmalaya');
+        $I->amUser('user.tasik');
 
         $I->sendGET('/v1/phone-books?kabkota_id=22');
         $I->canSeeResponseCodeIs(200);
@@ -133,7 +133,7 @@ class PhoneBookCest
 
     public function getListFilterBekasiTest(ApiTester $I)
     {
-        $I->amUser('user.tasikmalaya');
+        $I->amUser('user.tasik');
 
         $I->sendGET('/v1/phone-books?kabkota_id=23');
         $I->canSeeResponseCodeIs(200);
