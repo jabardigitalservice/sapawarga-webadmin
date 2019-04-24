@@ -8,6 +8,10 @@ const state = {
   avatar: '',
   introduction: '',
   roles: [],
+  roles_active: {
+    id: null,
+    label: null
+  },
   kel_id: null,
   kec_id: null,
   kabkota_id: null,
@@ -29,6 +33,9 @@ const mutations = {
   },
   SET_ROLES: (state, roles) => {
     state.roles = roles
+  },
+  SET_ROLES_ACTIVE: (state, data) => {
+    state.roles_active = data
   },
   SET_AREA: (state, data) => {
     state.kel_id = data.kel_id
@@ -69,7 +76,7 @@ const actions = {
             reject('Verification failed, please Login again.')
           }
 
-          const { name, role_id, photo_url } = data
+          const { name, role_label, role_id, photo_url } = data
 
           const roles = [role_id] // @TODO sebaiknya bisa multiple dan switch roles
 
@@ -79,6 +86,12 @@ const actions = {
           }
 
           commit('SET_ROLES', roles)
+
+          commit('SET_ROLES_ACTIVE', {
+            id: role_id,
+            label: role_label
+          })
+
           commit('SET_NAME', name)
           if (photo_url == null) {
             commit('SET_AVATAR', dummy_image)
