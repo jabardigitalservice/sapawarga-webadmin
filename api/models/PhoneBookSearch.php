@@ -43,6 +43,12 @@ class PhoneBookSearch extends PhoneBook
     {
         $query = PhoneBook::find();
 
+        $sortBy    = Arr::get($params, 'sort_by', 'seq');
+        $sortOrder = Arr::get($params, 'sort_order', 'ascending');
+        $sortOrder = $this->getSortOrder($sortOrder);
+
+        $pageLimit = Arr::get($params, 'limit');
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);

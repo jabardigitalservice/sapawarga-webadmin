@@ -32,7 +32,7 @@ const userRouter = {
       },
       meta: {
         title: 'Provinsi',
-        roles: ['admin', 'staffProv']
+        roles: ['admin']
       }
     },
     {
@@ -80,7 +80,7 @@ const userRouter = {
       },
       meta: {
         title: 'User Tingkat RW',
-        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']
+        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec']
       }
     },
     {

@@ -11,11 +11,16 @@ class UserSearch extends Model
     public $range_roles = [];
     public $not_in_status = [];
 
+    public $name;
+    public $phone;
+
     public $role_id;
     public $kabkota_id;
     public $kec_id;
     public $kel_id;
     public $rw;
+
+    public $status;
 
     public $limit;
     public $sort_by;
@@ -26,7 +31,10 @@ class UserSearch extends Model
         return [
             [['search'], 'string', 'max' => 50],
             [['limit'], 'integer'],
-            [['role_id', 'kabkota_id', 'kec_id', 'kel_id', 'rw', 'sort_by', 'sort_order'], 'string'],
+            [
+                ['name', 'phone', 'role_id', 'kabkota_id', 'kec_id', 'kel_id', 'rw', 'status', 'sort_by', 'sort_order'],
+                'string'
+            ],
         ];
     }
 
@@ -66,6 +74,18 @@ class UserSearch extends Model
                 ['like', 'user.name', $this->search],
                 ['like', 'user.phone', $this->search],
             ]);
+        }
+
+        if ($this->name) {
+            $query->andWhere(['like', 'user.name', $this->name]);
+        }
+
+        if ($this->phone) {
+            $query->andWhere(['like', 'user.phone', $this->phone]);
+        }
+
+        if ($this->status) {
+            $query->andWhere(['user.status' => $this->status]);
         }
 
         $this->sort_by = $this->sort_by ?? 'name';

@@ -15,7 +15,7 @@
         <el-tooltip placement="top">
           <div slot="content">{{ generateIconCode(item) }}</div>
           <div class="icon-item">
-            <svg-icon :icon-class="item" class-name="disabled"/>
+            <svg-icon :icon-class="item" class-name="disabled" />
             <span>{{ item }}</span>
           </div>
         </el-tooltip>
@@ -25,25 +25,25 @@
 </template>
 
 <script>
-import icons from "./requireIcons";
-import clipboard from "@/utils/clipboard";
+import icons from './requireIcons'
+import clipboard from '@/utils/clipboard'
 
 export default {
-  name: "Icons",
+  name: 'Icons',
   data() {
     return {
       iconsMap: icons
-    };
+    }
   },
   methods: {
     generateIconCode(symbol) {
-      return `<svg-icon icon-class="${symbol}" />`;
+      return `<svg-icon icon-class="${symbol}" />`
     },
     handleClipboard(text, event) {
-      clipboard(text, event);
+      clipboard(text, event)
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
