@@ -16,7 +16,9 @@
 
       <div class="right-menu-item">
         <div>
-          <div style="font-size: 10pt; display: block"><strong>{{ name }}</strong> ({{ _.get(user, 'roles_active.label') }})</div>
+          <div style="font-size: 10pt; display: block; line-height: 1.3em; padding: 8px">
+            <strong>{{ name }}</strong><br>{{ _.get(user, 'roles_active.label') }}
+          </div>
         </div>
       </div>
 
