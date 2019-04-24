@@ -118,6 +118,8 @@ $config = [
                         'OPTIONS {id}' => 'options',
                         'POST login' => 'login',
                         'OPTIONS login' => 'options',
+                        'GET count' => 'count',
+                        'OPTIONS count' => 'options',
                         'GET get-permissions' => 'get-permissions',
                         'OPTIONS get-permissions' => 'options',
                     ]
