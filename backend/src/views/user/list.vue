@@ -70,8 +70,6 @@
 </template>
 
 <script>
-import _ from 'lodash'
-
 import { fetchList, activate, deactivate } from '@/api/staff'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 
