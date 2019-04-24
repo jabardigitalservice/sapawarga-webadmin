@@ -17,10 +17,13 @@ class UserEditForm extends Model
     public $name;
     public $phone;
     public $address;
+    public $rt;
     public $rw;
     public $kel_id;
     public $kec_id;
     public $kabkota_id;
+    public $lat;
+    public $lon;
     public $photo_url;
     public $facebook;
     public $twitter;
@@ -79,7 +82,7 @@ class UserEditForm extends Model
             ],
 
             ['password', 'string', 'length' => [5, User::MAX_LENGTH]],
-            [['username', 'name', 'phone', 'address', 'rw', 'kel_id', 'kec_id', 'kabkota_id', 'photo_url', 'facebook', 'twitter', 'instagram'], 'default'],
+            [['username', 'name', 'phone', 'address', 'rt', 'rw', 'kel_id', 'kec_id', 'kabkota_id', 'lat', 'lon', 'photo_url', 'facebook', 'twitter', 'instagram'], 'default'],
         ];
     }
 
