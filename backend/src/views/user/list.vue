@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
 
-    <!-- STATISTIK TAMPILKAN DI ATAS COY -->
+    <panel-group :role-id="roleId" :total-all-user="totalAllUser" :total-user-province="totalUserProvince" :total-user-kab-kota="totalUserKabKota" :total-user-kec="totalUserKec" :total-user-kel="totalUserKel" :total-user-rw="totalUserRw" />
 
     <el-row :gutter="20">
       <el-col :span="24">
@@ -70,14 +70,15 @@
 </template>
 
 <script>
-import { fetchList, activate, deactivate } from '@/api/staff'
+import { fetchList, activate, deactivate, totalUser } from '@/api/staff'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
+import PanelGroup from './components/PanelGroup'
 
 import ListFilter from './_listfilter'
 
 export default {
 
-  components: { Pagination, ListFilter },
+  components: { Pagination, ListFilter, PanelGroup },
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -112,12 +113,19 @@ export default {
         sort_order: 'ascending',
         page: 1,
         limit: 10
-      }
+      },
+      totalAllUser: 0,
+      totalUserProvince: 0,
+      totalUserKabKota: 0,
+      totalUserKec: 0,
+      totalUserKel: 0,
+      totalUserRw: 0
     }
   },
 
   created() {
     this.getList()
+    this.getTotalUser()
   },
 
   methods: {
@@ -127,6 +135,17 @@ export default {
         this.list = response.data.items
         this.total = response.data._meta.totalCount
         this.listLoading = false
+      })
+    },
+
+    getTotalUser() {
+      totalUser().then(response => {
+        this.totalAllUser = _.find(response.data.items, ["level", "all"]).value
+        this.totalUserProvince = _.find(response.data.items, ["level", "prov"]).value
+        this.totalUserKabKota = _.find(response.data.items, ["level", "kabkota"]).value
+        this.totalUserKec = _.find(response.data.items, ["level", "kec"]).value
+        this.totalUserKel = _.find(response.data.items, ["level", "kel"]).value
+        this.totalUserRw = _.find(response.data.items, ["level", "rw"]).value
       })
     },
 
