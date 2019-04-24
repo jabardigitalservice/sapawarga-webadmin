@@ -24,4 +24,25 @@ describe("API Staff", () => {
     expect(result).toEqual(totalUserFixture)
     expect(request.isDone()).toBe(true);
   });
+
+  it('get total user, using province role', async () => {
+    // abc.data.items.splice(1, 1)
+    // arrange
+    const expectedCount = 31
+    const totalUserFixtureProvince = totalUserFixture
+    totalUserFixtureProvince.data.items.splice(0, 1) // remove total all user
+    const request = nock("http://localhost")
+      .get("/staff/count")
+      .reply(200, totalUserFixtureProvince);
+
+    // act
+    const result = await countUser();
+    await flushPromises();
+
+    // assert
+    expect(result).toBeDefined();
+    expect(result.data.items[0].value).toEqual(expectedCount);
+    expect(result).toEqual(totalUserFixtureProvince)
+    expect(request.isDone()).toBe(true);
+  })
 });
