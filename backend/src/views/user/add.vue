@@ -7,9 +7,12 @@
       <el-col :sm="24" :lg="8" :xl="6" class="grid-content">
         <el-form ref="user" :model="user" :rules="rules">
           <el-form-item label="Photo" prop="photo">
-            <input type="file" @change="onFileSelected">
-            <el-button type="primary" size="small" style="margin-left:50px">Unggah</el-button>
+            <input type="file" @change="onFileSelected" accept="image/*">
+            <el-button type="primary" size="small" style="margin-left:50px" @click="onUpload">Unggah</el-button>
           </el-form-item>
+          <div class="image-preview" v-if="imageData.length > 0">
+            <img class="preview" :src="imageData">
+          </div>
         </el-form>
       </el-col>
 
@@ -181,7 +184,7 @@
 </template>
 <script>
 import checkPermission from '@/utils/permission'
-import { requestArea, requestKecamatan, requestKelurahan, createUser } from '@/api/staff'
+import { requestArea, requestKecamatan, requestKelurahan, createUser, uploadImage } from '@/api/staff'
 import { Message } from 'element-ui'
 export default {
   data() {
@@ -246,6 +249,8 @@ export default {
       area: '',
       kecamatan: '',
       kelurahan: '',
+      image: '',
+      imageData: '',
       // validation
       rules: {
         username: [
@@ -533,7 +538,8 @@ export default {
             rw: this.user.rw,
             facebook: this.user.facebook,
             twitter: this.user.twitter,
-            instagram: this.user.instagram
+            instagram: this.user.instagram,
+            photo_url: this.user.photo
           }).then(() => {
             this.$alert('Pengguna berhasil ditambahkan', {
               callback: action => {}
@@ -625,12 +631,46 @@ export default {
     },
     // Upload image
     onFileSelected(event) {
-      this.photo = event.target.files[0]
+      this.image = event.target.files[0]
+      let input = event.target
+      if (input.files && input.files[0]) {
+                // create a new FileReader to read this image and convert to base64 format
+            var reader = new FileReader()
+                // Define a callback function to run, when FileReader finishes its job
+            reader.onload = (e) => {
+                    // Note: arrow function used here, so that "this.imageData" refers to the imageData of Vue component
+                    // Read image as base64 and set to imageData
+            this.imageData = e.target.result
+          }
+                // Start the reader job - read file as a data url (base64 format)
+        reader.readAsDataURL(input.files[0])
+      }
+    },
+    onUpload(){
+      const formData = new FormData();
+      formData.append('image', this.image, this.image.name)
+      uploadImage(formData).then(response => {
+        this.user.photo = response.data.photo_url
+        console.log(this.user.photo)
+        Message({
+          message: 'Upload foto berhasil',
+          type: 'success',
+          duration: 5 * 1000
+                })
+      }).catch(error => {
+        console.log(error.response.data.image[0])
+      })
     }
   }
 }
 </script>
 <style lang="scss" scoped>
+img.preview {
+    width: 200px;
+    background-color: white;
+    border: 1px solid #DDD;
+    padding: 5px;
+}
 .upload-demo {
   margin: 10px auto;
 }
