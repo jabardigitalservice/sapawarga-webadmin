@@ -1,7 +1,6 @@
 import { login, getInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
-import { getKecamatan } from '../../api/user';
 
 const state = {
   token: getToken(),
@@ -41,7 +40,6 @@ const mutations = {
     state.kabkota = data.kabkota
     state.kecamatan = data.kecamatan
     state.kelurahan = data.kelurahan
-
   }
 }
 
@@ -99,8 +97,7 @@ const actions = {
           console.log(kecamatan)
           const kabkotaName = !kabkota ? null : kabkota.name
           const kecamatanName = !kecamatan ? null : kecamatan.name
-          const kelurahanName = !kelurahan ?  null : kelurahan.name
-
+          const kelurahanName = !kelurahan ? null : kelurahan.name
 
           commit('SET_AREA', {
             kel_id: kel_id,

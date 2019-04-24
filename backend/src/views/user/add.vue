@@ -449,21 +449,17 @@ export default {
       }
       return null
     },
-    filterRole(){
-      let ruleOptions = this.opsiPeran
-      if(checkPermission(['admin'])){
+    filterRole() {
+      const ruleOptions = this.opsiPeran
+      if (checkPermission(['admin'])) {
         return ruleOptions
-      }
-      if(checkPermission(['staffProv'])){
+      } if (checkPermission(['staffProv'])) {
         return ruleOptions.slice(1, ruleOptions.length)
-      }
-      if(checkPermission(['staffKabkota'])){
+      } if (checkPermission(['staffKabkota'])) {
         return ruleOptions.slice(2, ruleOptions.length)
-      }
-      if(checkPermission(['staffKec'])){
+      } if (checkPermission(['staffKec'])) {
         return ruleOptions.slice(3, ruleOptions.length)
-      }
-      if(checkPermission(['staffKel'])){
+      } if (checkPermission(['staffKel'])) {
         return ruleOptions.slice(4, ruleOptions.length)
       }
       return ruleOptions
