@@ -22,7 +22,6 @@
               style="width: 100%"
             >
               <el-option value="10" label="Aktif" />
-              <el-option value="1" label="Pending" />
               <el-option value="0" label="Tidak Aktif" />
             </el-select>
           </el-form-item>

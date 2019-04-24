@@ -18,7 +18,7 @@
         <ListFilter :list-query.sync="listQuery" @submit-search="getList" @reset-search="resetFilter" />
 
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%" @sort-change="changeSort">
-          <el-table-column type="index" width="50" align="center" />
+          <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
 
           <el-table-column prop="name" sortable="custom" label="Nama Pengguna" />
 
@@ -51,11 +51,14 @@
                   Edit
                 </el-button>
               </router-link>
-              <router-link :to="'/user/edit/'+scope.row.id">
-                <el-button type="danger" size="mini">
-                  Deactivate
-                </el-button>
-              </router-link>
+
+              <el-button v-if="scope.row.status === 10" type="danger" size="mini" @click="deactivateUser(scope.row.id)">
+                Deactivate
+              </el-button>
+              <el-button v-if="scope.row.status === 0" type="success" size="mini" @click="activateUser(scope.row.id)">
+                Activate
+              </el-button>
+
             </template>
           </el-table-column>
         </el-table>
@@ -67,9 +70,7 @@
 </template>
 
 <script>
-import _ from 'lodash'
-
-import { fetchList } from '@/api/staff'
+import { fetchList, activate, deactivate } from '@/api/staff'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 
 import ListFilter from './_listfilter'
@@ -135,6 +136,10 @@ export default {
       this.getList()
     },
 
+    getTableRowNumbering(index) {
+      return ((this.listQuery.page - 1) * this.listQuery.limit) + (index + 1)
+    },
+
     getKedudukan(user) {
       const userRole = _.get(user, 'role_id')
 
@@ -168,6 +173,52 @@ export default {
       this.listQuery.sort_by = e.prop
       this.listQuery.sort_order = e.order
       this.getList()
+    },
+
+    async activateUser(id) {
+      try {
+        await this.$confirm(this.$t('crud.deactivate-confirm'), 'Warning', {
+          confirmButtonText: this.$t('common.confirm'),
+          cancelButtonText: this.$t('common.cancel'),
+          type: 'warning'
+        })
+
+        this.listLoading = true
+
+        await activate(id)
+
+        this.$message({
+          type: 'success',
+          message: this.$t('crud.activate-success')
+        })
+
+        this.getList()
+      } catch (e) {
+        console.log(e)
+      }
+    },
+
+    async deactivateUser(id) {
+      try {
+        await this.$confirm(this.$t('crud.deactivate-confirm'), 'Warning', {
+          confirmButtonText: this.$t('common.confirm'),
+          cancelButtonText: this.$t('common.cancel'),
+          type: 'warning'
+        })
+
+        this.listLoading = true
+
+        await deactivate(id)
+
+        this.$message({
+          type: 'success',
+          message: this.$t('crud.deactivate-success')
+        })
+
+        this.getList()
+      } catch (e) {
+        console.log(e)
+      }
     }
   }
 }
