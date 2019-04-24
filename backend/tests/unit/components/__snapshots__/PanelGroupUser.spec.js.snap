@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`PanelGroup User renders the component 1`] = `
-<div class="panel-group el-row" style="margin-left: -20px; margin-right: -20px;" totalusersummary="[object Object]">
+<div class="panel-group el-row" style="margin-left: -20px; margin-right: -20px;">
   <div class="el-card box-card is-always-shadow">
     <div class="el-card__header">
       <div class="clearfix"><span>Total user per:</span></div>

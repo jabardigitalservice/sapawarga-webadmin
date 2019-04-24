@@ -1,19 +1,32 @@
 import { mount, createLocalVue } from "@vue/test-utils";
 import PanelGroup from "@/views/user/components/PanelGroup";
 import totalUser from "../fixtures/totalUser";
-import ElementUI from 'element-ui';
+import ElementUI from "element-ui";
 //import SVG from '@/components/SvgIcon';
 // src/components/SvgIcon/index.vue
-import SvgIcon from '@/components/SvgIcon'// svg组件
+import SvgIcon from "@/components/SvgIcon"; // svg组件
 
 // register globally
 
-const localVue = createLocalVue()
-localVue.use(ElementUI)
-localVue.component('svg-icon', SvgIcon)
+const localVue = createLocalVue();
+localVue.use(ElementUI);
+localVue.component("svg-icon", SvgIcon);
+
+const totalAllUser = totalUser.data.items[0].value;
+const totalUserProvince = totalUser.data.items[1].value;
+const totalUserKabKota = totalUser.data.items[2].value;
+const totalUserKec = totalUser.data.items[3].value;
+const totalUserKel = totalUser.data.items[4].value;
+const totalUserRw = totalUser.data.items[5].value;
 
 describe("PanelGroup User", () => {
   let props;
+  const selectorAll = ".total-all";
+  const selectorUserProvince = ".total-province";
+  const selectorUserKabKota = ".total-kota";
+  const selectorUserKec = ".total-kec";
+  const selectorUserKel = ".total-kel";
+  const selectorUserRw = ".total-rw";
 
   const build = () => {
     const wrapper = mount(PanelGroup, {
@@ -21,23 +34,64 @@ describe("PanelGroup User", () => {
       localVue
     });
     return {
-      wrapper
-      /* cardColumn: () => wrapper.find('.card-panel-col'),
-      cardIcon: () => wrapper.find('.card-panel-icon-wrapper.icon-people-all'),
-      cardNumber: () => wrapper.find('.card-panel-description') */
+      wrapper,
+      cardColumnAllUser: () => wrapper.find(".card-panel-col" + selectorAll),
+      cardIconAllUser: () =>
+        wrapper.find(selectorAll).find(".card-panel-icon-wrapper"),
+      cardTextAllUser: () => wrapper.find(selectorAll).find(".card-panel-text"),
+      cardNumberAllUser: () =>
+        wrapper.find(selectorAll).find(".card-panel-num"),
+      cardColumnUserProvince: () =>
+        wrapper.find(".card-panel-col" + selectorUserProvince),
+      cardIconUserProvince: () =>
+        wrapper.find(selectorUserProvince).find(".card-panel-icon-wrapper"),
+      cardTextUserProvince: () =>
+        wrapper.find(selectorUserProvince).find(".card-panel-text"),
+      cardNumberUserProvince: () =>
+        wrapper.find(selectorUserProvince).find(".card-panel-num"),
+      cardColumnUserKabKota: () =>
+        wrapper.find(".card-panel-col" + selectorUserKabKota),
+      cardIconUserKabKota: () =>
+        wrapper.find(selectorUserKabKota).find(".card-panel-icon-wrapper"),
+      cardTextUserKabKota: () =>
+        wrapper.find(selectorUserKabKota).find(".card-panel-text"),
+      cardNumberUserKabKota: () =>
+        wrapper.find(selectorUserKabKota).find(".card-panel-num"),
+      cardColumnUserKec: () =>
+        wrapper.find(".card-panel-col" + selectorUserKec),
+      cardIconUserKec: () =>
+        wrapper.find(selectorUserKec).find(".card-panel-icon-wrapper"),
+      cardTextUserKec: () =>
+        wrapper.find(selectorUserKec).find(".card-panel-text"),
+      cardNumberUserKec: () =>
+        wrapper.find(selectorUserKec).find(".card-panel-num"),
+      cardColumnUserKel: () =>
+        wrapper.find(".card-panel-col" + selectorUserKel),
+      cardIconUserKel: () =>
+        wrapper.find(selectorUserKel).find(".card-panel-icon-wrapper"),
+      cardTextUserKel: () =>
+        wrapper.find(selectorUserKel).find(".card-panel-text"),
+      cardNumberUserKel: () =>
+        wrapper.find(selectorUserKel).find(".card-panel-num"),
+      cardColumnUserRw: () => wrapper.find(".card-panel-col" + selectorUserRw),
+      cardIconUserRw: () =>
+        wrapper.find(selectorUserRw).find(".card-panel-icon-wrapper"),
+      cardTextUserRw: () =>
+        wrapper.find(selectorUserRw).find(".card-panel-text"),
+      cardNumberUserRw: () =>
+        wrapper.find(selectorUserRw).find(".card-panel-num")
     };
   };
 
   beforeEach(() => {
     props = {
       roleId: null,
-      totalUserSummary: totalUser,
-      totalAllUser: totalUser.totalUser,
-      totalUserProvince: totalUser.totalUserProvince,
-      totalUserKabKota: totalUser.totalUserKoKab,
-      totalUserKec: totalUser.totalUserKec,
-      totalUserKel: totalUser.totalUserKel,
-      totalUserRw: totalUser.totalUserRw,
+      totalAllUser: totalAllUser,
+      totalUserProvince: totalUserProvince,
+      totalUserKabKota: totalUserKabKota,
+      totalUserKec: totalUserKec,
+      totalUserKel: totalUserKel,
+      totalUserRw: totalUserRw,
       duration: 1
     };
   });
@@ -50,34 +104,98 @@ describe("PanelGroup User", () => {
     expect(wrapper.html()).toMatchSnapshot();
   });
 
-  it("renders total all user", done => {
+  it("renders all card", done => {
     // arrange
-    const { wrapper } = build();
-    const mainSelector = ".total-all";
-
-    const cardColumn = () => wrapper.find(".card-panel-col" + mainSelector);
-    const cardIcon = () =>
-      wrapper.find(mainSelector).find(".card-panel-icon-wrapper");
-    const cardText = () => wrapper.find(mainSelector).find(".card-panel-text");
-    const cardNumber = () => wrapper.find(mainSelector).find(".card-panel-num");
+    const {
+      wrapper,
+      cardColumnAllUser,
+      cardIconAllUser,
+      cardTextAllUser,
+      cardNumberAllUser,
+      cardColumnUserProvince,
+      cardIconUserProvince,
+      cardTextUserProvince,
+      cardNumberUserProvince,
+      cardColumnUserKabKota,
+      cardIconUserKabKota,
+      cardTextUserKabKota,
+      cardNumberUserKabKota,
+      cardColumnUserKec,
+      cardIconUserKec,
+      cardTextUserKec,
+      cardNumberUserKec,
+      cardColumnUserKel,
+      cardIconUserKel,
+      cardTextUserKel,
+      cardNumberUserKel,
+      cardColumnUserRw,
+      cardIconUserRw,
+      cardTextUserRw,
+      cardNumberUserRw
+    } = build();
 
     // assert
-    expect(cardColumn().exists()).toBe(true);
-    expect(cardIcon().exists()).toBe(true);
-    expect(cardText().exists()).toBe(true);
-    expect(cardNumber().exists()).toBe(true);
-    // expect(wrapper.vm.roleId).toBeTruthy();
     expect(wrapper.props().roleId).toBe(null);
+    expect(cardColumnAllUser().exists()).toBe(true);
+    expect(cardIconAllUser().exists()).toBe(true);
+    expect(cardTextAllUser().exists()).toBe(true);
+    expect(cardNumberAllUser().exists()).toBe(true);
+    // expect(wrapper.vm.roleId).toBeTruthy();
+    expect(cardColumnUserProvince().exists()).toBe(true);
+    expect(cardIconUserProvince().exists()).toBe(true);
+    expect(cardTextUserProvince().exists()).toBe(true);
+    expect(cardNumberUserProvince().exists()).toBe(true);
+    expect(cardColumnUserKabKota().exists()).toBe(true);
+    expect(cardIconUserKabKota().exists()).toBe(true);
+    expect(cardTextUserKabKota().exists()).toBe(true);
+    expect(cardNumberUserKabKota().exists()).toBe(true);
+    expect(cardColumnUserKec().exists()).toBe(true);
+    expect(cardIconUserKec().exists()).toBe(true);
+    expect(cardTextUserKec().exists()).toBe(true);
+    expect(cardNumberUserKec().exists()).toBe(true);
+    expect(cardColumnUserKel().exists()).toBe(true);
+    expect(cardIconUserKel().exists()).toBe(true);
+    expect(cardTextUserKel().exists()).toBe(true);
+    expect(cardNumberUserKel().exists()).toBe(true);
+    expect(cardColumnUserRw().exists()).toBe(true);
+    expect(cardIconUserRw().exists()).toBe(true);
+    expect(cardTextUserRw().exists()).toBe(true);
+    expect(cardNumberUserRw().exists()).toBe(true);
 
-    expect(cardNumber().text()).toMatch("0");
-    expect(cardText().text()).toMatch("Semua");
+    expect(cardNumberAllUser().text()).toMatch("0");
+    expect(cardTextAllUser().text()).toMatch("Semua");
+    expect(cardNumberUserProvince().text()).toMatch("0");
+    expect(cardTextUserProvince().text()).toMatch("Provinsi");
+    expect(cardNumberUserKabKota().text()).toMatch("0");
+    expect(cardTextUserKabKota().text()).toMatch("Kota/Kab");
+    expect(cardNumberUserKec().text()).toMatch("0");
+    expect(cardTextUserKec().text()).toMatch("Kecamatan");
+    expect(cardNumberUserKel().text()).toMatch("0");
+    expect(cardTextUserKel().text()).toMatch("Kelurahan");
+    expect(cardNumberUserRw().text()).toMatch("0");
+    expect(cardTextUserRw().text()).toMatch("RW");
 
     setTimeout(() => {
-      expect(cardNumber().text()).toMatch(totalUser.totalUser.toString());
+      // expect(result.data.items[0].value).toEqual(expectedCount);
+      expect(cardNumberAllUser().text()).toMatch(totalAllUser.toString());
+      expect(cardNumberUserProvince().text()).toMatch(
+        totalUserProvince.toString()
+      );
+      expect(cardNumberUserKabKota().text()).toMatch(
+        totalUserKabKota.toString()
+      );
+      expect(cardNumberUserKec().text()).toMatch(totalUserKec.toString());
+      expect(cardNumberUserKel().text()).toMatch(totalUserKel.toString());
+      expect(cardNumberUserRw().text()).toMatch(totalUserRw.toString());
       done();
     }, 1100);
 
-    expect(wrapper.props().totalAllUser).toBe(totalUser.totalUser);
+    expect(wrapper.props().totalAllUser).toBe(totalAllUser);
+    expect(wrapper.props().totalUserProvince).toBe(totalUserProvince);
+    expect(wrapper.props().totalUserKabKota).toBe(totalUserKabKota);
+    expect(wrapper.props().totalUserKec).toBe(totalUserKec);
+    expect(wrapper.props().totalUserKel).toBe(totalUserKel);
+    expect(wrapper.props().totalUserRw).toBe(totalUserRw);
     // expect(name().text()).toBe(props.user.name)
   });
 
@@ -92,35 +210,6 @@ describe("PanelGroup User", () => {
     expect(cardColumn().exists()).toBe(false);
   });
 
-  it("renders total user province", done => {
-    // arrange
-    const { wrapper } = build();
-    const mainSelector = ".total-province";
-    const cardColumn = () => wrapper.find(".card-panel-col" + mainSelector);
-    const cardIcon = () =>
-      wrapper.find(mainSelector).find(".card-panel-icon-wrapper");
-    const cardText = () => wrapper.find(mainSelector).find(".card-panel-text");
-    const cardNumber = () => wrapper.find(mainSelector).find(".card-panel-num");
-
-    // assert
-    expect(cardColumn().exists()).toBe(true);
-    expect(cardIcon().exists()).toBe(true);
-    expect(cardText().exists()).toBe(true);
-    expect(cardNumber().exists()).toBe(true);
-
-    expect(cardNumber().text()).toMatch("0");
-    expect(cardText().text()).toMatch("Provinsi");
-
-    setTimeout(() => {
-      expect(cardNumber().text()).toMatch(
-        totalUser.totalUserProvince.toString()
-      );
-      done();
-    }, 1100);
-
-    expect(wrapper.props().totalUserProvince).toBe(totalUser.totalUserProvince);
-  });
-
   it("hide total all user province when role is not province", () => {
     // arrange
     const { wrapper } = build();
@@ -130,35 +219,6 @@ describe("PanelGroup User", () => {
     const cardColumn = () => wrapper.find(".card-panel-col" + mainSelector);
 
     expect(cardColumn().exists()).toBe(false);
-  });
-
-  it("renders total user kota/kab", done => {
-    // arrange
-    const { wrapper } = build();
-    const mainSelector = ".total-kota";
-    const cardColumn = () => wrapper.find(".card-panel-col" + mainSelector);
-    const cardIcon = () =>
-      wrapper.find(mainSelector).find(".card-panel-icon-wrapper");
-    const cardText = () => wrapper.find(mainSelector).find(".card-panel-text");
-    const cardNumber = () => wrapper.find(mainSelector).find(".card-panel-num");
-
-    // assert
-    expect(cardColumn().exists()).toBe(true);
-    expect(cardIcon().exists()).toBe(true);
-    expect(cardText().exists()).toBe(true);
-    expect(cardNumber().exists()).toBe(true);
-
-    expect(cardNumber().text()).toMatch("0");
-    expect(cardText().text()).toMatch("Kota/Kab");
-
-    setTimeout(() => {
-      expect(cardNumber().text()).toMatch(
-        totalUser.totalUserKoKab.toString()
-      );
-      done();
-    }, 1100);
-
-    expect(wrapper.props().totalUserKabKota).toBe(totalUser.totalUserKoKab);
   });
 
   it("hide total all user kota/kab when role is not kota/kab", () => {
@@ -172,35 +232,6 @@ describe("PanelGroup User", () => {
     expect(cardColumn().exists()).toBe(false);
   });
 
-  it("renders total user kecamatan", done => {
-    // arrange
-    const { wrapper } = build();
-    const mainSelector = ".total-kec";
-    const cardColumn = () => wrapper.find(".card-panel-col" + mainSelector);
-    const cardIcon = () =>
-      wrapper.find(mainSelector).find(".card-panel-icon-wrapper");
-    const cardText = () => wrapper.find(mainSelector).find(".card-panel-text");
-    const cardNumber = () => wrapper.find(mainSelector).find(".card-panel-num");
-
-    // assert
-    expect(cardColumn().exists()).toBe(true);
-    expect(cardIcon().exists()).toBe(true);
-    expect(cardText().exists()).toBe(true);
-    expect(cardNumber().exists()).toBe(true);
-
-    expect(cardNumber().text()).toMatch("0");
-    expect(cardText().text()).toMatch("Kecamatan");
-
-    setTimeout(() => {
-      expect(cardNumber().text()).toMatch(
-        totalUser.totalUserKec.toString()
-      );
-      done();
-    }, 1100);
-
-    expect(wrapper.props().totalUserKec).toBe(totalUser.totalUserKec);
-  });
-
   it("hide total all user kecamatan when role is not kecamatan", () => {
     // arrange
     const { wrapper } = build();
@@ -210,35 +241,6 @@ describe("PanelGroup User", () => {
     const cardColumn = () => wrapper.find(".card-panel-col" + mainSelector);
 
     expect(cardColumn().exists()).toBe(false);
-  });
-
-  it("renders total user kelurahan", done => {
-    // arrange
-    const { wrapper } = build();
-    const mainSelector = ".total-kel";
-    const cardColumn = () => wrapper.find(".card-panel-col" + mainSelector);
-    const cardIcon = () =>
-      wrapper.find(mainSelector).find(".card-panel-icon-wrapper");
-    const cardText = () => wrapper.find(mainSelector).find(".card-panel-text");
-    const cardNumber = () => wrapper.find(mainSelector).find(".card-panel-num");
-
-    // assert
-    expect(cardColumn().exists()).toBe(true);
-    expect(cardIcon().exists()).toBe(true);
-    expect(cardText().exists()).toBe(true);
-    expect(cardNumber().exists()).toBe(true);
-
-    expect(cardNumber().text()).toMatch("0");
-    expect(cardText().text()).toMatch("Kelurahan");
-
-    setTimeout(() => {
-      expect(cardNumber().text()).toMatch(
-        totalUser.totalUserKel.toString()
-      );
-      done();
-    }, 1100);
-
-    expect(wrapper.props().totalUserKel).toBe(totalUser.totalUserKel);
   });
 
   it("hide total all user kelurahan when role is not kelurahan", () => {
@@ -251,34 +253,4 @@ describe("PanelGroup User", () => {
 
     expect(cardColumn().exists()).toBe(false);
   });
-
-  it("renders total user RW", done => {
-    // arrange
-    const { wrapper } = build();
-    const mainSelector = ".total-rw";
-    const cardColumn = () => wrapper.find(".card-panel-col" + mainSelector);
-    const cardIcon = () =>
-      wrapper.find(mainSelector).find(".card-panel-icon-wrapper");
-    const cardText = () => wrapper.find(mainSelector).find(".card-panel-text");
-    const cardNumber = () => wrapper.find(mainSelector).find(".card-panel-num");
-
-    // assert
-    expect(cardColumn().exists()).toBe(true);
-    expect(cardIcon().exists()).toBe(true);
-    expect(cardText().exists()).toBe(true);
-    expect(cardNumber().exists()).toBe(true);
-
-    expect(cardNumber().text()).toMatch("0");
-    expect(cardText().text()).toMatch("RW");
-
-    setTimeout(() => {
-      expect(cardNumber().text()).toMatch(
-        totalUser.totalUserRw.toString()
-      );
-      done();
-    }, 1100);
-
-    expect(wrapper.props().totalUserRw).toBe(totalUser.totalUserRw);
-  });
-
 });
