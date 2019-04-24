@@ -83,6 +83,8 @@ class UserEditForm extends Model
 
             ['password', 'string', 'length' => [5, User::MAX_LENGTH]],
             [['username', 'name', 'phone', 'address', 'rt', 'rw', 'kel_id', 'kec_id', 'kabkota_id', 'lat', 'lon', 'photo_url', 'facebook', 'twitter', 'instagram'], 'default'],
+            [['name', 'address'], 'string', 'max' => User::MAX_LENGTH],
+            ['phone', 'string', 'length' => [3, 13]],
         ];
     }
 
@@ -110,13 +112,11 @@ class UserEditForm extends Model
             }
 
             // Set all the other fields
-            $excluded_attributes = ['email', 'password'];
+            $excluded_attributes = ['password'];
             $attribute_names = $this->attributes();
             $attribute_names = array_diff($attribute_names, $excluded_attributes);
             foreach ($attribute_names as $name) {
-                if ($this[$name] != '') {
-                    $this->_user[$name] = $this[$name];
-                }
+                $this->_user[$name] = $this[$name];
             }
 
 
