@@ -93,8 +93,6 @@ const actions = {
           }
 
           const { kel_id, kec_id, kabkota_id, kabkota, kecamatan, kelurahan } = data
-          console.log(data)
-          console.log(kecamatan)
           const kabkotaName = !kabkota ? null : kabkota.name
           const kecamatanName = !kecamatan ? null : kecamatan.name
           const kelurahanName = !kelurahan ? null : kelurahan.name

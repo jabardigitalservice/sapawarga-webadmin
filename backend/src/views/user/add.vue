@@ -175,6 +175,7 @@
         </el-form>
       </el-col>
       <!-- right colomn -->
+
     </el-row>
   </div>
 </template>
@@ -240,7 +241,7 @@ export default {
       ],
       id_kabkota: '',
       id_kec: '',
-
+      id_kel: '',
       // validation
       rules: {
         username: [
@@ -449,18 +450,49 @@ export default {
       }
       return null
     },
+    parentArea() {
+      const authUser = this.$store.state.user
+      if (checkPermission(['staffKabkota'])) {
+        const staffKabkota = authUser.kabkota_id
+        this.parentKabkotaSet(staffKabkota)
+      }
+      return null
+    },
+    parentKecamatan() {
+      const authUser = this.$store.state.user
+      if (checkPermission(['staffKec'])) {
+        const staffKecamatan = {
+          kabkota: authUser.kabkota_id,
+          kecamatan: authUser.kec_id
+        }
+        this.parentKecamatanSet(staffKecamatan)
+      }
+      return null
+    },
+    parentKelurahan() {
+      const authUser = this.$store.state.user
+      if (checkPermission(['staffKel'])) {
+        const staffKelurahan = {
+          kabkota: authUser.kabkota_id,
+          kecamatan: authUser.kec_id,
+          kelurahan: authUser.kel_id
+        }
+        this.parentKelurahanSet(staffKelurahan)
+      }
+      return null
+    },
     filterRole() {
       const ruleOptions = this.opsiPeran
       if (checkPermission(['admin'])) {
         return ruleOptions
       } if (checkPermission(['staffProv'])) {
-        return ruleOptions.slice(1, ruleOptions.length)
-      } if (checkPermission(['staffKabkota'])) {
         return ruleOptions.slice(2, ruleOptions.length)
-      } if (checkPermission(['staffKec'])) {
+      } if (checkPermission(['staffKabkota'])) {
         return ruleOptions.slice(3, ruleOptions.length)
-      } if (checkPermission(['staffKel'])) {
+      } if (checkPermission(['staffKec'])) {
         return ruleOptions.slice(4, ruleOptions.length)
+      } if (checkPermission(['staffKel'])) {
+        return ruleOptions.slice(5, ruleOptions.length)
       }
       return ruleOptions
     }
@@ -468,6 +500,9 @@ export default {
   created() {
     this.pilihKota()
     this.parentId
+    this.parentArea
+    this.parentKecamatan
+    this.parentKelurahan
     if (checkPermission(['staffKabkota'])) {
       this.pilihKecamatan()
     }
@@ -490,9 +525,9 @@ export default {
               phone: this.user.phone,
               address: this.user.address,
               role_id: this.user.role,
-              kabkota_id: this.user.kabkota.id,
-              kec_id: this.user.kecamatan.id,
-              kel_id: this.user.kelurahan.id,
+              kabkota_id: this.user.kabkota.id || this.id_kabkota,
+              kec_id: this.user.kecamatan.id || this.id_kec,
+              kel_id: this.user.kelurahan.id || this.id_kel,
               rw: this.user.rw,
               facebook: this.user.facebook,
               twitter: this.user.twitter,
@@ -514,6 +549,18 @@ export default {
     },
     resetForm(formName) {
       this.$refs[formName].resetFields()
+    },
+    parentKabkotaSet(dataKabkota) {
+      this.id_kabkota = dataKabkota
+    },
+    parentKecamatanSet(dataKecamatan) {
+      this.id_kabkota = dataKecamatan.kabkota
+      this.id_kec = dataKecamatan.kecamatan
+    },
+    parentKelurahanSet(dataKelurahan) {
+      this.id_kabkota = dataKelurahan.kabkota
+      this.id_kec = dataKelurahan.kecamatan
+      this.id_kel = dataKelurahan.kelurahan
     },
     pilihKota: function() {
       return this.$store
