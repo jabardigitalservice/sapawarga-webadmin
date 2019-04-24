@@ -8,7 +8,7 @@ export function fetchList(query) {
   })
 }
 
-export function countUser() {
+export function totalUser() {
   return request({
     url: '/staff/count',
     method: 'get'

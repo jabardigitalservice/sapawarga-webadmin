@@ -1,6 +1,6 @@
 import flushPromises from "flush-promises";
 import nock from "nock";
-import { countUser } from "@/api/staff";
+import { totalUser } from "@/api/staff";
 import totalUserFixture from "./fixtures/totalUser";
 
 describe("API Staff", () => {
@@ -15,7 +15,7 @@ describe("API Staff", () => {
       .reply(200, totalUserFixture);
 
     // act
-    const result = await countUser();
+    const result = await totalUser();
     await flushPromises();
 
     // assert
@@ -36,7 +36,7 @@ describe("API Staff", () => {
       .reply(200, totalUserFixtureProvince);
 
     // act
-    const result = await countUser();
+    const result = await totalUser();
     await flushPromises();
 
     // assert
