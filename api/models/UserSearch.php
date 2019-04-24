@@ -30,9 +30,9 @@ class UserSearch extends Model
     {
         return [
             [['search'], 'string', 'max' => 50],
-            [['limit'], 'integer'],
+            [['limit', 'status'], 'integer'],
             [
-                ['name', 'phone', 'role_id', 'kabkota_id', 'kec_id', 'kel_id', 'rw', 'status', 'sort_by', 'sort_order'],
+                ['name', 'phone', 'role_id', 'kabkota_id', 'kec_id', 'kel_id', 'rw', 'sort_by', 'sort_order'],
                 'string'
             ],
         ];
@@ -84,7 +84,7 @@ class UserSearch extends Model
             $query->andWhere(['like', 'user.phone', $this->phone]);
         }
 
-        if ($this->status) {
+        if (isset($this->status)) {
             $query->andWhere(['user.status' => $this->status]);
         }
 
