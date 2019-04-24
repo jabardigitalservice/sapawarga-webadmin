@@ -14,3 +14,23 @@ export function totalUser() {
     method: 'get'
   })
 }
+
+export function activate(id) {
+  return request({
+    url: `/staff/${id}`,
+    method: 'put',
+    data: {
+      status: 10
+    }
+  })
+}
+
+export function deactivate(id) {
+  return request({
+    url: `/staff/${id}`,
+    method: 'put',
+    data: {
+      status: 0
+    }
+  })
+}

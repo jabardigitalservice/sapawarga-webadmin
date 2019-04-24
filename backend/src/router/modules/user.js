@@ -8,7 +8,7 @@ const userRouter = {
   redirect: 'noredirect',
   name: 'User',
   meta: {
-    title: 'User Management',
+    title: 'user-manage',
     icon: 'user'
   },
   children: [
@@ -31,7 +31,7 @@ const userRouter = {
         roleId: 'staffProv'
       },
       meta: {
-        title: 'Provinsi',
+        title: 'user-list-provinsi',
         roles: ['admin']
       }
     },
@@ -43,7 +43,7 @@ const userRouter = {
         roleId: 'staffKabkota'
       },
       meta: {
-        title: 'Kabupaten / Kota',
+        title: 'user-list-kabkota',
         roles: ['admin', 'staffProv']
       }
     },
@@ -55,7 +55,7 @@ const userRouter = {
         roleId: 'staffKec'
       },
       meta: {
-        title: 'Kecamatan',
+        title: 'user-list-kecamatan',
         roles: ['admin', 'staffProv', 'staffKabkota']
       }
     },
@@ -67,7 +67,7 @@ const userRouter = {
         roleId: 'staffKel'
       },
       meta: {
-        title: 'Kelurahan',
+        title: 'user-list-kelurahan',
         roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec']
       }
     },
@@ -79,8 +79,8 @@ const userRouter = {
         roleId: 'staffRW'
       },
       meta: {
-        title: 'User Tingkat RW',
-        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']
+        title: 'user-list-rw',
+        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec']
       }
     },
     {
@@ -93,11 +93,11 @@ const userRouter = {
       }
     },
     {
-      name: 'create',
+      name: 'user-create',
       path: 'create',
       component: () => import('@/views/user/add'),
       meta: {
-        title: 'Tambah Pengguna Baru'
+        title: 'user-create'
       }
     }
   ]

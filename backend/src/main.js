@@ -9,6 +9,9 @@ import './styles/element-variables.scss'
 
 import '@/styles/index.scss' // global css
 
+import _ from 'lodash'
+Object.defineProperty(Vue.prototype, '_', { value: _ })
+
 import App from './App'
 import store from './store'
 import router from './router'

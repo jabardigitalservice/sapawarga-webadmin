@@ -52,6 +52,7 @@ class StaffController extends ActiveController
                 'update' => ['put'],
                 'delete' => ['delete'],
                 'login' => ['post'],
+                'count' => ['get'],
                 'getPermissions' => ['get'],
             ],
         ];
@@ -82,7 +83,7 @@ class StaffController extends ActiveController
             'rules' => [
                 [
                     'allow' => true,
-                    'actions' => ['index', 'view', 'create', 'update', 'delete', 'getPermissions'],
+                    'actions' => ['index', 'view', 'create', 'update', 'delete', 'count', 'getPermissions'],
                     'roles' => ['admin', 'manageStaffs'],
                 ],
             ],
@@ -353,6 +354,46 @@ class StaffController extends ActiveController
 
             return $model->getErrors();
         }
+    }
+
+    /**
+     * Return number of users, depending on role of the logged-in staff
+     *
+     * Request: GET /v1/staff/count
+     */
+    public function actionCount()
+    {
+        $roleMap = [
+            User::ROLE_ADMIN => ['level' => 'all', 'name' => 'Semua'],
+            User::ROLE_STAFF_PROV => ['level' => 'prov', 'name' => 'Provinsi'],
+            User::ROLE_STAFF_KABKOTA => ['level' => 'kabkota', 'name' => 'Kabupaten/Kota'],
+            User::ROLE_STAFF_KEC => ['level' => 'kec', 'name' => 'Kecamatan'],
+            User::ROLE_STAFF_KEL => ['level' => 'kel', 'name' => 'Kelurahan'],
+            User::ROLE_STAFF_RW => ['level' => 'rw', 'name' => 'RW'],
+        ];
+
+        $currentUser = User::findIdentity(\Yii::$app->user->getId());
+        $role = $currentUser->role;
+
+        // Admin will get all user counts, while staffs below admin will get user counts only from areas below them
+        $items = [];
+        $index = 1;
+        foreach ($roleMap as $key => $value) {
+            if ($role == User::ROLE_ADMIN ||
+                $role < User::ROLE_ADMIN && $key < $role
+            ) {
+                $count = User::find()->where(['<=', 'role', $key])->count();
+                array_push($items, [
+                    'id' => $index,
+                    'level' => $value['level'],
+                    'name' => $value['name'],
+                    'value' => (int) $count,
+                ]);
+                $index++;
+            }
+        }
+
+        return ['items' => $items];
     }
 
     /**
