@@ -176,8 +176,8 @@ export default {
     async activateUser(id) {
       try {
         await this.$confirm(this.$t('crud.deactivate-confirm'), 'Warning', {
-          confirmButtonText: 'Ya',
-          cancelButtonText: 'Batal',
+          confirmButtonText: this.$t('common.confirm'),
+          cancelButtonText: this.$t('common.cancel'),
           type: 'warning'
         })
 
@@ -187,7 +187,7 @@ export default {
 
         this.$message({
           type: 'success',
-          message: 'Pengguna berhasil diaktifkan.'
+          message: this.$t('crud.activate-success')
         })
 
         this.getList()
@@ -199,8 +199,8 @@ export default {
     async deactivateUser(id) {
       try {
         await this.$confirm(this.$t('crud.deactivate-confirm'), 'Warning', {
-          confirmButtonText: 'Ya',
-          cancelButtonText: 'Batal',
+          confirmButtonText: this.$t('common.confirm'),
+          cancelButtonText: this.$t('common.cancel'),
           type: 'warning'
         })
 
@@ -210,7 +210,7 @@ export default {
 
         this.$message({
           type: 'success',
-          message: 'Pengguna berhasil dinonaktifkan.'
+          message: this.$t('crud.deactivate-success')
         })
 
         this.getList()
