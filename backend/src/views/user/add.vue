@@ -77,10 +77,10 @@
                 <el-select
                   v-model="user.kabkota"
                   placeholder="Pilih Kab/Kota"
-                  @change="pilihKecamatan"
+                  @change="getKecamatan"
                 >
                   <el-option
-                    v-for="item in AREAS"
+                    v-for="item in area"
                     :key="item.id"
                     :value="item"
                     :label="user.kabkota.name"
@@ -100,10 +100,10 @@
                   v-model="user.kecamatan"
                   placeholder="Pilih Kecamatan"
                   :disabled="user.kabkota == '' && checkPermission(['admin', 'staffProv'])"
-                  @change="pilihKelurahan"
+                  @change="getKelurahan"
                 >
                   <el-option
-                    v-for="item in KECAMATAN"
+                    v-for="item in kecamatan"
                     :key="item.id"
                     :value="item"
                     :label="user.kecamatan.name"
@@ -119,7 +119,7 @@
               >
                 <el-select v-model="user.kelurahan" placeholder="Pilih Kelurahan" :disabled="user.kecamatan == '' && checkPermission(['admin', 'staffProv', 'staffKabkota'])">
                   <el-option
-                    v-for="item in KELURAHAN"
+                    v-for="item in kelurahan"
                     :key="item.id"
                     :value="item"
                     :label="user.kelurahan.name"
@@ -180,8 +180,9 @@
   </div>
 </template>
 <script>
-import { mapGetters } from 'vuex'
 import checkPermission from '@/utils/permission'
+import { requestArea, requestKecamatan, requestKelurahan, createUser } from '@/api/staff'
+import { Message } from 'element-ui'
 export default {
   data() {
     const checkPhone = (rule, value, callback) => {
@@ -242,6 +243,9 @@ export default {
       id_kabkota: '',
       id_kec: '',
       id_kel: '',
+      area: '',
+      kecamatan: '',
+      kelurahan: '',
       // validation
       rules: {
         username: [
@@ -439,7 +443,6 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['AREAS', 'KECAMATAN', 'KELURAHAN']),
     parentId() {
       const authUser = this.$store.state.user
       if (checkPermission(['staffKabkota'])) {
@@ -498,16 +501,16 @@ export default {
     }
   },
   created() {
-    this.pilihKota()
+    this.getArea()
     this.parentId
     this.parentArea
     this.parentKecamatan
     this.parentKelurahan
     if (checkPermission(['staffKabkota'])) {
-      this.pilihKecamatan()
+      this.getKecamatan()
     }
     if (checkPermission(['staffKec'])) {
-      this.pilihKelurahan()
+      this.getKelurahan()
     }
   },
 
@@ -516,31 +519,50 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.$store
-            .dispatch('addUser/tambahUser', {
-              username: this.user.username,
-              name: this.user.name,
-              email: this.user.email,
-              password: this.user.password,
-              phone: this.user.phone,
-              address: this.user.address,
-              role_id: this.user.role,
-              kabkota_id: this.user.kabkota.id || this.id_kabkota,
-              kec_id: this.user.kecamatan.id || this.id_kec,
-              kel_id: this.user.kelurahan.id || this.id_kel,
-              rw: this.user.rw,
-              facebook: this.user.facebook,
-              twitter: this.user.twitter,
-              instagram: this.user.instagram
+          createUser({
+            username: this.user.username,
+            name: this.user.name,
+            email: this.user.email,
+            password: this.user.password,
+            phone: this.user.phone,
+            address: this.user.address,
+            role_id: this.user.role,
+            kabkota_id: this.user.kabkota.id || this.id_kabkota,
+            kec_id: this.user.kecamatan.id || this.id_kec,
+            kel_id: this.user.kelurahan.id || this.id_kel,
+            rw: this.user.rw,
+            facebook: this.user.facebook,
+            twitter: this.user.twitter,
+            instagram: this.user.instagram
+          }).then(() => {
+            this.$alert('Pengguna berhasil ditambahkan', {
+              callback: action => {}
             })
-            .then(() => {
-              this.$alert('Pengguna berhasil ditambahkan', {
-                callback: action => {}
-              })
+            this.$refs[formName].resetFields()
+          })
+            .catch(error => {
               this.$refs[formName].resetFields()
-            })
-            .catch(() => {
-              this.$refs[formName].resetFields()
+              const usernameError = error.response.data.data.username
+              const emailError = error.response.data.data.email
+              if (!emailError) {
+                Message({
+                  message: usernameError[0],
+                  type: 'error',
+                  duration: 5 * 1000
+                })
+              } else if (!usernameError) {
+                Message({
+                  message: emailError[0],
+                  type: 'error',
+                  duration: 5 * 1000
+                })
+              } else {
+                Message({
+                  message: 'Nama pengguna dan alamat email sudah digunakan',
+                  type: 'error',
+                  duration: 5 * 1000
+                })
+              }
             })
         } else {
           return false
@@ -562,27 +584,30 @@ export default {
       this.id_kec = dataKelurahan.kecamatan
       this.id_kel = dataKelurahan.kelurahan
     },
-    pilihKota: function() {
-      return this.$store
-        .dispatch('addUser/pilihKota')
-        .then(() => {})
-        .catch()
+    getArea() {
+      requestArea().then(response => {
+        this.area = response.data.items
+      })
     },
-    pilihKecamatan: function() {
+    getKecamatan() {
       if (!(this.user.kabkota.id == null)) {
         this.id_kabkota = this.user.kabkota.id
       } else {
         this.id_kabkota = this.parentId
       }
-      this.$store.dispatch('addUser/pilihKecamatan', this.id_kabkota)
+      requestKecamatan(this.id_kabkota).then(response => {
+        this.kecamatan = response.data.items
+      })
     },
-    pilihKelurahan: function() {
+    getKelurahan() {
       if (!(this.user.kecamatan.id == null)) {
         this.id_kec = this.user.kecamatan.id
       } else {
         this.id_kec = this.parentId
       }
-      this.$store.dispatch('addUser/pilihKelurahan', this.id_kec)
+      requestKelurahan(this.id_kec).then(response => {
+        this.kelurahan = response.data.items
+      })
     },
     // Generate password
     randomPassword(length) {

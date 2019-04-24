@@ -27,3 +27,47 @@ export function deactivate(id) {
     }
   })
 }
+
+export function requestArea() {
+  return request({
+    url: 'areas',
+    method: 'get',
+    params: {
+      parent_id: 1,
+      depth: 2,
+      all: true
+    }
+  })
+}
+
+export function requestKecamatan(id) {
+  return request({
+    url: 'areas',
+    method: 'get',
+    params: {
+      parent_id: id,
+      depth: 3,
+      all: true
+    }
+  })
+}
+
+export function requestKelurahan(id) {
+  return request({
+    url: 'areas',
+    method: 'get',
+    params: {
+      parent_id: id,
+      depth: 4,
+      all: true
+    }
+  })
+}
+
+export function createUser(data) {
+  return request({
+    url: 'staff',
+    method: 'post',
+    data
+  })
+}
