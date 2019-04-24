@@ -1,0 +1,99 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PanelGroup User renders the component 1`] = `
+<div class="panel-group el-row" style="margin-left: -20px; margin-right: -20px;">
+  <div class="el-card box-card is-always-shadow">
+    <div class="el-card__header">
+      <div class="clearfix"><span>Total user per:</span></div>
+    </div>
+    <div class="el-card__body">
+      <div style="margin-bottom: 50px;">
+        <div class="card-panel-col total-all el-col el-col-24 el-col-xs-12 el-col-sm-12 el-col-lg-6" style="padding-left: 20px; padding-right: 20px;">
+          <div class="card-panel">
+            <div class="card-panel-icon-wrapper icon-people-all"><svg aria-hidden="true" class="svg-icon card-panel-icon">
+                <use xlink:href="#icon-peoples"></use>
+              </svg></div>
+            <div class="card-panel-description">
+              <div class="card-panel-text">
+                Semua
+              </div> <span class="card-panel-num">
+  0
+</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-panel-col total-province el-col el-col-24 el-col-xs-12 el-col-sm-12 el-col-lg-6" style="padding-left: 20px; padding-right: 20px;">
+          <div class="card-panel">
+            <div class="card-panel-icon-wrapper icon-people-province"><svg aria-hidden="true" class="svg-icon card-panel-icon">
+                <use xlink:href="#icon-peoples"></use>
+              </svg></div>
+            <div class="card-panel-description">
+              <div class="card-panel-text">
+                Provinsi
+              </div> <span class="card-panel-num">
+  0
+</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-panel-col total-kota el-col el-col-24 el-col-xs-12 el-col-sm-12 el-col-lg-6" style="padding-left: 20px; padding-right: 20px;">
+          <div class="card-panel">
+            <div class="card-panel-icon-wrapper icon-people-kota"><svg aria-hidden="true" class="svg-icon card-panel-icon">
+                <use xlink:href="#icon-peoples"></use>
+              </svg></div>
+            <div class="card-panel-description">
+              <div class="card-panel-text">
+                Kota/Kab
+              </div> <span class="card-panel-num">
+  0
+</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-panel-col total-kec el-col el-col-24 el-col-xs-12 el-col-sm-12 el-col-lg-6" style="padding-left: 20px; padding-right: 20px;">
+          <div class="card-panel">
+            <div class="card-panel-icon-wrapper icon-people-kec"><svg aria-hidden="true" class="svg-icon card-panel-icon">
+                <use xlink:href="#icon-peoples"></use>
+              </svg></div>
+            <div class="card-panel-description">
+              <div class="card-panel-text">
+                Kecamatan
+              </div> <span class="card-panel-num">
+  0
+</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-panel-col total-kel el-col el-col-24 el-col-xs-12 el-col-sm-12 el-col-lg-6" style="padding-left: 20px; padding-right: 20px;">
+          <div class="card-panel">
+            <div class="card-panel-icon-wrapper icon-people-kel"><svg aria-hidden="true" class="svg-icon card-panel-icon">
+                <use xlink:href="#icon-peoples"></use>
+              </svg></div>
+            <div class="card-panel-description">
+              <div class="card-panel-text">
+                Kelurahan
+              </div> <span class="card-panel-num">
+  0
+</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-panel-col total-rw el-col el-col-24 el-col-xs-12 el-col-sm-12 el-col-lg-6" style="padding-left: 20px; padding-right: 20px;">
+          <div class="card-panel">
+            <div class="card-panel-icon-wrapper icon-people-rw"><svg aria-hidden="true" class="svg-icon card-panel-icon">
+                <use xlink:href="#icon-peoples"></use>
+              </svg></div>
+            <div class="card-panel-description">
+              <div class="card-panel-text">
+                RW
+              </div> <span class="card-panel-num">
+  0
+</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
