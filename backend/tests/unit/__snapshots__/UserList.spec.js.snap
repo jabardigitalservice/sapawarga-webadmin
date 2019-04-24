@@ -16,7 +16,7 @@ exports[`UserList renders the component 1`] = `
       </el-row-stub>
       <listfilter-stub listquery="[object Object]"></listfilter-stub>
       <el-table-stub fit="true" stripe="true" border="true" showheader="true" highlightcurrentrow="true" selectonindeterminate="true" indent="16" style="width: 100%;">
-        <el-table-column-stub type="index" width="50" resizable="true" align="center" filtermultiple="true" sortorders="ascending,descending,"></el-table-column-stub>
+        <el-table-column-stub type="index" width="50" resizable="true" align="center" filtermultiple="true" index="function () { [native code] }" sortorders="ascending,descending,"></el-table-column-stub>
         <el-table-column-stub type="default" label="Nama Pengguna" prop="name" sortable="custom" resizable="true" filtermultiple="true" sortorders="ascending,descending,"></el-table-column-stub>
         <el-table-column-stub type="default" label="Kedudukan" resizable="true" filtermultiple="true" sortorders="ascending,descending,"></el-table-column-stub>
         <el-table-column-stub type="default" label="Telp" prop="phone" width="150" sortable="custom" resizable="true" filtermultiple="true" sortorders="ascending,descending,"></el-table-column-stub>
