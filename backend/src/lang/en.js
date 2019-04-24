@@ -71,7 +71,7 @@ export default {
     github: 'Github',
     theme: 'Theme',
     size: 'Global Size',
-    profile: 'Lihat profil'
+    profile: 'View Profile'
   },
   login: {
     title: 'Login Form',
@@ -182,4 +182,4 @@ export default {
     fixedHeader: 'Fixed Header',
     sidebarLogo: 'Sidebar Logo'
   }
-};
+}

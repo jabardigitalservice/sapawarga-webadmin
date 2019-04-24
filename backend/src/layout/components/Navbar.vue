@@ -7,23 +7,23 @@
       @toggleClick="toggleSideBar"
     />
 
-    <breadcrumb id="breadcrumb-container" class="breadcrumb-container"/>
+    <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
 
     <div class="right-menu">
       <template v-if="device!=='mobile'">
-        <error-log class="errLog-container right-menu-item hover-effect"/>
+        <error-log class="errLog-container right-menu-item hover-effect" />
       </template>
 
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
           <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
-          <i class="el-icon-caret-bottom"/>
+          <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item>
             <b>{{ name }}</b>
           </el-dropdown-item>
-          <el-dropdown-item>Peran: {{ roles[0] }}</el-dropdown-item>
+          <el-dropdown-item>Peran: {{ _.get(user, 'roles_active.label') }}</el-dropdown-item>
           <router-link to="/">
             <el-dropdown-item>{{ $t('navbar.profile') }}</el-dropdown-item>
           </router-link>
@@ -37,10 +37,10 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import Breadcrumb from "@/components/Breadcrumb";
-import Hamburger from "@/components/Hamburger";
-import ErrorLog from "@/components/ErrorLog";
+import { mapGetters } from 'vuex'
+import Breadcrumb from '@/components/Breadcrumb'
+import Hamburger from '@/components/Hamburger'
+import ErrorLog from '@/components/ErrorLog'
 
 export default {
   components: {
@@ -49,18 +49,18 @@ export default {
     ErrorLog
   },
   computed: {
-    ...mapGetters(["sidebar", "name", "avatar", "device", "roles"])
+    ...mapGetters(['sidebar', 'name', 'avatar', 'device', 'user', 'roles_active'])
   },
   methods: {
     toggleSideBar() {
-      this.$store.dispatch("app/toggleSideBar");
+      this.$store.dispatch('app/toggleSideBar')
     },
     async logout() {
-      await this.$store.dispatch("user/logout");
-      this.$router.push(`/login`);
+      await this.$store.dispatch('user/logout')
+      this.$router.push(`/login`)
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

@@ -8,5 +8,8 @@ export default {
   common: {
     confirm: 'Ya',
     cancel: 'Batal'
+  },
+  navbar: {
+    profile: 'Lihat Profil'
   }
 }
