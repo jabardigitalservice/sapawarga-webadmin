@@ -2,7 +2,7 @@
 
 exports[`UserList renders the component 1`] = `
 <div class="app-container">
-  <panel-group-stub totalalluser="1000" totaluserprovince="20" totaluserkabkota="0" totaluserkec="627" totaluserkel="22" totaluserrw="111" duration="2600" total-user-kota="27"></panel-group-stub>
+  <panel-group-stub totalalluser="0" totaluserprovince="0" totaluserkabkota="0" totaluserkec="0" totaluserkel="0" totaluserrw="0" duration="2600"></panel-group-stub>
   <el-row-stub tag="div" gutter="20" justify="start" align="top">
     <el-col-stub span="24" tag="div">
       <el-row-stub tag="div" justify="start" align="top" style="margin: 10px 0px;">
