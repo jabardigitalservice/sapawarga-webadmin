@@ -12,7 +12,7 @@ api_lint:
 
 admin_lint:
   stage: test
-  image: node:10.1-alpine
+  image: node
   before_script:
     - cd backend/
     - npm install
