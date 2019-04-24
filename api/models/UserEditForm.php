@@ -82,7 +82,7 @@ class UserEditForm extends Model
             ],
 
             ['password', 'string', 'length' => [5, User::MAX_LENGTH]],
-            [['username', 'name', 'phone', 'address', 'rt', 'rw', 'kel_id', 'kec_id', 'kabkota_id', 'lat', 'lon', 'photo_url', 'facebook', 'twitter', 'instagram'], 'default'],
+            [['name', 'phone', 'address', 'rt', 'rw', 'kel_id', 'kec_id', 'kabkota_id', 'lat', 'lon', 'photo_url', 'facebook', 'twitter', 'instagram'], 'default'],
             [['name', 'address'], 'string', 'max' => User::MAX_LENGTH],
             ['phone', 'string', 'length' => [3, 13]],
         ];
