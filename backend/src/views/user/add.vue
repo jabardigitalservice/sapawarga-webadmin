@@ -7,12 +7,12 @@
       <el-col :sm="24" :lg="8" :xl="6" class="grid-content">
         <el-form ref="user" :model="user" :rules="rules">
           <el-form-item label="Photo" prop="photo">
-            <input type="file" @change="onFileSelected" accept="image/*">
-            <el-button type="primary" size="small" style="margin-left:50px" @click="onUpload">Unggah</el-button>
-          </el-form-item>
-          <div class="image-preview" v-if="imageData.length > 0">
+            <input type="file" @change="onFileSelected" accept="image/*"> <br>
+            <div class="image-preview" v-if="imageData.length > 0">
             <img class="preview" :src="imageData">
           </div>
+            <el-button type="primary" size="small" style="margin-left:50px" @click="onUpload">Unggah</el-button>
+          </el-form-item>
         </el-form>
       </el-col>
 
@@ -650,15 +650,24 @@ export default {
       const formData = new FormData();
       formData.append('image', this.image, this.image.name)
       uploadImage(formData).then(response => {
-        this.user.photo = response.data.photo_url
+        const link_photo = response.data.photo_url
+        const link_photo_name = link_photo.substring(45, link_photo.length)
+        this.user.photo = link_photo_name
         console.log(this.user.photo)
         Message({
           message: 'Upload foto berhasil',
           type: 'success',
           duration: 5 * 1000
-                })
+        })
       }).catch(error => {
-        console.log(error.response.data.image[0])
+        const image_error = error.response.data.status
+        if(image_error == 500){
+          Message({
+          message: 'Ukuran foto tidak boleh lebih dari 2 MB',
+          type: 'error',
+          duration: 5 * 1000
+        })
+        }
       })
     }
   }
@@ -670,6 +679,7 @@ img.preview {
     background-color: white;
     border: 1px solid #DDD;
     padding: 5px;
+    margin-left: 50px;
 }
 .upload-demo {
   margin: 10px auto;
