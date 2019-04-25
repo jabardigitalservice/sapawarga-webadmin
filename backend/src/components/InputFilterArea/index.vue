@@ -61,6 +61,7 @@
 import { getKabkotaList, getKecamatanList, getKelurahanList } from '@/api/areas'
 
 export default {
+  name: 'InputFilterArea',
   props: {
     enableKabkota: {
       type: Boolean,
