@@ -134,4 +134,17 @@ class PhoneBookSearch extends PhoneBook
 
         return $query;
     }
+
+    protected function getSortOrder($sortOrder)
+    {
+        switch ($sortOrder) {
+            case 'descending':
+                return SORT_DESC;
+                break;
+            case 'ascending':
+            default:
+                return SORT_ASC;
+                break;
+        }
+    }
 }

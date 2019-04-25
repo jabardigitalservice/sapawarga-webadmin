@@ -15,6 +15,9 @@ const state = {
   kel_id: null,
   kec_id: null,
   kabkota_id: null,
+  kabkota: null,
+  kecamatan: null,
+  kelurahan: null,
   dummy_image: require('@/assets/user.png')
 }
 
@@ -41,6 +44,9 @@ const mutations = {
     state.kel_id = data.kel_id
     state.kec_id = data.kec_id
     state.kabkota_id = data.kabkota_id
+    state.kabkota = data.kabkota
+    state.kecamatan = data.kecamatan
+    state.kelurahan = data.kelurahan
   }
 }
 
@@ -99,12 +105,18 @@ const actions = {
             commit('SET_AVATAR', photo_url)
           }
 
-          const { kel_id, kec_id, kabkota_id } = data
+          const { kel_id, kec_id, kabkota_id, kabkota, kecamatan, kelurahan } = data
+          const kabkotaName = !kabkota ? null : kabkota.name
+          const kecamatanName = !kecamatan ? null : kecamatan.name
+          const kelurahanName = !kelurahan ? null : kelurahan.name
 
           commit('SET_AREA', {
             kel_id: kel_id,
             kec_id: kec_id,
-            kabkota_id: kabkota_id
+            kabkota_id: kabkota_id,
+            kabkota: kabkotaName,
+            kecamatan: kecamatanName,
+            kelurahan: kelurahanName
           })
 
           data = roles

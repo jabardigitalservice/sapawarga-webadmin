@@ -4,7 +4,7 @@
     <p class="warn-content">Profile Pengguna</p>
     <el-row :gutter="10">
       <!-- Left colomn -->
-      <el-col :sm="24" :lg="6" :xl="6" class="grid-content">
+      <el-col :sm="24" :lg="8" :xl="6" class="grid-content">
         <el-form ref="user" :model="user" :rules="rules">
           <el-form-item label="Photo" prop="photo">
             <input type="file" @change="onFileSelected">
@@ -54,31 +54,33 @@
           <el-form-item label="Alamat" prop="address">
             <el-input v-model="user.address" type="text" />
           </el-form-item>
-          <el-form-item label="role" prop="role">
-            <el-select v-model="user.role" placeholder="Pilih Peran">
-              <el-option
-                v-for="item in opsiPeran"
-                :key="item.value"
-                :value="item.value"
-                :label="item.label"
-              >{{ item.label }}</el-option>
-            </el-select>
-          </el-form-item>
+
           <el-row>
             <el-col :span="12">
+              <el-form-item label="Peran" prop="role">
+                <el-select v-model="user.role" placeholder="Pilih Peran">
+                  <el-option
+                    v-for="item in filterRole"
+                    :key="item.value"
+                    :value="item.value"
+                    :label="item.label"
+                  >{{ item.label }}</el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12" class="form-right-side">
               <el-form-item
-                v-if="(!(this.user.role == 'admin') && !(this.user.role == 'staffProv'))"
+                v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && checkPermission(['admin', 'staffProv']))"
                 label="Kab/Kota"
                 prop="kabkota"
               >
                 <el-select
                   v-model="user.kabkota"
-                  v-bind="pilihKota"
                   placeholder="Pilih Kab/Kota"
-                  @change="pilihKecamatan"
+                  @change="getKecamatan"
                 >
                   <el-option
-                    v-for="item in AREAS"
+                    v-for="item in area"
                     :key="item.id"
                     :value="item"
                     :label="user.kabkota.name"
@@ -86,30 +88,22 @@
                 </el-select>
               </el-form-item>
             </el-col>
-            <el-col :span="12">
-              <el-form-item
-                v-if="(!(this.user.role == 'admin') && !(this.user.role == 'staffProv') && !(this.user.role == 'staffKabkota') && !(this.user.role == 'staffKec') && !(this.user.role == 'staffKel'))"
-                label="RW"
-                prop="rw"
-              >
-                <el-input v-model="user.rw" type="number" placeholder="Masukan RW" />
-              </el-form-item>
-            </el-col>
           </el-row>
           <el-row>
             <el-col :span="12">
               <el-form-item
-                v-if="(!(this.user.role == 'admin') && !(this.user.role == 'staffProv') && !(this.user.role == 'staffKabkota'))"
+                v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && checkPermission(['admin', 'staffProv', 'staffKabkota']))"
                 label="Kecamatan"
                 prop="kecamatan"
               >
                 <el-select
                   v-model="user.kecamatan"
                   placeholder="Pilih Kecamatan"
-                  @change="pilihKelurahan"
+                  :disabled="user.kabkota == '' && checkPermission(['admin', 'staffProv'])"
+                  @change="getKelurahan"
                 >
                   <el-option
-                    v-for="item in KECAMATAN"
+                    v-for="item in kecamatan"
                     :key="item.id"
                     :value="item"
                     :label="user.kecamatan.name"
@@ -117,26 +111,15 @@
                 </el-select>
               </el-form-item>
             </el-col>
-            <el-col :span="12">
+            <el-col :span="12" class="form-right-side">
               <el-form-item
-                v-if="(!(this.user.role == 'admin') && !(this.user.role == 'staffProv') && !(this.user.role == 'staffKabkota') && !(this.user.role == 'staffKec') && !(this.user.role == 'staffKel'))"
-                label="RT"
-                prop="rt"
-              >
-                <el-input v-model="user.rt" type="number" placeholder="Masukan RT" />
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="12">
-              <el-form-item
-                v-if="(!(this.user.role == 'admin') && !(this.user.role == 'staffProv') && !(this.user.role == 'staffKabkota') && !(this.user.role == 'staffKec'))"
+                v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffKec') && ! checkPermission(['staffKel']))"
                 label="Kelurahan"
                 prop="kelurahan"
               >
-                <el-select v-model="user.kelurahan" placeholder="Pilih Kelurahan">
+                <el-select v-model="user.kelurahan" placeholder="Pilih Kelurahan" :disabled="user.kecamatan == '' && checkPermission(['admin', 'staffProv', 'staffKabkota'])">
                   <el-option
-                    v-for="item in KELURAHAN"
+                    v-for="item in kelurahan"
                     :key="item.id"
                     :value="item"
                     :label="user.kelurahan.name"
@@ -145,6 +128,26 @@
               </el-form-item>
             </el-col>
             <el-col :span="12" />
+          </el-row>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item
+                v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffKec') && !(user.role == 'staffKel'))"
+                label="RW"
+                prop="rw"
+              >
+                <el-input v-model="user.rw" type="number" placeholder="Masukan RW" :disabled="user.kelurahan == '' && checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec'])" />
+              </el-form-item>
+            </el-col>
+            <el-col :span="12" class="form-right-side">
+              <el-form-item
+                v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffKec') && !(user.role == 'staffKel'))"
+                label="RT"
+                prop="rt"
+              >
+                <el-input v-model="user.rt" type="number" placeholder="Masukan RT" :disabled="user.rw == '' && checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec'])" />
+              </el-form-item>
+            </el-col>
           </el-row>
           <p class="warn-content">Media Sosial</p>
 
@@ -172,14 +175,25 @@
         </el-form>
       </el-col>
       <!-- right colomn -->
+
     </el-row>
   </div>
 </template>
 <script>
-import { mapGetters } from 'vuex'
-import { mapActions } from 'vuex'
+import checkPermission from '@/utils/permission'
+import { requestArea, requestKecamatan, requestKelurahan, createUser } from '@/api/staff'
+import { Message } from 'element-ui'
 export default {
   data() {
+    const checkPhone = (rule, value, callback) => {
+      const phoneStringFormat = value.toString()
+      const checkStringPhone = phoneStringFormat.startsWith('0')
+      if (!checkStringPhone) {
+        callback(new Error('Nomor telepon harus dimulai dari 0'))
+      } else {
+        callback()
+      }
+    }
     return {
       user: {
         username: '',
@@ -226,7 +240,12 @@ export default {
         },
         { label: 'Pengguna', value: 'user' }
       ],
-
+      id_kabkota: '',
+      id_kec: '',
+      id_kel: '',
+      area: '',
+      kecamatan: '',
+      kelurahan: '',
       // validation
       rules: {
         username: [
@@ -247,7 +266,8 @@ export default {
           },
           {
             pattern: /^[a-z0-9_.]+$/,
-            message: 'Karakter nama pengguna tidak sesuai',
+            message:
+              'Nama pengguna hanya boleh menggunakan huruf, angka, underscore dan titik',
             trigger: 'blur'
           }
         ],
@@ -264,7 +284,7 @@ export default {
           },
           {
             pattern: /^[a-zA-Z.'\s]+$/,
-            message: 'Karakter Nama tidak sesuai',
+            message: 'Nama hanya boleh menggunakan huruf, aposthrope dan titik',
             trigger: 'blur'
           }
         ],
@@ -284,7 +304,7 @@ export default {
           {
             required: true,
             message: 'Kata sandi harus diisi',
-            trigger: 'blur'
+            trigger: 'change'
           },
           {
             max: 255,
@@ -298,7 +318,8 @@ export default {
           },
           {
             pattern: /^[a-zA-Z0-9\w\S]+$/,
-            message: 'Karakter kata sandi tidak sesuai',
+            message:
+              'Karakter kata hanya boleh menggunakan huruf, angka dan spesial karakter',
             trigger: 'blur'
           }
         ],
@@ -316,6 +337,15 @@ export default {
           {
             max: 13,
             message: 'Nomor telepon maksimal 13 karakter',
+            trigger: 'blur'
+          },
+          {
+            pattern: /^[0-9]+$/,
+            message: 'Nomor telepon hanya boleh menggunakan angka',
+            trigger: 'blur'
+          },
+          {
+            validator: checkPhone,
             trigger: 'blur'
           }
         ],
@@ -411,49 +441,129 @@ export default {
       }
     }
   },
+
+  computed: {
+    parentId() {
+      const authUser = this.$store.state.user
+      if (checkPermission(['staffKabkota'])) {
+        return parseInt(authUser.kabkota_id)
+      }
+      if (checkPermission(['staffKec'])) {
+        return parseInt(authUser.kec_id)
+      }
+      return null
+    },
+    parentArea() {
+      const authUser = this.$store.state.user
+      if (checkPermission(['staffKabkota'])) {
+        const staffKabkota = authUser.kabkota_id
+        this.parentKabkotaSet(staffKabkota)
+      }
+      return null
+    },
+    parentKecamatan() {
+      const authUser = this.$store.state.user
+      if (checkPermission(['staffKec'])) {
+        const staffKecamatan = {
+          kabkota: authUser.kabkota_id,
+          kecamatan: authUser.kec_id
+        }
+        this.parentKecamatanSet(staffKecamatan)
+      }
+      return null
+    },
+    parentKelurahan() {
+      const authUser = this.$store.state.user
+      if (checkPermission(['staffKel'])) {
+        const staffKelurahan = {
+          kabkota: authUser.kabkota_id,
+          kecamatan: authUser.kec_id,
+          kelurahan: authUser.kel_id
+        }
+        this.parentKelurahanSet(staffKelurahan)
+      }
+      return null
+    },
+    filterRole() {
+      const ruleOptions = this.opsiPeran
+      if (checkPermission(['admin'])) {
+        return ruleOptions
+      } if (checkPermission(['staffProv'])) {
+        return ruleOptions.slice(2, ruleOptions.length)
+      } if (checkPermission(['staffKabkota'])) {
+        return ruleOptions.slice(3, ruleOptions.length)
+      } if (checkPermission(['staffKec'])) {
+        return ruleOptions.slice(4, ruleOptions.length)
+      } if (checkPermission(['staffKel'])) {
+        return ruleOptions.slice(5, ruleOptions.length)
+      }
+      return ruleOptions
+    }
+  },
+  created() {
+    this.getArea()
+    this.parentId
+    this.parentArea
+    this.parentKecamatan
+    this.parentKelurahan
+    if (checkPermission(['staffKabkota'])) {
+      this.getKecamatan()
+    }
+    if (checkPermission(['staffKec'])) {
+      this.getKelurahan()
+    }
+  },
+
   methods: {
+    checkPermission,
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.$store
-            .dispatch('addUser/tambahUser', {
-              username: this.user.username,
-              name: this.user.name,
-              email: this.user.email,
-              password: this.user.password,
-              phone: this.user.phone,
-              address: this.user.address,
-              role_id: this.user.role,
-              kabkota_id: this.user.kabkota.id,
-              kec_id: this.user.kecamatan.id,
-              kel_id: this.user.kelurahan.id,
-              rw: this.user.rw,
-              facebook: this.user.facebook,
-              twitter: this.user.twitter,
-              instagram: this.user.instagram
+          createUser({
+            username: this.user.username,
+            name: this.user.name,
+            email: this.user.email,
+            password: this.user.password,
+            phone: this.user.phone,
+            address: this.user.address,
+            role_id: this.user.role,
+            kabkota_id: this.user.kabkota.id || this.id_kabkota,
+            kec_id: this.user.kecamatan.id || this.id_kec,
+            kel_id: this.user.kelurahan.id || this.id_kel,
+            rw: this.user.rw,
+            facebook: this.user.facebook,
+            twitter: this.user.twitter,
+            instagram: this.user.instagram
+          }).then(() => {
+            this.$alert('Pengguna berhasil ditambahkan', {
+              callback: action => {}
             })
-            .then(() => {
-              this.$alert('Pengguna berhasil ditambahkan', {
-                callback: action => {}
-              })
-
-              this.user.username = ''
-              this.user.name = ''
-              this.user.email = ''
-              this.user.password = ''
-              this.user.role = ''
-              this.user.kabkota = ''
-              this.user.kecamatan = ''
-              this.user.kelurahan = ''
-              this.user.rt = ''
-              this.user.rw = ''
-              this.user.facebook = ''
-              this.user.twitter = ''
-              this.user.instagram = ''
-              this.user.phone = ''
-              this.user.address = ''
+            this.$refs[formName].resetFields()
+          })
+            .catch(error => {
+              this.$refs[formName].resetFields()
+              const usernameError = error.response.data.data.username
+              const emailError = error.response.data.data.email
+              if (!emailError) {
+                Message({
+                  message: usernameError[0],
+                  type: 'error',
+                  duration: 5 * 1000
+                })
+              } else if (!usernameError) {
+                Message({
+                  message: emailError[0],
+                  type: 'error',
+                  duration: 5 * 1000
+                })
+              } else {
+                Message({
+                  message: 'Nama pengguna dan alamat email sudah digunakan',
+                  type: 'error',
+                  duration: 5 * 1000
+                })
+              }
             })
-            .catch(() => {})
         } else {
           return false
         }
@@ -462,11 +572,42 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields()
     },
-    pilihKecamatan: function() {
-      this.$store.dispatch('addUser/pilihKecamatan', this.user.kabkota.id)
+    parentKabkotaSet(dataKabkota) {
+      this.id_kabkota = dataKabkota
     },
-    pilihKelurahan: function() {
-      this.$store.dispatch('addUser/pilihKelurahan', this.user.kecamatan.id)
+    parentKecamatanSet(dataKecamatan) {
+      this.id_kabkota = dataKecamatan.kabkota
+      this.id_kec = dataKecamatan.kecamatan
+    },
+    parentKelurahanSet(dataKelurahan) {
+      this.id_kabkota = dataKelurahan.kabkota
+      this.id_kec = dataKelurahan.kecamatan
+      this.id_kel = dataKelurahan.kelurahan
+    },
+    getArea() {
+      requestArea().then(response => {
+        this.area = response.data.items
+      })
+    },
+    getKecamatan() {
+      if (!(this.user.kabkota.id == null)) {
+        this.id_kabkota = this.user.kabkota.id
+      } else {
+        this.id_kabkota = this.parentId
+      }
+      requestKecamatan(this.id_kabkota).then(response => {
+        this.kecamatan = response.data.items
+      })
+    },
+    getKelurahan() {
+      if (!(this.user.kecamatan.id == null)) {
+        this.id_kec = this.user.kecamatan.id
+      } else {
+        this.id_kec = this.parentId
+      }
+      requestKelurahan(this.id_kec).then(response => {
+        this.kelurahan = response.data.items
+      })
     },
     // Generate password
     randomPassword(length) {
@@ -485,15 +626,6 @@ export default {
     // Upload image
     onFileSelected(event) {
       this.photo = event.target.files[0]
-    }
-  },
-  computed: {
-    ...mapGetters(['AREAS', 'KECAMATAN', 'KELURAHAN']),
-    pilihKota() {
-      this.$store
-        .dispatch('addUser/pilihKota')
-        .then(() => {})
-        .catch(err => {})
     }
   }
 }
@@ -521,6 +653,10 @@ p {
       margin-bottom: 0;
     }
   }
+}
+
+.form-right-side {
+  padding-left: 10px;
 }
 
 .el-row {

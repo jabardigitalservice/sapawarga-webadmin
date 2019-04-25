@@ -14,16 +14,20 @@
         <error-log class="errLog-container right-menu-item hover-effect" />
       </template>
 
+      <div class="right-menu-item">
+        <div>
+          <div style="font-size: 10pt; display: block; line-height: 1.3em; padding: 8px">
+            <strong>{{ name }}</strong><br>{{ _.get(user, 'roles_active.label') }}
+          </div>
+        </div>
+      </div>
+
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
+          <img :src="avatar" class="user-avatar">
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>
-            <b>{{ name }}</b>
-          </el-dropdown-item>
-          <el-dropdown-item>Peran: {{ _.get(user, 'roles_active.label') }}</el-dropdown-item>
           <router-link to="/">
             <el-dropdown-item>{{ $t('navbar.profile') }}</el-dropdown-item>
           </router-link>

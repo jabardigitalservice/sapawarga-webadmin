@@ -8,6 +8,13 @@ export function fetchList(query) {
   })
 }
 
+export function totalUser() {
+  return request({
+    url: '/staff/count',
+    method: 'get'
+  })
+}
+
 export function activate(id) {
   return request({
     url: `/staff/${id}`,
@@ -25,5 +32,49 @@ export function deactivate(id) {
     data: {
       status: 0
     }
+  })
+}
+
+export function requestArea() {
+  return request({
+    url: 'areas',
+    method: 'get',
+    params: {
+      parent_id: 1,
+      depth: 2,
+      all: true
+    }
+  })
+}
+
+export function requestKecamatan(id) {
+  return request({
+    url: 'areas',
+    method: 'get',
+    params: {
+      parent_id: id,
+      depth: 3,
+      all: true
+    }
+  })
+}
+
+export function requestKelurahan(id) {
+  return request({
+    url: 'areas',
+    method: 'get',
+    params: {
+      parent_id: id,
+      depth: 4,
+      all: true
+    }
+  })
+}
+
+export function createUser(data) {
+  return request({
+    url: 'staff',
+    method: 'post',
+    data
   })
 }
