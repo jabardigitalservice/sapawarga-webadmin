@@ -484,6 +484,7 @@
       "kecamatan": null,
       "kel_id": null,
       "kelurahan": null,
+      "rw": null,
       "status": 10,
       "status_label": "Aktif",
       "author_id": 1,
@@ -518,6 +519,7 @@
         "id": 6082,
         "name": "Cicaheum"
       },
+      "rw": null,
       "status": 10,
       "status_label": "Aktif",
       "author_id": 2,
@@ -546,6 +548,7 @@
       "kecamatan": null,
       "kel_id": null,
       "kelurahan": null,
+      "rw": null,
       "status": 10,
       "status_label": "Aktif",
       "author_id": 3,
