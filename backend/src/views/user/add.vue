@@ -691,8 +691,6 @@ export default {
                 // Start the reader job - read file as a data url (base64 format)
         this.preview = reader.readAsDataURL(input.files[0])
         this.onUpload()
-
-
       }
 
     },
@@ -703,17 +701,18 @@ export default {
         const link_photo = response.data.photo_url
         const link_photo_name = link_photo.substring(45, link_photo.length)
         this.user.photo = link_photo_name
-        console.log('berhasil')
 
       }).catch(error => {
         const image_error = error.response.data.status
         if(image_error == 500){
           Message({
-          message: 'Ukuran foto tidak boleh lebih dari 2 MB',
+          message: 'Ukuran foto tidak boleh lebih dari 2 MB. Mohon unggah kembali foto Anda',
           type: 'error',
           duration: 5 * 1000
         })
         }
+        this.imageData = 0
+        this.image = null
       })
     }
   }
