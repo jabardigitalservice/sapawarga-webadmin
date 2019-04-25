@@ -8,6 +8,13 @@ export function fetchList(query) {
   })
 }
 
+export function totalUser() {
+  return request({
+    url: '/staff/count',
+    method: 'get'
+  })
+}
+
 export function activate(id) {
   return request({
     url: `/staff/${id}`,
