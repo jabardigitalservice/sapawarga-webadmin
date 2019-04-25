@@ -7,11 +7,10 @@
       <el-col :sm="24" :lg="8" :xl="6" class="grid-content">
         <el-form ref="user" :model="user" :rules="rules">
           <el-form-item label="Photo" prop="photo">
-            <input type="file" @change="onFileSelected" accept="image/*"> <br>
             <div class="image-preview" v-if="imageData.length > 0">
-            <img class="preview" :src="imageData">
-          </div>
-            <el-button type="primary" size="small" style="margin-left:50px" @click="onUpload">Unggah</el-button>
+              <img class="preview" :src="imageData">
+            </div>
+            <input type="file" @change="onFileSelected" accept="image/*" style="margin-left:50px">
           </el-form-item>
         </el-form>
       </el-col>
@@ -53,9 +52,6 @@
 
           <el-form-item label="Telepon" prop="phone">
             <el-input v-model="user.phone" type="number" placeholder="contoh: 081254332233" />
-          </el-form-item>
-          <el-form-item label="Alamat" prop="address">
-            <el-input v-model="user.address" type="text" />
           </el-form-item>
 
           <el-row>
@@ -152,6 +148,28 @@
               </el-form-item>
             </el-col>
           </el-row>
+          <p class="warn-content">Lokasi pengguna</p>
+          <el-row>
+            <el-col>
+              <el-form-item label="Alamat" prop="address">
+            <el-input v-model="user.address" type="text" />
+          </el-form-item>
+            </el-col>
+          </el-row>
+
+
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="Latitude" prop="latitude">
+            <el-input v-model="user.latitude" type="text" placeholder="Contoh: -6.943097" />
+          </el-form-item>
+            </el-col>
+            <el-col :span="12" class="form-right-side">
+              <el-form-item label="Longitude" prop="longitude">
+            <el-input v-model="user.longitude" type="text" placeholder="Contoh: 107.633545" />
+          </el-form-item>
+            </el-col>
+          </el-row>
           <p class="warn-content">Media Sosial</p>
 
           <el-form-item label="Twitter" prop="twitter">
@@ -175,9 +193,10 @@
             <el-button type="primary" @click="submitForm('user')">Tambah Pengguna</el-button>
             <el-button @click="resetForm('user')">Batal</el-button>
           </el-form-item>
+          <div>
+          </div>
         </el-form>
       </el-col>
-      <!-- right colomn -->
 
     </el-row>
   </div>
@@ -214,7 +233,9 @@ export default {
         twitter: '',
         facebook: '',
         instagram: '',
-        photo: ''
+        photo: '',
+        latitude: '',
+        longitude: ''
       },
       opsiPeran: [
         {
@@ -251,6 +272,7 @@ export default {
       kelurahan: '',
       image: '',
       imageData: '',
+      preview: '',
       // validation
       rules: {
         username: [
@@ -297,6 +319,11 @@ export default {
           {
             required: true,
             message: 'Email harus diisi',
+            trigger: 'blur'
+          },
+          {
+            max: 255,
+            message: 'Alamat email terlalu panjang, maksimum 255 karakter',
             trigger: 'blur'
           },
           {
@@ -363,6 +390,20 @@ export default {
           {
             max: 255,
             message: 'Alamat maksimal 255 karakter',
+            trigger: 'blur'
+          }
+        ],
+        latitude: [
+          {
+            pattern: /^[0-9.]+$/,
+            message: 'Pilih latitude dari google map',
+            trigger: 'blur'
+          }
+        ],
+        longitude: [
+          {
+            pattern: /^[0-9.]+$/,
+            message: 'Pilih latitude dari google map',
             trigger: 'blur'
           }
         ],
@@ -539,12 +580,17 @@ export default {
             facebook: this.user.facebook,
             twitter: this.user.twitter,
             instagram: this.user.instagram,
-            photo_url: this.user.photo
+            photo_url: this.user.photo,
+            lat: this.user.latitude,
+            lon: this.user.longitude
+
           }).then(() => {
             this.$alert('Pengguna berhasil ditambahkan', {
               callback: action => {}
             })
             this.$refs[formName].resetFields()
+            this.imageData = 0
+
           })
             .catch(error => {
               this.$refs[formName].resetFields()
@@ -643,8 +689,12 @@ export default {
             this.imageData = e.target.result
           }
                 // Start the reader job - read file as a data url (base64 format)
-        reader.readAsDataURL(input.files[0])
+        this.preview = reader.readAsDataURL(input.files[0])
+        this.onUpload()
+
+
       }
+
     },
     onUpload(){
       const formData = new FormData();
@@ -653,12 +703,8 @@ export default {
         const link_photo = response.data.photo_url
         const link_photo_name = link_photo.substring(45, link_photo.length)
         this.user.photo = link_photo_name
-        console.log(this.user.photo)
-        Message({
-          message: 'Upload foto berhasil',
-          type: 'success',
-          duration: 5 * 1000
-        })
+        console.log('berhasil')
+
       }).catch(error => {
         const image_error = error.response.data.status
         if(image_error == 500){
@@ -679,7 +725,6 @@ img.preview {
     background-color: white;
     border: 1px solid #DDD;
     padding: 5px;
-    margin-left: 50px;
 }
 .upload-demo {
   margin: 10px auto;
