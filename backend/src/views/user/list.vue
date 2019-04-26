@@ -150,7 +150,7 @@ export default {
     },
 
     resetFilter() {
-      Object.assign(this.$data, this.$options.data())
+      Object.assign(this.$data.listQuery, this.$options.data().listQuery)
 
       this.getList()
     },
