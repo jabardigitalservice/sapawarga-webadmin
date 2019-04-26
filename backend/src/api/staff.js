@@ -78,3 +78,11 @@ export function createUser(data) {
     data
   })
 }
+
+export function uploadImage(data) {
+  return request({
+    url: 'user/me/photo',
+    method: 'post',
+    data
+  })
+}
