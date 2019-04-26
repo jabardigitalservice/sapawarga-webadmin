@@ -79,6 +79,14 @@ export function createUser(data) {
   })
 }
 
+export function editUser(data) {
+  return request({
+    url: 'staff',
+    method: 'put',
+    data
+  })
+}
+
 export function uploadImage(data) {
   return request({
     url: 'user/me/photo',
@@ -86,3 +94,11 @@ export function uploadImage(data) {
     data
   })
 }
+
+export function fetchUser(id) {
+  return request({
+    url: 'staff/' + id,
+    method: 'get'
+  })
+}
+

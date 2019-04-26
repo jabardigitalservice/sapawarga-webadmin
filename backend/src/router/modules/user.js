@@ -86,7 +86,7 @@ const userRouter = {
     {
       name: 'user-edit',
       path: 'edit/:id',
-      component: () => import('@/views/user/add'), // @TODO ganti ke edit
+      component: () => import('@/views/user/edit'), // @TODO ganti ke edit
       hidden: true,
       meta: {
         title: 'Edit'
