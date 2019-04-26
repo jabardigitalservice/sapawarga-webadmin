@@ -27,6 +27,6 @@ phpunit.phar
 /phpunit.xml
 
 tests/_output/*
-# tests/_support/_generated
+tests/_support/_generated
 
 _references_

@@ -331,7 +331,6 @@ class StaffController extends ActiveController
             User::ROLE_STAFF_KABKOTA,
             User::ROLE_STAFF_KEC,
             User::ROLE_STAFF_KEL,
-            User::ROLE_STAFF_RW
         ];
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             $user = $model->getUser();

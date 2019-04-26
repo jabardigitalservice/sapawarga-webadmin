@@ -8,6 +8,13 @@ export function fetchList(query) {
   })
 }
 
+export function totalUser() {
+  return request({
+    url: '/staff/count',
+    method: 'get'
+  })
+}
+
 export function activate(id) {
   return request({
     url: `/staff/${id}`,
@@ -67,6 +74,14 @@ export function requestKelurahan(id) {
 export function createUser(data) {
   return request({
     url: 'staff',
+    method: 'post',
+    data
+  })
+}
+
+export function uploadImage(data) {
+  return request({
+    url: 'user/me/photo',
     method: 'post',
     data
   })
