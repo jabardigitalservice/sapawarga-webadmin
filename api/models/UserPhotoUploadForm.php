@@ -2,10 +2,12 @@
 
 namespace app\models;
 
+use Illuminate\Support\Str;
 use Intervention\Image\ImageManagerStatic as Image;
 use Yii;
 use yii\base\Model;
 use yii\web\UploadedFile;
+use yii2tech\filestorage\BucketInterface;
 
 /**
  * User Photo Upload form
@@ -28,22 +30,46 @@ class UserPhotoUploadForm extends Model
     }
 
     /**
-     * @param \app\models\User $user
-     *
-     * @return string
+     * @param string $tempFilePath
+     * @param \yii2tech\filestorage\BucketInterface $bucket
+     * @return bool
      */
-    public function upload(User $user)
+    public function upload($tempFilePath, BucketInterface $bucket)
     {
-        if ($image = $this->cropAndResizePhoto($this->image->tempName)) {
-            $relativePath = sprintf('user-%s/%s', $user->getId(), $this->image->name);
+        if ($image = $this->cropAndResizePhoto($tempFilePath)) {
+            $relativeFilePath = $this->createFilePath();
 
-            $bucket = \Yii::$app->fileStorage->getBucket('imageFiles');
-            $bucket->saveFileContent($relativePath, $image->encode());
-
-            return $this->setUserProfilePhoto($user, $relativePath);
+            return $bucket->saveFileContent($relativeFilePath, $image->encode());
         }
 
         return false;
+    }
+
+    /**
+     * @return string
+     */
+    protected function createRandomFilename()
+    {
+        return Str::random(32);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getRelativePath()
+    {
+        return 'avatars';
+    }
+
+    /**
+     * @return string
+     */
+    public function createFilePath()
+    {
+        $relativePath = $this->getRelativePath();
+        $filename     = $this->createRandomFilename();
+
+        return sprintf('%s/%s', $relativePath, $filename);
     }
 
     /**
@@ -61,7 +87,7 @@ class UserPhotoUploadForm extends Model
      * @param $relativePath
      * @return string
      */
-    protected function setUserProfilePhoto($user, $relativePath)
+    public function setUserProfilePhoto($user, $relativePath)
     {
         $user->photo_url = $relativePath;
         $user->save(false);
