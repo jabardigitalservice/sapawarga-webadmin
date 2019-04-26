@@ -472,5 +472,120 @@
       "created_at": 1554076800,
       "updated_at": 1554076800
     }
+  ],
+  "broadcast": [
+    {
+      "id": 1,
+      "title": "Jadwal Maintenance",
+      "description": "Kepada warga Jawa Barat, aplikasi Sapa Warga akan dijadwalkan untuk memasuki fase maintenance pada tanggal 1 Mei 2019, jam 09.00-12.00 WIB. Seluruh fitur yang membutuhkan akses daring tidak akan bisa digunakan. Atas pengertiannya kami ucapkan terima kasih.",
+      "kabkota_id": null,
+      "kabkota": null,
+      "kec_id": null,
+      "kecamatan": null,
+      "kel_id": null,
+      "kelurahan": null,
+      "status": 10,
+      "status_label": "Aktif",
+      "author_id": 1,
+      "author": {
+        "id": 1,
+        "name": "Administrator"
+      },
+      "category_id": 1,
+      "category": {
+        "id": 1,
+        "name": "Sistem"
+      },
+      "created_at": 1556079159,
+      "updated_at": 1556079159
+    },
+    {
+      "id": 2,
+      "title": "Kegiatan Duduk Bareng Lurah Cicaheum",
+      "description": "Kepada warga Kelurahan Cicaheum, akan ada kegiatan Duduk Bareng Lurah Cicaheum yang akan dilaksanakan di Kantor Kelurahan pada hari Sabtu, 27 April 2019 jam 08.00 WIB. Konsumsi sudah disediakan. Hayu ngariung!",
+      "kabkota_id": 22,
+      "kabkota": {
+        "id": 22,
+        "name": "Kota Bandung"
+      },
+      "kec_id": 446,
+      "kecamatan": {
+        "id": 446,
+        "name": "Bandung Wetan"
+      },
+      "kel_id": 6082,
+      "kelurahan": {
+        "id": 6082,
+        "name": "Cicaheum"
+      },
+      "status": 10,
+      "status_label": "Aktif",
+      "author_id": 2,
+      "author": {
+        "id": 2,
+        "name": "Staff Kelurahan Cicaheum"
+      },
+      "category_id": 2,
+      "category": {
+        "id": 2,
+        "name": "Sosialisasi"
+      },
+      "created_at": 1556079159,
+      "updated_at": 1556079159
+    },
+    {
+      "id": 3,
+      "title": "Klarifikasi Hoax Penculikan",
+      "description": "Kepada warga Kota Bandung, seperti diketahui dalam sepekan ini beredar video tentang penculikan anak di Antapani. Setelah ditelusuri rupanya pengakuan tersebut hanya karangan dari sang anak karena ingin mendapat perhatian dari orang tuanya.",
+      "kabkota_id": 22,
+      "kabkota": {
+        "id": 22,
+        "name": "Kota Bandung"
+      },
+      "kec_id": null,
+      "kecamatan": null,
+      "kel_id": null,
+      "kelurahan": null,
+      "status": 10,
+      "status_label": "Aktif",
+      "author_id": 3,
+      "author": {
+        "id": 3,
+        "name": "Tim Saber Hoax"
+      },
+      "category_id": 3,
+      "category": {
+        "id": 3,
+        "name": "Berita Hoax"
+      },
+      "created_at": 1556079159,
+      "updated_at": 1556079159
+    }
+  ],
+  "broadcast-categories": [
+    {
+      "id": 1,
+      "name": "Sistem",
+      "status": 10,
+      "status_label": "Aktif",
+      "created_at": 1556079159,
+      "updated_at": 1556079159
+    },
+    {
+      "id": 2,
+      "name": "Sosialisasi",
+      "status": 10,
+      "status_label": "Aktif",
+      "created_at": 1556079159,
+      "updated_at": 1556079159
+    },
+    {
+      "id": 3,
+      "name": "Berita Hoax",
+      "status": 10,
+      "status_label": "Aktif",
+      "created_at": 1556079159,
+      "updated_at": 1556079159
+    }
   ]
 }
