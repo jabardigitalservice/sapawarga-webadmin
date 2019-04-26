@@ -82,12 +82,22 @@ class UserPhotoUploadFormTest extends \Codeception\Test\Unit
 
     public function testCropAndResize()
     {
-        $filePath = __DIR__ . '/../../data/hd1080.png';
+        $tempFilePath = '/tmp/test.jpg'; // mock file path
+
+        $imageProcessor = m::mock(ImageManager::class);
+        $imageProcessor->shouldReceive('make')->once()->andReturnUsing(function () {
+            $driver = new Driver();
+            $core = imagecreatetruecolor(1024, 1024);
+
+            $image = new Image($driver, $core);
+
+            return $image;
+        });
 
         $model = new UserPhotoUploadForm();
-        $model->setImageProcessor(new ImageManager());
+        $model->setImageProcessor($imageProcessor);
 
-        $image = $model->cropAndResizePhoto($filePath);
+        $image = $model->cropAndResizePhoto($tempFilePath);
 
         $this->assertEquals($image->getHeight(), 640);
         $this->assertEquals($image->getWidth(), 640);
@@ -95,12 +105,22 @@ class UserPhotoUploadFormTest extends \Codeception\Test\Unit
 
     public function testCropAndResizeSmallImage()
     {
-        $filePath = __DIR__ . '/../../data/qvga.png';
+        $tempFilePath = '/tmp/test.jpg'; // mock file path
+
+        $imageProcessor = m::mock(ImageManager::class);
+        $imageProcessor->shouldReceive('make')->once()->andReturnUsing(function () {
+            $driver = new Driver();
+            $core = imagecreatetruecolor(128, 128);
+
+            $image = new Image($driver, $core);
+
+            return $image;
+        });
 
         $model = new UserPhotoUploadForm();
-        $model->setImageProcessor(new ImageManager());
+        $model->setImageProcessor($imageProcessor);
 
-        $image = $model->cropAndResizePhoto($filePath);
+        $image = $model->cropAndResizePhoto($tempFilePath);
 
         $this->assertEquals($image->getHeight(), 640);
         $this->assertEquals($image->getWidth(), 640);

@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Illuminate\Support\Str;
+use Intervention\Image\ImageManager;
 use Yii;
 use yii\base\Model;
 use yii\web\UploadedFile;
