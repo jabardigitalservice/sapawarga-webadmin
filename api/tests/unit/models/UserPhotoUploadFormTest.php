@@ -4,6 +4,9 @@ namespace tests\models;
 
 use app\models\User;
 use app\models\UserPhotoUploadForm;
+use Intervention\Image\Gd\Driver;
+use Intervention\Image\Image;
+use Intervention\Image\ImageManager;
 use yii\web\UploadedFile;
 use Mockery as m;
 use yii2tech\filestorage\local\Bucket;
@@ -82,6 +85,7 @@ class UserPhotoUploadFormTest extends \Codeception\Test\Unit
         $filePath = __DIR__ . '/../../data/hd1080.png';
 
         $model = new UserPhotoUploadForm();
+        $model->setImageProcessor(new ImageManager());
 
         $image = $model->cropAndResizePhoto($filePath);
 
@@ -94,6 +98,7 @@ class UserPhotoUploadFormTest extends \Codeception\Test\Unit
         $filePath = __DIR__ . '/../../data/qvga.png';
 
         $model = new UserPhotoUploadForm();
+        $model->setImageProcessor(new ImageManager());
 
         $image = $model->cropAndResizePhoto($filePath);
 
@@ -109,22 +114,53 @@ class UserPhotoUploadFormTest extends \Codeception\Test\Unit
         $this->assertStringContainsString('avatars/', $relativeFilePath);
     }
 
-    public function testUpload()
+    public function testUploadSuccess()
     {
-        $tempFilePath = '/temp/test.jpg'; // random file path
+        $tempFilePath = '/tmp/test.jpg'; // mock file path
+
+        $imageProcessor = m::mock(ImageManager::class);
+        $imageProcessor->shouldReceive('make->fit')->once()->andReturnUsing(function () {
+            $driver = new Driver();
+            $core = imagecreatetruecolor(600, 600);
+
+            $image = new Image($driver, $core);
+
+            return $image;
+        });
 
         $bucket = m::mock(Bucket::class);
         $bucket->shouldReceive('saveFileContent')->andReturnTrue()->once();
 
         $model  = new UserPhotoUploadForm();
+        $model->setImageProcessor($imageProcessor);
+
         $result = $model->upload($tempFilePath, $bucket);
 
         $this->assertTrue($result);
     }
 
+    public function testUploadFailed()
+    {
+        $tempFilePath = '/tmp/test.jpg'; // mock file path
+
+        $imageProcessor = m::mock(ImageManager::class);
+        $imageProcessor->shouldReceive('make->fit')->andReturnFalse()->once();
+
+        $bucket = m::mock(Bucket::class);
+
+        $model  = new UserPhotoUploadForm();
+        $model->setImageProcessor($imageProcessor);
+
+        $result = $model->upload($tempFilePath, $bucket);
+
+        $this->assertFalse($result);
+    }
+
     public function testSetUserProfilePhoto()
     {
-        $user = new User();
+        $user = m::mock(User::class);
+        $user->shouldReceive('hasAttribute')->andReturnTrue()->once();
+        $user->shouldReceive('save')->andReturnTrue()->once();
 
         $model            = new UserPhotoUploadForm();
         $relativeFilePath = $model->setUserProfilePhoto($user, 'avatars/my.jpg');

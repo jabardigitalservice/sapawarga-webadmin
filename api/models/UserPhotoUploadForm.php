@@ -3,7 +3,6 @@
 namespace app\models;
 
 use Illuminate\Support\Str;
-use Intervention\Image\ImageManagerStatic as Image;
 use Yii;
 use yii\base\Model;
 use yii\web\UploadedFile;
@@ -18,6 +17,11 @@ class UserPhotoUploadForm extends Model
      * @var UploadedFile
      */
     public $image;
+
+    /**
+     * @var ImageManager
+     */
+    protected $imageProcessor;
 
     public function rules()
     {
@@ -75,15 +79,15 @@ class UserPhotoUploadForm extends Model
     /**
      * @param $filePath
      *
-     * @return \Intervention\Image\Image|\Intervention\Image\ImageManagerStatic
+     * @return \Intervention\Image\Image|\Intervention\Image\ImageManager
      */
     public function cropAndResizePhoto($filePath)
     {
-        return Image::make($filePath)->fit(640, 640);
+        return $this->imageProcessor->make($filePath)->fit(640, 640);
     }
 
     /**
-     * @param $user
+     * @param \app\models\User $user
      * @param $relativePath
      * @return string
      */
@@ -93,5 +97,13 @@ class UserPhotoUploadForm extends Model
         $user->save(false);
 
         return $relativePath;
+    }
+
+    /**
+     * @param $imageProcessor
+     */
+    public function setImageProcessor($imageProcessor)
+    {
+        $this->imageProcessor = $imageProcessor;
     }
 }
