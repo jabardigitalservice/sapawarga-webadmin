@@ -2,9 +2,10 @@
 
 namespace tests\models;
 
+use app\models\User;
 use app\models\UserPhotoUploadForm;
-use Spatie\Image\Image;
 use yii\web\UploadedFile;
+use Mockery as m;
 
 class UserPhotoUploadFormTest extends \Codeception\Test\Unit
 {
@@ -97,5 +98,40 @@ class UserPhotoUploadFormTest extends \Codeception\Test\Unit
 
         $this->assertEquals($image->getHeight(), 640);
         $this->assertEquals($image->getWidth(), 640);
+    }
+
+    public function testCreateRelativePath()
+    {
+        $model            = new UserPhotoUploadForm();
+        $relativeFilePath = $model->createFilePath();
+
+        $this->assertStringContainsString('avatars/', $relativeFilePath);
+    }
+
+    public function testUpload()
+    {
+        $tempFilePath = '/temp/test.jpg'; // random file path
+
+        /**
+         * @var \yii2tech\filestorage\BucketInterface $bucket
+         */
+        $bucket = m::mock(\Yii::$app->fileStorage->getBucket('imageFiles'));
+        $bucket->shouldReceive('saveFileContent')->andReturnTrue()->once();
+
+        $model  = new UserPhotoUploadForm();
+        $result = $model->upload($tempFilePath, $bucket);
+
+        $this->assertTrue($result);
+    }
+
+    public function testSetUserProfilePhoto()
+    {
+        $user = new User();
+
+        $model            = new UserPhotoUploadForm();
+        $relativeFilePath = $model->setUserProfilePhoto($user, 'avatars/my.jpg');
+
+        $this->assertEquals('avatars/my.jpg', $relativeFilePath);
+        $this->assertEquals('avatars/my.jpg', $user->photo_url);
     }
 }
