@@ -6,6 +6,7 @@ use app\models\User;
 use app\models\UserPhotoUploadForm;
 use yii\web\UploadedFile;
 use Mockery as m;
+use yii2tech\filestorage\local\Bucket;
 
 class UserPhotoUploadFormTest extends \Codeception\Test\Unit
 {
@@ -112,10 +113,7 @@ class UserPhotoUploadFormTest extends \Codeception\Test\Unit
     {
         $tempFilePath = '/temp/test.jpg'; // random file path
 
-        /**
-         * @var \yii2tech\filestorage\BucketInterface $bucket
-         */
-        $bucket = m::mock(\Yii::$app->fileStorage->getBucket('imageFiles'));
+        $bucket = m::mock(Bucket::class);
         $bucket->shouldReceive('saveFileContent')->andReturnTrue()->once();
 
         $model  = new UserPhotoUploadForm();
