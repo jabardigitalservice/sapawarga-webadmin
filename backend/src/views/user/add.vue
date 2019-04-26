@@ -135,7 +135,7 @@
                 label="RW"
                 prop="rw"
               >
-                <el-input v-model="user.rw" type="number" placeholder="Masukan RW" :disabled="user.kelurahan == '' && checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec'])" />
+                <el-input v-model="user.rw" type="text" placeholder="Masukan RW" :disabled="user.kelurahan == '' && checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec'])" />
               </el-form-item>
             </el-col>
             <el-col :span="12" class="form-right-side">
@@ -144,7 +144,7 @@
                 label="RT"
                 prop="rt"
               >
-                <el-input v-model="user.rt" type="number" placeholder="Masukan RT" :disabled="user.rw == '' && checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec'])" />
+                <el-input v-model="user.rt" type="text" placeholder="Masukan RT" :disabled="user.rw == '' && checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec'])" />
               </el-form-item>
             </el-col>
           </el-row>
@@ -323,7 +323,7 @@ export default {
           },
           {
             max: 255,
-            message: 'Alamat email terlalu panjang, maksimum 255 karakter',
+            message: 'Alamat email terlalu panjang, maksimal 255 karakter',
             trigger: 'blur'
           },
           {
@@ -436,7 +436,7 @@ export default {
           },
           {
             pattern: /^[0-9]+$/,
-            message: 'Karakter RW tidak sesuai',
+            message: 'RW harus menggunakan angka',
             trigger: 'blur'
           }
         ],
@@ -448,7 +448,7 @@ export default {
           },
           {
             pattern: /^[0-9]+$/,
-            message: 'Karakter RT tidak sesuai',
+            message: 'RT harus menggunakan angka',
             trigger: 'blur'
           }
         ],
@@ -585,12 +585,16 @@ export default {
             lon: this.user.longitude
 
           }).then(() => {
-            this.$alert('Pengguna berhasil ditambahkan', {
-              callback: action => {}
-            })
+            Message({
+                  message: 'Pengguna berhasil ditambahkan',
+                  type: 'success',
+                  duration: 1 * 1000
+                }, )
+            setTimeout(()=>{
+              this.$router.push('/user/user-all')
+            },1000);
             this.$refs[formName].resetFields()
             this.imageData = 0
-
           })
             .catch(error => {
               this.$refs[formName].resetFields()
@@ -701,7 +705,6 @@ export default {
         const link_photo = response.data.photo_url
         const link_photo_name = link_photo.substring(45, link_photo.length)
         this.user.photo = link_photo_name
-
       }).catch(error => {
         const image_error = error.response.data.status
         if(image_error == 500){
