@@ -5,7 +5,7 @@
         <span>Total user per:</span>
       </div>
       <div style="margin-bottom:50px;">
-        <el-col v-if="(roleId == null)" :xs="12" :sm="12" :lg="6" class="card-panel-col total-all">
+        <el-col v-if="(roleId == null && totalAllUser != null)" :xs="12" :sm="12" :lg="6" class="card-panel-col total-all">
           <div class="card-panel">
             <div class="card-panel-icon-wrapper icon-people-all">
               <svg-icon icon-class="peoples" class-name="card-panel-icon" />
@@ -18,7 +18,7 @@
             </div>
           </div>
         </el-col>
-        <el-col v-if="(roleId == null) || (roleId == 'staffProv')" :xs="12" :sm="12" :lg="6" class="card-panel-col total-province">
+        <el-col v-if="(roleId == null && totalUserProvince != null) || (roleId == 'staffProv') && (totalUserProvince != null)" :xs="12" :sm="12" :lg="6" class="card-panel-col total-province">
           <div class="card-panel">
             <div class="card-panel-icon-wrapper icon-people-province">
               <svg-icon icon-class="peoples" class-name="card-panel-icon" />
@@ -31,7 +31,7 @@
             </div>
           </div>
         </el-col>
-        <el-col v-if="(roleId == null) || (roleId == 'staffProv') || (roleId == 'staffKabkota')" :xs="12" :sm="12" :lg="6" class="card-panel-col total-kota">
+        <el-col v-if="(roleId == null && totalUserKabKota != null) || (roleId == 'staffProv') || (roleId == 'staffKabkota')" :xs="12" :sm="12" :lg="6" class="card-panel-col total-kota">
           <div class="card-panel">
             <div class="card-panel-icon-wrapper icon-people-kota">
               <svg-icon icon-class="peoples" class-name="card-panel-icon" />
@@ -44,7 +44,7 @@
             </div>
           </div>
         </el-col>
-        <el-col v-if="(roleId == null) || (roleId == 'staffProv') || (roleId == 'staffKabkota') || (roleId == 'staffKec')" :xs="12" :sm="12" :lg="6" class="card-panel-col total-kec">
+        <el-col v-if="(roleId == null && totalUserKec != null) || (roleId == 'staffProv') || (roleId == 'staffKabkota') || (roleId == 'staffKec')" :xs="12" :sm="12" :lg="6" class="card-panel-col total-kec">
           <div class="card-panel">
             <div class="card-panel-icon-wrapper icon-people-kec">
               <svg-icon icon-class="peoples" class-name="card-panel-icon" />
@@ -57,7 +57,7 @@
             </div>
           </div>
         </el-col>
-        <el-col v-if="(roleId == null) || (roleId == 'staffProv') || (roleId == 'staffKabkota') || (roleId == 'staffKec') || (roleId == 'staffKel')" :xs="12" :sm="12" :lg="6" class="card-panel-col total-kel">
+        <el-col v-if="(roleId == null && totalUserKel != null) || (roleId == 'staffProv') || (roleId == 'staffKabkota') || (roleId == 'staffKec') || (roleId == 'staffKel')" :xs="12" :sm="12" :lg="6" class="card-panel-col total-kel">
           <div class="card-panel">
             <div class="card-panel-icon-wrapper icon-people-kel">
               <svg-icon icon-class="peoples" class-name="card-panel-icon" />
