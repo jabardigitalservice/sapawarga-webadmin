@@ -7,10 +7,10 @@
       <el-col :sm="24" :lg="8" :xl="6" class="grid-content">
         <el-form ref="user" :model="user" :rules="rules">
           <el-form-item label="Photo" prop="photo">
-            <div class="image-preview" v-if="imageData.length > 0">
+            <div v-if="imageData.length > 0" class="image-preview">
               <img class="preview" :src="imageData">
             </div>
-            <input type="file" @change="onFileSelected" accept="image/*" style="margin-left:50px">
+            <input type="file" class="input-image" accept="image/*" @change="onFileSelected">
           </el-form-item>
         </el-form>
       </el-col>
@@ -152,22 +152,20 @@
           <el-row>
             <el-col>
               <el-form-item label="Alamat" prop="address">
-            <el-input v-model="user.address" type="text" />
-          </el-form-item>
+                <el-input v-model="user.address" type="text" />
+              </el-form-item>
             </el-col>
           </el-row>
-
-
           <el-row>
             <el-col :span="12">
               <el-form-item label="Latitude" prop="latitude">
-            <el-input v-model="user.latitude" type="text" placeholder="Contoh: -6.943097" />
-          </el-form-item>
+                <el-input v-model="user.latitude" type="text" placeholder="Contoh: -6.943097" />
+              </el-form-item>
             </el-col>
             <el-col :span="12" class="form-right-side">
               <el-form-item label="Longitude" prop="longitude">
-            <el-input v-model="user.longitude" type="text" placeholder="Contoh: 107.633545" />
-          </el-form-item>
+                <el-input v-model="user.longitude" type="text" placeholder="Contoh: 107.633545" />
+              </el-form-item>
             </el-col>
           </el-row>
           <p class="warn-content">Media Sosial</p>
@@ -193,11 +191,8 @@
             <el-button type="primary" @click="submitForm('user')">Tambah Pengguna</el-button>
             <el-button @click="resetForm('user')">Batal</el-button>
           </el-form-item>
-          <div>
-          </div>
         </el-form>
       </el-col>
-
     </el-row>
   </div>
 </template>
@@ -586,13 +581,13 @@ export default {
 
           }).then(() => {
             Message({
-                  message: 'Pengguna berhasil ditambahkan',
-                  type: 'success',
-                  duration: 1 * 1000
-                }, )
-            setTimeout(()=>{
+              message: 'Pengguna berhasil ditambahkan',
+              type: 'success',
+              duration: 1 * 1000
+            })
+            setTimeout(() => {
               this.$router.push('/user/user-all')
-            },1000);
+            }, 1000)
             this.$refs[formName].resetFields()
             this.imageData = 0
           })
@@ -682,24 +677,23 @@ export default {
     // Upload image
     onFileSelected(event) {
       this.image = event.target.files[0]
-      let input = event.target
+      const input = event.target
       if (input.files && input.files[0]) {
-                // create a new FileReader to read this image and convert to base64 format
-            var reader = new FileReader()
-                // Define a callback function to run, when FileReader finishes its job
-            reader.onload = (e) => {
-                    // Note: arrow function used here, so that "this.imageData" refers to the imageData of Vue component
-                    // Read image as base64 and set to imageData
-            this.imageData = e.target.result
-          }
-                // Start the reader job - read file as a data url (base64 format)
+        // create a new FileReader to read this image and convert to base64 format
+        var reader = new FileReader()
+        // Define a callback function to run, when FileReader finishes its job
+        reader.onload = (e) => {
+          // Note: arrow function used here, so that "this.imageData" refers to the imageData of Vue component
+          // Read image as base64 and set to imageData
+          this.imageData = e.target.result
+        }
+        // Start the reader job - read file as a data url (base64 format)
         this.preview = reader.readAsDataURL(input.files[0])
         this.onUpload()
       }
-
     },
-    onUpload(){
-      const formData = new FormData();
+    onUpload() {
+      const formData = new FormData()
       formData.append('image', this.image, this.image.name)
       uploadImage(formData).then(response => {
         const link_photo = response.data.photo_url
@@ -707,12 +701,12 @@ export default {
         this.user.photo = link_photo_name
       }).catch(error => {
         const image_error = error.response.data.status
-        if(image_error == 500){
+        if (image_error === 500) {
           Message({
-          message: 'Ukuran foto tidak boleh lebih dari 2 MB. Mohon unggah kembali foto Anda',
-          type: 'error',
-          duration: 5 * 1000
-        })
+            message: 'Ukuran foto tidak boleh lebih dari 2 MB. Mohon unggah kembali foto Anda',
+            type: 'error',
+            duration: 5 * 1000
+          })
         }
         this.imageData = 0
         this.image = null
@@ -722,6 +716,9 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.input-image {
+  margin-left:50px;
+}
 img.preview {
     width: 200px;
     background-color: white;
