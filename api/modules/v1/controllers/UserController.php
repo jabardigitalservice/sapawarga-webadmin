@@ -14,6 +14,7 @@ use app\models\UserEditForm;
 use app\models\UserPhotoUploadForm;
 use app\models\UserSearch;
 use Illuminate\Support\Arr;
+use Intervention\Image\ImageManager;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\auth\CompositeAuth;
@@ -494,6 +495,9 @@ class UserController extends ActiveController
     {
         $user = User::findIdentity(\Yii::$app->user->getId());
 
+        /**
+         * @var \yii2tech\filestorage\BucketInterface $bucket
+         */
         $bucket = Yii::$app->fileStorage->getBucket('imageFiles');
 
         $responseData = [
@@ -505,30 +509,42 @@ class UserController extends ActiveController
 
     public function actionMePhotoUpload()
     {
-        $user         = User::findIdentity(\Yii::$app->user->getId());
+        $user = User::findIdentity(\Yii::$app->user->getId());
 
-        $model        = new UserPhotoUploadForm();
+        /**
+         * @var \yii2tech\filestorage\BucketInterface $bucket
+         */
+        $bucket = Yii::$app->fileStorage->getBucket('imageFiles');
+
+        $imageProcessor = new ImageManager();
+        $model = new UserPhotoUploadForm();
+
+        $model->setBucket($bucket);
+        $model->setImageProcessor($imageProcessor);
+
         $model->image = UploadedFile::getInstanceByName('image');
 
-        if ($model->validate()) {
-            if ($photoUrl = $model->upload($user)) {
-                $bucket = Yii::$app->fileStorage->getBucket('imageFiles');
-
-                $responseData = [
-                    'photo_url' => $bucket->getFileUrl($photoUrl),
-                ];
-
-                return $responseData;
-            } else {
-                $response = \Yii::$app->getResponse();
-                $response->setStatusCode(400);
-            }
-        } else {
-            // Validation error
-            $response = \Yii::$app->getResponse();
+        if (! $model->validate()) {
+            $response = Yii::$app->getResponse();
             $response->setStatusCode(422);
 
             return $model->getErrors();
+        }
+
+        if ($model->upload()) {
+            $relativePath = $model->getRelativeFilePath();
+
+            $user->photo_url = $relativePath;
+            $user->save(false);
+
+            $responseData = [
+                'photo_url' => $bucket->getFileUrl($relativePath),
+            ];
+
+            return $responseData;
+        } else {
+            $response = Yii::$app->getResponse();
+            $response->setStatusCode(400);
         }
     }
 

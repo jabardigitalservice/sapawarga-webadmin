@@ -24,6 +24,16 @@ class UserPhotoUploadForm extends Model
      */
     protected $imageProcessor;
 
+    /**
+     * @var BucketInterface
+     */
+    protected $bucket;
+
+    /**
+     * @var string
+     */
+    protected $relativeFilePath;
+
     public function rules()
     {
         $uploadMaxSize = Yii::$app->params['upload_max_size'];
@@ -35,16 +45,25 @@ class UserPhotoUploadForm extends Model
     }
 
     /**
-     * @param string $tempFilePath
-     * @param \yii2tech\filestorage\BucketInterface $bucket
      * @return bool
      */
-    public function upload($tempFilePath, BucketInterface $bucket)
+    public function upload()
+    {
+        $tempFilePath = $this->image->tempName;
+
+        return $this->save($tempFilePath);
+    }
+
+    /**
+     * @param string $tempFilePath
+     * @return bool
+     */
+    public function save($tempFilePath)
     {
         if ($image = $this->cropAndResizePhoto($tempFilePath)) {
-            $relativeFilePath = $this->createFilePath();
+            $this->relativeFilePath = $this->createFilePath();
 
-            return $bucket->saveFileContent($relativeFilePath, $image->encode());
+            return $this->bucket->saveFileContent($this->relativeFilePath, $image->encode());
         }
 
         return false;
@@ -73,8 +92,9 @@ class UserPhotoUploadForm extends Model
     {
         $relativePath = $this->getRelativePath();
         $filename     = $this->createRandomFilename();
+        $extension    = '.jpg';
 
-        return sprintf('%s/%s', $relativePath, $filename);
+        return sprintf('%s/%s.%s', $relativePath, $filename, $extension);
     }
 
     /**
@@ -106,5 +126,29 @@ class UserPhotoUploadForm extends Model
     public function setImageProcessor($imageProcessor)
     {
         $this->imageProcessor = $imageProcessor;
+    }
+
+    /**
+     * @param BucketInterface $bucket
+     */
+    public function setBucket(BucketInterface $bucket)
+    {
+        $this->bucket = $bucket;
+    }
+
+    /**
+     * @return void
+     */
+    public function setRelativePath($path)
+    {
+        $this->relativeFilePath = $path;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRelativeFilePath()
+    {
+        return $this->relativeFilePath;
     }
 }

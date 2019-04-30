@@ -153,8 +153,9 @@ class UserPhotoUploadFormTest extends \Codeception\Test\Unit
 
         $model  = new UserPhotoUploadForm();
         $model->setImageProcessor($imageProcessor);
+        $model->setBucket($bucket);
 
-        $result = $model->upload($tempFilePath, $bucket);
+        $result = $model->save($tempFilePath);
 
         $this->assertTrue($result);
     }
@@ -170,8 +171,9 @@ class UserPhotoUploadFormTest extends \Codeception\Test\Unit
 
         $model  = new UserPhotoUploadForm();
         $model->setImageProcessor($imageProcessor);
+        $model->setBucket($bucket);
 
-        $result = $model->upload($tempFilePath, $bucket);
+        $result = $model->save($tempFilePath);
 
         $this->assertFalse($result);
     }
@@ -187,5 +189,15 @@ class UserPhotoUploadFormTest extends \Codeception\Test\Unit
 
         $this->assertEquals('avatars/my.jpg', $relativeFilePath);
         $this->assertEquals('avatars/my.jpg', $user->photo_url);
+    }
+
+    public function testSetRelativePath()
+    {
+        $path = '/tmp/test.jpg';
+
+        $model = new UserPhotoUploadForm();
+        $model->setRelativePath($path);
+
+        $this->assertEquals($path, $model->getRelativeFilePath());
     }
 }
