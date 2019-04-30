@@ -542,10 +542,10 @@ class UserController extends ActiveController
             ];
 
             return $responseData;
-        } else {
-            $response = Yii::$app->getResponse();
-            $response->setStatusCode(400);
         }
+
+        $response = Yii::$app->getResponse();
+        $response->setStatusCode(400);
     }
 
     /**

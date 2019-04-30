@@ -2,7 +2,29 @@
 
 class StaffPhotoUploadCest
 {
-    public function postPhotoUploadTest(ApiTester $I)
+    public function _before(ApiTester $I)
+    {
+        //
+    }
+
+    public function postStaffPhotoUploadUnauthorizedTest(ApiTester $I)
+    {
+        $I->amUser();
+
+        $I->deleteHeader('Content-Type');
+
+        $I->sendPOST('/v1/staff/photo');
+
+        $I->canSeeResponseCodeIs(403);
+        $I->seeResponseIsJson();
+
+        $I->seeResponseContainsJson([
+            'success' => false,
+            'status'  => 403,
+        ]);
+    }
+
+    public function postStaffPhotoUploadTest(ApiTester $I)
     {
         $I->amStaff();
 
@@ -27,11 +49,9 @@ class StaffPhotoUploadCest
             'success' => true,
             'status'  => 200,
         ]);
-
-        $I->canSeeResponseJsonMatchesJsonPath('$.data.photo_url');
     }
 
-    public function postPhotoUploadNoFileTest(ApiTester $I)
+    public function postStaffPhotoUploadNoFileTest(ApiTester $I)
     {
         $I->amStaff();
 
@@ -48,7 +68,7 @@ class StaffPhotoUploadCest
         ]);
     }
 
-    public function postPhotoUploadInvalidFileTypeTest(ApiTester $I)
+    public function postStaffPhotoUploadInvalidFileTypeTest(ApiTester $I)
     {
         $I->amStaff();
 
@@ -74,9 +94,9 @@ class StaffPhotoUploadCest
         ]);
     }
 
-    public function postPhotoUploadInvalidHeaderMimeTest(ApiTester $I)
+    public function postStaffPhotoUploadInvalidHeaderMimeTest(ApiTester $I)
     {
-        $I->amUser();
+        $I->amStaff();
 
         $I->deleteHeader('Content-Type');
 
