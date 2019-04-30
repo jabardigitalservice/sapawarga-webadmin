@@ -122,6 +122,8 @@ $config = [
                         'OPTIONS count' => 'options',
                         'GET get-permissions' => 'get-permissions',
                         'OPTIONS get-permissions' => 'options',
+                        'POST photo' => 'photo-upload',
+                        'OPTIONS photo' => 'options',
                     ]
                 ],
                 [
