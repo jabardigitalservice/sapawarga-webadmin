@@ -91,9 +91,17 @@ class PhoneBookSearch extends PhoneBook
      */
     public function searchNearby(User $user, $params)
     {
+        // Radius in kilometers
+        $radius = 3.0;
+
         $sql = file_get_contents(__DIR__ . '/scripts/getNearestByRadius.sql');
         $provider = new SqlDataProvider([
             'sql' => $sql,
+            'params' => [
+                ':latitude' => Arr::get($params, 'lat'),
+                ':longitude' => Arr::get($params, 'lon'),
+                ':radius' => $radius,
+            ],
         ]);
 
         return $provider;

@@ -13,8 +13,8 @@ SELECT id, name,
                  * SIN(RADIANS(pb.latitude)))) AS distance
   FROM phonebooks AS pb
   JOIN (   /* these are the query parameters */
-        SELECT  -6.910711 AS latpoint, 107.609822 AS longpoint,
-                20.0 AS radius, 111.045 AS distance_unit
+        SELECT  :latitude AS latpoint, :longitude AS longpoint,
+                :radius AS radius, 111.045 AS distance_unit
     ) AS c ON 1=1
   WHERE pb.latitude
      BETWEEN c.latpoint  - (c.radius / c.distance_unit)
