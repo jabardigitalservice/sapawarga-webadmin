@@ -14,7 +14,7 @@ SELECT id, name,
   FROM phonebooks AS pb
   JOIN (   /* these are the query parameters */
         SELECT  -6.910711 AS latpoint, 107.609822 AS longpoint,
-                3.0 AS radius, 111.045 AS distance_unit
+                20.0 AS radius, 111.045 AS distance_unit
     ) AS c ON 1=1
   WHERE pb.latitude
      BETWEEN c.latpoint  - (c.radius / c.distance_unit)
@@ -22,7 +22,7 @@ SELECT id, name,
     AND pb.longitude
      BETWEEN c.longpoint - (c.radius / (c.distance_unit * COS(RADIANS(c.latpoint))))
          AND c.longpoint + (c.radius / (c.distance_unit * COS(RADIANS(c.latpoint))))
+    AND pb.status <> -1
  ) AS d
  WHERE distance <= radius
  ORDER BY distance
-LIMIT 15

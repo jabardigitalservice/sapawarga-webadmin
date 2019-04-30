@@ -6,6 +6,7 @@ use Illuminate\Support\Arr;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use yii\data\SqlDataProvider;;
 
 /**
  * PhoneBookSearch represents the model behind the search form of `app\models\PhoneBook`.
@@ -41,6 +42,12 @@ class PhoneBookSearch extends PhoneBook
      */
     public function search(User $user, $params)
     {
+        $lat = Arr::get($params, 'lat');
+        $lon = Arr::get($params, 'lon');
+        if ($lat && $lon) {
+            return $this->searchNearby($user, $params);
+        }
+
         $query = PhoneBook::find();
 
         $sortBy    = Arr::get($params, 'sort_by', 'seq');
@@ -73,6 +80,23 @@ class PhoneBookSearch extends PhoneBook
 
         // Else Has Admin Role, tampilkan semua
         return $this->getQueryAll($query, $params);
+    }
+
+    /**
+     * Search using SqlDataProvider
+     *
+     * @param array $params
+     *
+     * @return SqlDataProvider
+     */
+    public function searchNearby(User $user, $params)
+    {
+        $sql = file_get_contents(__DIR__ . '/scripts/getNearestByRadius.sql');
+        $provider = new SqlDataProvider([
+            'sql' => $sql,
+        ]);
+
+        return $provider;
     }
 
     protected function getQueryRoleUser($user, $query, $params)
