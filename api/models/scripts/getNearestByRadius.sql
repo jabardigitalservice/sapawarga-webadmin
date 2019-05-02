@@ -1,8 +1,11 @@
-SELECT id, name,
+SELECT id, name, description, address, phone_numbers,
        latitude, longitude, distance
   FROM (
  SELECT pb.id,
         pb.name,
+        pb.description,
+        pb.address,
+        pb.phone_numbers,
         pb.latitude, pb.longitude,
         c.radius,
         c.distance_unit

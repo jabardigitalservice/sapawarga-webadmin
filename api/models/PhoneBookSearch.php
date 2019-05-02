@@ -105,6 +105,13 @@ class PhoneBookSearch extends PhoneBook
         ]);
         $provider->setPagination(false);
 
+        // Convert JSON string of phone_numbers
+        $phonebooks = $provider->getModels();
+        foreach ($phonebooks as &$phonebook) {
+            $phonebook['phone_numbers'] = json_decode($phonebook['phone_numbers']);
+        }
+        $provider->setModels($phonebooks);
+
         return $provider;
     }
 
