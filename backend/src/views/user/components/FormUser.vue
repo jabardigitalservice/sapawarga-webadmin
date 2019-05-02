@@ -46,14 +46,6 @@
             <el-input type="text" v-model="user.confirmation" />
           </el-form-item>
 
-          <!-- <el-form-item label="Ulangi Password" prop="konfirmasiPassword">
-            <el-input v-model="user.konfirmasiPassword" type="text" />
-          </el-form-item> -->
-
-            <!-- <el-col :span="3" style="margin-left:5px">
-              <el-button type="success" @click="generate">Generate</el-button>
-            </el-col> -->
-
           <el-form-item label="Telepon" prop="phone">
             <el-input v-model="user.phone" type="number" placeholder="contoh: 081254332233" />
           </el-form-item>
@@ -163,19 +155,19 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="Latitude" prop="latitude">
-                <el-input v-model="user.latitude" type="text" placeholder="Contoh: -6.943097" />
+                <el-input v-model="user.latitude" type="text" placeholder="Contoh: -6.943097 atau -" />
               </el-form-item>
             </el-col>
             <el-col :span="12" class="form-right-side">
               <el-form-item label="Longitude" prop="longitude">
-                <el-input v-model="user.longitude" type="text" placeholder="Contoh: 107.633545" />
+                <el-input v-model="user.longitude" type="text" placeholder="Contoh: 107.633545 atau -" />
               </el-form-item>
             </el-col>
           </el-row>
           <p class="warn-content">Media Sosial</p>
 
           <el-form-item label="Twitter" prop="twitter">
-            <el-input v-model="user.twitter" type="text" placeholder="Contoh: @jabardigitalservice" />
+            <el-input v-model="user.twitter" type="text" placeholder="Contoh: jabardigitalservice" />
           </el-form-item>
           <el-form-item label="Facebook" prop="facebook">
             <el-input
@@ -188,7 +180,7 @@
             <el-input
               v-model="user.instagram"
               type="text"
-              placeholder="Contoh: @jabardigitalservice"
+              placeholder="Contoh: jabardigitalservice"
             />
           </el-form-item>
           <el-form-item>
@@ -234,37 +226,6 @@ export default {
       } else {
         callback()
       }
-    }
-
-    const checkLatitude = (rule, value, callback, source, option) => {
-
-      if (this.user.longitude === '') {
-        callback(new Error('latitude harus diisi'))
-      }
-    }
-
-    const checkLongitude = (rule, value, callback) => {
-
-      if (this.user.latitude === '') {
-        // this.$refs.user.validateField('checkLatitude')
-        callback(new Error('Longitude harus diisi'))
-      }
-    }
-
-    const checkLatLng = (rule, value, callback) => {
-
-      setTimeout(() => {
-      if (this.user.latitude === '' && this.user.longitude === ''){
-        callback()
-      } else if (this.user.latitude === '' && this.user.longitude !== ''){
-        callback(new Error('Latitude harus diisi'))
-
-      } else if (this.user.longitude === '' && this.user.latitude !== ''){
-        callback(new Error('Longitude harus diisi'))
-      }
-      callback()
-      }, 1000)
-
     }
 
     return {
@@ -321,29 +282,30 @@ export default {
       image: '',
       imageData: '',
       preview: '',
-
+      latitude_value: '',
+      longitude_value:'',
       // validation
       rules: {
         username: [
           {
             required: true,
-            message: 'Nama pengguna harus diisi',
+            message: 'Username harus diisi',
             trigger: 'blur'
           },
           {
             min: 4,
-            message: 'Nama pengguna minimal 4 karakter',
+            message: 'Username minimal 4 karakter',
             trigger: 'blur'
           },
           {
-            max: 14,
-            message: 'Nama pengguna maksimal 14 karakter',
+            max: 255,
+            message: 'Username maksimal 14 karakter',
             trigger: 'blur'
           },
           {
             pattern: /^[a-z0-9_.]+$/,
             message:
-              'Nama pengguna hanya boleh menggunakan huruf, angka, underscore dan titik',
+              'Username hanya boleh menggunakan huruf kecil, angka, underscore dan titik',
             trigger: 'blur'
           }
         ],
@@ -467,33 +429,26 @@ export default {
         ],
         latitude: [
           {
-            required: false,
-            message: 'Latitude harus diisi',
+            required: true,
+            message: 'Latitude harus diisi, jika tidak ada latitude isi dengan -',
             trigger: 'blur'
           },
           {
             pattern: /^[0-9.+-]+$/,
-            message: 'Pilih latitude dari google map',
-            trigger: 'blur'
-          },
-          {
-            validator: checkLatLng,
+            message: 'Latitude hanya boleh menggunakan angka, - atau +',
             trigger: 'blur'
           }
         ],
         longitude: [
+
           {
-            required: false,
-            message: 'Longitude harus diisi',
+            required: true,
+            message: 'Longitude harus diisi, jika tidak ada longitude isi dengan -',
             trigger: 'blur'
           },
           {
             pattern: /^[0-9.+-]+$/,
-            message: 'Pilih latitude dari google map',
-            trigger: 'blur'
-          },
-          {
-            validator: checkLatLng,
+            message: 'Longitude hanya boleh menggunakan angka, - atau +',
             trigger: 'blur'
           }
         ],
@@ -554,14 +509,19 @@ export default {
             required: false
           },
           {
-            pattern: /^[a-z0-9.@_]+$/,
-            message: 'Karakter tidak sesuai',
+            pattern: /^[a-z0-9._]+$/,
+            message: 'Twitte hanya boleh menggunakan huruf, angka, titik dan underscore',
             trigger: 'blur'
           }
         ],
         facebook: [
           {
             required: false
+          },
+          {
+            type: 'url',
+            message: 'Tolong masukan url lengkap, contoh: https://www.facebook.com/namapengguna',
+            trigger: 'blur'
           }
         ],
         instagram: [
@@ -569,8 +529,8 @@ export default {
             required: false
           },
           {
-            pattern: /^[a-z0-9.@_]+$/,
-            message: 'Karakter tidak sesuai',
+            pattern: /^[a-z0-9._]+$/,
+            message: 'Instagram hanya boleh menggunakan huruf, angka, titik dan underscore',
             trigger: 'blur'
           }
         ]
@@ -671,8 +631,8 @@ export default {
             twitter: this.user.twitter,
             instagram: this.user.instagram,
             photo_url: this.user.photo,
-            lat: this.user.latitude,
-            lon: this.user.longitude
+            lat: this.user.latitude == '-' ? null : this.user.latitude,
+            lon: this.user.longitude == '-' ? null : this.user.longitude
 
           }).then(() => {
             Message({
