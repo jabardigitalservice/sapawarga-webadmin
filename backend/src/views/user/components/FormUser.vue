@@ -236,6 +236,37 @@ export default {
       }
     }
 
+    const checkLatitude = (rule, value, callback, source, option) => {
+
+      if (this.user.longitude === '') {
+        callback(new Error('latitude harus diisi'))
+      }
+    }
+
+    const checkLongitude = (rule, value, callback) => {
+
+      if (this.user.latitude === '') {
+        // this.$refs.user.validateField('checkLatitude')
+        callback(new Error('Longitude harus diisi'))
+      }
+    }
+
+    const checkLatLng = (rule, value, callback) => {
+
+      setTimeout(() => {
+      if (this.user.latitude === '' && this.user.longitude === ''){
+        callback()
+      } else if (this.user.latitude === '' && this.user.longitude !== ''){
+        callback(new Error('Latitude harus diisi'))
+
+      } else if (this.user.longitude === '' && this.user.latitude !== ''){
+        callback(new Error('Longitude harus diisi'))
+      }
+      callback()
+      }, 1000)
+
+    }
+
     return {
       user: {
         username: '',
@@ -290,6 +321,7 @@ export default {
       image: '',
       imageData: '',
       preview: '',
+
       // validation
       rules: {
         username: [
@@ -435,15 +467,33 @@ export default {
         ],
         latitude: [
           {
+            required: false,
+            message: 'Latitude harus diisi',
+            trigger: 'blur'
+          },
+          {
             pattern: /^[0-9.+-]+$/,
             message: 'Pilih latitude dari google map',
+            trigger: 'blur'
+          },
+          {
+            validator: checkLatLng,
             trigger: 'blur'
           }
         ],
         longitude: [
           {
+            required: false,
+            message: 'Longitude harus diisi',
+            trigger: 'blur'
+          },
+          {
             pattern: /^[0-9.+-]+$/,
             message: 'Pilih latitude dari google map',
+            trigger: 'blur'
+          },
+          {
+            validator: checkLatLng,
             trigger: 'blur'
           }
         ],
