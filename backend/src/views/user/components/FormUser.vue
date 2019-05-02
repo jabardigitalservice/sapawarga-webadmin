@@ -27,29 +27,29 @@
           :rules="rules"
         >
           <!-- form -->
-          <el-form-item label="Nama Pengguna" prop="username">
+          <el-form-item label="Username" prop="username">
             <el-input v-model="user.username" type="text" />
           </el-form-item>
-          <el-form-item label="Nama" prop="name">
+          <el-form-item label="Nama Lengkap" prop="name">
             <el-input v-model="user.name" type="text" />
           </el-form-item>
 
           <el-form-item label="Email" prop="email">
             <el-input v-model="user.email" type="email" />
           </el-form-item>
-            
+
           <el-form-item label="Password" prop="password">
             <el-input v-model="user.password" type="text" />
           </el-form-item>
 
           <el-form-item label="Ulangi Password" prop="confirmation">
-            <el-input v-model="user.confirmationPassword" type="text" />
+            <el-input type="text" v-model="user.confirmation" />
           </el-form-item>
-                    
+
           <!-- <el-form-item label="Ulangi Password" prop="konfirmasiPassword">
             <el-input v-model="user.konfirmasiPassword" type="text" />
           </el-form-item> -->
-            
+
             <!-- <el-col :span="3" style="margin-left:5px">
               <el-button type="success" @click="generate">Generate</el-button>
             </el-col> -->
@@ -218,22 +218,31 @@ export default {
     const validatePass = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('Password tolong diisi'))
+      } else {
+        if (this.user.confirmation !== '') {
+          this.$refs.user.validateField('confirmation')
+        }
+        callback()
       }
     }
 
     const checkPassword = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('Tolong ulangi password'))
+      } else if (value !== this.user.password) {
+        callback(new Error('Password tidak sesuai'))
+      } else {
+        callback()
       }
     }
-    
+
     return {
       user: {
         username: '',
         name: '',
         email: '',
         password: '',
-        confirmationPassword:'',
+        confirmation:'',
         phone: '',
         address: '',
         kabkota: [],
@@ -250,10 +259,6 @@ export default {
         longitude: ''
       },
       opsiPeran: [
-        {
-          label: 'Admin',
-          value: 'admin'
-        },
         {
           label: 'Admin Provinsi',
           value: 'staffProv'
@@ -345,40 +350,48 @@ export default {
           }
         ],
         password: [
-          // {
-          //   required: true,
-          //   message: 'Kata sandi harus diisi',
-          //   trigger: 'blur'
-          // },
           {
             max: 255,
-            message: 'Kata sandi maksimal 255 karakter',
+            message: 'Password maksimal 255 karakter',
             trigger: 'blur'
           },
           {
             min: 5,
-            message: 'Kata sandi minimal 5 karakter',
+            message: 'Password minimal 5 karakter',
             trigger: 'blur'
           },
           {
             pattern: /^[a-zA-Z0-9\w\S]+$/,
             message:
-              'Karakter kata hanya boleh menggunakan huruf, angka dan spesial karakter',
+              'Karakter password hanya boleh menggunakan huruf, angka dan spesial karakter',
             trigger: 'blur'
           },
           {
+            required: true,
             validator: validatePass,
             trigger: 'blur'
           }
         ],
         confirmation: [
-          // {
-          //   required: true,
-          //   message: 'Ulangi password',
-          //   trigger: 'blur'
-          // },
           {
-            validator: checkPhone,
+            max: 255,
+            message: 'Password maksimal 255 karakter',
+            trigger: 'blur'
+          },
+          {
+            min: 5,
+            message: 'Password minimal 5 karakter',
+            trigger: 'blur'
+          },
+          {
+            pattern: /^[a-zA-Z0-9\w\S]+$/,
+            message:
+              'Karakter password hanya boleh menggunakan huruf, angka dan spesial karakter',
+            trigger: 'blur'
+          },
+          {
+            required: true,
+            validator: checkPassword,
             trigger: 'blur'
           }
         ],
@@ -596,7 +609,7 @@ export default {
             username: this.user.username,
             name: this.user.name,
             email: this.user.email,
-            password: this.user.password,
+            password: this.user.confirmation,
             phone: this.user.phone,
             address: this.user.address,
             role_id: this.user.role,
@@ -654,6 +667,7 @@ export default {
     },
     resetForm(formName) {
       this.$refs[formName].resetFields()
+      this.$router.go(-1)
     },
     parentKabkotaSet(dataKabkota) {
       this.id_kabkota = dataKabkota
