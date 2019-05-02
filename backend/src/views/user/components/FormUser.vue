@@ -27,7 +27,6 @@
           :rules="rules"
         >
           <!-- form -->
-
           <el-form-item label="Nama Pengguna" prop="username">
             <el-input v-model="user.username" type="text" />
           </el-form-item>
@@ -38,17 +37,22 @@
           <el-form-item label="Email" prop="email">
             <el-input v-model="user.email" type="email" />
           </el-form-item>
-          <el-row>
-            <el-col :span="20">
-              <el-form-item label="Password" prop="password">
-                <el-input v-model="user.password" type="text" />
-              </el-form-item>
-            </el-col>
+            
+          <el-form-item label="Password" prop="password">
+            <el-input v-model="user.password" type="text" />
+          </el-form-item>
 
-            <el-col :span="3" style="margin-left:5px">
+          <el-form-item label="Ulangi Password" prop="confirmation">
+            <el-input v-model="user.confirmationPassword" type="text" />
+          </el-form-item>
+                    
+          <!-- <el-form-item label="Ulangi Password" prop="konfirmasiPassword">
+            <el-input v-model="user.konfirmasiPassword" type="text" />
+          </el-form-item> -->
+            
+            <!-- <el-col :span="3" style="margin-left:5px">
               <el-button type="success" @click="generate">Generate</el-button>
-            </el-col>
-          </el-row>
+            </el-col> -->
 
           <el-form-item label="Telepon" prop="phone">
             <el-input v-model="user.phone" type="number" placeholder="contoh: 081254332233" />
@@ -211,12 +215,25 @@ export default {
         callback()
       }
     }
+    const validatePass = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('Password tolong diisi'))
+      }
+    }
+
+    const checkPassword = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('Tolong ulangi password'))
+      }
+    }
+    
     return {
       user: {
         username: '',
         name: '',
         email: '',
         password: '',
+        confirmationPassword:'',
         phone: '',
         address: '',
         kabkota: [],
@@ -328,11 +345,11 @@ export default {
           }
         ],
         password: [
-          {
-            required: true,
-            message: 'Kata sandi harus diisi',
-            trigger: 'change'
-          },
+          // {
+          //   required: true,
+          //   message: 'Kata sandi harus diisi',
+          //   trigger: 'blur'
+          // },
           {
             max: 255,
             message: 'Kata sandi maksimal 255 karakter',
@@ -347,6 +364,21 @@ export default {
             pattern: /^[a-zA-Z0-9\w\S]+$/,
             message:
               'Karakter kata hanya boleh menggunakan huruf, angka dan spesial karakter',
+            trigger: 'blur'
+          },
+          {
+            validator: validatePass,
+            trigger: 'blur'
+          }
+        ],
+        confirmation: [
+          // {
+          //   required: true,
+          //   message: 'Ulangi password',
+          //   trigger: 'blur'
+          // },
+          {
+            validator: checkPhone,
             trigger: 'blur'
           }
         ],
