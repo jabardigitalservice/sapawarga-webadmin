@@ -39,11 +39,11 @@
           </el-form-item>
 
           <el-form-item label="Password" prop="password">
-            <el-input v-model="user.password" type="text" />
+            <el-input v-model="user.password" type="password" />
           </el-form-item>
 
           <el-form-item label="Ulangi Password" prop="confirmation">
-            <el-input v-model="user.confirmation" type="text" />
+            <el-input v-model="user.confirmation" type="password" />
           </el-form-item>
 
           <el-form-item label="Telepon" prop="phone">
@@ -509,7 +509,7 @@ export default {
           },
           {
             pattern: /^[a-z0-9._]+$/,
-            message: 'Twitte hanya boleh menggunakan huruf, angka, titik dan underscore',
+            message: 'Twitter hanya boleh menggunakan huruf, angka, titik dan underscore',
             trigger: 'blur'
           }
         ],
