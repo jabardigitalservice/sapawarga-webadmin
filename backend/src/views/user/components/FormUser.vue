@@ -43,7 +43,7 @@
           </el-form-item>
 
           <el-form-item label="Ulangi Password" prop="confirmation">
-            <el-input type="text" v-model="user.confirmation" />
+            <el-input v-model="user.confirmation" type="text" />
           </el-form-item>
 
           <el-form-item label="Telepon" prop="phone">
@@ -63,7 +63,7 @@
                 </el-select>
               </el-form-item>
             </el-col>
-            <el-col :span="12" class="form-right-side">
+            <el-col :span="12" :style="{paddingLeft: formRightSide}">
               <el-form-item
                 v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && checkPermission(['admin', 'staffProv']))"
                 label="Kab/Kota"
@@ -106,7 +106,7 @@
                 </el-select>
               </el-form-item>
             </el-col>
-            <el-col :span="12" class="form-right-side">
+            <el-col :span="12" :style="{paddingLeft: formRightSide}">
               <el-form-item
                 v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffKec') && ! checkPermission(['staffKel']))"
                 label="Kelurahan"
@@ -155,12 +155,12 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="Latitude" prop="latitude">
-                <el-input v-model="user.latitude" type="text" placeholder="Contoh: -6.943097 atau -" />
+                <el-input v-model="user.latitude" type="text" placeholder="Contoh: -6.943097" />
               </el-form-item>
             </el-col>
             <el-col :span="12" class="form-right-side">
               <el-form-item label="Longitude" prop="longitude">
-                <el-input v-model="user.longitude" type="text" placeholder="Contoh: 107.633545 atau -" />
+                <el-input v-model="user.longitude" type="text" placeholder="Contoh: 107.633545" />
               </el-form-item>
             </el-col>
           </el-row>
@@ -234,7 +234,7 @@ export default {
         name: '',
         email: '',
         password: '',
-        confirmation:'',
+        confirmation: '',
         phone: '',
         address: '',
         kabkota: [],
@@ -282,8 +282,7 @@ export default {
       image: '',
       imageData: '',
       preview: '',
-      latitude_value: '',
-      longitude_value:'',
+      formRightSide: '10px',
       // validation
       rules: {
         username: [
@@ -607,6 +606,7 @@ export default {
     }
     if (checkPermission(['staffKec'])) {
       this.getKelurahan()
+      this.formRightSide = '0'
     }
   },
 
@@ -631,8 +631,8 @@ export default {
             twitter: this.user.twitter,
             instagram: this.user.instagram,
             photo_url: this.user.photo,
-            lat: this.user.latitude == '-' ? null : this.user.latitude,
-            lon: this.user.longitude == '-' ? null : this.user.longitude
+            lat: this.user.latitude === '-' ? null : this.user.latitude,
+            lon: this.user.longitude === '-' ? null : this.user.longitude
 
           }).then(() => {
             Message({
