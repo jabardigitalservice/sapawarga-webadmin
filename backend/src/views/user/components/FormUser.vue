@@ -47,7 +47,7 @@
           </el-form-item>
 
           <el-form-item label="Telepon" prop="phone">
-            <el-input v-model="user.phone" type="number" placeholder="contoh: 081254332233" />
+            <el-input v-model="user.phone" type="text" placeholder="contoh: 081254332233" />
           </el-form-item>
 
           <el-row>
@@ -131,7 +131,7 @@
                 label="RW"
                 prop="rw"
               >
-                <el-input v-model="user.rw" type="text" placeholder="Masukan RW" :disabled="user.kelurahan == '' && checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec'])" />
+                <el-input v-model="user.rw" type="text" placeholder="Contoh: 001" :disabled="user.kelurahan == '' && checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec'])" />
               </el-form-item>
             </el-col>
             <el-col :span="12" class="form-right-side">
@@ -140,7 +140,7 @@
                 label="RT"
                 prop="rt"
               >
-                <el-input v-model="user.rt" type="text" placeholder="Masukan RT" :disabled="user.rw == '' && checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec'])" />
+                <el-input v-model="user.rt" type="text" placeholder="Contoh: 002" :disabled="user.rw == '' && checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec'])" />
               </el-form-item>
             </el-col>
           </el-row>
@@ -479,6 +479,16 @@ export default {
             trigger: 'blur'
           },
           {
+            max: 3,
+            message: 'RW harus 3 angka',
+            trigger: 'blur'
+          },
+          {
+            min: 3,
+            message: 'RW harus 3 angka',
+            trigger: 'blur'
+          },
+          {
             pattern: /^[0-9]+$/,
             message: 'RW harus menggunakan angka',
             trigger: 'blur'
@@ -488,6 +498,16 @@ export default {
           {
             required: true,
             message: 'RT harus diisi',
+            trigger: 'blur'
+          },
+          {
+            max: 3,
+            message: 'RT harus 3 angka',
+            trigger: 'blur'
+          },
+          {
+            min: 3,
+            message: 'RT harus 3 angka',
             trigger: 'blur'
           },
           {
