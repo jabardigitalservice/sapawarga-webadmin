@@ -2,9 +2,14 @@
 
 namespace tests\models;
 
+use app\models\User;
 use app\models\UserPhotoUploadForm;
-use Spatie\Image\Image;
+use Intervention\Image\Gd\Driver;
+use Intervention\Image\Image;
+use Intervention\Image\ImageManager;
 use yii\web\UploadedFile;
+use Mockery as m;
+use yii2tech\filestorage\local\Bucket;
 
 class UserPhotoUploadFormTest extends \Codeception\Test\Unit
 {
@@ -77,11 +82,22 @@ class UserPhotoUploadFormTest extends \Codeception\Test\Unit
 
     public function testCropAndResize()
     {
-        $filePath = __DIR__ . '/../../data/hd1080.png';
+        $tempFilePath = '/tmp/test.jpg'; // mock file path
+
+        $imageProcessor = m::mock(ImageManager::class);
+        $imageProcessor->shouldReceive('make')->once()->andReturnUsing(function () {
+            $driver = new Driver();
+            $core = imagecreatetruecolor(1024, 1024);
+
+            $image = new Image($driver, $core);
+
+            return $image;
+        });
 
         $model = new UserPhotoUploadForm();
+        $model->setImageProcessor($imageProcessor);
 
-        $image = $model->cropAndResizePhoto($filePath);
+        $image = $model->cropAndResizePhoto($tempFilePath);
 
         $this->assertEquals($image->getHeight(), 640);
         $this->assertEquals($image->getWidth(), 640);
@@ -89,13 +105,99 @@ class UserPhotoUploadFormTest extends \Codeception\Test\Unit
 
     public function testCropAndResizeSmallImage()
     {
-        $filePath = __DIR__ . '/../../data/qvga.png';
+        $tempFilePath = '/tmp/test.jpg'; // mock file path
+
+        $imageProcessor = m::mock(ImageManager::class);
+        $imageProcessor->shouldReceive('make')->once()->andReturnUsing(function () {
+            $driver = new Driver();
+            $core = imagecreatetruecolor(128, 128);
+
+            $image = new Image($driver, $core);
+
+            return $image;
+        });
 
         $model = new UserPhotoUploadForm();
+        $model->setImageProcessor($imageProcessor);
 
-        $image = $model->cropAndResizePhoto($filePath);
+        $image = $model->cropAndResizePhoto($tempFilePath);
 
         $this->assertEquals($image->getHeight(), 640);
         $this->assertEquals($image->getWidth(), 640);
+    }
+
+    public function testCreateRelativePath()
+    {
+        $model            = new UserPhotoUploadForm();
+        $relativeFilePath = $model->createFilePath();
+
+        $this->assertStringContainsString('avatars/', $relativeFilePath);
+    }
+
+    public function testUploadSuccess()
+    {
+        $tempFilePath = '/tmp/test.jpg'; // mock file path
+
+        $imageProcessor = m::mock(ImageManager::class);
+        $imageProcessor->shouldReceive('make->fit')->once()->andReturnUsing(function () {
+            $driver = new Driver();
+            $core = imagecreatetruecolor(600, 600);
+
+            $image = new Image($driver, $core);
+
+            return $image;
+        });
+
+        $bucket = m::mock(Bucket::class);
+        $bucket->shouldReceive('saveFileContent')->andReturnTrue()->once();
+
+        $model  = new UserPhotoUploadForm();
+        $model->setImageProcessor($imageProcessor);
+        $model->setBucket($bucket);
+
+        $result = $model->save($tempFilePath);
+
+        $this->assertTrue($result);
+    }
+
+    public function testUploadFailed()
+    {
+        $tempFilePath = '/tmp/test.jpg'; // mock file path
+
+        $imageProcessor = m::mock(ImageManager::class);
+        $imageProcessor->shouldReceive('make->fit')->andReturnFalse()->once();
+
+        $bucket = m::mock(Bucket::class);
+
+        $model  = new UserPhotoUploadForm();
+        $model->setImageProcessor($imageProcessor);
+        $model->setBucket($bucket);
+
+        $result = $model->save($tempFilePath);
+
+        $this->assertFalse($result);
+    }
+
+    public function testSetUserProfilePhoto()
+    {
+        $user = m::mock(User::class);
+        $user->shouldReceive('hasAttribute')->andReturnTrue()->once();
+        $user->shouldReceive('save')->andReturnTrue()->once();
+
+        $model            = new UserPhotoUploadForm();
+        $relativeFilePath = $model->setUserProfilePhoto($user, 'avatars/my.jpg');
+
+        $this->assertEquals('avatars/my.jpg', $relativeFilePath);
+        $this->assertEquals('avatars/my.jpg', $user->photo_url);
+    }
+
+    public function testSetRelativePath()
+    {
+        $path = '/tmp/test.jpg';
+
+        $model = new UserPhotoUploadForm();
+        $model->setRelativePath($path);
+
+        $this->assertEquals($path, $model->getRelativeFilePath());
     }
 }
