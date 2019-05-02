@@ -42,8 +42,8 @@ class PhoneBookSearch extends PhoneBook
      */
     public function search(User $user, $params)
     {
-        $lat = Arr::get($params, 'lat');
-        $lon = Arr::get($params, 'lon');
+        $lat = Arr::get($params, 'latitude');
+        $lon = Arr::get($params, 'longitude');
         if ($lat && $lon) {
             return $this->searchNearby($user, $params);
         }
@@ -98,11 +98,12 @@ class PhoneBookSearch extends PhoneBook
         $provider = new SqlDataProvider([
             'sql' => $sql,
             'params' => [
-                ':latitude' => Arr::get($params, 'lat'),
-                ':longitude' => Arr::get($params, 'lon'),
+                ':latitude' => Arr::get($params, 'latitude'),
+                ':longitude' => Arr::get($params, 'longitude'),
                 ':radius' => $radius,
             ],
         ]);
+        $provider->setPagination(false);
 
         return $provider;
     }
