@@ -252,6 +252,10 @@ export default {
       },
       opsiPeran: [
         {
+          label: 'Admin',
+          value: 'admin'
+        },
+        {
           label: 'Admin Provinsi',
           value: 'staffProv'
         },
@@ -311,17 +315,17 @@ export default {
         name: [
           {
             required: true,
-            message: 'Nama harus diisi',
+            message: 'Nama Lengkap harus diisi',
             trigger: 'blur'
           },
           {
             max: 255,
-            message: 'Nama pengguna maksimal 255 karakter',
+            message: 'Nama Lengkap maksimal 255 karakter',
             trigger: 'blur'
           },
           {
             pattern: /^[a-zA-Z.'\s]+$/,
-            message: 'Nama hanya boleh menggunakan huruf, aposthrope dan titik',
+            message: 'Nama Lengkap hanya boleh menggunakan huruf, aposthrope dan titik',
             trigger: 'blur'
           }
         ],
@@ -333,7 +337,7 @@ export default {
           },
           {
             max: 255,
-            message: 'Alamat email terlalu panjang, maksimal 255 karakter',
+            message: 'Email terlalu panjang, maksimal 255 karakter',
             trigger: 'blur'
           },
           {
@@ -434,7 +438,7 @@ export default {
           },
           {
             pattern: /^[0-9.+-]+$/,
-            message: 'Latitude hanya boleh menggunakan angka, - atau +',
+            message: 'Latitude hanya boleh menggunakan angka, titik, - atau +',
             trigger: 'blur'
           }
         ],
@@ -447,7 +451,7 @@ export default {
           },
           {
             pattern: /^[0-9.+-]+$/,
-            message: 'Longitude hanya boleh menggunakan angka, - atau +',
+            message: 'Longitude hanya boleh menggunakan angka, titik, - atau +',
             trigger: 'blur'
           }
         ],
@@ -479,6 +483,11 @@ export default {
             trigger: 'blur'
           },
           {
+            pattern: /^[0-9]+$/,
+            message: 'RW harus menggunakan angka',
+            trigger: 'blur'
+          },
+          {
             max: 3,
             message: 'RW harus 3 angka',
             trigger: 'blur'
@@ -486,11 +495,6 @@ export default {
           {
             min: 3,
             message: 'RW harus 3 angka',
-            trigger: 'blur'
-          },
-          {
-            pattern: /^[0-9]+$/,
-            message: 'RW harus menggunakan angka',
             trigger: 'blur'
           }
         ],
@@ -501,6 +505,11 @@ export default {
             trigger: 'blur'
           },
           {
+            pattern: /^[0-9]+$/,
+            message: 'RT harus menggunakan angka',
+            trigger: 'blur'
+          },
+          {
             max: 3,
             message: 'RT harus 3 angka',
             trigger: 'blur'
@@ -508,11 +517,6 @@ export default {
           {
             min: 3,
             message: 'RT harus 3 angka',
-            trigger: 'blur'
-          },
-          {
-            pattern: /^[0-9]+$/,
-            message: 'RT harus menggunakan angka',
             trigger: 'blur'
           }
         ],
@@ -602,7 +606,7 @@ export default {
     filterRole() {
       const ruleOptions = this.opsiPeran
       if (checkPermission(['admin'])) {
-        return ruleOptions
+        return ruleOptions.slice(1, ruleOptions.length)
       } if (checkPermission(['staffProv'])) {
         return ruleOptions.slice(2, ruleOptions.length)
       } if (checkPermission(['staffKabkota'])) {
