@@ -293,6 +293,14 @@ export default {
       formRightSide: '10px',
       // validation
       rules: {
+        // coba lagi besok
+        erroremail: [
+          {
+            pattern: /^[a-z0-9_.]+$/,
+            message: 'error',
+            trigger: 'blur'
+          }
+        ],
         username: [
           {
             required: true,
@@ -782,9 +790,9 @@ export default {
             this.$refs[formName].resetFields()
             this.imageData = 0
             }).catch(error => {
-              this.$refs[formName].resetFields()
               const usernameError = error.response.data.data.username
               const emailError = error.response.data.data.email
+
               if (!emailError) {
                 Message({
                   message: usernameError[0],
@@ -804,6 +812,8 @@ export default {
                   duration: 5 * 1000
                 })
               }
+              // this.user.email = null
+              this.$refs.user.validateField('email')
             })
         } else {
           return false
