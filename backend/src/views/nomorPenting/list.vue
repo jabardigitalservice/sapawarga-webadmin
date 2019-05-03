@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
 
-    <panel-group :role-id="roleId" :total-all-user="totalAllUser" :total-user-province="totalUserProvince" :total-user-kab-kota="totalUserKabKota" :total-user-kec="totalUserKec" :total-user-kel="totalUserKel" :total-user-rw="totalUserRw" />
+    <!-- panel-group :role-id="roleId" :total-all-user="totalAllUser" :total-user-province="totalUserProvince" :total-user-kab-kota="totalUserKabKota" :total-user-kec="totalUserKec" :total-user-kel="totalUserKel" :total-user-rw="totalUserRw" /-->
 
     <el-row :gutter="20">
       <el-col :span="24">
@@ -15,21 +15,16 @@
           </el-col>
         </el-row>
 
-        <ListFilter :list-query.sync="listQuery" @submit-search="getList" @reset-search="resetFilter" />
+        <!-- ListFilter :list-query.sync="listQuery" @submit-search="getList" @reset-search="resetFilter" /-->
 
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%" @sort-change="changeSort">
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
 
-          <el-table-column prop="name" sortable="custom" label="Nama Pengguna" />
+          <el-table-column prop="name" sortable="custom" label="Nama Instansi" />
 
-          <el-table-column label="Kedudukan">
-            <template slot-scope="{row}">
-              {{ getKedudukan(row) }}
-            </template>
-          </el-table-column>
-
-          <el-table-column prop="phone" width="150" sortable="custom" label="Telp" />
-          <el-table-column prop="role_label" width="150" label="Role" />
+          <el-table-column prop="category_name" label="Kategori" />
+          <el-table-column prop="address" label="Alamat" />
+          <el-table-column prop="seq" width="100" align="right" label="Sequence" />
 
           <el-table-column prop="status" sortable="custom" class-name="status-col" label="Status" width="150px">
             <template slot-scope="{row}">
@@ -70,15 +65,15 @@
 </template>
 
 <script>
-import { fetchList, activate, deactivate, totalUser } from '@/api/staff'
+import { fetchList } from '@/api/phonebooks'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
-import PanelGroup from './components/PanelGroup'
+// import PanelGroup from './components/PanelGroup'
 
-import ListFilter from './_listfilter'
+// import ListFilter from './_listfilter'
 
 export default {
 
-  components: { Pagination, ListFilter, PanelGroup },
+  components: { Pagination },
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -103,12 +98,13 @@ export default {
       listLoading: true,
       listQuery: {
         name: null,
-        phone: null,
+        category_id: null,
+        address: null,
+        sequence: null,
         status: null,
         kabkota_id: null,
         kec_id: null,
         kel_id: null,
-        role_id: this.roleId,
         sort_by: 'name',
         sort_order: 'ascending',
         page: 1,
@@ -139,14 +135,14 @@ export default {
     },
 
     getTotalUser() {
-      totalUser().then(response => {
-        this.totalAllUser = (_.find(response.data.items, ['level', 'all'])) ? _.find(response.data.items, ['level', 'all']).value : null
-        this.totalUserProvince = (_.find(response.data.items, ['level', 'prov'])) ? _.find(response.data.items, ['level', 'prov']).value : null
-        this.totalUserKabKota = (_.find(response.data.items, ['level', 'kabkota'])) ? _.find(response.data.items, ['level', 'kabkota']).value : null
-        this.totalUserKec = (_.find(response.data.items, ['level', 'kec'])) ? _.find(response.data.items, ['level', 'kec']).value : null
-        this.totalUserKel = (_.find(response.data.items, ['level', 'kel'])) ? _.find(response.data.items, ['level', 'kel']).value : null
-        this.totalUserRw = (_.find(response.data.items, ['level', 'rw'])) ? _.find(response.data.items, ['level', 'rw']).value : null
-      })
+      // totalUser().then(response => {
+      //   this.totalAllUser = (_.find(response.data.items, ['level', 'all'])) ? _.find(response.data.items, ['level', 'all']).value : null
+      //   this.totalUserProvince = (_.find(response.data.items, ['level', 'prov'])) ? _.find(response.data.items, ['level', 'prov']).value : null
+      //   this.totalUserKabKota = (_.find(response.data.items, ['level', 'kabkota'])) ? _.find(response.data.items, ['level', 'kabkota']).value : null
+      //   this.totalUserKec = (_.find(response.data.items, ['level', 'kec'])) ? _.find(response.data.items, ['level', 'kec']).value : null
+      //   this.totalUserKel = (_.find(response.data.items, ['level', 'kel'])) ? _.find(response.data.items, ['level', 'kel']).value : null
+      //   this.totalUserRw = (_.find(response.data.items, ['level', 'rw'])) ? _.find(response.data.items, ['level', 'rw']).value : null
+      // })
     },
 
     resetFilter() {
