@@ -1,7 +1,7 @@
 <template>
   <div>
-    <el-row style="margin-bottom: 15px">
-      <el-col v-if="enableKabkota" :span="8">
+    <el-row v-if="enableKabkota" style="margin-bottom: 15px">
+      <el-col :span="8">
         <el-select
           v-model="kabkota_selected"
           filterable
@@ -88,11 +88,6 @@ export default {
       type: Number,
       default: null
     },
-
-    parentId: {
-      type: Number,
-      default: null
-    }
   },
 
   data() {
@@ -129,6 +124,20 @@ export default {
       }
 
       return false
+    },
+
+    parentId() {
+      const authUser = this.$store.state.user
+
+      if (checkPermission(['staffKabkota'])) {
+        return parseInt(authUser.kabkota_id)
+      }
+
+      if (checkPermission(['staffKec'])) {
+        return parseInt(authUser.kec_id)
+      }
+
+      return null
     }
   },
 
@@ -136,6 +145,8 @@ export default {
     kabkotaId: {
       handler: function(value) {
         this.kabkota_selected = value
+
+        this.changeSelection(value, 'changeKabkota')
       },
       immediate: true
     },
@@ -143,6 +154,8 @@ export default {
     kecId: {
       handler: function(value) {
         this.kecamatan_selected = value
+
+        this.changeSelection(value, 'changeKecamatan')
       },
       immediate: true
     },

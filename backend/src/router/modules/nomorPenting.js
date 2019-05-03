@@ -29,13 +29,20 @@ const nomorPentingRouter = {
       path: 'create',
       component: () => import('@/views/nomorPenting/create'),
       name: 'nomor-penting-create',
-      meta: { title: 'nomor-penting-create' }
+      meta: {
+        title: 'nomor-penting-create',
+        roles: ['admin']
+      }
     },
     {
       path: 'edit/:id(\\d+)',
       component: () => import('@/views/nomorPenting/edit'),
       name: 'nomor-penting-edit',
-      meta: { title: 'nomor-penting-edit', noCache: true },
+      meta: {
+        title: 'nomor-penting-edit',
+        noCache: true,
+        roles: ['admin']
+      },
       hidden: true
     }
   ]
