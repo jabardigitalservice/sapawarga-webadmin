@@ -23,6 +23,13 @@
           <el-table-column prop="name" sortable="custom" label="Nama Instansi" />
 
           <el-table-column prop="category.name" sortable="custom" label="Kategori" />
+
+          <el-table-column prop="phone_numbers" label="Nomor Telepon">
+            <template slot-scope="{row}">
+              <div v-html="showPhoneNumbers(row.phone_numbers)"></div>
+            </template>
+          </el-table-column>
+
           <el-table-column prop="address" label="Alamat" />
           <el-table-column prop="seq" sortable="custom" width="120" align="right" label="Sequence" />
 
@@ -132,6 +139,10 @@ export default {
         this.total = response.data._meta.totalCount
         this.listLoading = false
       })
+    },
+
+    showPhoneNumbers(array) {
+      return _.map(array, 'phone_number').join('<br />')
     },
 
     getTotalUser() {
