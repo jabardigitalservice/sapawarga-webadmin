@@ -26,7 +26,7 @@
           class="demo-ruleForm"
           :rules="rules"
         >
-          <!-- form -->
+
           <el-form-item label="Username" prop="username">
             <el-input v-model="user.username" type="text" />
           </el-form-item>
@@ -656,8 +656,8 @@ export default {
             twitter: this.user.twitter,
             instagram: this.user.instagram,
             photo_url: this.user.photo,
-            lat: (this.user.latitude === '-') || (this.user.latitude === '.')  || (this.user.latitude === '+') ? null : this.user.latitude,
-            lon: (this.user.longitude === '-') || (this.user.latitude === '.') || (this.user.latitude === '+') ?  null : this.user.longitude
+            lat: (this.user.latitude === '-') || (this.user.latitude === '.') || (this.user.latitude === '+') ? null : this.user.latitude,
+            lon: (this.user.longitude === '-') || (this.user.latitude === '.') || (this.user.latitude === '+') ? null : this.user.longitude
 
           }).then(() => {
             Message({
