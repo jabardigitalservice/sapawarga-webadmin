@@ -20,7 +20,9 @@
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%" @sort-change="changeSort">
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
 
-          <el-table-column prop="name" sortable="custom" label="Nama Pengguna" />
+          <el-table-column prop="name" sortable="custom" label="Nama Lengkap" />
+
+          <el-table-column prop="username" sortable="custom" label="Username" />
 
           <el-table-column label="Kedudukan">
             <template slot-scope="{row}">
@@ -103,6 +105,7 @@ export default {
       listLoading: true,
       listQuery: {
         name: null,
+        username: null,
         phone: null,
         status: null,
         kabkota_id: null,
