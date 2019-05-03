@@ -53,7 +53,7 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="Peran" prop="role">
-                <el-select v-model="user.role" placeholder="Pilih Peran">
+                <el-select v-model="user.role" placeholder="Pilih Peran" :disabled="isEdit">
                   <el-option
                     v-for="item in filterRole"
                     :key="item.value"
