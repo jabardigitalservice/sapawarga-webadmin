@@ -6,6 +6,7 @@ use Illuminate\Support\Arr;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use yii\data\SqlDataProvider;
 
 /**
  * PhoneBookSearch represents the model behind the search form of `app\models\PhoneBook`.
@@ -41,13 +42,13 @@ class PhoneBookSearch extends PhoneBook
      */
     public function search(User $user, $params)
     {
+        $lat = Arr::get($params, 'latitude');
+        $lon = Arr::get($params, 'longitude');
+        if ($lat && $lon) {
+            return $this->searchNearby($user, $params);
+        }
+
         $query = PhoneBook::find();
-
-        $sortBy    = Arr::get($params, 'sort_by', 'seq');
-        $sortOrder = Arr::get($params, 'sort_order', 'ascending');
-        $sortOrder = $this->getSortOrder($sortOrder);
-
-        $pageLimit = Arr::get($params, 'limit');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -75,6 +76,39 @@ class PhoneBookSearch extends PhoneBook
         return $this->getQueryAll($query, $params);
     }
 
+    /**
+     * Search using SqlDataProvider
+     *
+     * @param array $params
+     *
+     * @return SqlDataProvider
+     */
+    public function searchNearby(User $user, $params)
+    {
+        // Radius in kilometers
+        $radius = 3.0;
+
+        $sql = file_get_contents(__DIR__ . '/scripts/getNearestByRadius.sql');
+        $provider = new SqlDataProvider([
+            'sql' => $sql,
+            'params' => [
+                ':latitude' => Arr::get($params, 'latitude'),
+                ':longitude' => Arr::get($params, 'longitude'),
+                ':radius' => $radius,
+            ],
+        ]);
+        $provider->setPagination(false);
+
+        // Convert JSON string of phone_numbers
+        $phonebooks = $provider->getModels();
+        foreach ($phonebooks as &$phonebook) {
+            $phonebook['phone_numbers'] = json_decode($phonebook['phone_numbers']);
+        }
+        $provider->setModels($phonebooks);
+
+        return $provider;
+    }
+
     protected function getQueryRoleUser($user, $query, $params)
     {
         // Jika memilih custom filter, akan override semua parameter default
@@ -94,9 +128,17 @@ class PhoneBookSearch extends PhoneBook
             ['kel_id' => null],
         ]);
 
+        $pageLimit = Arr::get($params, 'limit');
+        $sortBy    = Arr::get($params, 'sort_by', 'seq');
+        $sortOrder = Arr::get($params, 'sort_order', 'descending');
+        $sortOrder = $this->getSortOrder($sortOrder);
+
         return new ActiveDataProvider([
             'query' => $query,
-            'sort'=> ['defaultOrder' => ['seq' => SORT_DESC]],
+            'sort'=> ['defaultOrder' => [$sortBy => $sortOrder]],
+            'pagination' => [
+                'pageSize' => $pageLimit,
+            ],
         ]);
     }
 
@@ -104,11 +146,16 @@ class PhoneBookSearch extends PhoneBook
     {
         $this->filterByArea($query, $params);
 
+        $pageLimit = Arr::get($params, 'limit');
+        $sortBy    = Arr::get($params, 'sort_by', 'seq');
+        $sortOrder = Arr::get($params, 'sort_order', 'descending');
+        $sortOrder = $this->getSortOrder($sortOrder);
+
         return new ActiveDataProvider([
             'query' => $query,
-            'sort'=> ['defaultOrder' => ['seq' => SORT_DESC]],
+            'sort'=> ['defaultOrder' => [$sortBy => $sortOrder]],
             'pagination' => [
-                'pageSize' => Arr::get($params, 'limit'),
+                'pageSize' => $pageLimit,
             ],
         ]);
     }
