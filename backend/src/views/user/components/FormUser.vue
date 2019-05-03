@@ -27,8 +27,8 @@
           :rules="rules"
         >
 
-          <el-form-item label="Username" prop="username">
-            <el-input v-model="user.username" type="text" />
+          <el-form-item label="Username" prop="username" >
+            <el-input v-model="user.username" type="text" :disabled="isEdit" />
           </el-form-item>
           <el-form-item label="Nama Lengkap" prop="name">
             <el-input v-model="user.name" type="text" />
@@ -59,7 +59,7 @@
                     :key="item.value"
                     :value="item.value"
                     :label="item.label"
-                  >{{ item.label }}</el-option>
+                  ></el-option>
                 </el-select>
               </el-form-item>
             </el-col>
@@ -78,7 +78,7 @@
                     v-for="item in area"
                     :key="item.id"
                     :value="item"
-                    :label="user.kabkota.name"
+                    :label="(user.kabkota.name || 'kosong')"
                   >{{ item.name }}</el-option>
                 </el-select>
               </el-form-item>
@@ -184,7 +184,8 @@
             />
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="submitForm('user')">Tambah Pengguna</el-button>
+            <el-button v-if="(!isEdit)" type="primary" @click="submitForm('user')">Tambah Pengguna</el-button>
+            <el-button v-if="(isEdit)" type="primary" @click="updateForm('user')">Update Pengguna</el-button>
             <el-button @click="resetForm('user')">Batal</el-button>
           </el-form-item>
         </el-form>
@@ -194,7 +195,7 @@
 </template>
 <script>
 import checkPermission from '@/utils/permission'
-import { requestArea, requestKecamatan, requestKelurahan, createUser, uploadImage, fetchUser } from '@/api/staff'
+import { requestArea, requestKecamatan, requestKelurahan, createUser, uploadImage, fetchUser, editUser } from '@/api/staff'
 import { Message } from 'element-ui'
 export default {
   props: {
@@ -214,20 +215,14 @@ export default {
       }
     }
     const validatePass = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('Password tolong diisi'))
-      } else {
         if (this.user.confirmation !== '') {
           this.$refs.user.validateField('confirmation')
         }
         callback()
-      }
     }
 
     const checkPassword = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('Tolong ulangi password'))
-      } else if (value !== this.user.password) {
+      if (value !== this.user.password) {
         callback(new Error('Password tidak sesuai'))
       } else {
         callback()
@@ -375,8 +370,12 @@ export default {
             trigger: 'blur'
           },
           {
-            required: true,
             validator: validatePass,
+            trigger: 'blur'
+          },
+          {
+            required: !this.isEdit,
+            message: 'Password tidak boleh kosong',
             trigger: 'blur'
           }
         ],
@@ -398,8 +397,12 @@ export default {
             trigger: 'blur'
           },
           {
-            required: true,
             validator: checkPassword,
+            trigger: 'blur'
+          },
+          {
+            required: !this.isEdit,
+            message: 'Mohon ulangi password',
             trigger: 'blur'
           }
         ],
@@ -656,78 +659,30 @@ export default {
     fetchData(id) {
       fetchUser(id).then(response => {
         const dataUser = response.data
+        // assign to data
+        console.log(dataUser)
+        this.getKecamatan(dataUser.kabkota_id)
 
-        // this.filterRole()
-        // this.user.username = dataUser.username
-        // this.user.name = dataUser.name
-        this.user = Object.assign({}, dataUser)
-        this.user.password = ''
+        this.user.twitter = dataUser.twitter
+        this.user.facebook = dataUser.facebook
+        this.user.instagram = dataUser.instagram
+        this.user.username = dataUser.username
+        this.user.name = dataUser.name
+        this.user.email = dataUser.email
+        this.user.phone = dataUser.phone
+        this.user.address = dataUser.address
         this.user.latitude = dataUser.lat
         this.user.longitude = dataUser.lon
         this.user.role = dataUser.role_id
         this.user.kabkota = dataUser.kabkota.name
         this.user.kecamatan = dataUser.kecamatan.name
         this.user.kelurahan = dataUser.kelurahan.name
+
       }).catch(() => {})
     },
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          if (isEdit === '') {
-            editUser({
-            username: this.user.username,
-            name: this.user.name,
-            email: this.user.email,
-            // password: this.user.password,
-            phone: this.user.phone,
-            address: this.user.address,
-            role_id: this.user.role,
-            kabkota_id: this.user.kabkota.id || this.id_kabkota,
-            kec_id: this.user.kecamatan.id || this.id_kec,
-            kel_id: this.user.kelurahan.id || this.id_kel,
-            rw: this.user.rw,
-            facebook: this.user.facebook,
-            twitter: this.user.twitter,
-            instagram: this.user.instagram,
-            photo_url: this.user.photo,
-            lat: this.user.latitude,
-            lon: this.user.longitude
-            }).then(response => {
-              Message({
-              message: 'Pengguna berhasil diperbaharui',
-              type: 'success',
-              duration: 1 * 1000
-            })
-            setTimeout(() => {
-              this.$router.push('/user/user-all')
-            }, 1000)
-            this.$refs[formName].resetFields()
-            this.imageData = 0
-            }).catch(error => {
-              this.$refs[formName].resetFields()
-              const usernameError = error.response.data.data.username
-              const emailError = error.response.data.data.email
-              if (!emailError) {
-                Message({
-                  message: usernameError[0],
-                  type: 'error',
-                  duration: 5 * 1000
-                })
-              } else if (!usernameError) {
-                Message({
-                  message: emailError[0],
-                  type: 'error',
-                  duration: 5 * 1000
-                })
-              } else {
-                Message({
-                  message: 'Nama pengguna dan alamat email sudah digunakan',
-                  type: 'error',
-                  duration: 5 * 1000
-                })
-              }
-            })
-          }
           createUser({
             username: this.user.username,
             name: this.user.name,
@@ -755,7 +710,7 @@ export default {
               duration: 1 * 1000
             })
             setTimeout(() => {
-              this.$router.push('/user/user-all')
+              this.$router.go(-1)
             }, 1000)
             this.$refs[formName].resetFields()
             this.imageData = 0
@@ -778,7 +733,69 @@ export default {
                 })
               } else {
                 Message({
-                  message: 'Nama pengguna dan alamat email sudah digunakan',
+                  message: 'Username dan email sudah digunakan',
+                  type: 'error',
+                  duration: 5 * 1000
+                })
+              }
+            })
+        } else {
+          return false
+        }
+      })
+    },
+    updateForm(formName){
+      const id = this.$route.params && this.$route.params.id
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          editUser({
+            username: this.user.username,
+            name: this.user.name,
+            email: this.user.email,
+            password: this.user.confirmation,
+            phone: this.user.phone,
+            address: this.user.address,
+            role_id: this.user.role,
+            kabkota_id: this.user.kabkota.id || this.id_kabkota,
+            kec_id: this.user.kecamatan.id || this.id_kec,
+            kel_id: this.user.kelurahan.id || this.id_kel,
+            rw: this.user.rw,
+            facebook: this.user.facebook,
+            twitter: this.user.twitter,
+            instagram: this.user.instagram,
+            photo_url: this.user.photo,
+            lat: (this.user.latitude === '-') || (this.user.latitude === '.') || (this.user.latitude === '+') ? null : this.user.latitude,
+            lon: (this.user.longitude === '-') || (this.user.latitude === '.') || (this.user.latitude === '+') ? null : this.user.longitude
+            }, id).then(response => {
+              Message({
+              message: 'Pengguna berhasil diperbaharui',
+              type: 'success',
+              duration: 1 * 1000
+            })
+            setTimeout(() => {
+              this.$router.go(-1)
+            }, 1000)
+            this.$refs[formName].resetFields()
+            this.imageData = 0
+            }).catch(error => {
+              this.$refs[formName].resetFields()
+              const usernameError = error.response.data.data.username
+              const emailError = error.response.data.data.email
+              if (!emailError) {
+                Message({
+                  message: usernameError[0],
+                  type: 'error',
+                  duration: 5 * 1000
+                })
+              } else if (!usernameError) {
+                Message({
+                  message: emailError[0],
+                  type: 'error',
+                  duration: 5 * 1000
+                })
+              } else {
+                Message({
+                  message: 'Username dan email sudah digunakan',
                   type: 'error',
                   duration: 5 * 1000
                 })
@@ -791,9 +808,7 @@ export default {
     },
     resetForm(formName) {
       this.$refs[formName].resetFields()
-      if (this.isEdit) {
-        this.$router.push('/user/user-all')
-      }
+      this.$router.go(-1)
     },
     parentKabkotaSet(dataKabkota) {
       this.id_kabkota = dataKabkota

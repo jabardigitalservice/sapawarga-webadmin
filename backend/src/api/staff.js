@@ -79,9 +79,9 @@ export function createUser(data) {
   })
 }
 
-export function editUser(data) {
+export function editUser(data, id) {
   return request({
-    url: 'staff',
+    url: 'staff/' + id,
     method: 'put',
     data
   })
