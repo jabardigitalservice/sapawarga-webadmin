@@ -651,12 +651,13 @@ export default {
             kec_id: this.user.kecamatan.id || this.id_kec,
             kel_id: this.user.kelurahan.id || this.id_kel,
             rw: this.user.rw,
+            rt: this.user.rt,
             facebook: this.user.facebook,
             twitter: this.user.twitter,
             instagram: this.user.instagram,
             photo_url: this.user.photo,
-            lat: this.user.latitude === '-' ? null : this.user.latitude,
-            lon: this.user.longitude === '-' ? null : this.user.longitude
+            lat: (this.user.latitude === '-') || (this.user.latitude === '.')  || (this.user.latitude === '+') ? null : this.user.latitude,
+            lon: (this.user.longitude === '-') || (this.user.latitude === '.') || (this.user.latitude === '+') ?  null : this.user.longitude
 
           }).then(() => {
             Message({
