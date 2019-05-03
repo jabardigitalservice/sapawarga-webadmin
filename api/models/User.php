@@ -300,6 +300,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             'email' => Yii::t('app', 'Email'),
             'password' => Yii::t('app', \Yii::t('app', 'app.password')),
             'role_id' => Yii::t('app', 'app.role'),
+            'name' => Yii::t('app', 'app.name'),
             'rt' => Yii::t('app', 'app.rt'),
             'rw' => Yii::t('app', 'app.rw'),
             'kel_id' => Yii::t('app', 'app.kel_id'),
@@ -484,11 +485,11 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             [['username', 'email', 'role_id'], 'required', 'on' => self::SCENARIO_REGISTER],
             ['username', 'trim'],
             ['username', 'required'],
-            ['username', 'string', 'length' => [4, 14]],
+            ['username', 'string', 'length' => [4, 255]],
             [
                 'username',
                 'match',
-                'pattern' => '/^[a-z0-9_.]{4,14}$/',
+                'pattern' => '/^[a-z0-9_.]{4,255}$/',
                 'message' => Yii::t('app', 'error.username.pattern')
             ],
             ['username', 'validateUsername'],

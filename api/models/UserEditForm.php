@@ -51,11 +51,11 @@ class UserEditForm extends Model
             ],
 
             ['username', 'trim'],
-            ['username', 'string', 'length' => [4, 14]],
+            ['username', 'string', 'length' => [4, 255]],
             [
                 'username',
                 'match',
-                'pattern' => '/^[a-z0-9_.]{4,14}$/',
+                'pattern' => '/^[a-z0-9_.]{4,255}$/',
                 'message' => Yii::t('app', 'error.username.pattern')
             ],
             [
