@@ -1,5 +1,5 @@
 module.exports = {
-  verbose: true,
+  verbose: false,
   moduleFileExtensions: ['js', 'jsx', 'json', 'vue'],
   transformIgnorePatterns: [
     'node_modules/(?!(babel-jest|jest-vue-preprocessor)/)'

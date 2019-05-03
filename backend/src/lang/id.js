@@ -7,13 +7,22 @@ export default {
     'user-list-kabkota': 'Kabupaten / Kota',
     'user-list-kecamatan': 'Kecamatan',
     'user-list-kelurahan': 'Kelurahan',
-    'user-list-rw': 'User Tingkat RW'
+    'user-list-rw': 'User Tingkat RW',
+    'nomor-penting-manage': 'Kelola Nomor Penting',
+    'nomor-penting-list': 'Daftar Nomor Penting',
+    'nomor-penting-create': 'Tambah Nomor Penting',
+    'nomor-penting-edit': 'Edit Nomor Penting'
   },
   crud: {
-    'activate-confirm': 'Anda yakin ingin mengaktifkan pengguna ini?',
-    'deactivate-confirm': 'Anda yakin ingin menonaktifkan pengguna ini?',
-    'activate-success': 'Pengguna berhasil diaktifkan.',
-    'deactivate-success': 'Pengguna berhasil dinonaktifkan.'
+    'user-activate-confirm': 'Anda yakin ingin mengaktifkan pengguna ini?',
+    'user-deactivate-confirm': 'Anda yakin ingin menonaktifkan pengguna ini?',
+    'user-activate-success': 'Pengguna berhasil diaktifkan.',
+    'user-deactivate-success': 'Pengguna berhasil dinonaktifkan.',
+
+    'activate-confirm': 'Anda yakin ingin mengaktifkan data ini?',
+    'deactivate-confirm': 'Anda yakin ingin menonaktifkan data ini?',
+    'activate-success': 'Data berhasil diaktifkan.',
+    'deactivate-success': 'Data berhasil dinonaktifkan.'
   },
   common: {
     confirm: 'Ya',
