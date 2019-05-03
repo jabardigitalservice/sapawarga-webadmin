@@ -3,7 +3,7 @@
 use yii\db\Migration;
 
 /**
- * Handles the creation of table `{{%categories_table_and_delete_phonebook_categories}}`.
+ * Handles the creation of table `categories` and deletion of table `phonebooks_categories`.
  */
 class m190503_081749_create_categories_table_and_delete_phonebook_categories_table extends Migration
 {
@@ -12,7 +12,7 @@ class m190503_081749_create_categories_table_and_delete_phonebook_categories_tab
      */
     public function safeUp()
     {
-        $this->createTable('{{%categories}}', [
+        $this->createTable('categories', [
             'id'         => $this->primaryKey(),
             'type'       => $this->string()->null(),
             'name'       => $this->string()->null(),
@@ -39,6 +39,6 @@ class m190503_081749_create_categories_table_and_delete_phonebook_categories_tab
             'updated_at' => $this->integer()->null(),
         ]);
 
-        $this->dropTable('{{%categories}}');
+        $this->dropTable('categories');
     }
 }

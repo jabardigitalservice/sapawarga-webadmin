@@ -3,7 +3,7 @@
 namespace app\modules\v1\controllers;
 
 use app\filters\auth\HttpBearerAuth;
-use app\models\PhoneBookCategory;
+use app\models\category\PhoneBookCategory;
 use app\models\User;
 use Yii;
 use yii\filters\AccessControl;

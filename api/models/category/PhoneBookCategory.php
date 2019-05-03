@@ -1,95 +1,30 @@
 <?php
 
-namespace app\models;
+namespace app\models\category;
 
 use Yii;
-use yii\behaviors\TimestampBehavior;
 
 /**
- * This is the model class for table "phonebooks_categories".
- *
- * @property int $id
- * @property string $name
- * @property mixed $meta
- * @property int $status
+ * This is a child class of model Category.
  */
-class PhoneBookCategory extends \yii\db\ActiveRecord
+class PhoneBookCategory extends Category
 {
-    const STATUS_DELETED = -1;
-    const STATUS_DISABLED = 0;
-    const STATUS_ACTIVE = 10;
+    const TYPE = 'phonebook';
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function tableName()
+    public function init()
     {
-        return 'phonebooks_categories';
+        $this->type = self::TYPE;
+        parent::init();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function rules()
+    public static function find()
     {
-        return [
-            ['name', 'string', 'max' => 64],
-            [['name'], 'trim'],
-            [['name'], 'safe'],
-            [['name', 'status'], 'required'],
-        ];
+        return new CategoryQuery(get_called_class(), ['type' => self::TYPE, 'tableName' => self::tableName()]);
     }
 
-    public function fields()
+    public function beforeSave($insert)
     {
-        $fields = [
-            'id',
-            'name',
-            'meta',
-            'status',
-            'status_label' => function () {
-                $statusLabel = '';
-                switch ($this->status) {
-                    case self::STATUS_ACTIVE:
-                        $statusLabel = Yii::t('app', 'status.active');
-                        break;
-                    case self::STATUS_DISABLED:
-                        $statusLabel = Yii::t('app', 'status.inactive');
-                        break;
-                    case self::STATUS_DELETED:
-                        $statusLabel = Yii::t('app', 'status.deleted');
-                        break;
-                }
-                return $statusLabel;
-            },
-            'created_at',
-            'updated_at',
-        ];
-
-        return $fields;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id'   => 'ID',
-            'name' => 'Nama',
-        ];
-    }
-
-    /** @inheritdoc */
-    public function behaviors()
-    {
-        return [
-            [
-                'class'              => TimestampBehavior::className(),
-                'createdAtAttribute' => 'created_at',
-                'updatedAtAttribute' => 'updated_at',
-                'value'              => time(),
-            ],
-        ];
+        $this->type = self::TYPE;
+        return parent::beforeSave($insert);
     }
 }

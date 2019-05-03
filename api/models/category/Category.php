@@ -1,8 +1,9 @@
 <?php
 
-namespace app\models;
+namespace app\models\category;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "categories".
@@ -18,6 +19,19 @@ class Category extends \yii\db\ActiveRecord
     const STATUS_DELETED = -1;
     const STATUS_DISABLED = 0;
     const STATUS_ACTIVE = 10;
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function instantiate($row)
+    {
+        switch ($row['type']) {
+            case PhoneBookCategory::TYPE:
+                return new PhoneBookCategory();
+            default:
+            return new self;
+        }
+    }
 
     /**
      * {@inheritdoc}
