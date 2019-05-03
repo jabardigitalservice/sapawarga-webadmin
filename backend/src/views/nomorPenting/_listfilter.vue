@@ -28,9 +28,6 @@
         </el-col>
         <el-col :span="8">
           <input-filter-area
-            :enable-kabkota="checkPermission(['admin', 'staffProv'])"
-            :enable-kecamatan="checkPermission(['admin', 'staffProv', 'staffKabkota'])"
-            :enable-kelurahan="checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec'])"
             :parent-id="filterAreaParentId"
             :kabkota-id="listQuery.kabkota_id"
             :kec-id="listQuery.kec_id"

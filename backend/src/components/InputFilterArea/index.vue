@@ -59,21 +59,12 @@
 
 <script>
 import { getKabkotaList, getKecamatanList, getKelurahanList } from '@/api/areas'
+import checkPermission from '@/utils/permission'
 
 export default {
   name: 'InputFilterArea',
   props: {
-    enableKabkota: {
-      type: Boolean,
-      default: true
-    },
-
-    enableKecamatan: {
-      type: Boolean,
-      default: true
-    },
-
-    enableKelurahan: {
+    enableRolePolicy: {
       type: Boolean,
       default: true
     },
@@ -107,6 +98,32 @@ export default {
       kabkota_options: [],
       kecamatan_options: [],
       kelurahan_options: []
+    }
+  },
+
+  computed: {
+    enableKabkota() {
+      if (this.enableRolePolicy === true) {
+        return checkPermission(['admin', 'staffProv'])
+      }
+
+      return false
+    },
+
+    enableKecamatan() {
+      if (this.enableRolePolicy === true) {
+        return checkPermission(['admin', 'staffProv', 'staffKabkota'])
+      }
+
+      return false
+    },
+
+    enableKelurahan() {
+      if (this.enableRolePolicy === true) {
+        return checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec'])
+      }
+
+      return false
     }
   },
 
