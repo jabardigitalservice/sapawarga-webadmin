@@ -5,7 +5,7 @@ import Layout from '@/layout'
 const nomorPentingRouter = {
   path: '/nomor-penting',
   component: Layout,
-  redirect: 'noredirect',
+  redirect: '/nomor-penting/index',
   name: 'NomorPenting',
   meta: {
     title: 'nomor-penting-manage',
