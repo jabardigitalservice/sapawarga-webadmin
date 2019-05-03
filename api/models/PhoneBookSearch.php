@@ -7,6 +7,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use yii\data\SqlDataProvider;
+use yii\db\JsonExpression;
 
 /**
  * PhoneBookSearch represents the model behind the search form of `app\models\PhoneBook`.
@@ -69,6 +70,10 @@ class PhoneBookSearch extends PhoneBook
 
         if (Arr::has($params, 'name')) {
             $query->andWhere(['like', 'name', Arr::get($params, 'name')]);
+        }
+
+        if (Arr::has($params, 'phone')) {
+            $query->andWhere(['like', 'CAST(phone_numbers as CHAR)', Arr::get($params, 'phone')]);
         }
 
         if (Arr::has($params, 'status')) {

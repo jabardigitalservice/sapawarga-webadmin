@@ -107,6 +107,7 @@ export default {
         name: null,
         category_id: null,
         address: null,
+        phone: null,
         sequence: null,
         status: null,
         kabkota_id: null,
