@@ -30,6 +30,15 @@
             ></InputSelectArea>
           </el-form-item>
 
+          <el-form-item label="Nomor Telepon">
+            <el-row v-for="row in form.phone_numbers" :key="row">
+              <el-col :span="5">Telepon</el-col>
+              <el-col :span="5">{{ row.phone_number }}</el-col>
+              <el-col :span="5">{{ row.type }}</el-col>
+              <el-col :span="5">Hapus</el-col>
+            </el-row>
+          </el-form-item>
+
           <el-form-item>
             <el-button type="primary">Create</el-button>
             <el-button>Cancel</el-button>
@@ -51,7 +60,17 @@ const defaultForm = {
   description: null,
   kabkota_id: null,
   kec_id: null,
-  kel_id: null
+  kel_id: null,
+  phone_numbers: [
+    {
+      'type': 'phone',
+      'phone_number': '022-123456'
+    },
+    {
+      'type': 'message',
+      'phone_number': '022-098763'
+    }
+  ]
 }
 
 export default {
