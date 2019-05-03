@@ -8,7 +8,8 @@ const nomorPentingRouter = {
   redirect: 'noredirect',
   name: 'NomorPenting',
   meta: {
-    title: 'Kelola Nomor Penting',
+    title: 'nomor-penting-manage',
+    roles: ['admin'],
     icon: 'list'
   },
   children: [
@@ -20,7 +21,27 @@ const nomorPentingRouter = {
         //
       },
       meta: {
-        title: 'Daftar Nomor Penting'
+        title: 'Daftar Nomor Penting',
+        roles: ['admin']
+      }
+    },
+    {
+      name: 'nomor-penting-edit',
+      path: 'edit/:id',
+      // component: () => import('@/views/nomorPenting/edit'),
+      hidden: true,
+      meta: {
+        title: 'nomor-penting-edit',
+        roles: ['admin']
+      }
+    },
+    {
+      name: 'nomor-penting-create',
+      path: 'create',
+      // component: () => import('@/views/nomorPenting/add'),
+      meta: {
+        title: 'nomor-penting-create',
+        roles: ['admin']
       }
     }
   ]

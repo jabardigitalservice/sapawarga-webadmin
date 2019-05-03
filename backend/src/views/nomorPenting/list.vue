@@ -7,7 +7,7 @@
       <el-col :span="24">
         <el-row style="margin: 10px 0px">
           <el-col :span="12">
-            <router-link :to="{ path: '/user/create', query: { role_id: roleId }}">
+            <router-link :to="{ path: '/nomor-penting/create' }">
               <el-button type="primary" size="small" icon="el-icon-plus">
                 Tambah Nomor Baru
               </el-button>
@@ -36,12 +36,12 @@
 
           <el-table-column align="center" label="Actions" width="250px">
             <template slot-scope="scope">
-              <router-link :to="'/user/show/'+scope.row.id">
+              <router-link :to="'/nomor-penting/show/'+scope.row.id">
                 <el-button type="white" size="mini">
                   View
                 </el-button>
               </router-link>
-              <router-link :to="'/user/edit/'+scope.row.id">
+              <router-link :to="'/nomor-penting/edit/'+scope.row.id">
                 <el-button type="white" size="mini">
                   Edit
                 </el-button>
