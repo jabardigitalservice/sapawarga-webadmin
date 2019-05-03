@@ -22,9 +22,9 @@
 
           <el-table-column prop="name" sortable="custom" label="Nama Instansi" />
 
-          <el-table-column prop="category_name" label="Kategori" />
+          <el-table-column prop="category.name" sortable="custom" label="Kategori" />
           <el-table-column prop="address" label="Alamat" />
-          <el-table-column prop="seq" width="100" align="right" label="Sequence" />
+          <el-table-column prop="seq" sortable="custom" width="120" align="right" label="Sequence" />
 
           <el-table-column prop="status" sortable="custom" class-name="status-col" label="Status" width="150px">
             <template slot-scope="{row}">
@@ -47,10 +47,10 @@
                 </el-button>
               </router-link>
 
-              <el-button v-if="scope.row.status === 10" type="danger" size="mini" @click="deactivateUser(scope.row.id)">
+              <el-button v-if="scope.row.status === 10" type="danger" size="mini" @click="deactivateRecord(scope.row.id)">
                 Deactivate
               </el-button>
-              <el-button v-if="scope.row.status === 0" type="success" size="mini" @click="activateUser(scope.row.id)">
+              <el-button v-if="scope.row.status === 0" type="success" size="mini" @click="activateRecord(scope.row.id)">
                 Activate
               </el-button>
 
@@ -65,7 +65,7 @@
 </template>
 
 <script>
-import { fetchList } from '@/api/phonebooks'
+import { fetchList, activate, deactivate } from '@/api/phonebooks'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 // import PanelGroup from './components/PanelGroup'
 
@@ -155,42 +155,17 @@ export default {
       return ((this.listQuery.page - 1) * this.listQuery.limit) + (index + 1)
     },
 
-    getKedudukan(user) {
-      const userRole = _.get(user, 'role_id')
-
-      const rw = _.get(user, 'rw', 'N/A')
-      const kelurahan = _.get(user, 'kelurahan.name', 'N/A')
-      const kecamatan = _.get(user, 'kecamatan.name')
-      const kabkota = _.get(user, 'kabkota.name')
-
-      if (userRole === 'staffRW') {
-        return `RW ${rw}, Kelurahan ${kelurahan}, Kecamatan ${kecamatan}, ${kabkota}`
-      }
-
-      if (userRole === 'staffKel') {
-        return `Kelurahan ${kelurahan}, Kecamatan ${kecamatan}, ${kabkota}`
-      }
-
-      if (userRole === 'staffKec') {
-        return `Kecamatan ${kecamatan}, ${kabkota}`
-      }
-
-      if (userRole === 'staffKabkota') {
-        return `${kabkota}, Provinsi Jawa Barat`
-      }
-
-      if (userRole === 'staffProv') {
-        return `Provinsi Jawa Barat`
-      }
-    },
-
     changeSort(e) {
+      if (e.prop === 'category.name') {
+        e.prop = 'category_id'
+      }
+
       this.listQuery.sort_by = e.prop
       this.listQuery.sort_order = e.order
       this.getList()
     },
 
-    async activateUser(id) {
+    async activateRecord(id) {
       try {
         await this.$confirm(this.$t('crud.deactivate-confirm'), 'Warning', {
           confirmButtonText: this.$t('common.confirm'),
@@ -213,7 +188,7 @@ export default {
       }
     },
 
-    async deactivateUser(id) {
+    async deactivateRecord(id) {
       try {
         await this.$confirm(this.$t('crud.deactivate-confirm'), 'Warning', {
           confirmButtonText: this.$t('common.confirm'),
