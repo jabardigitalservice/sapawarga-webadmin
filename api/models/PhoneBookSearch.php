@@ -67,6 +67,14 @@ class PhoneBookSearch extends PhoneBook
 
         $query->andFilterWhere(['like', 'name', $params['search'] ?? null]);
 
+        if (Arr::has($params, 'name')) {
+            $query->andWhere(['like', 'name', Arr::get($params, 'name')]);
+        }
+
+        if (Arr::has($params, 'status')) {
+            $query->andWhere(['status' => Arr::get($params, 'status')]);
+        }
+
         // Jika User
         if ($user->role === User::ROLE_USER) {
             return $this->getQueryRoleUser($user, $query, $params);
