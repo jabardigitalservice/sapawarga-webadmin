@@ -12,6 +12,7 @@ class UserSearch extends Model
     public $not_in_status = [];
 
     public $name;
+    public $username;
     public $phone;
 
     public $role_id;
@@ -32,7 +33,11 @@ class UserSearch extends Model
             [['search'], 'string', 'max' => 50],
             [['limit', 'status'], 'integer'],
             [
-                ['name', 'phone', 'role_id', 'kabkota_id', 'kec_id', 'kel_id', 'rw', 'sort_by', 'sort_order'],
+                [
+                    'name', 'username', 'phone',
+                    'role_id', 'kabkota_id', 'kec_id', 'kel_id', 'rw',
+                    'sort_by', 'sort_order'
+                ],
                 'string'
             ],
         ];
@@ -74,6 +79,10 @@ class UserSearch extends Model
                 ['like', 'user.name', $this->search],
                 ['like', 'user.phone', $this->search],
             ]);
+        }
+
+        if ($this->username) {
+            $query->andWhere(['like', 'user.username', $this->username]);
         }
 
         if ($this->name) {

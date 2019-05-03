@@ -12,12 +12,13 @@ api_lint:
 
 admin_lint:
   stage: test
-  image: node
+  image: node:10
   before_script:
     - cd backend/
     - npm install
   script:
     - npm run lint
+    - npm run test:unit
 
 api_test:
   stage: test

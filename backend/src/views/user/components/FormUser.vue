@@ -26,29 +26,25 @@
           class="demo-ruleForm"
           :rules="rules"
         >
-          <!-- form -->
 
-          <el-form-item label="Nama Pengguna" prop="username">
+          <el-form-item label="Username" prop="username">
             <el-input v-model="user.username" type="text" />
           </el-form-item>
-          <el-form-item label="Nama" prop="name">
+          <el-form-item label="Nama Lengkap" prop="name">
             <el-input v-model="user.name" type="text" />
           </el-form-item>
 
           <el-form-item label="Email" prop="email">
             <el-input v-model="user.email" type="email" />
           </el-form-item>
-          <el-row>
-            <el-col :span="20">
-              <el-form-item label="Password" prop="password">
-                <el-input v-model="user.password" type="text" />
-              </el-form-item>
-            </el-col>
 
-            <el-col :span="3" style="margin-left:5px">
-              <el-button type="success" @click="generate">Generate</el-button>
-            </el-col>
-          </el-row>
+          <el-form-item label="Password" prop="password">
+            <el-input v-model="user.password" type="password" />
+          </el-form-item>
+
+          <el-form-item label="Ulangi Password" prop="confirmation">
+            <el-input v-model="user.confirmation" type="password" />
+          </el-form-item>
 
           <el-form-item label="Telepon" prop="phone">
             <el-input v-model="user.phone" type="text" placeholder="contoh: 081254332233" />
@@ -135,7 +131,7 @@
                 label="RW"
                 prop="rw"
               >
-                <el-input v-model="user.rw" type="text" placeholder="Masukan RW" :disabled="user.kelurahan == '' && checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec'])" />
+                <el-input v-model="user.rw" type="text" placeholder="Contoh: 001" :disabled="user.kelurahan == '' && checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec'])" />
               </el-form-item>
             </el-col>
             <el-col :span="12" class="form-right-side">
@@ -144,7 +140,7 @@
                 label="RT"
                 prop="rt"
               >
-                <el-input v-model="user.rt" type="text" placeholder="Masukan RT" :disabled="user.rw == '' && checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec'])" />
+                <el-input v-model="user.rt" type="text" placeholder="Contoh: 002" :disabled="user.rw == '' && checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec'])" />
               </el-form-item>
             </el-col>
           </el-row>
@@ -217,12 +213,34 @@ export default {
         callback()
       }
     }
+    const validatePass = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('Password tolong diisi'))
+      } else {
+        if (this.user.confirmation !== '') {
+          this.$refs.user.validateField('confirmation')
+        }
+        callback()
+      }
+    }
+
+    const checkPassword = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('Tolong ulangi password'))
+      } else if (value !== this.user.password) {
+        callback(new Error('Password tidak sesuai'))
+      } else {
+        callback()
+      }
+    }
+
     return {
       user: {
         username: '',
         name: '',
         email: '',
         password: '',
+        confirmation: '',
         phone: '',
         address: '',
         kabkota: [],
@@ -280,40 +298,40 @@ export default {
         username: [
           {
             required: true,
-            message: 'Nama pengguna harus diisi',
+            message: 'Username harus diisi',
             trigger: 'blur'
           },
           {
             min: 4,
-            message: 'Nama pengguna minimal 4 karakter',
+            message: 'Username minimal 4 karakter',
             trigger: 'blur'
           },
           {
-            max: 14,
-            message: 'Nama pengguna maksimal 14 karakter',
+            max: 255,
+            message: 'Username maksimal 14 karakter',
             trigger: 'blur'
           },
           {
             pattern: /^[a-z0-9_.]+$/,
             message:
-              'Nama pengguna hanya boleh menggunakan huruf, angka, underscore dan titik',
+              'Username hanya boleh menggunakan huruf kecil, angka, underscore dan titik',
             trigger: 'blur'
           }
         ],
         name: [
           {
             required: true,
-            message: 'Nama harus diisi',
+            message: 'Nama Lengkap harus diisi',
             trigger: 'blur'
           },
           {
             max: 255,
-            message: 'Nama pengguna maksimal 255 karakter',
+            message: 'Nama Lengkap maksimal 255 karakter',
             trigger: 'blur'
           },
           {
             pattern: /^[a-zA-Z.'\s]+$/,
-            message: 'Nama hanya boleh menggunakan huruf, aposthrope dan titik',
+            message: 'Nama Lengkap hanya boleh menggunakan huruf, aposthrope dan titik',
             trigger: 'blur'
           }
         ],
@@ -325,7 +343,7 @@ export default {
           },
           {
             max: 255,
-            message: 'Alamat email terlalu panjang, maksimal 255 karakter',
+            message: 'Email terlalu panjang, maksimal 255 karakter',
             trigger: 'blur'
           },
           {
@@ -341,24 +359,47 @@ export default {
         ],
         password: [
           {
-            required: true,
-            message: 'Kata sandi harus diisi',
-            trigger: 'change'
-          },
-          {
             max: 255,
-            message: 'Kata sandi maksimal 255 karakter',
+            message: 'Password maksimal 255 karakter',
             trigger: 'blur'
           },
           {
             min: 5,
-            message: 'Kata sandi minimal 5 karakter',
+            message: 'Password minimal 5 karakter',
             trigger: 'blur'
           },
           {
             pattern: /^[a-zA-Z0-9\w\S]+$/,
             message:
-              'Karakter kata hanya boleh menggunakan huruf, angka dan spesial karakter',
+              'Karakter password hanya boleh menggunakan huruf, angka dan spesial karakter',
+            trigger: 'blur'
+          },
+          {
+            required: true,
+            validator: validatePass,
+            trigger: 'blur'
+          }
+        ],
+        confirmation: [
+          {
+            max: 255,
+            message: 'Password maksimal 255 karakter',
+            trigger: 'blur'
+          },
+          {
+            min: 5,
+            message: 'Password minimal 5 karakter',
+            trigger: 'blur'
+          },
+          {
+            pattern: /^[a-zA-Z0-9\w\S]+$/,
+            message:
+              'Karakter password hanya boleh menggunakan huruf, angka dan spesial karakter',
+            trigger: 'blur'
+          },
+          {
+            required: true,
+            validator: checkPassword,
             trigger: 'blur'
           }
         ],
@@ -402,15 +443,26 @@ export default {
         ],
         latitude: [
           {
+            required: true,
+            message: 'Latitude harus diisi, jika tidak ada latitude isi dengan -',
+            trigger: 'blur'
+          },
+          {
             pattern: /^[0-9.+-]+$/,
-            message: 'Pilih latitude dari google map',
+            message: 'Latitude hanya boleh menggunakan angka, titik, - atau +',
             trigger: 'blur'
           }
         ],
         longitude: [
+
+          {
+            required: true,
+            message: 'Longitude harus diisi, jika tidak ada longitude isi dengan -',
+            trigger: 'blur'
+          },
           {
             pattern: /^[0-9.+-]+$/,
-            message: 'Pilih latitude dari google map',
+            message: 'Longitude hanya boleh menggunakan angka, titik, - atau +',
             trigger: 'blur'
           }
         ],
@@ -445,6 +497,16 @@ export default {
             pattern: /^[0-9]+$/,
             message: 'RW harus menggunakan angka',
             trigger: 'blur'
+          },
+          {
+            max: 3,
+            message: 'RW harus 3 angka',
+            trigger: 'blur'
+          },
+          {
+            min: 3,
+            message: 'RW harus 3 angka',
+            trigger: 'blur'
           }
         ],
         rt: [
@@ -456,6 +518,16 @@ export default {
           {
             pattern: /^[0-9]+$/,
             message: 'RT harus menggunakan angka',
+            trigger: 'blur'
+          },
+          {
+            max: 3,
+            message: 'RT harus 3 angka',
+            trigger: 'blur'
+          },
+          {
+            min: 3,
+            message: 'RT harus 3 angka',
             trigger: 'blur'
           }
         ],
@@ -471,14 +543,19 @@ export default {
             required: false
           },
           {
-            pattern: /^[a-z0-9.@_]+$/,
-            message: 'Karakter tidak sesuai',
+            pattern: /^[a-z0-9._]+$/,
+            message: 'Twitter hanya boleh menggunakan huruf, angka, titik dan underscore',
             trigger: 'blur'
           }
         ],
         facebook: [
           {
             required: false
+          },
+          {
+            type: 'url',
+            message: 'Tolong masukan url lengkap, contoh: https://www.facebook.com/namapengguna',
+            trigger: 'blur'
           }
         ],
         instagram: [
@@ -486,8 +563,8 @@ export default {
             required: false
           },
           {
-            pattern: /^[a-z0-9.@_]+$/,
-            message: 'Karakter tidak sesuai',
+            pattern: /^[a-z0-9._]+$/,
+            message: 'Instagram hanya boleh menggunakan huruf, angka, titik dan underscore',
             trigger: 'blur'
           }
         ]
@@ -540,7 +617,7 @@ export default {
     filterRole() {
       const ruleOptions = this.opsiPeran
       if (checkPermission(['admin'])) {
-        return ruleOptions
+        return ruleOptions.slice(1, ruleOptions.length)
       } if (checkPermission(['staffProv'])) {
         return ruleOptions.slice(2, ruleOptions.length)
       } if (checkPermission(['staffKabkota'])) {
@@ -655,7 +732,7 @@ export default {
             username: this.user.username,
             name: this.user.name,
             email: this.user.email,
-            password: this.user.password,
+            password: this.user.confirmation,
             phone: this.user.phone,
             address: this.user.address,
             role_id: this.user.role,
@@ -663,12 +740,13 @@ export default {
             kec_id: this.user.kecamatan.id || this.id_kec,
             kel_id: this.user.kelurahan.id || this.id_kel,
             rw: this.user.rw,
+            rt: this.user.rt,
             facebook: this.user.facebook,
             twitter: this.user.twitter,
             instagram: this.user.instagram,
             photo_url: this.user.photo,
-            lat: this.user.latitude,
-            lon: this.user.longitude
+            lat: (this.user.latitude === '-') || (this.user.latitude === '.') || (this.user.latitude === '+') ? null : this.user.latitude,
+            lon: (this.user.longitude === '-') || (this.user.latitude === '.') || (this.user.latitude === '+') ? null : this.user.longitude
 
           }).then(() => {
             Message({

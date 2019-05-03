@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`List Filter renders the component 1`] = `
+<div>
+  <el-row-stub tag="div" gutter="10" justify="start" align="top">
+    <el-col-stub span="8" tag="div">
+      <el-select-stub autocomplete="off" filterable="true" multiplelimit="0" placeholder="Pilih Kabupaten/Kota" valuekey="value" popperappendtobody="true" style="width: 100%;"></el-select-stub>
+    </el-col-stub>
+    <el-col-stub span="8" tag="div">
+      <el-select-stub autocomplete="off" disabled="true" filterable="true" multiplelimit="0" placeholder="Pilih Kecamatan" valuekey="value" popperappendtobody="true" style="width: 100%;"></el-select-stub>
+    </el-col-stub>
+    <el-col-stub span="8" tag="div">
+      <el-select-stub autocomplete="off" disabled="true" filterable="true" multiplelimit="0" placeholder="Pilih Kelurahan" valuekey="value" popperappendtobody="true" style="width: 100%;"></el-select-stub>
+    </el-col-stub>
+  </el-row-stub>
+</div>
+`;

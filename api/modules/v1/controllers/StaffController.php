@@ -5,7 +5,9 @@ namespace app\modules\v1\controllers;
 use app\filters\auth\HttpBearerAuth;
 use app\models\LoginForm;
 use app\models\User;
+use app\models\UserPhotoUploadForm;
 use app\models\UserSearch;
+use Intervention\Image\ImageManager;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\filters\AccessControl;
@@ -16,6 +18,7 @@ use yii\web\BadRequestHttpException;
 use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\ServerErrorHttpException;
+use yii\web\UploadedFile;
 
 class StaffController extends ActiveController
 {
@@ -54,6 +57,7 @@ class StaffController extends ActiveController
                 'login' => ['post'],
                 'count' => ['get'],
                 'getPermissions' => ['get'],
+                'photo-upload' => ['post'],
             ],
         ];
 
@@ -79,11 +83,15 @@ class StaffController extends ActiveController
         // setup access
         $behaviors['access'] = [
             'class' => AccessControl::className(),
-            'only' => ['index', 'view', 'create', 'update', 'delete', 'getPermissions'], //only be applied to
+            'only' => ['index', 'view', 'create', 'update', 'delete', 'photo-upload', 'getPermissions'], //only be applied to
             'rules' => [
                 [
                     'allow' => true,
-                    'actions' => ['index', 'view', 'create', 'update', 'delete', 'count', 'getPermissions'],
+                    'actions' => [
+                        'index', 'view', 'create',
+                        'update', 'delete', 'count', 'photo-upload',
+                        'getPermissions'
+                    ],
                     'roles' => ['admin', 'manageStaffs'],
                 ],
             ],
@@ -441,6 +449,42 @@ class StaffController extends ActiveController
         }
 
         return $tmpPermissions;
+    }
+
+    public function actionPhotoUpload()
+    {
+        /**
+         * @var \yii2tech\filestorage\BucketInterface $bucket
+         */
+        $bucket = Yii::$app->fileStorage->getBucket('imageFiles');
+
+        $imageProcessor = new ImageManager();
+        $model = new UserPhotoUploadForm();
+
+        $model->setBucket($bucket);
+        $model->setImageProcessor($imageProcessor);
+
+        $model->image = UploadedFile::getInstanceByName('image');
+
+        if (! $model->validate()) {
+            $response = Yii::$app->getResponse();
+            $response->setStatusCode(422);
+
+            return $model->getErrors();
+        }
+
+        if ($model->upload()) {
+            $relativePath = $model->getRelativeFilePath();
+
+            $responseData = [
+                'photo_url' => $bucket->getFileUrl($relativePath),
+            ];
+
+            return $responseData;
+        }
+
+        $response = Yii::$app->getResponse();
+        $response->setStatusCode(400);
     }
 
     /**

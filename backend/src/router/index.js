@@ -8,6 +8,7 @@ import Layout from '@/layout'
 
 /* Router Modules */
 import userRouter from './modules/user'
+import nomorPentingRouter from './modules/nomorPenting'
 
 /** note: sub-menu only appear when children.length>=1
  *  detail see  https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -94,6 +95,7 @@ export const constantRoutes = [
 export const asyncRoutes = [
 
   userRouter,
+  nomorPentingRouter,
 
   {
     path: '/permission',
