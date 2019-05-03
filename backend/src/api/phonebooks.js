@@ -8,6 +8,13 @@ export function fetchList(query) {
   })
 }
 
+export function fetchRecord(id) {
+  return request({
+    url: `/phone-books/${id}`,
+    method: 'get'
+  })
+}
+
 export function activate(id) {
   return request({
     url: `/phone-books/${id}`,
