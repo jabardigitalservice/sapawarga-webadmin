@@ -21,6 +21,9 @@
 
           <el-form-item label="Wilayah">
             <InputSelectArea
+                :kabkota-id="form.kabkota_id"
+                :kec-id="form.kec_id"
+                :kel-id="form.kel_id"
                 @changeKabkota="form.kabkota_id = $event"
                 @changeKecamatan="form.kec_id = $event"
                 @changeKelurahan="form.kel_id = $event"
