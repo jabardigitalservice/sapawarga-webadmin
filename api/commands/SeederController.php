@@ -19,8 +19,8 @@ class SeederController extends Controller
         echo 'Seeding Users...' . PHP_EOL;
         $this->actionUser();
 
-        echo 'Seeding Phonebooks Categories...' . PHP_EOL;
-        $this->actionPhoneBookCategories();
+        echo 'Seeding Categories...' . PHP_EOL;
+        $this->actionCategories();
 
         echo 'Seeding Phonebooks...' . PHP_EOL;
         $this->actionPhoneBook();
@@ -43,35 +43,41 @@ class SeederController extends Controller
         Yii::$app->db->createCommand($sql)->execute();
     }
 
-    public function actionPhoneBookCategories()
+    public function actionCategories()
     {
-        Yii::$app->db->createCommand('TRUNCATE phonebooks_categories')->execute();
+        Yii::$app->db->createCommand('TRUNCATE categories')->execute();
 
-        Yii::$app->db->createCommand()->batchInsert('phonebooks_categories', [
+        $typePhonebook = 'phonebook';
+        Yii::$app->db->createCommand()->batchInsert('categories', [
+            'type',
             'name',
             'status',
             'created_at',
             'updated_at',
         ], [
             [
+                $typePhonebook,
                 'Kesehatan',
                 10,
                 time(),
                 time(),
             ],
             [
+                $typePhonebook,
                 'Ekonomi',
                 10,
                 time(),
                 time(),
             ],
             [
+                $typePhonebook,
                 'Keamanan',
                 10,
                 time(),
                 time(),
             ],
             [
+                $typePhonebook,
                 'Transportasi',
                 10,
                 time(),
