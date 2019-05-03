@@ -50,12 +50,6 @@ class PhoneBookSearch extends PhoneBook
 
         $query = PhoneBook::find();
 
-        $sortBy    = Arr::get($params, 'sort_by', 'seq');
-        $sortOrder = Arr::get($params, 'sort_order', 'ascending');
-        $sortOrder = $this->getSortOrder($sortOrder);
-
-        $pageLimit = Arr::get($params, 'limit');
-
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -134,9 +128,17 @@ class PhoneBookSearch extends PhoneBook
             ['kel_id' => null],
         ]);
 
+        $pageLimit = Arr::get($params, 'limit');
+        $sortBy    = Arr::get($params, 'sort_by', 'seq');
+        $sortOrder = Arr::get($params, 'sort_order', 'descending');
+        $sortOrder = $this->getSortOrder($sortOrder);
+
         return new ActiveDataProvider([
             'query' => $query,
-            'sort'=> ['defaultOrder' => ['seq' => SORT_DESC]],
+            'sort'=> ['defaultOrder' => [$sortBy => $sortOrder]],
+            'pagination' => [
+                'pageSize' => $pageLimit,
+            ],
         ]);
     }
 
@@ -144,11 +146,16 @@ class PhoneBookSearch extends PhoneBook
     {
         $this->filterByArea($query, $params);
 
+        $pageLimit = Arr::get($params, 'limit');
+        $sortBy    = Arr::get($params, 'sort_by', 'seq');
+        $sortOrder = Arr::get($params, 'sort_order', 'descending');
+        $sortOrder = $this->getSortOrder($sortOrder);
+
         return new ActiveDataProvider([
             'query' => $query,
-            'sort'=> ['defaultOrder' => ['seq' => SORT_DESC]],
+            'sort'=> ['defaultOrder' => [$sortBy => $sortOrder]],
             'pagination' => [
-                'pageSize' => Arr::get($params, 'limit'),
+                'pageSize' => $pageLimit,
             ],
         ]);
     }
