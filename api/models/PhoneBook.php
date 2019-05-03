@@ -39,7 +39,7 @@ class PhoneBook extends \yii\db\ActiveRecord
 
     public function getCategory()
     {
-        return $this->hasOne(PhoneBookCategory::class, ['id' => 'category_id']);
+        return $this->hasOne(category\PhoneBookCategory::class, ['id' => 'category_id']);
     }
 
     /**
