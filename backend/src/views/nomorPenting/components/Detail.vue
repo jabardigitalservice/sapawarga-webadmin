@@ -1,10 +1,31 @@
 <template>
-  <div class="container">
-    <el-form ref="form" :model="form" label-width="120px">
-      <el-form-item label="Nama Instansi">
-        <el-input v-model="form.name"></el-input>
-      </el-form-item>
-    </el-form>
+  <div class="components-container">
+    <p class="warn-content"><a href="#">Nomor Telepon Penting</a></p>
+    <el-row :gutter="20">
+      <el-col :span="5">
+        Gambar
+      </el-col>
+      <el-col :span="19">
+        <el-form ref="form" :model="form" label-width="160px">
+          <el-form-item label="Nama Instansi" required>
+            <el-input v-model="form.name"></el-input>
+          </el-form-item>
+
+          <el-form-item label="Alamat Instansi">
+            <el-input v-model="form.address"></el-input>
+          </el-form-item>
+
+          <el-form-item label="Deskripsi">
+            <el-input type="textarea" v-model="form.description" rows="5"></el-input>
+          </el-form-item>
+
+          <el-form-item>
+            <el-button type="primary">Create</el-button>
+            <el-button>Cancel</el-button>
+          </el-form-item>
+        </el-form>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -12,7 +33,9 @@
 import { fetchRecord } from '@/api/phonebooks'
 
 const defaultForm = {
-  name: null
+  name: null,
+  address: null,
+  description: null
 }
 
 export default {
