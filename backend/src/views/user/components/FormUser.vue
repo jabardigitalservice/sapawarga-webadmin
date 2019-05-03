@@ -73,6 +73,7 @@
                   v-model="user.kabkota"
                   placeholder="Pilih Kab/Kota"
                   @change="getKecamatan"
+                  :disabled="isEdit"
                 >
                   <el-option
                     v-for="item in area"
@@ -94,8 +95,10 @@
                 <el-select
                   v-model="user.kecamatan"
                   placeholder="Pilih Kecamatan"
-                  :disabled="user.kabkota == '' && checkPermission(['admin', 'staffProv'])"
+                  :disabled="(user.kabkota == '' && checkPermission(['admin', 'staffProv']) || isEdit)"
                   @change="getKelurahan"
+
+
                 >
                   <el-option
                     v-for="item in kecamatan"
@@ -112,7 +115,7 @@
                 label="Kelurahan"
                 prop="kelurahan"
               >
-                <el-select v-model="user.kelurahan" placeholder="Pilih Kelurahan" :disabled="user.kecamatan == '' && checkPermission(['admin', 'staffProv', 'staffKabkota'])">
+                <el-select v-model="user.kelurahan" placeholder="Pilih Kelurahan" :disabled="(user.kecamatan == '' && checkPermission(['admin', 'staffProv', 'staffKabkota']) || isEdit)">
                   <el-option
                     v-for="item in kelurahan"
                     :key="item.id"
@@ -131,7 +134,7 @@
                 label="RW"
                 prop="rw"
               >
-                <el-input v-model="user.rw" type="text" placeholder="Contoh: 001" :disabled="user.kelurahan == '' && checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec'])" />
+                <el-input v-model="user.rw" type="text" placeholder="Contoh: 001" :disabled="(user.kelurahan == '' && checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec']) || isEdit)" />
               </el-form-item>
             </el-col>
             <el-col :span="12" class="form-right-side">
@@ -677,6 +680,7 @@ export default {
         this.user.kabkota = dataUser.kabkota.name
         this.user.kecamatan = dataUser.kecamatan.name
         this.user.kelurahan = dataUser.kelurahan.name
+        this.user.rw = dataUser.rw
 
       }).catch(() => {})
     },
