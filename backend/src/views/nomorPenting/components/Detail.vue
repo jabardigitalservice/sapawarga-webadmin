@@ -19,6 +19,14 @@
             <el-input type="textarea" v-model="form.description" rows="5"></el-input>
           </el-form-item>
 
+          <el-form-item label="Wilayah">
+            <InputSelectArea
+                @changeKabkota="form.kabkota_id = $event"
+                @changeKecamatan="form.kec_id = $event"
+                @changeKelurahan="form.kel_id = $event"
+            ></InputSelectArea>
+          </el-form-item>
+
           <el-form-item>
             <el-button type="primary">Create</el-button>
             <el-button>Cancel</el-button>
@@ -32,15 +40,20 @@
 <script>
 import { fetchRecord } from '@/api/phonebooks'
 
+import InputSelectArea from '@/components/InputSelectArea'
+
 const defaultForm = {
   name: null,
   address: null,
-  description: null
+  description: null,
+  kabkota_id: null,
+  kec_id: null,
+  kel_id: null
 }
 
 export default {
   components: {
-    //
+    InputSelectArea
   },
   props: {
     isEdit: {
