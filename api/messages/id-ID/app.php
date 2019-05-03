@@ -6,7 +6,7 @@
 return [
     'app.username' => 'Username',
     'app.email' => 'Email',
-    'app.password' => 'Password',
+    'app.password' => 'Kata Sandi',
     'app.role' => 'Role',
     'app.name' => 'Nama Lengkap',
     'app.rt' => 'RT',
@@ -15,7 +15,7 @@ return [
     'app.kec_id' => 'Kecamatan',
     'app.kabkota_id' => 'Kabupaten/Kota',
 
-    'error.login.incorrect' => 'Username atau password salah.',
+    'error.login.incorrect' => 'Username atau kata sandi salah.',
     'error.email.taken' => 'Alamat email sudah digunakan.',
     'error.username.taken' => 'Username sudah digunakan.',
     'error.username.pattern' => 'Username hanya boleh menggunakan karakter alfanumerik huruf kecil, underscore, dan titik.',
