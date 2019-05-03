@@ -380,6 +380,10 @@ class StaffController extends ActiveController
         ];
 
         $currentUser = User::findIdentity(\Yii::$app->user->getId());
+        $kabkota_id = $currentUser->kabkota_id;
+        $kel_id = $currentUser->kel_id;
+        $kec_id = $currentUser->kec_id;
+        $rw = $currentUser->rw;
         $role = $currentUser->role;
 
         // Admin will get all user counts, while staffs below admin will get user counts only from areas below them
@@ -389,7 +393,26 @@ class StaffController extends ActiveController
             if ($role == User::ROLE_ADMIN ||
                 $role < User::ROLE_ADMIN && $key < $role
             ) {
-                $count = User::find()->where(['<=', 'role', $key])->count();
+                $query = User::find();
+                if ($key < User::ROLE_ADMIN) {
+                    $query->where(['role' => $key]);
+                }
+
+                // filter by area (for staffProv and below)
+                if ($kabkota_id) {
+                    $query->andWhere(['kabkota_id' => $kabkota_id]);
+                }
+                if ($kec_id) {
+                    $query->andWhere(['kec_id' => $kec_id]);
+                }
+                if ($kel_id) {
+                    $query->andWhere(['kel_id' => $kel_id]);
+                }
+                if ($rw) {
+                    $query->andWhere(['rw' => $rw]);
+                }
+
+                $count = $query->count();
                 array_push($items, [
                     'id' => $index,
                     'level' => $value['level'],
