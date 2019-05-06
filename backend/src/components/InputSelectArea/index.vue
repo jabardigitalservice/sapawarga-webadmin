@@ -1,9 +1,10 @@
 <template>
   <div>
-    <el-row v-if="enableKabkota" style="margin-bottom: 15px">
+    <el-row style="margin-bottom: 15px">
       <el-col :span="8">
         <el-select
           v-model="kabkota_selected"
+          :disabled="enableRolePolicy && ! enableKabkota"
           filterable
           placeholder="Pilih Kabupaten/Kota"
           style="width: 100%"
@@ -19,11 +20,11 @@
       </el-col>
     </el-row>
 
-    <el-row v-if="enableKecamatan" style="margin-bottom: 15px">
+    <el-row style="margin-bottom: 15px">
       <el-col :span="8">
         <el-select
           v-model="kecamatan_selected"
-          :disabled="enableKabkota === true && (kabkota_selected === '' || kabkota_selected === null)"
+          :disabled="! enableKecamatan"
           filterable
           placeholder="Pilih Kecamatan"
           style="width: 100%"
@@ -39,11 +40,11 @@
       </el-col>
     </el-row>
 
-    <el-row v-if="enableKelurahan">
+    <el-row>
       <el-col :span="8">
         <el-select
           v-model="kelurahan_selected"
-          :disabled="enableKecamatan === true && (kecamatan_selected === '' || kecamatan_selected === null)"
+          :disabled="! enableKelurahan"
           filterable
           placeholder="Pilih Kelurahan"
           style="width: 100%"
@@ -67,7 +68,6 @@ import { getKabkotaList, getKecamatanList, getKelurahanList } from '@/api/areas'
 import checkPermission from '@/utils/permission'
 
 export default {
-  name: 'InputFilterArea',
   props: {
     enableRolePolicy: {
       type: Boolean,
@@ -107,7 +107,7 @@ export default {
         return checkPermission(['admin', 'staffProv'])
       }
 
-      return false
+      return true
     },
 
     enableKecamatan() {
@@ -115,7 +115,7 @@ export default {
         return checkPermission(['admin', 'staffProv', 'staffKabkota'])
       }
 
-      return false
+      return true
     },
 
     enableKelurahan() {
@@ -123,21 +123,7 @@ export default {
         return checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec'])
       }
 
-      return false
-    },
-
-    parentId() {
-      const authUser = this.$store.state.user
-
-      if (checkPermission(['staffKabkota'])) {
-        return parseInt(authUser.kabkota_id)
-      }
-
-      if (checkPermission(['staffKec'])) {
-        return parseInt(authUser.kec_id)
-      }
-
-      return null
+      return true
     }
   },
 
@@ -245,14 +231,26 @@ export default {
     },
 
     init() {
+      const authUser = this.$store.state.user
+
       this.getKabkotaOptions()
 
-      if (this.enableKabkota === false) {
-        this.getKecamatanOptions(this.parentId)
+      if (checkPermission(['staffKabkota', 'staffKec', 'staffKel'])) {
+        this.kabkota_selected = authUser.kabkota_id
+
+        this.changeSelection(this.kabkota_selected, 'changeKabkota')
       }
 
-      if (this.enableKecamatan === false) {
-        this.getKelurahanOptions(this.parentId)
+      if (checkPermission(['staffKec', 'staffKel'])) {
+        this.kecamatan_selected = authUser.kec_id
+
+        this.changeSelection(this.kecamatan_selected, 'changeKecamatan')
+      }
+
+      if (checkPermission(['staffKel'])) {
+        this.kelurahan_selected = authUser.kel_id
+
+        this.changeSelection(this.kelurahan_selected, 'changeKelurahan')
       }
     }
   }
