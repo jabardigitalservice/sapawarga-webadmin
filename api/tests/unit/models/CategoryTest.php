@@ -2,7 +2,7 @@
 
 namespace tests\unit\models;
 
-use app\models\category\Category;
+use app\models\Category;
 
 class CategoryTest extends \Codeception\Test\Unit
 {
