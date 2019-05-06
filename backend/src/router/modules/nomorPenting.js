@@ -50,7 +50,7 @@ const nomorPentingRouter = {
       component: () => import('@/views/nomorPenting/show'),
       hidden: true,
       meta: {
-        title: 'nomor-penting-show',
+        title: 'Detail no penting',
         roles: ['admin']
       }
     }
