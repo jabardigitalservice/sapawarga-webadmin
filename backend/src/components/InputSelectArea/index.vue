@@ -6,6 +6,7 @@
           v-model="kabkota_selected"
           :disabled="enableRolePolicy && ! enableKabkota"
           filterable
+          clearable
           placeholder="Pilih Kabupaten/Kota"
           style="width: 100%"
           @change="changeSelection($event, 'changeKabkota')"
@@ -26,6 +27,7 @@
           v-model="kecamatan_selected"
           :disabled="! enableKecamatan"
           filterable
+          clearable
           placeholder="Pilih Kecamatan"
           style="width: 100%"
           @change="changeSelection($event, 'changeKecamatan')"
@@ -46,6 +48,7 @@
           v-model="kelurahan_selected"
           :disabled="! enableKelurahan"
           filterable
+          clearable
           placeholder="Pilih Kelurahan"
           style="width: 100%"
           @change="changeSelection($event, 'changeKelurahan')"
@@ -160,7 +163,11 @@ export default {
 
   methods: {
     changeSelection(value, type) {
-      if (type === 'changeKabkota' && value !== '') {
+      if (value === '') {
+        value = null
+      }
+
+      if (type === 'changeKabkota') {
         this.kecamatan_selected = null
         this.kelurahan_selected = null
 
@@ -170,7 +177,7 @@ export default {
         this.getKecamatanOptions(value)
       }
 
-      if (type === 'changeKecamatan' && value !== '') {
+      if (type === 'changeKecamatan') {
         this.kelurahan_selected = null
 
         this.kelurahan_options = []

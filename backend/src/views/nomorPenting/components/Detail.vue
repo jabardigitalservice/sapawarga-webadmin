@@ -67,16 +67,7 @@ const defaultForm = {
   kec_id: null,
   kel_id: null,
   seq: null,
-  phone_numbers: [
-    {
-      'type': 'phone',
-      'phone_number': '022-123456'
-    },
-    {
-      'type': 'message',
-      'phone_number': '022-098763'
-    }
-  ]
+  phone_numbers: []
 }
 
 export default {
