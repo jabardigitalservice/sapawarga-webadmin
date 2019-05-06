@@ -25,7 +25,7 @@
       <el-col :span="8">
         <el-select
           v-model="kecamatan_selected"
-          :disabled="! enableKecamatan"
+          :disabled="(enableRolePolicy && ! enableKecamatan) || kabkota_selected === null"
           filterable
           clearable
           placeholder="Pilih Kecamatan"
@@ -46,7 +46,7 @@
       <el-col :span="8">
         <el-select
           v-model="kelurahan_selected"
-          :disabled="! enableKelurahan"
+          :disabled="(enableRolePolicy && ! enableKelurahan) || kecamatan_selected === null"
           filterable
           clearable
           placeholder="Pilih Kelurahan"
