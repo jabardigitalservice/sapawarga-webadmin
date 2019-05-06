@@ -138,9 +138,6 @@ class Category extends \yii\db\ActiveRecord
             if ($existingName > 0) {
                 $this->addError($attribute, Yii::t('app', 'error.category.taken'));
             }
-        } else {
-            // unknown request
-            $this->addError($attribute, Yii::t('app', 'Unknown request'));
         }
     }
 }
