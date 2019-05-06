@@ -21,9 +21,12 @@
             <el-input v-model="form.description" type="textarea" rows="5" />
           </el-form-item>
 
-          <el-form-item label="Call Center" />
+          <el-form-item label="Call Center" required>
+            <el-radio v-model="form.seq" :label="1000">Ya</el-radio>
+            <el-radio v-model="form.seq" :label="1">Tidak</el-radio>
+          </el-form-item>
 
-          <el-form-item label="Wilayah" required>
+          <el-form-item label="Wilayah">
             <InputSelectArea
               :kabkota-id="form.kabkota_id"
               :kec-id="form.kec_id"
@@ -63,6 +66,7 @@ const defaultForm = {
   kabkota_id: null,
   kec_id: null,
   kel_id: null,
+  seq: null,
   phone_numbers: [
     {
       'type': 'phone',
