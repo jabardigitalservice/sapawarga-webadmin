@@ -19,6 +19,7 @@ return [
     'error.email.taken' => 'Alamat email sudah digunakan.',
     'error.username.taken' => 'Username sudah digunakan.',
     'error.username.pattern' => 'Username hanya boleh menggunakan karakter alfanumerik huruf kecil, underscore, dan titik.',
+    'error.category.taken' => 'Nama kategori sudah digunakan.',
     'error.role.permission' => 'Anda tidak diperbolehkan untuk melakukan aksi ini.',
 
     'role.admin' => 'Administrator',

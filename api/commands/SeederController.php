@@ -4,6 +4,8 @@ namespace app\commands;
 
 use app\models\Area;
 use app\models\PhoneBook;
+use app\models\category\PhoneBookCategory;
+use app\models\category\BroadcastCategory;
 use tebazil\yii2seeder\Seeder;
 use Yii;
 use yii\console\Controller;
@@ -19,8 +21,8 @@ class SeederController extends Controller
         echo 'Seeding Users...' . PHP_EOL;
         $this->actionUser();
 
-        echo 'Seeding Phonebooks Categories...' . PHP_EOL;
-        $this->actionPhoneBookCategories();
+        echo 'Seeding Categories...' . PHP_EOL;
+        $this->actionCategories();
 
         echo 'Seeding Phonebooks...' . PHP_EOL;
         $this->actionPhoneBook();
@@ -43,36 +45,73 @@ class SeederController extends Controller
         Yii::$app->db->createCommand($sql)->execute();
     }
 
-    public function actionPhoneBookCategories()
+    public function actionCategories()
     {
-        Yii::$app->db->createCommand('TRUNCATE phonebooks_categories')->execute();
+        Yii::$app->db->createCommand('TRUNCATE categories')->execute();
 
-        Yii::$app->db->createCommand()->batchInsert('phonebooks_categories', [
+        $typePhonebook = PhoneBookCategory::TYPE;
+        Yii::$app->db->createCommand()->batchInsert('categories', [
+            'type',
             'name',
             'status',
             'created_at',
             'updated_at',
         ], [
             [
+                $typePhonebook,
                 'Kesehatan',
                 10,
                 time(),
                 time(),
             ],
             [
+                $typePhonebook,
                 'Ekonomi',
                 10,
                 time(),
                 time(),
             ],
             [
+                $typePhonebook,
                 'Keamanan',
                 10,
                 time(),
                 time(),
             ],
             [
+                $typePhonebook,
                 'Transportasi',
+                10,
+                time(),
+                time(),
+            ],
+        ])->execute();
+
+        $typeBroadcast = BroadcastCategory::TYPE;
+        Yii::$app->db->createCommand()->batchInsert('categories', [
+            'type',
+            'name',
+            'status',
+            'created_at',
+            'updated_at',
+        ], [
+            [
+                $typeBroadcast,
+                'Sistem',
+                10,
+                time(),
+                time(),
+            ],
+            [
+                $typeBroadcast,
+                'Sosialisasi',
+                10,
+                time(),
+                time(),
+            ],
+            [
+                $typeBroadcast,
+                'Berita Hoax',
                 10,
                 time(),
                 time(),

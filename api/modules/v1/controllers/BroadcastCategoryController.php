@@ -3,7 +3,7 @@
 namespace app\modules\v1\controllers;
 
 use app\filters\auth\HttpBearerAuth;
-use app\models\category\PhoneBookCategory;
+use app\models\category\BroadcastCategory;
 use app\models\User;
 use Yii;
 use yii\filters\AccessControl;
@@ -13,11 +13,11 @@ use yii\web\NotFoundHttpException;
 use yii\web\ServerErrorHttpException;
 
 /**
- * PhoneBookCategoryController implements the CRUD actions for PhoneBookCategory model.
+ * BroadcastCategoryController implements the CRUD actions for BroadcastCategory model.
  */
-class PhoneBooksCategoryController extends ActiveController
+class BroadcastCategoryController extends ActiveController
 {
-    public $modelClass = PhoneBookCategory::class;
+    public $modelClass = BroadcastCategory::class;
 
     public function behaviors()
     {
