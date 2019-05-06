@@ -8,10 +8,33 @@ const userRouter = {
   redirect: 'noredirect',
   name: 'User',
   meta: {
-    title: 'User Management',
+    title: 'user-manage',
     icon: 'user'
   },
   children: [
+    {
+      name: 'user-list',
+      path: 'user-all',
+      component: () => import('@/views/user/list'),
+      props: {
+        //
+      },
+      meta: {
+        title: 'Semua Pengguna'
+      }
+    },
+    {
+      name: 'user-list-provinsi',
+      path: 'user-provinsi',
+      component: () => import('@/views/user/list'),
+      props: {
+        roleId: 'staffProv'
+      },
+      meta: {
+        title: 'user-list-provinsi',
+        roles: ['admin']
+      }
+    },
     {
       name: 'user-list-kabkota',
       path: 'user-kabkota',
@@ -20,7 +43,8 @@ const userRouter = {
         roleId: 'staffKabkota'
       },
       meta: {
-        title: 'Kabupaten / Kota'
+        title: 'user-list-kabkota',
+        roles: ['admin', 'staffProv']
       }
     },
     {
@@ -31,7 +55,8 @@ const userRouter = {
         roleId: 'staffKec'
       },
       meta: {
-        title: 'Kecamatan'
+        title: 'user-list-kecamatan',
+        roles: ['admin', 'staffProv', 'staffKabkota']
       }
     },
     {
@@ -42,7 +67,8 @@ const userRouter = {
         roleId: 'staffKel'
       },
       meta: {
-        title: 'Kelurahan'
+        title: 'user-list-kelurahan',
+        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec']
       }
     },
     {
@@ -53,24 +79,25 @@ const userRouter = {
         roleId: 'staffRW'
       },
       meta: {
-        title: 'User Tingkat RW'
+        title: 'user-list-rw',
+        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec']
       }
     },
     {
       name: 'user-edit',
       path: 'edit/:id',
-      component: () => import('@/views/user/add'), // @TODO ganti ke edit
+      component: () => import('@/views/user/edit'), // @TODO ganti ke edit
       hidden: true,
       meta: {
         title: 'Edit'
       }
     },
     {
-      name: 'create',
+      name: 'user-create',
       path: 'create',
       component: () => import('@/views/user/add'),
       meta: {
-        title: 'Tambah Pengguna Baru'
+        title: 'user-create'
       }
     }
   ]

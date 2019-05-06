@@ -1,5 +1,3 @@
-import { stat } from 'fs';
-
 const getters = {
   sidebar: state => state.app.sidebar,
   language: state => state.app.language,
@@ -11,13 +9,10 @@ const getters = {
   avatar: state => state.user.avatar,
   name: state => state.user.name,
   introduction: state => state.user.introduction,
+  user: state => state.user,
   roles: state => state.user.roles,
   permission_routes: state => state.permission.routes,
   addRoutes: state => state.permission.addRoutes,
-  errorLogs: state => state.errorLog.logs,
-  USER: state => state.addUser.user,
-  AREAS: state => state.addUser.areas,
-  KECAMATAN: state => state.addUser.kecamatan,
-  KELURAHAN: state => state.addUser.kelurahan
-};
-export default getters;
+  errorLogs: state => state.errorLog.logs
+}
+export default getters

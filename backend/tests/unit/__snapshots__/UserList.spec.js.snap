@@ -1,16 +1,32 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`UserList renders the component 1`] = `
-<el-row>
-  <h1>hello</h1>
-  <el-col span="8">
-    <div class="grid-content bg-purple"></div>
-  </el-col>
-  <el-col span="8">
-    <div class="grid-content bg-purple-light"></div>
-  </el-col>
-  <el-col span="8">
-    <div class="grid-content bg-purple"></div>
-  </el-col>
-</el-row>
+<div class="app-container">
+  <panel-group-stub totalalluser="0" totaluserprovince="0" totaluserkabkota="0" totaluserkec="0" totaluserkel="0" totaluserrw="0" duration="2600"></panel-group-stub>
+  <el-row-stub tag="div" gutter="20" justify="start" align="top">
+    <el-col-stub span="24" tag="div">
+      <el-row-stub tag="div" justify="start" align="top" style="margin: 10px 0px;">
+        <el-col-stub span="12" tag="div">
+          <router-link-stub to="[object Object]" tag="a" event="click">
+            <el-button-stub type="primary" size="small" icon="el-icon-plus" nativetype="button">
+              Tambah Pengguna Baru
+            </el-button-stub>
+          </router-link-stub>
+        </el-col-stub>
+      </el-row-stub>
+      <listfilter-stub listquery="[object Object]"></listfilter-stub>
+      <el-table-stub fit="true" stripe="true" border="true" showheader="true" highlightcurrentrow="true" selectonindeterminate="true" indent="16" style="width: 100%;">
+        <el-table-column-stub type="index" width="50" resizable="true" align="center" filtermultiple="true" index="function () { [native code] }" sortorders="ascending,descending,"></el-table-column-stub>
+        <el-table-column-stub type="default" label="Nama Lengkap" prop="name" sortable="custom" resizable="true" filtermultiple="true" sortorders="ascending,descending,"></el-table-column-stub>
+        <el-table-column-stub type="default" label="Username" prop="username" sortable="custom" resizable="true" filtermultiple="true" sortorders="ascending,descending,"></el-table-column-stub>
+        <el-table-column-stub type="default" label="Kedudukan" resizable="true" filtermultiple="true" sortorders="ascending,descending,"></el-table-column-stub>
+        <el-table-column-stub type="default" label="Telp" prop="phone" width="150" sortable="custom" resizable="true" filtermultiple="true" sortorders="ascending,descending,"></el-table-column-stub>
+        <el-table-column-stub type="default" label="Role" prop="role_label" width="150" resizable="true" filtermultiple="true" sortorders="ascending,descending,"></el-table-column-stub>
+        <el-table-column-stub type="default" label="Status" classname="status-col" prop="status" width="150px" sortable="custom" resizable="true" filtermultiple="true" sortorders="ascending,descending,"></el-table-column-stub>
+        <el-table-column-stub type="default" label="Actions" width="250px" resizable="true" align="center" filtermultiple="true" sortorders="ascending,descending,"></el-table-column-stub>
+      </el-table-stub>
+      <pagination-stub total="0" page="1" limit="10" pagesizes="10,20,30,50" layout="total, sizes, prev, pager, next, jumper" background="true" autoscroll="true" style="display: none;"></pagination-stub>
+    </el-col-stub>
+  </el-row-stub>
+</div>
 `;

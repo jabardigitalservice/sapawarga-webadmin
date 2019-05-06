@@ -17,10 +17,13 @@ class UserEditForm extends Model
     public $name;
     public $phone;
     public $address;
+    public $rt;
     public $rw;
     public $kel_id;
     public $kec_id;
     public $kabkota_id;
+    public $lat;
+    public $lon;
     public $photo_url;
     public $facebook;
     public $twitter;
@@ -48,7 +51,13 @@ class UserEditForm extends Model
             ],
 
             ['username', 'trim'],
-            ['username', 'string', 'length' => [5, 14]],
+            ['username', 'string', 'length' => [4, 255]],
+            [
+                'username',
+                'match',
+                'pattern' => '/^[a-z0-9_.]{4,255}$/',
+                'message' => Yii::t('app', 'error.username.pattern')
+            ],
             [
                 'username',
                 'unique',
@@ -61,7 +70,7 @@ class UserEditForm extends Model
 
             ['email', 'trim'],
             ['email', 'email'],
-            ['email', 'string', 'max' => 255],
+            ['email', 'string', 'max' => User::MAX_LENGTH],
             [
                 'email',
                 'unique',
@@ -72,8 +81,10 @@ class UserEditForm extends Model
                 }
             ],
 
-            ['password', 'string', 'min' => 6],
-            [['username', 'name', 'phone', 'address', 'rw', 'kel_id', 'kec_id', 'kabkota_id', 'photo_url', 'facebook', 'twitter', 'instagram'], 'default'],
+            ['password', 'string', 'length' => [5, User::MAX_LENGTH]],
+            [['name', 'phone', 'address', 'rt', 'rw', 'kel_id', 'kec_id', 'kabkota_id', 'lat', 'lon', 'photo_url', 'facebook', 'twitter', 'instagram'], 'default'],
+            [['name', 'address'], 'string', 'max' => User::MAX_LENGTH],
+            ['phone', 'string', 'length' => [3, 13]],
         ];
     }
 
@@ -101,13 +112,11 @@ class UserEditForm extends Model
             }
 
             // Set all the other fields
-            $excluded_attributes = ['email', 'password'];
+            $excluded_attributes = ['password', 'photo_url'];
             $attribute_names = $this->attributes();
             $attribute_names = array_diff($attribute_names, $excluded_attributes);
             foreach ($attribute_names as $name) {
-                if ($this[$name] != '') {
-                    $this->_user[$name] = $this[$name];
-                }
+                $this->_user[$name] = $this[$name];
             }
 
 

@@ -70,12 +70,12 @@ class AreaController extends ActiveController
                 [
                     'allow' => true,
                     'actions' => ['index', 'view', 'create', 'update', 'delete'],
-                    'roles' => ['admin', 'manageSettings'],
+                    'roles' => ['areaManage'],
                 ],
                 [
                     'allow' => true,
                     'actions' => ['index', 'view'],
-                    'roles' => ['user'],
+                    'roles' => ['areaList'],
                 ],
             ],
         ];

@@ -1,6 +1,6 @@
-import { login, logout, getInfo } from '@/api/user';
-import { getToken, setToken, removeToken } from '@/utils/auth';
-import router, { resetRouter } from '@/router';
+import { login, getInfo } from '@/api/user'
+import { getToken, setToken, removeToken } from '@/utils/auth'
+import router, { resetRouter } from '@/router'
 
 const state = {
   token: getToken(),
@@ -8,45 +8,66 @@ const state = {
   avatar: '',
   introduction: '',
   roles: [],
+  roles_active: {
+    id: null,
+    label: null
+  },
+  kel_id: null,
+  kec_id: null,
+  kabkota_id: null,
+  kabkota: null,
+  kecamatan: null,
+  kelurahan: null,
   dummy_image: require('@/assets/user.png')
-};
+}
 
 const mutations = {
   SET_TOKEN: (state, token) => {
-    state.token = token;
+    state.token = token
   },
   SET_INTRODUCTION: (state, introduction) => {
-    state.introduction = introduction;
+    state.introduction = introduction
   },
   SET_NAME: (state, name) => {
-    state.name = name;
+    state.name = name
   },
   SET_AVATAR: (state, avatar) => {
-    state.avatar = avatar;
+    state.avatar = avatar
   },
   SET_ROLES: (state, roles) => {
-    state.roles = roles;
+    state.roles = roles
+  },
+  SET_ROLES_ACTIVE: (state, data) => {
+    state.roles_active = data
+  },
+  SET_AREA: (state, data) => {
+    state.kel_id = data.kel_id
+    state.kec_id = data.kec_id
+    state.kabkota_id = data.kabkota_id
+    state.kabkota = data.kabkota
+    state.kecamatan = data.kecamatan
+    state.kelurahan = data.kelurahan
   }
-};
+}
 
 const actions = {
   // user login
   login({ commit }, userInfo) {
-    const { username, password } = userInfo;
+    const { username, password } = userInfo
 
     return new Promise((resolve, reject) => {
-      login({ LoginForm: { username: username.trim(), password: password } })
+      login({ LoginForm: { username: username.trim(), password: password }})
         .then(response => {
-          const { data } = response;
-          commit('SET_TOKEN', data.access_token);
-          setToken(data.access_token);
-          resolve();
+          const { data } = response
+          commit('SET_TOKEN', data.access_token)
+          setToken(data.access_token)
+          resolve()
         })
         .catch(error => {
-          error;
-          reject();
-        });
-    });
+          error
+          reject()
+        })
+    })
   },
 
   // get user info
@@ -54,87 +75,108 @@ const actions = {
     return new Promise((resolve, reject) => {
       getInfo(state.token)
         .then(response => {
-          let { data } = response;
-          let dummy_image = state.dummy_image;
+          let { data } = response
+          const dummy_image = state.dummy_image
 
           if (!data) {
-            reject('Verification failed, please Login again.');
+            reject('Verification failed, please Login again.')
           }
 
-          const { name, photo_url } = data;
+          const { name, role_label, role_id, photo_url } = data
 
-          const roles = ['admin'];
+          const roles = [role_id] // @TODO sebaiknya bisa multiple dan switch roles
 
           // roles must be a non-empty array
           if (!roles || roles.length <= 0) {
-            reject('getInfo: roles must be a non-null array!');
+            reject('getInfo: roles must be a non-null array!')
           }
 
-          commit('SET_ROLES', roles);
-          commit('SET_NAME', name);
+          commit('SET_ROLES', roles)
+
+          commit('SET_ROLES_ACTIVE', {
+            id: role_id,
+            label: role_label
+          })
+
+          commit('SET_NAME', name)
           if (photo_url == null) {
-            commit('SET_AVATAR', dummy_image);
+            commit('SET_AVATAR', dummy_image)
           } else {
-            commit('SET_AVATAR', photo_url);
+            commit('SET_AVATAR', photo_url)
           }
-          data = roles;
-          resolve(data);
+
+          const { kel_id, kec_id, kabkota_id, kabkota, kecamatan, kelurahan } = data
+          const kabkotaName = !kabkota ? null : kabkota.name
+          const kecamatanName = !kecamatan ? null : kecamatan.name
+          const kelurahanName = !kelurahan ? null : kelurahan.name
+
+          commit('SET_AREA', {
+            kel_id: kel_id,
+            kec_id: kec_id,
+            kabkota_id: kabkota_id,
+            kabkota: kabkotaName,
+            kecamatan: kecamatanName,
+            kelurahan: kelurahanName
+          })
+
+          data = roles
+          resolve(data)
         })
         .catch(error => {
-          reject(error);
-        });
-    });
+          reject(error)
+        })
+    })
   },
 
   // user logout
   logout({ commit }) {
     return new Promise((resolve, reject) => {
-      commit('SET_TOKEN', '');
-      commit('SET_ROLES', []);
-      removeToken();
-      resetRouter();
-      resolve();
-    });
+      commit('SET_TOKEN', '')
+      commit('SET_ROLES', [])
+      removeToken()
+      resetRouter()
+      resolve()
+    })
   },
 
   // remove token
   resetToken({ commit }) {
     return new Promise(resolve => {
-      commit('SET_TOKEN', '');
-      commit('SET_ROLES', []);
-      removeToken();
-      resolve();
-    });
+      commit('SET_TOKEN', '')
+      commit('SET_ROLES', [])
+      removeToken()
+      resolve()
+    })
   },
 
   // Dynamically modify permissions
   changeRoles({ commit, dispatch }, role) {
     return new Promise(async resolve => {
-      const token = role + '-token';
+      const token = role + '-token'
 
-      commit('SET_TOKEN', token);
-      setToken(token);
+      commit('SET_TOKEN', token)
+      setToken(token)
 
-      const { roles } = await dispatch('getInfo');
+      const { roles } = await dispatch('getInfo')
 
-      resetRouter();
+      resetRouter()
 
       // generate accessible routes map based on roles
       const accessRoutes = await dispatch('permission/generateRoutes', roles, {
         root: true
-      });
+      })
 
       // dynamically add accessible routes
-      router.addRoutes(accessRoutes);
+      router.addRoutes(accessRoutes)
 
-      resolve();
-    });
+      resolve()
+    })
   }
-};
+}
 
 export default {
   namespaced: true,
   state,
   mutations,
   actions
-};
+}

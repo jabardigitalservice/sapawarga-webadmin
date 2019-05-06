@@ -5,7 +5,9 @@ namespace app\modules\v1\controllers;
 use app\filters\auth\HttpBearerAuth;
 use app\models\LoginForm;
 use app\models\User;
+use app\models\UserPhotoUploadForm;
 use app\models\UserSearch;
+use Intervention\Image\ImageManager;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\filters\AccessControl;
@@ -16,6 +18,7 @@ use yii\web\BadRequestHttpException;
 use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\ServerErrorHttpException;
+use yii\web\UploadedFile;
 
 class StaffController extends ActiveController
 {
@@ -52,7 +55,9 @@ class StaffController extends ActiveController
                 'update' => ['put'],
                 'delete' => ['delete'],
                 'login' => ['post'],
+                'count' => ['get'],
                 'getPermissions' => ['get'],
+                'photo-upload' => ['post'],
             ],
         ];
 
@@ -78,11 +83,15 @@ class StaffController extends ActiveController
         // setup access
         $behaviors['access'] = [
             'class' => AccessControl::className(),
-            'only' => ['index', 'view', 'create', 'update', 'delete', 'getPermissions'], //only be applied to
+            'only' => ['index', 'view', 'create', 'update', 'delete', 'photo-upload', 'getPermissions'], //only be applied to
             'rules' => [
                 [
                     'allow' => true,
-                    'actions' => ['index', 'view', 'create', 'update', 'delete', 'getPermissions'],
+                    'actions' => [
+                        'index', 'view', 'create',
+                        'update', 'delete', 'count', 'photo-upload',
+                        'getPermissions'
+                    ],
                     'roles' => ['admin', 'manageStaffs'],
                 ],
             ],
@@ -205,7 +214,7 @@ class StaffController extends ActiveController
     public function actionUpdate($id)
     {
         $model = $this->actionView($id);
-
+        $model->scenario = User::SCENARIO_UPDATE;
         $model->load(\Yii::$app->getRequest()->getBodyParams(), '');
 
         if ($model->validate() && $model->save()) {
@@ -256,6 +265,11 @@ class StaffController extends ActiveController
      */
     public function actionView($id)
     {
+        $currentUser = User::findIdentity(\Yii::$app->user->getId());
+        $role = $currentUser->role;
+        // Admins can see other admins, while staffs can only see staffs one level below them
+        $maxRoleRange = ($role == User::ROLE_ADMIN) ? ($role) : ($role - 1);
+
         $staff = User::find()->where(
             [
                 'id' => $id
@@ -264,13 +278,13 @@ class StaffController extends ActiveController
             [
                 '!=',
                 'status',
-                -1
+                User::STATUS_DELETED
             ]
         )->andWhere(
             [
-                'in',
-                'role',
-                [User::ROLE_STAFF_RW, User::ROLE_ADMIN]
+                'or',
+                ['between', 'role', 0, $maxRoleRange],
+                $id . '=' . (string) $currentUser->id
             ]
         )->one();
         if ($staff) {
@@ -325,7 +339,6 @@ class StaffController extends ActiveController
             User::ROLE_STAFF_KABKOTA,
             User::ROLE_STAFF_KEC,
             User::ROLE_STAFF_KEL,
-            User::ROLE_STAFF_RW
         ];
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             $user = $model->getUser();
@@ -348,6 +361,69 @@ class StaffController extends ActiveController
 
             return $model->getErrors();
         }
+    }
+
+    /**
+     * Return number of users, depending on role of the logged-in staff
+     *
+     * Request: GET /v1/staff/count
+     */
+    public function actionCount()
+    {
+        $roleMap = [
+            User::ROLE_ADMIN => ['level' => 'all', 'name' => 'Semua'],
+            User::ROLE_STAFF_PROV => ['level' => 'prov', 'name' => 'Provinsi'],
+            User::ROLE_STAFF_KABKOTA => ['level' => 'kabkota', 'name' => 'Kabupaten/Kota'],
+            User::ROLE_STAFF_KEC => ['level' => 'kec', 'name' => 'Kecamatan'],
+            User::ROLE_STAFF_KEL => ['level' => 'kel', 'name' => 'Kelurahan'],
+            User::ROLE_STAFF_RW => ['level' => 'rw', 'name' => 'RW'],
+        ];
+
+        $currentUser = User::findIdentity(\Yii::$app->user->getId());
+        $kabkota_id = $currentUser->kabkota_id;
+        $kel_id = $currentUser->kel_id;
+        $kec_id = $currentUser->kec_id;
+        $rw = $currentUser->rw;
+        $role = $currentUser->role;
+
+        // Admin will get all user counts, while staffs below admin will get user counts only from areas below them
+        $items = [];
+        $index = 1;
+        foreach ($roleMap as $key => $value) {
+            if ($role == User::ROLE_ADMIN ||
+                $role < User::ROLE_ADMIN && $key < $role
+            ) {
+                $query = User::find();
+                if ($key < User::ROLE_ADMIN) {
+                    $query->where(['role' => $key]);
+                }
+
+                // filter by area (for staffProv and below)
+                if ($kabkota_id) {
+                    $query->andWhere(['kabkota_id' => $kabkota_id]);
+                }
+                if ($kec_id) {
+                    $query->andWhere(['kec_id' => $kec_id]);
+                }
+                if ($kel_id) {
+                    $query->andWhere(['kel_id' => $kel_id]);
+                }
+                if ($rw) {
+                    $query->andWhere(['rw' => $rw]);
+                }
+
+                $count = $query->count();
+                array_push($items, [
+                    'id' => $index,
+                    'level' => $value['level'],
+                    'name' => $value['name'],
+                    'value' => (int) $count,
+                ]);
+                $index++;
+            }
+        }
+
+        return ['items' => $items];
     }
 
     /**
@@ -396,6 +472,42 @@ class StaffController extends ActiveController
         }
 
         return $tmpPermissions;
+    }
+
+    public function actionPhotoUpload()
+    {
+        /**
+         * @var \yii2tech\filestorage\BucketInterface $bucket
+         */
+        $bucket = Yii::$app->fileStorage->getBucket('imageFiles');
+
+        $imageProcessor = new ImageManager();
+        $model = new UserPhotoUploadForm();
+
+        $model->setBucket($bucket);
+        $model->setImageProcessor($imageProcessor);
+
+        $model->image = UploadedFile::getInstanceByName('image');
+
+        if (! $model->validate()) {
+            $response = Yii::$app->getResponse();
+            $response->setStatusCode(422);
+
+            return $model->getErrors();
+        }
+
+        if ($model->upload()) {
+            $relativePath = $model->getRelativeFilePath();
+
+            $responseData = [
+                'photo_url' => $bucket->getFileUrl($relativePath),
+            ];
+
+            return $responseData;
+        }
+
+        $response = Yii::$app->getResponse();
+        $response->setStatusCode(400);
     }
 
     /**

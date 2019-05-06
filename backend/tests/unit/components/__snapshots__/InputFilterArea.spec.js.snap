@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`List Filter renders the component 1`] = `
+<div>
+  <el-row-stub tag="div" gutter="10" justify="start" align="top">
+    <!---->
+    <!---->
+    <!---->
+  </el-row-stub>
+</div>
+`;
