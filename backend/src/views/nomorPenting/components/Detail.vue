@@ -41,7 +41,9 @@
             <ListPhoneNumber v-model="form.phone_numbers" />
           </el-form-item>
 
-          <el-form-item label="Koordinat Lokasi" />
+          <el-form-item label="Koordinat Lokasi">
+            <InputMap v-model="form.coordinates"></InputMap>
+          </el-form-item>
 
           <el-form-item>
             <el-button type="primary">{{ $t('crud.create') }}</el-button>
@@ -57,6 +59,8 @@
 import { fetchRecord } from '@/api/phonebooks'
 
 import InputSelectArea from '@/components/InputSelectArea'
+import InputMap from '@/components/InputMap'
+
 import ListPhoneNumber from './ListPhoneNumber'
 
 const defaultForm = {
@@ -67,12 +71,14 @@ const defaultForm = {
   kec_id: null,
   kel_id: null,
   seq: null,
-  phone_numbers: []
+  phone_numbers: [],
+  coordinates: [110, 90]
 }
 
 export default {
   components: {
     InputSelectArea,
+    InputMap,
     ListPhoneNumber
   },
   props: {
@@ -107,6 +113,10 @@ export default {
     fetchData(id) {
       fetchRecord(id).then(response => {
         this.form = response.data
+
+        const { latitude, longitude } = response.data
+
+        this.form.coordinates = [latitude, longitude]
       }).catch(err => {
         console.log(err)
       })
