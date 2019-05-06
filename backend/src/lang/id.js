@@ -14,6 +14,15 @@ export default {
     'nomor-penting-edit': 'Edit Nomor Penting'
   },
   crud: {
+    'create': 'Simpan',
+    'update': 'Simpan',
+    'delete': 'Hapus',
+    'cancel': 'Batal',
+    'back': 'Kembali',
+
+    'insert-row': 'Tambah Baris Baru',
+    'delete-row': 'Hapus',
+
     'user-activate-confirm': 'Anda yakin ingin mengaktifkan pengguna ini?',
     'user-deactivate-confirm': 'Anda yakin ingin menonaktifkan pengguna ini?',
     'user-activate-success': 'Pengguna berhasil diaktifkan.',

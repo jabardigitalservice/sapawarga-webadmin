@@ -15,11 +15,15 @@
             <el-input v-model="form.address" />
           </el-form-item>
 
-          <el-form-item label="Deskripsi">
+          <el-form-item label="Kategori Instansi" required />
+
+          <el-form-item label="Deskripsi" required>
             <el-input v-model="form.description" type="textarea" rows="5" />
           </el-form-item>
 
-          <el-form-item label="Wilayah">
+          <el-form-item label="Call Center" />
+
+          <el-form-item label="Wilayah" required>
             <InputSelectArea
               :kabkota-id="form.kabkota_id"
               :kec-id="form.kec_id"
@@ -30,13 +34,15 @@
             />
           </el-form-item>
 
-          <el-form-item label="Nomor Telepon">
+          <el-form-item label="Nomor Telepon" required>
             <ListPhoneNumber v-model="form.phone_numbers" />
           </el-form-item>
 
+          <el-form-item label="Koordinat Lokasi" />
+
           <el-form-item>
-            <el-button type="primary">Create</el-button>
-            <el-button>Cancel</el-button>
+            <el-button type="primary">{{ $t('crud.create') }}</el-button>
+            <el-button>{{ $t('crud.cancel') }}</el-button>
           </el-form-item>
         </el-form>
       </el-col>
