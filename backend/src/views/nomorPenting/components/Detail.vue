@@ -74,6 +74,7 @@ const defaultForm = {
   kabkota_id: null,
   kec_id: null,
   kel_id: null,
+  meta: null,
   seq: null,
   phone_numbers: [],
   coordinates: [null, null]
@@ -153,9 +154,13 @@ export default {
     },
 
     async submitForm() {
-      const valid = this.$refs.form.validate()
+      const valid = await this.$refs.form.validate()
 
       console.log(valid)
+
+      if (!valid) {
+        return
+      }
 
       const data = {}
 

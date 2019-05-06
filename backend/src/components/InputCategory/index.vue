@@ -20,13 +20,13 @@ export default {
     return {
       options: [{
         value: 1,
-        label: 'Option1'
+        label: 'Kesehatan'
       }, {
         value: 2,
-        label: 'Option2'
+        label: 'Ekonomi'
       }, {
         value: 3,
-        label: 'Option3'
+        label: 'Keamanan'
       }],
       selected: null
     }
