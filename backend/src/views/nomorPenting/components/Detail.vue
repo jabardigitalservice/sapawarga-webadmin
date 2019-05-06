@@ -8,35 +8,30 @@
       <el-col :span="19">
         <el-form ref="form" :model="form" label-width="160px">
           <el-form-item label="Nama Instansi" required>
-            <el-input v-model="form.name"></el-input>
+            <el-input v-model="form.name" />
           </el-form-item>
 
           <el-form-item label="Alamat Instansi">
-            <el-input v-model="form.address"></el-input>
+            <el-input v-model="form.address" />
           </el-form-item>
 
           <el-form-item label="Deskripsi">
-            <el-input type="textarea" v-model="form.description" rows="5"></el-input>
+            <el-input v-model="form.description" type="textarea" rows="5" />
           </el-form-item>
 
           <el-form-item label="Wilayah">
             <InputSelectArea
-                :kabkota-id="form.kabkota_id"
-                :kec-id="form.kec_id"
-                :kel-id="form.kel_id"
-                @changeKabkota="form.kabkota_id = $event"
-                @changeKecamatan="form.kec_id = $event"
-                @changeKelurahan="form.kel_id = $event"
-            ></InputSelectArea>
+              :kabkota-id="form.kabkota_id"
+              :kec-id="form.kec_id"
+              :kel-id="form.kel_id"
+              @changeKabkota="form.kabkota_id = $event"
+              @changeKecamatan="form.kec_id = $event"
+              @changeKelurahan="form.kel_id = $event"
+            />
           </el-form-item>
 
           <el-form-item label="Nomor Telepon">
-            <el-row v-for="row in form.phone_numbers" :key="row">
-              <el-col :span="5">Telepon</el-col>
-              <el-col :span="5">{{ row.phone_number }}</el-col>
-              <el-col :span="5">{{ row.type }}</el-col>
-              <el-col :span="5">Hapus</el-col>
-            </el-row>
+            <ListPhoneNumber v-model="form.phone_numbers" />
           </el-form-item>
 
           <el-form-item>
@@ -53,6 +48,7 @@
 import { fetchRecord } from '@/api/phonebooks'
 
 import InputSelectArea from '@/components/InputSelectArea'
+import ListPhoneNumber from './ListPhoneNumber'
 
 const defaultForm = {
   name: null,
@@ -75,7 +71,8 @@ const defaultForm = {
 
 export default {
   components: {
-    InputSelectArea
+    InputSelectArea,
+    ListPhoneNumber
   },
   props: {
     isEdit: {
@@ -116,7 +113,7 @@ export default {
 
     submitForm() {
       //
-    },
+    }
   }
 }
 </script>

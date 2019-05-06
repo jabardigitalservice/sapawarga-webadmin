@@ -87,7 +87,7 @@ export default {
     kelId: {
       type: Number,
       default: null
-    },
+    }
   },
 
   data() {
