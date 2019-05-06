@@ -4,8 +4,8 @@
       v-if="items.length === 0"
       :title="$t('crud.list-empty')"
       type="warning"
-      show-icon>
-    </el-alert>
+      show-icon
+    />
 
     <div class="clearfix" />
 

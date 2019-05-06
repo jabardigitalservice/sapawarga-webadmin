@@ -42,7 +42,7 @@
           </el-form-item>
 
           <el-form-item label="Koordinat Lokasi">
-            <InputMap v-model="form.coordinates"></InputMap>
+            <InputMap v-model="form.coordinates" />
           </el-form-item>
 
           <el-form-item>
@@ -72,7 +72,7 @@ const defaultForm = {
   kel_id: null,
   seq: null,
   phone_numbers: [],
-  coordinates: [110, 90]
+  coordinates: [null, null]
 }
 
 export default {
