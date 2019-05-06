@@ -6,22 +6,22 @@
         Gambar
       </el-col>
       <el-col :span="19">
-        <el-form ref="form" :model="form" label-width="160px">
-          <el-form-item label="Nama Instansi" required>
+        <el-form ref="form" :model="form" :rules="rules" label-width="160px">
+          <el-form-item label="Nama Instansi" prop="name" required>
             <el-input v-model="form.name" />
           </el-form-item>
 
-          <el-form-item label="Alamat Instansi">
+          <el-form-item label="Alamat Instansi" prop="address">
             <el-input v-model="form.address" />
           </el-form-item>
 
-          <el-form-item label="Kategori Instansi" required />
+          <el-form-item label="Kategori Instansi" required prop="category_id" />
 
-          <el-form-item label="Deskripsi" required>
-            <el-input v-model="form.description" type="textarea" rows="5" />
+          <el-form-item label="Deskripsi">
+            <el-input v-model="form.description" type="textarea" rows="5" prop="description" />
           </el-form-item>
 
-          <el-form-item label="Call Center" required>
+          <el-form-item label="Call Center" required prop="seq">
             <el-radio v-model="form.seq" :label="1000">Ya</el-radio>
             <el-radio v-model="form.seq" :label="1">Tidak</el-radio>
           </el-form-item>
@@ -37,16 +37,16 @@
             />
           </el-form-item>
 
-          <el-form-item label="Nomor Telepon" required>
+          <el-form-item label="Nomor Telepon" required prop="phone_numbers">
             <ListPhoneNumber v-model="form.phone_numbers" />
           </el-form-item>
 
-          <el-form-item label="Koordinat Lokasi">
+          <el-form-item label="Koordinat Lokasi" prop="coordinates">
             <InputMap v-model="form.coordinates" />
           </el-form-item>
 
           <el-form-item>
-            <el-button type="primary">{{ $t('crud.create') }}</el-button>
+            <el-button type="primary" @click="submitForm">{{ $t('crud.create') }}</el-button>
             <el-button>{{ $t('crud.cancel') }}</el-button>
           </el-form-item>
         </el-form>
@@ -67,6 +67,7 @@ const defaultForm = {
   name: null,
   address: null,
   description: null,
+  category_id: null,
   kabkota_id: null,
   kec_id: null,
   kel_id: null,
@@ -91,9 +92,34 @@ export default {
     return {
       form: Object.assign({}, defaultForm),
       loading: false,
-      userListOptions: [],
       rules: {
-        //
+        name: [
+          { required: true, message: 'Nama Instansi harus diisi.', trigger: 'blur' }
+        ],
+        address: [
+          //
+        ],
+        category_id: [
+          { required: true, message: 'Kategori Instansi harus diisi.', trigger: 'blur' }
+        ],
+        description: [
+          //
+        ],
+        seq: [
+          { required: true, message: 'Call Center harus diisi.', trigger: 'blur' }
+        ],
+        kabkota_id: [
+          { required: true, message: 'Kabupaten/Kota harus diisi.', trigger: 'blur' }
+        ],
+        kec_id: [
+          { required: true, message: 'Kecamatan harus diisi.', trigger: 'blur' }
+        ],
+        kel_id: [
+          { required: true, message: 'Kelurahan harus diisi.', trigger: 'blur' }
+        ],
+        phone_numbers: [
+          { required: true, message: 'Nomor Telepon harus diisi.', trigger: 'blur' }
+        ]
       },
       tempRoute: {}
     }
@@ -122,8 +148,10 @@ export default {
       })
     },
 
-    submitForm() {
-      //
+    async submitForm() {
+      const valid = this.$refs.form.validate()
+
+      console.log(valid)
     }
   }
 }
