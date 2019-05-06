@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import { fetchRecord } from '@/api/phonebooks'
+import { fetchRecord, create, update } from '@/api/phonebooks'
 
 import InputSelectArea from '@/components/InputSelectArea'
 import InputMap from '@/components/InputMap'
@@ -156,6 +156,18 @@ export default {
       const valid = this.$refs.form.validate()
 
       console.log(valid)
+
+      const data = {}
+
+      Object.assign(data, this.form)
+
+      if (this.isEdit) {
+        const id = this.$route.params && this.$route.params.id
+
+        await update(id, data)
+      } else {
+        await create(data)
+      }
     }
   }
 }

@@ -34,3 +34,19 @@ export function deactivate(id) {
     }
   })
 }
+
+export function create(data) {
+  return request({
+    url: '/phone-books',
+    method: 'post',
+    data
+  })
+}
+
+export function update(id, data) {
+  return request({
+    url: `/phone-books/${id}`,
+    method: 'put',
+    data
+  })
+}
