@@ -4,6 +4,8 @@ namespace app\commands;
 
 use app\models\Area;
 use app\models\PhoneBook;
+use app\models\category\PhoneBookCategory;
+use app\models\category\BroadcastCategory;
 use tebazil\yii2seeder\Seeder;
 use Yii;
 use yii\console\Controller;
@@ -47,7 +49,7 @@ class SeederController extends Controller
     {
         Yii::$app->db->createCommand('TRUNCATE categories')->execute();
 
-        $typePhonebook = 'phonebook';
+        $typePhonebook = PhoneBookCategory::TYPE;
         Yii::$app->db->createCommand()->batchInsert('categories', [
             'type',
             'name',
@@ -79,6 +81,37 @@ class SeederController extends Controller
             [
                 $typePhonebook,
                 'Transportasi',
+                10,
+                time(),
+                time(),
+            ],
+        ])->execute();
+
+        $typeBroadcast = BroadcastCategory::TYPE;
+        Yii::$app->db->createCommand()->batchInsert('categories', [
+            'type',
+            'name',
+            'status',
+            'created_at',
+            'updated_at',
+        ], [
+            [
+                $typeBroadcast,
+                'Sistem',
+                10,
+                time(),
+                time(),
+            ],
+            [
+                $typeBroadcast,
+                'Sosialisasi',
+                10,
+                time(),
+                time(),
+            ],
+            [
+                $typeBroadcast,
+                'Berita Hoax',
                 10,
                 time(),
                 time(),
