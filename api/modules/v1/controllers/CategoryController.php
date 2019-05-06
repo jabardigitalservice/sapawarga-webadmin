@@ -4,7 +4,7 @@ namespace app\modules\v1\controllers;
 
 use app\filters\auth\HttpBearerAuth;
 use app\models\Category;
-use app\models\User;
+use app\models\CategorySearch;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\auth\CompositeAuth;
@@ -80,5 +80,19 @@ class CategoryController extends ActiveController
         ];
 
         return $behaviors;
+    }
+
+    public function actions()
+    {
+        $actions = parent::actions();
+        $actions['index']['prepareDataProvider'] = [$this, 'prepareDataProvider'];
+        return $actions;
+    }
+
+    public function prepareDataProvider()
+    {
+        $search = new CategorySearch();
+
+        return $search->search(\Yii::$app->request->getQueryParams());
     }
 }
