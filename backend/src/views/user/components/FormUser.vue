@@ -26,8 +26,7 @@
           class="demo-ruleForm"
           :rules="rules"
         >
-
-          <el-form-item label="Username" prop="username" >
+          <el-form-item label="Username" prop="username">
             <el-input v-model="user.username" type="text" :disabled="isEdit" />
           </el-form-item>
           <el-form-item label="Nama Lengkap" prop="name">
@@ -59,7 +58,7 @@
                     :key="item.value"
                     :value="item.value"
                     :label="item.label"
-                  ></el-option>
+                  >{{ item.label }}</el-option>
                 </el-select>
               </el-form-item>
             </el-col>
@@ -72,8 +71,8 @@
                 <el-select
                   v-model="user.kabkota"
                   placeholder="Pilih Kab/Kota"
-                  @change="getKecamatan"
                   :disabled="isEdit"
+                  @change="getKecamatan"
                 >
                   <el-option
                     v-for="item in area"
@@ -97,8 +96,6 @@
                   placeholder="Pilih Kecamatan"
                   :disabled="(user.kabkota == '' && checkPermission(['admin', 'staffProv']) || isEdit)"
                   @change="getKelurahan"
-
-
                 >
                   <el-option
                     v-for="item in kecamatan"
@@ -218,10 +215,10 @@ export default {
       }
     }
     const validatePass = (rule, value, callback) => {
-        if (this.user.confirmation !== '') {
-          this.$refs.user.validateField('confirmation')
-        }
-        callback()
+      if (this.user.confirmation !== '') {
+        this.$refs.user.validateField('confirmation')
+      }
+      callback()
     }
 
     const checkPassword = (rule, value, callback) => {
@@ -356,7 +353,7 @@ export default {
             trigger: 'blur'
           }
         ],
-        erroremail: [
+        errorEmail: [
           {
             required: true,
             message: 'Alamat email sudah digunakan',
@@ -688,8 +685,7 @@ export default {
         this.user.kecamatan = dataUser.kecamatan.name
         this.user.kelurahan = dataUser.kelurahan.name
         this.user.rw = dataUser.rw
-
-      }).catch(() => {})
+      }).catch()
     },
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
@@ -711,8 +707,8 @@ export default {
             twitter: this.user.twitter,
             instagram: this.user.instagram,
             photo_url: this.user.photo,
-            lat: (this.user.latitude === '-') || (this.user.latitude === '.') || (this.user.latitude === '+') ? null : this.user.latitude,
-            lon: (this.user.longitude === '-') || (this.user.latitude === '.') || (this.user.latitude === '+') ? null : this.user.longitude
+            lat: (this.user.latitude === '-') || (this.user.latitude === '.') || (this.user.latitude === ' + ') ? null : this.user.latitude,
+            lon: (this.user.longitude === '-') || (this.user.latitude === '.') || (this.user.latitude === ' + ') ? null : this.user.longitude
 
           }).then(() => {
             Message({
@@ -755,7 +751,7 @@ export default {
         }
       })
     },
-    updateForm(formName){
+    updateForm(formName) {
       const id = this.$route.params && this.$route.params.id
       this.$refs[formName].validate(valid => {
         if (valid) {
@@ -777,8 +773,8 @@ export default {
             photo_url: this.user.photo,
             lat: (this.user.latitude === '-') || (this.user.latitude === '.') || (this.user.latitude === '+') ? null : this.user.latitude,
             lon: (this.user.longitude === '-') || (this.user.latitude === '.') || (this.user.latitude === '+') ? null : this.user.longitude
-            }, id).then(response => {
-              Message({
+          }, id).then(response => {
+            Message({
               message: 'Pengguna berhasil diperbaharui',
               type: 'success',
               duration: 1 * 1000
@@ -788,38 +784,37 @@ export default {
             }, 1000)
             this.$refs[formName].resetFields()
             this.imageData = 0
-            }).catch(error => {
-              const usernameError = error.response.data.data.username
-              const emailError = error.response.data.data.email
-
-              if (!emailError) {
-                Message({
-                  message: usernameError[0],
-                  type: 'error',
-                  duration: 5 * 1000
-                })
-              } else if (!usernameError) {
-                Message({
-                  message: emailError[0],
-                  type: 'error',
-                  duration: 5 * 1000
-                })
-              } else {
-                Message({
-                  message: 'Username dan email sudah digunakan',
-                  type: 'error',
-                  duration: 5 * 1000
-                })
-              }
-              this.user.email = null
-              this.emailValidation = 'erroremail'
-            })
+          }).catch(error => {
+            const usernameError = error.response.data.data.username
+            const emailError = error.response.data.data.email
+            if (!emailError) {
+              Message({
+                message: usernameError[0],
+                type: 'error',
+                duration: 5 * 1000
+              })
+            } else if (!usernameError) {
+              Message({
+                message: emailError[0],
+                type: 'error',
+                duration: 5 * 1000
+              })
+            } else {
+              Message({
+                message: 'Username dan email sudah digunakan',
+                type: 'error',
+                duration: 5 * 1000
+              })
+            }
+            this.user.email = null
+            this.emailValidation = 'errorEmail'
+          })
         } else {
           return false
         }
       })
     },
-    changePropEmail(){
+    changePropEmail() {
       if (this.emailValidation === 'erroremail') {
         this.emailValidation = 'email'
       } else {
@@ -888,7 +883,7 @@ export default {
       if (this.isEdit) {
         input = this.photo
       }
-      if ( input.files[0]) {
+      if (input.files[0]) {
         // create a new FileReader to read this image and convert to base64 format
         var reader = new FileReader()
         // Define a callback function to run, when FileReader finishes its job
