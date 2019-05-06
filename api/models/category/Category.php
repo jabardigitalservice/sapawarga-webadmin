@@ -28,6 +28,8 @@ class Category extends \yii\db\ActiveRecord
         switch ($row['type']) {
             case PhoneBookCategory::TYPE:
                 return new PhoneBookCategory();
+            case BroadcastCategory::TYPE:
+                return new BroadcastCategory();
             default:
             return new self;
         }
@@ -51,6 +53,7 @@ class Category extends \yii\db\ActiveRecord
             [['type', 'name'], 'trim'],
             [['name', 'meta'], 'safe'],
             [['type', 'name', 'status'], 'required'],
+            ['name', 'validateName'],
             ['status', 'integer'],
         ];
     }
@@ -110,5 +113,34 @@ class Category extends \yii\db\ActiveRecord
                 'value'              => time(),
             ],
         ];
+    }
+
+    /**
+     * Checks if category name has been taken
+     *
+     * @param $attribute
+     * @param $params
+     */
+    public function validateName($attribute, $params)
+    {
+        // get post type - POST or PUT
+        $request = Yii::$app->request;
+
+        if ($request->isPost || $request->isPut) {
+            $existingName = Category::find()
+                ->where(['name' => $this->$attribute])
+                ->andWhere(['type' => $this->type]);
+            if ($request->isPut) {
+                $existingName->andWhere(['!=', 'id', $this->id]);
+            }
+            $existingName = $existingName->count();
+
+            if ($existingName > 0) {
+                $this->addError($attribute, Yii::t('app', 'error.category.taken'));
+            }
+        } else {
+            // unknown request
+            $this->addError($attribute, Yii::t('app', 'Unknown request'));
+        }
     }
 }
