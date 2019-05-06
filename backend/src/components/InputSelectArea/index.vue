@@ -256,8 +256,6 @@ export default {
 
       if (checkPermission(['staffKel'])) {
         this.kelurahan_selected = authUser.kel_id
-
-        this.changeSelection(this.kelurahan_selected, 'changeKelurahan')
       }
     }
   }
