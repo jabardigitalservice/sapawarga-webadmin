@@ -2,16 +2,17 @@
 
 namespace tests\unit\models;
 
-use app\models\category\BroadcastCategory;
+use app\models\category\Category;
 
-class BroadcastCategoryTest extends \Codeception\Test\Unit
+class CategoryTest extends \Codeception\Test\Unit
 {
     public function testValidateFillRequired()
     {
-        $model = new BroadcastCategory();
+        $model = new Category();
 
         $this->assertFalse($model->validate());
 
+        $this->assertTrue($model->hasErrors('type'));
         $this->assertTrue($model->hasErrors('name'));
         $this->assertTrue($model->hasErrors('status'));
         $this->assertFalse($model->hasErrors('meta'));
@@ -19,7 +20,7 @@ class BroadcastCategoryTest extends \Codeception\Test\Unit
 
     public function testNameMaxCharactersValid()
     {
-        $model       = new BroadcastCategory();
+        $model       = new Category();
         $model->name = 'My Name';
 
         $model->validate();
@@ -35,7 +36,7 @@ class BroadcastCategoryTest extends \Codeception\Test\Unit
 
     public function testNameTooLong()
     {
-        $model       = new BroadcastCategory();
+        $model       = new Category();
         $model->name = 'klARBlYBSY2wqkyuIz3t1A8AXUQLTDX1Ij7raxZ89r9H97hFLOCbi36BpCIr3yi5xxxxx';
 
         $model->validate();
@@ -45,15 +46,17 @@ class BroadcastCategoryTest extends \Codeception\Test\Unit
 
     public function testNameNotSafe()
     {
-        $model       = new BroadcastCategory();
+        $model       = new Category();
         $model->name = '<script>alert()</script>';
 
         $model->validate();
+
+        // $this->assertTrue($model->hasErrors('name'));
     }
 
     public function testTypeMaxCharactersValid()
     {
-        $model       = new BroadcastCategory();
+        $model       = new Category();
         $model->type = 'My Type';
 
         $model->validate();
@@ -69,7 +72,7 @@ class BroadcastCategoryTest extends \Codeception\Test\Unit
 
     public function testTypeTooLong()
     {
-        $model       = new BroadcastCategory();
+        $model       = new Category();
         $model->type = 'klARBlYBSY2wqkyuIz3t1A8AXUQLTDX1Ij7raxZ89r9H97hFLOCbi36BpCIr3yi5xxxxx';
 
         $model->validate();
