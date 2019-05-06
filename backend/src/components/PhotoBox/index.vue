@@ -10,7 +10,6 @@
   </el-card>
 </template>
 
-
 <script>
 export default {
   name: 'PhotoBox',
@@ -24,7 +23,7 @@ export default {
       default: '220px'
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
