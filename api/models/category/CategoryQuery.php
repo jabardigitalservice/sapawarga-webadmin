@@ -5,6 +5,9 @@ namespace app\models\category;
 use Yii;
 use yii\db\ActiveQuery;
 
+/**
+ * A helper class for classes that extend Category
+ */
 class CategoryQuery extends ActiveQuery
 {
     public $type;

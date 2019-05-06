@@ -2,7 +2,7 @@
 
 namespace tests\unit\models;
 
-use app\models\PhoneBookCategory;
+use app\models\category\PhoneBookCategory;
 
 class PhoneBookCategoryTest extends \Codeception\Test\Unit
 {
