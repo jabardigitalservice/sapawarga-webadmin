@@ -15,7 +15,9 @@
             <el-input v-model="form.address" />
           </el-form-item>
 
-          <el-form-item label="Kategori Instansi" required prop="category_id" />
+          <el-form-item label="Kategori Instansi" required prop="category_id">
+            <InputCategory v-model="form.category_id"></InputCategory>
+          </el-form-item>
 
           <el-form-item label="Deskripsi">
             <el-input v-model="form.description" type="textarea" rows="5" prop="description" />
@@ -60,6 +62,7 @@ import { fetchRecord } from '@/api/phonebooks'
 
 import InputSelectArea from '@/components/InputSelectArea'
 import InputMap from '@/components/InputMap'
+import InputCategory from '@/components/InputCategory'
 
 import ListPhoneNumber from './ListPhoneNumber'
 
@@ -80,6 +83,7 @@ export default {
   components: {
     InputSelectArea,
     InputMap,
+    InputCategory,
     ListPhoneNumber
   },
   props: {
