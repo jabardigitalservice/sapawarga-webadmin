@@ -78,7 +78,7 @@
                     v-for="item in area"
                     :key="item.id"
                     :value="item"
-                    :label="(user.kabkota.name || 'kosong')"
+                    :label="(user.kabkota.name)"
                   >{{ item.name }}</el-option>
                 </el-select>
               </el-form-item>
@@ -681,10 +681,13 @@ export default {
         this.user.latitude = dataUser.lat
         this.user.longitude = dataUser.lon
         this.user.role = dataUser.role_id
-        this.user.kabkota = dataUser.kabkota.name
-        this.user.kecamatan = dataUser.kecamatan.name
-        this.user.kelurahan = dataUser.kelurahan.name
+        this.user.kabkota = dataUser.kabkota
+        this.user.kecamatan = dataUser.kecamatan
+        this.user.kelurahan = dataUser.kelurahan
         this.user.rw = dataUser.rw
+        this.user.photo = dataUser.photo_url
+
+
       }).catch()
     },
     submitForm(formName) {
@@ -902,8 +905,9 @@ export default {
       formData.append('image', this.image, this.image.name)
       uploadImage(formData).then(response => {
         const link_photo = response.data.photo_url
-        const photo_name = link_photo.substring(link_photo.lastIndexOf('/')+1)
+        const photo_name = link_photo.substring(link_photo.lastIndexOf('/', link_photo.lastIndexOf('/')-1)+1)
         this.user.photo = photo_name
+        console.log(this.user.photo)
       }).catch(error => {
         const image_error = error.response.data.status
         if (image_error === 500) {
