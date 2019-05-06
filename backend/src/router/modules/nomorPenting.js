@@ -43,6 +43,16 @@ const nomorPentingRouter = {
         title: 'nomor-penting-create',
         roles: ['admin']
       }
+    },
+    {
+      name: 'nomor-penting-show',
+      path: 'show/:id',
+      component: () => import('@/views/nomorPenting/show'),
+      hidden: true,
+      meta: {
+        title: 'nomor-penting-show',
+        roles: ['admin']
+      }
     }
   ]
 }
