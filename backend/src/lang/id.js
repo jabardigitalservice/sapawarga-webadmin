@@ -14,6 +14,8 @@ export default {
     'nomor-penting-edit': 'Edit Nomor Penting'
   },
   crud: {
+    'list-empty': 'Belum ada data.',
+
     'create': 'Simpan',
     'update': 'Simpan',
     'delete': 'Hapus',
@@ -22,6 +24,7 @@ export default {
 
     'insert-row': 'Tambah Baris Baru',
     'delete-row': 'Hapus',
+    'delete-row-confirm': 'Anda yakin ingin menghapus data ini?',
 
     'user-activate-confirm': 'Anda yakin ingin mengaktifkan pengguna ini?',
     'user-deactivate-confirm': 'Anda yakin ingin menonaktifkan pengguna ini?',

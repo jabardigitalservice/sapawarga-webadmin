@@ -1,6 +1,14 @@
 <template>
   <div>
+    <el-alert
+      v-if="items.length === 0"
+      :title="$t('crud.list-empty')"
+      type="warning"
+      show-icon>
+    </el-alert>
+
     <div class="clearfix" />
+
     <el-row v-for="(item, index) in items" :key="index" :gutter="15" style="margin-bottom: 15px">
       <el-col :span="5">
         <el-input v-model="item.phone_number" placeholder="Nomor Telepon" />
@@ -52,7 +60,13 @@ export default {
     }
   },
   methods: {
-    removeItem(index) {
+    async removeItem(index) {
+      await this.$confirm(this.$t('crud.delete-row-confirm'), 'Warning', {
+        confirmButtonText: this.$t('common.confirm'),
+        cancelButtonText: this.$t('common.cancel'),
+        type: 'warning'
+      })
+
       this.items.splice(index, 1)
 
       this.$emit('input', this.items)
