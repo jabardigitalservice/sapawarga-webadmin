@@ -2,13 +2,13 @@
 
 namespace tests\unit\models;
 
-use app\models\category\PhoneBookCategory;
+use app\models\category\BroadcastCategory;
 
-class PhoneBookCategoryTest extends \Codeception\Test\Unit
+class BroadcastCategoryTest extends \Codeception\Test\Unit
 {
     public function testValidateFillRequired()
     {
-        $model = new PhoneBookCategory();
+        $model = new BroadcastCategory();
 
         $this->assertFalse($model->validate());
 
@@ -19,7 +19,7 @@ class PhoneBookCategoryTest extends \Codeception\Test\Unit
 
     public function testNameMaxCharactersValid()
     {
-        $model       = new PhoneBookCategory();
+        $model       = new BroadcastCategory();
         $model->name = 'My Name';
 
         $model->validate();
@@ -35,7 +35,7 @@ class PhoneBookCategoryTest extends \Codeception\Test\Unit
 
     public function testNameTooLong()
     {
-        $model       = new PhoneBookCategory();
+        $model       = new BroadcastCategory();
         $model->name = 'klARBlYBSY2wqkyuIz3t1A8AXUQLTDX1Ij7raxZ89r9H97hFLOCbi36BpCIr3yi5xxxxx';
 
         $model->validate();
@@ -45,17 +45,15 @@ class PhoneBookCategoryTest extends \Codeception\Test\Unit
 
     public function testNameNotSafe()
     {
-        $model       = new PhoneBookCategory();
+        $model       = new BroadcastCategory();
         $model->name = '<script>alert()</script>';
 
         $model->validate();
-
-        // $this->assertTrue($model->hasErrors('name'));
     }
 
     public function testTypeMaxCharactersValid()
     {
-        $model       = new PhoneBookCategory();
+        $model       = new BroadcastCategory();
         $model->type = 'My Type';
 
         $model->validate();
@@ -71,7 +69,7 @@ class PhoneBookCategoryTest extends \Codeception\Test\Unit
 
     public function testTypeTooLong()
     {
-        $model       = new PhoneBookCategory();
+        $model       = new BroadcastCategory();
         $model->type = 'klARBlYBSY2wqkyuIz3t1A8AXUQLTDX1Ij7raxZ89r9H97hFLOCbi36BpCIr3yi5xxxxx';
 
         $model->validate();

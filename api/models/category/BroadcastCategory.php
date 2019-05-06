@@ -5,11 +5,11 @@ namespace app\models\category;
 use Yii;
 
 /**
- * This is a child class of model Category, representing categories used by PhoneBook model
+ * This is a child class of model Category, representing categories used by Broadcast model
  */
-class PhoneBookCategory extends Category
+class BroadcastCategory extends Category
 {
-    const TYPE = 'phonebook';
+    const TYPE = 'broadcast';
 
     public function init()
     {
