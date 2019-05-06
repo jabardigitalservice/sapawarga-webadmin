@@ -7,7 +7,7 @@
       <el-col :sm="24" :lg="8" :xl="6" class="grid-content">
         <el-form ref="user" :model="user" :rules="rules">
           <el-form-item label="Photo" prop="photo">
-            <div v-if="imageData.length > 0" class="image-preview">
+            <div class="image-preview">
               <img class="preview" :src="imageData">
             </div>
             <input type="file" class="input-image" accept="image/*" @change="onFileSelected">
@@ -667,9 +667,26 @@ export default {
     fetchData(id) {
       fetchUser(id).then(response => {
         const dataUser = response.data
+        const dataUserPhotoUrl = dataUser.photo_url
+        // const dataUserGetPhotoUrl = dataUser.dataUserPhotoUrl.substring(dataUser.dataUserPhotoUrl.lastIndexOf('/', dataUser.dataUserPhotoUrl.lastIndexOf('/') - 1) + 1)
+        // let urlPhoto = if(dataUserPhotoUrl){
+        // dataUserPhotoUrl.substring(dataUserPhotoUrl.lastIndexOf('/', dataUserPhotoUrl.lastIndexOf('/') - 1 ) + 1)
+        // }
+        let urlPhoto = null
+        if (dataUser.photo_url !== null) {
+          console.log('link foto tidak null')
+          urlPhoto = dataUserPhotoUrl.substring(dataUserPhotoUrl.lastIndexOf('/', dataUserPhotoUrl.lastIndexOf('/') - 1 ) + 1)
+        } else {
+          urlPhoto = dataUser.photo_url
+        }
         // assign to data
-        // this.getKecamatan(dataUser.kabkota_id)
+        this.getKecamatan(dataUser.kabkota_id)
+        this.getKelurahan(dataUser.kec_id)
 
+        this.user.rw = dataUser.rw
+        this.user.rt = dataUser.rt
+        this.user.photo = urlPhoto
+        this.imageData = dataUser.photo_url || this.imageData
         this.user.twitter = dataUser.twitter
         this.user.facebook = dataUser.facebook
         this.user.instagram = dataUser.instagram
@@ -684,12 +701,7 @@ export default {
         this.user.kabkota = dataUser.kabkota
         this.user.kecamatan = dataUser.kecamatan
         this.user.kelurahan = dataUser.kelurahan
-        this.user.rw = dataUser.rw
-        this.user.photo = dataUser.photo_url
-        this.imageData = dataUser.photo_url
         console.log(this.user.photo)
-        console.log(this.user.kelurahan)
-        console.log(this.user.kabkota)
       }).catch()
     },
     submitForm(formName) {
@@ -891,7 +903,7 @@ export default {
         reader.onload = (e) => {
           // Note: arrow function used here, so that "this.imageData" refers to the imageData of Vue component
           // Read image as base64 and set to imageData
-
+          // this.imageData = this.user.photo
           this.imageData = e.target.result
         }
         // Start the reader job - read file as a data url (base64 format)
