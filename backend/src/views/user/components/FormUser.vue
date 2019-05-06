@@ -78,7 +78,7 @@
                     v-for="item in area"
                     :key="item.id"
                     :value="item"
-                    :label="(user.kabkota.name)"
+                    :label="user.kabkota.name"
                   >{{ item.name }}</el-option>
                 </el-select>
               </el-form-item>
@@ -87,7 +87,7 @@
           <el-row>
             <el-col :span="12">
               <el-form-item
-                v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && checkPermission(['admin', 'staffProv', 'staffKabkota']))"
+                v-if="(!(this.user.role == 'admin') && !(this.user.role == 'staffProv') && !(this.user.role == 'staffKabkota') && checkPermission(['admin', 'staffProv', 'staffKabkota']))"
                 label="Kecamatan"
                 prop="kecamatan"
               >
@@ -108,7 +108,7 @@
             </el-col>
             <el-col :span="12" :style="{paddingLeft: formRightSide}">
               <el-form-item
-                v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffKec') && ! checkPermission(['staffKel']))"
+                v-if="(!(this.user.role == 'admin') && !(this.user.role == 'staffProv') && !(this.user.role == 'staffKabkota') && !(this.user.role == 'staffKec') && ! checkPermission(['staffKel']))"
                 label="Kelurahan"
                 prop="kelurahan"
               >
@@ -127,7 +127,7 @@
           <el-row>
             <el-col :span="12">
               <el-form-item
-                v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffKec') && !(user.role == 'staffKel'))"
+                v-if="(!(this.user.role == 'admin') && !(this.user.role == 'staffProv') && !(this.user.role == 'staffKabkota') && !(this.user.role == 'staffKec') && !(user.role == 'staffKel'))"
                 label="RW"
                 prop="rw"
               >
@@ -136,7 +136,7 @@
             </el-col>
             <el-col :span="12" class="form-right-side">
               <el-form-item
-                v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffKec') && !(user.role == 'staffKel'))"
+                v-if="(!(this.user.role == 'admin') && !(this.user.role == 'staffProv') && !(this.user.role == 'staffKabkota') && !(this.user.role == 'staffKec') && !(user.role == 'staffKel'))"
                 label="RT"
                 prop="rt"
               >
@@ -697,7 +697,7 @@ export default {
         this.user.kabkota = dataUser.kabkota
         this.user.kecamatan = dataUser.kecamatan
         this.user.kelurahan = dataUser.kelurahan
-        console.log(this.user.photo)
+        console.log(this.user.role)
       }).catch()
     },
     submitForm(formName) {
@@ -764,27 +764,6 @@ export default {
         }
       })
     },
-    // dataOfEdit(){
-    //   user = {
-    //     username: this.user.username,
-    //     name: this.user.name,
-    //     email: this.user.email,
-    //     password: this.user.confirmation ,
-    //     phone: this.user.phone,
-    //     address: this.user.address,
-    //     role_id: this.user.role,
-    //     kabkota_id: this.user.kabkota.id || this.id_kabkota,
-    //     kec_id: this.user.kecamatan.id || this.id_kec,
-    //     kel_id: this.user.kelurahan.id || this.id_kel,
-    //     rw: this.user.rw,
-    //     facebook: this.user.facebook,
-    //     twitter: this.user.twitter,
-    //     instagram: this.user.instagram,
-    //     photo_url: this.user.photo,
-    //     lat: (this.user.latitude === '-') || (this.user.latitude === '.') || (this.user.latitude === '+') ? null : this.user.latitude,
-    //     lon: (this.user.longitude === '-') || (this.user.latitude === '.') || (this.user.latitude === '+') ? null : this.user.longitude
-    //   }
-    // },
     updateForm(formName) {
       const id = this.$route.params && this.$route.params.id
       this.$refs[formName].validate(valid => {
@@ -796,9 +775,6 @@ export default {
             phone: this.user.phone,
             address: this.user.address,
             role_id: this.user.role,
-            kabkota_id: this.user.kabkota.id || this.id_kabkota,
-            kec_id: this.user.kecamatan.id || this.id_kec,
-            kel_id: this.user.kelurahan.id || this.id_kel,
             rw: this.user.rw,
             facebook: this.user.facebook,
             twitter: this.user.twitter,
@@ -807,9 +783,22 @@ export default {
             lat: (this.user.latitude === '-') || (this.user.latitude === '.') || (this.user.latitude === ' + ') ? null : this.user.latitude,
             lon: (this.user.longitude === '-') || (this.user.latitude === '.') || (this.user.latitude === ' + ') ? null : this.user.longitude
           }
-          if(this.user.confirmation !== ''){
+          if (this.user.confirmation !== ''){
             userEdit['password'] = this.user.confirmation
-            console.log('password berubah')
+          }
+          if (this.user.role == 'staffKabkota') {
+            userEdit['kabkota_id'] = this.user.kabkota.id || this.id_kabkota
+          }
+          if (this.user.role == 'staffKec') {
+            userEdit['kabkota_id'] = this.user.kabkota.id || this.id_kabkota
+            userEdit['kec_id'] = this.user.kecamatan.id || this.id_kec
+
+          }
+          if (this.user.role == 'staffKel') {
+            userEdit['kabkota_id'] = this.user.kabkota.id || this.id_kabkota
+            userEdit['kec_id'] = this.user.kecamatan.id || this.id_kec
+            userEdit['kel_id'] = this.user.kelurahan.id || this.id_kel
+
           }
           editUser(userEdit, id).then(response => {
             Message({

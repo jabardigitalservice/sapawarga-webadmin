@@ -7,7 +7,7 @@ function resolve(dir) {
 }
 
 const name = pkg.name || 'vue-element-admin'; // page title
-const port = 9527; // dev port
+const port = 8080; // dev port
 
 // All configuration item explanations can be find in https://cli.vuejs.org/config/
 module.exports = {
@@ -64,6 +64,7 @@ module.exports = {
     // provide the app's title in webpack's name field, so that
     // it can be accessed in index.html to inject the correct title.
     name: name,
+    devtool: 'source-map',
     resolve: {
       alias: {
         '@': resolve('src')
