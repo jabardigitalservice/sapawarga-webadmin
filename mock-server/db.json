@@ -20,7 +20,7 @@
     },
     {
       "id": 3,
-      "type": "aspiration",
+      "type": "opinion",
       "name": "Infrastruktur",
       "status": 10,
       "status_label": "Aktif",
@@ -29,7 +29,7 @@
     },
     {
       "id": 4,
-      "type": "aspiration",
+      "type": "opinion",
       "name": "Transportasi",
       "status": 10,
       "status_label": "Aktif",
