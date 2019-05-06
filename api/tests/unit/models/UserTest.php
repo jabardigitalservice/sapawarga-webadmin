@@ -47,7 +47,7 @@ class UserTest extends \Codeception\Test\Unit
         );
 
         $this->specify(
-            'username length must be between 4 and 14 characters',
+            'username length must be between 4 and 255 characters',
             function () {
                 // Initialise User model
                 $user = new User();
@@ -62,8 +62,8 @@ class UserTest extends \Codeception\Test\Unit
                 // Verify that validation must be failed
                 $this->assertTrue($user->validate($this->_username));
 
-                // Set username length as 15
-                $user->username = 'abcdefghijklmno';
+                // Set username length as 256
+                $user->username = 'ob3kb6ge1iguezd5wdnhisujr6xg63q7q6moav1l7lc2ffv1mp36z34gil9cgdnxlis7itp6nweui9s9be7sxvr5ffckoqnk9vdkxeznopu6e07som9msbarsyvuzyjv61or7itweqck60gz9y772okdn9p4swvwsxqrwwdc29kilz60dwqdg9omyf1o6ws0eo4i5defxre7xwsgmcie6x52z2o8c6vzmm7rxo09ankebxcysobv2uz8yobuggsc';
                 $this->assertFalse($user->validate($this->_username));
             }
         );

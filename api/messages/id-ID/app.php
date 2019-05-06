@@ -4,20 +4,21 @@
 * Translation map for id-ID, app category
 */
 return [
-    'app.username' => 'Nama pengguna',
+    'app.username' => 'Username',
     'app.email' => 'Email',
-    'app.password' => 'Kata sandi',
+    'app.password' => 'Kata Sandi',
     'app.role' => 'Role',
+    'app.name' => 'Nama Lengkap',
     'app.rt' => 'RT',
     'app.rw' => 'RW',
     'app.kel_id' => 'Kelurahan',
     'app.kec_id' => 'Kecamatan',
     'app.kabkota_id' => 'Kabupaten/Kota',
 
-    'error.login.incorrect' => 'Nama pengguna atau kata sandi salah.',
+    'error.login.incorrect' => 'Username atau kata sandi salah.',
     'error.email.taken' => 'Alamat email sudah digunakan.',
-    'error.username.taken' => 'Nama pengguna sudah digunakan.',
-    'error.username.pattern' => 'Nama pengguna hanya boleh menggunakan karakter alfanumerik huruf kecil, underscore, dan titik.',
+    'error.username.taken' => 'Username sudah digunakan.',
+    'error.username.pattern' => 'Username hanya boleh menggunakan karakter alfanumerik huruf kecil, underscore, dan titik.',
     'error.category.taken' => 'Nama kategori sudah digunakan.',
     'error.role.permission' => 'Anda tidak diperbolehkan untuk melakukan aksi ini.',
 
