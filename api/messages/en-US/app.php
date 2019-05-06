@@ -8,6 +8,7 @@ return [
     'app.email' => 'Email',
     'app.password' => 'Password',
     'app.role' => 'Role',
+    'app.name' => 'Full Name',
     'app.rt' => 'RT',
     'app.rw' => 'RW',
     'app.kel_id' => 'Kelurahan',
