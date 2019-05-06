@@ -269,7 +269,7 @@ export default {
           value: 'staffKec'
         },
         {
-          label: 'Admin kelurahan',
+          label: 'Admin Kelurahan',
           value: 'staffKel'
         },
         {
@@ -668,14 +668,10 @@ export default {
       fetchUser(id).then(response => {
         const dataUser = response.data
         const dataUserPhotoUrl = dataUser.photo_url
-        // const dataUserGetPhotoUrl = dataUser.dataUserPhotoUrl.substring(dataUser.dataUserPhotoUrl.lastIndexOf('/', dataUser.dataUserPhotoUrl.lastIndexOf('/') - 1) + 1)
-        // let urlPhoto = if(dataUserPhotoUrl){
-        // dataUserPhotoUrl.substring(dataUserPhotoUrl.lastIndexOf('/', dataUserPhotoUrl.lastIndexOf('/') - 1 ) + 1)
-        // }
         let urlPhoto = null
         if (dataUser.photo_url !== null) {
           console.log('link foto tidak null')
-          urlPhoto = dataUserPhotoUrl.substring(dataUserPhotoUrl.lastIndexOf('/', dataUserPhotoUrl.lastIndexOf('/') - 1 ) + 1)
+          urlPhoto = dataUserPhotoUrl.substring(dataUserPhotoUrl.lastIndexOf('/', dataUserPhotoUrl.lastIndexOf('/') - 1) + 1)
         } else {
           urlPhoto = dataUser.photo_url
         }
@@ -768,15 +764,35 @@ export default {
         }
       })
     },
+    // dataOfEdit(){
+    //   user = {
+    //     username: this.user.username,
+    //     name: this.user.name,
+    //     email: this.user.email,
+    //     password: this.user.confirmation ,
+    //     phone: this.user.phone,
+    //     address: this.user.address,
+    //     role_id: this.user.role,
+    //     kabkota_id: this.user.kabkota.id || this.id_kabkota,
+    //     kec_id: this.user.kecamatan.id || this.id_kec,
+    //     kel_id: this.user.kelurahan.id || this.id_kel,
+    //     rw: this.user.rw,
+    //     facebook: this.user.facebook,
+    //     twitter: this.user.twitter,
+    //     instagram: this.user.instagram,
+    //     photo_url: this.user.photo,
+    //     lat: (this.user.latitude === '-') || (this.user.latitude === '.') || (this.user.latitude === '+') ? null : this.user.latitude,
+    //     lon: (this.user.longitude === '-') || (this.user.latitude === '.') || (this.user.latitude === '+') ? null : this.user.longitude
+    //   }
+    // },
     updateForm(formName) {
       const id = this.$route.params && this.$route.params.id
       this.$refs[formName].validate(valid => {
         if (valid) {
-          editUser({
+          let userEdit = {
             username: this.user.username,
             name: this.user.name,
             email: this.user.email,
-            password: this.user.confirmation,
             phone: this.user.phone,
             address: this.user.address,
             role_id: this.user.role,
@@ -788,11 +804,16 @@ export default {
             twitter: this.user.twitter,
             instagram: this.user.instagram,
             photo_url: this.user.photo,
-            lat: (this.user.latitude === '-') || (this.user.latitude === '.') || (this.user.latitude === '+') ? null : this.user.latitude,
-            lon: (this.user.longitude === '-') || (this.user.latitude === '.') || (this.user.latitude === '+') ? null : this.user.longitude
-          }, id).then(response => {
+            lat: (this.user.latitude === '-') || (this.user.latitude === '.') || (this.user.latitude === ' + ') ? null : this.user.latitude,
+            lon: (this.user.longitude === '-') || (this.user.latitude === '.') || (this.user.latitude === ' + ') ? null : this.user.longitude
+          }
+          if(this.confirmation !== null){
+            userEdit['password'] = this.user.confirmation
+            console.log('password berubah')
+          }
+          editUser(userEdit, id).then(response => {
             Message({
-              message: 'Pengguna berhasil diperbaharui',
+              message: 'Data user berhasil diupdate',
               type: 'success',
               duration: 1 * 1000
             })
