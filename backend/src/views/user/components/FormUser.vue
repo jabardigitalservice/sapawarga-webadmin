@@ -807,7 +807,7 @@ export default {
             lat: (this.user.latitude === '-') || (this.user.latitude === '.') || (this.user.latitude === ' + ') ? null : this.user.latitude,
             lon: (this.user.longitude === '-') || (this.user.latitude === '.') || (this.user.latitude === ' + ') ? null : this.user.longitude
           }
-          if(this.confirmation !== null){
+          if(this.user.confirmation !== ''){
             userEdit['password'] = this.user.confirmation
             console.log('password berubah')
           }
