@@ -690,7 +690,6 @@ export default {
         console.log(this.user.photo)
         console.log(this.user.kelurahan)
         console.log(this.user.kabkota)
-
       }).catch()
     },
     submitForm(formName) {
@@ -885,10 +884,6 @@ export default {
     // Upload image
     onFileSelected(event) {
       this.image = event.target.files[0]
-      let input = event.target
-      if (this.isEdit) {
-        input = this.photo
-      }
       if (this.image) {
         // create a new FileReader to read this image and convert to base64 format
         var reader = new FileReader()
@@ -909,7 +904,7 @@ export default {
       formData.append('image', this.image, this.image.name)
       uploadImage(formData).then(response => {
         const link_photo = response.data.photo_url
-        const photo_name = link_photo.substring(link_photo.lastIndexOf('/', link_photo.lastIndexOf('/')-1)+1)
+        const photo_name = link_photo.substring(link_photo.lastIndexOf('/', link_photo.lastIndexOf('/') - 1) + 1)
         this.user.photo = photo_name
         console.log(this.user.photo)
       }).catch(error => {
