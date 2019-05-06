@@ -92,7 +92,7 @@ class UserPhotoUploadForm extends Model
     {
         $relativePath = $this->getRelativePath();
         $filename     = $this->createRandomFilename();
-        $extension    = '.jpg';
+        $extension    = 'jpg';
 
         return sprintf('%s/%s.%s', $relativePath, $filename, $extension);
     }

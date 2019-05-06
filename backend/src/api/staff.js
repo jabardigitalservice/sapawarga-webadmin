@@ -89,7 +89,7 @@ export function editUser(data, id) {
 
 export function uploadImage(data) {
   return request({
-    url: 'user/me/photo',
+    url: 'staff/photo',
     method: 'post',
     data
   })

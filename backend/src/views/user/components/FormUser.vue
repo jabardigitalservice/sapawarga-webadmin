@@ -902,8 +902,8 @@ export default {
       formData.append('image', this.image, this.image.name)
       uploadImage(formData).then(response => {
         const link_photo = response.data.photo_url
-        const link_photo_name = link_photo.substring(45, link_photo.length)
-        this.user.photo = link_photo_name
+        const photo_name = link_photo.substring(link_photo.lastIndexOf('/')+1)
+        this.user.photo = photo_name
       }).catch(error => {
         const image_error = error.response.data.status
         if (image_error === 500) {

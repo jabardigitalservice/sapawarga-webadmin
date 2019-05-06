@@ -51,11 +51,11 @@ class UserEditForm extends Model
             ],
 
             ['username', 'trim'],
-            ['username', 'string', 'length' => [4, 14]],
+            ['username', 'string', 'length' => [4, 255]],
             [
                 'username',
                 'match',
-                'pattern' => '/^[a-z0-9_.]{4,14}$/',
+                'pattern' => '/^[a-z0-9_.]{4,255}$/',
                 'message' => Yii::t('app', 'error.username.pattern')
             ],
             [
@@ -112,7 +112,7 @@ class UserEditForm extends Model
             }
 
             // Set all the other fields
-            $excluded_attributes = ['password'];
+            $excluded_attributes = ['password', 'photo_url'];
             $attribute_names = $this->attributes();
             $attribute_names = array_diff($attribute_names, $excluded_attributes);
             foreach ($attribute_names as $name) {

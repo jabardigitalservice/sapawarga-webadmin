@@ -22,6 +22,14 @@
 
           <el-table-column prop="name" sortable="custom" label="Nama Instansi" />
 
+          <el-table-column label="Call Center" width="150px" class-name="status-col">
+            <template slot-scope="{row}">
+              <el-tag :type="row | callCenterFilterTag">
+                {{ row | callCenterFilterLabel }}
+              </el-tag>
+            </template>
+          </el-table-column>
+
           <el-table-column prop="category.name" sortable="custom" label="Kategori" />
 
           <el-table-column prop="phone_numbers" label="Nomor Telepon">
@@ -90,6 +98,18 @@ export default {
         '-1': 'danger'
       }
       return statusMap[status]
+    },
+
+    callCenterFilterTag(row) {
+      const isCallCenter = row.kabkota_id === null && row.kec_id === null && row.kel_id === null
+
+      return isCallCenter ? 'success' : 'info'
+    },
+
+    callCenterFilterLabel(row) {
+      const isCallCenter = row.kabkota_id === null && row.kec_id === null && row.kel_id === null
+
+      return isCallCenter ? 'Ya' : 'Tidak'
     }
   },
   props: {
@@ -107,6 +127,7 @@ export default {
         name: null,
         category_id: null,
         address: null,
+        phone: null,
         sequence: null,
         status: null,
         kabkota_id: null,
