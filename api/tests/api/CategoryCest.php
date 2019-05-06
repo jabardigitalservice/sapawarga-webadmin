@@ -68,7 +68,7 @@ class CategoryCest
     {
         $I->amStaff();
 
-        $I->sendGET(`{$this->endpointCategory}?type=phonebook`);
+        $I->sendGET("{$this->endpointCategory}?type=phonebook");
         $I->canSeeResponseCodeIs(200);
         $I->seeResponseIsJson();
 
@@ -90,7 +90,7 @@ class CategoryCest
     {
         $I->amStaff();
 
-        $I->sendGET(`{$this->endpointCategory}/999`);
+        $I->sendGET("{$this->endpointCategory}/999");
         $I->canSeeResponseCodeIs(404);
         $I->seeResponseIsJson();
 
@@ -104,7 +104,7 @@ class CategoryCest
     {
         $I->amStaff();
 
-        $I->sendGET(`{$this->endpointCategory}/1`);
+        $I->sendGET("{$this->endpointCategory}/1");
         $I->canSeeResponseCodeIs(200);
         $I->seeResponseIsJson();
 
@@ -114,7 +114,7 @@ class CategoryCest
             'data'      => [
                 'id' => 1,
                 'type' => 'phonebook',
-                'name' => 'Layanan Kesehatan',
+                'name' => 'Kesehatan',
                 'status' => 10,
             ]
         ]);
@@ -124,7 +124,7 @@ class CategoryCest
     {
         $I->amStaff();
 
-        $I->sendPUT(`{$this->endpointCategory}/1`, [
+        $I->sendPUT("{$this->endpointCategory}/1", [
             'name' => 'Layanan Kesehatan Edited',
         ]);
 
@@ -141,7 +141,7 @@ class CategoryCest
     {
         $I->amStaff();
 
-        $I->sendDELETE(`{$this->endpointCategory}/1`);
+        $I->sendDELETE("{$this->endpointCategory}/1");
         $I->canSeeResponseCodeIs(204);
     }
 }

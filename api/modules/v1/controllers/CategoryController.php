@@ -3,7 +3,7 @@
 namespace app\modules\v1\controllers;
 
 use app\filters\auth\HttpBearerAuth;
-use app\models\category\BroadcastCategory;
+use app\models\Category;
 use app\models\User;
 use Yii;
 use yii\filters\AccessControl;
@@ -13,11 +13,11 @@ use yii\web\NotFoundHttpException;
 use yii\web\ServerErrorHttpException;
 
 /**
- * BroadcastCategoryController implements the CRUD actions for BroadcastCategory model.
+ * CategoryController implements the CRUD actions for Category model.
  */
-class BroadcastCategoryController extends ActiveController
+class CategoryController extends ActiveController
 {
-    public $modelClass = BroadcastCategory::class;
+    public $modelClass = Category::class;
 
     public function behaviors()
     {
