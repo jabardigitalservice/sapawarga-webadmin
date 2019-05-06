@@ -1,0 +1,62 @@
+<template>
+  <div class="app-container">
+    <el-row :gutter="10">
+      <el-col :sm="24" :lg="8" :xl="6">
+        <PhotoBox :image="imageUrl" :height="height"></PhotoBox>
+      </el-col>
+      <el-col :sm="24" :lg="15" :xl="18">
+        <el-card>
+          <el-table :data="tableData" style="width: 100%">
+            <el-table-column prop="date" label="Nomor Telepon" width="180"></el-table-column>
+            <el-table-column prop="name" label="" width="180"></el-table-column>
+          </el-table>
+        </el-card>
+      </el-col>
+    </el-row>
+  </div>
+</template>
+
+
+<script>
+// TODO: make table dynamic from API
+import PhotoBox from "@/components/PhotoBox";
+
+export default {
+  components: { PhotoBox },
+  data() {
+    return {
+      id: 0,
+      imageUrl: require("@/assets/user.png"),
+      height: "220px",
+      tableData: [
+        {
+          date: "2016-05-03",
+          name: ": Tom"
+        },
+        {
+          date: "2016-05-02",
+          name: ": Tom"
+        },
+        {
+          date: "2016-05-04",
+          name: ": Tom"
+        },
+        {
+          date: "2016-05-01",
+          name: ": Tom"
+        }
+      ]
+    };
+  },
+
+  created() {
+    const id = this.$route.params && this.$route.params.id;
+    this.id = id;
+    console.log(id);
+    //this.fetchData(id);
+  }
+};
+</script>
+
+<style lang="scss" scoped>
+</style>
