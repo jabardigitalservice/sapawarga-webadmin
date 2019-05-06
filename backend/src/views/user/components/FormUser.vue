@@ -4,7 +4,7 @@
     <p class="warn-content">Profile Pengguna</p>
     <el-row :gutter="10">
       <!-- Left colomn -->
-      <el-col :sm="24" :lg="8" :xl="6" class="grid-content" style="background:yellow">
+      <el-col :sm="24" :lg="8" :xl="6" class="grid-content">
         <el-form ref="user" :model="user" :rules="rules">
           <el-form-item label="Photo" prop="photo">
             <div v-if="imageData.length > 0" class="image-preview">
@@ -285,7 +285,7 @@ export default {
       kecamatan: '',
       kelurahan: '',
       image: '',
-      imageData: '',
+      imageData: require('@/assets/user.png'),
       preview: '',
       formRightSide: '10px',
       emailValidation: 'email',
@@ -668,7 +668,7 @@ export default {
       fetchUser(id).then(response => {
         const dataUser = response.data
         // assign to data
-        this.getKecamatan(dataUser.kabkota_id)
+        // this.getKecamatan(dataUser.kabkota_id)
 
         this.user.twitter = dataUser.twitter
         this.user.facebook = dataUser.facebook
@@ -686,7 +686,10 @@ export default {
         this.user.kelurahan = dataUser.kelurahan
         this.user.rw = dataUser.rw
         this.user.photo = dataUser.photo_url
-
+        this.imageData = dataUser.photo_url
+        console.log(this.user.photo)
+        console.log(this.user.kelurahan)
+        console.log(this.user.kabkota)
 
       }).catch()
     },
@@ -886,17 +889,18 @@ export default {
       if (this.isEdit) {
         input = this.photo
       }
-      if (input.files[0]) {
+      if (this.image) {
         // create a new FileReader to read this image and convert to base64 format
         var reader = new FileReader()
         // Define a callback function to run, when FileReader finishes its job
         reader.onload = (e) => {
           // Note: arrow function used here, so that "this.imageData" refers to the imageData of Vue component
           // Read image as base64 and set to imageData
+
           this.imageData = e.target.result
         }
         // Start the reader job - read file as a data url (base64 format)
-        this.preview = reader.readAsDataURL(input.files[0])
+        this.preview = reader.readAsDataURL(this.image)
         this.onUpload()
       }
     },
