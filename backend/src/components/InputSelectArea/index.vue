@@ -7,7 +7,7 @@
           :disabled="enableRolePolicy && ! enableKabkota"
           filterable
           clearable
-          placeholder="Pilih Kabupaten/Kota"
+          placeholder="Semua Kabupaten/Kota"
           style="width: 100%"
           @change="changeSelection($event, 'changeKabkota')"
         >
@@ -28,7 +28,7 @@
           :disabled="(enableRolePolicy && ! enableKecamatan) || kabkota_selected === null"
           filterable
           clearable
-          placeholder="Pilih Kecamatan"
+          placeholder="Semua Kecamatan"
           style="width: 100%"
           @change="changeSelection($event, 'changeKecamatan')"
         >
@@ -49,7 +49,7 @@
           :disabled="(enableRolePolicy && ! enableKelurahan) || kecamatan_selected === null"
           filterable
           clearable
-          placeholder="Pilih Kelurahan"
+          placeholder="Semua Kelurahan"
           style="width: 100%"
           @change="changeSelection($event, 'changeKelurahan')"
         >
