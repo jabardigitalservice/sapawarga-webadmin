@@ -34,8 +34,8 @@
             <el-input v-model="user.name" type="text" />
           </el-form-item>
 
-          <el-form-item label="Email" prop="email">
-            <el-input v-model="user.email" type="email" />
+          <el-form-item label="Email" :prop="emailValidation">
+            <el-input v-model="user.email" type="email" @focus="changePropEmail" />
           </el-form-item>
 
           <el-form-item label="Password" prop="password">
@@ -291,16 +291,9 @@ export default {
       imageData: '',
       preview: '',
       formRightSide: '10px',
+      emailValidation: 'email',
       // validation
       rules: {
-        // coba lagi besok
-        erroremail: [
-          {
-            pattern: /^[a-z0-9_.]+$/,
-            message: 'error',
-            trigger: 'blur'
-          }
-        ],
         username: [
           {
             required: true,
@@ -361,6 +354,13 @@ export default {
             type: 'email',
             message: 'Format email yang Anda masukan salah',
             trigger: 'blur'
+          }
+        ],
+        erroremail: [
+          {
+            required: true,
+            message: 'Alamat email sudah digunakan',
+            trigger: 'change'
           }
         ],
         password: [
@@ -671,7 +671,6 @@ export default {
       fetchUser(id).then(response => {
         const dataUser = response.data
         // assign to data
-        console.log(dataUser)
         this.getKecamatan(dataUser.kabkota_id)
 
         this.user.twitter = dataUser.twitter
@@ -812,13 +811,20 @@ export default {
                   duration: 5 * 1000
                 })
               }
-              // this.user.email = null
-              this.$refs.user.validateField('email')
+              this.user.email = null
+              this.emailValidation = 'erroremail'
             })
         } else {
           return false
         }
       })
+    },
+    changePropEmail(){
+      if (this.emailValidation === 'erroremail') {
+        this.emailValidation = 'email'
+      } else {
+        this.emailValidation = 'email'
+      }
     },
     resetForm(formName) {
       this.$refs[formName].resetFields()
