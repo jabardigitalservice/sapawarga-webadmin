@@ -22,7 +22,7 @@ class SeederController extends Controller
         $this->actionUser();
 
         echo 'Seeding Categories...' . PHP_EOL;
-        $this->actionCategories();
+        $this->actionCategory();
 
         echo 'Seeding Phonebooks...' . PHP_EOL;
         $this->actionPhoneBook();
@@ -45,11 +45,11 @@ class SeederController extends Controller
         Yii::$app->db->createCommand($sql)->execute();
     }
 
-    public function actionCategories()
+    public function actionCategory()
     {
         Yii::$app->db->createCommand('TRUNCATE categories')->execute();
 
-        $typePhonebook = PhoneBookCategory::TYPE;
+        $typePhonebook = 'phonebook';
         Yii::$app->db->createCommand()->batchInsert('categories', [
             'type',
             'name',
@@ -87,7 +87,7 @@ class SeederController extends Controller
             ],
         ])->execute();
 
-        $typeBroadcast = BroadcastCategory::TYPE;
+        $typeBroadcast = 'broadcast';
         Yii::$app->db->createCommand()->batchInsert('categories', [
             'type',
             'name',
