@@ -48,4 +48,48 @@ class BroadcastTest extends \Codeception\Test\Unit
         $this->assertFalse($model->hasErrors('kel_id'));
         $this->assertFalse($model->hasErrors('rw'));
     }
+
+    public function testTitleTooLong()
+    {
+        $model        = new Broadcast();
+        $model->title = 'l5WdQPtZ8J6pEf1vZl2eynOuFP4g8qHXXeyYvE4h0y72QCesFoSyQUGqmVKpbv3tqeqITczwX1DLIFKdX6CjrCoNbJiOGQXzaDhRB5Q45wtPl9OaZDa6dz4jzk58GsXQfAiihEGd9nKCudaoXSBqxf2AITfSlAJ0kH2KaikUBOLrMHniFBPbIs2byQTPVqQ8FbwfJoxjJyga4oSHxPQlDVdgb9DQ1LI3fIMklRHc4itLdlsmOWBxcEVw47nPoIQ6';
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('title'));
+    }
+
+    public function testTitleMaxCharactersValid()
+    {
+        $model        = new Broadcast();
+        $model->title = 'Broadcast Title';
+        $model->validate();
+
+        $this->assertFalse($model->hasErrors('title'));
+
+        $model->title = 'l5WdQPtZ8J6pEf1vZl2eynOuFP4g8qHXXeyYvE4h0y72QCesFoSyQUGqmVKpbv3tqeqITczwX1DLIFKdX6CjrCoNbJiOGQXzaDhRB5Q45wtPl9OaZDa6dz4jzk58GsXQfAiihEGd9nKCudaoXSBqxf2AITfSlAJ0kH2KaikUBOLrMHniFBPbIs2byQTPVqQ8FbwfJoxjJyga4oSHxPQlDVdgb9DQ1LI3fIMklRHc4itLdlsmOWBxcEVw47nPoIQ';
+        $model->validate();
+
+        $this->assertFalse($model->hasErrors('title'));
+    }
+
+    public function testRWValidation()
+    {
+        $model       = new Broadcast();
+        $model->rw   = '1';
+        $model->validate();
+        $this->assertTrue($model->hasErrors('rw'));
+
+        $model->rw   = '0001';
+        $model->validate();
+        $this->assertTrue($model->hasErrors('rw'));
+
+        $model->rw   = '_a1A.';
+        $model->validate();
+        $this->assertTrue($model->hasErrors('rw'));
+
+        $model->rw   = '001';
+        $model->validate();
+        $this->assertFalse($model->hasErrors('rw'));
+    }
 }

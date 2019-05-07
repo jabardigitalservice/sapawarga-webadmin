@@ -21,6 +21,7 @@ return [
     'error.username.pattern' => 'Username hanya boleh menggunakan karakter alfanumerik huruf kecil, underscore, dan titik.',
     'error.category.taken' => 'Nama kategori sudah digunakan.',
     'error.role.permission' => 'Anda tidak diperbolehkan untuk melakukan aksi ini.',
+    'error.rw.pattern' => 'RW harus terdiri dari 3 karakter dan hanya boleh menggunakan karakter numerik (0-9).',
 
     'role.admin' => 'Administrator',
     'role.staffProv' => 'Staf Provinsi',

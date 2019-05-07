@@ -53,9 +53,16 @@ class Broadcast extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'rw'], 'string'],
-            [['title', 'description', 'meta'], 'trim'],
             [['title', 'status'], 'required'],
+            [['title', 'description', 'rw', 'meta'], 'trim'],
+            ['title', 'string', 'max' => 255],
+            ['rw', 'string', 'length' => 3],
+            [
+                'rw',
+                'match',
+                'pattern' => '/^[0-9]{3}$/',
+                'message' => Yii::t('app', 'error.rw.pattern')
+            ],
             [['author_id', 'category_id', 'kabkota_id', 'kec_id', 'kel_id', 'status'], 'integer'],
         ];
     }
