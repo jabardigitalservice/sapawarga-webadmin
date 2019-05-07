@@ -590,5 +590,8 @@
       "created_at": 1556079159,
       "updated_at": 1556079159
     }
-  ]
+  ],
+  "upload": {
+    "photo_url": "http://103.122.5.71/api/storage/image/avatars/Lv9rvmvCMHt09yEbd30ggPl4cR81UJcH.jpg"
+  }
 }

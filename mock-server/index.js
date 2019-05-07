@@ -1,7 +1,7 @@
 const jsonServer = require('json-server')
 const server = jsonServer.create()
 const router = jsonServer.router('db.json')
-const middlewares = jsonServer.defaults()
+const middlewares = jsonServer.defaults({noCors: true})
 
 router.render = (req, res) => {
   if (Array.isArray(res.locals.data)) {
@@ -70,7 +70,8 @@ server.use(jsonServer.rewriter({
   '/api/v1/aspirasi': '/aspirasi',
   '/api/v1/aspirasi/:id': '/aspirasi/:id',
   '/api/v1/broadcast': '/broadcast',
-  '/api/v1/broadcast/:id': '/broadcast/:id'
+  '/api/v1/broadcast/:id': '/broadcast/:id',
+  '/api/v1/upload': '/upload',
 }))
 
 server.use(middlewares)
