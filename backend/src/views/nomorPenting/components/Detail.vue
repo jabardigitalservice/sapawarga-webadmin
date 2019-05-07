@@ -48,7 +48,7 @@
           </el-form-item>
 
           <el-form-item>
-            <el-button type="primary" @click="submitForm">{{ isEdit ? $t('crud.save-update') : $t('crud.save-create') }}</el-button>
+            <el-button type="primary" @click="submitForm" :loading="loading">{{ isEdit ? $t('crud.save-update') : $t('crud.save-create') }}</el-button>
             <el-button>{{ $t('crud.cancel') }}</el-button>
           </el-form-item>
         </el-form>
@@ -187,19 +187,27 @@ export default {
         return
       }
 
-      const data = {}
+      try {
+        this.loading = true
 
-      Object.assign(data, this.form)
+        const data = {}
 
-      data.latitude = this.coordinates[0]
-      data.longitude = this.coordinates[1]
+        Object.assign(data, this.form)
 
-      if (this.isEdit) {
-        const id = this.$route.params && this.$route.params.id
+        data.latitude = this.coordinates[0]
+        data.longitude = this.coordinates[1]
 
-        await update(id, data)
-      } else {
-        await create(data)
+        if (this.isEdit) {
+          const id = this.$route.params && this.$route.params.id
+
+          await update(id, data)
+        } else {
+          await create(data)
+        }
+      } catch (e) {
+        console.log(e)
+      } finally {
+        this.loading = false
       }
     }
   }
