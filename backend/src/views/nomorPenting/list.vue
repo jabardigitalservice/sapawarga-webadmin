@@ -34,7 +34,7 @@
 
           <el-table-column prop="phone_numbers" label="Nomor Telepon">
             <template slot-scope="{row}">
-              <div v-html="showPhoneNumbers(row.phone_numbers)"></div>
+              <div v-html="showPhoneNumbers(row.phone_numbers)" />
             </template>
           </el-table-column>
 

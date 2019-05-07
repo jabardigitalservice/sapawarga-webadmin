@@ -41,9 +41,9 @@ const mutations = {
     state.roles_active = data
   },
   SET_AREA: (state, data) => {
-    state.kel_id = data.kel_id
-    state.kec_id = data.kec_id
-    state.kabkota_id = data.kabkota_id
+    state.kel_id = parseInt(data.kel_id) || null // @TODO perbaiki dari API
+    state.kec_id = parseInt(data.kec_id) || null
+    state.kabkota_id = parseInt(data.kabkota_id) || null
     state.kabkota = data.kabkota
     state.kecamatan = data.kecamatan
     state.kelurahan = data.kelurahan
