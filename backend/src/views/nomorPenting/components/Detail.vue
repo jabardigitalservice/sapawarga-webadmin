@@ -49,7 +49,9 @@
 
           <el-form-item>
             <el-button type="primary" @click="submitForm" :loading="loading">{{ isEdit ? $t('crud.save-update') : $t('crud.save-create') }}</el-button>
-            <el-button>{{ $t('crud.cancel') }}</el-button>
+            <router-link :to="'/nomor-penting/index'">
+              <el-button>{{ $t('crud.cancel') }}</el-button>
+            </router-link>
           </el-form-item>
         </el-form>
       </el-col>
