@@ -4,6 +4,7 @@ namespace app\modules\v1\controllers;
 
 use app\filters\auth\HttpBearerAuth;
 use app\models\Broadcast;
+use app\models\BroadcastSearch;
 use app\models\User;
 use Yii;
 use yii\filters\AccessControl;
