@@ -16,7 +16,7 @@
           </el-form-item>
 
           <el-form-item label="Kategori Instansi" prop="category_id">
-            <InputCategory category-type="phonebook" v-model="form.category_id"></InputCategory>
+            <InputCategory v-model="form.category_id" category-type="phonebook" />
           </el-form-item>
 
           <el-form-item label="Deskripsi">
@@ -48,7 +48,7 @@
           </el-form-item>
 
           <el-form-item>
-            <el-button type="primary" @click="submitForm" :loading="loading">{{ isEdit ? $t('crud.save-update') : $t('crud.save-create') }}</el-button>
+            <el-button type="primary" :loading="loading" @click="submitForm">{{ isEdit ? $t('crud.save-update') : $t('crud.save-create') }}</el-button>
             <router-link :to="'/nomor-penting/index'">
               <el-button>{{ $t('crud.cancel') }}</el-button>
             </router-link>

@@ -3,7 +3,7 @@
     <el-button size="mini" type="primary" @click="modalAddPhoneNumberVisible = true">{{ $t('crud.insert-row') }}</el-button>
 
     <el-table :data="items" border stripe style="width: 600px">
-      <el-table-column label="Nomor Telepon" prop="phone_number"></el-table-column>
+      <el-table-column label="Nomor Telepon" prop="phone_number" />
       <el-table-column label="Jenis" prop="type">
         <template slot-scope="{ row }">
           {{ row.type === 'phone' ? 'Telepon' : 'Pesan' }}
@@ -16,7 +16,7 @@
       </el-table-column>
     </el-table>
 
-    <ModalAddPhoneNumber :modal-add-phone-number-visible="modalAddPhoneNumberVisible" @save="addItem" @close="closeDialog"></ModalAddPhoneNumber>
+    <ModalAddPhoneNumber :modal-add-phone-number-visible="modalAddPhoneNumberVisible" @save="addItem" @close="closeDialog" />
   </div>
 </template>
 

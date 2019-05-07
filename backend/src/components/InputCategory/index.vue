@@ -4,8 +4,8 @@
       v-for="item in options"
       :key="item.value"
       :label="item.label"
-      :value="item.value">
-    </el-option>
+      :value="item.value"
+    />
   </el-select>
 </template>
 
@@ -14,7 +14,7 @@ import { fetchList } from '@/api/categories'
 
 export default {
   props: {
-    value: {
+    value: { // eslint-disable-line
       required: true
     },
 
@@ -40,6 +40,9 @@ export default {
       immediate: true
     }
   },
+  mounted() {
+    this.getList()
+  },
   methods: {
     async getList() {
       const response = await fetchList(this.listQuery)
@@ -53,9 +56,6 @@ export default {
         }
       })
     }
-  },
-  mounted() {
-    this.getList()
   }
 }
 </script>
