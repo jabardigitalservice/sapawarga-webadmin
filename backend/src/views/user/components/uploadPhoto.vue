@@ -18,7 +18,7 @@ export default {
     return {
       imageData: require('@/assets/user.png'),
       image: '',
-      urlImage: '',
+      urlImage: null,
     }
   },
   methods: {
@@ -47,7 +47,7 @@ export default {
         const photo_name = link_photo.substring(link_photo.lastIndexOf('/', link_photo.lastIndexOf('/') - 1) + 1)
         this.urlImage = photo_name
         console.log(this.urlImage)
-        console.log(response)
+        this.$emit('onUpload', this.urlImage)
       }).catch(error => {
         const image_error = error.response.data.status
         console.log(error.response)

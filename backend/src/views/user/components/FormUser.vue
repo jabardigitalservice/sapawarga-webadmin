@@ -13,7 +13,7 @@
             <input type="file" class="input-image" accept="image/*" @change="onFileSelected">
           </el-form-item>
         </el-form> -->
-        <uploadPhoto />
+        <uploadPhoto v-on:onUpload="getUrlPhoto" />
       </el-col>
 
       <!-- Center colomn -->
@@ -667,6 +667,9 @@ export default {
   },
 
   methods: {
+    getUrlPhoto(url){
+      console.log( 'ini dari form user ' + url)
+    },
     checkPermission,
     fetchData(id) {
       fetchUser(id).then(response => {
