@@ -88,7 +88,7 @@
           <el-row>
             <el-col :span="12">
               <el-form-item
-                v-if="(!(this.user.role == 'admin') && !(this.user.role == 'staffProv') && !(this.user.role == 'staffKabkota') && checkPermission(['admin', 'staffProv', 'staffKabkota']))"
+                v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && checkPermission(['admin', 'staffProv', 'staffKabkota']))"
                 label="Kecamatan"
                 prop="kecamatan"
               >
@@ -109,7 +109,7 @@
             </el-col>
             <el-col :span="12" :style="{paddingLeft: formRightSide}">
               <el-form-item
-                v-if="(!(this.user.role == 'admin') && !(this.user.role == 'staffProv') && !(this.user.role == 'staffKabkota') && !(this.user.role == 'staffKec') && ! checkPermission(['staffKel']))"
+                v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffKec') && ! checkPermission(['staffKel']))"
                 label="Kelurahan"
                 prop="kelurahan"
               >
@@ -128,7 +128,7 @@
           <el-row>
             <el-col :span="12">
               <el-form-item
-                v-if="(!(this.user.role == 'admin') && !(this.user.role == 'staffProv') && !(this.user.role == 'staffKabkota') && !(this.user.role == 'staffKec') && !(user.role == 'staffKel'))"
+                v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffKec') && !(user.role == 'staffKel'))"
                 label="RW"
                 prop="rw"
               >
@@ -137,7 +137,7 @@
             </el-col>
             <el-col :span="12" class="form-right-side">
               <el-form-item
-                v-if="(!(this.user.role == 'admin') && !(this.user.role == 'staffProv') && !(this.user.role == 'staffKabkota') && !(this.user.role == 'staffKec') && !(user.role == 'staffKel'))"
+                v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffKec') && !(user.role == 'staffKel'))"
                 label="RT"
                 prop="rt"
               >
@@ -567,7 +567,7 @@ export default {
           },
           {
             type: 'url',
-            message: 'Tolong masukan url lengkap, contoh: https://www.facebook.com/namapengguna',
+            message: 'Masukan url facebook secara lengkap, contoh: https://www.facebook.com/namapengguna',
             trigger: 'blur'
           }
         ],
@@ -776,7 +776,7 @@ export default {
       const id = this.$route.params && this.$route.params.id
       this.$refs[formName].validate(valid => {
         if (valid) {
-          let userEdit = {
+          const userEdit = {
             name: this.user.name,
             email: this.user.email,
             phone: this.user.phone,
@@ -789,7 +789,7 @@ export default {
             lat: (this.user.latitude === '-') || (this.user.latitude === '.') || (this.user.latitude === ' + ') ? null : this.user.latitude,
             lon: (this.user.longitude === '-') || (this.user.latitude === '.') || (this.user.latitude === ' + ') ? null : this.user.longitude
           }
-          if (this.user.confirmation !== ''){
+          if (this.user.confirmation !== '') {
             userEdit['password'] = this.user.confirmation
           }
           editUser(userEdit, id).then(response => {
@@ -860,7 +860,6 @@ export default {
       this.loading = true
       requestArea().then(response => {
         this.area = response.data.items
-
       })
     },
     getKecamatan() {
@@ -872,7 +871,6 @@ export default {
       }
       requestKecamatan(this.id_kabkota).then(response => {
         this.kecamatan = response.data.items
-
       })
     },
     getKelurahan() {
@@ -884,7 +882,6 @@ export default {
       }
       requestKelurahan(this.id_kec).then(response => {
         this.kelurahan = response.data.items
-
       })
     },
     // Generate password
