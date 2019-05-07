@@ -6,9 +6,12 @@
       </el-col>
       <el-col :sm="24" :lg="16" :xl="18">
         <el-card>
-          <el-table :data="tableData" style="width: 100%">
-            <el-table-column prop="date" label="Nomor Telepon" width="180" />
-            <el-table-column prop="name" label="" width="180" />
+          <div slot="header" class="clearfix">
+            <span>Nomor Telepon</span>
+          </div>
+          <el-table :data="tableData" :show-header="false" style="width: 100%">
+            <el-table-column prop="title" width="180" />
+            <el-table-column prop="content" width="180" />
           </el-table>
         </el-card>
       </el-col>
