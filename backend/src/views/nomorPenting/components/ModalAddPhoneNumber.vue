@@ -2,10 +2,10 @@
   <el-dialog title="Tambah Nomor Telepon" :append-to-body="true" :visible="modalAddPhoneNumberVisible" @closed="modalClosed">
 
     <el-form ref="modal_phone_number" :status-icon="true" :model="form" :rules="rules" label-width="160px">
-      <el-form-item label="Nomor Telepon" prop="phone_number" required>
+      <el-form-item label="Nomor Telepon" prop="phone_number">
         <el-input v-model="form.phone_number" placeholder="Nomor Telepon" autocomplete="off" />
       </el-form-item>
-      <el-form-item label="Jenis" prop="type" required>
+      <el-form-item label="Jenis" prop="type">
         <el-select v-model="form.type" placeholder="Pilih Jenis">
           <el-option label="Telepon" value="phone" />
           <el-option label="Pesan" value="message" />
@@ -37,7 +37,8 @@ export default {
           { required: true, message: 'Jenis harus diisi.', trigger: 'blur' }
         ],
         phone_number: [
-          { required: true, message: 'Nomor Telepon harus diisi.', trigger: 'blur' }
+          { required: true, message: 'Nomor Telepon harus diisi.', trigger: 'blur' },
+          { min: 3, message: 'Nomor Telepon minimal 3 digit.', trigger: 'blur' }
         ]
       }
     }
