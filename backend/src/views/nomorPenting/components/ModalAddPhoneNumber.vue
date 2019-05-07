@@ -34,10 +34,10 @@ export default {
       },
       rules: {
         type: [
-          { required: true, message: 'Jenis', trigger: 'blur' }
+          { required: true, message: 'Jenis harus diisi.', trigger: 'blur' }
         ],
         phone_number: [
-          { required: true, message: 'Nomor Telepon', trigger: 'blur' }
+          { required: true, message: 'Nomor Telepon harus diisi.', trigger: 'blur' }
         ]
       }
     }
