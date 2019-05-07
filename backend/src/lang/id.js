@@ -19,7 +19,7 @@ export default {
     'create': 'Buat Baru',
     'save-create': 'Simpan',
     'update': 'Edit',
-    'save-update': 'Simpan',
+    'save-update': 'Simpan Perubahan',
     'delete': 'Hapus',
     'cancel': 'Batal',
     'back': 'Kembali',

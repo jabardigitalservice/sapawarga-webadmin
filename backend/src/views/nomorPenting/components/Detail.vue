@@ -48,7 +48,7 @@
           </el-form-item>
 
           <el-form-item>
-            <el-button type="primary" @click="submitForm">{{ $t('crud.create') }}</el-button>
+            <el-button type="primary" @click="submitForm">{{ isEdit ? $t('crud.save-update') : $t('crud.save-create') }}</el-button>
             <el-button>{{ $t('crud.cancel') }}</el-button>
           </el-form-item>
         </el-form>
