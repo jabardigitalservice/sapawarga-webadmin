@@ -7,7 +7,7 @@
       </el-col>
       <el-col :span="19">
         <el-form ref="form" :model="form" :rules="rules" label-width="160px">
-          <el-form-item label="Nama Instansi" prop="name" required>
+          <el-form-item label="Nama Instansi" prop="name">
             <el-input v-model="form.name" />
           </el-form-item>
 
@@ -15,7 +15,7 @@
             <el-input v-model="form.address" />
           </el-form-item>
 
-          <el-form-item label="Kategori Instansi" required prop="category_id">
+          <el-form-item label="Kategori Instansi" prop="category_id">
             <InputCategory category-type="phonebook" v-model="form.category_id"></InputCategory>
           </el-form-item>
 
@@ -23,7 +23,7 @@
             <el-input v-model="form.description" type="textarea" rows="5" prop="description" />
           </el-form-item>
 
-          <el-form-item label="Call Center" required prop="seq">
+          <el-form-item label="Call Center" prop="seq">
             <el-radio v-model="form.seq" :label="1000" border>Ya</el-radio>
             <el-radio v-model="form.seq" :label="1" border>Tidak</el-radio>
           </el-form-item>
@@ -39,7 +39,7 @@
             />
           </el-form-item>
 
-          <el-form-item label="Nomor Telepon" required prop="phone_numbers">
+          <el-form-item label="Nomor Telepon" prop="phone_numbers">
             <ListPhoneNumber v-model="form.phone_numbers" />
           </el-form-item>
 
