@@ -22,6 +22,7 @@ return [
     'error.category.taken' => 'This category name has already been taken.',
     'error.role.permission' => 'You are not allowed to perform this action.',
     'error.rw.pattern' => 'RW must be exactly 3 characters long dan can only contain numeric characters (0-9).',
+    'error.id.invalid' => 'Invalid id.',
 
     'role.admin' => 'Administrator',
     'role.staffProv' => 'Staff Provinsi',

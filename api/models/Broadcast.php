@@ -26,6 +26,8 @@ class Broadcast extends \yii\db\ActiveRecord
     const STATUS_DISABLED = 0;
     const STATUS_ACTIVE = 10;
 
+    const CATEGORY_TYPE = 'broadcast';
+
     /**
      * {@inheritdoc}
      */
@@ -61,6 +63,8 @@ class Broadcast extends \yii\db\ActiveRecord
                 'message' => Yii::t('app', 'error.rw.pattern')
             ],
             [['author_id', 'category_id', 'kabkota_id', 'kec_id', 'kel_id', 'status'], 'integer'],
+            ['author_id', 'validateAuthorID'],
+            ['category_id', 'validateCategoryID'],
             ['meta', 'default'],
         ];
     }
@@ -113,5 +117,44 @@ class Broadcast extends \yii\db\ActiveRecord
                 'value'              => time(),
             ],
         ];
+    }
+
+    /**
+     * Checks if author_id is current user's id
+     *
+     * @param $attribute
+     * @param $params
+     */
+    public function validateAuthorID($attribute, $params)
+    {
+        $request = Yii::$app->request;
+
+        if ($request->isPost || $request->isPut) {
+            $user = User::findIdentity(Yii::$app->user->getId());
+            if ($user->id != $this->$attribute) {
+                $this->addError($attribute, Yii::t('app', 'error.id.invalid'));
+            }
+        }
+    }
+
+    /**
+     * Checks if category_id is current user's id
+     *
+     * @param $attribute
+     * @param $params
+     */
+    public function validateCategoryID($attribute, $params)
+    {
+        $request = Yii::$app->request;
+
+        if ($request->isPost || $request->isPut) {
+            $category_id = Category::find()
+                ->where(['id' => $this->$attribute])
+                ->andWhere(['type' => self::CATEGORY_TYPE]);
+
+            if ($category_id->count() <= 0) {
+                $this->addError($attribute, Yii::t('app', 'error.id.invalid'));
+            }
+        }
     }
 }
