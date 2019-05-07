@@ -16,7 +16,7 @@
           </el-form-item>
 
           <el-form-item label="Kategori Instansi" required prop="category_id">
-            <InputCategory v-model="form.category_id"></InputCategory>
+            <InputCategory category-type="phonebook" v-model="form.category_id"></InputCategory>
           </el-form-item>
 
           <el-form-item label="Deskripsi">

@@ -10,25 +10,26 @@
 </template>
 
 <script>
+import { fetchList } from '@/api/categories'
+
 export default {
   props: {
     value: {
+      required: true
+    },
+
+    categoryType: {
+      type: String,
       required: true
     }
   },
   data() {
     return {
-      options: [{
-        value: 1,
-        label: 'Kesehatan'
-      }, {
-        value: 2,
-        label: 'Ekonomi'
-      }, {
-        value: 3,
-        label: 'Keamanan'
-      }],
-      selected: null
+      options: [],
+      selected: null,
+      listQuery: {
+        type: this.categoryType
+      }
     }
   },
   watch: {
@@ -38,6 +39,23 @@ export default {
       },
       immediate: true
     }
+  },
+  methods: {
+    async getList() {
+      const response = await fetchList(this.listQuery)
+
+      const { data } = response
+
+      this.options = data.items.map(item => {
+        return {
+          value: item.id,
+          label: item.name
+        }
+      })
+    }
+  },
+  mounted() {
+    this.getList()
   }
 }
 </script>
