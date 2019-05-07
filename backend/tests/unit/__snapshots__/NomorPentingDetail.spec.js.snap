@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Nomor Penting Show Detail renders main component 1`] = `
+<div class="app-container">
+  <el-row-stub tag="div" gutter="10" justify="start" align="top">
+    <el-col-stub span="24" tag="div" sm="24" lg="8" xl="6">
+      <photobox-stub image="" height="220px"></photobox-stub>
+    </el-col-stub>
+    <el-col-stub span="24" tag="div" sm="24" lg="16" xl="18">
+      <el-card-stub>
+        <div class="clearfix"><span>Nomor Telepon</span></div>
+        <el-table-stub data="[object Object],[object Object],[object Object],[object Object]" fit="true" selectonindeterminate="true" indent="16" style="width: 100%;">
+          <el-table-column-stub type="default" prop="title" width="180" resizable="true" filtermultiple="true" sortorders="ascending,descending,"></el-table-column-stub>
+          <el-table-column-stub type="default" prop="content" width="180" resizable="true" filtermultiple="true" sortorders="ascending,descending,"></el-table-column-stub>
+        </el-table-stub>
+      </el-card-stub>
+    </el-col-stub>
+  </el-row-stub>
+</div>
+`;
