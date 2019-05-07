@@ -3,8 +3,8 @@
 namespace app\modules\v1\controllers;
 
 use app\filters\auth\HttpBearerAuth;
-use app\models\category\BroadcastCategory;
-use app\models\User;
+use app\models\Category;
+use app\models\CategorySearch;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\auth\CompositeAuth;
@@ -13,11 +13,11 @@ use yii\web\NotFoundHttpException;
 use yii\web\ServerErrorHttpException;
 
 /**
- * BroadcastCategoryController implements the CRUD actions for BroadcastCategory model.
+ * CategoryController implements the CRUD actions for Category model.
  */
-class BroadcastCategoryController extends ActiveController
+class CategoryController extends ActiveController
 {
-    public $modelClass = BroadcastCategory::class;
+    public $modelClass = Category::class;
 
     public function behaviors()
     {
@@ -80,5 +80,19 @@ class BroadcastCategoryController extends ActiveController
         ];
 
         return $behaviors;
+    }
+
+    public function actions()
+    {
+        $actions = parent::actions();
+        $actions['index']['prepareDataProvider'] = [$this, 'prepareDataProvider'];
+        return $actions;
+    }
+
+    public function prepareDataProvider()
+    {
+        $search = new CategorySearch();
+
+        return $search->search(\Yii::$app->request->getQueryParams());
     }
 }
