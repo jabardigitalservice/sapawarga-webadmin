@@ -5,14 +5,15 @@
     <el-row :gutter="10">
       <!-- Left colomn -->
       <el-col :sm="24" :lg="8" :xl="6" class="grid-content">
-        <el-form ref="user" :model="user" :rules="rules">
+        <!-- <el-form ref="user" :model="user" :rules="rules">
           <el-form-item label="Photo" prop="photo">
             <div class="image-preview">
               <img class="preview" :src="imageData">
             </div>
             <input type="file" class="input-image" accept="image/*" @change="onFileSelected">
           </el-form-item>
-        </el-form>
+        </el-form> -->
+        <uploadPhoto />
       </el-col>
 
       <!-- Center colomn -->
@@ -195,10 +196,12 @@
   </div>
 </template>
 <script>
+import uploadPhoto from './uploadPhoto'
 import checkPermission from '@/utils/permission'
 import { requestArea, requestKecamatan, requestKelurahan, createUser, uploadImage, fetchUser, editUser } from '@/api/staff'
 import { Message } from 'element-ui'
 export default {
+  components: { uploadPhoto },
   props: {
     isEdit: {
       type: Boolean,
@@ -290,7 +293,6 @@ export default {
       preview: '',
       formRightSide: '10px',
       emailValidation: 'email',
-      loading: false,
       // validation
       rules: {
         username: [
@@ -857,13 +859,11 @@ export default {
       this.id_kel = dataKelurahan.kelurahan
     },
     getArea() {
-      this.loading = true
       requestArea().then(response => {
         this.area = response.data.items
       })
     },
     getKecamatan() {
-      this.loading = true
       if (!(this.user.kabkota.id == null)) {
         this.id_kabkota = this.user.kabkota.id
       } else {
@@ -874,7 +874,6 @@ export default {
       })
     },
     getKelurahan() {
-      this.loading = true
       if (!(this.user.kecamatan.id == null)) {
         this.id_kec = this.user.kecamatan.id
       } else {
