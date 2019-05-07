@@ -9,17 +9,14 @@ use yii\behaviors\TimestampBehavior;
  * This is the model class for table "broadcasts".
  *
  * @property int $id
- * @property string $name
- * @property string $address
+ * @property int $author_id
+ * @property int $category_id
+ * @property string $title
  * @property string $description
- * @property mixed $phone_numbers
  * @property int $kabkota_id
  * @property int $kec_id
  * @property int $kel_id
- * @property string $latitude
- * @property string $longitude
- * @property int $seq
- * @property string $cover_image_path
+ * @property string $rw
  * @property mixed $meta
  * @property int $status
  */
