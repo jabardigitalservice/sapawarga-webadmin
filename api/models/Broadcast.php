@@ -61,6 +61,7 @@ class Broadcast extends \yii\db\ActiveRecord
                 'message' => Yii::t('app', 'error.rw.pattern')
             ],
             [['author_id', 'category_id', 'kabkota_id', 'kec_id', 'kel_id', 'status'], 'integer'],
+            ['meta', 'default'],
         ];
     }
 
