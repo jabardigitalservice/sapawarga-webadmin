@@ -1,16 +1,18 @@
+// jest.mock('@/api/phonebooks')
 import { shallowMount, createLocalVue } from "@vue/test-utils"
 import Show from '@/views/nomorPenting/show'
-// import PhotoBox from "@/components/PhotoBox"
+import PhotoBox from "@/components/PhotoBox"
 import ElementUI from "element-ui";
 const sampleImage = require("@/assets/user.png")
+// import { fetchDetail } from '@/api/phonebooks'
 
 const localVue = createLocalVue()
 localVue.use(ElementUI)
 
 const $route = {
   // http://localhost:9527/backend/#/nomor-penting/show/140
-  path: '/nomor-penting/show/140',
-  params: { id: '578' },
+  path: '/nomor-penting/show/578',
+  params: { id: 578 },
 }
 
 const factory = (values = {}) => {
@@ -29,5 +31,13 @@ describe('Nomor Penting Show Detail', () => {
     const wrapper = factory()
 
     expect(wrapper.html()).toMatchSnapshot()
+    expect(wrapper.props().id).not.toBe(0)
+
+  })
+
+  it('renders main child components', () => {
+    const wrapper = factory()
+
+    expect(wrapper.find(PhotoBox).exists()).toBe(true)
   })
 })
