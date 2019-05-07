@@ -14,8 +14,6 @@ class BroadcastTest extends \Codeception\Test\Unit
 
         $model->title       = 'test';
         $model->description = 'test';
-        $model->category_id = 1;
-        $model->author_id   = 1;
 
         $model->kabkota_id  = 1;
         $model->kec_id      = 1;
@@ -32,8 +30,6 @@ class BroadcastTest extends \Codeception\Test\Unit
 
         $model->title       = null;
         $model->description = null;
-        $model->category_id = null;
-        $model->author_id   = null;
 
         $model->kabkota_id  = null;
         $model->kec_id      = null;
@@ -44,9 +40,12 @@ class BroadcastTest extends \Codeception\Test\Unit
         $this->assertFalse($model->validate());
 
         $this->assertTrue($model->hasErrors('title'));
-        $this->assertTrue($model->hasErrors('description'));
-        $this->assertTrue($model->hasErrors('category_id'));
-        $this->assertTrue($model->hasErrors('author_id'));
         $this->assertTrue($model->hasErrors('status'));
+
+        $this->assertFalse($model->hasErrors('description'));
+        $this->assertFalse($model->hasErrors('kabkota_id'));
+        $this->assertFalse($model->hasErrors('kec_id'));
+        $this->assertFalse($model->hasErrors('kel_id'));
+        $this->assertFalse($model->hasErrors('rw'));
     }
 }
