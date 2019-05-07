@@ -64,7 +64,7 @@ class CategoryCest
         ]);
     }
 
-    public function getCategoryListPhonebook(ApiTester $I)
+    public function getCategoryListFilterType(ApiTester $I)
     {
         $I->amStaff();
 
@@ -83,6 +83,28 @@ class CategoryCest
 
         $I->cantSeeResponseContainsJson([
             'type' => 'broadcast',
+        ]);
+    }
+
+    public function getCategoryListFilterName(ApiTester $I)
+    {
+        $I->amStaff();
+
+        $I->sendGET("{$this->endpointCategory}?name=kesehatan");
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $I->seeResponseContainsJson([
+            'success' => true,
+            'status'  => 200,
+        ]);
+
+        $I->seeResponseContainsJson([
+            'name' => 'Kesehatan',
+        ]);
+
+        $I->cantSeeResponseContainsJson([
+            'name' => 'Keamanan',
         ]);
     }
 

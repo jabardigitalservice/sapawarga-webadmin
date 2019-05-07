@@ -64,18 +64,11 @@ class CategorySearch extends Category
         }
 
         if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
             return $dataProvider;
         }
 
-        // grid filtering conditions
-        // $query->andFilterWhere([
-        //     'id' => $this->id,
-        // ]);
-
-        $query->andFilterWhere(['like', 'name', $this->name]);
-        $query->andFilterWhere(['like', 'type', $this->type]);
+        $query->andFilterWhere(['like', 'name', Arr::get($params, 'name')]);
+        $query->andFilterWhere(['like', 'type', Arr::get($params, 'type')]);
 
         return $dataProvider;
     }
