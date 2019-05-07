@@ -4,7 +4,11 @@
 
     <el-table :data="items" border stripe style="width: 600px">
       <el-table-column label="Nomor Telepon" prop="phone_number"></el-table-column>
-      <el-table-column label="Jenis" prop="type"></el-table-column>
+      <el-table-column label="Jenis" prop="type">
+        <template slot-scope="{ row }">
+          {{ row.type === 'phone' ? 'Telepon' : 'Pesan' }}
+        </template>
+      </el-table-column>
       <el-table-column label="Aksi" width="150">
         <template slot-scope="scope">
           <el-button size="mini" type="danger" @click="removeItem(scope.$index)">{{ $t('crud.delete-row') }}</el-button>
