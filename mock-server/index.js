@@ -41,6 +41,16 @@ server.post('/api/v1/aspirasi/likes/:id', (req, res) => {
   })
 })
 
+server.post('/api/v1/upload', (req, res) => {
+  res.json({
+    status: 200,
+    success: true,
+    data: {
+      photo_url: "http://103.122.5.71/api/storage/image/avatars/Lv9rvmvCMHt09yEbd30ggPl4cR81UJcH.jpg"
+    }
+  })
+})
+
 server.use(jsonServer.bodyParser)
 server.use((req, res, next) => {
   if (req.method === 'POST') {

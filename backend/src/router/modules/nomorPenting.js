@@ -5,7 +5,7 @@ import Layout from '@/layout'
 const nomorPentingRouter = {
   path: '/nomor-penting',
   component: Layout,
-  redirect: 'noredirect',
+  redirect: '/nomor-penting/index',
   name: 'NomorPenting',
   meta: {
     title: 'nomor-penting-manage',
@@ -26,23 +26,24 @@ const nomorPentingRouter = {
       }
     },
     {
-      name: 'nomor-penting-edit',
-      path: 'edit/:id',
-      // component: () => import('@/views/nomorPenting/edit'),
-      hidden: true,
-      meta: {
-        title: 'nomor-penting-edit',
-        roles: ['admin']
-      }
-    },
-    {
-      name: 'nomor-penting-create',
       path: 'create',
-      // component: () => import('@/views/nomorPenting/add'),
+      component: () => import('@/views/nomorPenting/create'),
+      name: 'nomor-penting-create',
       meta: {
         title: 'nomor-penting-create',
         roles: ['admin']
       }
+    },
+    {
+      path: 'edit/:id(\\d+)',
+      component: () => import('@/views/nomorPenting/edit'),
+      name: 'nomor-penting-edit',
+      meta: {
+        title: 'nomor-penting-edit',
+        noCache: true,
+        roles: ['admin']
+      },
+      hidden: true
     }
   ]
 }
