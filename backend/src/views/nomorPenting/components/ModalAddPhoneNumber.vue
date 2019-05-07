@@ -1,7 +1,7 @@
 <template>
   <el-dialog title="Tambah Nomor Telepon" :append-to-body="true" :visible="modalAddPhoneNumberVisible" @closed="modalClosed">
 
-    <el-form ref="modal_phone_number" :model="form" :rules="rules" label-width="160px">
+    <el-form ref="modal_phone_number" :status-icon="true" :model="form" :rules="rules" label-width="160px">
       <el-form-item label="Nomor Telepon" prop="phone_number" required>
         <el-input v-model="form.phone_number" placeholder="Nomor Telepon" autocomplete="off"></el-input>
       </el-form-item>

@@ -6,7 +6,7 @@
         Gambar
       </el-col>
       <el-col :span="19">
-        <el-form ref="form" :model="form" :rules="rules" label-width="160px">
+        <el-form ref="form" :model="form" :rules="rules" :status-icon="true" label-width="160px">
           <el-form-item label="Nama Instansi" prop="name">
             <el-input v-model="form.name" />
           </el-form-item>
@@ -24,8 +24,8 @@
           </el-form-item>
 
           <el-form-item label="Call Center" prop="seq">
-            <el-radio v-model="form.seq" :label="1000" border>Ya</el-radio>
-            <el-radio v-model="form.seq" :label="1" border>Tidak</el-radio>
+            <el-radio v-model="form.seq" :label="1000" border @change="resetCallCenter">Ya</el-radio>
+            <el-radio v-model="form.seq" :label="1" border @change="resetCallCenter">Tidak</el-radio>
           </el-form-item>
 
           <el-form-item v-if="form.seq === 1" label="Wilayah" prop="wilayah">
@@ -129,7 +129,7 @@ export default {
           //
         ],
         category_id: [
-          { required: true, message: 'Kategori Instansi harus diisi.', trigger: 'blur' }
+          { required: true, message: 'Kategori Instansi harus diisi.', trigger: 'change' }
         ],
         description: [
           //
@@ -180,6 +180,14 @@ export default {
       })
     },
 
+    resetCallCenter(value) {
+      if (value === 1000) {
+        this.form.kabkota_id = null
+        this.form.kec_id = null
+        this.form.kel_id = null
+      }
+    },
+
     async submitForm() {
       const valid = await this.$refs.form.validate()
 
@@ -203,8 +211,15 @@ export default {
           const id = this.$route.params && this.$route.params.id
 
           await update(id, data)
+
+          this.$message.success(this.$t('crud.update-success'))
+
+          this.$router.push('/nomor-penting/index')
         } else {
           await create(data)
+          this.$message.success(this.$t('crud.create-success'))
+
+          this.$router.push('/nomor-penting/index')
         }
       } catch (e) {
         console.log(e)

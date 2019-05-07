@@ -28,6 +28,9 @@ export default {
     'delete-row': 'Hapus',
     'delete-row-confirm': 'Anda yakin ingin menghapus data ini?',
 
+    'create-success': 'Data baru berhasil dibuat.',
+    'update-success': 'Perubahan data berhasil disimpan.',
+
     'user-activate-confirm': 'Anda yakin ingin mengaktifkan pengguna ini?',
     'user-deactivate-confirm': 'Anda yakin ingin menonaktifkan pengguna ini?',
     'user-activate-success': 'Pengguna berhasil diaktifkan.',
