@@ -69,6 +69,7 @@
                 prop="kabkota"
               >
                 <el-select
+                  v-if="area !== null"
                   v-model="user.kabkota"
                   placeholder="Pilih Kab/Kota"
                   :disabled="isEdit"
@@ -289,6 +290,7 @@ export default {
       preview: '',
       formRightSide: '10px',
       emailValidation: 'email',
+      loading: false,
       // validation
       rules: {
         username: [
@@ -670,15 +672,25 @@ export default {
         const dataUserPhotoUrl = dataUser.photo_url
         let urlPhoto = null
         if (dataUser.photo_url !== null) {
-          console.log('link foto tidak null')
           urlPhoto = dataUserPhotoUrl.substring(dataUserPhotoUrl.lastIndexOf('/', dataUserPhotoUrl.lastIndexOf('/') - 1) + 1)
         } else {
           urlPhoto = dataUser.photo_url
         }
-        // assign to data
-        this.getKecamatan(dataUser.kabkota_id)
-        this.getKelurahan(dataUser.kec_id)
-
+        // // assign to data
+        if (dataUser.role_id === 'staffRW') {
+          this.user.kabkota = dataUser.kabkota.name
+          this.user.kecamatan = dataUser.kecamatan.name
+          this.user.kelurahan = dataUser.kelurahan.name
+        } else if (dataUser.role_id === 'staffKel') {
+          this.user.kabkota = dataUser.kabkota.name
+          this.user.kecamatan = dataUser.kecamatan.name
+          this.user.kelurahan = dataUser.kelurahan.name
+        } else if (dataUser.role_id === 'staffKec') {
+          this.user.kabkota = dataUser.kabkota.name
+          this.user.kecamatan = dataUser.kecamatan.name
+        } else if (dataUser.role_id === 'staffKabkota') {
+          this.user.kabkota = dataUser.kabkota.name
+        }
         this.user.rw = dataUser.rw
         this.user.rt = dataUser.rt
         this.user.photo = urlPhoto
@@ -694,10 +706,6 @@ export default {
         this.user.latitude = dataUser.lat
         this.user.longitude = dataUser.lon
         this.user.role = dataUser.role_id
-        this.user.kabkota = dataUser.kabkota
-        this.user.kecamatan = dataUser.kecamatan
-        this.user.kelurahan = dataUser.kelurahan
-        console.log(this.user.role)
       }).catch()
     },
     submitForm(formName) {
@@ -769,13 +777,11 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           let userEdit = {
-            username: this.user.username,
             name: this.user.name,
             email: this.user.email,
             phone: this.user.phone,
             address: this.user.address,
-            role_id: this.user.role,
-            rw: this.user.rw,
+            rt: this.user.rt,
             facebook: this.user.facebook,
             twitter: this.user.twitter,
             instagram: this.user.instagram,
@@ -785,20 +791,6 @@ export default {
           }
           if (this.user.confirmation !== ''){
             userEdit['password'] = this.user.confirmation
-          }
-          if (this.user.role == 'staffKabkota') {
-            userEdit['kabkota_id'] = this.user.kabkota.id || this.id_kabkota
-          }
-          if (this.user.role == 'staffKec') {
-            userEdit['kabkota_id'] = this.user.kabkota.id || this.id_kabkota
-            userEdit['kec_id'] = this.user.kecamatan.id || this.id_kec
-
-          }
-          if (this.user.role == 'staffKel') {
-            userEdit['kabkota_id'] = this.user.kabkota.id || this.id_kabkota
-            userEdit['kec_id'] = this.user.kecamatan.id || this.id_kec
-            userEdit['kel_id'] = this.user.kelurahan.id || this.id_kel
-
           }
           editUser(userEdit, id).then(response => {
             Message({
@@ -865,11 +857,14 @@ export default {
       this.id_kel = dataKelurahan.kelurahan
     },
     getArea() {
+      this.loading = true
       requestArea().then(response => {
         this.area = response.data.items
+
       })
     },
     getKecamatan() {
+      this.loading = true
       if (!(this.user.kabkota.id == null)) {
         this.id_kabkota = this.user.kabkota.id
       } else {
@@ -877,9 +872,11 @@ export default {
       }
       requestKecamatan(this.id_kabkota).then(response => {
         this.kecamatan = response.data.items
+
       })
     },
     getKelurahan() {
+      this.loading = true
       if (!(this.user.kecamatan.id == null)) {
         this.id_kec = this.user.kecamatan.id
       } else {
@@ -887,6 +884,7 @@ export default {
       }
       requestKelurahan(this.id_kec).then(response => {
         this.kelurahan = response.data.items
+
       })
     },
     // Generate password
@@ -928,7 +926,6 @@ export default {
         const link_photo = response.data.photo_url
         const photo_name = link_photo.substring(link_photo.lastIndexOf('/', link_photo.lastIndexOf('/') - 1) + 1)
         this.user.photo = photo_name
-        console.log(this.user.photo)
       }).catch(error => {
         const image_error = error.response.data.status
         if (image_error === 500) {
