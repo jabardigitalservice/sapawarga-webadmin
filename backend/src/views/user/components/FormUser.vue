@@ -5,15 +5,15 @@
     <el-row :gutter="10">
       <!-- Left colomn -->
       <el-col :sm="24" :lg="8" :xl="6" class="grid-content">
-        <!-- <el-form ref="user" :model="user" :rules="rules">
+        <el-form ref="user" :model="user" :rules="rules">
           <el-form-item label="Photo" prop="photo">
             <div class="image-preview">
               <img class="preview" :src="imageData">
             </div>
             <input type="file" class="input-image" accept="image/*" @change="onFileSelected">
           </el-form-item>
-        </el-form> -->
-        <uploadPhoto v-on:onUpload="getUrlPhoto" />
+        </el-form>
+        <uploadPhoto v-on:onUpload="getUrlPhoto" :linkEditPhoto="setLinkEditPhoto" />
       </el-col>
 
       <!-- Center colomn -->
@@ -293,6 +293,8 @@ export default {
       preview: '',
       formRightSide: '10px',
       emailValidation: 'email',
+      emitUrlPhoto: '',
+      setLinkEditPhoto: '',
       // validation
       rules: {
         username: [
@@ -668,19 +670,22 @@ export default {
 
   methods: {
     getUrlPhoto(url){
-      console.log( 'ini dari form user ' + url)
+      this.user.photo = url
     },
+    // setLinkEditPhoto(){
+
+    // },
     checkPermission,
     fetchData(id) {
       fetchUser(id).then(response => {
         const dataUser = response.data
         const dataUserPhotoUrl = dataUser.photo_url
         let urlPhoto = null
-        if (dataUser.photo_url !== null) {
-          urlPhoto = dataUserPhotoUrl.substring(dataUserPhotoUrl.lastIndexOf('/', dataUserPhotoUrl.lastIndexOf('/') - 1) + 1)
-        } else {
-          urlPhoto = dataUser.photo_url
-        }
+        // if (dataUser.photo_url !== null) {
+        //   urlPhoto = dataUserPhotoUrl.substring(dataUserPhotoUrl.lastIndexOf('/', dataUserPhotoUrl.lastIndexOf('/') - 1) + 1)
+        // } else {
+        //   urlPhoto = dataUser.photo_url
+        // }
         // // assign to data
         if (dataUser.role_id === 'staffRW') {
           this.user.kabkota = dataUser.kabkota.name
@@ -700,6 +705,7 @@ export default {
         this.user.rt = dataUser.rt
         this.user.photo = urlPhoto
         this.imageData = dataUser.photo_url || this.imageData
+        this.setLinkEditPhoto = dataUser.photo_url
         this.user.twitter = dataUser.twitter
         this.user.facebook = dataUser.facebook
         this.user.instagram = dataUser.instagram

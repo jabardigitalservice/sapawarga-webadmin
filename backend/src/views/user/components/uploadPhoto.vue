@@ -7,6 +7,7 @@
         </div>
         <input type="file" class="input-image" accept="image/*" @change="onFileSelected">
       </el-form-item>
+      <div>{{linkEditPhoto}}</div>
     </el-form>
   </div>
 </template>
@@ -14,12 +15,28 @@
 import { uploadImage } from '@/api/staff'
 import { Message } from 'element-ui'
 export default {
+  props: {
+    linkEditPhoto: {
+      type: String,
+      default: ''
+    }
+  },
   data(){
     return {
       imageData: require('@/assets/user.png'),
       image: '',
       urlImage: null,
+      gunil: this.linkEditPhoto
     }
+  },
+  created(){
+    // if (this.linkEditPhoto !== null) {
+    //   console.log(this.linkEditPhoto)
+    //   this.imageData = this.linkEditPhoto
+    // } else {
+    //   this.imageData = require('@/assets/user.png')
+    // }
+    console.log(linkEditPhoto)
   },
   methods: {
     onFileSelected(event) {
@@ -46,7 +63,7 @@ export default {
         const link_photo = response.data.photo_url
         const photo_name = link_photo.substring(link_photo.lastIndexOf('/', link_photo.lastIndexOf('/') - 1) + 1)
         this.urlImage = photo_name
-        console.log(this.urlImage)
+
         this.$emit('onUpload', this.urlImage)
       }).catch(error => {
         const image_error = error.response.data.status
