@@ -1,38 +1,28 @@
 <template>
   <div>
-    <el-alert
-      v-if="items.length === 0"
-      :title="$t('crud.list-empty')"
-      type="warning"
-      show-icon
-    />
+    <el-button size="mini" type="primary" @click="modalAddPhoneNumberVisible = true">{{ $t('crud.insert-row') }}</el-button>
 
-    <div class="clearfix" />
+    <el-table :data="items" border stripe style="width: 600px">
+      <el-table-column label="Nomor Telepon" prop="phone_number"></el-table-column>
+      <el-table-column label="Jenis" prop="type"></el-table-column>
+      <el-table-column label="Aksi" width="150">
+        <template slot-scope="scope">
+          <el-button size="mini" type="danger" @click="removeItem(scope.$index)">{{ $t('crud.delete-row') }}</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
 
-    <el-row v-for="(item, index) in items" :key="index" :gutter="15" style="margin-bottom: 15px">
-      <el-col :span="5">
-        <el-input v-model="item.phone_number" placeholder="Nomor Telepon" />
-      </el-col>
-      <el-col :span="5">
-        <el-select v-model="item.type" placeholder="Pilih Jenis">
-          <el-option
-            v-for="option in typeOptions"
-            :key="option.value"
-            :label="option.label"
-            :value="option.value"
-          />
-        </el-select>
-      </el-col>
-      <el-col :span="5">
-        <el-button size="mini" type="danger" @click="removeItem(index)">{{ $t('crud.delete-row') }}</el-button>
-      </el-col>
-    </el-row>
-    <el-button size="mini" type="primary" @click="addItem">{{ $t('crud.insert-row') }}</el-button>
+    <ModalAddPhoneNumber :modal-add-phone-number-visible="modalAddPhoneNumberVisible" @save="addItem" @close="closeDialog"></ModalAddPhoneNumber>
   </div>
 </template>
 
 <script>
+import ModalAddPhoneNumber from './ModalAddPhoneNumber'
+
 export default {
+  components: {
+    ModalAddPhoneNumber
+  },
   props: {
     value: {
       type: Array,
@@ -41,6 +31,7 @@ export default {
   },
   data() {
     return {
+      modalAddPhoneNumberVisible: false,
       items: [],
       typeOptions: [{
         value: 'phone',
@@ -67,16 +58,23 @@ export default {
         type: 'warning'
       })
 
-      this.items.splice(index, 1)
+      const items = this.items
 
-      this.$emit('input', this.items)
+      items.splice(index, 1)
+
+      this.$emit('input', items)
     },
 
-    addItem() {
-      this.items.push({
-        type: null,
-        phone_number: null
-      })
+    addItem(data) {
+      const items = this.items
+
+      items.push(data)
+
+      this.$emit('input', items)
+    },
+
+    closeDialog() {
+      this.modalAddPhoneNumberVisible = false
     }
   }
 }

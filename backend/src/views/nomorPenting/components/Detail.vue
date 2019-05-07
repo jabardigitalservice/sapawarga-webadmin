@@ -24,8 +24,8 @@
           </el-form-item>
 
           <el-form-item label="Call Center" required prop="seq">
-            <el-radio v-model="form.seq" :label="1000">Ya</el-radio>
-            <el-radio v-model="form.seq" :label="1">Tidak</el-radio>
+            <el-radio v-model="form.seq" :label="1000" border>Ya</el-radio>
+            <el-radio v-model="form.seq" :label="1" border>Tidak</el-radio>
           </el-form-item>
 
           <el-form-item v-if="form.seq === 1" label="Wilayah" prop="wilayah">
@@ -95,13 +95,14 @@ export default {
   },
   data() {
     const validatorWilayah = (rule, value, callback) => {
-      if (this.form.seq === 1 && (this.form.kabkota_id === null && this.form.kec_id === null && this.form.kel_id === null)) {
+      if (this.form.seq === 1 && (this.form.kabkota_id === null)) {
         callback(new Error('Wilayah harus diisi.'))
       }
       callback()
     }
 
     return {
+      modalAddPhoneNumberVisible: false,
       form: Object.assign({}, defaultForm),
       loading: false,
       rules: {
@@ -121,7 +122,7 @@ export default {
           { required: true, message: 'Call Center harus diisi.', trigger: 'blur' }
         ],
         wilayah: [
-          { validator: validatorWilayah, trigger: 'blur' }
+          { validator: validatorWilayah, trigger: 'change' }
         ],
         kec_id: [
           { required: true, message: 'Kecamatan harus diisi.', trigger: 'blur' }

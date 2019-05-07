@@ -16,8 +16,10 @@ export default {
   crud: {
     'list-empty': 'Belum ada data.',
 
-    'create': 'Simpan',
-    'update': 'Simpan',
+    'create': 'Buat Baru',
+    'save-create': 'Simpan',
+    'update': 'Edit',
+    'save-update': 'Simpan',
     'delete': 'Hapus',
     'cancel': 'Batal',
     'back': 'Kembali',
