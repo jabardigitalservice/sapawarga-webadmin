@@ -165,6 +165,7 @@ export default {
       this.fetchData(id)
     } else {
       this.form = Object.assign({}, defaultForm)
+      this.form.phone_numbers = []
     }
   },
   methods: {
