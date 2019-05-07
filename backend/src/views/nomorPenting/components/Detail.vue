@@ -44,7 +44,7 @@
           </el-form-item>
 
           <el-form-item label="Koordinat Lokasi" prop="coordinates">
-            <InputMap v-model="form.coordinates" />
+            <InputMap v-model="coordinates" />
           </el-form-item>
 
           <el-form-item>
@@ -77,7 +77,8 @@ const defaultForm = {
   meta: null,
   seq: null,
   phone_numbers: [],
-  coordinates: [null, null]
+  latitude: null,
+  longitude: null
 }
 
 export default {
@@ -101,9 +102,22 @@ export default {
       callback()
     }
 
+    const validatorCoordinate = (rule, value, callback) => {
+      if (_.isEmpty(this.coordinates[0]) === false && _.isEmpty(this.coordinates[1]) === true) {
+        callback(new Error('Koordinat Lokasi (Longitude) harus diisi.'))
+      }
+
+      if (_.isEmpty(this.coordinates[0]) === true && _.isEmpty(this.coordinates[1]) === false) {
+        callback(new Error('Koordinat Lokasi (Latitude) harus diisi.'))
+      }
+
+      callback()
+    }
+
     return {
       modalAddPhoneNumberVisible: false,
       form: Object.assign({}, defaultForm),
+      coordinates: [null, null],
       loading: false,
       rules: {
         name: [
@@ -123,6 +137,9 @@ export default {
         ],
         wilayah: [
           { validator: validatorWilayah, trigger: 'change' }
+        ],
+        coordinates: [
+          { validator: validatorCoordinate, trigger: 'change' }
         ],
         kec_id: [
           { required: true, message: 'Kecamatan harus diisi.', trigger: 'blur' }
@@ -155,7 +172,7 @@ export default {
 
         const { latitude, longitude } = response.data
 
-        this.form.coordinates = [latitude, longitude]
+        this.coordinates = [latitude, longitude]
       }).catch(err => {
         console.log(err)
       })
@@ -173,6 +190,9 @@ export default {
       const data = {}
 
       Object.assign(data, this.form)
+
+      data.latitude = this.coordinates[0]
+      data.longitude = this.coordinates[1]
 
       if (this.isEdit) {
         const id = this.$route.params && this.$route.params.id
