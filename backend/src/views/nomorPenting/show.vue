@@ -32,20 +32,20 @@ export default {
       height: '220px',
       tableData: [
         {
-          date: '2016-05-03',
-          name: ': Tom'
+          title: 'Nama Instansi',
+          content: ': Tom'
         },
         {
-          date: '2016-05-02',
-          name: ': Tom'
+          title: 'Alamat Instansi',
+          content: ': Tom'
         },
         {
-          date: '2016-05-04',
-          name: ': Tom'
+          title: 'Kategori Instansi',
+          content: ': Tom'
         },
         {
-          date: '2016-05-01',
-          name: ': Tom'
+          title: 'Deskripsi',
+          content: ': Tom'
         }
       ]
     }
