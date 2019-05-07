@@ -148,7 +148,7 @@ export default {
           { required: true, message: 'Kelurahan harus diisi.', trigger: 'blur' }
         ],
         phone_numbers: [
-          { required: true, message: 'Nomor Telepon harus diisi.', trigger: 'blur' }
+          { required: true, message: 'Harus memiliki minimal 1 Nomor Telepon.', trigger: 'blur' }
         ]
       },
       tempRoute: {}
