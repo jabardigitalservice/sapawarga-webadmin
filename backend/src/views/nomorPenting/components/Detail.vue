@@ -61,6 +61,7 @@
 
 <script>
 import { fetchRecord, create, update } from '@/api/phonebooks'
+import { validContainsSpecialCharacters } from '@/utils/validate'
 
 import InputSelectArea from '@/components/InputSelectArea'
 import InputMap from '@/components/InputMap'
@@ -97,6 +98,14 @@ export default {
     }
   },
   data() {
+    const validatorNameNoSpecialCharacters = (rule, value, callback) => {
+      if (validContainsSpecialCharacters(value)) {
+        callback(new Error('Nama Instansi hanya boleh menggunakan Alfa Numerik dan Spasi.'))
+      }
+
+      callback()
+    }
+
     const validatorWilayah = (rule, value, callback) => {
       if (this.form.seq === 1 && (this.form.kabkota_id === null)) {
         callback(new Error('Wilayah harus diisi.'))
@@ -123,7 +132,8 @@ export default {
       loading: false,
       rules: {
         name: [
-          { required: true, message: 'Nama Instansi harus diisi.', trigger: 'blur' }
+          { required: true, message: 'Nama Instansi harus diisi.', trigger: 'blur' },
+          { validator: validatorNameNoSpecialCharacters, trigger: 'blur' }
         ],
         address: [
           //
