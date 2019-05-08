@@ -239,7 +239,7 @@ class SeederController extends Controller
             'status' => Broadcast::STATUS_ACTIVE,
             'created_at' => time(),
             'updated_at' => time(),
-        ])->rowQuantity(10);
+        ])->rowQuantity(20);
 
         $seeder->refill();
     }
