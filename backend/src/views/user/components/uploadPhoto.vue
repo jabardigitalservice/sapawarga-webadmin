@@ -7,7 +7,7 @@
         </div>
         <input type="file" class="input-image" accept="image/*" @change="onFileSelected">
       </el-form-item>
-      <div>{{linkEditPhoto}}</div>
+      <h5>{{linkEditPhoto}}</h5>
     </el-form>
   </div>
 </template>
@@ -18,7 +18,7 @@ export default {
   props: {
     linkEditPhoto: {
       type: String,
-      default: ''
+      default: null
     }
   },
   data(){
@@ -26,19 +26,36 @@ export default {
       imageData: require('@/assets/user.png'),
       image: '',
       urlImage: null,
-      gunil: this.linkEditPhoto
+
     }
   },
-  created(){
-    // if (this.linkEditPhoto !== null) {
-    //   console.log(this.linkEditPhoto)
-    //   this.imageData = this.linkEditPhoto
-    // } else {
-    //   this.imageData = require('@/assets/user.png')
-    // }
-    console.log(linkEditPhoto)
+  computed: {
+
+  },
+  watch:{
+    linkEditPhoto: function(){
+      if (this.linkEditPhoto !== null){
+        this.imageData = this.linkEditPhoto
+        console.log(this.imageData)
+      }
+    }
+  },
+  mounted(){
+
   },
   methods: {
+    // getUrlEditPhoto(){
+    //   // if (this.$props.linkEditPhoto !== null) {
+    //   //   this.imageData = this.$props.linkEditPhoto
+    //   //   console.log(this.imageData)
+    //   // } else {
+    //   //   this.imageData = require('@/assets/user.png')
+    //   //   console.log(this.imageData)
+    //   // }
+    //   if(this.$props.linkEditPhoto){
+    //     console.log(`${this.linkEditPhoto}`)
+    //   }
+    // },
     onFileSelected(event) {
       this.image = event.target.files[0]
       if (this.image) {

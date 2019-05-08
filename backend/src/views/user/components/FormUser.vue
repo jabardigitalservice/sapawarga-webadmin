@@ -5,14 +5,6 @@
     <el-row :gutter="10">
       <!-- Left colomn -->
       <el-col :sm="24" :lg="8" :xl="6" class="grid-content">
-        <el-form ref="user" :model="user" :rules="rules">
-          <el-form-item label="Photo" prop="photo">
-            <div class="image-preview">
-              <img class="preview" :src="imageData">
-            </div>
-            <input type="file" class="input-image" accept="image/*" @change="onFileSelected">
-          </el-form-item>
-        </el-form>
         <uploadPhoto v-on:onUpload="getUrlPhoto" :linkEditPhoto="setLinkEditPhoto" />
       </el-col>
 
@@ -27,8 +19,8 @@
           class="demo-ruleForm"
           :rules="rules"
         >
-          <el-form-item label="Username" prop="username">
-            <el-input v-model="user.username" type="text" :disabled="isEdit" />
+          <el-form-item label="Username" :prop="usernameValidation">
+            <el-input v-model="user.username" type="text" @focus="changePropUsername" :disabled="isEdit" />
           </el-form-item>
           <el-form-item label="Nama Lengkap" prop="name">
             <el-input v-model="user.name" type="text" />
@@ -293,6 +285,7 @@ export default {
       preview: '',
       formRightSide: '10px',
       emailValidation: 'email',
+      usernameValidation: 'username',
       emitUrlPhoto: '',
       setLinkEditPhoto: '',
       // validation
@@ -318,6 +311,13 @@ export default {
             message:
               'Username hanya boleh menggunakan huruf kecil, angka, underscore dan titik',
             trigger: 'blur'
+          }
+        ],
+        errorUsername: [
+          {
+            required: true,
+            message: 'Username sudah digunakan',
+            trigger: 'change'
           }
         ],
         name: [
@@ -651,8 +651,6 @@ export default {
     if (this.isEdit) {
       const id = this.$route.params && this.$route.params.id
       this.fetchData(id)
-    } else {
-      // this.postForm = Object.assign({}, defaultForm)
     }
     this.getArea()
     this.parentId
@@ -672,20 +670,17 @@ export default {
     getUrlPhoto(url){
       this.user.photo = url
     },
-    // setLinkEditPhoto(){
-
-    // },
     checkPermission,
     fetchData(id) {
       fetchUser(id).then(response => {
         const dataUser = response.data
         const dataUserPhotoUrl = dataUser.photo_url
         let urlPhoto = null
-        // if (dataUser.photo_url !== null) {
-        //   urlPhoto = dataUserPhotoUrl.substring(dataUserPhotoUrl.lastIndexOf('/', dataUserPhotoUrl.lastIndexOf('/') - 1) + 1)
-        // } else {
-        //   urlPhoto = dataUser.photo_url
-        // }
+        if (dataUser.photo_url !== null) {
+          urlPhoto = dataUserPhotoUrl.substring(dataUserPhotoUrl.lastIndexOf('/', dataUserPhotoUrl.lastIndexOf('/') - 1) + 1)
+        } else {
+          urlPhoto = dataUser.photo_url
+        }
         // // assign to data
         if (dataUser.role_id === 'staffRW') {
           this.user.kabkota = dataUser.kabkota.name
@@ -755,7 +750,6 @@ export default {
             this.imageData = 0
           })
             .catch(error => {
-              this.$refs[formName].resetFields()
               const usernameError = error.response.data.data.username
               const emailError = error.response.data.data.email
               if (!emailError) {
@@ -764,18 +758,26 @@ export default {
                   type: 'error',
                   duration: 5 * 1000
                 })
+                this.user.username = null
+                this.usernameValidation = 'errorUsername'
               } else if (!usernameError) {
                 Message({
                   message: emailError[0],
                   type: 'error',
                   duration: 5 * 1000
                 })
+                this.user.email = null
+                this.emailValidation = 'errorEmail'
               } else {
                 Message({
                   message: 'Username dan email sudah digunakan',
                   type: 'error',
                   duration: 5 * 1000
                 })
+                this.user.username = null
+                this.user.email = null
+                this.emailValidation = 'errorEmail'
+                this.usernameValidation = 'errorUsername'
               }
             })
         } else {
@@ -845,12 +847,20 @@ export default {
       })
     },
     changePropEmail() {
-      if (this.emailValidation === 'erroremail') {
+      if (this.emailValidation === 'errorEmail') {
         this.emailValidation = 'email'
       } else {
         this.emailValidation = 'email'
       }
     },
+    changePropUsername() {
+      if (this.usernameValidation === 'errorUsername') {
+        this.usernameValidation = 'username'
+      } else {
+        this.usernameValidation = 'username'
+      }
+    },
+
     resetForm(formName) {
       this.$refs[formName].resetFields()
       this.$router.go(-1)
@@ -907,43 +917,43 @@ export default {
       this.user.password = this.randomPassword(8)
     },
     // Upload image
-    onFileSelected(event) {
-      this.image = event.target.files[0]
-      if (this.image) {
-        // create a new FileReader to read this image and convert to base64 format
-        var reader = new FileReader()
-        // Define a callback function to run, when FileReader finishes its job
-        reader.onload = (e) => {
-          // Note: arrow function used here, so that "this.imageData" refers to the imageData of Vue component
-          // Read image as base64 and set to imageData
-          // this.imageData = this.user.photo
-          this.imageData = e.target.result
-        }
-        // Start the reader job - read file as a data url (base64 format)
-        this.preview = reader.readAsDataURL(this.image)
-        this.onUpload()
-      }
-    },
-    onUpload() {
-      const formData = new FormData()
-      formData.append('image', this.image, this.image.name)
-      uploadImage(formData).then(response => {
-        const link_photo = response.data.photo_url
-        const photo_name = link_photo.substring(link_photo.lastIndexOf('/', link_photo.lastIndexOf('/') - 1) + 1)
-        this.user.photo = photo_name
-      }).catch(error => {
-        const image_error = error.response.data.status
-        if (image_error === 500) {
-          Message({
-            message: 'Ukuran foto tidak boleh lebih dari 2 MB. Mohon unggah kembali foto Anda',
-            type: 'error',
-            duration: 5 * 1000
-          })
-        }
-        this.imageData = 0
-        this.image = null
-      })
-    }
+    // onFileSelected(event) {
+    //   this.image = event.target.files[0]
+    //   if (this.image) {
+    //     // create a new FileReader to read this image and convert to base64 format
+    //     var reader = new FileReader()
+    //     // Define a callback function to run, when FileReader finishes its job
+    //     reader.onload = (e) => {
+    //       // Note: arrow function used here, so that "this.imageData" refers to the imageData of Vue component
+    //       // Read image as base64 and set to imageData
+    //       // this.imageData = this.user.photo
+    //       this.imageData = e.target.result
+    //     }
+    //     // Start the reader job - read file as a data url (base64 format)
+    //     this.preview = reader.readAsDataURL(this.image)
+    //     this.onUpload()
+    //   }
+    // },
+    // onUpload() {
+    //   const formData = new FormData()
+    //   formData.append('image', this.image, this.image.name)
+    //   uploadImage(formData).then(response => {
+    //     const link_photo = response.data.photo_url
+    //     const photo_name = link_photo.substring(link_photo.lastIndexOf('/', link_photo.lastIndexOf('/') - 1) + 1)
+    //     this.user.photo = photo_name
+    //   }).catch(error => {
+    //     const image_error = error.response.data.status
+    //     if (image_error === 500) {
+    //       Message({
+    //         message: 'Ukuran foto tidak boleh lebih dari 2 MB. Mohon unggah kembali foto Anda',
+    //         type: 'error',
+    //         duration: 5 * 1000
+    //       })
+    //     }
+    //     this.imageData = 0
+    //     this.image = null
+    //   })
+    // }
   }
 }
 </script>
