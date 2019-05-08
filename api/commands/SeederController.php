@@ -225,7 +225,6 @@ class SeederController extends Controller
         $author_id = [1, 2];
         $category_id = [5, 6, 7];
         $kabkota_id = [22, 23];
-        $status = [Broadcast::STATUS_DISABLED, Broadcast::STATUS_ACTIVE];
 
         $seeder->table('broadcasts')->columns([
             'id',
@@ -237,7 +236,7 @@ class SeederController extends Controller
             'kec_id' => null,
             'kel_id' => null,
             'rw' => null,
-            'status' => $faker->randomElement($status),
+            'status' => Broadcast::STATUS_ACTIVE,
             'created_at' => time(),
             'updated_at' => time(),
         ])->rowQuantity(10);

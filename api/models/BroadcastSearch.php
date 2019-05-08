@@ -55,24 +55,15 @@ class BroadcastSearch extends Broadcast
             return $dataProvider;
         }
 
-        // grid filtering conditions
-        $query->andFilterWhere(['id' => $this->id]);
-
+        // Filter berdasarkan query pencarian, dan tidak menampilkan pesan yang sudah dihapus
         $query->andFilterWhere(['<>', 'status', Broadcast::STATUS_DELETED]);
 
-        $query->andFilterWhere(['like', 'name', $params['search'] ?? null]);
-
-        if (Arr::has($params, 'name')) {
-            $query->andWhere(['like', 'name', Arr::get($params, 'name')]);
-        }
-
-        if (Arr::has($params, 'phone')) {
-            $query->andWhere(['like', 'CAST(phone_numbers as CHAR)', Arr::get($params, 'phone')]);
-        }
-
-        if (Arr::has($params, 'status')) {
-            $query->andWhere(['status' => Arr::get($params, 'status')]);
-        }
+        $search = $params['search'] ?? null;
+        $query->andFilterWhere([
+            'or',
+            ['like', 'title', $search],
+            ['like', 'description', $search],
+        ]);
 
         // Jika User
         if ($user->role === User::ROLE_USER) {
@@ -85,25 +76,16 @@ class BroadcastSearch extends Broadcast
 
     protected function getQueryRoleUser($user, $query, $params)
     {
-        // Jika memilih custom filter, akan override semua parameter default
-        if ($this->isCustomFilter($params) === true) {
-            $this->filterByArea($query, $params);
-        } else {
-            // Jika tidak memilih custom filter,
-            // by default tampilkan daftar instansi di Kab/Kota dimana user tersebut tinggal
-            $params['kabkota_id'] = Arr::get($user, 'kabkota_id');
+        // Filter berdasarkan area pengguna
+        $params['kabkota_id'] = Arr::get($user, 'kabkota_id');
+        $params['kec_id'] = Arr::get($user, 'kec_id');
+        $params['kel_id'] = Arr::get($user, 'kel_id');
+        $params['rw'] = Arr::get($user, 'rw');
 
-            $this->filterByArea($query, $params);
-        }
-
-        $query->orWhere(['and',
-            ['kabkota_id' => null],
-            ['kec_id' => null],
-            ['kel_id' => null],
-        ]);
+        $this->filterByArea($query, $params);
 
         $pageLimit = Arr::get($params, 'limit');
-        $sortBy    = Arr::get($params, 'sort_by', 'seq');
+        $sortBy    = Arr::get($params, 'sort_by', 'updated_at');
         $sortOrder = Arr::get($params, 'sort_order', 'descending');
         $sortOrder = $this->getSortOrder($sortOrder);
 
@@ -142,15 +124,27 @@ class BroadcastSearch extends Broadcast
     protected function filterByArea(&$query, $params)
     {
         if (Arr::has($params, 'kabkota_id')) {
-            $query->andFilterWhere(['kabkota_id' => $params['kabkota_id']]);
+            $query->andWhere(['or',
+                ['kabkota_id' => $params['kabkota_id']],
+                ['kabkota_id' => null]]);
         }
 
         if (Arr::has($params, 'kec_id')) {
-            $query->andFilterWhere(['kec_id' => $params['kec_id']]);
+            $query->andWhere(['or',
+                ['kec_id' => $params['kec_id']],
+                ['kec_id' => null]]);
         }
 
         if (Arr::has($params, 'kel_id')) {
-            $query->andFilterWhere(['kel_id' => $params['kel_id']]);
+            $query->andWhere(['or',
+                ['kel_id' => $params['kel_id']],
+                ['kel_id' => null]]);
+        }
+
+        if (Arr::has($params, 'rw')) {
+            $query->andWhere(['or',
+                ['rw' => $params['rw']],
+                ['rw' => null]]);
         }
 
         return $query;

@@ -82,6 +82,7 @@ class Broadcast extends \yii\db\ActiveRecord
             'kabkota_id',
             'kec_id',
             'kel_id',
+            'rw',
             'meta',
             'status',
             'status_label' => function () {
