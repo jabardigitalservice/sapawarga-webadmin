@@ -54,6 +54,7 @@ export default {
         this.latitude = latitude
         this.longitude = longitude
         this.urlMap = `https://maps.google.com/maps?q=${latitude},${longitude}&hl=es;z=14&amp;output=embed`
+        const textPhoneMsg = phone_numbers.map(e => e.type + ': ' + e.phone_number).join(", ")
         this.tableData = [
           {
             title: 'Nama Instansi',
@@ -81,7 +82,7 @@ export default {
           },
           {
             title: 'Nomor Telepon',
-            content: ': ' + response.data.name
+            content: ': ' + textPhoneMsg
           },
           {
             title: 'Koordinat Lokasi',
