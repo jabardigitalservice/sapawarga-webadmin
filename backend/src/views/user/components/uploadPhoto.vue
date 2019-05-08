@@ -7,7 +7,6 @@
         </div>
         <input type="file" class="input-image" accept="image/*" @change="onFileSelected">
       </el-form-item>
-      <h5>{{linkEditPhoto}}</h5>
     </el-form>
   </div>
 </template>
@@ -21,41 +20,21 @@ export default {
       default: null
     }
   },
-  data(){
+  data() {
     return {
       imageData: require('@/assets/user.png'),
       image: '',
-      urlImage: null,
-
+      urlImage: null
     }
   },
-  computed: {
-
-  },
-  watch:{
-    linkEditPhoto: function(){
-      if (this.linkEditPhoto !== null){
+  watch: {
+    linkEditPhoto: function() {
+      if (this.linkEditPhoto !== null) {
         this.imageData = this.linkEditPhoto
-        console.log(this.imageData)
       }
     }
   },
-  mounted(){
-
-  },
   methods: {
-    // getUrlEditPhoto(){
-    //   // if (this.$props.linkEditPhoto !== null) {
-    //   //   this.imageData = this.$props.linkEditPhoto
-    //   //   console.log(this.imageData)
-    //   // } else {
-    //   //   this.imageData = require('@/assets/user.png')
-    //   //   console.log(this.imageData)
-    //   // }
-    //   if(this.$props.linkEditPhoto){
-    //     console.log(`${this.linkEditPhoto}`)
-    //   }
-    // },
     onFileSelected(event) {
       this.image = event.target.files[0]
       if (this.image) {
@@ -84,7 +63,6 @@ export default {
         this.$emit('onUpload', this.urlImage)
       }).catch(error => {
         const image_error = error.response.data.status
-        console.log(error.response)
         if (image_error === 500) {
           Message({
             message: 'Ukuran foto tidak boleh lebih dari 2 MB. Mohon unggah kembali foto Anda',

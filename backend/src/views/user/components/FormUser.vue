@@ -5,7 +5,7 @@
     <el-row :gutter="10">
       <!-- Left colomn -->
       <el-col :sm="24" :lg="8" :xl="6" class="grid-content">
-        <uploadPhoto v-on:onUpload="getUrlPhoto" :linkEditPhoto="setLinkEditPhoto" />
+        <uploadPhoto :link-edit-photo="setLinkEditPhoto" @onUpload="getUrlPhoto" />
       </el-col>
 
       <!-- Center colomn -->
@@ -20,7 +20,7 @@
           :rules="rules"
         >
           <el-form-item label="Username" :prop="usernameValidation">
-            <el-input v-model="user.username" type="text" @focus="changePropUsername" :disabled="isEdit" />
+            <el-input v-model="user.username" type="text" :disabled="isEdit" @focus="changePropUsername" />
           </el-form-item>
           <el-form-item label="Nama Lengkap" prop="name">
             <el-input v-model="user.name" type="text" />
@@ -190,7 +190,7 @@
 <script>
 import uploadPhoto from './uploadPhoto'
 import checkPermission from '@/utils/permission'
-import { requestArea, requestKecamatan, requestKelurahan, createUser, uploadImage, fetchUser, editUser } from '@/api/staff'
+import { requestArea, requestKecamatan, requestKelurahan, createUser, fetchUser, editUser } from '@/api/staff'
 import { Message } from 'element-ui'
 export default {
   components: { uploadPhoto },
@@ -667,7 +667,7 @@ export default {
   },
 
   methods: {
-    getUrlPhoto(url){
+    getUrlPhoto(url) {
       this.user.photo = url
     },
     checkPermission,
@@ -915,45 +915,7 @@ export default {
     },
     generate() {
       this.user.password = this.randomPassword(8)
-    },
-    // Upload image
-    // onFileSelected(event) {
-    //   this.image = event.target.files[0]
-    //   if (this.image) {
-    //     // create a new FileReader to read this image and convert to base64 format
-    //     var reader = new FileReader()
-    //     // Define a callback function to run, when FileReader finishes its job
-    //     reader.onload = (e) => {
-    //       // Note: arrow function used here, so that "this.imageData" refers to the imageData of Vue component
-    //       // Read image as base64 and set to imageData
-    //       // this.imageData = this.user.photo
-    //       this.imageData = e.target.result
-    //     }
-    //     // Start the reader job - read file as a data url (base64 format)
-    //     this.preview = reader.readAsDataURL(this.image)
-    //     this.onUpload()
-    //   }
-    // },
-    // onUpload() {
-    //   const formData = new FormData()
-    //   formData.append('image', this.image, this.image.name)
-    //   uploadImage(formData).then(response => {
-    //     const link_photo = response.data.photo_url
-    //     const photo_name = link_photo.substring(link_photo.lastIndexOf('/', link_photo.lastIndexOf('/') - 1) + 1)
-    //     this.user.photo = photo_name
-    //   }).catch(error => {
-    //     const image_error = error.response.data.status
-    //     if (image_error === 500) {
-    //       Message({
-    //         message: 'Ukuran foto tidak boleh lebih dari 2 MB. Mohon unggah kembali foto Anda',
-    //         type: 'error',
-    //         duration: 5 * 1000
-    //       })
-    //     }
-    //     this.imageData = 0
-    //     this.image = null
-    //   })
-    // }
+    }
   }
 }
 </script>
