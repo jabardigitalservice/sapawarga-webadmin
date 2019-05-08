@@ -23,7 +23,7 @@ use yii\behaviors\TimestampBehavior;
 class Broadcast extends \yii\db\ActiveRecord
 {
     const STATUS_DELETED = -1;
-    const STATUS_DISABLED = 0;
+    const STATUS_DRAFT = 0;
     const STATUS_ACTIVE = 10;
 
     const CATEGORY_TYPE = 'broadcast';
@@ -91,7 +91,7 @@ class Broadcast extends \yii\db\ActiveRecord
                     case self::STATUS_ACTIVE:
                         $statusLabel = Yii::t('app', 'status.active');
                         break;
-                    case self::STATUS_DISABLED:
+                    case self::STATUS_DRAFT:
                         $statusLabel = Yii::t('app', 'status.draft');
                         break;
                     case self::STATUS_DELETED:

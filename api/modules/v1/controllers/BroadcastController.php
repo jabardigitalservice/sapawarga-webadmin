@@ -146,9 +146,16 @@ class BroadcastController extends ActiveController
      */
     public function findModel($id)
     {
+        $status = [Broadcast::STATUS_ACTIVE];
+        $user = User::findIdentity(Yii::$app->user->getId());
+        // Admin dan staf dapat mencari broadcast yang mempunyai status sebagai draft
+        if ($user->role > User::ROLE_STAFF_RW) {
+            \array_push($status, Broadcast::STATUS_DRAFT);
+        }
+
         $model = Broadcast::find()
             ->where(['id' => $id])
-            ->andWhere(['!=', 'status', Broadcast::STATUS_DELETED])
+            ->andWhere(['in', 'status',  $status])
             ->one();
 
         if ($model === null) {
