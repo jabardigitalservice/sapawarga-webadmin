@@ -135,11 +135,14 @@ class PhoneBookSearch extends PhoneBook
             $this->filterByArea($query, $params);
         }
 
-        $query->orWhere(['and',
-            ['kabkota_id' => null],
-            ['kec_id' => null],
-            ['kel_id' => null],
-        ]);
+        if (Arr::has($params, ['search']) === false) {
+            $query->orWhere([
+                'and',
+                ['kabkota_id' => null],
+                ['kec_id' => null],
+                ['kel_id' => null],
+            ]);
+        }
 
         $pageLimit = Arr::get($params, 'limit');
         $sortBy    = Arr::get($params, 'sort_by', 'seq');
