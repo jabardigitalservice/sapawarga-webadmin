@@ -25,7 +25,7 @@
 <script>
 // TODO: make table dynamic from API
 import PhotoBox from '@/components/PhotoBox'
-import { fetchDetail } from '@/api/phonebooks'
+import { fetchRecord } from '@/api/phonebooks'
 
 export default {
   components: { PhotoBox },
