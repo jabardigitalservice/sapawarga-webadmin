@@ -55,9 +55,7 @@ class BroadcastSearch extends Broadcast
             return $dataProvider;
         }
 
-        // Filter berdasarkan query pencarian, dan tidak menampilkan pesan yang sudah dihapus
-        $query->andFilterWhere(['<>', 'status', Broadcast::STATUS_DELETED]);
-
+        // Filter berdasarkan query pencarian
         $search = $params['search'] ?? null;
         $query->andFilterWhere([
             'or',
@@ -76,6 +74,9 @@ class BroadcastSearch extends Broadcast
 
     protected function getQueryRoleUser($user, $query, $params)
     {
+        // Hanya menampilkan pesan broadcast yang masih aktif
+        $query->andFilterWhere(['status' => Broadcast::STATUS_ACTIVE]);
+
         // Filter berdasarkan area pengguna
         $params['kabkota_id'] = Arr::get($user, 'kabkota_id');
         $params['kec_id'] = Arr::get($user, 'kec_id');
@@ -100,10 +101,18 @@ class BroadcastSearch extends Broadcast
 
     protected function getQueryAll($query, $params)
     {
+        // Hanya menampilkan pesan broadcast dengan status aktif dan draft
+        $query->andFilterWhere(['<>', 'status', Broadcast::STATUS_DELETED]);
+
+        // Filter berdasarkan area (jika ada)
         $this->filterByArea($query, $params);
 
+        // Filter berdasarkan status dam kategori
+        $query->andFilterWhere(['status' => Arr::get($params, 'status')])
+              ->andFilterWhere(['category_id' => Arr::get($params, 'category_id')]);
+
         $pageLimit = Arr::get($params, 'limit');
-        $sortBy    = Arr::get($params, 'sort_by', 'seq');
+        $sortBy    = Arr::get($params, 'sort_by', 'updated_at');
         $sortOrder = Arr::get($params, 'sort_order', 'descending');
         $sortOrder = $this->getSortOrder($sortOrder);
 

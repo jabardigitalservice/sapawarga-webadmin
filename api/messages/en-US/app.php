@@ -35,4 +35,5 @@ return [
     'status.active'   => 'Active',
     'status.inactive' => 'Not Active',
     'status.deleted'  => 'Deleted',
+    'status.draft'  => 'Draft',
 ];

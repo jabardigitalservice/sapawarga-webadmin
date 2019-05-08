@@ -92,7 +92,7 @@ class Broadcast extends \yii\db\ActiveRecord
                         $statusLabel = Yii::t('app', 'status.active');
                         break;
                     case self::STATUS_DISABLED:
-                        $statusLabel = Yii::t('app', 'status.inactive');
+                        $statusLabel = Yii::t('app', 'status.draft');
                         break;
                     case self::STATUS_DELETED:
                         $statusLabel = Yii::t('app', 'status.deleted');
