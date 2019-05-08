@@ -4,12 +4,12 @@
     <p class="warn-content">Profile Pengguna</p>
     <el-row :gutter="10">
       <!-- Left colomn -->
-      <el-col :sm="24" :lg="8" :xl="6" class="grid-content">
+      <el-col :sm="24" :md="24" :lg="5" :xl="6" class="grid-content">
         <uploadPhoto :link-edit-photo="setLinkEditPhoto" @onUpload="getUrlPhoto" />
       </el-col>
 
       <!-- Center colomn -->
-      <el-col :sm="24" :lg="15" :xl="14" class="grid-content">
+      <el-col :sm="24" :md="24" :lg="19" :xl="14" class="grid-content">
         <el-form
           ref="user"
           :model="user"
@@ -43,7 +43,7 @@
           </el-form-item>
 
           <el-row>
-            <el-col :span="12">
+            <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
               <el-form-item label="Peran" prop="role">
                 <el-select v-model="user.role" placeholder="Pilih Peran" :disabled="isEdit">
                   <el-option
@@ -55,7 +55,7 @@
                 </el-select>
               </el-form-item>
             </el-col>
-            <el-col :span="12" :style="{paddingLeft: formRightSide}">
+            <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" :style="{paddingLeft: formRightSide}" class="form-right-side-padding">
               <el-form-item
                 v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && checkPermission(['admin', 'staffProv']))"
                 label="Kab/Kota"
@@ -79,7 +79,7 @@
             </el-col>
           </el-row>
           <el-row>
-            <el-col :span="12">
+            <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
               <el-form-item
                 v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && checkPermission(['admin', 'staffProv', 'staffKabkota']))"
                 label="Kecamatan"
@@ -100,7 +100,7 @@
                 </el-select>
               </el-form-item>
             </el-col>
-            <el-col :span="12" :style="{paddingLeft: formRightSide}">
+            <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" :style="{paddingLeft: formRightSide}" class="form-right-side-padding">
               <el-form-item
                 v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffKec') && ! checkPermission(['staffKel']))"
                 label="Kelurahan"
@@ -116,10 +116,10 @@
                 </el-select>
               </el-form-item>
             </el-col>
-            <el-col :span="12" />
+            <!-- <el-col :span="12" /> -->
           </el-row>
           <el-row>
-            <el-col :span="12">
+            <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
               <el-form-item
                 v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffKec') && !(user.role == 'staffKel'))"
                 label="RW"
@@ -128,7 +128,7 @@
                 <el-input v-model="user.rw" type="text" placeholder="Contoh: 001" :disabled="(user.kelurahan == '' && checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec']) || isEdit)" />
               </el-form-item>
             </el-col>
-            <el-col :span="12" class="form-right-side">
+            <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="form-right-side">
               <el-form-item
                 v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffKec') && !(user.role == 'staffKel'))"
                 label="RT"
@@ -147,12 +147,12 @@
             </el-col>
           </el-row>
           <el-row>
-            <el-col :span="12">
+            <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
               <el-form-item label="Latitude" prop="latitude">
                 <el-input v-model="user.latitude" type="text" placeholder="Contoh: -6.943097" />
               </el-form-item>
             </el-col>
-            <el-col :span="12" class="form-right-side">
+            <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="form-right-side">
               <el-form-item label="Longitude" prop="longitude">
                 <el-input v-model="user.longitude" type="text" placeholder="Contoh: 107.633545" />
               </el-form-item>
@@ -1002,5 +1002,13 @@ p {
   width: 178px;
   height: 178px;
   display: block;
+}
+@media only screen and (max-width: 768px) {
+.form-right-side {
+  padding-left: 0px;
+}
+.form-right-side-padding {
+  margin-left: -10px;
+}
 }
 </style>

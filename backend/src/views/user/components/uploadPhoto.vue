@@ -79,12 +79,27 @@ export default {
 </script>
 <style lang="scss" scoped>
 .input-image {
-  margin-left:50px;
+  margin-left: 75px;
 }
 img.preview {
     width: 200px;
     background-color: white;
     border: 1px solid #DDD;
     padding: 5px;
+    margin-left: 25px;
+
 }
+@media only screen and (min-width: 1200px)  and (max-width: 1600px) {
+  .input-image {
+    margin-left: 0px;
+  }
+  img.preview {
+      width: 150px;
+      background-color: white;
+      border: 1px solid #DDD;
+      padding: 5px;
+      margin-left: 0px;
+  }
+}
+
 </style>
