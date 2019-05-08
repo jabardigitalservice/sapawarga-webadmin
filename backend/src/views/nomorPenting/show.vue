@@ -47,7 +47,7 @@ export default {
 
   methods: {
     getDetail() {
-      fetchDetail(this.id).then(response => {
+      fetchRecord(this.id).then(response => {
         const { name, address, description, category, seq, kabkota_id, kec_id, kel_id, phone_numbers, latitude, longitude, cover_image_path } = response.data
 
         this.imageUrl = cover_image_path !== null ? cover_image_path : require('@/assets/user.png')
