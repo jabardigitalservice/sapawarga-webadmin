@@ -155,8 +155,33 @@ class BroadcastController extends ActiveController
 
         $model = Broadcast::find()
             ->where(['id' => $id])
-            ->andWhere(['in', 'status',  $status])
-            ->one();
+            ->andWhere(['in', 'status',  $status]);
+
+        if ($user->role < User::ROLE_ADMIN) {
+            // staff dan user hanya boleh melihat broadcast yang sesuai dengan area mereka
+            if ($user->kabkota_id) {
+                $model->andWhere(['or',
+                ['kabkota_id' => $user->kabkota_id],
+                ['kabkota_id' => null]]);
+            }
+            if ($user->kec_id) {
+                $model->andWhere(['or',
+                ['kec_id' => $user->kec_id],
+                ['kec_id' => null]]);
+            }
+            if ($user->kel_id) {
+                $model->andWhere(['or',
+                ['kel_id' => $user->kel_id],
+                ['kel_id' => null]]);
+            }
+            if ($user->rw) {
+                $model->andWhere(['or',
+                ['rw' => $user->rw],
+                ['rw' => null]]);
+            }
+        }
+
+        $model = $model->one();
 
         if ($model === null) {
             throw new NotFoundHttpException("Object not found: $id");
