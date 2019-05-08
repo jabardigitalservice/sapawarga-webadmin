@@ -1,7 +1,7 @@
 const jsonServer = require('json-server')
 const server = jsonServer.create()
 const router = jsonServer.router('db.json')
-const middlewares = jsonServer.defaults()
+const middlewares = jsonServer.defaults({noCors: true})
 
 router.render = (req, res) => {
   if (Array.isArray(res.locals.data)) {
@@ -41,6 +41,16 @@ server.post('/api/v1/aspirasi/likes/:id', (req, res) => {
   })
 })
 
+server.post('/api/v1/upload', (req, res) => {
+  res.json({
+    status: 200,
+    success: true,
+    data: {
+      photo_url: "http://103.122.5.71/api/storage/image/avatars/Lv9rvmvCMHt09yEbd30ggPl4cR81UJcH.jpg"
+    }
+  })
+})
+
 server.use(jsonServer.bodyParser)
 server.use((req, res, next) => {
   if (req.method === 'POST') {
@@ -52,19 +62,16 @@ server.use((req, res, next) => {
 })
 
 server.use(jsonServer.rewriter({
-  '/api/v1/phone-books/categories': '/phone-books-categories',
-  '/api/v1/phone-books/categories/:id': '/phone-books-categories/:id',
+  '/api/v1/categories': '/categories',
+  '/api/v1/categories/:id': '/categories/:id',
   '/api/v1/phone-books': '/phone-books',
   '/api/v1/phone-books/:id': '/phone-books/:id',
-  '/api/v1/aspirasi/categories': '/aspirasi-categories',
-  '/api/v1/aspirasi/categories/:id': '/aspirasi-categories/:id',
   '/api/v1/aspirasi/me': '/aspirasi',
   '/api/v1/aspirasi': '/aspirasi',
   '/api/v1/aspirasi/:id': '/aspirasi/:id',
-  '/api/v1/broadcast/categories': '/broadcast-categories',
-  '/api/v1/broadcast/categories/:id': '/broadcast-categories/:id',
   '/api/v1/broadcast': '/broadcast',
-  '/api/v1/broadcast/:id': '/broadcast/:id'
+  '/api/v1/broadcast/:id': '/broadcast/:id',
+  '/api/v1/upload': '/upload',
 }))
 
 server.use(middlewares)

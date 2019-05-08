@@ -156,15 +156,7 @@ $config = [
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',
-                    'controller' => 'v1/phone-books-category',
-                    'tokens' => [
-                        '{id}' => '<id:\d+>',
-                    ],
-                    'extraPatterns' => []
-                ],
-                [
-                    'class' => 'yii\rest\UrlRule',
-                    'controller' => 'v1/broadcast-category',
+                    'controller' => 'v1/category',
                     'tokens' => [
                         '{id}' => '<id:\d+>',
                     ],

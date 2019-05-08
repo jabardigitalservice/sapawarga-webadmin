@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models\category;
+namespace app\models;
 
 use Yii;
 use yii\behaviors\TimestampBehavior;
@@ -19,21 +19,6 @@ class Category extends \yii\db\ActiveRecord
     const STATUS_DELETED = -1;
     const STATUS_DISABLED = 0;
     const STATUS_ACTIVE = 10;
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function instantiate($row)
-    {
-        switch ($row['type']) {
-            case PhoneBookCategory::TYPE:
-                return new PhoneBookCategory();
-            case BroadcastCategory::TYPE:
-                return new BroadcastCategory();
-            default:
-            return new self;
-        }
-    }
 
     /**
      * {@inheritdoc}
@@ -138,9 +123,6 @@ class Category extends \yii\db\ActiveRecord
             if ($existingName > 0) {
                 $this->addError($attribute, Yii::t('app', 'error.category.taken'));
             }
-        } else {
-            // unknown request
-            $this->addError($attribute, Yii::t('app', 'Unknown request'));
         }
     }
 }

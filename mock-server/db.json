@@ -1,4 +1,69 @@
 {
+  "categories": [
+    {
+      "id": 1,
+      "type": "phonebook",
+      "name": "Layanan Kesehatan",
+      "status": 10,
+      "status_label": "Aktif",
+      "created_at": 1554076800,
+      "updated_at": 1554076800
+    },
+    {
+      "id": 2,
+      "type": "phonebook",
+      "name": "Layanan Ekonomi",
+      "status": 10,
+      "status_label": "Aktif",
+      "created_at": 1554076800,
+      "updated_at": 1554076800
+    },
+    {
+      "id": 3,
+      "type": "opinion",
+      "name": "Infrastruktur",
+      "status": 10,
+      "status_label": "Aktif",
+      "created_at": 1554076800,
+      "updated_at": 1554076800
+    },
+    {
+      "id": 4,
+      "type": "opinion",
+      "name": "Transportasi",
+      "status": 10,
+      "status_label": "Aktif",
+      "created_at": 1554076800,
+      "updated_at": 1554076800
+    },
+    {
+      "id": 5,
+      "type": "broadcast",
+      "name": "Sistem",
+      "status": 10,
+      "status_label": "Aktif",
+      "created_at": 1556079159,
+      "updated_at": 1556079159
+    },
+    {
+      "id": 6,
+      "type": "broadcast",
+      "name": "Sosialisasi",
+      "status": 10,
+      "status_label": "Aktif",
+      "created_at": 1556079159,
+      "updated_at": 1556079159
+    },
+    {
+      "id": 7,
+      "type": "broadcast",
+      "name": "Berita Hoax",
+      "status": 10,
+      "status_label": "Aktif",
+      "created_at": 1556079159,
+      "updated_at": 1556079159
+    }
+  ],
   "phone-books": [
     {
       "id": 1,
@@ -100,24 +165,6 @@
       "updated_at": 1554706345
     }
   ],
-  "phone-books-categories": [
-    {
-      "id": 1,
-      "name": "Layanan Kesehatan",
-      "status": 10,
-      "status_label": "Aktif",
-      "created_at": 1554076800,
-      "updated_at": 1554076800
-    },
-    {
-      "id": 2,
-      "name": "Layanan Ekonomi",
-      "status": 10,
-      "status_label": "Aktif",
-      "created_at": 1554076800,
-      "updated_at": 1554076800
-    }
-  ],
   "aspirasi": [
     {
       "id": 1,
@@ -156,9 +203,9 @@
         "id": 1,
         "name": "Muhammad Rahmat Irfan"
       },
-      "category_id": 1,
+      "category_id": 3,
       "category": {
-        "id": 1,
+        "id": 3,
         "name": "Infrastruktur"
       },
       "attachments": [
@@ -223,9 +270,9 @@
         "id": 1,
         "name": "Muhammad Rahmat Irfan"
       },
-      "category_id": 1,
+      "category_id": 3,
       "category": {
-        "id": 1,
+        "id": 3,
         "name": "Infrastruktur"
       },
       "attachments": [
@@ -290,9 +337,9 @@
         "id": 1,
         "name": "Muhammad Rahmat Irfan"
       },
-      "category_id": 1,
+      "category_id": 3,
       "category": {
-        "id": 1,
+        "id": 3,
         "name": "Infrastruktur"
       },
       "attachments": [
@@ -357,9 +404,9 @@
         "id": 1,
         "name": "Muhammad Rahmat Irfan"
       },
-      "category_id": 1,
+      "category_id": 3,
       "category": {
-        "id": 1,
+        "id": 3,
         "name": "Infrastruktur"
       },
       "attachments": [
@@ -424,9 +471,9 @@
         "id": 1,
         "name": "Muhammad Rahmat Irfan"
       },
-      "category_id": 1,
+      "category_id": 3,
       "category": {
-        "id": 1,
+        "id": 3,
         "name": "Infrastruktur"
       },
       "attachments": [
@@ -455,24 +502,6 @@
       "updated_at": 1554076800
     }
   ],
-  "aspirasi-categories": [
-    {
-      "id": 1,
-      "name": "Infrastruktur",
-      "status": 10,
-      "status_label": "Aktif",
-      "created_at": 1554076800,
-      "updated_at": 1554076800
-    },
-    {
-      "id": 2,
-      "name": "Transportasi",
-      "status": 10,
-      "status_label": "Aktif",
-      "created_at": 1554076800,
-      "updated_at": 1554076800
-    }
-  ],
   "broadcast": [
     {
       "id": 1,
@@ -491,9 +520,9 @@
         "id": 1,
         "name": "Administrator"
       },
-      "category_id": 1,
+      "category_id": 5,
       "category": {
-        "id": 1,
+        "id": 5,
         "name": "Sistem"
       },
       "created_at": 1556079159,
@@ -525,9 +554,9 @@
         "id": 2,
         "name": "Staff Kelurahan Cicaheum"
       },
-      "category_id": 2,
+      "category_id": 6,
       "category": {
-        "id": 2,
+        "id": 6,
         "name": "Sosialisasi"
       },
       "created_at": 1556079159,
@@ -553,39 +582,16 @@
         "id": 3,
         "name": "Tim Saber Hoax"
       },
-      "category_id": 3,
+      "category_id": 7,
       "category": {
-        "id": 3,
+        "id": 7,
         "name": "Berita Hoax"
       },
       "created_at": 1556079159,
       "updated_at": 1556079159
     }
   ],
-  "broadcast-categories": [
-    {
-      "id": 1,
-      "name": "Sistem",
-      "status": 10,
-      "status_label": "Aktif",
-      "created_at": 1556079159,
-      "updated_at": 1556079159
-    },
-    {
-      "id": 2,
-      "name": "Sosialisasi",
-      "status": 10,
-      "status_label": "Aktif",
-      "created_at": 1556079159,
-      "updated_at": 1556079159
-    },
-    {
-      "id": 3,
-      "name": "Berita Hoax",
-      "status": 10,
-      "status_label": "Aktif",
-      "created_at": 1556079159,
-      "updated_at": 1556079159
-    }
-  ]
+  "upload": {
+    "photo_url": "http://103.122.5.71/api/storage/image/avatars/Lv9rvmvCMHt09yEbd30ggPl4cR81UJcH.jpg"
+  }
 }

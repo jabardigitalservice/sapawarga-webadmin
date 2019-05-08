@@ -5,7 +5,7 @@ import Layout from '@/layout'
 const nomorPentingRouter = {
   path: '/nomor-penting',
   component: Layout,
-  redirect: 'noredirect',
+  redirect: '/nomor-penting/index',
   name: 'NomorPenting',
   meta: {
     title: 'nomor-penting-manage',
@@ -26,22 +26,23 @@ const nomorPentingRouter = {
       }
     },
     {
-      name: 'nomor-penting-edit',
-      path: 'edit/:id',
-      // component: () => import('@/views/nomorPenting/edit'),
-      hidden: true,
+      path: 'create',
+      component: () => import('@/views/nomorPenting/create'),
+      name: 'nomor-penting-create',
       meta: {
-        title: 'nomor-penting-edit',
+        title: 'nomor-penting-create',
         roles: ['admin']
       }
     },
     {
-      name: 'nomor-penting-create',
-      path: 'create',
-      // component: () => import('@/views/nomorPenting/add'),
+      path: 'edit/:id(\\d+)',
+      component: () => import('@/views/nomorPenting/edit'),
+      name: 'nomor-penting-edit',
       meta: {
-        title: 'nomor-penting-create',
+        title: 'nomor-penting-edit',
+        noCache: true,
         roles: ['admin']
+<<<<<<< HEAD
       }
     },
     {
@@ -53,6 +54,10 @@ const nomorPentingRouter = {
         title: 'Detail no penting',
         roles: ['admin']
       }
+=======
+      },
+      hidden: true
+>>>>>>> 719702a23bc4d658ccfd26d3050a9c8206cb903e
     }
   ]
 }
