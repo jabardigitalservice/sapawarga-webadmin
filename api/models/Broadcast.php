@@ -62,8 +62,8 @@ class Broadcast extends \yii\db\ActiveRecord
                 'pattern' => '/^[0-9]{3}$/',
                 'message' => Yii::t('app', 'error.rw.pattern')
             ],
+            ['rw', 'default'],
             [['author_id', 'category_id', 'kabkota_id', 'kec_id', 'kel_id', 'status'], 'integer'],
-            ['author_id', 'validateAuthorID'],
             ['category_id', 'validateCategoryID'],
             ['meta', 'default'],
         ];
@@ -120,22 +120,11 @@ class Broadcast extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * Checks if author_id is current user's id
-     *
-     * @param $attribute
-     * @param $params
-     */
-    public function validateAuthorID($attribute, $params)
-    {
-        $request = Yii::$app->request;
+    /** @inheritdoc */
+    public function beforeSave($insert) {
+        $this->author_id = Yii::$app->user->getId();
 
-        if ($request->isPost || $request->isPut) {
-            $user = User::findIdentity(Yii::$app->user->getId());
-            if ($user->id != $this->$attribute) {
-                $this->addError($attribute, Yii::t('app', 'error.id.invalid'));
-            }
-        }
+        return parent::beforeSave($insert);
     }
 
     /**
