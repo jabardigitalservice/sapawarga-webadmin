@@ -23,7 +23,6 @@
 </template>
 
 <script>
-// TODO: make table dynamic from API
 import PhotoBox from '@/components/PhotoBox'
 import { fetchRecord } from '@/api/phonebooks'
 
@@ -42,8 +41,7 @@ export default {
   },
 
   created() {
-    const id = this.$route.params && this.$route.params.id
-    this.id = id
+    this.id = this.$route.params && this.$route.params.id
     this.getDetail();
   },
 
@@ -90,7 +88,6 @@ export default {
             content: `: Latitude ${latitude}, Longitude ${longitude}`
           }
         ]
-        console.log(response.data)
       })
     }
   }
