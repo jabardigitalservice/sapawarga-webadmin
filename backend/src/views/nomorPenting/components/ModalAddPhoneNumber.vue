@@ -3,7 +3,7 @@
 
     <el-form ref="modal_phone_number" :status-icon="true" :model="form" :rules="rules" label-width="160px">
       <el-form-item label="Nomor Telepon" prop="phone_number">
-        <el-input v-model="form.phone_number" placeholder="Nomor Telepon" autocomplete="off" />
+        <el-input v-model="form.phone_number" placeholder="Masukkan angka, contoh: 022553135" autocomplete="off" />
       </el-form-item>
       <el-form-item label="Jenis" prop="type">
         <el-select v-model="form.type" placeholder="Pilih Jenis">
@@ -20,6 +20,8 @@
 </template>
 
 <script>
+import { containsInvalidPhoneNumber } from '@/utils/validate'
+
 export default {
   props: {
     modalAddPhoneNumberVisible: {
@@ -27,6 +29,14 @@ export default {
     }
   },
   data() {
+    const validatorPhoneNumber = (rule, value, callback) => {
+      if (containsInvalidPhoneNumber(value)) {
+        callback(new Error('Nomor Telepon hanya boleh berisi angka.'))
+      }
+
+      callback()
+    }
+
     return {
       form: {
         type: null,
@@ -38,7 +48,8 @@ export default {
         ],
         phone_number: [
           { required: true, message: 'Nomor Telepon harus diisi.', trigger: 'blur' },
-          { min: 3, message: 'Nomor Telepon minimal 3 digit.', trigger: 'blur' }
+          { min: 3, message: 'Nomor Telepon minimal 3 digit.', trigger: 'blur' },
+          { validator: validatorPhoneNumber, trigger: 'blur' }
         ]
       }
     }
