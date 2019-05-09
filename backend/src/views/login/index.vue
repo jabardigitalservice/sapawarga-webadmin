@@ -59,9 +59,6 @@
 
 <script>
 import { Message } from 'element-ui'
-// import { validPassword } from '@/utils/validate'
-// import LangSelect from '@/components/LangSelect'
-// import SocialSign from './socialsignin'
 
 export default {
   name: 'Login',
@@ -135,13 +132,6 @@ export default {
     },
 
     handleLogin() {
-      // const validateUsername = (rule, value, callback) => {
-      //   if (!validUsername(value)) {
-      //     callback(new Error("Nama pengguna Anda salah"));
-      //   } else {
-      //     callback();
-      //   }
-      // };
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
@@ -161,29 +151,10 @@ export default {
               this.$refs['loginForm'].resetFields()
             })
         } else {
-          console.log('error submit!!')
           return false
         }
       })
     }
-    // afterQRScan() {
-    //   if (e.key === 'x-admin-oauth-code') {
-    //     const code = getQueryObject(e.newValue)
-    //     const codeMap = {
-    //       wechat: 'code',
-    //       tencent: 'code'
-    //     }
-    //     const type = codeMap[this.auth_type]
-    //     const codeName = code[type]
-    //     if (codeName) {
-    //       this.$store.dispatch('LoginByThirdparty', codeName).then(() => {
-    //         this.$router.push({ path: this.redirect || '/' })
-    //       })
-    //     } else {
-    //       alert('第三方登录失败')
-    //     }
-    //   }
-    // }
   }
 }
 </script>
