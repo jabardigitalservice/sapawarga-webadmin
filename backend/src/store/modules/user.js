@@ -65,7 +65,7 @@ const actions = {
           resolve()
         })
         .catch(error => {
-          if (error.response.status === 422){
+          if (error.response.status === 422) {
             Message({
               message: 'Username atau Password salah',
               type: 'error',
