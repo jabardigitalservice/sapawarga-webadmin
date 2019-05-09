@@ -50,3 +50,11 @@ export function update(id, data) {
     data
   })
 }
+
+export function checkExist(query) {
+  return request({
+    url: '/phone-books/check-exist',
+    method: 'get',
+    params: query
+  })
+}

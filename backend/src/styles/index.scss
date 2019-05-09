@@ -201,3 +201,9 @@ code {
 .multiselect--active {
   z-index: 1000 !important;
 }
+
+.el-input--medium.is-disabled {
+  .el-input__validateIcon {
+    display: none
+  }
+}

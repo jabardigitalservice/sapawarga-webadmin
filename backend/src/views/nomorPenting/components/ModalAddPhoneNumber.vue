@@ -1,9 +1,9 @@
 <template>
-  <el-dialog title="Tambah Nomor Telepon" :append-to-body="true" :visible="modalAddPhoneNumberVisible" @closed="modalClosed">
+  <el-dialog title="Tambah Nomor Telepon" :append-to-body="true" :visible="modalAddPhoneNumberVisible" :close-on-press-escape="false" :show-close="false" :close-on-click-modal="false" @closed="modalClosed">
 
     <el-form ref="modal_phone_number" :status-icon="true" :model="form" :rules="rules" label-width="160px">
       <el-form-item label="Nomor Telepon" prop="phone_number">
-        <el-input v-model="form.phone_number" placeholder="Nomor Telepon" autocomplete="off" />
+        <el-input v-model="form.phone_number" placeholder="Masukkan angka, contoh: 022553135" autocomplete="off" />
       </el-form-item>
       <el-form-item label="Jenis" prop="type">
         <el-select v-model="form.type" placeholder="Pilih Jenis">
@@ -20,6 +20,10 @@
 </template>
 
 <script>
+import { checkExist } from '@/api/phonebooks'
+
+import { containsInvalidPhoneNumber } from '@/utils/validate'
+
 export default {
   props: {
     modalAddPhoneNumberVisible: {
@@ -27,6 +31,24 @@ export default {
     }
   },
   data() {
+    const validatorPhoneNumber = (rule, value, callback) => {
+      if (containsInvalidPhoneNumber(value)) {
+        callback(new Error('Nomor Telepon hanya boleh berisi angka.'))
+      }
+
+      callback()
+    }
+
+    const validatorNumberExist = async(rule, value, callback) => {
+      const { data } = await checkExist({ phone_number: value })
+
+      if (data.exist === true) {
+        callback(new Error('Nomor Telepon sudah terdaftar.'))
+      }
+
+      callback()
+    }
+
     return {
       form: {
         type: null,
@@ -34,11 +56,13 @@ export default {
       },
       rules: {
         type: [
-          { required: true, message: 'Jenis harus diisi.', trigger: 'blur' }
+          { required: true, message: 'Jenis harus diisi.', trigger: 'change' }
         ],
         phone_number: [
           { required: true, message: 'Nomor Telepon harus diisi.', trigger: 'blur' },
-          { min: 3, message: 'Nomor Telepon minimal 3 digit.', trigger: 'blur' }
+          { min: 3, message: 'Nomor Telepon minimal 3 digit.', trigger: 'blur' },
+          { validator: validatorPhoneNumber, trigger: 'blur' },
+          { validator: validatorNumberExist, trigger: 'blur' }
         ]
       }
     }

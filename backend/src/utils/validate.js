@@ -41,6 +41,18 @@ export function validEmail(email) {
   return reg.test(email)
 }
 
+export function validContainsSpecialCharacters(str) {
+  const reg = /[^a-zA-Z0-9 ]/
+
+  return reg.test(str)
+}
+
+export function containsInvalidPhoneNumber(str) {
+  const reg = /[^0-9]/
+
+  return reg.test(str)
+}
+
 export function isString(str) {
   if (typeof str === 'string' || str instanceof String) {
     return true
