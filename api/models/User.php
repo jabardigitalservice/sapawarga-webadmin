@@ -427,7 +427,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         return $fields;
     }
 
-    private function getRoleLabel()
+    public function getRoleLabel()
     {
         $roleLabel = '';
         switch ($this->role) {

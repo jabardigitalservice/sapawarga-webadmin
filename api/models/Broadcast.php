@@ -74,9 +74,20 @@ class Broadcast extends \yii\db\ActiveRecord
         $fields = [
             'id',
             'author_id',
-            'author',
+            'author' => function() {
+                return [
+                    'id'   => $this->author->id,
+                    'name' => $this->author->name,
+                    'role'   => $this->author->getRoleLabel(),
+                ];
+            },
             'category_id',
-            'category',
+            'category' => function() {
+                return [
+                    'id'   => $this->category->id,
+                    'name' => $this->category->name,
+                ];
+            },
             'title',
             'description',
             'kabkota_id',
