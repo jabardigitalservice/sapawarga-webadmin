@@ -1,11 +1,11 @@
 <template>
   <div class="app-container">
     <el-row :gutter="10">
-      <el-col :sm="24" :lg="8" :xl="6">
+      <el-col :sm="24" :lg="6" :xl="4">
         <PhotoBox :image="imageUrl" :height="height" />
         <!-- ini sample asli iframe, dimana gagal! <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.280178877438!2d108.20895931416229!3d-7.322392994715478!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zN8KwMTknMjAuNiJTIDEwOMKwMTInNDAuMSJF!5e0!3m2!1sen!2sid!4v1557246825382!5m2!1sen!2sid" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe> -->
         <!-- <iframe :src="urlMap" width="400" height="400" frameborder="0" style="border:0" allowfullscreen></iframe> -->
-        <vue-friendly-iframe :src="urlMap" :style="{'border':0}" @load="onLoad" @document-load="onDocumentLoad" />
+        <vue-friendly-iframe :src="urlMap" :style="{'border':0}" />
       </el-col>
       <el-col :sm="24" :lg="16" :xl="18">
         <el-card>
@@ -48,47 +48,48 @@ export default {
   methods: {
     getDetail() {
       fetchRecord(this.id).then(response => {
-        const { name, address, description, category, seq, kabkota_id, phone_numbers, latitude, longitude, cover_image_path
+        const { name, address, description, category, seq, kabkota, kecamatan, kelurahan, phone_numbers, latitude, longitude, cover_image_path
         // kec_id, kel_id,
         } = response.data
 
-        this.imageUrl = cover_image_path !== null ? cover_image_path : require('@/assets/user.png')
+        this.imageUrl = (cover_image_path ? cover_image_path : null)
         this.latitude = latitude
         this.longitude = longitude
         this.urlMap = `https://maps.google.com/maps?q=${latitude},${longitude}&hl=es;z=14&amp;output=embed`
         const textPhoneMsg = phone_numbers.map(e => e.type + ': ' + e.phone_number).join(', ')
+        const wilayah = [kabkota, kecamatan, kelurahan].filter(e => e.name !== null).map(e => e.name).join(', ')
         this.tableData = [
           {
             title: 'Nama Instansi',
-            content: ': ' + name
+            content: ': ' + (name ? name : '-')
           },
           {
             title: 'Alamat Instansi',
-            content: ': ' + address
+            content: ': ' + (address ? address : '-')
           },
           {
             title: 'Kategori Instansi',
-            content: ': ' + category.name
+            content: ': ' + (category ? category.name : '-')
           },
           {
             title: 'Deskripsi',
-            content: ': ' + description
+            content: ': ' + (description ? description : '-')
           },
           {
             title: 'Call Center',
-            content: ': ' + (seq === 1000 ? 'Ya' : 'Tidak')
+            content: ': ' + (seq === 1000 ? 'Ya' : 'Tidak') || '-'
           },
           {
             title: 'Wilayah',
-            content: ': ' + kabkota_id
+            content: ': ' + (wilayah ? wilayah : '-')
           },
           {
             title: 'Nomor Telepon',
-            content: ': ' + textPhoneMsg
+            content: ': ' + (textPhoneMsg ? textPhoneMsg : '-')
           },
           {
             title: 'Koordinat Lokasi',
-            content: `: Latitude ${latitude}, Longitude ${longitude}`
+            content: `: Latitude ${latitude}, Longitude ${longitude}` || '-'
           }
         ]
       })
