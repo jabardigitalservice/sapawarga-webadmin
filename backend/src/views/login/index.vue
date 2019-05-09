@@ -58,8 +58,6 @@
 </template>
 
 <script>
-import { Message } from 'element-ui'
-
 export default {
   name: 'Login',
   components: { },
@@ -143,11 +141,6 @@ export default {
             })
             .catch(() => {
               this.loading = false
-              Message({
-                message: 'Username atau Password salah',
-                type: 'error',
-                duration: 5 * 1000
-              })
               this.$refs['loginForm'].resetFields()
             })
         } else {
