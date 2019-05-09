@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="Tambah Nomor Telepon" :append-to-body="true" :visible="modalAddPhoneNumberVisible" @closed="modalClosed">
+  <el-dialog title="Tambah Nomor Telepon" :append-to-body="true" :visible="modalAddPhoneNumberVisible" @closed="modalClosed" :close-on-press-escape="false" :show-close="false" :close-on-click-modal="false">
 
     <el-form ref="modal_phone_number" :status-icon="true" :model="form" :rules="rules" label-width="160px">
       <el-form-item label="Nomor Telepon" prop="phone_number">
