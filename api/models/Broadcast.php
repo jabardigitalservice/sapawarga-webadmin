@@ -140,7 +140,7 @@ class Broadcast extends \yii\db\ActiveRecord
     }
 
     /**
-     * Checks if category_id is current user's id
+     * Checks if category_id is current user id
      *
      * @param $attribute
      * @param $params
