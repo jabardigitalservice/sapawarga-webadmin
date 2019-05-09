@@ -76,7 +76,7 @@ service.interceptors.response.use(
     Message({
       message: 'Oops, telah terjadi kesalahan, silahkan muat ulang halaman ini',
       type: 'error',
-      duration: 5 * 1000
+      duration: 9 * 1000
     })
     return Promise.reject(error)
   }
