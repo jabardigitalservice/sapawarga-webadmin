@@ -8,7 +8,7 @@
       <el-col :span="19">
         <el-form ref="form" :model="form" :rules="rules" :status-icon="true" label-width="160px">
           <el-form-item label="Nama Instansi" prop="name">
-            <el-input v-model="form.name" />
+            <el-input v-model="form.name" placeholder="Contoh: Rumah Sakit Daerah Kota Tasikmalaya" />
           </el-form-item>
 
           <el-form-item label="Alamat Instansi" prop="address">
