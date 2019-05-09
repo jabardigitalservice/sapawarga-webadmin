@@ -4,6 +4,7 @@ namespace app\commands;
 
 use app\models\Area;
 use app\models\PhoneBook;
+use app\models\Broadcast;
 use app\models\category\PhoneBookCategory;
 use app\models\category\BroadcastCategory;
 use tebazil\yii2seeder\Seeder;
@@ -26,6 +27,9 @@ class SeederController extends Controller
 
         echo 'Seeding Phonebooks...' . PHP_EOL;
         $this->actionPhoneBook();
+
+        echo 'Seeding Broadcasts...' . PHP_EOL;
+        $this->actionBroadcast();
     }
 
     public function actionArea()
@@ -208,6 +212,36 @@ class SeederController extends Controller
                 time(),
             ],
         ])->execute();
+    }
+
+    public function actionBroadcast()
+    {
+        Yii::$app->db->createCommand('TRUNCATE broadcasts')->execute();
+
+        $seeder = new Seeder();
+        $generator = $seeder->getGeneratorConfigurator();
+        $faker = $generator->getFakerConfigurator();
+
+        $author_id = [1, 2];
+        $category_id = [5, 6, 7];
+        $kabkota_id = [22, 23];
+
+        $seeder->table('broadcasts')->columns([
+            'id',
+            'author_id' => $faker->randomElement($author_id),
+            'category_id' => $faker->randomElement($category_id),
+            'title' => $faker->sentence,
+            'description' => $faker->text,
+            'kabkota_id' => $faker->optional()->randomElement($kabkota_id),
+            'kec_id' => null,
+            'kel_id' => null,
+            'rw' => null,
+            'status' => Broadcast::STATUS_ACTIVE,
+            'created_at' => time(),
+            'updated_at' => time(),
+        ])->rowQuantity(20);
+
+        $seeder->refill();
     }
 
     protected function setRandomKecamatan()

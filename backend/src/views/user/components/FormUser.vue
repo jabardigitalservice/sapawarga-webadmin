@@ -4,19 +4,12 @@
     <p class="warn-content">Profile Pengguna</p>
     <el-row :gutter="10">
       <!-- Left colomn -->
-      <el-col :sm="24" :lg="8" :xl="6" class="grid-content">
-        <el-form ref="user" :model="user" :rules="rules">
-          <el-form-item label="Photo" prop="photo">
-            <div v-if="imageData.length > 0" class="image-preview">
-              <img class="preview" :src="imageData">
-            </div>
-            <input type="file" class="input-image" accept="image/*" @change="onFileSelected">
-          </el-form-item>
-        </el-form>
+      <el-col :sm="24" :md="24" :lg="5" :xl="6" class="grid-content">
+        <uploadPhoto :link-edit-photo="setLinkEditPhoto" @onUpload="getUrlPhoto" />
       </el-col>
 
       <!-- Center colomn -->
-      <el-col :sm="24" :lg="15" :xl="14" class="grid-content">
+      <el-col :sm="24" :md="24" :lg="19" :xl="14" class="grid-content">
         <el-form
           ref="user"
           :model="user"
@@ -26,16 +19,15 @@
           class="demo-ruleForm"
           :rules="rules"
         >
-
-          <el-form-item label="Username" prop="username">
-            <el-input v-model="user.username" type="text" />
+          <el-form-item label="Username" :prop="usernameValidation">
+            <el-input v-model="user.username" type="text" :disabled="isEdit" @focus="changePropUsername" />
           </el-form-item>
           <el-form-item label="Nama Lengkap" prop="name">
             <el-input v-model="user.name" type="text" />
           </el-form-item>
 
-          <el-form-item label="Email" prop="email">
-            <el-input v-model="user.email" type="email" />
+          <el-form-item label="Email" :prop="emailValidation">
+            <el-input v-model="user.email" type="email" @focus="changePropEmail" />
           </el-form-item>
 
           <el-form-item label="Password" prop="password">
@@ -51,9 +43,9 @@
           </el-form-item>
 
           <el-row>
-            <el-col :span="12">
+            <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
               <el-form-item label="Peran" prop="role">
-                <el-select v-model="user.role" placeholder="Pilih Peran">
+                <el-select v-model="user.role" placeholder="Pilih Peran" :disabled="isEdit">
                   <el-option
                     v-for="item in filterRole"
                     :key="item.value"
@@ -63,15 +55,17 @@
                 </el-select>
               </el-form-item>
             </el-col>
-            <el-col :span="12" :style="{paddingLeft: formRightSide}">
+            <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" :style="{paddingLeft: formRightSide}" class="form-right-side-padding">
               <el-form-item
                 v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && checkPermission(['admin', 'staffProv']))"
                 label="Kab/Kota"
                 prop="kabkota"
               >
                 <el-select
+                  v-if="area !== null"
                   v-model="user.kabkota"
                   placeholder="Pilih Kab/Kota"
+                  :disabled="isEdit"
                   @change="getKecamatan"
                 >
                   <el-option
@@ -85,7 +79,7 @@
             </el-col>
           </el-row>
           <el-row>
-            <el-col :span="12">
+            <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
               <el-form-item
                 v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && checkPermission(['admin', 'staffProv', 'staffKabkota']))"
                 label="Kecamatan"
@@ -94,7 +88,7 @@
                 <el-select
                   v-model="user.kecamatan"
                   placeholder="Pilih Kecamatan"
-                  :disabled="user.kabkota == '' && checkPermission(['admin', 'staffProv'])"
+                  :disabled="(user.kabkota == '' && checkPermission(['admin', 'staffProv']) || isEdit)"
                   @change="getKelurahan"
                 >
                   <el-option
@@ -106,13 +100,13 @@
                 </el-select>
               </el-form-item>
             </el-col>
-            <el-col :span="12" :style="{paddingLeft: formRightSide}">
+            <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" :style="{paddingLeft: formRightSide}" class="form-right-side-padding">
               <el-form-item
                 v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffKec') && ! checkPermission(['staffKel']))"
                 label="Kelurahan"
                 prop="kelurahan"
               >
-                <el-select v-model="user.kelurahan" placeholder="Pilih Kelurahan" :disabled="user.kecamatan == '' && checkPermission(['admin', 'staffProv', 'staffKabkota'])">
+                <el-select v-model="user.kelurahan" placeholder="Pilih Kelurahan" :disabled="(user.kecamatan == '' && checkPermission(['admin', 'staffProv', 'staffKabkota']) || isEdit)">
                   <el-option
                     v-for="item in kelurahan"
                     :key="item.id"
@@ -122,19 +116,19 @@
                 </el-select>
               </el-form-item>
             </el-col>
-            <el-col :span="12" />
+            <!-- <el-col :span="12" /> -->
           </el-row>
           <el-row>
-            <el-col :span="12">
+            <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
               <el-form-item
                 v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffKec') && !(user.role == 'staffKel'))"
                 label="RW"
                 prop="rw"
               >
-                <el-input v-model="user.rw" type="text" placeholder="Contoh: 001" :disabled="user.kelurahan == '' && checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec'])" />
+                <el-input v-model="user.rw" type="text" placeholder="Contoh: 001" :disabled="(user.kelurahan == '' && checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec']) || isEdit)" />
               </el-form-item>
             </el-col>
-            <el-col :span="12" class="form-right-side">
+            <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="form-right-side">
               <el-form-item
                 v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffKec') && !(user.role == 'staffKel'))"
                 label="RT"
@@ -153,12 +147,12 @@
             </el-col>
           </el-row>
           <el-row>
-            <el-col :span="12">
+            <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
               <el-form-item label="Latitude" prop="latitude">
                 <el-input v-model="user.latitude" type="text" placeholder="Contoh: -6.943097" />
               </el-form-item>
             </el-col>
-            <el-col :span="12" class="form-right-side">
+            <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="form-right-side">
               <el-form-item label="Longitude" prop="longitude">
                 <el-input v-model="user.longitude" type="text" placeholder="Contoh: 107.633545" />
               </el-form-item>
@@ -184,7 +178,8 @@
             />
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="submitForm('user')">Tambah Pengguna</el-button>
+            <el-button v-if="(!isEdit)" type="primary" @click="submitForm('user')">Tambah Pengguna</el-button>
+            <el-button v-if="(isEdit)" type="primary" @click="updateForm('user')">Update Pengguna</el-button>
             <el-button @click="resetForm('user')">Batal</el-button>
           </el-form-item>
         </el-form>
@@ -193,10 +188,18 @@
   </div>
 </template>
 <script>
+import uploadPhoto from './uploadPhoto'
 import checkPermission from '@/utils/permission'
-import { requestArea, requestKecamatan, requestKelurahan, createUser, uploadImage } from '@/api/staff'
+import { requestArea, requestKecamatan, requestKelurahan, createUser, fetchUser, editUser } from '@/api/staff'
 import { Message } from 'element-ui'
 export default {
+  components: { uploadPhoto },
+  props: {
+    isEdit: {
+      type: Boolean,
+      default: false
+    }
+  },
   data() {
     const checkPhone = (rule, value, callback) => {
       const phoneStringFormat = value.toString()
@@ -208,20 +211,14 @@ export default {
       }
     }
     const validatePass = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('Password tolong diisi'))
-      } else {
-        if (this.user.confirmation !== '') {
-          this.$refs.user.validateField('confirmation')
-        }
-        callback()
+      if (this.user.confirmation !== '') {
+        this.$refs.user.validateField('confirmation')
       }
+      callback()
     }
 
     const checkPassword = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('Tolong ulangi password'))
-      } else if (value !== this.user.password) {
+      if (value !== this.user.password) {
         callback(new Error('Password tidak sesuai'))
       } else {
         callback()
@@ -268,7 +265,7 @@ export default {
           value: 'staffKec'
         },
         {
-          label: 'Admin kelurahan',
+          label: 'Admin Kelurahan',
           value: 'staffKel'
         },
         {
@@ -284,9 +281,13 @@ export default {
       kecamatan: '',
       kelurahan: '',
       image: '',
-      imageData: '',
+      imageData: require('@/assets/user.png'),
       preview: '',
       formRightSide: '10px',
+      emailValidation: 'email',
+      usernameValidation: 'username',
+      emitUrlPhoto: '',
+      setLinkEditPhoto: '',
       // validation
       rules: {
         username: [
@@ -310,6 +311,13 @@ export default {
             message:
               'Username hanya boleh menggunakan huruf kecil, angka, underscore dan titik',
             trigger: 'blur'
+          }
+        ],
+        errorUsername: [
+          {
+            required: true,
+            message: 'Username sudah digunakan',
+            trigger: 'change'
           }
         ],
         name: [
@@ -341,9 +349,21 @@ export default {
             trigger: 'blur'
           },
           {
+            min: 3,
+            message: 'Alamat email minimal 3 karakter',
+            trigger: 'blur'
+          },
+          {
             type: 'email',
             message: 'Format email yang Anda masukan salah',
             trigger: 'blur'
+          }
+        ],
+        errorEmail: [
+          {
+            required: true,
+            message: 'Alamat email sudah digunakan',
+            trigger: 'change'
           }
         ],
         password: [
@@ -364,8 +384,12 @@ export default {
             trigger: 'blur'
           },
           {
-            required: true,
             validator: validatePass,
+            trigger: 'blur'
+          },
+          {
+            required: !this.isEdit,
+            message: 'Password tidak boleh kosong',
             trigger: 'blur'
           }
         ],
@@ -387,8 +411,12 @@ export default {
             trigger: 'blur'
           },
           {
-            required: true,
             validator: checkPassword,
+            trigger: 'blur'
+          },
+          {
+            required: !this.isEdit,
+            message: 'Mohon ulangi password',
             trigger: 'blur'
           }
         ],
@@ -543,7 +571,7 @@ export default {
           },
           {
             type: 'url',
-            message: 'Tolong masukan url lengkap, contoh: https://www.facebook.com/namapengguna',
+            message: 'Masukan url facebook secara lengkap, contoh: https://www.facebook.com/namapengguna',
             trigger: 'blur'
           }
         ],
@@ -620,6 +648,10 @@ export default {
     }
   },
   created() {
+    if (this.isEdit) {
+      const id = this.$route.params && this.$route.params.id
+      this.fetchData(id)
+    }
     this.getArea()
     this.parentId
     this.parentArea
@@ -635,7 +667,53 @@ export default {
   },
 
   methods: {
+    getUrlPhoto(url) {
+      this.user.photo = url
+    },
     checkPermission,
+    fetchData(id) {
+      fetchUser(id).then(response => {
+        const dataUser = response.data
+        const dataUserPhotoUrl = dataUser.photo_url
+        let urlPhoto = null
+        if (dataUser.photo_url !== null) {
+          urlPhoto = dataUserPhotoUrl.substring(dataUserPhotoUrl.lastIndexOf('/', dataUserPhotoUrl.lastIndexOf('/') - 1) + 1)
+        } else {
+          urlPhoto = dataUser.photo_url
+        }
+        // // assign to data
+        if (dataUser.role_id === 'staffRW') {
+          this.user.kabkota = dataUser.kabkota.name
+          this.user.kecamatan = dataUser.kecamatan.name
+          this.user.kelurahan = dataUser.kelurahan.name
+        } else if (dataUser.role_id === 'staffKel') {
+          this.user.kabkota = dataUser.kabkota.name
+          this.user.kecamatan = dataUser.kecamatan.name
+          this.user.kelurahan = dataUser.kelurahan.name
+        } else if (dataUser.role_id === 'staffKec') {
+          this.user.kabkota = dataUser.kabkota.name
+          this.user.kecamatan = dataUser.kecamatan.name
+        } else if (dataUser.role_id === 'staffKabkota') {
+          this.user.kabkota = dataUser.kabkota.name
+        }
+        this.user.rw = dataUser.rw
+        this.user.rt = dataUser.rt
+        this.user.photo = urlPhoto
+        this.imageData = dataUser.photo_url || this.imageData
+        this.setLinkEditPhoto = dataUser.photo_url
+        this.user.twitter = dataUser.twitter
+        this.user.facebook = dataUser.facebook
+        this.user.instagram = dataUser.instagram
+        this.user.username = dataUser.username
+        this.user.name = dataUser.name
+        this.user.email = dataUser.email
+        this.user.phone = dataUser.phone
+        this.user.address = dataUser.address
+        this.user.latitude = dataUser.lat
+        this.user.longitude = dataUser.lon
+        this.user.role = dataUser.role_id
+      }).catch()
+    },
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
@@ -656,8 +734,8 @@ export default {
             twitter: this.user.twitter,
             instagram: this.user.instagram,
             photo_url: this.user.photo,
-            lat: (this.user.latitude === '-') || (this.user.latitude === '.') || (this.user.latitude === '+') ? null : this.user.latitude,
-            lon: (this.user.longitude === '-') || (this.user.latitude === '.') || (this.user.latitude === '+') ? null : this.user.longitude
+            lat: (this.user.latitude === '-') || (this.user.latitude === '.') || (this.user.latitude === ' + ') ? null : this.user.latitude,
+            lon: (this.user.longitude === '-') || (this.user.latitude === '.') || (this.user.latitude === ' + ') ? null : this.user.longitude
 
           }).then(() => {
             Message({
@@ -666,13 +744,12 @@ export default {
               duration: 1 * 1000
             })
             setTimeout(() => {
-              this.$router.push('/user/user-all')
+              this.$router.go(-1)
             }, 1000)
             this.$refs[formName].resetFields()
             this.imageData = 0
           })
             .catch(error => {
-              this.$refs[formName].resetFields()
               const usernameError = error.response.data.data.username
               const emailError = error.response.data.data.email
               if (!emailError) {
@@ -681,18 +758,26 @@ export default {
                   type: 'error',
                   duration: 5 * 1000
                 })
+                this.user.username = null
+                this.usernameValidation = 'errorUsername'
               } else if (!usernameError) {
                 Message({
                   message: emailError[0],
                   type: 'error',
                   duration: 5 * 1000
                 })
+                this.user.email = null
+                this.emailValidation = 'errorEmail'
               } else {
                 Message({
-                  message: 'Nama pengguna dan alamat email sudah digunakan',
+                  message: 'Username dan email sudah digunakan',
                   type: 'error',
                   duration: 5 * 1000
                 })
+                this.user.username = null
+                this.user.email = null
+                this.emailValidation = 'errorEmail'
+                this.usernameValidation = 'errorUsername'
               }
             })
         } else {
@@ -700,6 +785,82 @@ export default {
         }
       })
     },
+    updateForm(formName) {
+      const id = this.$route.params && this.$route.params.id
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          const userEdit = {
+            name: this.user.name,
+            email: this.user.email,
+            phone: this.user.phone,
+            address: this.user.address,
+            rt: this.user.rt,
+            facebook: this.user.facebook,
+            twitter: this.user.twitter,
+            instagram: this.user.instagram,
+            photo_url: this.user.photo,
+            lat: (this.user.latitude === '-') || (this.user.latitude === '.') || (this.user.latitude === ' + ') ? null : this.user.latitude,
+            lon: (this.user.longitude === '-') || (this.user.latitude === '.') || (this.user.latitude === ' + ') ? null : this.user.longitude
+          }
+          if (this.user.confirmation !== '') {
+            userEdit['password'] = this.user.confirmation
+          }
+          editUser(userEdit, id).then(response => {
+            Message({
+              message: 'Data user berhasil diupdate',
+              type: 'success',
+              duration: 1 * 1000
+            })
+            setTimeout(() => {
+              this.$router.go(-1)
+            }, 1000)
+            this.$refs[formName].resetFields()
+            this.imageData = 0
+          }).catch(error => {
+            const usernameError = error.response.data.data.username
+            const emailError = error.response.data.data.email
+            if (!emailError) {
+              Message({
+                message: usernameError[0],
+                type: 'error',
+                duration: 5 * 1000
+              })
+            } else if (!usernameError) {
+              Message({
+                message: emailError[0],
+                type: 'error',
+                duration: 5 * 1000
+              })
+            } else {
+              Message({
+                message: 'Username dan email sudah digunakan',
+                type: 'error',
+                duration: 5 * 1000
+              })
+            }
+            this.user.email = null
+            this.emailValidation = 'errorEmail'
+          })
+        } else {
+          return false
+        }
+      })
+    },
+    changePropEmail() {
+      if (this.emailValidation === 'errorEmail') {
+        this.emailValidation = 'email'
+      } else {
+        this.emailValidation = 'email'
+      }
+    },
+    changePropUsername() {
+      if (this.usernameValidation === 'errorUsername') {
+        this.usernameValidation = 'username'
+      } else {
+        this.usernameValidation = 'username'
+      }
+    },
+
     resetForm(formName) {
       this.$refs[formName].resetFields()
       this.$router.go(-1)
@@ -754,44 +915,6 @@ export default {
     },
     generate() {
       this.user.password = this.randomPassword(8)
-    },
-    // Upload image
-    onFileSelected(event) {
-      this.image = event.target.files[0]
-      const input = event.target
-      if (input.files && input.files[0]) {
-        // create a new FileReader to read this image and convert to base64 format
-        var reader = new FileReader()
-        // Define a callback function to run, when FileReader finishes its job
-        reader.onload = (e) => {
-          // Note: arrow function used here, so that "this.imageData" refers to the imageData of Vue component
-          // Read image as base64 and set to imageData
-          this.imageData = e.target.result
-        }
-        // Start the reader job - read file as a data url (base64 format)
-        this.preview = reader.readAsDataURL(input.files[0])
-        this.onUpload()
-      }
-    },
-    onUpload() {
-      const formData = new FormData()
-      formData.append('image', this.image, this.image.name)
-      uploadImage(formData).then(response => {
-        const link_photo = response.data.photo_url
-        const photo_name = link_photo.substring(link_photo.lastIndexOf('/')+1)
-        this.user.photo = photo_name
-      }).catch(error => {
-        const image_error = error.response.data.status
-        if (image_error === 500) {
-          Message({
-            message: 'Ukuran foto tidak boleh lebih dari 2 MB. Mohon unggah kembali foto Anda',
-            type: 'error',
-            duration: 5 * 1000
-          })
-        }
-        this.imageData = 0
-        this.image = null
-      })
     }
   }
 }
@@ -879,5 +1002,13 @@ p {
   width: 178px;
   height: 178px;
   display: block;
+}
+@media only screen and (max-width: 768px) {
+.form-right-side {
+  padding-left: 0px;
+}
+.form-right-side-padding {
+  margin-left: -10px;
+}
 }
 </style>
