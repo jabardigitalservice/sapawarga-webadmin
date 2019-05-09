@@ -74,7 +74,7 @@ service.interceptors.response.use(
   },
   error => {
     Message({
-      message: 'Tidak ada koneksi internet',
+      message: 'Oops, telah terjadi kesalahan, silahkan muat ulang halaman ini',
       type: 'error',
       duration: 5 * 1000
     })
