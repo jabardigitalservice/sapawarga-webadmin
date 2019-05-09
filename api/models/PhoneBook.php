@@ -42,6 +42,21 @@ class PhoneBook extends \yii\db\ActiveRecord
         return $this->hasOne(Category::class, ['id' => 'category_id']);
     }
 
+    public function getKelurahan()
+    {
+        return $this->hasOne(Area::className(), ['id' => 'kel_id']);
+    }
+
+    public function getKecamatan()
+    {
+        return $this->hasOne(Area::className(), ['id' => 'kec_id']);
+    }
+
+    public function getKabkota()
+    {
+        return $this->hasOne(Area::className(), ['id' => 'kabkota_id']);
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -66,8 +81,26 @@ class PhoneBook extends \yii\db\ActiveRecord
             'description',
             'phone_numbers',
             'kabkota_id',
+            'kabkota' => function () {
+                return [
+                    'id'   => optional($this->kabkota)->id,
+                    'name' => optional($this->kabkota)->name,
+                ];
+            },
             'kec_id',
+            'kecamatan' => function () {
+                return [
+                    'id'   => optional($this->kecamatan)->id,
+                    'name' => optional($this->kecamatan)->name,
+                ];
+            },
             'kel_id',
+            'kelurahan' => function () {
+                return [
+                    'id'   => optional($this->kelurahan)->id,
+                    'name' => optional($this->kelurahan)->name,
+                ];
+            },
             'latitude',
             'longitude',
             'seq',
