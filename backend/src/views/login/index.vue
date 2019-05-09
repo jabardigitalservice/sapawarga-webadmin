@@ -21,7 +21,7 @@
         <el-input
           ref="username"
           v-model="loginForm.username"
-          placeholder="Nama Pengguna"
+          placeholder="Username"
           name="username"
           type="text"
           auto-complete="on"
@@ -37,7 +37,7 @@
           ref="password"
           v-model="loginForm.password"
           :type="passwordType"
-          placeholder="Kata sandi"
+          placeholder="Password"
           name="password"
           auto-complete="on"
           @keyup.enter.native="handleLogin"
