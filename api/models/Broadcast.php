@@ -76,9 +76,9 @@ class Broadcast extends \yii\db\ActiveRecord
             'author_id',
             'author' => function () {
                 return [
-                    'id'   => $this->author->id,
-                    'name' => $this->author->name,
-                    'role'   => $this->author->getRoleLabel(),
+                    'id'            => $this->author->id,
+                    'name'          => $this->author->name,
+                    'role_label'    => $this->author->getRoleLabel(),
                 ];
             },
             'category_id',
