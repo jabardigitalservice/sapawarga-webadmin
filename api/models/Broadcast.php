@@ -74,7 +74,7 @@ class Broadcast extends \yii\db\ActiveRecord
         $fields = [
             'id',
             'author_id',
-            'author' => function() {
+            'author' => function () {
                 return [
                     'id'   => $this->author->id,
                     'name' => $this->author->name,
@@ -82,7 +82,7 @@ class Broadcast extends \yii\db\ActiveRecord
                 ];
             },
             'category_id',
-            'category' => function() {
+            'category' => function () {
                 return [
                     'id'   => $this->category->id,
                     'name' => $this->category->name,
