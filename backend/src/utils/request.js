@@ -74,7 +74,7 @@ service.interceptors.response.use(
   },
   error => {
     Message({
-      message: 'Nama pengguna atau kata sandi salah',
+      message: 'Tidak ada koneksi internet',
       type: 'error',
       duration: 5 * 1000
     })
