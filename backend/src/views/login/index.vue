@@ -58,7 +58,7 @@
 </template>
 
 <script>
-// import { validUsername } from '@/utils/validate'
+import { Message } from 'element-ui'
 // import { validPassword } from '@/utils/validate'
 // import LangSelect from '@/components/LangSelect'
 // import SocialSign from './socialsignin'
@@ -151,8 +151,14 @@ export default {
               this.$router.push({ path: this.redirect || '/' })
               this.loading = false
             })
-            .catch(() => {
+            .catch(error => {
               this.loading = false
+              Message({
+                message: 'Username atau Password salah',
+                type: 'error',
+                duration: 5 * 1000
+              }),
+              this.$refs['loginForm'].resetFields()
             })
         } else {
           console.log('error submit!!')
