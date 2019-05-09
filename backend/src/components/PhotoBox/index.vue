@@ -1,13 +1,7 @@
 <template>
-  <el-card>
-    <div class="photo">
-      <div class="box-center">
-        <div :style="{height:height}" class="box-card-header">
-          <img :src="image">
-        </div>
-      </div>
-    </div>
-  </el-card>
+  <div class="image-preview">
+    <img class="preview" :src="imageData">
+  </div>
 </template>
 
 <script>
@@ -16,11 +10,23 @@ export default {
   props: {
     image: {
       type: String,
-      required: true
+      default: null
     },
     height: {
       type: String,
       default: '220px'
+    }
+  },
+  data(){
+    return {
+      imageData: require('@/assets/user.png')
+    }
+  },
+  watch: {
+    image(){
+      if (this.image !== null) {
+        this.imageData = this.image
+      }
     }
   }
 }
@@ -28,25 +34,34 @@ export default {
 
 <style lang="scss" scoped>
 .box-center {
-  margin: 0 auto;
-  display: table;
+
+  // display: table;
 }
-/* .photo {
-  .box-center {
-    padding-top: 10px;
-  }
-} */
+
+img.preview {
+    width: 400px;
+    height: 300px;
+    background-color: white;
+    border: 1px solid #DDD;
+    padding: 5px;
+}
 .box-card-header {
   position: relative;
+  width: 600px;
+  height: 400px;
   /* height: 220px; */
   img {
+    // width: 100%;
+    // height: 100%;
+    // transition: all 0.2s linear;
+    // &:hover {
+    //   transform: scale(1.1, 1.1);
+    //   filter: contrast(130%);
     width: 100%;
     height: 100%;
-    transition: all 0.2s linear;
-    &:hover {
-      transform: scale(1.1, 1.1);
-      filter: contrast(130%);
+    background-color: white;
+    border: 1px solid #DDD;
     }
   }
-}
+
 </style>
