@@ -21,7 +21,7 @@
         <el-input
           ref="username"
           v-model="loginForm.username"
-          placeholder="Nama Pengguna"
+          placeholder="Username"
           name="username"
           type="text"
           auto-complete="on"
@@ -37,7 +37,7 @@
           ref="password"
           v-model="loginForm.password"
           :type="passwordType"
-          placeholder="Kata sandi"
+          placeholder="Password"
           name="password"
           auto-complete="on"
           @keyup.enter.native="handleLogin"
@@ -58,10 +58,7 @@
 </template>
 
 <script>
-// import { validUsername } from '@/utils/validate'
-// import { validPassword } from '@/utils/validate'
-// import LangSelect from '@/components/LangSelect'
-// import SocialSign from './socialsignin'
+import { Message } from 'element-ui'
 
 export default {
   name: 'Login',
@@ -135,13 +132,6 @@ export default {
     },
 
     handleLogin() {
-      // const validateUsername = (rule, value, callback) => {
-      //   if (!validUsername(value)) {
-      //     callback(new Error("Nama pengguna Anda salah"));
-      //   } else {
-      //     callback();
-      //   }
-      // };
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
@@ -153,31 +143,18 @@ export default {
             })
             .catch(() => {
               this.loading = false
+              Message({
+                message: 'Username atau Password salah',
+                type: 'error',
+                duration: 5 * 1000
+              })
+              this.$refs['loginForm'].resetFields()
             })
         } else {
-          console.log('error submit!!')
           return false
         }
       })
     }
-    // afterQRScan() {
-    //   if (e.key === 'x-admin-oauth-code') {
-    //     const code = getQueryObject(e.newValue)
-    //     const codeMap = {
-    //       wechat: 'code',
-    //       tencent: 'code'
-    //     }
-    //     const type = codeMap[this.auth_type]
-    //     const codeName = code[type]
-    //     if (codeName) {
-    //       this.$store.dispatch('LoginByThirdparty', codeName).then(() => {
-    //         this.$router.push({ path: this.redirect || '/' })
-    //       })
-    //     } else {
-    //       alert('第三方登录失败')
-    //     }
-    //   }
-    // }
   }
 }
 </script>
