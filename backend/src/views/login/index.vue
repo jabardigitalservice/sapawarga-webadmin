@@ -141,13 +141,13 @@ export default {
               this.$router.push({ path: this.redirect || '/' })
               this.loading = false
             })
-            .catch(error => {
+            .catch(() => {
               this.loading = false
               Message({
                 message: 'Username atau Password salah',
                 type: 'error',
                 duration: 5 * 1000
-              }),
+              })
               this.$refs['loginForm'].resetFields()
             })
         } else {
