@@ -20,6 +20,8 @@
 </template>
 
 <script>
+import { checkExist } from '@/api/phonebooks'
+
 import { containsInvalidPhoneNumber } from '@/utils/validate'
 
 export default {
@@ -37,6 +39,16 @@ export default {
       callback()
     }
 
+    const validatorNumberExist = async(rule, value, callback) => {
+      const { data } = await checkExist({ phone_number: value })
+
+      if (data.exist === true) {
+        callback(new Error('Nomor Telepon sudah terdaftar.'))
+      }
+
+      callback()
+    }
+
     return {
       form: {
         type: null,
@@ -44,12 +56,13 @@ export default {
       },
       rules: {
         type: [
-          { required: true, message: 'Jenis harus diisi.', trigger: 'blur' }
+          { required: true, message: 'Jenis harus diisi.', trigger: 'change' }
         ],
         phone_number: [
           { required: true, message: 'Nomor Telepon harus diisi.', trigger: 'blur' },
           { min: 3, message: 'Nomor Telepon minimal 3 digit.', trigger: 'blur' },
-          { validator: validatorPhoneNumber, trigger: 'blur' }
+          { validator: validatorPhoneNumber, trigger: 'blur' },
+          { validator: validatorNumberExist, trigger: 'blur' }
         ]
       }
     }

@@ -152,7 +152,10 @@ $config = [
                     'tokens' => [
                         '{id}' => '<id:\d+>',
                     ],
-                    'extraPatterns' => []
+                    'extraPatterns' => [
+                        'GET check-exist' => 'check-exist',
+                        'OPTIONS check-exist' => 'options',
+                    ]
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',
