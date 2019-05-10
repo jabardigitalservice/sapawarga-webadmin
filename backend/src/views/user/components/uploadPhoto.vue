@@ -6,15 +6,9 @@
           <img class="preview" :src="imageData">
         </div>
         <label class="custom-file-upload primary-custome">
-          <input type="file" class="input-image" accept="image/*" @change="onFileSelected" />
+          <input type="file" accept="image/*" @change="onFileSelected" />
             Pilih Foto
         </label>
-
-        <!-- <label class="custom-file-upload">
-          <input type="file"/>
-            Custom Upload
-        </label> -->
-
       </el-form-item>
     </el-form>
   </div>
@@ -88,61 +82,66 @@ export default {
 </script>
 <style lang="scss" scoped>
 input[type="file"] {
-    display: none;
+  display: none;
 }
 .custom-file-upload {
-    display: inline-block;
-    line-height: 1;
-    white-space: nowrap;
-    cursor: pointer;
-    background: #FFFFFF;
-    border: 1px solid #DCDFE6;
-    border-color: #DCDFE6;
-    color: #606266;
-    -webkit-appearance: none;
-    text-align: center;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    outline: none;
-    margin: 0;
-    -webkit-transition: .1s;
-    transition: .1s;
-    font-weight: 400;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-    padding: 12px 20px;
-    font-size: 14px;
-    border-radius: 4px;
-    margin-left: 75px;
-    width: 200px;
+  display: inline-block;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  background: #FFFFFF;
+  border: 1px solid #DCDFE6;
+  border-color: #DCDFE6;
+  color: #606266;
+  -webkit-appearance: none;
+  text-align: center;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  outline: none;
+  margin: 0;
+  -webkit-transition: .1s;
+  transition: .1s;
+  font-weight: 400;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  padding: 12px 20px;
+  font-size: 14px;
+  border-radius: 4px;
+  margin-left: 75px;
+  width: 200px;
 }
 .primary-custome {
-    color: #FFFFFF;
-    background-color: #1890ff;
-    border-color: #1890ff;
+  color: #409eff;
+  background: #ecf5ff;
+  border-color: #b3d8ff;
 }
-.input-image {
-  margin-left: 75px;
-}
-img.preview {
-    width: 200px;
-    background-color: white;
-    border: 1px solid #DDD;
-    padding: 5px;
-    margin-left: 25px;
 
+.primary-custome:hover {
+  background: #46a6ff;
+  border-color: #46a6ff;
+  color: #FFFFFF;
+}
+
+img.preview {
+  width: 200px;
+  margin-left: 25px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.43);
+  -moz-box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.43);
+  -webkit-box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.43);
 }
 @media only screen and (min-width: 1200px)  and (max-width: 1291px) {
   .input-image {
     margin-left: 0px;
   }
   img.preview {
-      width: 150px;
-      background-color: white;
-      border: 1px solid #DDD;
-      padding: 5px;
-      margin-left: 0px;
+    width: 150px;
+    margin-left: 0px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.43);
+    -moz-box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.43);
+    -webkit-box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.43);
   }
   .custom-file-upload {
     display: inline-block;
@@ -172,22 +171,29 @@ img.preview {
     width: 150px;
   }
   .primary-custome {
+    color: #409eff;
+    background: #ecf5ff;
+    border-color: #b3d8ff;
+  }
+
+  .primary-custome:hover {
+    background: #46a6ff;
+    border-color: #46a6ff;
     color: #FFFFFF;
-    background-color: #1890ff;
-    border-color: #1890ff;
   }
 }
 
-@media only screen and (min-width: 1292px)  and (max-width: 1600px) {
+@media only screen and (min-width: 1292px)  and (max-width: 1651px) {
   .input-image {
     margin-left: 0px;
   }
   img.preview {
-      width: 150px;
-      background-color: white;
-      border: 1px solid #DDD;
-      padding: 5px;
-      margin-left: 0px;
+    width: 150px;
+    margin-left: 0px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.43);
+    -moz-box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.43);
+    -webkit-box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.43);
   }
   .custom-file-upload {
     display: inline-block;
@@ -217,9 +223,15 @@ img.preview {
     width: 150px;
   }
   .primary-custome {
+    color: #409eff;
+    background: #ecf5ff;
+    border-color: #b3d8ff;
+  }
+
+  .primary-custome:hover {
+    background: #46a6ff;
+    border-color: #46a6ff;
     color: #FFFFFF;
-    background-color: #1890ff;
-    border-color: #1890ff;
   }
 }
 
