@@ -13,6 +13,7 @@ use yii\behaviors\TimestampBehavior;
  * @property string $address
  * @property string $description
  * @property mixed $phone_numbers
+ * @property int $category_id
  * @property int $kabkota_id
  * @property int $kec_id
  * @property int $kel_id
