@@ -6,8 +6,10 @@ use app\filters\auth\HttpBearerAuth;
 use app\models\PhoneBook;
 use app\models\PhoneBookSearch;
 use app\models\User;
+use Illuminate\Support\Arr;
 use Yii;
 use yii\base\Model;
+use yii\db\Expression;
 use yii\filters\AccessControl;
 use yii\filters\auth\CompositeAuth;
 use yii\helpers\Url;
@@ -42,6 +44,7 @@ class PhoneBookController extends ActiveController
                 'update' => ['put'],
                 'delete' => ['delete'],
                 'public' => ['get'],
+                'check-exist' => ['get']
             ],
         ];
 
@@ -67,11 +70,11 @@ class PhoneBookController extends ActiveController
         // setup access
         $behaviors['access'] = [
             'class' => AccessControl::className(),
-            'only'  => ['index', 'view', 'create', 'update', 'delete'], //only be applied to
+            'only'  => ['index', 'view', 'create', 'update', 'delete', 'check-exist'], //only be applied to
             'rules' => [
                 [
                     'allow'   => true,
-                    'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                    'actions' => ['index', 'view', 'create', 'update', 'delete', 'check-exist'],
                     'roles'   => ['admin', 'manageSettings'],
                 ],
                 [
@@ -146,6 +149,35 @@ class PhoneBookController extends ActiveController
         $response->setStatusCode(204);
 
         return 'ok';
+    }
+
+    public function actionCheckExist()
+    {
+        $params = Yii::$app->request->getQueryParams();
+        $phoneNumber = Arr::get($params, 'phone_number');
+
+        if (empty($phoneNumber)) {
+            $response = Yii::$app->getResponse();
+            $response->setStatusCode(422);
+
+            return 'Query Params phone_number is required.';
+        }
+
+        $expression = new Expression("JSON_CONTAINS(phone_numbers->'$[*].phone_number', json_array('$phoneNumber'))");
+
+        $model = PhoneBook::find()
+            ->andWhere($expression)
+            ->andWhere(['!=', 'status', PhoneBook::STATUS_DELETED])
+            ->one();
+
+        $response = Yii::$app->getResponse();
+        $response->setStatusCode(200);
+
+        if ($model !== null) {
+            return ['exist' => true];
+        }
+
+        return ['exist' => false];
     }
 
     /**

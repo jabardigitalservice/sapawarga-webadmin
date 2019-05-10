@@ -1,6 +1,7 @@
 import { login, getInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
+import { Message } from 'element-ui'
 
 const state = {
   token: getToken(),
@@ -64,7 +65,13 @@ const actions = {
           resolve()
         })
         .catch(error => {
-          error
+          if (error.response.status === 422) {
+            Message({
+              message: 'Username atau Password salah',
+              type: 'error',
+              duration: 5 * 1000
+            })
+          }
           reject()
         })
     })
