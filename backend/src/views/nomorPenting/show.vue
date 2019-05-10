@@ -85,7 +85,7 @@ export default {
           },
           {
             title: 'Koordinat Lokasi',
-            content: `: Latitude ${latitude}, Longitude ${longitude}` || '-'
+            content: ': ' + ((latitude && longitude !== null ) ? `Latitude ${latitude}, Longitude ${longitude}` : '-')
           }
         ]
       })
