@@ -5,7 +5,7 @@
         <div class="image-preview">
           <img class="preview" :src="imageData">
         </div>
-        <label class="custom-file-upload">
+        <label class="custom-file-upload primary-custome">
           <input type="file" class="input-image" accept="image/*" @change="onFileSelected" />
             Pilih Foto
         </label>
@@ -114,6 +114,13 @@ input[type="file"] {
     padding: 12px 20px;
     font-size: 14px;
     border-radius: 4px;
+    margin-left: 75px;
+    width: 200px;
+}
+.primary-custome {
+    color: #FFFFFF;
+    background-color: #1890ff;
+    border-color: #1890ff;
 }
 .input-image {
   margin-left: 75px;
@@ -126,7 +133,7 @@ img.preview {
     margin-left: 25px;
 
 }
-@media only screen and (min-width: 1200px)  and (max-width: 1600px) {
+@media only screen and (min-width: 1200px)  and (max-width: 1291px) {
   .input-image {
     margin-left: 0px;
   }
@@ -136,6 +143,83 @@ img.preview {
       border: 1px solid #DDD;
       padding: 5px;
       margin-left: 0px;
+  }
+  .custom-file-upload {
+    display: inline-block;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    background: #FFFFFF;
+    border: 1px solid #DCDFE6;
+    border-color: #DCDFE6;
+    color: #606266;
+    -webkit-appearance: none;
+    text-align: center;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    outline: none;
+    margin: 0;
+    -webkit-transition: .1s;
+    transition: .1s;
+    font-weight: 400;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    padding: 12px 20px;
+    font-size: 14px;
+    border-radius: 4px;
+    margin-left: 0px;
+    width: 150px;
+  }
+  .primary-custome {
+    color: #FFFFFF;
+    background-color: #1890ff;
+    border-color: #1890ff;
+  }
+}
+
+@media only screen and (min-width: 1292px)  and (max-width: 1600px) {
+  .input-image {
+    margin-left: 0px;
+  }
+  img.preview {
+      width: 150px;
+      background-color: white;
+      border: 1px solid #DDD;
+      padding: 5px;
+      margin-left: 0px;
+  }
+  .custom-file-upload {
+    display: inline-block;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    background: #FFFFFF;
+    border: 1px solid #DCDFE6;
+    border-color: #DCDFE6;
+    color: #606266;
+    -webkit-appearance: none;
+    text-align: center;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    outline: none;
+    margin: 0;
+    -webkit-transition: .1s;
+    transition: .1s;
+    font-weight: 400;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    padding: 12px 20px;
+    font-size: 14px;
+    border-radius: 4px;
+    margin-left: 50px;
+    width: 150px;
+  }
+  .primary-custome {
+    color: #FFFFFF;
+    background-color: #1890ff;
+    border-color: #1890ff;
   }
 }
 
