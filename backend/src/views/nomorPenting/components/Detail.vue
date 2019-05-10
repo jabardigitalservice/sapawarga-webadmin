@@ -61,7 +61,7 @@
 
 <script>
 import { fetchRecord, create, update } from '@/api/phonebooks'
-import { validContainsSpecialCharacters } from '@/utils/validate'
+import { validContainsSpecialCharacters, validCoordinate } from '@/utils/validate'
 
 import InputSelectArea from '@/components/InputSelectArea'
 import InputMap from '@/components/InputMap'
@@ -100,7 +100,7 @@ export default {
   data() {
     const validatorNameNoSpecialCharacters = (rule, value, callback) => {
       if (validContainsSpecialCharacters(value)) {
-        callback(new Error('Nama Instansi hanya boleh menggunakan Alfa Numerik dan Spasi.'))
+        callback(new Error('Nama Instansi hanya boleh menggunakan huruf dan angka.'))
       }
 
       callback()
@@ -113,13 +113,25 @@ export default {
       callback()
     }
 
-    const validatorCoordinate = (rule, value, callback) => {
+    const validatorCoordinateRequired = (rule, value, callback) => {
       if (_.isEmpty(this.coordinates[0]) === false && _.isEmpty(this.coordinates[1]) === true) {
         callback(new Error('Koordinat Lokasi (Longitude) harus diisi.'))
       }
 
       if (_.isEmpty(this.coordinates[0]) === true && _.isEmpty(this.coordinates[1]) === false) {
         callback(new Error('Koordinat Lokasi (Latitude) harus diisi.'))
+      }
+
+      callback()
+    }
+
+    const validatorCoordinateInputNumber = (rule, value, callback) => {
+      if (_.isEmpty(this.coordinates[0]) === false && validCoordinate(this.coordinates[0]) === false) {
+        callback(new Error('Koordinat Lokasi (Latitude) hanya boleh menggunakan angka, titik, - atau +'))
+      }
+
+      if (_.isEmpty(this.coordinates[1]) === false && validCoordinate(this.coordinates[1]) === false) {
+        callback(new Error('Koordinat Lokasi (Longitude) hanya boleh menggunakan angka, titik, - atau +'))
       }
 
       callback()
@@ -151,7 +163,8 @@ export default {
           { validator: validatorWilayah, trigger: 'change' }
         ],
         coordinates: [
-          { validator: validatorCoordinate, trigger: 'change' }
+          { validator: validatorCoordinateRequired, trigger: 'change' },
+          { validator: validatorCoordinateInputNumber, trigger: 'change' }
         ],
         kec_id: [
           { required: true, message: 'Kecamatan harus diisi.', trigger: 'blur' }

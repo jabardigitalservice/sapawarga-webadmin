@@ -53,6 +53,12 @@ export function containsInvalidPhoneNumber(str) {
   return reg.test(str)
 }
 
+export function validCoordinate(str) {
+  const reg = /^[0-9.+-]+$/
+
+  return reg.test(str)
+}
+
 export function isString(str) {
   if (typeof str === 'string' || str instanceof String) {
     return true

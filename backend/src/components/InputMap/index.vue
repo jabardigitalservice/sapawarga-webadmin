@@ -4,11 +4,11 @@
       <el-col :span="6">
         <el-form>
           <el-form-item label="Latitude">
-            <el-input v-model="latitude" placeholder="Latitude" @input="change" />
+            <el-input v-model="latitude" placeholder="Contoh: -6.943097" @input="change" />
           </el-form-item>
 
           <el-form-item label="Longitude">
-            <el-input v-model="longitude" placeholder="Longitude" @input="change" />
+            <el-input v-model="longitude" placeholder="Contoh: 107.633545" @input="change" />
           </el-form-item>
         </el-form>
       </el-col>
