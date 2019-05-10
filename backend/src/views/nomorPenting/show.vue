@@ -49,7 +49,7 @@ export default {
         const { name, address, description, category, seq, kabkota, kecamatan, kelurahan, phone_numbers, latitude, longitude, cover_image_path
         } = response.data
 
-        this.imageUrl = (cover_image_path ? cover_image_path : null)
+        this.imageUrl = ((cover_image_path !== null) ? cover_image_path : null)
         this.latitude = latitude
         this.longitude = longitude
         const textPhoneMsg = phone_numbers.map(e => e.type + ': ' + e.phone_number).join(', ')
@@ -57,19 +57,19 @@ export default {
         this.tableData = [
           {
             title: 'Nama Instansi',
-            content: ': ' + (name ? name : '-')
+            content: ': ' + (name !== null ? name : '-')
           },
           {
             title: 'Alamat Instansi',
-            content: ': ' + (address ? address : '-')
+            content: ': ' + (address !== null ? address : '-')
           },
           {
             title: 'Kategori Instansi',
-            content: ': ' + (category ? category.name : '-')
+            content: ': ' + (category !== null ? category.name : '-')
           },
           {
             title: 'Deskripsi',
-            content: ': ' + (description ? description : '-')
+            content: ': ' + (description !== null ? description : '-')
           },
           {
             title: 'Call Center',
@@ -77,11 +77,11 @@ export default {
           },
           {
             title: 'Wilayah',
-            content: ': ' + (wilayah ? wilayah : '-')
+            content: ': ' + (wilayah !== null ? wilayah : '-')
           },
           {
             title: 'Nomor Telepon',
-            content: ': ' + (textPhoneMsg ? textPhoneMsg : '-')
+            content: ': ' + (textPhoneMsg !== null ? textPhoneMsg : '-')
           },
           {
             title: 'Koordinat Lokasi',

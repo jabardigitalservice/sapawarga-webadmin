@@ -17,13 +17,13 @@ export default {
       default: '220px'
     }
   },
-  data(){
+  data() {
     return {
       imageData: require('@/assets/user.png')
     }
   },
   watch: {
-    image(){
+    image() {
       if (this.image !== null) {
         this.imageData = this.image
       }
