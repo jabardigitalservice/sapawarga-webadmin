@@ -75,7 +75,7 @@ export default {
         }
         if (image_error === 500) {
           Message({
-            message: 'Ukuran foto tidak boleh lebih dari 2 MB. Mohon unggah kembali foto Anda',
+            message: 'Oops, telah terjadi kesalahan, silahkan muat ulang halaman ini.',
             type: 'error',
             duration: 5 * 1000
           })
