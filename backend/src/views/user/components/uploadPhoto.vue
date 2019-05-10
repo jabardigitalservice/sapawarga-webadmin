@@ -67,6 +67,12 @@ export default {
       }).catch(error => {
         const image_error = error.response.data.status
         if (image_error === 422) {
+          Message({
+            message: 'Ukuran photo tidak boleh lebih dari 2 MB. Mohon unggah kembali foto Anda',
+            type: 'error',
+            duration: 5 * 1000
+          })
+        }
         if (image_error === 500) {
           Message({
             message: 'Ukuran foto tidak boleh lebih dari 2 MB. Mohon unggah kembali foto Anda',
