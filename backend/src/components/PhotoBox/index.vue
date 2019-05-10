@@ -43,8 +43,11 @@ img.preview {
     height: 350px;
     background-color: white;
     border: 1px solid #DDD;
-    padding: 5px;
     margin-left: 20px;
+    -webkit-box-shadow: 0px 0px 30px -10px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 30px -10px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 30px -10px rgba(0,0,0,0.75);
+
 }
 // .box-card-header {
 //   position: relative;
