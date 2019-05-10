@@ -13,6 +13,7 @@ use yii\behaviors\TimestampBehavior;
  * @property string $address
  * @property string $description
  * @property mixed $phone_numbers
+ * @property int $category_id
  * @property int $kabkota_id
  * @property int $kec_id
  * @property int $kel_id
@@ -64,8 +65,11 @@ class PhoneBook extends \yii\db\ActiveRecord
     {
         return [
             ['name', 'string', 'max' => 64],
-            [['name'], 'trim'],
-            [['name', 'phone_numbers', 'seq', 'status'], 'required'],
+
+            [['name', 'address', 'description'], 'trim'],
+            [['address', 'description', 'latitude', 'longitude', 'cover_image_path', 'meta'], 'default'],
+
+            [['name', 'category_id', 'phone_numbers', 'seq', 'status'], 'required'],
             [['category_id', 'kabkota_id', 'kec_id', 'kel_id', 'seq'], 'integer'],
         ];
     }

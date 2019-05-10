@@ -19,6 +19,7 @@ class PhoneBookTest extends \Codeception\Test\Unit
             'name' => 'Rumah Sakit',
         ];
 
+        $model->category_id      = 1;
         $model->kabkota_id       = 1;
         $model->kec_id           = 1;
         $model->kel_id           = 1;
@@ -40,6 +41,7 @@ class PhoneBookTest extends \Codeception\Test\Unit
         $model->address          = null;
         $model->description      = null;
         $model->phone_numbers    = null;
+        $model->category_id      = null;
         $model->kabkota_id       = null;
         $model->kec_id           = null;
         $model->kel_id           = null;
