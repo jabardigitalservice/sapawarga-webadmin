@@ -43,13 +43,16 @@ img.preview {
   box-shadow: 0px 0px 30px -10px rgba(0,0,0,0.75);
 }
 
-@media only screen and (min-width: 1200px)  and (max-width: 1400px) {
-
-}
-@media only screen and (max-width: 1200px) {
-  .image {
-    // padding-left: 30%;
-    background-color: black;
+@media only screen and (min-width: 1200px) and (max-width: 1570px) {
+  img.preview {
+    width: 300px;
+    height: 250px;
+    border-radius: 5px;
+    margin-left: 20px;
+    -webkit-box-shadow: 0px 0px 30px -10px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 30px -10px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 30px -10px rgba(0,0,0,0.75);
   }
 }
+
 </style>
