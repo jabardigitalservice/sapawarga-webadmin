@@ -2,7 +2,7 @@
 
 namespace tests\models;
 
-use app\models\UserPhotoUploadForm;
+use app\models\GeneralUploadForm;
 use yii\web\UploadedFile;
 
 class GeneralUploadFormTest extends \Codeception\Test\Unit
