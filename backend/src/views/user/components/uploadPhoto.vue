@@ -2,12 +2,14 @@
   <div class="app-container">
     <el-form>
       <el-form-item label="Photo" prop="photo">
-        <div class="image-preview">
-          <img class="preview" :src="imageData">
+        <div class="image-preview" >
+          <div v-loading="loading">
+            <img class="preview" :src="imageData" >
+          </div>
         </div>
         <label class="custom-file-upload primary-custome">
           <input type="file" accept="image/*" @change="onFileSelected" />
-            Pilih Foto
+            Pilih Photo
         </label>
       </el-form-item>
     </el-form>
@@ -27,7 +29,8 @@ export default {
     return {
       imageData: require('@/assets/user.png'),
       image: '',
-      urlImage: null
+      urlImage: null,
+      loading: false
     }
   },
   watch: {
@@ -56,14 +59,15 @@ export default {
       }
     },
     onUpload() {
+      this.loading = true
       const formData = new FormData()
       formData.append('image', this.image, this.image.name)
       uploadImage(formData).then(response => {
         const link_photo = response.data.photo_url
         const photo_name = link_photo.substring(link_photo.lastIndexOf('/', link_photo.lastIndexOf('/') - 1) + 1)
         this.urlImage = photo_name
-
         this.$emit('onUpload', this.urlImage)
+        this.loading = false
       }).catch(error => {
         const image_error = error.response.data.status
         if (image_error === 422) {
@@ -80,6 +84,7 @@ export default {
             duration: 5 * 1000
           })
         }
+        this.loading = false
         this.imageData = require('@/assets/user.png')
         this.image = null
       })
