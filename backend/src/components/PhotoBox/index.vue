@@ -1,5 +1,5 @@
 <template>
-  <div class="image-preview image">
+  <div class="image-preview">
     <img class="preview" :src="imageData">
   </div>
 </template>
