@@ -11,10 +11,6 @@ export default {
     image: {
       type: String,
       default: null
-    },
-    height: {
-      type: String,
-      default: '220px'
     }
   },
   data() {
