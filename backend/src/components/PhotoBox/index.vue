@@ -40,28 +40,29 @@ export default {
 
 img.preview {
     width: 400px;
-    height: 300px;
+    height: 350px;
     background-color: white;
     border: 1px solid #DDD;
     padding: 5px;
+    margin-left: 20px;
 }
-.box-card-header {
-  position: relative;
-  width: 600px;
-  height: 400px;
-  /* height: 220px; */
-  img {
-    // width: 100%;
-    // height: 100%;
-    // transition: all 0.2s linear;
-    // &:hover {
-    //   transform: scale(1.1, 1.1);
-    //   filter: contrast(130%);
-    width: 100%;
-    height: 100%;
-    background-color: white;
-    border: 1px solid #DDD;
-    }
-  }
+// .box-card-header {
+//   position: relative;
+//   width: 600px;
+//   height: 400px;
+//   /* height: 220px; */
+//   img {
+//     // width: 100%;
+//     // height: 100%;
+//     // transition: all 0.2s linear;
+//     // &:hover {
+//     //   transform: scale(1.1, 1.1);
+//     //   filter: contrast(130%);
+//     width: 100%;
+//     height: 100%;
+//     background-color: white;
+//     border: 1px solid #DDD;
+//     }
+//   }
 
 </style>
