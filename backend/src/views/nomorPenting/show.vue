@@ -3,7 +3,7 @@
     <el-row :gutter="10">
       <el-col :sm="24" :lg="7" :xl="5">
         <PhotoBox :image="imageUrl" :height="height" />
-        <vue-friendly-iframe :src="`https://maps.google.com/maps?q=${latitude},${longitude}&hl=es;z=14&amp;output=embed`" :style="{'border':0}" class="map" />
+        <vue-friendly-iframe id="map" :src="`https://maps.google.com/maps?q=${latitude},${longitude}&hl=es;z=14&amp;output=embed`" :style="{'border':0}" class="map" />
       </el-col>
       <el-col :sm="24" :lg="16" :xl="18">
         <el-card>
@@ -94,8 +94,8 @@ export default {
 }
 </script>
 
-<style>
-iframe {
+<style lang="scss">
+#map iframe {
   width: 400px;
   height: 350px;
   margin-left: 20px;
@@ -104,4 +104,5 @@ iframe {
   -moz-box-shadow: 0px 0px 30px -10px rgba(0,0,0,0.75);
   box-shadow: 0px 0px 30px -10px rgba(0,0,0,0.75);
 }
+
 </style>
