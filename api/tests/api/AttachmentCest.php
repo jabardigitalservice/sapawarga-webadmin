@@ -9,13 +9,13 @@ class AttachmentCest
 
     public function postSuccessTest(ApiTester $I)
     {
-        $I->amUser();
+        $I->amStaff();
 
         $I->deleteHeader('Content-Type');
 
         $filePath = __DIR__ . '/../data/example.jpg';
 
-        $I->sendPOST('/v1/upload', [], [
+        $I->sendPOST('/v1/attachments', [], [
             'image' => [
                 'name'     => 'example.jpg',
                 'type'     => 'image/jpeg',
@@ -36,11 +36,11 @@ class AttachmentCest
 
     public function postNoFileTest(ApiTester $I)
     {
-        $I->amUser();
+        $I->amStaff();
 
         $I->deleteHeader('Content-Type');
 
-        $I->sendPOST('/v1/upload');
+        $I->sendPOST('/v1/attachments');
 
         $I->canSeeResponseCodeIs(422);
         $I->seeResponseIsJson();
@@ -53,13 +53,13 @@ class AttachmentCest
 
     public function postParamTypeEmptyTest(ApiTester $I)
     {
-        $I->amUser();
+        $I->amStaff();
 
         $I->deleteHeader('Content-Type');
 
         $filePath = __DIR__ . '/../data/example.jpg';
 
-        $I->sendPOST('/v1/upload', [], [
+        $I->sendPOST('/v1/attachments', [], [
             'image' => [
                 'name'     => 'example.jpg',
                 'type'     => 'image/jpeg',
