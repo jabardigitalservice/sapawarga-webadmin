@@ -5,7 +5,16 @@
         <div class="image-preview">
           <img class="preview" :src="imageData">
         </div>
-        <input type="file" class="input-image" accept="image/*" @change="onFileSelected">
+        <label class="custom-file-upload">
+          <input type="file" class="input-image" accept="image/*" @change="onFileSelected" />
+            Pilih Foto
+        </label>
+
+        <!-- <label class="custom-file-upload">
+          <input type="file"/>
+            Custom Upload
+        </label> -->
+
       </el-form-item>
     </el-form>
   </div>
@@ -78,6 +87,34 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+input[type="file"] {
+    display: none;
+}
+.custom-file-upload {
+    display: inline-block;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    background: #FFFFFF;
+    border: 1px solid #DCDFE6;
+    border-color: #DCDFE6;
+    color: #606266;
+    -webkit-appearance: none;
+    text-align: center;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    outline: none;
+    margin: 0;
+    -webkit-transition: .1s;
+    transition: .1s;
+    font-weight: 400;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    padding: 12px 20px;
+    font-size: 14px;
+    border-radius: 4px;
+}
 .input-image {
   margin-left: 75px;
 }
@@ -103,3 +140,5 @@ img.preview {
 }
 
 </style>
+
+}
