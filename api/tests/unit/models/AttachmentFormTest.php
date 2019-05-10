@@ -2,14 +2,14 @@
 
 namespace tests\models;
 
-use app\models\GeneralUploadForm;
+use app\models\AttachmentForm;
 use yii\web\UploadedFile;
 
-class GeneralUploadFormTest extends \Codeception\Test\Unit
+class AttachmentFormTest extends \Codeception\Test\Unit
 {
     public function testValidateRequired()
     {
-        $model = new GeneralUploadForm();
+        $model = new AttachmentForm();
 
         $this->assertFalse($model->validate());
 
@@ -29,7 +29,7 @@ class GeneralUploadFormTest extends \Codeception\Test\Unit
             ],
         ];
 
-        $model       = new GeneralUploadForm();
+        $model       = new AttachmentForm();
         $model->file = UploadedFile::getInstanceByName('file');
         $model->type = 'phonebook';
 

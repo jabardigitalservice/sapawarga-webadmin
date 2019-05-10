@@ -5,7 +5,7 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 
-class GeneralUploadForm extends Model
+class AttachmentForm extends Model
 {
     public $file;
     public $type;

@@ -1,6 +1,6 @@
 <?php
 
-class GeneralUploadCest
+class AttachmentCest
 {
     public function _before(ApiTester $I)
     {
