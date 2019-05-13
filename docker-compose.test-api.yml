@@ -28,7 +28,6 @@ services:
       - .env-dev
     volumes:
       - ./api:/srv
-      - ./api/vendor:/srv/vendor
 
   database:
     image: mysql:5.7
