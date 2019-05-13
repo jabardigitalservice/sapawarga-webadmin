@@ -20,15 +20,5 @@ describe('PhotoBox', () => {
 
     expect(wrapper.find('img').exists()).toBeTruthy()
     expect(wrapper.find('img').attributes('src')).toBe(sampleImage)
-
-    // make sure default value for height is set
-    expect(wrapper.find('.box-card-header').attributes('style')).toEqual('height: 220px;')
-  })
-
-  it('renders with custom height', () => {
-    const expectedHeight = '500px;'
-    const wrapper = factory({ image: sampleImage, height: '500px' })
-
-    expect(wrapper.find('.box-card-header').attributes('style')).toBe('height: ' + expectedHeight)
   })
 })
