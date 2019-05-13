@@ -28,13 +28,12 @@ services:
       - .env-dev
     volumes:
       - ./api:/srv
+      - /srv/vendor
 
   database:
     image: mysql:5.7
     networks:
       - internal
-    ports:
-      - 3306:3306
     env_file:
       - .env-dev
 
