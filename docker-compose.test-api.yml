@@ -1,0 +1,49 @@
+version: '3'
+services:
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile.test-api
+    image: jdsteam/sapawarga-nginx:1.0
+    networks:
+      - internal
+    volumes:
+      - ./nginx:/etc/nginx/html
+    depends_on:
+      - api
+      - memcached
+    ports:
+      - 80:80
+      - 443:443
+
+  api:
+    build:
+      context: ./api
+    image: jdsteam/sapawarga-api:1.0
+    networks:
+      - internal
+    depends_on:
+      - database
+    env_file:
+      - .env-dev
+    volumes:
+      - ./api:/srv
+      - ./api/vendor:/srv/vendor
+
+  database:
+    image: mysql:5.7
+    networks:
+      - internal
+    ports:
+      - 3306:3306
+    env_file:
+      - .env-dev
+
+  memcached:
+    image: memcached:latest
+    networks:
+      - internal
+
+networks:
+  internal:
+    driver: bridge
