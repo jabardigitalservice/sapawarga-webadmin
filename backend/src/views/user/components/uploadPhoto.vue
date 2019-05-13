@@ -2,14 +2,14 @@
   <div class="app-container">
     <el-form>
       <el-form-item label="Photo" prop="photo">
-        <div class="image-preview" >
+        <div class="image-preview">
           <div v-loading="loading">
-            <img class="preview" :src="imageData" >
+            <img class="preview" :src="imageData">
           </div>
         </div>
         <label class="custom-file-upload primary-custome">
-          <input type="file" accept="image/*" @change="onFileSelected" />
-            Pilih Photo
+          <input type="file" accept="image/*" @change="onFileSelected">
+          Pilih Photo
         </label>
       </el-form-item>
     </el-form>
