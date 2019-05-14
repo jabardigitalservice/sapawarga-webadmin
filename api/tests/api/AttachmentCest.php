@@ -16,13 +16,14 @@ class AttachmentCest
         $filePath = __DIR__ . '/../data/example.jpg';
 
         $I->sendPOST('/v1/attachments', [], [
-            'image' => [
+            'file' => [
                 'name'     => 'example.jpg',
                 'type'     => 'image/jpeg',
                 'error'    => UPLOAD_ERR_OK,
                 'size'     => filesize($filePath),
                 'tmp_name' => $filePath,
             ],
+            'type' => 'phonebook_photo',
         ]);
 
         $I->canSeeResponseCodeIs(200);
@@ -60,13 +61,69 @@ class AttachmentCest
         $filePath = __DIR__ . '/../data/example.jpg';
 
         $I->sendPOST('/v1/attachments', [], [
-            'image' => [
+            'file' => [
                 'name'     => 'example.jpg',
                 'type'     => 'image/jpeg',
                 'error'    => UPLOAD_ERR_OK,
                 'size'     => filesize($filePath),
                 'tmp_name' => $filePath,
             ],
+        ]);
+
+        $I->canSeeResponseCodeIs(422);
+        $I->seeResponseIsJson();
+
+        $I->seeResponseContainsJson([
+            'success' => false,
+            'status'  => 422,
+        ]);
+    }
+
+    public function postPhoneBookPhotoFileSizeValidTest(ApiTester $I)
+    {
+        $I->amStaff();
+
+        $I->deleteHeader('Content-Type');
+
+        $filePath = __DIR__ . '/../data/example.jpg';
+
+        $I->sendPOST('/v1/attachments', [], [
+            'file' => [
+                'name'     => 'example.jpg',
+                'type'     => 'image/jpeg',
+                'error'    => UPLOAD_ERR_OK,
+                'size'     => filesize($filePath),
+                'tmp_name' => $filePath,
+            ],
+            'type' => 'phonebook_photo',
+        ]);
+
+        $I->canSeeResponseCodeIs(422);
+        $I->seeResponseIsJson();
+
+        $I->seeResponseContainsJson([
+            'success' => false,
+            'status'  => 422,
+        ]);
+    }
+
+    public function postPhoneBookPhotoFileSizeBigTest(ApiTester $I)
+    {
+        $I->amStaff();
+
+        $I->deleteHeader('Content-Type');
+
+        $filePath = __DIR__ . '/../data/example.jpg';
+
+        $I->sendPOST('/v1/attachments', [], [
+            'file' => [
+                'name'     => 'example.jpg',
+                'type'     => 'image/jpeg',
+                'error'    => UPLOAD_ERR_OK,
+                'size'     => filesize($filePath),
+                'tmp_name' => $filePath,
+            ],
+            'type' => 'phonebook_photo',
         ]);
 
         $I->canSeeResponseCodeIs(422);
