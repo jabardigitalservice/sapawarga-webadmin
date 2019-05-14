@@ -12,7 +12,9 @@ export default {
     'nomor-penting-list': 'Daftar Nomor Penting',
     'nomor-penting-create': 'Tambah Nomor Penting',
     'nomor-penting-edit': 'Edit Nomor Penting',
-    'nomor-penting-detail': 'Detail Nomor Penting'
+    'nomor-penting-detail': 'Detail Nomor Penting',
+    'broadcast-manage': 'Broadcast',
+    'broadcast-create': 'Tambah Broadcast'
   },
   crud: {
     'list-empty': 'Belum ada data.',
