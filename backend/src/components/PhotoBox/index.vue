@@ -34,9 +34,9 @@ img.preview {
   height: 350px;
   border-radius: 5px;
   margin-left: 20px;
-  -webkit-box-shadow: 0px 0px 30px -10px rgba(0,0,0,0.75);
-  -moz-box-shadow: 0px 0px 30px -10px rgba(0,0,0,0.75);
-  box-shadow: 0px 0px 30px -10px rgba(0,0,0,0.75);
+  -webkit-box-shadow: 0px 0px 25px -10px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 25px -10px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 25px -10px rgba(0,0,0,0.75);
 }
 
 @media only screen and (min-width: 1200px) and (max-width: 1570px) {
@@ -45,9 +45,9 @@ img.preview {
     height: 200px;
     border-radius: 5px;
     margin-left: 20px;
-    -webkit-box-shadow: 0px 0px 30px -10px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px 0px 30px -10px rgba(0,0,0,0.75);
-    box-shadow: 0px 0px 30px -10px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 0px 0px 25px -10px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 25px -10px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 25px -10px rgba(0,0,0,0.75);
   }
 }
 
