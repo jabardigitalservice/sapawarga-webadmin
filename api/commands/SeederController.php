@@ -61,41 +61,8 @@ class SeederController extends Controller
     {
         Yii::$app->db->createCommand('TRUNCATE phonebooks')->execute();
 
-        $seeder = new Seeder();
-        $generator = $seeder->getGeneratorConfigurator();
-        $faker = $generator->getFakerConfigurator();
-
-        $kabKota = [22, 23, 26];
-
-        $seeder->table('phonebooks')->columns([
-            'id',
-            'name' => $faker->company,
-            'description' => $faker->text,
-            'address' => $faker->address,
-            'phone_numbers' => new JsonExpression([
-                [
-                    'type' => 'phone',
-                    'phone_number' => '022-123456',
-                ],
-                [
-                    'type' => 'message',
-                    'phone_number' => '022-098763',
-                ],
-            ]),
-            'kabkota_id' => $faker->randomElement($kabKota),
-            'status' => PhoneBook::STATUS_ACTIVE,
-            'seq' => 1,
-            'latitude' => $faker->latitude('-6.148534', '-7.484602'),
-            'longitude' => $faker->longitude('106.022438', '108.680921'),
-            'cover_image_path' => $faker->optional()->imageUrl(800, 480, 'city'),
-            'category_id' => $faker->randomElement([1, 2, 3, 4]),
-            'created_at' => time(),
-            'updated_at' => time(),
-        ])->rowQuantity(500);
-
-        $seeder->refill();
-
-        $this->setRandomKecamatan();
+        $sql = file_get_contents(__DIR__ . '/../migrations/seeder/phonebook.sql');
+        Yii::$app->db->createCommand($sql)->execute();
 
         // Khusus Call Center
         Yii::$app->db->createCommand()->batchInsert('phonebooks', [
