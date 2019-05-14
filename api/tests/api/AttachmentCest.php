@@ -15,7 +15,9 @@ class AttachmentCest
 
         $filePath = __DIR__ . '/../data/example.jpg';
 
-        $I->sendPOST('/v1/attachments', [], [
+        $I->sendPOST('/v1/attachments', [
+            'type' => 'phonebook_photo',
+        ], [
             'file' => [
                 'name'     => 'example.jpg',
                 'type'     => 'image/jpeg',
@@ -23,7 +25,6 @@ class AttachmentCest
                 'size'     => filesize($filePath),
                 'tmp_name' => $filePath,
             ],
-            'type' => 'phonebook_photo',
         ]);
 
         $I->canSeeResponseCodeIs(200);
@@ -87,7 +88,9 @@ class AttachmentCest
 
         $filePath = __DIR__ . '/../data/example.jpg';
 
-        $I->sendPOST('/v1/attachments', [], [
+        $I->sendPOST('/v1/attachments', [
+            'type' => 'phonebook_photo',
+        ], [
             'file' => [
                 'name'     => 'example.jpg',
                 'type'     => 'image/jpeg',
@@ -95,43 +98,14 @@ class AttachmentCest
                 'size'     => filesize($filePath),
                 'tmp_name' => $filePath,
             ],
-            'type' => 'phonebook_photo',
         ]);
 
-        $I->canSeeResponseCodeIs(422);
+        $I->canSeeResponseCodeIs(true);
         $I->seeResponseIsJson();
 
         $I->seeResponseContainsJson([
-            'success' => false,
-            'status'  => 422,
-        ]);
-    }
-
-    public function postPhoneBookPhotoFileSizeBigTest(ApiTester $I)
-    {
-        $I->amStaff();
-
-        $I->deleteHeader('Content-Type');
-
-        $filePath = __DIR__ . '/../data/example.jpg';
-
-        $I->sendPOST('/v1/attachments', [], [
-            'file' => [
-                'name'     => 'example.jpg',
-                'type'     => 'image/jpeg',
-                'error'    => UPLOAD_ERR_OK,
-                'size'     => filesize($filePath),
-                'tmp_name' => $filePath,
-            ],
-            'type' => 'phonebook_photo',
-        ]);
-
-        $I->canSeeResponseCodeIs(422);
-        $I->seeResponseIsJson();
-
-        $I->seeResponseContainsJson([
-            'success' => false,
-            'status'  => 422,
+            'success' => true,
+            'status'  => 200,
         ]);
     }
 }

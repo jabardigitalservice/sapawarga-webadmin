@@ -4,8 +4,11 @@ namespace app\modules\v1\controllers;
 
 use app\filters\auth\HttpBearerAuth;
 use app\models\AttachmentForm;
+use Illuminate\Support\Arr;
+use Yii;
 use yii\filters\AccessControl;
 use yii\filters\auth\CompositeAuth;
+use yii\web\UploadedFile;
 
 class AttachmentController extends ActiveController
 {
@@ -75,6 +78,24 @@ class AttachmentController extends ActiveController
 
     public function actionCreate()
     {
+        $model = new AttachmentForm();
+        $model->load(Yii::$app->getRequest()->getBodyParams(), '');
+
+        switch ($model->type) {
+            case 'phonebook_photo':
+                $model->scenario = AttachmentForm::SCENARIO_PHONE_BOOK_PHOTO_CREATE;
+                break;
+        }
+
+        $model->file = UploadedFile::getInstanceByName('file');
+
+        if (! $model->validate()) {
+            $response = Yii::$app->getResponse();
+            $response->setStatusCode(422);
+
+            return $model->getErrors();
+        }
+
         return 'ok';
     }
 }
