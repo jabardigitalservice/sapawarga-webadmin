@@ -3,7 +3,7 @@ services:
   nginx:
     build:
       context: ./nginx
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.test-api
     image: jdsteam/sapawarga-nginx:1.0
     networks:
       - internal
@@ -11,8 +11,6 @@ services:
       - ./nginx:/etc/nginx/html
     depends_on:
       - api
-      - frontend
-      - backend
       - memcached
     ports:
       - 80:80
@@ -33,24 +31,10 @@ services:
       - /srv/vendor
       - vol_storage:/srv/web/storage
 
-  backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    image: jdsteam/sapawarga-backend:1.0
-    depends_on:
-      - api
-    networks:
-      - internal
-    # volumes:
-    #   - ./backend:/app
-
   database:
     image: mysql:5.7
     networks:
       - internal
-    ports:
-      - 3306:3306
     env_file:
       - .env-dev
     volumes:

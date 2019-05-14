@@ -4,6 +4,7 @@ namespace app\commands;
 
 use app\models\Area;
 use app\models\PhoneBook;
+use app\models\Broadcast;
 use app\models\category\PhoneBookCategory;
 use app\models\category\BroadcastCategory;
 use tebazil\yii2seeder\Seeder;
@@ -26,6 +27,9 @@ class SeederController extends Controller
 
         echo 'Seeding Phonebooks...' . PHP_EOL;
         $this->actionPhoneBook();
+
+        echo 'Seeding Broadcasts...' . PHP_EOL;
+        $this->actionBroadcast();
     }
 
     public function actionArea()
@@ -97,7 +101,7 @@ class SeederController extends Controller
         ], [
             [
                 $typeBroadcast,
-                'Sistem',
+                'Informasi',
                 10,
                 time(),
                 time(),
@@ -111,7 +115,7 @@ class SeederController extends Controller
             ],
             [
                 $typeBroadcast,
-                'Berita Hoax',
+                'Kunjungan',
                 10,
                 time(),
                 time(),
@@ -208,6 +212,14 @@ class SeederController extends Controller
                 time(),
             ],
         ])->execute();
+    }
+
+    public function actionBroadcast()
+    {
+        Yii::$app->db->createCommand('TRUNCATE broadcasts')->execute();
+
+        $sql = file_get_contents(__DIR__ . '/../migrations/seeder/broadcast.sql');
+        Yii::$app->db->createCommand($sql)->execute();
     }
 
     protected function setRandomKecamatan()

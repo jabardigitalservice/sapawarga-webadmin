@@ -13,6 +13,7 @@ use yii\behaviors\TimestampBehavior;
  * @property string $address
  * @property string $description
  * @property mixed $phone_numbers
+ * @property int $category_id
  * @property int $kabkota_id
  * @property int $kec_id
  * @property int $kel_id
@@ -42,6 +43,21 @@ class PhoneBook extends \yii\db\ActiveRecord
         return $this->hasOne(Category::class, ['id' => 'category_id']);
     }
 
+    public function getKelurahan()
+    {
+        return $this->hasOne(Area::className(), ['id' => 'kel_id']);
+    }
+
+    public function getKecamatan()
+    {
+        return $this->hasOne(Area::className(), ['id' => 'kec_id']);
+    }
+
+    public function getKabkota()
+    {
+        return $this->hasOne(Area::className(), ['id' => 'kabkota_id']);
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -49,8 +65,11 @@ class PhoneBook extends \yii\db\ActiveRecord
     {
         return [
             ['name', 'string', 'max' => 64],
-            [['name'], 'trim'],
-            [['name', 'phone_numbers', 'seq', 'status'], 'required'],
+
+            [['name', 'address', 'description'], 'trim'],
+            [['address', 'description', 'latitude', 'longitude', 'cover_image_path', 'meta'], 'default'],
+
+            [['name', 'category_id', 'phone_numbers', 'seq', 'status'], 'required'],
             [['category_id', 'kabkota_id', 'kec_id', 'kel_id', 'seq'], 'integer'],
         ];
     }
@@ -66,8 +85,26 @@ class PhoneBook extends \yii\db\ActiveRecord
             'description',
             'phone_numbers',
             'kabkota_id',
+            'kabkota' => function () {
+                return [
+                    'id'   => optional($this->kabkota)->id,
+                    'name' => optional($this->kabkota)->name,
+                ];
+            },
             'kec_id',
+            'kecamatan' => function () {
+                return [
+                    'id'   => optional($this->kecamatan)->id,
+                    'name' => optional($this->kecamatan)->name,
+                ];
+            },
             'kel_id',
+            'kelurahan' => function () {
+                return [
+                    'id'   => optional($this->kelurahan)->id,
+                    'name' => optional($this->kelurahan)->name,
+                ];
+            },
             'latitude',
             'longitude',
             'seq',

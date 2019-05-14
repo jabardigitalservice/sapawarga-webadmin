@@ -38,12 +38,22 @@ const nomorPentingRouter = {
       path: 'edit/:id(\\d+)',
       component: () => import('@/views/nomorPenting/edit'),
       name: 'nomor-penting-edit',
+      hidden: true,
       meta: {
         title: 'nomor-penting-edit',
         noCache: true,
         roles: ['admin']
-      },
-      hidden: true
+      }
+    },
+    {
+      name: 'nomor-penting-show',
+      path: 'show/:id',
+      component: () => import('@/views/nomorPenting/show'),
+      hidden: true,
+      meta: {
+        title: 'nomor-penting-detail',
+        roles: ['admin']
+      }
     }
   ]
 }

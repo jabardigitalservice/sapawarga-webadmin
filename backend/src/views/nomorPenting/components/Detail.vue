@@ -8,7 +8,7 @@
       <el-col :span="19">
         <el-form ref="form" :model="form" :rules="rules" :status-icon="true" label-width="160px">
           <el-form-item label="Nama Instansi" prop="name">
-            <el-input v-model="form.name" />
+            <el-input v-model="form.name" placeholder="Contoh: Rumah Sakit Daerah Kota Tasikmalaya" />
           </el-form-item>
 
           <el-form-item label="Alamat Instansi" prop="address">
@@ -61,6 +61,7 @@
 
 <script>
 import { fetchRecord, create, update } from '@/api/phonebooks'
+import { validContainsSpecialCharacters, validCoordinate } from '@/utils/validate'
 
 import InputSelectArea from '@/components/InputSelectArea'
 import InputMap from '@/components/InputMap'
@@ -97,6 +98,14 @@ export default {
     }
   },
   data() {
+    const validatorNameNoSpecialCharacters = (rule, value, callback) => {
+      if (validContainsSpecialCharacters(value)) {
+        callback(new Error('Nama Instansi hanya boleh menggunakan huruf dan angka.'))
+      }
+
+      callback()
+    }
+
     const validatorWilayah = (rule, value, callback) => {
       if (this.form.seq === 1 && (this.form.kabkota_id === null)) {
         callback(new Error('Wilayah harus diisi.'))
@@ -104,13 +113,25 @@ export default {
       callback()
     }
 
-    const validatorCoordinate = (rule, value, callback) => {
+    const validatorCoordinateRequired = (rule, value, callback) => {
       if (_.isEmpty(this.coordinates[0]) === false && _.isEmpty(this.coordinates[1]) === true) {
         callback(new Error('Koordinat Lokasi (Longitude) harus diisi.'))
       }
 
       if (_.isEmpty(this.coordinates[0]) === true && _.isEmpty(this.coordinates[1]) === false) {
         callback(new Error('Koordinat Lokasi (Latitude) harus diisi.'))
+      }
+
+      callback()
+    }
+
+    const validatorCoordinateInputNumber = (rule, value, callback) => {
+      if (_.isEmpty(this.coordinates[0]) === false && validCoordinate(this.coordinates[0]) === false) {
+        callback(new Error('Koordinat Lokasi (Latitude) hanya boleh menggunakan angka, titik, - atau +'))
+      }
+
+      if (_.isEmpty(this.coordinates[1]) === false && validCoordinate(this.coordinates[1]) === false) {
+        callback(new Error('Koordinat Lokasi (Longitude) hanya boleh menggunakan angka, titik, - atau +'))
       }
 
       callback()
@@ -123,7 +144,8 @@ export default {
       loading: false,
       rules: {
         name: [
-          { required: true, message: 'Nama Instansi harus diisi.', trigger: 'blur' }
+          { required: true, message: 'Nama Instansi harus diisi.', trigger: 'blur' },
+          { validator: validatorNameNoSpecialCharacters, trigger: 'blur' }
         ],
         address: [
           //
@@ -141,7 +163,8 @@ export default {
           { validator: validatorWilayah, trigger: 'change' }
         ],
         coordinates: [
-          { validator: validatorCoordinate, trigger: 'change' }
+          { validator: validatorCoordinateRequired, trigger: 'change' },
+          { validator: validatorCoordinateInputNumber, trigger: 'change' }
         ],
         kec_id: [
           { required: true, message: 'Kecamatan harus diisi.', trigger: 'blur' }

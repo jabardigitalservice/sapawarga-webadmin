@@ -73,11 +73,22 @@ service.interceptors.response.use(
     // }
   },
   error => {
-    Message({
-      message: 'Nama pengguna atau kata sandi salah',
-      type: 'error',
-      duration: 5 * 1000
-    })
+    if (error.response && error.response.status !== 422) {
+      Message({
+        message: 'Oops, telah terjadi kesalahan, silahkan muat ulang halaman ini.',
+        type: 'error',
+        duration: 5 * 1000
+      })
+    }
+
+    if (error.message === 'Network Error') {
+      Message({
+        message: 'Oops, telah terjadi kesalahan, periksa kembali koneksi Internet Anda.',
+        type: 'error',
+        duration: 5 * 1000
+      })
+    }
+
     return Promise.reject(error)
   }
 )

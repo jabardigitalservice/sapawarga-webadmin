@@ -3,26 +3,22 @@
 namespace app\modules\v1\controllers;
 
 use app\filters\auth\HttpBearerAuth;
-use app\models\PhoneBook;
-use app\models\PhoneBookSearch;
+use app\models\Broadcast;
+use app\models\BroadcastSearch;
 use app\models\User;
-use Illuminate\Support\Arr;
 use Yii;
-use yii\base\Model;
-use yii\db\Expression;
 use yii\filters\AccessControl;
 use yii\filters\auth\CompositeAuth;
-use yii\helpers\Url;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\ServerErrorHttpException;
 
 /**
- * PhoneBookController implements the CRUD actions for PhoneBook model.
+ * BroadcastController implements the CRUD actions for Broadcast model.
  */
-class PhoneBookController extends ActiveController
+class BroadcastController extends ActiveController
 {
-    public $modelClass = PhoneBook::class;
+    public $modelClass = Broadcast::class;
 
     public function behaviors()
     {
@@ -44,7 +40,6 @@ class PhoneBookController extends ActiveController
                 'update' => ['put'],
                 'delete' => ['delete'],
                 'public' => ['get'],
-                'check-exist' => ['get']
             ],
         ];
 
@@ -70,12 +65,12 @@ class PhoneBookController extends ActiveController
         // setup access
         $behaviors['access'] = [
             'class' => AccessControl::className(),
-            'only'  => ['index', 'view', 'create', 'update', 'delete', 'check-exist'], //only be applied to
+            'only'  => ['index', 'view', 'create', 'update', 'delete'], //only be applied to
             'rules' => [
                 [
                     'allow'   => true,
-                    'actions' => ['index', 'view', 'create', 'update', 'delete', 'check-exist'],
-                    'roles'   => ['admin', 'manageSettings'],
+                    'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                    'roles'   => ['admin', 'manageUsers'],
                 ],
                 [
                     'allow'   => true,
@@ -95,33 +90,10 @@ class PhoneBookController extends ActiveController
         // Override Delete Action
         unset($actions['delete']);
 
-        // Override Create Action
-        unset($actions['create']);
-
         $actions['index']['prepareDataProvider'] = [$this, 'prepareDataProvider'];
         $actions['view']['findModel'] = [$this, 'findModel'];
 
         return $actions;
-    }
-
-    public function actionCreate()
-    {
-        /* @var $model \yii\db\ActiveRecord */
-        $model = new $this->modelClass([
-            'scenario' => Model::SCENARIO_DEFAULT,
-        ]);
-
-        $model->status = PhoneBook::STATUS_ACTIVE;
-
-        $model->load(Yii::$app->getRequest()->getBodyParams(), '');
-        if ($model->save()) {
-            $response = Yii::$app->getResponse();
-            $response->setStatusCode(201);
-        } elseif (!$model->hasErrors()) {
-            throw new ServerErrorHttpException('Failed to create the object for unknown reason.');
-        }
-
-        return $model;
     }
 
     /**
@@ -139,7 +111,7 @@ class PhoneBookController extends ActiveController
 
         $this->checkAccess('delete', $model, $id);
 
-        $model->status = PhoneBook::STATUS_DELETED;
+        $model->status = Broadcast::STATUS_DELETED;
 
         if ($model->save(false) === false) {
             throw new ServerErrorHttpException('Failed to delete the object for unknown reason.');
@@ -149,35 +121,6 @@ class PhoneBookController extends ActiveController
         $response->setStatusCode(204);
 
         return 'ok';
-    }
-
-    public function actionCheckExist()
-    {
-        $params = Yii::$app->request->getQueryParams();
-        $phoneNumber = Arr::get($params, 'phone_number');
-
-        if (empty($phoneNumber)) {
-            $response = Yii::$app->getResponse();
-            $response->setStatusCode(422);
-
-            return 'Query Params phone_number is required.';
-        }
-
-        $expression = new Expression("JSON_CONTAINS(phone_numbers->'$[*].phone_number', json_array('$phoneNumber'))");
-
-        $model = PhoneBook::find()
-            ->andWhere($expression)
-            ->andWhere(['!=', 'status', PhoneBook::STATUS_DELETED])
-            ->one();
-
-        $response = Yii::$app->getResponse();
-        $response->setStatusCode(200);
-
-        if ($model !== null) {
-            return ['exist' => true];
-        }
-
-        return ['exist' => false];
     }
 
     /**
@@ -198,15 +141,47 @@ class PhoneBookController extends ActiveController
 
     /**
      * @param $id
-     * @return mixed|PhoneBook
+     * @return mixed|Broadcast
      * @throws \yii\web\NotFoundHttpException
      */
     public function findModel($id)
     {
-        $model = PhoneBook::find()
+        $status = [Broadcast::STATUS_ACTIVE];
+        $user = User::findIdentity(Yii::$app->user->getId());
+        // Admin dan staf dapat mencari broadcast yang mempunyai status sebagai draft
+        if ($user->role > User::ROLE_STAFF_RW) {
+            \array_push($status, Broadcast::STATUS_DRAFT);
+        }
+
+        $model = Broadcast::find()
             ->where(['id' => $id])
-            ->andWhere(['!=', 'status', PhoneBook::STATUS_DELETED])
-            ->one();
+            ->andWhere(['in', 'status',  $status]);
+
+        if ($user->role < User::ROLE_ADMIN) {
+            // staff dan user hanya boleh melihat broadcast yang sesuai dengan area mereka
+            if ($user->kabkota_id) {
+                $model->andWhere(['or',
+                ['kabkota_id' => $user->kabkota_id],
+                ['kabkota_id' => null]]);
+            }
+            if ($user->kec_id) {
+                $model->andWhere(['or',
+                ['kec_id' => $user->kec_id],
+                ['kec_id' => null]]);
+            }
+            if ($user->kel_id) {
+                $model->andWhere(['or',
+                ['kel_id' => $user->kel_id],
+                ['kel_id' => null]]);
+            }
+            if ($user->rw) {
+                $model->andWhere(['or',
+                ['rw' => $user->rw],
+                ['rw' => null]]);
+            }
+        }
+
+        $model = $model->one();
 
         if ($model === null) {
             throw new NotFoundHttpException("Object not found: $id");
@@ -217,7 +192,7 @@ class PhoneBookController extends ActiveController
 
     public function prepareDataProvider()
     {
-        $search = new PhoneBookSearch();
+        $search = new BroadcastSearch();
 
         $user = User::findIdentity(Yii::$app->user->getId());
 

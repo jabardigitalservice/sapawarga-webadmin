@@ -152,11 +152,22 @@ $config = [
                     'tokens' => [
                         '{id}' => '<id:\d+>',
                     ],
-                    'extraPatterns' => []
+                    'extraPatterns' => [
+                        'GET check-exist' => 'check-exist',
+                        'OPTIONS check-exist' => 'options',
+                    ]
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => 'v1/category',
+                    'tokens' => [
+                        '{id}' => '<id:\d+>',
+                    ],
+                    'extraPatterns' => []
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'v1/broadcast',
                     'tokens' => [
                         '{id}' => '<id:\d+>',
                     ],

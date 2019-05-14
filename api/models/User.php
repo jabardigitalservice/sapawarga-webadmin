@@ -364,11 +364,38 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             'rt',
             'rw',
             'kel_id',
-            'kelurahan',
+            'kelurahan' => function () {
+                if ($this->kelurahan) {
+                    return [
+                        'id'   => $this->kelurahan->id,
+                        'name' => $this->kelurahan->name,
+                    ];
+                } else {
+                    return null;
+                }
+            },
             'kec_id',
-            'kecamatan',
+            'kecamatan' => function () {
+                if ($this->kecamatan) {
+                    return [
+                        'id'   => $this->kecamatan->id,
+                        'name' => $this->kecamatan->name,
+                    ];
+                } else {
+                    return null;
+                }
+            },
             'kabkota_id',
-            'kabkota',
+            'kabkota' => function () {
+                if ($this->kabkota) {
+                    return [
+                        'id'   => $this->kabkota->id,
+                        'name' => $this->kabkota->name,
+                    ];
+                } else {
+                    return null;
+                }
+            },
             'lat',
             'lon',
             'photo_url' => function () {
@@ -427,7 +454,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         return $fields;
     }
 
-    private function getRoleLabel()
+    public function getRoleLabel()
     {
         $roleLabel = '';
         switch ($this->role) {

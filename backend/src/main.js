@@ -18,6 +18,7 @@ import router from './router'
 
 import i18n from './lang' // Internationalization
 import './icons' // icon
+import './vueFriendlyIframe' // iframe
 import './permission' // permission control
 import './utils/errorLog' // error log
 

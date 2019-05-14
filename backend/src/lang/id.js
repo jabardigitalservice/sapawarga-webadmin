@@ -11,7 +11,8 @@ export default {
     'nomor-penting-manage': 'Kelola Nomor Penting',
     'nomor-penting-list': 'Daftar Nomor Penting',
     'nomor-penting-create': 'Tambah Nomor Penting',
-    'nomor-penting-edit': 'Edit Nomor Penting'
+    'nomor-penting-edit': 'Edit Nomor Penting',
+    'nomor-penting-detail': 'Detail Nomor Penting'
   },
   crud: {
     'list-empty': 'Belum ada data.',

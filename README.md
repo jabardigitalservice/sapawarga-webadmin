@@ -1,5 +1,6 @@
-# Yii2 REST API + VueJS 2 Boilerplate
+[![pipeline status](https://gitlab.com/jdsteam/sapa-warga/sapawarga-app/badges/master/pipeline.svg)](https://gitlab.com/jdsteam/sapa-warga/sapawarga-app/commits/master)
+[![coverage report](https://gitlab.com/jdsteam/sapa-warga/sapawarga-app/badges/master/coverage.svg)](https://gitlab.com/jdsteam/sapa-warga/sapawarga-app/commits/master)
 
-This is a boilerplate project for future use. The project consists of REST API developed by Yii2 and backend/frontend developed by VueJS 2.
+# Sapa Warga API & Web Admin 
 
-For detailed documentation, please refer to [Wiki](https://gitlab.com/jdsteam/starter-kits/yii2-ngx-boilerplate/wikis/home)
+To be described.

@@ -29,7 +29,7 @@ api_test:
     - apk add --no-cache py-pip python-dev libffi-dev openssl-dev gcc libc-dev make
     - pip install docker-compose
   script:
-    - docker-compose -f docker-compose.dev.yml up -d --build
+    - docker-compose -f docker-compose.test-api.yml up -d --build
     - sleep 30
-    - docker-compose -f docker-compose.dev.yml exec -T api php yii seeder
-    - docker-compose -f docker-compose.dev.yml exec -T api composer run test
+    - docker-compose -f docker-compose.test-api.yml exec -T api php yii seeder
+    - docker-compose -f docker-compose.test-api.yml exec -T api composer run test

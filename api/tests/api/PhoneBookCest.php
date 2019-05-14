@@ -221,6 +221,7 @@ class PhoneBookCest
             'name' => 'Test Name',
             'description' => 'Test Description',
             'address' => 'Ini alamat.',
+            'category_id' => 1,
             'phone_numbers' => [
                 [
                     'phone_number' => '022-1234',
@@ -254,6 +255,7 @@ class PhoneBookCest
             'name' => 'Test Name',
             'description' => 'Test Description',
             'address' => 'Ini alamat.',
+            'category_id' => 1,
             'phone_numbers' => [
                 [
                     'phone_number' => '022-1234',
