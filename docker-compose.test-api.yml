@@ -29,6 +29,7 @@ services:
     volumes:
       - ./api:/srv
       - /srv/vendor
+      - vol_storage:/srv/web/storage
 
   database:
     image: mysql:5.7
@@ -36,6 +37,8 @@ services:
       - internal
     env_file:
       - .env-dev
+    volumes:
+      - vol_mysql_data:/var/lib/mysql
 
   memcached:
     image: memcached:latest
@@ -45,3 +48,9 @@ services:
 networks:
   internal:
     driver: bridge
+
+volumes:
+  vol_storage:
+    driver: local
+  vol_mysql_data:
+    driver: local
