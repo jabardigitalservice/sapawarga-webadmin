@@ -3,7 +3,7 @@
     <el-row :gutter="10">
       <el-col class="col-left" :xs="24" :sm="24" :md="24" :lg="7" :xl="5">
         <PhotoBox class="image" :image="imageUrl" :height="height" />
-        <vue-friendly-iframe v-show="latitude !== null" id="map" :src="`https://maps.google.com/maps?q=${latitude},${longitude}&hl=es;z=14&amp;output=embed`" :style="{'border':0}" />
+        <vue-friendly-iframe v-show="latitude && longitude !== null" id="map" :src="`https://maps.google.com/maps?q=${latitude},${longitude}&hl=es;z=14&amp;output=embed`" :style="{'border':0}" />
       </el-col>
       <el-col class="col-right" :xs="23" :sm="23" :md="23" :lg="16" :xl="18">
         <el-card>
