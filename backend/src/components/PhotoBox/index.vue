@@ -41,8 +41,8 @@ img.preview {
 
 @media only screen and (min-width: 1200px) and (max-width: 1570px) {
   img.preview {
-    width: 300px;
-    height: 250px;
+    width: 250px;
+    height: 200px;
     border-radius: 5px;
     margin-left: 20px;
     -webkit-box-shadow: 0px 0px 30px -10px rgba(0,0,0,0.75);
