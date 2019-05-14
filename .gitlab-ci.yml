@@ -20,11 +20,13 @@ admin_lint:
     - npm run lint
     - npm run test:unit
 
-api_test:
+api_test_partial:
   stage: test
   image: docker:latest
   services:
     - docker:dind
+  except:
+    - master
   before_script:
     - apk add --no-cache py-pip python-dev libffi-dev openssl-dev gcc libc-dev make
     - pip install docker-compose
@@ -33,3 +35,19 @@ api_test:
     - sleep 30
     - docker-compose -f docker-compose.test-api.yml exec -T api php yii seeder
     - docker-compose -f docker-compose.test-api.yml exec -T api composer run test
+
+api_test:
+  stage: test
+  image: docker:latest
+  services:
+    - docker:dind
+  only:
+    - master
+  before_script:
+    - apk add --no-cache py-pip python-dev libffi-dev openssl-dev gcc libc-dev make
+    - pip install docker-compose
+  script:
+    - docker-compose -f docker-compose.dev.yml up -d --build
+    - sleep 30
+    - docker-compose -f docker-compose.dev.yml exec -T api php yii seeder
+    - docker-compose -f docker-compose.dev.yml exec -T api composer run test
