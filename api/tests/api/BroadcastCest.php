@@ -23,7 +23,7 @@ class BroadcastCest
         ]);
 
         $I->cantSeeResponseContainsJson([
-            'category_id' => 23,
+            'kabkota_id' => 23,
         ]);
     }
 
@@ -45,7 +45,7 @@ class BroadcastCest
         ]);
 
         $I->cantSeeResponseContainsJson([
-            'category_id' => 22,
+            'kabkota_id' => 22,
         ]);
     }
 

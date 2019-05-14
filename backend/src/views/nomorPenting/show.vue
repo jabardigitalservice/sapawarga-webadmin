@@ -3,7 +3,7 @@
     <el-row :gutter="10">
       <el-col class="col-left" :xs="24" :sm="24" :md="24" :lg="7" :xl="5">
         <PhotoBox class="image" :image="imageUrl" :height="height" />
-        <vue-friendly-iframe id="map" :src="`https://maps.google.com/maps?q=${latitude},${longitude}&hl=es;z=14&amp;output=embed`" :style="{'border':0}" />
+        <vue-friendly-iframe v-show="latitude && longitude !== null" id="map" :src="`https://maps.google.com/maps?q=${latitude},${longitude}&hl=es;z=14&amp;output=embed`" :style="{'border':0}" />
       </el-col>
       <el-col class="col-right" :xs="23" :sm="23" :md="23" :lg="16" :xl="18">
         <el-card>
@@ -101,9 +101,9 @@ export default {
   margin-left: 20px;
   border-radius: 5px;
   margin-top: 30px;
-  -webkit-box-shadow: 0px 0px 30px -10px rgba(0,0,0,0.75);
-  -moz-box-shadow: 0px 0px 30px -10px rgba(0,0,0,0.75);
-  box-shadow: 0px 0px 30px -10px rgba(0,0,0,0.75);
+  -webkit-box-shadow: 0px 0px 25px -10px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 25px -10px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 25px -10px rgba(0,0,0,0.75);
 }
 
 @media only screen and (max-width: 1200px) {
@@ -116,14 +116,13 @@ export default {
 
 @media only screen and (min-width: 1200px) and (max-width: 1570px) {
   #map iframe {
-    width: 300px;
-    height: 250px;
+    width: 250px;
+    height: 200px;
     border-radius: 5px;
     margin-left: 20px;
-    margin-top: 30px;
-    -webkit-box-shadow: 0px 0px 30px -10px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px 0px 30px -10px rgba(0,0,0,0.75);
-    box-shadow: 0px 0px 30px -10px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 0px 0px 25px -10px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 25px -10px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 25px -10px rgba(0,0,0,0.75);
   }
 }
 </style>
