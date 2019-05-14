@@ -53,74 +53,8 @@ class SeederController extends Controller
     {
         Yii::$app->db->createCommand('TRUNCATE categories')->execute();
 
-        $typePhonebook = 'phonebook';
-        Yii::$app->db->createCommand()->batchInsert('categories', [
-            'type',
-            'name',
-            'status',
-            'created_at',
-            'updated_at',
-        ], [
-            [
-                $typePhonebook,
-                'Kesehatan',
-                10,
-                time(),
-                time(),
-            ],
-            [
-                $typePhonebook,
-                'Ekonomi',
-                10,
-                time(),
-                time(),
-            ],
-            [
-                $typePhonebook,
-                'Keamanan',
-                10,
-                time(),
-                time(),
-            ],
-            [
-                $typePhonebook,
-                'Transportasi',
-                10,
-                time(),
-                time(),
-            ],
-        ])->execute();
-
-        $typeBroadcast = 'broadcast';
-        Yii::$app->db->createCommand()->batchInsert('categories', [
-            'type',
-            'name',
-            'status',
-            'created_at',
-            'updated_at',
-        ], [
-            [
-                $typeBroadcast,
-                'Informasi',
-                10,
-                time(),
-                time(),
-            ],
-            [
-                $typeBroadcast,
-                'Sosialisasi',
-                10,
-                time(),
-                time(),
-            ],
-            [
-                $typeBroadcast,
-                'Kunjungan',
-                10,
-                time(),
-                time(),
-            ],
-        ])->execute();
+        $sql = file_get_contents(__DIR__ . '/../migrations/seeder/category.sql');
+        Yii::$app->db->createCommand($sql)->execute();
     }
 
     public function actionPhoneBook()
