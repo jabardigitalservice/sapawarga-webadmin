@@ -19,4 +19,9 @@ VALUES
     ('Kantor Kelurahan Braga','-','Jl. Tera No.50, Braga, Kec. Sumur Bandung, Kota Bandung, Jawa Barat 40111','[{"type": "phone", "phone_number": "022-4217532"}]',22,438,6132,'-6.915334','107.612156',1,NULL,NULL,10,1554706345,1554706345,8),
     ('Kantor Kelurahan Margajaya','-','Jl. Kemakmuran, Marga Jaya, Kec. Bekasi Sel., Kota Bekasi, Jawa Barat 17141','[{"type": "phone", "phone_number": "021-4217532"}]',23,454,6240,'-6.240864','106.994389',1,NULL,NULL,10,1554706345,1554706345,8),
     ('Kantor Walikota Bekasi','-','Jl. Jend. Ahmad Yani, Marga Jaya, Kec. Bekasi Sel., Kota Bekasi, Jawa Barat 17141','[{"type": "phone", "phone_number": "0815-8622-9897"}]',23,454,6240,'-6.236194','106.994177',1,NULL,NULL,10,1554706345,1554706345,8),
-    ('Kantor Walikota Tasikmalaya','-','Panglayungan, Cipedes, Tasikmalaya, Jawa Barat 46134','[{"type": "phone", "phone_number": "0265-322865"}]',26,469,6364,'-7.316317','108.197005',1,NULL,NULL,10,1554706345,1554706345,8);
+    ('Kantor Walikota Tasikmalaya','-','Panglayungan, Cipedes, Tasikmalaya, Jawa Barat 46134','[{"type": "phone", "phone_number": "0265-322865"}]',26,469,6364,'-7.316317','108.197005',1,NULL,NULL,10,1554706345,1554706345,8),
+    ('Polsek Andir','-','Jl. Srigunting Raya No. 1','[{"type": "phone", "phone_number": "0226012062"}]',22,429,6083,'-6.916719','107.597747',1,NULL,NULL,10,1554706345,1554706345,3),
+    ('Polsek Antapani','-','Jl. AH. Nasution No. 14','[{"type": "phone", "phone_number": "0227208467"}]',22,448,6189,'-6.903979','107.664065',1,NULL,NULL,10,1554706345,1554706345,3),
+    ('Polsek Arcamanik','-','Jl. Cisaranten Kulon','[{"type": "phone", "phone_number": "0227805022"}]',22,427,6073,'-6.920242','107.684173',1,NULL,NULL,10,1554706345,1554706345,3),
+    ('Polsek Astana Anyar','-','Jl. Bojongloa No. 69','[{"type": "phone", "phone_number": "0225204769"}]',22,424,6055,'-6.927586','107.600228',1,NULL,NULL,10,1554706345,1554706345,3),
+    ('Polsek Bandung Kidul','-','Jl. Batununggal No. 3','[{"type": "phone", "phone_number": "0227508122"}]',22,445,6176,'-6.95872','107.636905',1,NULL,NULL,10,1554706345,1554706345,3);
