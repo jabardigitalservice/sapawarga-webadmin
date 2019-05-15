@@ -159,6 +159,12 @@ $config = [
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',
+                    'controller' => 'v1/attachment',
+                    'tokens' => [],
+                    'extraPatterns' => []
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
                     'controller' => 'v1/category',
                     'tokens' => [
                         '{id}' => '<id:\d+>',

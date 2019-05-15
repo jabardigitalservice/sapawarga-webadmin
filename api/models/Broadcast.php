@@ -24,7 +24,7 @@ class Broadcast extends \yii\db\ActiveRecord
 {
     const STATUS_DELETED = -1;
     const STATUS_DRAFT = 0;
-    const STATUS_ACTIVE = 10;
+    const STATUS_PUBLISHED = 10;
 
     const CATEGORY_TYPE = 'broadcast';
 
@@ -44,6 +44,21 @@ class Broadcast extends \yii\db\ActiveRecord
     public function getCategory()
     {
         return $this->hasOne(Category::class, ['id' => 'category_id']);
+    }
+
+    public function getKelurahan()
+    {
+        return $this->hasOne(Area::className(), ['id' => 'kel_id']);
+    }
+
+    public function getKecamatan()
+    {
+        return $this->hasOne(Area::className(), ['id' => 'kec_id']);
+    }
+
+    public function getKabkota()
+    {
+        return $this->hasOne(Area::className(), ['id' => 'kabkota_id']);
     }
 
     /**
@@ -91,16 +106,46 @@ class Broadcast extends \yii\db\ActiveRecord
             'title',
             'description',
             'kabkota_id',
+            'kabkota' => function () {
+                if ($this->kabkota) {
+                    return [
+                        'id'   => $this->kabkota->id,
+                        'name' => $this->kabkota->name,
+                    ];
+                } else {
+                    return null;
+                }
+            },
             'kec_id',
+            'kecamatan' => function () {
+                if ($this->kecamatan) {
+                    return [
+                        'id'   => $this->kecamatan->id,
+                        'name' => $this->kecamatan->name,
+                    ];
+                } else {
+                    return null;
+                }
+            },
             'kel_id',
+            'kelurahan' => function () {
+                if ($this->kelurahan) {
+                    return [
+                        'id'   => $this->kelurahan->id,
+                        'name' => $this->kelurahan->name,
+                    ];
+                } else {
+                    return null;
+                }
+            },
             'rw',
             'meta',
             'status',
             'status_label' => function () {
                 $statusLabel = '';
                 switch ($this->status) {
-                    case self::STATUS_ACTIVE:
-                        $statusLabel = Yii::t('app', 'status.active');
+                    case self::STATUS_PUBLISHED:
+                        $statusLabel = Yii::t('app', 'status.published');
                         break;
                     case self::STATUS_DRAFT:
                         $statusLabel = Yii::t('app', 'status.draft');

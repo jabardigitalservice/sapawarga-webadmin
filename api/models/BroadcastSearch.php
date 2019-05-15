@@ -75,7 +75,7 @@ class BroadcastSearch extends Broadcast
     protected function getQueryRoleUser($user, $query, $params)
     {
         // Hanya menampilkan pesan broadcast yang masih aktif
-        $query->andFilterWhere(['status' => Broadcast::STATUS_ACTIVE]);
+        $query->andFilterWhere(['status' => Broadcast::STATUS_PUBLISHED]);
 
         // Filter berdasarkan area pengguna
         $params['kabkota_id'] = Arr::get($user, 'kabkota_id');
