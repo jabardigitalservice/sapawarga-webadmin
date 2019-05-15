@@ -14,7 +14,8 @@ export default {
     'nomor-penting-edit': 'Edit Nomor Penting',
     'nomor-penting-detail': 'Detail Nomor Penting',
     'broadcast-manage': 'Broadcast',
-    'broadcast-create': 'Tambah Broadcast'
+    'broadcast-create': 'Tambah Pesan',
+    'broadcast-list': 'Daftar Broadcast'
   },
   crud: {
     'list-empty': 'Belum ada data.',
