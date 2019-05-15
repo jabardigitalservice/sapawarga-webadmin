@@ -36,4 +36,5 @@ return [
     'status.inactive' => 'Not Active',
     'status.deleted'  => 'Deleted',
     'status.draft'  => 'Draft',
+    'status.published'   => 'Published',
 ];
