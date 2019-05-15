@@ -3,9 +3,9 @@
 namespace app\models\Attachment;
 
 use app\models\AttachmentForm;
-use Yii;
 use Illuminate\Support\Str;
 use Intervention\Image\ImageManager;
+use Yii;
 use yii2tech\filestorage\BucketInterface;
 
 class PhoneBookPhotoForm extends AttachmentForm
@@ -46,6 +46,15 @@ class PhoneBookPhotoForm extends AttachmentForm
      */
     public function upload()
     {
+        /**
+         * @var \yii2tech\filestorage\BucketInterface $bucket
+         */
+        $bucket = Yii::$app->fileStorage->getBucket('imageFiles');
+        $imageProcessor = new ImageManager();
+
+        $this->setBucket($bucket);
+        $this->setImageProcessor($imageProcessor);
+
         $tempFilePath = $this->file->tempName;
 
         return $this->save($tempFilePath);
@@ -79,7 +88,7 @@ class PhoneBookPhotoForm extends AttachmentForm
      */
     protected function getRelativePath()
     {
-        return 'avatars';
+        return 'general';
     }
 
     /**
@@ -134,5 +143,13 @@ class PhoneBookPhotoForm extends AttachmentForm
     public function getRelativeFilePath()
     {
         return $this->relativeFilePath;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFileUrl()
+    {
+        return $this->bucket->getFileUrl($this->getRelativeFilePath());
     }
 }

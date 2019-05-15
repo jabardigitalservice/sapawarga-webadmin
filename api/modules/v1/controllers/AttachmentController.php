@@ -105,18 +105,17 @@ class AttachmentController extends ActiveController
             return $model->getErrors();
         }
 
-        return 'ok';
+        if ($model->upload()) {
+            $relativePath = $model->getRelativeFilePath();
+            $url = $model->getFileUrl();
 
-//        if ($model->upload()) {
-//            $relativePath = $model->getRelativeFilePath();
-//
-//            $responseData = [
-//                'path' => $relativePath,
-//                'url'  => '',
-//            ];
-//
-//            return $responseData;
-//        }
+            $responseData = [
+                'path' => $relativePath,
+                'url'  => $url,
+            ];
+
+            return $responseData;
+        }
 
         $response = Yii::$app->getResponse();
         $response->setStatusCode(400);
