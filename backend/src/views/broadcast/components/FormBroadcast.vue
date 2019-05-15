@@ -13,7 +13,7 @@
           >
             <el-form-item label="Kab/Kota" :prop="kabkota">
               <el-select v-model="broadcast.kabkota" placeholder="Pilih Kab/Kota">
-                <el-option 
+                <el-option
                   v-for="item in options"
                   :key="item.value"
                   :label="item.label"
@@ -23,7 +23,7 @@
             </el-form-item>
             <el-form-item label="Kecamatan" :prop="kecamatan">
               <el-select v-model="broadcast.kecamatan" placeholder="Pilih Kecamatan">
-                <el-option 
+                <el-option
                   v-for="item in options"
                   :key="item.value"
                   :label="item.label"
@@ -33,7 +33,7 @@
             </el-form-item>
             <el-form-item label="Kelurahan" :prop="kelurahan">
               <el-select v-model="broadcast.kelurahan" placeholder="Pilih Kelurahan">
-                <el-option 
+                <el-option
                   v-for="item in options"
                   :key="item.value"
                   :label="item.label"
@@ -43,7 +43,7 @@
             </el-form-item>
             <el-form-item label="RW" :prop="rw">
               <el-select v-model="broadcast.rw" placeholder="Pilih RW">
-                <el-option 
+                <el-option
                   v-for="item in options"
                   :key="item.value"
                   :label="item.label"
@@ -58,30 +58,30 @@
         <p class="warn-content">Isi Pesan</p>
         <div class="broadcast-message">
           <el-form
-            :model="broadcast"
             ref="broadcast"
+            :model="broadcast"
             :rules="rules"
             label-width="150px"
             label-position="left"
           >
             <el-form-item label="Judul Pesan">
-              <el-input type="text" v-model="broadcast.title"></el-input>
+              <el-input v-model="broadcast.title" type="text" />
             </el-form-item>
             <el-form-item label="Kategori" prop="category">
               <InputCategory v-model="broadcast.category_id" category-type="broadcast" />
             </el-form-item>
             <el-form-item label="Isi Pesan" prop="message">
               <el-input
+                v-model="broadcast.description"
                 type="textarea"
                 :rows="8"
                 placeholder="Please input"
-                v-model="broadcast.description">
-              </el-input>
+              />
             </el-form-item>
             <el-form-item>
               <el-button type="info" :loading="loading" @click="submitForm(status.draft)">{{ $t('crud.draft') }}</el-button>
               <el-button type="primary" :loading="loading" @click="submitForm(status.active)"> {{ $t('crud.send') }}</el-button>
-          </el-form-item>
+            </el-form-item>
           </el-form>
         </div>
       </el-col>
@@ -90,6 +90,7 @@
 </template>
 <script>
 import InputCategory from '@/components/InputCategory'
+// import InputSelectArea from '@/components/InputSelectArea'
 import { create } from '@/api/broadcast'
 export default {
   components: {
@@ -133,7 +134,7 @@ export default {
         rw: '',
         title: '',
         category_id: '',
-        description: '',
+        description: ''
       },
       rules: {
 
@@ -141,7 +142,7 @@ export default {
     }
   },
   methods: {
-    async submitForm(status){
+    async submitForm(status) {
       // Fill with validation
 
       try {
@@ -152,19 +153,19 @@ export default {
 
         data.status = status
 
-        if(this.isEdit){
-
+        if (this.isEdit) {
+          console.log('edit')
         } else {
           await create(data)
-          if (status === 10){
+          if (status === 10) {
             this.$message.success(this.$t('crud.send-success'))
             this.$router.push('/broadcast/index')
-          } else if ( status === 0) {
+          } else if (status === 0) {
             this.$message.info(this.$t('crud.draft-success'))
             this.$router.push('/broadcast/index')
-          } 
+          }
         }
-      } catch(error) {
+      } catch (error) {
         console.log(error.response)
       } finally {
         this.loading = false
