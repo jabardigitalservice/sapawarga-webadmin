@@ -46,6 +46,21 @@ class Broadcast extends \yii\db\ActiveRecord
         return $this->hasOne(Category::class, ['id' => 'category_id']);
     }
 
+    public function getKelurahan()
+    {
+        return $this->hasOne(Area::className(), ['id' => 'kel_id']);
+    }
+
+    public function getKecamatan()
+    {
+        return $this->hasOne(Area::className(), ['id' => 'kec_id']);
+    }
+
+    public function getKabkota()
+    {
+        return $this->hasOne(Area::className(), ['id' => 'kabkota_id']);
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -91,8 +106,38 @@ class Broadcast extends \yii\db\ActiveRecord
             'title',
             'description',
             'kabkota_id',
+            'kabkota' => function () {
+                if ($this->kabkota) {
+                    return [
+                        'id'   => $this->kabkota->id,
+                        'name' => $this->kabkota->name,
+                    ];
+                } else {
+                    return null;
+                }
+            },
             'kec_id',
+            'kecamatan' => function () {
+                if ($this->kecamatan) {
+                    return [
+                        'id'   => $this->kecamatan->id,
+                        'name' => $this->kecamatan->name,
+                    ];
+                } else {
+                    return null;
+                }
+            },
             'kel_id',
+            'kelurahan' => function () {
+                if ($this->kelurahan) {
+                    return [
+                        'id'   => $this->kelurahan->id,
+                        'name' => $this->kelurahan->name,
+                    ];
+                } else {
+                    return null;
+                }
+            },
             'rw',
             'meta',
             'status',
