@@ -27,6 +27,8 @@ export default {
     'delete': 'Hapus',
     'cancel': 'Batal',
     'back': 'Kembali',
+    'draft': 'Simpan sebagai Draft',
+    'send': 'Kirim Pesan',
 
     'insert-row': 'Tambah Baris Baru',
     'delete-row': 'Hapus',
@@ -34,6 +36,8 @@ export default {
 
     'create-success': 'Data baru berhasil dibuat.',
     'update-success': 'Perubahan data berhasil disimpan.',
+    'send-success': 'Pesan berhasil dikirim',
+    'draft-success': 'Pesan berhasil disimpan di draft',
 
     'user-activate-confirm': 'Anda yakin ingin mengaktifkan pengguna ini?',
     'user-deactivate-confirm': 'Anda yakin ingin menonaktifkan pengguna ini?',
