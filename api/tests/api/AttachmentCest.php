@@ -42,7 +42,7 @@ class AttachmentCest
 
         $I->deleteHeader('Content-Type');
 
-        $I->sendPOST('/v1/attachments');
+        $I->sendPOST('/v1/attachments', ['type' => 'phonebook_photo']);
 
         $I->canSeeResponseCodeIs(422);
         $I->seeResponseIsJson();
@@ -71,13 +71,7 @@ class AttachmentCest
             ],
         ]);
 
-        $I->canSeeResponseCodeIs(422);
-        $I->seeResponseIsJson();
-
-        $I->seeResponseContainsJson([
-            'success' => false,
-            'status'  => 422,
-        ]);
+        $I->canSeeResponseCodeIs(400);
     }
 
     public function postPhoneBookPhotoFileSizeValidTest(ApiTester $I)

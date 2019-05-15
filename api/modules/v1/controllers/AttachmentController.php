@@ -3,8 +3,8 @@
 namespace app\modules\v1\controllers;
 
 use app\filters\auth\HttpBearerAuth;
+use app\models\Attachment\PhoneBookPhotoForm;
 use app\models\AttachmentForm;
-use Illuminate\Support\Arr;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\auth\CompositeAuth;
@@ -78,18 +78,27 @@ class AttachmentController extends ActiveController
 
     public function actionCreate()
     {
-        $model = new AttachmentForm();
-        $model->load(Yii::$app->getRequest()->getBodyParams(), '');
+        $type = Yii::$app->request->post('type');
 
-        switch ($model->type) {
+        $model = null;
+
+        switch ($type) {
             case 'phonebook_photo':
-                $model->scenario = AttachmentForm::SCENARIO_PHONE_BOOK_PHOTO_CREATE;
+                $model = new PhoneBookPhotoForm();
                 break;
         }
 
+        if ($model === null) {
+            $response = Yii::$app->getResponse();
+            $response->setStatusCode(400);
+
+            return ['Model type not set.'];
+        }
+
+        $model->load(Yii::$app->getRequest()->getBodyParams(), '');
         $model->file = UploadedFile::getInstanceByName('file');
 
-        if (! $model->validate()) {
+        if (!$model->validate()) {
             $response = Yii::$app->getResponse();
             $response->setStatusCode(422);
 
@@ -97,5 +106,19 @@ class AttachmentController extends ActiveController
         }
 
         return 'ok';
+
+//        if ($model->upload()) {
+//            $relativePath = $model->getRelativeFilePath();
+//
+//            $responseData = [
+//                'path' => $relativePath,
+//                'url'  => '',
+//            ];
+//
+//            return $responseData;
+//        }
+
+        $response = Yii::$app->getResponse();
+        $response->setStatusCode(400);
     }
 }

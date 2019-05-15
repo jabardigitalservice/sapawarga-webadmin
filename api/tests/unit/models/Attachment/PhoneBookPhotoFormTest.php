@@ -1,15 +1,15 @@
 <?php
 
-namespace tests\models;
+namespace tests\models\Attachment;
 
-use app\models\AttachmentForm;
+use app\models\Attachment\PhoneBookPhotoForm;
 use yii\web\UploadedFile;
 
-class AttachmentFormTest extends \Codeception\Test\Unit
+class PhoneBookPhotoFormTest extends \Codeception\Test\Unit
 {
     public function testValidateRequired()
     {
-        $model = new AttachmentForm();
+        $model = new PhoneBookPhotoForm();
 
         $this->assertFalse($model->validate());
 
@@ -21,7 +21,7 @@ class AttachmentFormTest extends \Codeception\Test\Unit
     {
         $_FILES = [
             'file' => [
-                'tmp_name' => __DIR__ . '/../../data/example.jpg',
+                'tmp_name' => __DIR__ . '/../../../data/example.jpg',
                 'name'     => 'example.jpg',
                 'type'     => 'image/jpeg ',
                 'size'     => 47152,
@@ -29,8 +29,7 @@ class AttachmentFormTest extends \Codeception\Test\Unit
             ],
         ];
 
-        $model           = new AttachmentForm();
-        $model->scenario = $model::SCENARIO_PHONE_BOOK_PHOTO_CREATE;
+        $model           = new PhoneBookPhotoForm();
         $model->file     = UploadedFile::getInstanceByName('file');
         $model->type     = 'phonebook_photo';
 
@@ -41,7 +40,7 @@ class AttachmentFormTest extends \Codeception\Test\Unit
     {
         $_FILES = [
             'file' => [
-                'tmp_name' => __DIR__ . '/../../data/example.txt',
+                'tmp_name' => __DIR__ . '/../../../data/example.txt',
                 'name'     => 'example.txt',
                 'type'     => 'text/plain',
                 'size'     => 2605,
@@ -49,8 +48,7 @@ class AttachmentFormTest extends \Codeception\Test\Unit
             ],
         ];
 
-        $model           = new AttachmentForm();
-        $model->scenario = $model::SCENARIO_PHONE_BOOK_PHOTO_CREATE;
+        $model           = new PhoneBookPhotoForm();
         $model->file     = UploadedFile::getInstanceByName('file');
         $model->type     = 'phonebook_photo';
 
@@ -63,7 +61,7 @@ class AttachmentFormTest extends \Codeception\Test\Unit
     {
         $_FILES = [
             'file' => [
-                'tmp_name' => __DIR__ . '/../../data/example.jpg',
+                'tmp_name' => __DIR__ . '/../../../data/example.jpg',
                 'name'     => 'example.jpg',
                 'type'     => 'image/jpeg ',
                 'size'     => 1024 * 1024 * 2, // override
@@ -71,8 +69,7 @@ class AttachmentFormTest extends \Codeception\Test\Unit
             ],
         ];
 
-        $model           = new AttachmentForm();
-        $model->scenario = $model::SCENARIO_PHONE_BOOK_PHOTO_CREATE;
+        $model           = new PhoneBookPhotoForm();
         $model->file     = UploadedFile::getInstanceByName('file');
         $model->type     = 'phonebook_photo';
 
@@ -83,7 +80,7 @@ class AttachmentFormTest extends \Codeception\Test\Unit
     {
         $_FILES = [
             'file' => [
-                'tmp_name' => __DIR__ . '/../../data/example.jpg',
+                'tmp_name' => __DIR__ . '/../../../data/example.jpg',
                 'name'     => 'example.jpg',
                 'type'     => 'image/jpeg ',
                 'size'     => 1024 * 1024 * 3, // override
@@ -91,8 +88,7 @@ class AttachmentFormTest extends \Codeception\Test\Unit
             ],
         ];
 
-        $model           = new AttachmentForm();
-        $model->scenario = $model::SCENARIO_PHONE_BOOK_PHOTO_CREATE;
+        $model           = new PhoneBookPhotoForm();
         $model->file     = UploadedFile::getInstanceByName('file');
         $model->type     = 'phonebook_photo';
 
