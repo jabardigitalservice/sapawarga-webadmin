@@ -28,6 +28,27 @@ const broadcastRouter = {
         title: 'broadcast-create',
         roles: ['admin']
       }
+    },
+    {
+      path: 'edit/:id(\\d+)',
+      component: () => import('@/views/broadcast/create'),
+      name: 'broadcast-edit',
+      hidden: true,
+      meta: {
+        title: 'broadcast-edit',
+        noCache: true,
+        roles: ['admin']
+      }
+    },
+    {
+      name: 'broadcast-show',
+      path: 'show/:id',
+      component: () => import('@/views/broadcast/create'),
+      hidden: true,
+      meta: {
+        title: 'broadcast-show',
+        roles: ['admin']
+      }
     }
   ]
 }
