@@ -5,6 +5,16 @@
         Kiri
       </el-col>
       <el-col :lg="18">
+        <el-row style="margin: 10px 0px">
+          <el-col :span="12">
+            <router-link :to="{ path: '/broadcast/create' }">
+              <el-button type="primary" size="small" icon="el-icon-plus">
+                Tambah Pesan Baru
+              </el-button>
+            </router-link>
+          </el-col>
+        </el-row>
+
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%" @sort-change="changeSort">
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
 
@@ -18,21 +28,26 @@
             </template>
           </el-table-column>
 
-          <el-table-column prop="created_at" sortable="custom" label="Dibuat" />
-          <el-table-column prop="updated_at" sortable="custom" label="Dikirim">
+          <el-table-column prop="created_at" sortable="custom" label="Dibuat" width="150">
             <template slot-scope="{row}">
-              {{ getSentDateTime(row) }}
+              {{ row.created_at | moment('D MMMM YYYY') }}
+            </template>
+          </el-table-column>
+
+          <el-table-column prop="updated_at" sortable="custom" label="Dikirim" width="150">>
+            <template slot-scope="{row}">
+              {{ getSentDateTime(row) | moment('D MMMM YYYY') }}
             </template>
           </el-table-column>
 
           <el-table-column align="center" label="Actions" width="250px">
             <template slot-scope="scope">
-              <router-link :to="'/nomor-penting/show/'+scope.row.id">
+              <router-link :to="'/broadcast/show/'+scope.row.id">
                 <el-button type="white" size="mini">
                   View
                 </el-button>
               </router-link>
-              <router-link :to="'/nomor-penting/edit/'+scope.row.id">
+              <router-link :to="'/broadcast/edit/'+scope.row.id">
                 <el-button type="white" size="mini">
                   Edit
                 </el-button>
