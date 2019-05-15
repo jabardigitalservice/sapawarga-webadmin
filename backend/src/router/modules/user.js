@@ -96,6 +96,7 @@ const userRouter = {
       name: 'user-create',
       path: 'create',
       component: () => import('@/views/user/add'),
+      hidden: true,
       meta: {
         title: 'user-create'
       }
