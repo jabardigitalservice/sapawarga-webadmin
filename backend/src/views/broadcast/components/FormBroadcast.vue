@@ -51,7 +51,7 @@
                 v-model="broadcast.description"
                 type="textarea"
                 :rows="8"
-                placeholder="Please input"
+                placeholder="Tulis pesan"
                 prop="description"
               />
             </el-form-item>
@@ -154,7 +154,6 @@ export default {
   },
   methods: {
     async submitForm(status) {
-      // Fill with validation
       const valid = await this.$refs.broadcast.validate()
 
       if(!valid) {
