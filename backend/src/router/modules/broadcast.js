@@ -12,6 +12,15 @@ const broadcastRouter = {
     },
     children: [
         {
+            name: 'broadcast-list',
+            path: 'index',
+            component: () => import('@/views/broadcast/list'),
+            meta: {
+                title: 'broadcast-list',
+                roles: ['admin']
+            }
+        },
+        {
             name: 'broadcast-create',
             path: 'create',
             component: () => import('@/views/broadcast/create'),
