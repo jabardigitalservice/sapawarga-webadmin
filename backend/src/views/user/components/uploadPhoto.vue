@@ -1,16 +1,18 @@
 <template>
   <div class="app-container">
     <el-form>
-      <el-form-item label="Photo" prop="photo">
-        <div class="image-preview">
-          <div v-loading="loading">
-            <img class="preview" :src="imageData">
+      <el-form-item label="" prop="photo">
+        <div class="user-image">
+          <div class="image-preview">
+            <div v-loading="loading">
+              <img class="preview" :src="imageData">
+            </div>
           </div>
+          <label class="custom-file-upload primary-custome">
+            <input type="file" accept="image/*" @change="onFileSelected">
+            Pilih Foto
+          </label>
         </div>
-        <label class="custom-file-upload primary-custome">
-          <input type="file" accept="image/*" @change="onFileSelected">
-          Pilih Photo
-        </label>
       </el-form-item>
     </el-form>
   </div>
@@ -93,6 +95,10 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.user-image {
+  margin: auto;
+  width: 200px;
+}
 input[type="file"] {
   display: none;
 }
@@ -120,7 +126,6 @@ input[type="file"] {
   padding: 12px 20px;
   font-size: 14px;
   border-radius: 4px;
-  margin-left: 75px;
   width: 200px;
 }
 .primary-custome {
@@ -137,16 +142,13 @@ input[type="file"] {
 
 img.preview {
   width: 200px;
-  margin-left: 25px;
   border-radius: 10px;
   box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.43);
   -moz-box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.43);
   -webkit-box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.43);
+  background-color: blue;
 }
 @media only screen and (min-width: 1200px)  and (max-width: 1291px) {
-  .input-image {
-    margin-left: 0px;
-  }
   img.preview {
     width: 150px;
     margin-left: 0px;
@@ -196,9 +198,6 @@ img.preview {
 }
 
 @media only screen and (min-width: 1292px)  and (max-width: 1651px) {
-  .input-image {
-    margin-left: 0px;
-  }
   img.preview {
     width: 150px;
     margin-left: 0px;
@@ -231,7 +230,6 @@ img.preview {
     padding: 12px 20px;
     font-size: 14px;
     border-radius: 4px;
-    margin-left: 50px;
     width: 150px;
   }
   .primary-custome {
