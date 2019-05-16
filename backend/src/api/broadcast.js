@@ -8,6 +8,13 @@ export function fetchList(query) {
   })
 }
 
+export function fetchRecord(id) {
+  return request({
+    url: `/broadcasts/${id}`,
+    method: 'get'
+  })
+}
+
 export function create(data) {
   return request({
     url: '/broadcasts',
