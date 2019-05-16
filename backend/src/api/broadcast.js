@@ -22,3 +22,11 @@ export function create(data) {
     data
   })
 }
+
+export function update(id, data) {
+  return request({
+    url: `/broadcasts/${id}`,
+    method: 'put',
+    data
+  })
+}
