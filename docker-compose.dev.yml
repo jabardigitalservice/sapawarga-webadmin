@@ -42,6 +42,7 @@ services:
     networks:
       - internal
     volumes:
+      - /app/node_modules
       - ./backend:/app
 
   database:
