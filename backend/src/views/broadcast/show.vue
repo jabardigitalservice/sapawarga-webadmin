@@ -50,8 +50,7 @@ export default {
   methods: {
     getDetail() {
       fetchRecord(this.id).then(response => {
-        
-        const { title, address, description, category, kabkota, kecamatan, kelurahan, rw, status, status_label } = response.data
+        const { title, description, category, kabkota, kecamatan, kelurahan, rw, status, status_label } = response.data
         // const textPhoneMsg = phone_numbers.map(e => e.type + ': ' + e.phone_number).join(', ')
         // const wilayah = [kabkota, kecamatan, kelurahan].filter(e => e.name !== null).map(e => e.name).join(', ')
         if (status === 10) {
