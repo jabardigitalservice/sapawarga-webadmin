@@ -21,7 +21,7 @@
             <el-table-column prop="title" width="180" />
             <el-table-column prop="content" />
           </el-table>
-          <el-button type="primary">Kirim</el-button>
+          <el-button type="primary" :disabled="btnKirimDisable">{{ btnKirimLabel }}</el-button>
         </el-card>
       </el-col>
     </el-row>
@@ -36,7 +36,9 @@ export default {
     return {
       id: 0,
       tableDataTarget: [],
-      tableDataPesan: []
+      tableDataPesan: [],
+      btnKirimLabel: '',
+      btnKirimDisable: false
     }
   },
 
@@ -48,11 +50,37 @@ export default {
   methods: {
     getDetail() {
       fetchRecord(this.id).then(response => {
-        const { title, address, description, category, kabkota, kecamatan, kelurahan } = response.data
-
+        
+        const { title, address, description, category, kabkota, kecamatan, kelurahan, rw, status, status_label } = response.data
         // const textPhoneMsg = phone_numbers.map(e => e.type + ': ' + e.phone_number).join(', ')
         // const wilayah = [kabkota, kecamatan, kelurahan].filter(e => e.name !== null).map(e => e.name).join(', ')
-        this.tableDataTarget = []
+        if (status === 10) {
+          this.btnKirimLabel = status_label
+          this.btnKirimDisable = true
+        } else if (status === 0) {
+          this.btnKirimLabel = 'Kirim'
+          this.btnKirimDisable = false
+        }
+
+        this.tableDataTarget = [
+          {
+            title: 'Kota',
+            content: ' : ' + ((kabkota !== null) ? kabkota.name : '-')
+          },
+          {
+            title: 'Kecamatan',
+            content: ' : ' + ((kecamatan !== null) ? kecamatan.name : '-')
+          },
+          {
+            title: 'Kelurahan/Desa',
+            content: ' : ' + ((kelurahan !== null) ? kelurahan.name : '-')
+          },
+          {
+            title: 'RW',
+            content: ' : ' + ((rw !== null) ? rw : '-')
+          }
+        ]
+
         this.tableDataPesan = [
           {
             title: 'Judul Pesan',
