@@ -29,7 +29,7 @@ services:
       - .env
     volumes:
       # - ./api:/srv
-      - /srv/vendor
+      # - /srv/vendor
       - vol_storage:/srv/web/storage
 
   backend:
@@ -41,9 +41,9 @@ services:
       - api
     networks:
       - internal
-    volumes:
-      - /app/node_modules
+    # volumes:
       # - ./backend:/app
+      # - /app/node_modules
 
   database:
     image: mysql:5.7
