@@ -48,7 +48,7 @@
                 </el-button>
               </router-link>
               <router-link :to="'/broadcast/edit/'+scope.row.id">
-                <el-button type="white" size="mini" :disabled="scope.row.status === 0">
+                <el-button type="white" size="mini" :disabled="scope.row.status === 10">
                   Edit
                 </el-button>
               </router-link>
