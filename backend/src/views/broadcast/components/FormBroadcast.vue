@@ -193,8 +193,8 @@ export default {
             this.$router.push('/broadcast/index')
           }
         }
-      } catch (error) {
-        console.log(error.response)
+      } catch (err) {
+        err
       } finally {
         this.loading = false
       }
