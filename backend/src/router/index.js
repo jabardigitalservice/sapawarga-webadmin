@@ -90,14 +90,14 @@ export const constantRoutes = [
   {
     path: '/profile',
     component: Layout,
-    redirect: '/profile/index',
     children: [
       {
         name: 'Profile',
-        path: 'index',
+        path:'',
         component: () => import('@/views/profile/index'),
+        hidden: true,
         meta: {
-          title: 'broadcast-list',
+          title: 'profile',
           roles: ['admin']
       }
       }
