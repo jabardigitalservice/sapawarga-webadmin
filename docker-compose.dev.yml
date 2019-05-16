@@ -4,7 +4,7 @@ services:
     build:
       context: ./nginx
       dockerfile: Dockerfile
-    image: jdsteam/sapawarga-nginx:1.0
+    image: registry.gitlab.com/jdsteam/sapa-warga/sapawarga-app/sapawarga-nginx:${IMAGETAG}
     networks:
       - internal
     volumes:
@@ -20,7 +20,7 @@ services:
   api:
     build:
       context: ./api
-    image: jdsteam/sapawarga-api:1.0
+    image: registry.gitlab.com/jdsteam/sapa-warga/sapawarga-app/sapawarga-api:${IMAGETAG}
     networks:
       - internal
     depends_on:
@@ -36,13 +36,14 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    image: jdsteam/sapawarga-backend:1.0
+    image: registry.gitlab.com/jdsteam/sapa-warga/sapawarga-app/sapawarga-backend:${IMAGETAG}
     depends_on:
       - api
     networks:
       - internal
-    # volumes:
-    #   - ./backend:/app
+    volumes:
+      - /app/node_modules
+      - ./backend:/app
 
   database:
     image: mysql:5.7
