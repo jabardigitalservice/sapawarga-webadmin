@@ -41,7 +41,7 @@
             :status-icon="true"
           >
             <el-form-item label="Judul Pesan" prop="title">
-              <el-input v-model="broadcast.title" type="text" />
+              <el-input v-model="broadcast.title" type="text" placeholder="Judul minimal 10 karakter dan maksimal 60 karakter" />
             </el-form-item>
             <el-form-item label="Kategori" prop="category_id">
               <InputCategory v-model="broadcast.category_id" category-type="broadcast" prop="category" />
@@ -51,7 +51,7 @@
                 v-model="broadcast.description"
                 type="textarea"
                 :rows="8"
-                placeholder="Tulis pesan"
+                placeholder="Tulis pesan, maksimal 280 karakter"
               />
             </el-form-item>
             <el-form-item>
@@ -168,7 +168,7 @@ export default {
       fetchRecord(id).then(response => {
         this.broadcast = response.data
       }).catch(err => {
-        err
+        console.log(err)
       })
     },
     async submitForm(status) {
@@ -205,7 +205,7 @@ export default {
           }
         }
       } catch (err) {
-        err
+        console.log(err)
       } finally {
         this.loading = false
       }
