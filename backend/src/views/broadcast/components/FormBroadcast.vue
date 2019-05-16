@@ -57,7 +57,7 @@
             </el-form-item>
             <el-form-item>
               <el-button type="info" :loading="loading" @click="submitForm(status.draft)">{{ $t('crud.draft') }}</el-button>
-              <el-button type="primary" :loading="loading" @click="submitForm(status.active)"> {{ $t('crud.send') }}</el-button>
+              <el-button v-show="!isEdit" type="primary" :loading="loading" @click="submitForm(status.active)"> {{ $t('crud.send') }}</el-button>
             </el-form-item>
           </el-form>
         </div>
