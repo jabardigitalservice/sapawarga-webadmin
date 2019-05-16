@@ -68,7 +68,7 @@
 <script>
 import InputCategory from '@/components/InputCategory'
 import InputSelectArea from '@/components/InputSelectArea'
-import { create } from '@/api/broadcast'
+import { create, fetchRecord, update } from '@/api/broadcast'
 export default {
   components: {
     InputCategory,
@@ -152,7 +152,20 @@ export default {
       }
     }
   },
+  created() {
+    if (this.isEdit) {
+      const id = this.$route.params && this.$route.params.id
+      this.fetchData(id)
+    }
+  },
   methods: {
+    fetchData(id) {
+      fetchRecord(id).then(response => {
+        this.broadcast = response.data
+      }).catch(err => {
+        err
+      })
+    },
     async submitForm(status) {
       const valid = await this.$refs.broadcast.validate()
 
