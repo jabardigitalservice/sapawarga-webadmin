@@ -41,8 +41,8 @@ services:
       - api
     networks:
       - internal
-    # volumes:
-    #   - ./backend:/app
+    volumes:
+      - ./backend:/app
 
   database:
     image: mysql:5.7
