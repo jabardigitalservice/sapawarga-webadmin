@@ -1,3 +1,176 @@
 <template>
-    <h1>Hello ini profile</h1>
+  <div class="app-container">
+    <el-row :gutter="10">
+      <el-col class="col-left" :xs="24" :sm="24" :md="24" :lg="7" :xl="5">
+        <PhotoBox class="image" :image="imageUrl" :height="height" />
+        <vue-friendly-iframe v-show="latitude && longitude !== null" id="map" :src="`https://maps.google.com/maps?q=${latitude},${longitude}&hl=es;z=14&amp;output=embed`" :style="{'border':0}" />
+      </el-col>
+      <el-col class="col-right" :xs="23" :sm="23" :md="23" :lg="16" :xl="18">
+        <el-card>
+          <div slot="header" class="clearfix">
+            <span>Profile Admin</span>
+          </div>
+          <el-table stripe :data="tableData" :show-header="false" style="width: 100%">
+            <el-table-column prop="title" width="180" />
+            <el-table-column prop="content" />
+          </el-table>
+        </el-card>
+        <el-card>
+          <div slot="header" class="clearfix">
+            <span>Sosial Media</span>
+          </div>
+          <!-- <img class="social-media-admin twitter" :src="twitter"> <br>
+          <img class="social-media-admin facebook" :src="facebook"> <br>
+          <img class="social-media-admin instagram" :src="instagram"> <br> -->
+          <el-table stripe :data="socialMedia" :show-header="false" style="width: 100%">
+            <el-table-column prop="title" width="180" />
+            <el-table-column prop="content" />
+          </el-table>
+        </el-card>
+      </el-col>
+    </el-row>
+  </div>
 </template>
+
+<script>
+import PhotoBox from '@/components/PhotoBox'
+import { getInfo } from '@/api/user'
+
+export default {
+  components: { PhotoBox },
+  data() {
+    return {
+      id: 0,
+      imageUrl: null,
+      height: '220px',
+      tableData: [],
+      socialMedia:[],
+      urlMap: null,
+      latitude: null,
+      longitude: null,
+      facebook: require('@/assets/facebook.svg'),
+      twitter: require('@/assets/twitter.svg'),
+      instagram: require('@/assets/instagram.svg')
+    }
+  },
+
+  created() {
+    this.getDetail()
+  },
+
+  methods: {
+    getDetail() {
+      getInfo().then(response => {
+        const { name, address, kabkota, kecamatan, kelurahan, phone, latitude, longitude, photo_url, role_label, email, facebook, instagram, rt, rw, twitter, username
+        } = response.data
+        console.log(name, username, role_label, phone, photo_url)
+        console.log(response.data)
+
+        // this.imageUrl = ((cover_image_path !== null) ? cover_image_path : null)
+        // this.latitude = latitude
+        // this.longitude = longitude
+        // const textPhoneMsg = phone_numbers.map(e => e.type + ': ' + e.phone_number).join(', ')
+        // const wilayah = [kabkota, kecamatan, kelurahan].filter(e => e.name !== null).map(e => e.name).join(', ')
+        
+        this.tableData = [
+          {
+            title: 'Nama',
+            content: ': ' + (name !== null ? name : '-')
+          },
+          {
+            title: 'Username',
+            content: ': ' + (username !== null ? username : '-')
+          },
+          {
+            title: 'Email',
+            content: ': ' + (email !== null ? email : '-')
+          },
+          {
+            title: 'Telepon',
+            content: ': ' + (phone !== null ? phone : '-')
+          },
+          {
+            title: 'Alamat Instansi',
+            content: ': ' + (address !== null ? address : '-')
+          },
+          {
+            title: 'RT',
+            content: ': ' + (rt !== null ? rw : '-')
+          },
+          {
+            title: 'RW',
+            content: ': ' + (rw !== null ? rw : '-')
+          },
+          {
+            title: 'Kelurahan',
+            content: ': ' + (kelurahan !== null ? kelurahan : '-')
+          },
+          {
+            title: 'Kecamatan',
+            content: ': ' + (kecamatan !== null ? kecamatan : '-')
+          },
+          {
+            title: 'Kab/Kota',
+            content: ': ' + (kabkota !== null ? kabkota : '-')
+          },
+        ]
+        this.socialMedia = [
+          {
+            title: '`<img class="social-media-admin twitter" :src="twitter">`',
+            content: ': ' + (twitter !== null ? twitter : '-')
+          },
+          {
+            title: 'Facebook',
+            content: ': ' + (facebook !== null ? facebook : '-')
+          },
+          {
+            title: 'Instagram',
+            content: ': ' + (instagram !== null ? instagram : '-')
+          },
+        ]
+      })
+    }
+  }
+}
+</script>
+
+<style lang="scss">
+#map iframe {
+  width: 400px;
+  height: 350px;
+  margin-left: 20px;
+  border-radius: 5px;
+  margin-top: 30px;
+  -webkit-box-shadow: 0px 0px 25px -10px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 25px -10px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 25px -10px rgba(0,0,0,0.75);
+}
+.social-media-admin {
+  width: 30px;
+  height: 30px;
+  margin-bottom: 30px;
+}
+
+
+
+
+@media only screen and (max-width: 1200px) {
+  .col-right {
+    margin-top: 30px;
+    margin-left: 20px;
+    margin-right: 20px !important
+  }
+}
+
+@media only screen and (min-width: 1200px) and (max-width: 1570px) {
+  #map iframe {
+    width: 250px;
+    height: 200px;
+    border-radius: 5px;
+    margin-left: 20px;
+    -webkit-box-shadow: 0px 0px 25px -10px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 25px -10px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 25px -10px rgba(0,0,0,0.75);
+  }
+}
+</style>
