@@ -31,7 +31,7 @@ const broadcastRouter = {
     },
     {
       path: 'edit/:id(\\d+)',
-      component: () => import('@/views/broadcast/create'),
+      component: () => import('@/views/broadcast/edit'),
       name: 'broadcast-edit',
       hidden: true,
       meta: {
