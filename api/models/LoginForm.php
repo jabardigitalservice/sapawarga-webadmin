@@ -18,6 +18,7 @@ class LoginForm extends Model
 
     public $username;
     public $password;
+    public $push_token;
     public $roles = [];
     public $rememberMe = true;
     /** @var User */
@@ -38,7 +39,7 @@ class LoginForm extends Model
     public function scenarios()
     {
         $scenarios = parent::scenarios();
-        $scenarios[self::SCENARIO_LOGIN] = ['username', 'password'];
+        $scenarios[self::SCENARIO_LOGIN] = ['username', 'password', 'push_token'];
         return $scenarios;
     }
 
@@ -54,6 +55,7 @@ class LoginForm extends Model
             ['rememberMe', 'boolean'],
             // password is validated by validatePassword()
             ['password', 'validatePassword'],
+            ['push_token', 'safe'],
         ];
     }
 
