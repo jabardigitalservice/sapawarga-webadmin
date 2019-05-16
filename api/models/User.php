@@ -1049,12 +1049,12 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             $this->push_token = $pushToken;
 
             // Area ids will be used as topic name
-            $areaIds = array(
+            $areaIds = [
                 'kabkota_id' => (string) $this->kabkota_id,
                 'kec_id' => (string) $this->kec_id,
                 'kel_id' => (string) $this->kel_id,
                 'rw' => "{$this->kel_id}_{$this->rw}",
-            );
+            ];
 
             // Update topic subscription
             Notification::subscribe($pushToken, $areaIds);
