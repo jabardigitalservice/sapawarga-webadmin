@@ -46,13 +46,12 @@
             <el-form-item label="Kategori" prop="category_id">
               <InputCategory v-model="broadcast.category_id" category-type="broadcast" prop="category" />
             </el-form-item>
-            <el-form-item label="Isi Pesan" prop="message">
+            <el-form-item label="Isi Pesan" prop="description">
               <el-input
                 v-model="broadcast.description"
                 type="textarea"
                 :rows="8"
                 placeholder="Tulis pesan"
-                prop="description"
               />
             </el-form-item>
             <el-form-item>
@@ -121,7 +120,13 @@ export default {
         ],
         description: [
           {
-            required: false,
+            required: true,
+            message: 'Pesan harus diisi',
+            trigger: 'blur'
+          },
+          {
+            max: 280,
+            message: 'Pesan maksimal 280 karakter',
             trigger: 'blur'
           }
         ],
