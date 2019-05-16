@@ -42,8 +42,8 @@ services:
     networks:
       - internal
     volumes:
-      - /app/node_modules
       # - ./backend:/app
+      - /app/node_modules
 
   database:
     image: mysql:5.7
