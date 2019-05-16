@@ -51,8 +51,6 @@ export default {
     getDetail() {
       fetchRecord(this.id).then(response => {
         const { title, description, category, kabkota, kecamatan, kelurahan, rw, status, status_label } = response.data
-        // const textPhoneMsg = phone_numbers.map(e => e.type + ': ' + e.phone_number).join(', ')
-        // const wilayah = [kabkota, kecamatan, kelurahan].filter(e => e.name !== null).map(e => e.name).join(', ')
         if (status === 10) {
           this.btnKirimLabel = status_label
           this.btnKirimDisable = true
@@ -101,17 +99,6 @@ export default {
 </script>
 
 <style lang="scss">
-#map iframe {
-  width: 400px;
-  height: 350px;
-  margin-left: 20px;
-  border-radius: 5px;
-  margin-top: 30px;
-  -webkit-box-shadow: 0px 0px 25px -10px rgba(0,0,0,0.75);
-  -moz-box-shadow: 0px 0px 25px -10px rgba(0,0,0,0.75);
-  box-shadow: 0px 0px 25px -10px rgba(0,0,0,0.75);
-}
-
 @media only screen and (max-width: 1200px) {
   .col-right {
     margin-top: 30px;
