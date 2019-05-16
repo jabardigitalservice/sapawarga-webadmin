@@ -1,10 +1,10 @@
 <template>
   <div class="app-container">
     <el-row :gutter="20">
-      <el-col :lg="6">
-        Kiri
-      </el-col>
-      <el-col :lg="18">
+<!--      <el-col :lg="6">-->
+<!--        Kiri-->
+<!--      </el-col>-->
+      <el-col :lg="24">
         <el-row style="margin: 10px 0px">
           <el-col :span="12">
             <router-link :to="{ path: '/broadcast/create' }">
@@ -30,13 +30,13 @@
 
           <el-table-column prop="created_at" sortable="custom" label="Dibuat" width="150">
             <template slot-scope="{row}">
-              {{ row.created_at | moment('D MMMM YYYY') }}
+              {{ row.created_at | moment('D MMMM YYYY HH:mm') }}
             </template>
           </el-table-column>
 
           <el-table-column prop="updated_at" sortable="custom" label="Dikirim" width="150">>
             <template slot-scope="{row}">
-              {{ getSentDateTime(row) | moment('D MMMM YYYY') }}
+              {{ getSentDateTime(row) | moment('D MMMM YYYY HH:mm') }}
             </template>
           </el-table-column>
 
@@ -48,7 +48,7 @@
                 </el-button>
               </router-link>
               <router-link :to="'/broadcast/edit/'+scope.row.id">
-                <el-button type="white" size="mini">
+                <el-button type="white" size="mini" :disabled="scope.row.status === 0">
                   Edit
                 </el-button>
               </router-link>
