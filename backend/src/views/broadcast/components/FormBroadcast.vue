@@ -5,8 +5,8 @@
         <p class="warn-content">Target</p>
         <div class="broadcast-target">
           <el-form
-            :model="broadcast"
             ref="broadcast"
+            :model="broadcast"
             label-width="150px"
             label-position="left"
             :rules="rules"
@@ -14,17 +14,17 @@
           >
             <el-form-item label="Wilayah" prop="wilayah">
               <InputSelectArea
-              :kabkota-id="broadcast.kabkota_id"
-              :kec-id="broadcast.kec_id"
-              :kel-id="broadcast.kel_id"
-              @changeKabkota="broadcast.kabkota_id = $event"
-              @changeKecamatan="broadcast.kec_id = $event"
-              @changeKelurahan="broadcast.kel_id = $event"
-              :style="{width: width}"
-            />
+                :kabkota-id="broadcast.kabkota_id"
+                :kec-id="broadcast.kec_id"
+                :kel-id="broadcast.kel_id"
+                :style="{width: width}"
+                @changeKabkota="broadcast.kabkota_id = $event"
+                @changeKecamatan="broadcast.kec_id = $event"
+                @changeKelurahan="broadcast.kel_id = $event"
+              />
             </el-form-item>
             <el-form-item class="rw" prop="rw">
-              <el-input placeholder="Semua RW" v-model="broadcast.rw" type="text" :disabled="broadcast.kel_id === null" />
+              <el-input v-model="broadcast.rw" placeholder="Semua RW" type="text" :disabled="broadcast.kel_id === null" />
             </el-form-item>
           </el-form>
         </div>
@@ -41,7 +41,7 @@
             :status-icon="true"
           >
             <el-form-item label="Judul Pesan" prop="title">
-              <el-input v-model="broadcast.title" type="text"  />
+              <el-input v-model="broadcast.title" type="text" />
             </el-form-item>
             <el-form-item label="Kategori" prop="category_id">
               <InputCategory v-model="broadcast.category_id" category-type="broadcast" prop="category" />
@@ -113,7 +113,7 @@ export default {
             max: 60,
             message: 'Judul maksimal 60 karakter',
             trigger: 'blur'
-          },
+          }
 
         ],
         category_id: [
@@ -156,7 +156,7 @@ export default {
     async submitForm(status) {
       const valid = await this.$refs.broadcast.validate()
 
-      if(!valid) {
+      if (!valid) {
         return
       }
 
