@@ -182,7 +182,13 @@ export default {
         data.status = status
 
         if (this.isEdit) {
-          console.log('edit')
+          const id = this.$route.params && this.$route.params.id
+
+          await update(id, data)
+
+          this.$message.info(this.$t('crud.draft-success'))
+
+          this.$router.push('/broadcast/index')
         } else {
           await create(data)
           if (status === 10) {
