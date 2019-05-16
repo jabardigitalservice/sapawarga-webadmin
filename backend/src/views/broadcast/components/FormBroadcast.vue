@@ -106,12 +106,12 @@ export default {
           },
           {
             min: 10,
-            message: 'Judul minimal 10 karakter',
+            message: 'Judul pesan minimal 10 karakter',
             trigger: 'blur'
           },
           {
             max: 60,
-            message: 'Judul maksimal 60 karakter',
+            message: 'Judul pesan maksimal 60 karakter',
             trigger: 'blur'
           }
 
