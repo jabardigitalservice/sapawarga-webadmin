@@ -1,46 +1,71 @@
+image: docker:latest
+
+services:
+  - docker:dind
+
+variables:
+  IMAGETAG: $CI_COMMIT_REF_SLUG
+
+before_script:
+  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  - apk add --no-cache py-pip python-dev libffi-dev openssl-dev gcc libc-dev make
+  - pip install docker-compose
+  
 stages:
+  - build
   - test
+  - release
 
-api_lint:
-  stage: test
-  image: javanlabs/php-tools:7.2
+build_dev:
+  stage: build
   only:
     changes:
       - api/**/*
-  before_script:
-    - cd api/
-    - composer install --no-scripts --no-progress --no-suggest --ignore-platform-reqs
-  script:
-    - composer sniff
-
-admin_lint:
-  stage: test
-  image: node:10
-  only:
-    changes:
       - backend/**/*
-  before_script:
-    - cd backend/
-    - npm install
+      - "*.yml"
   script:
-    - npm run lint
-    - npm run test:unit
+    - docker-compose -f docker-compose.dev.yml build
+    - docker images
+    - docker-compose -f docker-compose.dev.yml push
 
-api_test:
+test_api:
   stage: test
-  image: docker:latest
-  services:
-    - docker:dind
   only:
     changes:
       - api/**/*
-      - nginx/**/*
       - "*.yml"
-  before_script:
-    - apk add --no-cache py-pip python-dev libffi-dev openssl-dev gcc libc-dev make
-    - pip install docker-compose
   script:
-    - docker-compose -f docker-compose.dev.yml up -d --build
-    - sleep 30
+    - docker-compose -f docker-compose.dev.yml pull
+    - docker images
+    - docker-compose -f docker-compose.dev.yml up -d
+    - sleep 60
+    - docker ps
+    - docker-compose -f docker-compose.dev.yml exec -T api composer sniff
     - docker-compose -f docker-compose.dev.yml exec -T api php yii seeder
     - docker-compose -f docker-compose.dev.yml exec -T api composer run test
+
+test_backend:
+  stage: test
+  only:
+    changes:
+      - api/**/*
+      - backend/**/*
+      - "*.yml"
+  script:
+    - docker-compose -f docker-compose.dev.yml pull
+    - docker images
+    - docker-compose -f docker-compose.dev.yml up -d
+    - sleep 60
+    - docker ps
+    - docker-compose -f docker-compose.dev.yml exec -T backend npm run lint
+    - docker-compose -f docker-compose.dev.yml exec -T backend npm run test:unit
+
+release_api:
+  stage: release
+  only: 
+    - master
+  script:
+    - docker-compose -f docker-compose.dev.yml pull
+    - docker images
+    - docker tag registry.gitlab.com/jdsteam/sapa-warga/sapawarga-app/sapawarga-api:${IMAGETAG} registry.gitlab.com/jdsteam/sapa-warga/sapawarga-app/sapawarga-api:latest
+    - docker push registry.gitlab.com/jdsteam/sapa-warga/sapawarga-app/sapawarga-api:latest

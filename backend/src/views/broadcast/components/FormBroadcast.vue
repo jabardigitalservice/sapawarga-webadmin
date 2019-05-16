@@ -41,23 +41,22 @@
             :status-icon="true"
           >
             <el-form-item label="Judul Pesan" prop="title">
-              <el-input v-model="broadcast.title" type="text" />
+              <el-input v-model="broadcast.title" type="text" placeholder="Judul minimal 10 karakter dan maksimal 60 karakter" />
             </el-form-item>
             <el-form-item label="Kategori" prop="category_id">
               <InputCategory v-model="broadcast.category_id" category-type="broadcast" prop="category" />
             </el-form-item>
-            <el-form-item label="Isi Pesan" prop="message">
+            <el-form-item label="Isi Pesan" prop="description">
               <el-input
                 v-model="broadcast.description"
                 type="textarea"
                 :rows="8"
-                placeholder="Tulis pesan"
-                prop="description"
+                placeholder="Tulis pesan, maksimal 280 karakter"
               />
             </el-form-item>
             <el-form-item>
               <el-button type="info" :loading="loading" @click="submitForm(status.draft)">{{ $t('crud.draft') }}</el-button>
-              <el-button type="primary" :loading="loading" @click="submitForm(status.active)"> {{ $t('crud.send') }}</el-button>
+              <el-button v-show="!isEdit" type="primary" :loading="loading" @click="submitForm(status.active)"> {{ $t('crud.send') }}</el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -68,7 +67,7 @@
 <script>
 import InputCategory from '@/components/InputCategory'
 import InputSelectArea from '@/components/InputSelectArea'
-import { create } from '@/api/broadcast'
+import { create, fetchRecord, update } from '@/api/broadcast'
 export default {
   components: {
     InputCategory,
@@ -106,12 +105,12 @@ export default {
           },
           {
             min: 10,
-            message: 'Judul minimal 10 karakter',
+            message: 'Judul pesan minimal 10 karakter',
             trigger: 'blur'
           },
           {
             max: 60,
-            message: 'Judul maksimal 60 karakter',
+            message: 'Judul pesan maksimal 60 karakter',
             trigger: 'blur'
           }
 
@@ -121,7 +120,13 @@ export default {
         ],
         description: [
           {
-            required: false,
+            required: true,
+            message: 'Pesan harus diisi',
+            trigger: 'blur'
+          },
+          {
+            max: 280,
+            message: 'Pesan maksimal 280 karakter',
             trigger: 'blur'
           }
         ],
@@ -152,7 +157,20 @@ export default {
       }
     }
   },
+  created() {
+    if (this.isEdit) {
+      const id = this.$route.params && this.$route.params.id
+      this.fetchData(id)
+    }
+  },
   methods: {
+    fetchData(id) {
+      fetchRecord(id).then(response => {
+        this.broadcast = response.data
+      }).catch(err => {
+        console.log(err)
+      })
+    },
     async submitForm(status) {
       const valid = await this.$refs.broadcast.validate()
 
@@ -169,7 +187,13 @@ export default {
         data.status = status
 
         if (this.isEdit) {
-          console.log('edit')
+          const id = this.$route.params && this.$route.params.id
+
+          await update(id, data)
+
+          this.$message.info(this.$t('crud.draft-success'))
+
+          this.$router.push('/broadcast/index')
         } else {
           await create(data)
           if (status === 10) {
@@ -180,8 +204,8 @@ export default {
             this.$router.push('/broadcast/index')
           }
         }
-      } catch (error) {
-        console.log(error.response)
+      } catch (err) {
+        console.log(err)
       } finally {
         this.loading = false
       }
