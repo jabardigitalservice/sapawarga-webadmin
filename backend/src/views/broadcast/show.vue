@@ -22,7 +22,7 @@
             <el-table-column prop="content" />
           </el-table>
         </el-card>
-        <el-button class="button-send" type="primary" v-if="!btnKirimDisable" @click="submitForm(status.active)">{{ $t('crud.send') }}</el-button>
+        <el-button v-if="!btnKirimDisable" class="button-send" type="primary" @click="submitForm(status.active)">{{ $t('crud.send') }}</el-button>
       </el-col>
     </el-row>
   </div>
@@ -42,7 +42,7 @@ export default {
       status: {
         draft: 0,
         active: 10
-      },
+      }
     }
   },
 
@@ -54,7 +54,7 @@ export default {
   methods: {
     getDetail() {
       fetchRecord(this.id).then(response => {
-        const { title, description, category, kabkota, kecamatan, kelurahan, rw, status, status_label } = response.data
+        const { title, description, category, kabkota, kecamatan, kelurahan, rw, status } = response.data
         this.broadcast = response.data
         console.log(this.broadcast)
         if (status === 10) {
@@ -98,11 +98,11 @@ export default {
         ]
       })
     },
-    async submitForm(status){
+    async submitForm(status) {
       const id = this.$route.params && this.$route.params.id
       const data = {}
       Object.assign(data, this.broadcast)
-      data.status = status      
+      data.status = status
       await update(id, data)
       this.$message.success(this.$t('crud.send-success'))
       this.$router.push('/broadcast/index')
