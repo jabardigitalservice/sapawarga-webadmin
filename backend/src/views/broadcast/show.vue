@@ -51,13 +51,9 @@ export default {
     getDetail() {
       fetchRecord(this.id).then(response => {
         const { title, description, category, kabkota, kecamatan, kelurahan, rw, status, status_label } = response.data
-        // const textPhoneMsg = phone_numbers.map(e => e.type + ': ' + e.phone_number).join(', ')
-        // const wilayah = [kabkota, kecamatan, kelurahan].filter(e => e.name !== null).map(e => e.name).join(', ')
         if (status === 10) {
-          this.btnKirimLabel = status_label
           this.btnKirimDisable = true
         } else if (status === 0) {
-          this.btnKirimLabel = 'Kirim'
           this.btnKirimDisable = false
         }
 
