@@ -15,17 +15,40 @@
             <el-table-column prop="content" />
           </el-table>
         </el-card>
-        <el-card>
+        <el-card class="social-media-card">
           <div slot="header" class="clearfix">
             <span>Sosial Media</span>
           </div>
-          <!-- <img class="social-media-admin twitter" :src="twitter"> <br>
-          <img class="social-media-admin facebook" :src="facebook"> <br>
-          <img class="social-media-admin instagram" :src="instagram"> <br> -->
-          <el-table stripe :data="socialMedia" :show-header="false" style="width: 100%">
-            <el-table-column prop="title" width="180" />
-            <el-table-column prop="content" />
-          </el-table>
+          <el-row>
+            <el-col :span="6" style="margin-left:10px; padding-left: 50px">
+              <a :href="`https://twitter.com/${twitterAccount}`" target="_blank">
+                <img class="social-media-admin twitter" :src="twitter">
+              </a>
+            </el-col>
+            <el-col :span="14">
+              <p>: {{ twitterAccount }}</p>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="6" style="margin-left:10px; padding-left: 50px">
+              <a :href="`${facebookAccount}`" target="_blank">
+                <img class="social-media-admin twitter" :src="facebook">
+              </a>
+            </el-col>
+            <el-col :span="14">
+              <p>: {{ facebookAccount }}</p>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="6" style="margin-left:10px; padding-left: 50px">
+              <a :href="`https://www.instagram.com/${instagramAccount}`" target="_blank">
+                <img class="social-media-admin twitter" :src="instagram">
+              </a>
+            </el-col>
+            <el-col :span="14">
+              <p>: {{ instagramAccount }}</p>
+            </el-col>
+          </el-row>
         </el-card>
       </el-col>
     </el-row>
@@ -44,13 +67,16 @@ export default {
       imageUrl: null,
       height: '220px',
       tableData: [],
-      socialMedia:[],
+      socialMedia: [],
       urlMap: null,
       latitude: null,
       longitude: null,
-      facebook: require('@/assets/facebook.svg'),
       twitter: require('@/assets/twitter.svg'),
-      instagram: require('@/assets/instagram.svg')
+      facebook: require('@/assets/facebook.svg'),
+      instagram: require('@/assets/instagram.svg'),
+      twitterAccount: null,
+      facebookAccount: null,
+      instagramAccount: null
     }
   },
 
@@ -61,17 +87,15 @@ export default {
   methods: {
     getDetail() {
       getInfo().then(response => {
-        const { name, address, kabkota, kecamatan, kelurahan, phone, latitude, longitude, photo_url, role_label, email, facebook, instagram, rt, rw, twitter, username
+        const { name, address, kabkota, kecamatan, kelurahan, phone, latitude, longitude, photo_url, email, facebook, instagram, rt, rw, twitter, username
         } = response.data
-        console.log(name, username, role_label, phone, photo_url)
-        console.log(response.data)
+        this.twitterAccount = twitter || '-'
+        this.facebookAccount = facebook || '-'
+        this.instagramAccount = instagram || '-'
 
-        // this.imageUrl = ((cover_image_path !== null) ? cover_image_path : null)
-        // this.latitude = latitude
-        // this.longitude = longitude
-        // const textPhoneMsg = phone_numbers.map(e => e.type + ': ' + e.phone_number).join(', ')
-        // const wilayah = [kabkota, kecamatan, kelurahan].filter(e => e.name !== null).map(e => e.name).join(', ')
-        
+        this.imageUrl = ((photo_url !== null) ? photo_url : null)
+        this.latitude = latitude
+        this.longitude = longitude
         this.tableData = [
           {
             title: 'Nama',
@@ -112,21 +136,7 @@ export default {
           {
             title: 'Kab/Kota',
             content: ': ' + (kabkota !== null ? kabkota : '-')
-          },
-        ]
-        this.socialMedia = [
-          {
-            title: '`<img class="social-media-admin twitter" :src="twitter">`',
-            content: ': ' + (twitter !== null ? twitter : '-')
-          },
-          {
-            title: 'Facebook',
-            content: ': ' + (facebook !== null ? facebook : '-')
-          },
-          {
-            title: 'Instagram',
-            content: ': ' + (instagram !== null ? instagram : '-')
-          },
+          }
         ]
       })
     }
@@ -151,8 +161,9 @@ export default {
   margin-bottom: 30px;
 }
 
-
-
+.social-media-card {
+  margin-top: 30px;
+}
 
 @media only screen and (max-width: 1200px) {
   .col-right {
