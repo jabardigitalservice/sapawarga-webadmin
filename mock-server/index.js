@@ -33,14 +33,14 @@ router.render = (req, res) => {
   }
 }
 
-server.post('/api/v1/aspirasi-approval/:id', (req, res) => {
+server.post('/api/v1/aspirasi/approval/:id', (req, res) => {
   res.json({
     status: 200,
     success: true
   })
 })
 
-server.post('/api/v1/aspirasi-likes/:id', (req, res) => {
+server.post('/api/v1/aspirasi/likes/:id', (req, res) => {
   res.json({
     status: 200,
     success: true
