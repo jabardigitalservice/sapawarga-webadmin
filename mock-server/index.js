@@ -1,9 +1,15 @@
 const jsonServer = require('json-server')
 const server = jsonServer.create()
 const router = jsonServer.router('db.json')
-const middlewares = jsonServer.defaults({noCors: true})
+const middlewares = jsonServer.defaults()
 
 router.render = (req, res) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'authorization');
+  res.header('Access-Control-Request-Headers', 'authorization');
+  res.header('Access-Control-Allow-Methods', 'GET');
+  res.header('Access-Control-Request-Methods', 'GET');
+  
   if (Array.isArray(res.locals.data)) {
     res.json({
     	status: 200,
