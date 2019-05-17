@@ -107,24 +107,6 @@ class BroadcastController extends ActiveController
 
         $model->load(Yii::$app->getRequest()->getBodyParams(), '');
         if ($model->validate() && $model->save()) {
-            // test FCM notif
-            $fcm_key = getenv('FCM_KEY');
-            $sender_id = getenv('FCM_SENDER_ID');
-            $device_id = 'device-id';
-
-            $client = new \Fcm\FcmClient($fcm_key, $sender_id);
-            $notification = new \Fcm\Push\Notification();
-            $notification
-                ->setTitle('Hello from php-fcm!')
-                ->addTopic('test_topic');
-
-            $response_fcm = $client->send($notification);
-
-            // Subscribe $device_id to a topic
-            // $subscribe = new \Fcm\Topic\Subscribe('test_topic');
-            // $subscribe->addDevice($device_id);
-            // $client->send($subscribe);
-
             $response = Yii::$app->getResponse();
             $response->setStatusCode(201);
         } elseif (!$model->hasErrors()) {

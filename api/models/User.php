@@ -8,7 +8,6 @@ use yii\behaviors\TimestampBehavior;
 use yii\db\Expression;
 use yii\rbac\Permission;
 use yii\web\Request as WebRequest;
-use app\models\Notification;
 
 /**
  * Class User
@@ -1050,10 +1049,10 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 
             // Area ids will be used as topic name
             $areaIds = [
-                'kabkota_id' => (string) $this->kabkota_id,
-                'kec_id' => (string) $this->kec_id,
-                'kel_id' => (string) $this->kel_id,
-                'rw' => "{$this->kel_id}_{$this->rw}",
+                (string) $this->kabkota_id,
+                (string) $this->kec_id,
+                (string) $this->kel_id,
+                "{$this->kel_id}_{$this->rw}",
             ];
 
             // Update topic subscription

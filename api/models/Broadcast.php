@@ -181,6 +181,28 @@ class Broadcast extends \yii\db\ActiveRecord
     {
         $this->author_id = Yii::$app->user->getId();
 
+        if ($insert) {
+            // Handle push notification
+            if ($this->status == self::STATUS_PUBLISHED) {
+                $message = [
+                    'title'         => $this->title,
+                    'description'   => $this->description,
+                ];
+                // By default, send notification to all users
+                $topic = 'all';
+                if ($this->kel_id && $this->rw) {
+                    $topic = "{$this->kel_id}_{$this->rw}";
+                } else if ($this->kel_id) {
+                    $topic = (string) $this->kel_id;
+                } else if ($this->kec_id) {
+                    $topic = (string) $this->kec_id;
+                } else if ($this->kabkota_id) {
+                    $topic = (string) $this->kabkota_id;
+                }
+                Notification::send($message, $topic);
+            }
+        }
+
         return parent::beforeSave($insert);
     }
 
