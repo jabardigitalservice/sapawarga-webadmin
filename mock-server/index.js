@@ -5,10 +5,10 @@ const middlewares = jsonServer.defaults()
 
 router.render = (req, res) => {
   res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'authorization');
-  res.header('Access-Control-Request-Headers', 'authorization');
-  res.header('Access-Control-Allow-Methods', 'GET');
-  res.header('Access-Control-Request-Methods', 'GET');
+  res.header('Access-Control-Allow-Headers', '*');
+  res.header('Access-Control-Request-Headers', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Request-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   
   if (Array.isArray(res.locals.data)) {
     res.json({
