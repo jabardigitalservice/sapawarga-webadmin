@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-row :gutter="10">
-      <el-col class="col-left" :xs="24" :sm="24" :md="24" :lg="7" :xl="5">
+      <el-col class="col-left" :xs="24" :sm="24" :md="24" :lg="10" :xl="10">
         <el-card>
           <div slot="header" class="clearfix">
             <span>*Target</span>
@@ -12,7 +12,7 @@
           </el-table>
         </el-card>
       </el-col>
-      <el-col class="col-right" :xs="23" :sm="23" :md="23" :lg="16" :xl="18">
+      <el-col class="col-right" :xs="24" :sm="24" :md="24" :lg="14" :xl="14">
         <el-card>
           <div slot="header" class="clearfix">
             <span>*Isi Pesan</span>
