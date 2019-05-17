@@ -1,35 +1,35 @@
 <template>
   <div class="app-container">
     <el-row :gutter="10">
-      <el-col class="col-left" :xs="24" :sm="24" :md="24" :lg="7" :xl="5">
+      <el-col class="col-left" :xs="24" :sm="24" :md="24" :lg="10" :xl="10">
         <el-card>
           <div slot="header" class="clearfix">
-            <span>*Target</span>
+            <span>Target</span>
           </div>
-          <el-table :data="tableDataTarget" :show-header="false" style="width: 100%">
+          <el-table stripe :data="tableDataTarget" :show-header="false" style="width: 100%">
             <el-table-column prop="title" />
             <el-table-column prop="content" />
           </el-table>
         </el-card>
       </el-col>
-      <el-col class="col-right" :xs="23" :sm="23" :md="23" :lg="16" :xl="18">
+      <el-col class="col-right" :xs="24" :sm="24" :md="24" :lg="14" :xl="14">
         <el-card>
           <div slot="header" class="clearfix">
-            <span>*Isi Pesan</span>
+            <span>Isi Pesan</span>
           </div>
-          <el-table :data="tableDataPesan" :show-header="false" style="width: 100%">
+          <el-table stripe :data="tableDataPesan" :show-header="false" style="width: 100%">
             <el-table-column prop="title" width="180" />
             <el-table-column prop="content" />
           </el-table>
-          <el-button type="primary" :disabled="btnKirimDisable">{{ btnKirimLabel }}</el-button>
         </el-card>
+        <el-button v-if="!btnKirimDisable" class="button-send" type="primary" @click="submitForm(status.active)">{{ $t('crud.send') }}</el-button>
       </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
-import { fetchRecord } from '@/api/broadcast'
+import { fetchRecord, update } from '@/api/broadcast'
 
 export default {
   data() {
@@ -37,8 +37,12 @@ export default {
       id: 0,
       tableDataTarget: [],
       tableDataPesan: [],
-      btnKirimLabel: '',
-      btnKirimDisable: false
+      broadcast: null,
+      btnKirimDisable: false,
+      status: {
+        draft: 0,
+        active: 10
+      }
     }
   },
 
@@ -50,12 +54,12 @@ export default {
   methods: {
     getDetail() {
       fetchRecord(this.id).then(response => {
-        const { title, description, category, kabkota, kecamatan, kelurahan, rw, status, status_label } = response.data
+        const { title, description, category, kabkota, kecamatan, kelurahan, rw, status } = response.data
+        this.broadcast = response.data
+
         if (status === 10) {
-          this.btnKirimLabel = status_label
           this.btnKirimDisable = true
         } else if (status === 0) {
-          this.btnKirimLabel = 'Kirim'
           this.btnKirimDisable = false
         }
 
@@ -93,29 +97,30 @@ export default {
           }
         ]
       })
+    },
+    async submitForm(status) {
+      const id = this.$route.params && this.$route.params.id
+      const data = {}
+      Object.assign(data, this.broadcast)
+      data.status = status
+      await update(id, data)
+      this.$message.success(this.$t('crud.send-success'))
+      this.$router.push('/broadcast/index')
     }
   }
 }
 </script>
 
 <style lang="scss">
-@media only screen and (max-width: 1200px) {
-  .col-right {
-    margin-top: 30px;
-    margin-left: 20px;
-    margin-right: 20px !important
-  }
+.button-send {
+  margin-top: 30px;
+  display: block;
 }
 
-@media only screen and (min-width: 1200px) and (max-width: 1570px) {
-  #map iframe {
-    width: 250px;
-    height: 200px;
-    border-radius: 5px;
-    margin-left: 20px;
-    -webkit-box-shadow: 0px 0px 25px -10px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px 0px 25px -10px rgba(0,0,0,0.75);
-    box-shadow: 0px 0px 25px -10px rgba(0,0,0,0.75);
+@media only screen and (max-width: 1200px) {
+  .col-right {
+    margin-top: 20px;
+    margin-right: 20px !important
   }
 }
 </style>
