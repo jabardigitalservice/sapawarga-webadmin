@@ -6,7 +6,7 @@
           <div slot="header" class="clearfix">
             <span>Target</span>
           </div>
-          <el-table :data="tableDataTarget" :show-header="false" style="width: 100%">
+          <el-table stripe :data="tableDataTarget" :show-header="false" style="width: 100%">
             <el-table-column prop="title" />
             <el-table-column prop="content" />
           </el-table>
@@ -17,7 +17,7 @@
           <div slot="header" class="clearfix">
             <span>Isi Pesan</span>
           </div>
-          <el-table :data="tableDataPesan" :show-header="false" style="width: 100%">
+          <el-table stripe :data="tableDataPesan" :show-header="false" style="width: 100%">
             <el-table-column prop="title" width="180" />
             <el-table-column prop="content" />
           </el-table>
