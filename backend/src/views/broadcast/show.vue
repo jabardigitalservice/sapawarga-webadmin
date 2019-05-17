@@ -112,6 +112,11 @@ export default {
   box-shadow: 0px 0px 25px -10px rgba(0,0,0,0.75);
 }
 
+.button-send {
+  margin-top: 30px;
+  display: block;
+}
+
 @media only screen and (max-width: 1200px) {
   .col-right {
     margin-top: 30px;
