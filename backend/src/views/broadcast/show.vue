@@ -115,8 +115,7 @@ export default {
 
 @media only screen and (max-width: 1200px) {
   .col-right {
-    margin-top: 30px;
-    margin-left: 20px;
+    margin-top: 20px;
     margin-right: 20px !important
   }
 }
