@@ -56,7 +56,7 @@ export default {
       fetchRecord(this.id).then(response => {
         const { title, description, category, kabkota, kecamatan, kelurahan, rw, status } = response.data
         this.broadcast = response.data
-        console.log(this.broadcast)
+
         if (status === 10) {
           this.btnKirimDisable = true
         } else if (status === 0) {
