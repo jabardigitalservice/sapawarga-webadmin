@@ -4,7 +4,7 @@
       <el-col class="col-left" :xs="24" :sm="24" :md="24" :lg="10" :xl="10">
         <el-card>
           <div slot="header" class="clearfix">
-            <span>*Target</span>
+            <span>Target</span>
           </div>
           <el-table :data="tableDataTarget" :show-header="false" style="width: 100%">
             <el-table-column prop="title" />
@@ -15,7 +15,7 @@
       <el-col class="col-right" :xs="24" :sm="24" :md="24" :lg="14" :xl="14">
         <el-card>
           <div slot="header" class="clearfix">
-            <span>*Isi Pesan</span>
+            <span>Isi Pesan</span>
           </div>
           <el-table :data="tableDataPesan" :show-header="false" style="width: 100%">
             <el-table-column prop="title" width="180" />
