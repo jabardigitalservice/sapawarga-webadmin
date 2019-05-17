@@ -27,21 +27,21 @@ router.render = (req, res) => {
   }
 }
 
-server.post('/api/v1/aspirasi/approval/:id', (req, res) => {
+server.post('/api/v1/aspirasi-approval/:id', (req, res) => {
   res.json({
     status: 200,
     success: true
   })
 })
 
-server.post('/api/v1/aspirasi/likes/:id', (req, res) => {
+server.post('/api/v1/aspirasi-likes/:id', (req, res) => {
   res.json({
     status: 200,
     success: true
   })
 })
 
-server.post('/api/v1/upload', (req, res) => {
+server.post('/api/v1/attachments', (req, res) => {
   res.json({
     status: 200,
     success: true,
@@ -66,7 +66,7 @@ server.use(jsonServer.rewriter({
   '/api/v1/categories/:id': '/categories/:id',
   '/api/v1/phone-books': '/phone-books',
   '/api/v1/phone-books/:id': '/phone-books/:id',
-  '/api/v1/aspirasi/me': '/aspirasi',
+  '/api/v1/aspirasi-me': '/aspirasi',
   '/api/v1/aspirasi': '/aspirasi',
   '/api/v1/aspirasi/:id': '/aspirasi/:id',
   '/api/v1/broadcast': '/broadcast',
