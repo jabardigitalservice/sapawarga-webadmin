@@ -39,6 +39,7 @@ class AspirasiController extends ActiveController
                 'update' => ['put'],
                 'delete' => ['delete'],
                 'public' => ['get'],
+                'approval' => ['post'],
             ],
         ];
 
@@ -64,11 +65,11 @@ class AspirasiController extends ActiveController
         // setup access
         $behaviors['access'] = [
             'class' => AccessControl::className(),
-            'only'  => ['index', 'view', 'create', 'update', 'delete'], //only be applied to
+            'only'  => ['index', 'view', 'create', 'update', 'delete', 'approval'], //only be applied to
             'rules' => [
                 [
                     'allow'   => true,
-                    'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                    'actions' => ['index', 'view', 'create', 'update', 'delete', 'approval'],
                     'roles'   => ['admin', 'manageSettings'],
                 ],
                 [
@@ -119,6 +120,11 @@ class AspirasiController extends ActiveController
         $response = Yii::$app->getResponse();
         $response->setStatusCode(204);
 
+        return 'ok';
+    }
+
+    public function actionApproval($id)
+    {
         return 'ok';
     }
 

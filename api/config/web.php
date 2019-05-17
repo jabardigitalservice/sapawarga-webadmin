@@ -181,6 +181,18 @@ $config = [
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',
+                    'controller' => 'v1/aspirasi',
+                    'pluralize' => false,
+                    'tokens' => [
+                        '{id}' => '<id:\d+>',
+                    ],
+                    'extraPatterns' => [
+                        'POST approval/{id}' => 'approval',
+                        'OPTIONS approval/{id}' => 'approval',
+                    ]
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
                     'controller' => 'v1/page',
                     'pluralize' => false,
                     'tokens' => [
