@@ -93,13 +93,13 @@ export const constantRoutes = [
     children: [
       {
         name: 'Profile',
-        path:'',
+        path: '',
         component: () => import('@/views/profile/index'),
         hidden: true,
         meta: {
           title: 'profile',
           roles: ['admin']
-      }
+        }
       }
     ]
   }
