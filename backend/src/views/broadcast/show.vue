@@ -22,14 +22,14 @@
             <el-table-column prop="content" />
           </el-table>
         </el-card>
-        <el-button class="button-send" type="primary" v-if="!btnKirimDisable">{{ $t('crud.send') }}</el-button>
+        <el-button class="button-send" type="primary" v-if="!btnKirimDisable" @click="submitForm(status.active)">{{ $t('crud.send') }}</el-button>
       </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
-import { fetchRecord } from '@/api/broadcast'
+import { fetchRecord, update } from '@/api/broadcast'
 
 export default {
   data() {
@@ -37,8 +37,12 @@ export default {
       id: 0,
       tableDataTarget: [],
       tableDataPesan: [],
-      btnKirimLabel: '',
-      btnKirimDisable: false
+      broadcast: null,
+      btnKirimDisable: false,
+      status: {
+        draft: 0,
+        active: 10
+      },
     }
   },
 
@@ -51,6 +55,8 @@ export default {
     getDetail() {
       fetchRecord(this.id).then(response => {
         const { title, description, category, kabkota, kecamatan, kelurahan, rw, status, status_label } = response.data
+        this.broadcast = response.data
+        console.log(this.broadcast)
         if (status === 10) {
           this.btnKirimDisable = true
         } else if (status === 0) {
@@ -91,23 +97,21 @@ export default {
           }
         ]
       })
+    },
+    async submitForm(status){
+      const id = this.$route.params && this.$route.params.id
+      const data = {}
+      Object.assign(data, this.broadcast)
+      data.status = status      
+      await update(id, data)
+      this.$message.success(this.$t('crud.send-success'))
+      this.$router.push('/broadcast/index')
     }
   }
 }
 </script>
 
 <style lang="scss">
-#map iframe {
-  width: 400px;
-  height: 350px;
-  margin-left: 20px;
-  border-radius: 5px;
-  margin-top: 30px;
-  -webkit-box-shadow: 0px 0px 25px -10px rgba(0,0,0,0.75);
-  -moz-box-shadow: 0px 0px 25px -10px rgba(0,0,0,0.75);
-  box-shadow: 0px 0px 25px -10px rgba(0,0,0,0.75);
-}
-
 .button-send {
   margin-top: 30px;
   display: block;
