@@ -181,36 +181,38 @@ class Broadcast extends \yii\db\ActiveRecord
     {
         $this->author_id = Yii::$app->user->getId();
 
-        // Check condition for push notification
-        $isSendNotification = false;
-        if ($insert) {
-            $isSendNotification = $this->status == self::STATUS_PUBLISHED;
-        } else { // Update broadcast
-            $changedAttributes = $this->getDirtyAttributes(['status']);
-            if (array_key_exists('status', $changedAttributes)) {
-                if ($changedAttributes['status'] == self::STATUS_PUBLISHED) {
-                    $isSendNotification = true;
+        if (!YII_ENV_TEST) {
+            // Check condition for push notification
+            $isSendNotification = false;
+            if ($insert) {
+                $isSendNotification = $this->status == self::STATUS_PUBLISHED;
+            } else { // Update broadcast
+                $changedAttributes = $this->getDirtyAttributes(['status']);
+                if (array_key_exists('status', $changedAttributes)) {
+                    if ($changedAttributes['status'] == self::STATUS_PUBLISHED) {
+                        $isSendNotification = true;
+                    }
                 }
             }
-        }
 
-        if ($isSendNotification) {
-            $message = [
-                'title'         => $this->title,
-                'description'   => $this->description,
-            ];
-            // By default, send notification to all users
-            $topic = 'all';
-            if ($this->kel_id && $this->rw) {
-                $topic = "{$this->kel_id}_{$this->rw}";
-            } elseif ($this->kel_id) {
-                $topic = (string) $this->kel_id;
-            } elseif ($this->kec_id) {
-                $topic = (string) $this->kec_id;
-            } elseif ($this->kabkota_id) {
-                $topic = (string) $this->kabkota_id;
+            if ($isSendNotification) {
+                $message = [
+                    'title'         => $this->title,
+                    'description'   => $this->description,
+                ];
+                // By default, send notification to all users
+                $topic = 'all';
+                if ($this->kel_id && $this->rw) {
+                    $topic = "{$this->kel_id}_{$this->rw}";
+                } elseif ($this->kel_id) {
+                    $topic = (string) $this->kel_id;
+                } elseif ($this->kec_id) {
+                    $topic = (string) $this->kec_id;
+                } elseif ($this->kabkota_id) {
+                    $topic = (string) $this->kabkota_id;
+                }
+                Notification::send($message, $topic);
             }
-            Notification::send($message, $topic);
         }
 
         return parent::beforeSave($insert);
