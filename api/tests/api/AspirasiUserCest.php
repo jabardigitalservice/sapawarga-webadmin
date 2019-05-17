@@ -86,7 +86,7 @@ class AspirasiUserCest
     {
         $I->amUser('user');
 
-        $I->sendGET('/v1/aspirasi/me');
+        $I->sendGET('/v1/aspirasi-me');
         $I->canSeeResponseCodeIs(200);
         $I->seeResponseIsJson();
 
@@ -100,7 +100,7 @@ class AspirasiUserCest
     {
         $I->amUser('user');
 
-        $I->sendGET('/v1/aspirasi/me/1');
+        $I->sendGET('/v1/aspirasi-me/1');
         $I->canSeeResponseCodeIs(200);
         $I->seeResponseIsJson();
 
@@ -116,7 +116,7 @@ class AspirasiUserCest
 
         $data = [];
 
-        $I->sendPOST('/v1/aspirasi/me', $data);
+        $I->sendPOST('/v1/aspirasi-me', $data);
         $I->canSeeResponseCodeIs(201);
         $I->seeResponseIsJson();
 
@@ -132,7 +132,7 @@ class AspirasiUserCest
 
         $data = [];
 
-        $I->sendPOST('/v1/aspirasi/me/1', $data);
+        $I->sendPOST('/v1/aspirasi-me/1', $data);
         $I->canSeeResponseCodeIs(200);
         $I->seeResponseIsJson();
 
@@ -146,7 +146,7 @@ class AspirasiUserCest
     {
         $I->amUser('user');
 
-        $I->sendDELETE('/v1/aspirasi/me/1');
+        $I->sendDELETE('/v1/aspirasi-me/1');
         $I->canSeeResponseCodeIs(204);
         $I->seeResponseIsJson();
 

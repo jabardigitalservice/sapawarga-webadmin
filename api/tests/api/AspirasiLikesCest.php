@@ -13,7 +13,7 @@ class AspirasiLikesCest
 
         $data = [];
 
-        $I->sendPOST('/v1/aspirasi/likes/1', $data);
+        $I->sendPOST('/v1/aspirasi-likes/1', $data);
         $I->canSeeResponseCodeIs(200);
         $I->seeResponseIsJson();
 

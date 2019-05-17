@@ -16,7 +16,7 @@ class AspirasiApprovalCest
             'notes'  => 'Test',
         ];
 
-        $I->sendPOST('/v1/aspirasi/approval/1', $data);
+        $I->sendPOST('/v1/aspirasi-approval/1', $data);
         $I->canSeeResponseCodeIs(200);
         $I->seeResponseIsJson();
 
@@ -35,7 +35,7 @@ class AspirasiApprovalCest
             'notes'  => 'Test',
         ];
 
-        $I->sendPOST('/v1/aspirasi/approval/1', $data);
+        $I->sendPOST('/v1/aspirasi-approval/1', $data);
         $I->canSeeResponseCodeIs(403);
         $I->seeResponseIsJson();
 
