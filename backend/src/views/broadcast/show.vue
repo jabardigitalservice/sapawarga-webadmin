@@ -21,8 +21,8 @@
             <el-table-column prop="title" width="180" />
             <el-table-column prop="content" />
           </el-table>
-          <el-button type="primary" :disabled="btnKirimDisable">{{ btnKirimLabel }}</el-button>
         </el-card>
+        <el-button class="button-send" type="primary" v-if="!btnKirimDisable">{{ $t('crud.send') }}</el-button>
       </el-col>
     </el-row>
   </div>
