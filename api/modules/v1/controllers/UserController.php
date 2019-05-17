@@ -263,7 +263,9 @@ class UserController extends ActiveController
         ];
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             $user = $model->getUser();
-            $user->updatePushToken($model->push_token);
+            if ($model->push_token) {
+                $user->updatePushToken($model->push_token);
+            }
             $user->generateAccessTokenAfterUpdatingClientInfo(true);
 
             $response = \Yii::$app->getResponse();

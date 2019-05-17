@@ -181,26 +181,36 @@ class Broadcast extends \yii\db\ActiveRecord
     {
         $this->author_id = Yii::$app->user->getId();
 
+        // Check condition for push notification
+        $isSendNotification = false;
         if ($insert) {
-            // Handle push notification
-            if ($this->status == self::STATUS_PUBLISHED) {
-                $message = [
-                    'title'         => $this->title,
-                    'description'   => $this->description,
-                ];
-                // By default, send notification to all users
-                $topic = 'all';
-                if ($this->kel_id && $this->rw) {
-                    $topic = "{$this->kel_id}_{$this->rw}";
-                } else if ($this->kel_id) {
-                    $topic = (string) $this->kel_id;
-                } else if ($this->kec_id) {
-                    $topic = (string) $this->kec_id;
-                } else if ($this->kabkota_id) {
-                    $topic = (string) $this->kabkota_id;
+            $isSendNotification = $this->status == self::STATUS_PUBLISHED;
+        } else { // Update broadcast
+            $changedAttributes = $this->getDirtyAttributes(['status']);
+            if (array_key_exists('status', $changedAttributes)) {
+                if ($changedAttributes['status'] == self::STATUS_PUBLISHED) {
+                    $isSendNotification = true;
                 }
-                Notification::send($message, $topic);
             }
+        }
+
+        if ($isSendNotification) {
+            $message = [
+                'title'         => $this->title,
+                'description'   => $this->description,
+            ];
+            // By default, send notification to all users
+            $topic = 'all';
+            if ($this->kel_id && $this->rw) {
+                $topic = "{$this->kel_id}_{$this->rw}";
+            } elseif ($this->kel_id) {
+                $topic = (string) $this->kel_id;
+            } elseif ($this->kec_id) {
+                $topic = (string) $this->kec_id;
+            } elseif ($this->kabkota_id) {
+                $topic = (string) $this->kabkota_id;
+            }
+            Notification::send($message, $topic);
         }
 
         return parent::beforeSave($insert);
