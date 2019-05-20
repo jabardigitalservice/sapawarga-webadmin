@@ -70,14 +70,20 @@ class Aspirasi extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'status'], 'required'],
+            [
+                ['title', 'description', 'kabkota_id', 'kec_id', 'kel_id', 'author_id', 'category_id', 'status'],
+                'required',
+            ],
             [['title', 'description', 'rw', 'meta'], 'trim'],
             ['title', 'string', 'max' => 255],
+            ['title', 'string', 'min' => 5],
+            ['description', 'string', 'max' => 1024 * 3],
+            ['description', 'string', 'min' => 5],
             [
                 'rw',
                 'match',
                 'pattern' => '/^[0-9]{3}$/',
-                'message' => Yii::t('app', 'error.rw.pattern')
+                'message' => Yii::t('app', 'error.rw.pattern'),
             ],
             ['rw', 'default'],
             ['attachments', 'default'],
@@ -91,15 +97,15 @@ class Aspirasi extends \yii\db\ActiveRecord
         $fields = [
             'id',
             'author_id',
-            'author' => function () {
+            'author'       => function () {
                 return [
-                    'id'            => $this->author->id,
-                    'name'          => $this->author->name,
-                    'role_label'    => $this->author->getRoleLabel(),
+                    'id'         => $this->author->id,
+                    'name'       => $this->author->name,
+                    'role_label' => $this->author->getRoleLabel(),
                 ];
             },
             'category_id',
-            'category' => function () {
+            'category'     => function () {
                 return [
                     'id'   => $this->category->id,
                     'name' => $this->category->name,
@@ -108,7 +114,7 @@ class Aspirasi extends \yii\db\ActiveRecord
             'title',
             'description',
             'kabkota_id',
-            'kabkota' => function () {
+            'kabkota'      => function () {
                 if ($this->kabkota) {
                     return [
                         'id'   => $this->kabkota->id,
@@ -119,7 +125,7 @@ class Aspirasi extends \yii\db\ActiveRecord
                 }
             },
             'kec_id',
-            'kecamatan' => function () {
+            'kecamatan'    => function () {
                 if ($this->kecamatan) {
                     return [
                         'id'   => $this->kecamatan->id,
@@ -130,7 +136,7 @@ class Aspirasi extends \yii\db\ActiveRecord
                 }
             },
             'kel_id',
-            'kelurahan' => function () {
+            'kelurahan'    => function () {
                 if ($this->kelurahan) {
                     return [
                         'id'   => $this->kelurahan->id,

@@ -12,8 +12,8 @@ class AspirasiTest extends \Codeception\Test\Unit
 
         $this->assertFalse($model->validate());
 
-        $model->title       = 'test';
-        $model->description = 'test';
+        $model->title       = 'test test';
+        $model->description = 'test test';
         $model->status      = 10;
         $model->kabkota_id  = 1;
         $model->kec_id      = 1;
@@ -39,7 +39,6 @@ class AspirasiTest extends \Codeception\Test\Unit
         $this->assertTrue($model->hasErrors('kel_id'));
         $this->assertTrue($model->hasErrors('author_id'));
         $this->assertTrue($model->hasErrors('category_id'));
-        $this->assertTrue($model->hasErrors('attachments'));
     }
 
     public function testTitleValid()
