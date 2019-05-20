@@ -53,6 +53,7 @@ class AspirasiSearch extends Aspirasi
 
         // grid filtering conditions
         $query->andFilterWhere(['id' => $this->id]);
+        $query->andFilterWhere(['author_id' => $this->author_id]);
 
         $query->andFilterWhere(['<>', 'status', Aspirasi::STATUS_DELETED]);
 

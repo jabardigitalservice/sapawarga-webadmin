@@ -187,8 +187,12 @@ $config = [
                         '{id}' => '<id:\d+>',
                     ],
                     'extraPatterns' => [
+                        'GET me' => 'me',
+                        'OPTIONS me' => 'options',
+                        'POST likes/{id}' => 'likes',
+                        'OPTIONS likes/{id}' => 'options',
                         'POST approval/{id}' => 'approval',
-                        'OPTIONS approval/{id}' => 'approval',
+                        'OPTIONS approval/{id}' => 'options',
                     ]
                 ],
                 [

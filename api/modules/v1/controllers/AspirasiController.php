@@ -34,13 +34,15 @@ class AspirasiController extends ActiveController
         $behaviors['verbs'] = [
             'class'   => \yii\filters\VerbFilter::className(),
             'actions' => [
-                'index'  => ['get'],
-                'view'   => ['get'],
-                'create' => ['post'],
-                'update' => ['put'],
-                'delete' => ['delete'],
-                'public' => ['get'],
+                'index'    => ['get'],
+                'view'     => ['get'],
+                'create'   => ['post'],
+                'update'   => ['put'],
+                'delete'   => ['delete'],
+                'public'   => ['get'],
                 'approval' => ['post'],
+                'likes'    => ['post'],
+                'me'       => ['get'],
             ],
         ];
 
@@ -66,17 +68,17 @@ class AspirasiController extends ActiveController
         // setup access
         $behaviors['access'] = [
             'class' => AccessControl::className(),
-            'only'  => ['index', 'view', 'create', 'update', 'delete', 'approval'], //only be applied to
+            'only'  => ['index', 'view', 'create', 'update', 'delete', 'approval', 'likes', 'me'],
             'rules' => [
                 [
                     'allow'   => true,
-                    'actions' => ['index', 'view', 'create', 'update', 'delete', 'approval'],
+                    'actions' => ['index', 'view', 'create', 'update', 'delete', 'me', 'approval'],
                     'roles'   => ['admin', 'manageSettings'],
                 ],
                 [
                     'allow'   => true,
-                    'actions' => ['index', 'view'],
-                    'roles'   => ['user'],
+                    'actions' => ['index', 'view', 'create', 'update', 'delete', 'me', 'likes'],
+                    'roles'   => ['user', 'staffRW'],
                 ],
             ],
         ];
@@ -92,7 +94,7 @@ class AspirasiController extends ActiveController
         unset($actions['delete']);
 
         $actions['index']['prepareDataProvider'] = [$this, 'prepareDataProvider'];
-        $actions['view']['findModel'] = [$this, 'findModel'];
+        $actions['view']['findModel']            = [$this, 'findModel'];
 
         return $actions;
     }
@@ -127,6 +129,16 @@ class AspirasiController extends ActiveController
     public function actionApproval($id)
     {
         return 'ok';
+    }
+
+    public function actionMe()
+    {
+        $search            = new AspirasiSearch();
+        $search->author_id = Yii::$app->user->getId();
+
+        $params = Yii::$app->request->getQueryParams();
+
+        return $search->search($params);
     }
 
     /**
