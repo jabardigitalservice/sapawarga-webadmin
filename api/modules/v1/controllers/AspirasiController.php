@@ -124,10 +124,11 @@ class AspirasiController extends ActiveController
 
     public function actionUpdate($id)
     {
-        $model            = $this->findModel($id);
-        $model->author_id = Yii::$app->user->getId();
+        $model = $this->findModel($id);
 
-        $this->checkAccess('update', $model, $id);
+        $this->checkAccess('update', $model);
+
+        $model->author_id = Yii::$app->user->getId();
 
         $model->load(Yii::$app->getRequest()->getBodyParams(), '');
 
@@ -158,7 +159,7 @@ class AspirasiController extends ActiveController
     {
         $model = $this->findModel($id);
 
-        $this->checkAccess('delete', $model, $id);
+        $this->checkAccess('delete', $model);
 
         $model->status = Aspirasi::STATUS_DELETED;
 
@@ -200,7 +201,9 @@ class AspirasiController extends ActiveController
      */
     public function checkAccess($action, $model = null, $params = [])
     {
-        // throw new ForbiddenHttpException();
+        if ($model->author_id !== Yii::$app->user->getId()) {
+            throw new ForbiddenHttpException();
+        }
     }
 
     /**
