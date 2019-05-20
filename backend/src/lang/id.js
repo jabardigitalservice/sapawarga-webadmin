@@ -1,6 +1,7 @@
 export default {
   route: {
     dashboard: 'Dashboard',
+    'profile': 'Profile',
     'user-manage': 'Kelola Pengguna',
     'user-create': 'Tambah Pengguna Baru',
     'user-list-provinsi': 'Provinsi',
