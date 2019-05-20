@@ -2,16 +2,6 @@
   <div class="app-container">
     <el-row :gutter="20">
       <el-col :lg="24">
-        <el-row style="margin: 10px 0px">
-          <el-col :span="24">
-            <router-link :to="{ path: '/aspirasi/create'}">
-              <el-button type="primary" size="small" icon="el-icon-plus">
-                Tambah Pesan Baru
-              </el-button>
-            </router-link>
-          </el-col>
-        </el-row>
-
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width; 100%" @sort-change="changeSort">
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
 
