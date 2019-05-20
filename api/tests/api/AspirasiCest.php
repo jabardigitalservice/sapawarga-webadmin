@@ -1,6 +1,8 @@
 <?php
 
-class AspirasiUserCest
+use Illuminate\Support\Arr;
+
+class AspirasiCest
 {
     public function _before(ApiTester $I)
     {
@@ -39,15 +41,25 @@ class AspirasiUserCest
     {
         $I->amUser('user');
 
-        $data = [];
+        $data = [
+            'title'       => 'Lorem ipsum',
+            'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            'kabkota_id'  => 22,
+            'kec_id'      => 446,
+            'kel_id'      => 6082,
+            'status'      => 0,
+            'category_id' => 1,
+            'attachments' => [],
+        ];
 
         $I->sendPOST('/v1/aspirasi', $data);
-        $I->canSeeResponseCodeIs(403);
+        $I->canSeeResponseCodeIs(201);
         $I->seeResponseIsJson();
 
         $I->seeResponseContainsJson([
-            'success' => false,
-            'status'  => 403,
+            'success' => true,
+            'status'  => 201,
         ]);
     }
 
@@ -55,15 +67,29 @@ class AspirasiUserCest
     {
         $I->amUser('user');
 
-        $data = [];
+        // @TODO find better way
+        $createdIds = $I->grabColumnFromDatabase('aspirasi', 'id', ['author_id' => 36]);
+        $latestId   = last($createdIds);
 
-        $I->sendPOST('/v1/aspirasi/1', $data);
-        $I->canSeeResponseCodeIs(403);
+        $data = [
+            'title'       => 'Lorem ipsum',
+            'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            'kabkota_id'  => 22,
+            'kec_id'      => 446,
+            'kel_id'      => 6082,
+            'status'      => 0,
+            'category_id' => 1,
+            'attachments' => [],
+        ];
+
+        $I->sendPUT('/v1/aspirasi/' . $latestId, $data);
+        $I->canSeeResponseCodeIs(200);
         $I->seeResponseIsJson();
 
         $I->seeResponseContainsJson([
-            'success' => false,
-            'status'  => 403,
+            'success' => true,
+            'status'  => 200,
         ]);
     }
 
@@ -86,73 +112,13 @@ class AspirasiUserCest
     {
         $I->amUser('user');
 
-        $I->sendGET('/v1/aspirasi-me');
+        $I->sendGET('/v1/aspirasi/me');
         $I->canSeeResponseCodeIs(200);
         $I->seeResponseIsJson();
 
         $I->seeResponseContainsJson([
             'success' => true,
             'status'  => 200,
-        ]);
-    }
-
-    public function getMyShowTest(ApiTester $I)
-    {
-        $I->amUser('user');
-
-        $I->sendGET('/v1/aspirasi-me/1');
-        $I->canSeeResponseCodeIs(200);
-        $I->seeResponseIsJson();
-
-        $I->seeResponseContainsJson([
-            'success' => true,
-            'status'  => 200,
-        ]);
-    }
-
-    public function postMyCreateTest(ApiTester $I)
-    {
-        $I->amUser('user');
-
-        $data = [];
-
-        $I->sendPOST('/v1/aspirasi-me', $data);
-        $I->canSeeResponseCodeIs(201);
-        $I->seeResponseIsJson();
-
-        $I->seeResponseContainsJson([
-            'success' => true,
-            'status'  => 201,
-        ]);
-    }
-
-    public function postMyUpdateTest(ApiTester $I)
-    {
-        $I->amUser('user');
-
-        $data = [];
-
-        $I->sendPOST('/v1/aspirasi-me/1', $data);
-        $I->canSeeResponseCodeIs(200);
-        $I->seeResponseIsJson();
-
-        $I->seeResponseContainsJson([
-            'success' => true,
-            'status'  => 201,
-        ]);
-    }
-
-    public function deleteMyTest(ApiTester $I)
-    {
-        $I->amUser('user');
-
-        $I->sendDELETE('/v1/aspirasi-me/1');
-        $I->canSeeResponseCodeIs(204);
-        $I->seeResponseIsJson();
-
-        $I->seeResponseContainsJson([
-            'success' => true,
-            'status'  => 204,
         ]);
     }
 }

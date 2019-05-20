@@ -134,7 +134,7 @@ class AspirasiController extends ActiveController
 
         if ($model->validate() && $model->save()) {
             $response = Yii::$app->getResponse();
-            $response->setStatusCode(201);
+            $response->setStatusCode(200);
         } else {
             // Validation error
             $response = Yii::$app->getResponse();
@@ -254,7 +254,7 @@ class AspirasiController extends ActiveController
      */
     public function checkAccess($action, $model = null, $params = [])
     {
-        if ($model->author_id !== Yii::$app->user->getId()) {
+        if (in_array($action, ['update', 'delete']) && $model->author_id !== Yii::$app->user->getId()) {
             throw new ForbiddenHttpException();
         }
     }
