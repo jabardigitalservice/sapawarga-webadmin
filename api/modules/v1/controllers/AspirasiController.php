@@ -72,7 +72,7 @@ class AspirasiController extends ActiveController
             'rules' => [
                 [
                     'allow'   => true,
-                    'actions' => ['index', 'view', 'create', 'update', 'delete', 'me', 'approval'],
+                    'actions' => ['index', 'view', 'create', 'update', 'delete', 'me', 'likes', 'approval'],
                     'roles'   => ['admin', 'manageSettings'],
                 ],
                 [
@@ -199,6 +199,30 @@ class AspirasiController extends ActiveController
 
         if ($model->save(false) === false) {
             throw new ServerErrorHttpException('Failed to process the object for unknown reason.');
+        }
+
+        $response = Yii::$app->getResponse();
+        $response->setStatusCode(200);
+
+        return 'ok';
+    }
+
+    public function actionLikes($id)
+    {
+        $userId = Yii::$app->user->getId();
+        $user   = User::findIdentity($userId);
+
+        /**
+         * @var Aspirasi $model
+         */
+        $model = $this->findModel($id);
+
+        $alreadyLiked = (int) $model->getLikes(['user_id' => $userId])->count();
+
+        if ($alreadyLiked > 0) {
+            $model->unlink('likes', $user, true);
+        } else {
+            $model->link('likes', $user);
         }
 
         $response = Yii::$app->getResponse();
