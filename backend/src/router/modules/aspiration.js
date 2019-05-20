@@ -20,7 +20,7 @@ const aspirationRouter = {
         roles: ['admin']
       }
     },
-    
+
     {
       name: 'aspiration-detail',
       path: 'detail/:id',
