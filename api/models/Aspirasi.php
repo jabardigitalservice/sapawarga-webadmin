@@ -5,6 +5,7 @@ namespace app\models;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use app\validator\InputCleanValidator;
+use app\validator\IsArrayValidator;
 
 /**
  * This is the model class for table "aspirasi".
@@ -105,6 +106,7 @@ class Aspirasi extends \yii\db\ActiveRecord
             ],
             ['rw', 'default'],
             ['attachments', 'default'],
+            ['attachments', IsArrayValidator::class],
             [['author_id', 'category_id', 'kabkota_id', 'kec_id', 'kel_id', 'status'], 'integer'],
             ['meta', 'default'],
         ];
