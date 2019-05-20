@@ -66,19 +66,19 @@ export default {
         this.tableDataTarget = [
           {
             title: 'Kota',
-            content: ' : ' + ((kabkota !== null) ? kabkota.name : '-')
+            content: ' : ' + ((kabkota !== null) ? kabkota.name : 'Semua Kab/Kota')
           },
           {
             title: 'Kecamatan',
-            content: ' : ' + ((kecamatan !== null) ? kecamatan.name : '-')
+            content: ' : ' + ((kecamatan !== null) ? kecamatan.name : 'Semua Kecamatan')
           },
           {
             title: 'Kelurahan/Desa',
-            content: ' : ' + ((kelurahan !== null) ? kelurahan.name : '-')
+            content: ' : ' + ((kelurahan !== null) ? kelurahan.name : 'Semua Kelurahan')
           },
           {
             title: 'RW',
-            content: ' : ' + ((rw !== null) ? rw : '-')
+            content: ' : ' + ((rw !== null) ? rw : 'Semua RW')
           }
         ]
 
