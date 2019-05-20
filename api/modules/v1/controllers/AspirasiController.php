@@ -92,11 +92,33 @@ class AspirasiController extends ActiveController
 
         // Override Delete Action
         unset($actions['delete']);
+        unset($actions['create']);
 
         $actions['index']['prepareDataProvider'] = [$this, 'prepareDataProvider'];
         $actions['view']['findModel']            = [$this, 'findModel'];
 
         return $actions;
+    }
+
+    public function actionCreate()
+    {
+        $model            = new Aspirasi();
+        $model->author_id = Yii::$app->user->getId();
+
+        $model->load(Yii::$app->getRequest()->getBodyParams(), '');
+
+        if ($model->validate() && $model->save()) {
+            $response = Yii::$app->getResponse();
+            $response->setStatusCode(201);
+        } else {
+            // Validation error
+            $response = Yii::$app->getResponse();
+            $response->setStatusCode(422);
+
+            return $model->getErrors();
+        }
+
+        return $model;
     }
 
     /**
