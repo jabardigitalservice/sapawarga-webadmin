@@ -17,14 +17,6 @@ class BroadcastCest
             'success' => true,
             'status'  => 200,
         ]);
-
-        $I->seeResponseContainsJson([
-            'kabkota_id' => 22,
-        ]);
-
-        $I->cantSeeResponseContainsJson([
-            'kabkota_id' => 23,
-        ]);
     }
 
     public function getBroadcastListBekasi(ApiTester $I)
@@ -38,14 +30,6 @@ class BroadcastCest
         $I->seeResponseContainsJson([
             'success' => true,
             'status'  => 200,
-        ]);
-
-        $I->seeResponseContainsJson([
-            'kabkota_id' => 23,
-        ]);
-
-        $I->cantSeeResponseContainsJson([
-            'kabkota_id' => 22,
         ]);
     }
 
