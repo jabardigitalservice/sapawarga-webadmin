@@ -21,7 +21,7 @@ export default {
     'broadcast-show': 'Detail Broadcast',
     'aspiration-manage': 'Aspirasi Masyarakat',
     'aspiration-list': 'Daftar Aspirasi',
-    'aspiration-create': 'Tambah Aspirasi'
+    'aspiration-detail': 'Detail Aspirasi'
   },
   crud: {
     'list-empty': 'Belum ada data.',
