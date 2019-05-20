@@ -119,30 +119,6 @@ class BroadcastCest
         ]);
     }
 
-    public function createNewBroadcast(ApiTester $I)
-    {
-        $I->amStaff();
-
-        $I->sendPOST($this->endpointBroadcast, [
-            'category_id' => 5,
-            'title' => 'Broadcast Title',
-            'description' => 'Broadcast Description',
-            'kabkota_id' => null,
-            'kec_id' => null,
-            'kel_id' => null,
-            'rw' => null,
-            'status' => 10,
-        ]);
-
-        $I->canSeeResponseCodeIs(201);
-        $I->seeResponseIsJson();
-
-        $I->seeResponseContainsJson([
-            'success' => true,
-            'status'  => 201,
-        ]);
-    }
-
     public function getBroadcastListAll(ApiTester $I)
     {
         $I->amStaff();
