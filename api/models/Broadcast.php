@@ -199,6 +199,15 @@ class Broadcast extends \yii\db\ActiveRecord
                 $message = [
                     'title'         => $this->title,
                     'description'   => $this->description,
+                    'data'          => [
+                        'target'            => 'broadcast',
+                        'author'            => $this->author->name,
+                        'title'             => $this->title,
+                        'category_name'     => $this->category->name,
+                        'description'       => $this->description,
+                        'updated_at'        => $this->updated_at ?? time(),
+                        'push_notification' => true,
+                    ]
                 ];
                 // By default,  send notification to all users
                 $topic = 'all';
