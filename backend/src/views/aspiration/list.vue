@@ -25,7 +25,7 @@
 
           <el-table-column align="center" label="Actions" width="150px">
             <template slot-scope="scope">
-              <router-link :to="'/broadcast/show/'+scope.row.id">
+              <router-link :to="'/aspirasi/detail/'+scope.row.id">
                 <el-button type="white" size="medium">
                   Lihat
                 </el-button>
