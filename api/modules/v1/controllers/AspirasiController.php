@@ -4,6 +4,7 @@ namespace app\modules\v1\controllers;
 
 use app\filters\auth\HttpBearerAuth;
 use app\models\Aspirasi;
+use app\models\AspirasiSearch;
 use app\models\User;
 use Yii;
 use yii\filters\AccessControl;
@@ -165,6 +166,9 @@ class AspirasiController extends ActiveController
 
     public function prepareDataProvider()
     {
-        //
+        $search = new AspirasiSearch();
+        $params = Yii::$app->request->getQueryParams();
+
+        return $search->search($params);
     }
 }
