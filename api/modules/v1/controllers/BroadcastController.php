@@ -7,6 +7,7 @@ use app\models\Broadcast;
 use app\models\BroadcastSearch;
 use app\models\User;
 use Yii;
+use yii\base\Model;
 use yii\filters\AccessControl;
 use yii\filters\auth\CompositeAuth;
 use yii\web\ForbiddenHttpException;
@@ -89,11 +90,36 @@ class BroadcastController extends ActiveController
 
         // Override Delete Action
         unset($actions['delete']);
+        unset($actions['create']);
 
         $actions['index']['prepareDataProvider'] = [$this, 'prepareDataProvider'];
         $actions['view']['findModel'] = [$this, 'findModel'];
 
         return $actions;
+    }
+
+    public function actionCreate()
+    {
+        /* @var $model \yii\db\ActiveRecord */
+        $model = new $this->modelClass([
+            'scenario' => Model::SCENARIO_DEFAULT,
+        ]);
+
+        $model->load(Yii::$app->getRequest()->getBodyParams(), '');
+        if ($model->validate() && $model->save()) {
+            $response = Yii::$app->getResponse();
+            $response->setStatusCode(201);
+        } elseif (!$model->hasErrors()) {
+            throw new ServerErrorHttpException('Failed to create the object for unknown reason.');
+        } else {
+            // Validation error
+            $response = \Yii::$app->getResponse();
+            $response->setStatusCode(422);
+
+            return $model->getErrors();
+        }
+
+        return $model;
     }
 
     /**

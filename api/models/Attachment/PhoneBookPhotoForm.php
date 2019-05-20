@@ -30,7 +30,7 @@ class PhoneBookPhotoForm extends AttachmentForm
         $uploadMaxSize = Yii::$app->params['upload_max_size'];
 
         return [
-            ['file', 'required'],
+            [['file', 'type'], 'required'],
             [
                 'file',
                 'file',

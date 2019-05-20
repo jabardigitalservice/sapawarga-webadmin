@@ -1,9 +1,15 @@
 const jsonServer = require('json-server')
 const server = jsonServer.create()
 const router = jsonServer.router('db.json')
-const middlewares = jsonServer.defaults({noCors: true})
+const middlewares = jsonServer.defaults()
 
 router.render = (req, res) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', '*');
+  res.header('Access-Control-Request-Headers', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Request-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  
   if (Array.isArray(res.locals.data)) {
     res.json({
     	status: 200,
@@ -41,7 +47,7 @@ server.post('/api/v1/aspirasi/likes/:id', (req, res) => {
   })
 })
 
-server.post('/api/v1/upload', (req, res) => {
+server.post('/api/v1/attachments', (req, res) => {
   res.json({
     status: 200,
     success: true,
@@ -66,7 +72,7 @@ server.use(jsonServer.rewriter({
   '/api/v1/categories/:id': '/categories/:id',
   '/api/v1/phone-books': '/phone-books',
   '/api/v1/phone-books/:id': '/phone-books/:id',
-  '/api/v1/aspirasi/me': '/aspirasi',
+  '/api/v1/aspirasi-me': '/aspirasi',
   '/api/v1/aspirasi': '/aspirasi',
   '/api/v1/aspirasi/:id': '/aspirasi/:id',
   '/api/v1/broadcast': '/broadcast',

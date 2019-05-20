@@ -86,6 +86,22 @@ export const constantRoutes = [
         }
       }
     ]
+  },
+  {
+    path: '/profile',
+    component: Layout,
+    children: [
+      {
+        name: 'Profile',
+        path: '',
+        component: () => import('@/views/profile/index'),
+        hidden: true,
+        meta: {
+          title: 'profile',
+          roles: ['admin']
+        }
+      }
+    ]
   }
 ]
 

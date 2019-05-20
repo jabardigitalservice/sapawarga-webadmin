@@ -43,6 +43,7 @@ use yii\web\Request as WebRequest;
  * @property string $facebook
  * @property string $twitter
  * @property string $instagram
+ * @property string $push_token
  *
  * @package app\models
  */
@@ -1039,5 +1040,23 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function getPassword()
     {
         return '';
+    }
+
+    public function updatePushToken($pushToken)
+    {
+        if ($this->push_token != $pushToken) {
+            $this->push_token = $pushToken;
+
+            // Area ids will be used as topic name
+            $areaIds = [
+                (string) $this->kabkota_id,
+                (string) $this->kec_id,
+                (string) $this->kel_id,
+                "{$this->kel_id}_{$this->rw}",
+            ];
+
+            // Update topic subscription
+            Notification::subscribe($pushToken, $areaIds);
+        }
     }
 }

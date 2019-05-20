@@ -4,54 +4,29 @@
       <el-col :sm="24" :md="10" :lg="10" :xl="12">
         <p class="warn-content">Target</p>
         <div class="broadcast-target">
-          <!-- <el-form
-            :model="broadcast"
+          <el-form
             ref="broadcast"
-            :rules="rules"
+            :model="broadcast"
             label-width="150px"
             label-position="left"
+            :rules="rules"
+            :status-icon="true"
           >
-            <el-form-item label="Kab/Kota" :prop="kabkota">
-              <el-select v-model="broadcast.kabkota" placeholder="Pilih Kab/Kota">
-                <el-option
-                  v-for="item in options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value">
-                </el-option>
-              </el-select>
+            <el-form-item label="Wilayah" prop="wilayah">
+              <InputSelectArea
+                :kabkota-id="broadcast.kabkota_id"
+                :kec-id="broadcast.kec_id"
+                :kel-id="broadcast.kel_id"
+                :style="{width: width}"
+                @changeKabkota="broadcast.kabkota_id = $event"
+                @changeKecamatan="broadcast.kec_id = $event"
+                @changeKelurahan="broadcast.kel_id = $event"
+              />
             </el-form-item>
-            <el-form-item label="Kecamatan" :prop="kecamatan">
-              <el-select v-model="broadcast.kecamatan" placeholder="Pilih Kecamatan">
-                <el-option
-                  v-for="item in options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value">
-                </el-option>
-              </el-select>
+            <el-form-item class="rw" prop="rw">
+              <el-input v-model="broadcast.rw" placeholder="Semua RW" type="text" :disabled="broadcast.kel_id === null" />
             </el-form-item>
-            <el-form-item label="Kelurahan" :prop="kelurahan">
-              <el-select v-model="broadcast.kelurahan" placeholder="Pilih Kelurahan">
-                <el-option
-                  v-for="item in options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value">
-                </el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="RW" :prop="rw">
-              <el-select v-model="broadcast.rw" placeholder="Pilih RW">
-                <el-option
-                  v-for="item in options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value">
-                </el-option>
-              </el-select>
-            </el-form-item>
-          </el-form> -->
+          </el-form>
         </div>
       </el-col>
       <el-col :sm="24" :md="14" :lg="14" :xl="12">
@@ -63,24 +38,25 @@
             :rules="rules"
             label-width="150px"
             label-position="left"
+            :status-icon="true"
           >
-            <el-form-item label="Judul Pesan">
-              <el-input v-model="broadcast.title" type="text" />
+            <el-form-item label="Judul Pesan" prop="title">
+              <el-input v-model="broadcast.title" type="text" placeholder="Judul minimal 10 karakter dan maksimal 60 karakter" />
             </el-form-item>
-            <el-form-item label="Kategori" prop="category">
-              <InputCategory v-model="broadcast.category_id" category-type="broadcast" />
+            <el-form-item label="Kategori" prop="category_id">
+              <InputCategory v-model="broadcast.category_id" category-type="broadcast" prop="category" />
             </el-form-item>
-            <el-form-item label="Isi Pesan" prop="message">
+            <el-form-item label="Isi Pesan" prop="description">
               <el-input
                 v-model="broadcast.description"
                 type="textarea"
                 :rows="8"
-                placeholder="Please input"
+                placeholder="Tulis pesan, maksimal 280 karakter"
               />
             </el-form-item>
             <el-form-item>
               <el-button type="info" :loading="loading" @click="submitForm(status.draft)">{{ $t('crud.draft') }}</el-button>
-              <el-button type="primary" :loading="loading" @click="submitForm(status.active)"> {{ $t('crud.send') }}</el-button>
+              <el-button v-show="!isEdit" type="primary" :loading="loading" @click="submitForm(status.active)"> {{ $t('crud.send') }}</el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -90,11 +66,12 @@
 </template>
 <script>
 import InputCategory from '@/components/InputCategory'
-// import InputSelectArea from '@/components/InputSelectArea'
-import { create } from '@/api/broadcast'
+import InputSelectArea from '@/components/InputSelectArea'
+import { create, fetchRecord, update } from '@/api/broadcast'
 export default {
   components: {
-    InputCategory
+    InputCategory,
+    InputSelectArea
   },
   props: {
     isEdit: {
@@ -109,41 +86,97 @@ export default {
         draft: 0,
         active: 10
       },
-      options: [
-        {
-          value: 'Option1',
-          label: 'Option1'
-        }, {
-          value: 'Option2',
-          label: 'Option2'
-        }, {
-          value: 'Option3',
-          label: 'Option3'
-        }, {
-          value: 'Option4',
-          label: 'Option4'
-        }, {
-          value: 'Option5',
-          label: 'Option5'
-        }
-      ],
+      width: '300%',
       broadcast: {
-        kabkota: '',
-        kecamatan: '',
-        kelurahan: '',
-        rw: '',
-        title: '',
-        category_id: '',
-        description: ''
+        kabkota_id: null,
+        kec_id: null,
+        kel_id: null,
+        rw: null,
+        title: null,
+        category_id: null,
+        description: null
       },
       rules: {
+        title: [
+          {
+            required: true,
+            message: 'Judul pesan harus diisi',
+            trigger: 'blur'
+          },
+          {
+            min: 10,
+            message: 'Judul pesan minimal 10 karakter',
+            trigger: 'blur'
+          },
+          {
+            max: 60,
+            message: 'Judul pesan maksimal 60 karakter',
+            trigger: 'blur'
+          }
 
+        ],
+        category_id: [
+          { required: true, message: 'Kategori harus diisi.', trigger: 'change' }
+        ],
+        description: [
+          {
+            required: true,
+            message: 'Pesan harus diisi',
+            trigger: 'blur'
+          },
+          {
+            max: 280,
+            message: 'Pesan maksimal 280 karakter',
+            trigger: 'blur'
+          }
+        ],
+        rw: [
+          {
+            pattern: /^[0-9]+$/,
+            message: 'RW harus menggunakan angka',
+            trigger: 'blur'
+          },
+          {
+            max: 3,
+            message: 'RW harus 3 angka, contoh 001',
+            trigger: 'blur'
+          },
+          {
+            min: 3,
+            message: 'RW harus 3 angka, contoh 001',
+            trigger: 'blur'
+          }
+        ],
+        wilayah: [
+          {
+            required: false,
+            message: 'wilayah harus diisi',
+            trigger: 'change'
+          }
+        ]
       }
     }
   },
+  created() {
+    if (this.isEdit) {
+      const id = this.$route.params && this.$route.params.id
+      this.fetchData(id)
+    }
+  },
   methods: {
+    fetchData(id) {
+      fetchRecord(id).then(response => {
+        this.broadcast = response.data
+      }).catch(err => {
+        console.log(err)
+      })
+    },
     async submitForm(status) {
-      // Fill with validation
+      const valid = await this.$refs.broadcast.validate()
+
+      if (!valid) {
+        return
+      }
 
       try {
         this.loading = true
@@ -154,7 +187,13 @@ export default {
         data.status = status
 
         if (this.isEdit) {
-          console.log('edit')
+          const id = this.$route.params && this.$route.params.id
+
+          await update(id, data)
+
+          this.$message.info(this.$t('crud.draft-success'))
+
+          this.$router.push('/broadcast/index')
         } else {
           await create(data)
           if (status === 10) {
@@ -165,8 +204,8 @@ export default {
             this.$router.push('/broadcast/index')
           }
         }
-      } catch (error) {
-        console.log(error.response)
+      } catch (err) {
+        console.log(err)
       } finally {
         this.loading = false
       }
@@ -178,6 +217,9 @@ export default {
 <style lang="scss" scoped>
 .broadcast-target, .broadcast-message {
   margin: 20px;
+}
+.rw {
+  margin-top: -7px;
 }
 
 </style>
