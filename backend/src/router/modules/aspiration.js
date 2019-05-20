@@ -20,33 +20,14 @@ const aspirationRouter = {
         roles: ['admin']
       }
     },
+    
     {
-      name: 'aspiration-create',
-      path: 'create',
-      component: () => import('@/views/aspiration/create'),
-      meta: {
-        title: 'aspiration-create',
-        roles: ['admin']
-      }
-    },
-    {
-      path: 'edit/:id(\\d+)',
-      component: () => import('@/views/aspiration/create'),
-      name: 'aspiration-edit',
+      name: 'aspiration-detail',
+      path: 'detail/:id',
+      component: () => import('@/views/aspiration/detail'),
       hidden: true,
       meta: {
-        title: 'aspiration-edit',
-        noCache: true,
-        roles: ['admin']
-      }
-    },
-    {
-      name: 'aspiration-show',
-      path: 'show/:id',
-      component: () => import('@/views/aspiration/create'),
-      hidden: true,
-      meta: {
-        title: 'aspiration-show',
+        title: 'aspiration-detail',
         roles: ['admin']
       }
     }
