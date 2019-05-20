@@ -18,7 +18,10 @@ export default {
     'broadcast-create': 'Tambah Pesan',
     'broadcast-list': 'Daftar Broadcast',
     'broadcast-edit': 'Edit Broadcast',
-    'broadcast-show': 'Detail Broadcast'
+    'broadcast-show': 'Detail Broadcast',
+    'aspiration-manage': 'Aspirasi Masyarakat',
+    'aspiration-list': 'Daftar Aspirasi',
+    'aspiration-create': 'Tambah Aspirasi'
   },
   crud: {
     'list-empty': 'Belum ada data.',
