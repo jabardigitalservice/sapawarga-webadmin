@@ -200,7 +200,7 @@ class Broadcast extends \yii\db\ActiveRecord
                     'title'         => $this->title,
                     'description'   => $this->description,
                 ];
-                // By default, send notification to all users
+                // By default,  send notification to all users
                 $topic = 'all';
                 if ($this->kel_id && $this->rw) {
                     $topic = "{$this->kel_id}_{$this->rw}";
