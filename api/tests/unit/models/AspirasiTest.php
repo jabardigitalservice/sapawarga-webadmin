@@ -330,80 +330,25 @@ class AspirasiTest extends \Codeception\Test\Unit
     /**
      * Make sure regular user cannot override certain protected attributes
      */
-    public function testCreateScenarioUser()
-    {
-        $model           = new Aspirasi();
-        $model->scenario = Aspirasi::SCENARIO_CREATE_USER;
-
-        $model->status     = 10;
-        $model->author_id  = 1;
-        $model->created_at = 1;
-        $model->updated_at = 1;
-
-        $model->validate();
-
-        $this->assertTrue($model->hasErrors('status'));
-        $this->assertTrue($model->hasErrors('author_id'));
-        $this->assertTrue($model->hasErrors('created_at'));
-        $this->assertTrue($model->hasErrors('updated_at'));
-    }
+//    public function testCreateScenarioUser()
+//    {
+//        $model           = new Aspirasi();
+//        $model->scenario = Aspirasi::SCENARIO_USER_CREATE;
+//
+//        $model->status = 10;
+//
+//        $model->validate();
+//
+//        $this->assertNull($model->status);
+//    }
 
     public function testCreateScenarioStaff()
     {
-        $model           = new Aspirasi();
-        $model->scenario = Aspirasi::SCENARIO_CREATE_STAFF;
-
-        $model->status     = 10;
-        $model->author_id  = 1;
-        $model->created_at = 1;
-        $model->updated_at = 1;
+        $model         = new Aspirasi();
+        $model->status = 10;
 
         $model->validate();
 
         $this->assertFalse($model->hasErrors('status'));
-        $this->assertFalse($model->hasErrors('author_id'));
-
-        $this->assertTrue($model->hasErrors('created_at'));
-        $this->assertTrue($model->hasErrors('updated_at'));
-    }
-
-    /**
-     * Make sure regular user cannot override certain protected attributes
-     */
-    public function testUpdateScenarioUser()
-    {
-        $model           = new Aspirasi();
-        $model->scenario = Aspirasi::SCENARIO_UPDATE_USER;
-
-        $model->status     = 10;
-        $model->author_id  = 1;
-        $model->created_at = 1;
-        $model->updated_at = 1;
-
-        $model->validate();
-
-        $this->assertTrue($model->hasErrors('status'));
-        $this->assertTrue($model->hasErrors('author_id'));
-        $this->assertTrue($model->hasErrors('created_at'));
-        $this->assertTrue($model->hasErrors('updated_at'));
-    }
-
-    public function testUpdateScenarioStaff()
-    {
-        $model           = new Aspirasi();
-        $model->scenario = Aspirasi::SCENARIO_UPDATE_STAFF;
-
-        $model->status     = 10;
-        $model->author_id  = 1;
-        $model->created_at = 1;
-        $model->updated_at = 1;
-
-        $model->validate();
-
-        $this->assertFalse($model->hasErrors('status'));
-        $this->assertFalse($model->hasErrors('author_id'));
-
-        $this->assertTrue($model->hasErrors('created_at'));
-        $this->assertTrue($model->hasErrors('updated_at'));
     }
 }

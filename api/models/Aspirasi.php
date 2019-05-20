@@ -33,6 +33,8 @@ class Aspirasi extends \yii\db\ActiveRecord
 
     const CATEGORY_TYPE = 'aspirasi';
 
+    const SCENARIO_USER_CREATE = 'user-create';
+
     /**
      * {@inheritdoc}
      */
@@ -64,6 +66,13 @@ class Aspirasi extends \yii\db\ActiveRecord
     public function getKabkota()
     {
         return $this->hasOne(Area::className(), ['id' => 'kabkota_id']);
+    }
+
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+
+        return $scenarios;
     }
 
     /**
