@@ -29,12 +29,11 @@ class m190517_034741_create_table_aspirasi extends CustomMigration
         ]);
 
         $this->createTable('aspirasi_likes', [
-            'id'          => $this->primaryKey(),
             'aspirasi_id' => $this->integer(),
             'user_id'     => $this->integer(),
-            'created_at'  => $this->integer()->null(),
-            'updated_at'  => $this->integer()->null(),
         ]);
+
+        $this->addPrimaryKey('aspirasi_likes-pk', 'aspirasi_likes', ['aspirasi_id', 'user_id']);
 
         $this->addForeignKey(
             'fk-aspirasi-author_id',
