@@ -45,7 +45,7 @@ class SeederController extends Controller
         Yii::$app->db->createCommand('TRUNCATE auth_assignment')->execute();
         Yii::$app->db->createCommand('TRUNCATE user')->execute();
 
-        $sql = file_get_contents(__DIR__ . '/../migrations/seeder/staff_user_role_permission_20190423.sql');
+        $sql = file_get_contents(__DIR__ . '/../migrations/seeder/user_and_permission.sql');
         Yii::$app->db->createCommand($sql)->execute();
     }
 
