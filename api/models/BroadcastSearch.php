@@ -77,6 +77,9 @@ class BroadcastSearch extends Broadcast
         // Hanya menampilkan pesan broadcast yang masih aktif
         $query->andFilterWhere(['status' => Broadcast::STATUS_PUBLISHED]);
 
+        // Hanya menampilkan pesan broadcast yang di-publish setelah user melakukan login
+        $query->andFilterWhere(['>=', 'updated_at', $user->last_login_at]);
+
         // Filter berdasarkan area pengguna
         $params['kabkota_id'] = Arr::get($user, 'kabkota_id');
         $params['kec_id'] = Arr::get($user, 'kec_id');
