@@ -232,7 +232,7 @@ class AspirasiTest extends \Codeception\Test\Unit
 
         $model->validate();
 
-        $this->assertTrue($model->hasErrors('attachments'));
+        $this->assertFalse($model->hasErrors('attachments'));
     }
 
     public function testAttachmentsInputInteger()
@@ -261,12 +261,7 @@ class AspirasiTest extends \Codeception\Test\Unit
     {
         $model = new Aspirasi();
 
-        $model->attachments = [
-            [
-                'type' => 'photo',
-                'url' => '#',
-            ],
-        ];
+        $model->attachments = '{ "type": "photo" }';
 
         $model->validate();
 
