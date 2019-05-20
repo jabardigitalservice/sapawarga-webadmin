@@ -175,6 +175,35 @@ class AspirasiController extends ActiveController
 
     public function actionApproval($id)
     {
+        $action = Yii::$app->request->post('action');
+
+        $model = $this->findModel($id);
+
+        if ($model->status !== Aspirasi::STATUS_APPROVAL_PENDING) {
+            $response = Yii::$app->getResponse();
+            $response->setStatusCode(400);
+
+            return 'Bad Request: Invalid Object Status';
+        }
+
+        if ($action === 'APPROVE') {
+            $model->status = Aspirasi::STATUS_PUBLISHED;
+        } elseif ($action === 'REJECT') {
+            $model->status = Aspirasi::STATUS_APPROVAL_REJECTED;
+        } else {
+            $response = Yii::$app->getResponse();
+            $response->setStatusCode(400);
+
+            return 'Bad Request: Invalid Action';
+        }
+
+        if ($model->save(false) === false) {
+            throw new ServerErrorHttpException('Failed to process the object for unknown reason.');
+        }
+
+        $response = Yii::$app->getResponse();
+        $response->setStatusCode(200);
+
         return 'ok';
     }
 
