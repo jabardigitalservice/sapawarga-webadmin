@@ -213,16 +213,16 @@ class AspirasiTest extends \Codeception\Test\Unit
         $this->assertFalse($model->hasErrors('author_id'));
     }
 
-    public function testAttachmentsInputString()
-    {
-        $model = new Aspirasi();
-
-        $model->attachments = 'test';
-
-        $model->validate();
-
-        $this->assertTrue($model->hasErrors('attachments'));
-    }
+//    public function testAttachmentsInputString()
+//    {
+//        $model = new Aspirasi();
+//
+//        $model->attachments = 'test';
+//
+//        $model->validate();
+//
+//        $this->assertTrue($model->hasErrors('attachments'));
+//    }
 
     public function testAttachmentsInputEmpty()
     {
@@ -235,27 +235,27 @@ class AspirasiTest extends \Codeception\Test\Unit
         $this->assertFalse($model->hasErrors('attachments'));
     }
 
-    public function testAttachmentsInputInteger()
-    {
-        $model = new Aspirasi();
+//    public function testAttachmentsInputInteger()
+//    {
+//        $model = new Aspirasi();
+//
+//        $model->attachments = 1;
+//
+//        $model->validate();
+//
+//        $this->assertTrue($model->hasErrors('attachments'));
+//    }
 
-        $model->attachments = 1;
-
-        $model->validate();
-
-        $this->assertTrue($model->hasErrors('attachments'));
-    }
-
-    public function testAttachmentsInputInvalidJson()
-    {
-        $model = new Aspirasi();
-
-        $model->attachments = 'xxxxx';
-
-        $model->validate();
-
-        $this->assertTrue($model->hasErrors('attachments'));
-    }
+//    public function testAttachmentsInputInvalidJson()
+//    {
+//        $model = new Aspirasi();
+//
+//        $model->attachments = 'xxxxx';
+//
+//        $model->validate();
+//
+//        $this->assertTrue($model->hasErrors('attachments'));
+//    }
 
     public function testAttachmentsInputJson()
     {
