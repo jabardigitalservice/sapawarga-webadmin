@@ -10,14 +10,14 @@ export function fetchList(query) {
 
 export function fetchRecord(id) {
   return request({
-    url: `/broadcasts/${id}`,
+    url: `/aspirasi/${id}`,
     method: 'get'
   })
 }
 
 export function create(data) {
   return request({
-    url: '/broadcasts',
+    url: '/aspirasi',
     method: 'post',
     data
   })
@@ -25,7 +25,7 @@ export function create(data) {
 
 export function update(id, data) {
   return request({
-    url: `/broadcasts/${id}`,
+    url: `/aspirasi/${id}`,
     method: 'put',
     data
   })
