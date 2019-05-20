@@ -43,6 +43,12 @@ class Aspirasi extends \yii\db\ActiveRecord
         return 'aspirasi';
     }
 
+    public function getLikes()
+    {
+        return $this->hasMany(User::class, ['id' => 'user_id'])
+            ->viaTable('aspirasi_likes', ['aspirasi_id' => 'id']);
+    }
+
     public function getAuthor()
     {
         return $this->hasOne(User::class, ['id' => 'author_id']);
@@ -159,6 +165,18 @@ class Aspirasi extends \yii\db\ActiveRecord
                 } else {
                     return null;
                 }
+            },
+            'likes_count' => function () {
+                return (int) $this->getLikes()->count();
+            },
+            'likes_users' => function () {
+                // @TODO too many callback function
+                return array_map(function ($item) {
+                    return [
+                        'id'   => $item->id,
+                        'name' => $item->name,
+                    ];
+                }, $this->likes);
             },
             'rw',
             'meta',
