@@ -87,14 +87,14 @@ export default {
   methods: {
     getDetail() {
       getInfo().then(response => {
-        const { name, address, kabkota, kecamatan, kelurahan, phone, latitude, longitude, photo_url, email, facebook, instagram, rt, rw, twitter, username, role_label
+        const { name, address, kabkota, kecamatan, kelurahan, phone, lat, lon, photo_url, email, facebook, instagram, rt, rw, twitter, username, role_label
         } = response.data
         this.twitterAccount = twitter || '-'
         this.facebookAccount = facebook || '-'
         this.instagramAccount = instagram || '-'
         this.imageUrl = ((photo_url !== null) ? photo_url : null)
-        this.latitude = latitude
-        this.longitude = longitude
+        this.latitude = lat
+        this.longitude = lon
         this.tableData = [
           {
             title: 'Nama',
