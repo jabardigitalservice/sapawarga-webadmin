@@ -30,11 +30,14 @@ class Notification extends Model
         $client->setApiKey($server_key);
         $client->injectGuzzleHttpClient(new \GuzzleHttp\Client());
 
+        $notification = new PushNotification($msg['title'], $msg['description']);
+        $notification->setClickAction('FCM_PLUGIN_ACTIVITY');
+
         $message = new Message();
         $message->setPriority('high');
         $message->addRecipient(new Topic($topics));
         $message
-            ->setNotification(new PushNotification($msg['title'], $msg['description']))
+            ->setNotification($notification)
             ->setData($msg['data']);
 
         $response = $client->send($message);
