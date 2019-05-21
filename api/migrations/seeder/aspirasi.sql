@@ -1,0 +1,4 @@
+INSERT INTO `aspirasi` (`author_id`, `category_id`, `title`, `description`, `kabkota_id`, `kec_id`, `kel_id`, `rw`, `attachments`, `meta`, `status`, `created_at`, `updated_at`)
+VALUES
+    (1,9,'Jalan Rusak Cikundul, Sukabumi.','Bapak Gubernur dan jajarannya yang terhormat.\nBagaimana kejelasannya tentang rencana perbaikan di jalan utama Cikundul, Lembursitu, Sukabumi. Sudah 4 tahun kami kesulitan akibat akses jalan yang rusak dan sudah memakan beberapa korban yang terjatuh dari motor. Kami dari warga RW 02 Kelurahan Cikundul berharap agar jalan utama Cikundul dapat segera diperbaiki.',22,446,6082,NULL,'[{"type":"photo","description":"Lorem ipsum","url":"https://dummyimage.com/wsxga"},{"type":"photo","description":"Lorem ipsum","url":"https://dummyimage.com/wsxga"},{"type":"photo","description":"Lorem ipsum","url":"https://dummyimage.com/wsxga"},{"type":"photo","description":"Lorem ipsum","url":"https://dummyimage.com/wsxga"}]',NULL,10,1557738743,1557738743)
+    ;

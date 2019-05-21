@@ -35,6 +35,10 @@ class Notification extends Model
             ->setBody($message['description'])
             ->addTopic($topics);
 
+        foreach ($message['data'] as $key => $value) {
+            $notification->addData($key, $value);
+        }
+
         $response_fcm = $client->send($notification);
     }
 }

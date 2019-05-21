@@ -4,9 +4,11 @@ namespace app\models;
 
 use Yii;
 use yii\behaviors\TimestampBehavior;
+use app\validator\InputCleanValidator;
+use app\validator\IsArrayValidator;
 
 /**
- * This is the model class for table "broadcasts".
+ * This is the model class for table "aspirasi".
  *
  * @property int $id
  * @property int $author_id
@@ -17,26 +19,34 @@ use yii\behaviors\TimestampBehavior;
  * @property int $kec_id
  * @property int $kel_id
  * @property string $rw
+ * @property mixed $attachments
  * @property mixed $meta
  * @property int $status
  */
-class Broadcast extends \yii\db\ActiveRecord
+class Aspirasi extends \yii\db\ActiveRecord
 {
     const STATUS_DELETED = -1;
     const STATUS_DRAFT = 0;
+    const STATUS_APPROVAL_PENDING = 5;
+    const STATUS_APPROVAL_REJECTED = 3;
     const STATUS_PUBLISHED = 10;
 
-    const CATEGORY_TYPE = 'broadcast';
+    const CATEGORY_TYPE = 'aspirasi';
 
-    /** @var  array push notification metadata */
-    public $data;
+    const SCENARIO_USER_CREATE = 'user-create';
 
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'broadcasts';
+        return 'aspirasi';
+    }
+
+    public function getLikes()
+    {
+        return $this->hasMany(User::class, ['id' => 'user_id'])
+            ->viaTable('aspirasi_likes', ['aspirasi_id' => 'id']);
     }
 
     public function getAuthor()
@@ -64,25 +74,40 @@ class Broadcast extends \yii\db\ActiveRecord
         return $this->hasOne(Area::className(), ['id' => 'kabkota_id']);
     }
 
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+
+        return $scenarios;
+    }
+
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['title', 'status'], 'required'],
+            [
+                ['title', 'description', 'kabkota_id', 'kec_id', 'kel_id', 'author_id', 'category_id', 'status'],
+                'required',
+            ],
             [['title', 'description', 'rw', 'meta'], 'trim'],
             ['title', 'string', 'max' => 255],
-            ['rw', 'string', 'length' => 3],
+            ['title', 'string', 'min' => 5],
+            ['title', InputCleanValidator::class],
+            ['description', 'string', 'max' => 1024 * 3],
+            ['description', 'string', 'min' => 5],
+            ['description', InputCleanValidator::class],
             [
                 'rw',
                 'match',
                 'pattern' => '/^[0-9]{3}$/',
-                'message' => Yii::t('app', 'error.rw.pattern')
+                'message' => Yii::t('app', 'error.rw.pattern'),
             ],
             ['rw', 'default'],
+            ['attachments', 'default'],
+            ['attachments', IsArrayValidator::class],
             [['author_id', 'category_id', 'kabkota_id', 'kec_id', 'kel_id', 'status'], 'integer'],
-            ['category_id', 'validateCategoryID'],
             ['meta', 'default'],
         ];
     }
@@ -92,15 +117,15 @@ class Broadcast extends \yii\db\ActiveRecord
         $fields = [
             'id',
             'author_id',
-            'author' => function () {
+            'author'       => function () {
                 return [
-                    'id'            => $this->author->id,
-                    'name'          => $this->author->name,
-                    'role_label'    => $this->author->getRoleLabel(),
+                    'id'         => $this->author->id,
+                    'name'       => $this->author->name,
+                    'role_label' => $this->author->getRoleLabel(),
                 ];
             },
             'category_id',
-            'category' => function () {
+            'category'     => function () {
                 return [
                     'id'   => $this->category->id,
                     'name' => $this->category->name,
@@ -109,7 +134,7 @@ class Broadcast extends \yii\db\ActiveRecord
             'title',
             'description',
             'kabkota_id',
-            'kabkota' => function () {
+            'kabkota'      => function () {
                 if ($this->kabkota) {
                     return [
                         'id'   => $this->kabkota->id,
@@ -120,7 +145,7 @@ class Broadcast extends \yii\db\ActiveRecord
                 }
             },
             'kec_id',
-            'kecamatan' => function () {
+            'kecamatan'    => function () {
                 if ($this->kecamatan) {
                     return [
                         'id'   => $this->kecamatan->id,
@@ -131,7 +156,7 @@ class Broadcast extends \yii\db\ActiveRecord
                 }
             },
             'kel_id',
-            'kelurahan' => function () {
+            'kelurahan'    => function () {
                 if ($this->kelurahan) {
                     return [
                         'id'   => $this->kelurahan->id,
@@ -140,6 +165,18 @@ class Broadcast extends \yii\db\ActiveRecord
                 } else {
                     return null;
                 }
+            },
+            'likes_count' => function () {
+                return (int) $this->getLikes()->count();
+            },
+            'likes_users' => function () {
+                // @TODO too many callback function
+                return array_map(function ($item) {
+                    return [
+                        'id'   => $item->id,
+                        'name' => $item->name,
+                    ];
+                }, $this->likes);
             },
             'rw',
             'meta',
@@ -156,11 +193,14 @@ class Broadcast extends \yii\db\ActiveRecord
                     case self::STATUS_DELETED:
                         $statusLabel = Yii::t('app', 'status.deleted');
                         break;
+                    case self::STATUS_APPROVAL_PENDING:
+                        $statusLabel = Yii::t('app', 'status.approval-pending');
+                        break;
+                    case self::STATUS_APPROVAL_REJECTED:
+                        $statusLabel = Yii::t('app', 'status.approval-rejected');
+                        break;
                 }
                 return $statusLabel;
-            },
-            'data' => function () {
-                return $this->data;
             },
             'created_at',
             'updated_at',
@@ -186,50 +226,6 @@ class Broadcast extends \yii\db\ActiveRecord
     public function beforeSave($insert)
     {
         $this->author_id = Yii::$app->user->getId();
-
-        if (!YII_ENV_TEST) {
-            // Check condition for push notification
-            $isSendNotification = false;
-            if ($insert) {
-                $isSendNotification = $this->status == self::STATUS_PUBLISHED;
-            } else { // Update broadcast
-                $changedAttributes = $this->getDirtyAttributes(['status']);
-                if (array_key_exists('status', $changedAttributes)) {
-                    if ($changedAttributes['status'] == self::STATUS_PUBLISHED) {
-                        $isSendNotification = true;
-                    }
-                }
-            }
-
-            if ($isSendNotification) {
-                $this->data = [
-                    'target'            => 'broadcast',
-                    'author'            => $this->author->name,
-                    'title'             => $this->title,
-                    'category_name'     => $this->category->name,
-                    'description'       => $this->description,
-                    'updated_at'        => $this->updated_at ?? time(),
-                    'push_notification' => true,
-                ];
-                $message = [
-                    'title'         => $this->title,
-                    'description'   => $this->description,
-                    'data'          => $this->data,
-                ];
-                // By default,  send notification to all users
-                $topic = 'all';
-                if ($this->kel_id && $this->rw) {
-                    $topic = "{$this->kel_id}_{$this->rw}";
-                } elseif ($this->kel_id) {
-                    $topic = (string) $this->kel_id;
-                } elseif ($this->kec_id) {
-                    $topic = (string) $this->kec_id;
-                } elseif ($this->kabkota_id) {
-                    $topic = (string) $this->kabkota_id;
-                }
-                Notification::send($message, $topic);
-            }
-        }
 
         return parent::beforeSave($insert);
     }
