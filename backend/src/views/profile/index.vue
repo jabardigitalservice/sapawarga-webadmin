@@ -87,15 +87,14 @@ export default {
   methods: {
     getDetail() {
       getInfo().then(response => {
-        const { name, address, kabkota, kecamatan, kelurahan, phone, latitude, longitude, photo_url, email, facebook, instagram, rt, rw, twitter, username
+        const { name, address, kabkota, kecamatan, kelurahan, phone, lat, lon, photo_url, email, facebook, instagram, rt, rw, twitter, username, role_label
         } = response.data
         this.twitterAccount = twitter || '-'
         this.facebookAccount = facebook || '-'
         this.instagramAccount = instagram || '-'
-
         this.imageUrl = ((photo_url !== null) ? photo_url : null)
-        this.latitude = latitude
-        this.longitude = longitude
+        this.latitude = lat
+        this.longitude = lon
         this.tableData = [
           {
             title: 'Nama',
@@ -127,15 +126,19 @@ export default {
           },
           {
             title: 'Kelurahan',
-            content: ': ' + (kelurahan !== null ? kelurahan : '-')
+            content: ': ' + (kelurahan !== null ? kelurahan.name : '-')
           },
           {
             title: 'Kecamatan',
-            content: ': ' + (kecamatan !== null ? kecamatan : '-')
+            content: ': ' + (kecamatan !== null ? kecamatan.name : '-')
           },
           {
             title: 'Kab/Kota',
-            content: ': ' + (kabkota !== null ? kabkota : '-')
+            content: ': ' + (kabkota !== null ? kabkota.name : '-')
+          },
+          {
+            title: 'Peran',
+            content: ': ' + (role_label !== null ? role_label : '-')
           }
         ]
       })
