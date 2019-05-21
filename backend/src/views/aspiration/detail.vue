@@ -38,6 +38,72 @@
   </div>
 </template>
 
+<script>
+import { fetchRecord } from '@/api/aspiration'
+export default {
+  data() {
+    return {
+      id: 0,
+      title: null,
+      created_at: null,
+      status: false,
+      author: [],
+      aspirationDetail: []
+    }
+  },
+  created() {
+    this.id = this.$route.params && this.$route.params.id
+    this.getDetail()
+  },
+  methods: {
+    getDetail() {
+      fetchRecord(this.id).then(response => {
+        console.log(response)
+        const { title, created_at, author, category, description, status } = response.data
+        this.title = title
+        this.created_at = created_at
+
+        if (status === 10 || 3) {
+          this.status = false
+        } else if (status === 5) {
+          this.status = true
+        }
+
+        this.author = [
+          {
+            title: 'Dari',
+            content: ' : ' + author.name
+          },
+          {
+            title: 'Email',
+            content: '-'
+          },
+          {
+            title: 'Telepon',
+            content: '-'
+          },
+          {
+            title: 'Alamat',
+            content: '-'
+          }
+        ]
+
+        this.aspirationDetail = [
+          {
+            title: 'Kategori',
+            content: ' : ' + category.name
+          },
+          {
+            title: 'Aspirasi',
+            content: ' : ' + description
+          },
+        ]
+      })
+    }
+  }
+}
+</script>
+
 <style lang="scss" scoped>
 .aspiration-date {
   float: right;
