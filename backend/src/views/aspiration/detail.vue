@@ -6,6 +6,8 @@
           <div slot="header" class="clearfix">
             <span>Target</span>
           </div>
+          <gallery class="aspiration-gallery" :images="images" :index="index" @close="index = null"></gallery>
+          <div class="image" v-for="(image, imageIndex) in images" :key="image.value" @click="index = imageIndex" :style="{ backgroundImage: 'url(' + image + ')', width: '50px', height: '50px' }"></div>
         </el-card>
       </el-col>
       <el-col class="col-right" :xs="24" :sm="24" :md="24" :lg="15" :xl="15">
@@ -40,7 +42,11 @@
 
 <script>
 import { fetchRecord } from '@/api/aspiration'
+import VueGallery from 'vue-gallery'
 export default {
+  components: {
+    'gallery': VueGallery
+  },
   data() {
     return {
       id: 0,
@@ -48,7 +54,14 @@ export default {
       created_at: null,
       status: false,
       author: [],
-      aspirationDetail: []
+      aspirationDetail: [],
+      images: [
+        require('@/assets/twitter.svg'),
+        require('@/assets/facebook.svg'),
+        require('@/assets/instagram.svg'),
+        require('@/assets/user.png'),
+      ],
+      index: null
     }
   },
   created() {
@@ -104,7 +117,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .aspiration-date {
   float: right;
   font-size: 14px;
@@ -120,4 +133,20 @@ export default {
   margin: 10px;
   float: right;
 }
+
+.image {
+    float: left;
+    background-size: 50px 50px;
+    background-repeat: no-repeat;
+    // background-position: center center;
+    // background-color: blue;
+    cursor: pointer;
+    margin: 5px;
+  }
+
+.aspiration-gallery {
+  width: 300px;
+  height: 300px;
+}
+  
 </style>
