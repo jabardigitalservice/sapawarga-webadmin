@@ -122,6 +122,9 @@ class Aspirasi extends \yii\db\ActiveRecord
                     'id'         => $this->author->id,
                     'name'       => $this->author->name,
                     'role_label' => $this->author->getRoleLabel(),
+                    'email'       => $this->author->email,
+                    'phone'       => $this->author->phone,
+                    'address'       => $this->author->address,
                 ];
             },
             'category_id',
@@ -202,6 +205,7 @@ class Aspirasi extends \yii\db\ActiveRecord
                 }
                 return $statusLabel;
             },
+            'attachments',
             'created_at',
             'updated_at',
         ];
