@@ -117,7 +117,6 @@ export default {
 }
 
 .button-send {
-  // margin-top: 10px;
   margin: 10px;
   float: right;
 }
