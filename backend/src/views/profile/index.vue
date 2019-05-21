@@ -126,15 +126,15 @@ export default {
           },
           {
             title: 'Kelurahan',
-            content: ': ' + (kelurahan !== null ? kelurahan : '-')
+            content: ': ' + (kelurahan !== null ? kelurahan.name : '-')
           },
           {
             title: 'Kecamatan',
-            content: ': ' + (kecamatan !== null ? kecamatan : '-')
+            content: ': ' + (kecamatan !== null ? kecamatan.name : '-')
           },
           {
             title: 'Kab/Kota',
-            content: ': ' + (kabkota !== null ? kabkota : '-')
+            content: ': ' + (kabkota !== null ? kabkota.name : '-')
           }
         ]
       })
