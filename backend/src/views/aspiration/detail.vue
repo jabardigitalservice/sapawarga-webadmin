@@ -37,3 +37,22 @@
     </el-row>
   </div>
 </template>
+
+<style lang="scss" scoped>
+.aspiration-date {
+  float: right;
+  font-size: 14px;
+}
+
+.aspiration-title {
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 25px;
+}
+
+.button-send {
+  // margin-top: 10px;
+  margin: 10px;
+  float: right;
+}
+</style>
