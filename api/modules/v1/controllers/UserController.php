@@ -449,7 +449,7 @@ class UserController extends ActiveController
             return Arr::only($userArray, [
                 'id', 'username', 'email', 'role_id', 'role_label', 'last_login_at', 'last_login_ip',
                 'name', 'phone', 'address', 'rt', 'rw', 'kel_id', 'kelurahan',
-                'kec_id', 'kecamatan', 'kabkota_id', 'kabkota',
+                'kec_id', 'kecamatan', 'kabkota_id', 'kabkota', 'lat', 'lon',
                 'facebook', 'twitter', 'instagram', 'photo_url',
             ]);
         } else {
