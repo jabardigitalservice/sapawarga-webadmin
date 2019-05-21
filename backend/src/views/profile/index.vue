@@ -135,6 +135,10 @@ export default {
           {
             title: 'Kab/Kota',
             content: ': ' + (kabkota !== null ? kabkota.name : '-')
+          },
+          {
+            title: 'Peran',
+            content: ': ' + (role_label !== null ? role_label : '-')
           }
         ]
       })
