@@ -37,4 +37,6 @@ return [
     'status.deleted'  => 'Dihapus',
     'status.draft'  => 'Draft',
     'status.published'   => 'Terkirim',
+    'status.approval-pending'  => 'Menunggu Persetujuan',
+    'status.approval-rejected' => 'Ditolak',
 ];

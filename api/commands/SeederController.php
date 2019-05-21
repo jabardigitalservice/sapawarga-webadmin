@@ -16,6 +16,8 @@ class SeederController extends Controller
 {
     public function actionIndex()
     {
+        Yii::$app->db->createCommand()->checkIntegrity(false)->execute();
+
         echo 'Seeding Areas...' . PHP_EOL;
         $this->actionArea();
 
@@ -30,6 +32,11 @@ class SeederController extends Controller
 
         echo 'Seeding Broadcasts...' . PHP_EOL;
         $this->actionBroadcast();
+
+        echo 'Seeding Aspirasi...' . PHP_EOL;
+        $this->actionAspirasi();
+
+        Yii::$app->db->createCommand()->checkIntegrity(true)->execute();
     }
 
     public function actionArea()
@@ -120,6 +127,14 @@ class SeederController extends Controller
         Yii::$app->db->createCommand('TRUNCATE broadcasts')->execute();
 
         $sql = file_get_contents(__DIR__ . '/../migrations/seeder/broadcast.sql');
+        Yii::$app->db->createCommand($sql)->execute();
+    }
+
+    public function actionAspirasi()
+    {
+        Yii::$app->db->createCommand('TRUNCATE aspirasi')->execute();
+
+        $sql = file_get_contents(__DIR__ . '/../migrations/seeder/aspirasi.sql');
         Yii::$app->db->createCommand($sql)->execute();
     }
 
