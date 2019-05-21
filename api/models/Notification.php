@@ -3,42 +3,40 @@
 namespace app\models;
 
 use yii\base\Model;
-use Fcm\FcmClient;
-use Fcm\Topic\Subscribe;
-use Fcm\Push\Notification as PushNotification;
+use sngrl\PhpFirebaseCloudMessaging\Client;
+use sngrl\PhpFirebaseCloudMessaging\Message;
+use sngrl\PhpFirebaseCloudMessaging\Recipient\Topic;
+use sngrl\PhpFirebaseCloudMessaging\Notification as PushNotification;
 
 class Notification extends Model
 {
     public static function subscribe($pushToken, $areaIds)
     {
-        $fcm_key = getenv('FCM_KEY');
-        $sender_id = getenv('FCM_SENDER_ID');
-        $client = new FcmClient($fcm_key, $sender_id);
+        $server_key = getenv('FCM_KEY');
+        $client = new Client();
+        $client->setApiKey($server_key);
+        $client->injectGuzzleHttpClient(new \GuzzleHttp\Client());
 
         // Subscribe $device_id to a topic
         foreach ($areaIds as $topic) {
-            $subscribe = new Subscribe($topic);
-            $subscribe->addDevice($pushToken);
-            $client->send($subscribe);
+            $response = $client->addTopicSubscription($topic, [$pushToken]);
         }
     }
 
-    public static function send($message, $topics)
+    public static function send($msg, $topics)
     {
-        $fcm_key = getenv('FCM_KEY');
-        $sender_id = getenv('FCM_SENDER_ID');
+        $server_key = getenv('FCM_KEY');
+        $client = new Client();
+        $client->setApiKey($server_key);
+        $client->injectGuzzleHttpClient(new \GuzzleHttp\Client());
 
-        $client = new FcmClient($fcm_key, $sender_id);
-        $notification = new PushNotification();
-        $notification
-            ->setTitle($message['title'])
-            ->setBody($message['description'])
-            ->addTopic($topics);
+        $message = new Message();
+        $message->setPriority('high');
+        $message->addRecipient(new Topic($topics));
+        $message
+            ->setNotification(new PushNotification($msg['title'], $msg['description']))
+            ->setData($msg['data']);
 
-        foreach ($message['data'] as $key => $value) {
-            $notification->addData($key, $value);
-        }
-
-        $response_fcm = $client->send($notification);
+        $response = $client->send($message);
     }
 }
