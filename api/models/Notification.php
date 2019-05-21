@@ -23,6 +23,19 @@ class Notification extends Model
         }
     }
 
+    public static function unsubscribe($pushToken, $areaIds)
+    {
+        $server_key = getenv('FCM_KEY');
+        $client = new Client();
+        $client->setApiKey($server_key);
+        $client->injectGuzzleHttpClient(new \GuzzleHttp\Client());
+
+        // Subscribe $device_id to a topic
+        foreach ($areaIds as $topic) {
+            $response = $client->removeTopicSubscription($topic, [$pushToken]);
+        }
+    }
+
     public static function send($msg, $topics)
     {
         $server_key = getenv('FCM_KEY');
