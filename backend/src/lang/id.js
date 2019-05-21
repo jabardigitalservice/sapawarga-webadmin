@@ -35,6 +35,8 @@ export default {
     'back': 'Kembali',
     'draft': 'Simpan sebagai Draft',
     'send': 'Kirim Pesan',
+    'accept': 'Terima',
+    'reject': 'Tolak',
 
     'insert-row': 'Tambah Baris Baru',
     'delete-row': 'Hapus',
