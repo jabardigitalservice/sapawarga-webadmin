@@ -28,6 +28,9 @@ class Broadcast extends \yii\db\ActiveRecord
 
     const CATEGORY_TYPE = 'broadcast';
 
+    /** @var  array push notification metadata */
+    public $data;
+
     /**
      * {@inheritdoc}
      */
@@ -156,6 +159,9 @@ class Broadcast extends \yii\db\ActiveRecord
                 }
                 return $statusLabel;
             },
+            'data' => function () {
+                return $this->data;
+            },
             'created_at',
             'updated_at',
         ];
@@ -196,18 +202,19 @@ class Broadcast extends \yii\db\ActiveRecord
             }
 
             if ($isSendNotification) {
+                $this->data = [
+                    'target'            => 'broadcast',
+                    'author'            => $this->author->name,
+                    'title'             => $this->title,
+                    'category_name'     => $this->category->name,
+                    'description'       => $this->description,
+                    'updated_at'        => $this->updated_at ?? time(),
+                    'push_notification' => true,
+                ];
                 $message = [
                     'title'         => $this->title,
                     'description'   => $this->description,
-                    'data'          => [
-                        'target'            => 'broadcast',
-                        'author'            => $this->author->name,
-                        'title'             => $this->title,
-                        'category_name'     => $this->category->name,
-                        'description'       => $this->description,
-                        'updated_at'        => $this->updated_at ?? time(),
-                        'push_notification' => true,
-                    ]
+                    'data'          => $this->data,
                 ];
                 // By default,  send notification to all users
                 $topic = 'all';
