@@ -22,6 +22,8 @@ use app\validator\IsArrayValidator;
  * @property mixed $attachments
  * @property mixed $meta
  * @property int $status
+ * @property string $approval_note
+ * @property int $approved_by
  */
 class Aspirasi extends \yii\db\ActiveRecord
 {
@@ -109,6 +111,8 @@ class Aspirasi extends \yii\db\ActiveRecord
             ['attachments', IsArrayValidator::class],
             [['author_id', 'category_id', 'kabkota_id', 'kec_id', 'kel_id', 'status'], 'integer'],
             ['meta', 'default'],
+            ['approval_note', 'default'],
+            ['approval_by', 'default'],
         ];
     }
 

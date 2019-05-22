@@ -176,6 +176,9 @@ class AspirasiController extends ActiveController
     public function actionApproval($id)
     {
         $action = Yii::$app->request->post('action');
+        $note   = Yii::$app->request->post('note');
+
+        $currentUserId = Yii::$app->user->getId();
 
         $model = $this->findModel($id);
 
@@ -187,9 +190,12 @@ class AspirasiController extends ActiveController
         }
 
         if ($action === 'APPROVE') {
-            $model->status = Aspirasi::STATUS_PUBLISHED;
+            $model->status      = Aspirasi::STATUS_PUBLISHED;
+            $model->approved_by = $currentUserId;
         } elseif ($action === 'REJECT') {
-            $model->status = Aspirasi::STATUS_APPROVAL_REJECTED;
+            $model->status        = Aspirasi::STATUS_APPROVAL_REJECTED;
+            $model->approval_note = $note;
+            $model->approved_by   = $currentUserId;
         } else {
             $response = Yii::$app->getResponse();
             $response->setStatusCode(400);
