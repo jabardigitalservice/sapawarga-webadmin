@@ -4,7 +4,7 @@
       <el-col class="col-left" :xs="24" :sm="24" :md="24" :lg="9" :xl="9">
         <el-card style="margin-bottom: 10px">
           <div slot="header" class="clearfix">
-            <span>Target</span>
+            <span>Dokumentasi</span>
           </div>
           <gallery class="aspiration-gallery" :images="images" :index="index" @close="index = null"></gallery>
           <div class="image" v-for="(image, imageIndex) in images" :key="image.value" @click="index = imageIndex" :style="{ backgroundImage: 'url(' + image + ')', width: '50px', height: '50px' }"></div>
