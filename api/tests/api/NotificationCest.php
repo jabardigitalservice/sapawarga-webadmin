@@ -24,12 +24,16 @@ class NotificationCest
     {
         $I->amStaff();
 
+        $title = 'Title';
+        $description = 'Description';
+        $data = [
+            'push_notification' => true,
+        ];
+
         $I->sendPOST($this->endpointNotification, [
-            'title'         => 'Title',
-            'description'   => 'Description',
-            'data'          => [
-                'push_notification' => true,
-            ],
+            'title'         => $title,
+            'description'   => $description,
+            'data'          => $data,
         ]);
 
         $I->canSeeResponseCodeIs(201);
@@ -38,6 +42,11 @@ class NotificationCest
         $I->seeResponseContainsJson([
             'success' => true,
             'status'  => 201,
+            'data' => [
+                "title" => $title,
+                "description" => $description,
+                "data" => $data,
+            ]
         ]);
     }
 }
