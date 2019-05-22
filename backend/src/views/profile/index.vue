@@ -1,5 +1,6 @@
 <template>
   <div class="app-container">
+    <p class="warn-content">Profile Admin</p>
     <el-row :gutter="10">
       <el-col class="col-left" :xs="24" :sm="24" :md="24" :lg="7" :xl="5">
         <PhotoBox class="image" :image="imageUrl" :height="height" />
