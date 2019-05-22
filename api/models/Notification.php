@@ -8,8 +8,44 @@ use sngrl\PhpFirebaseCloudMessaging\Message;
 use sngrl\PhpFirebaseCloudMessaging\Recipient\Topic;
 use sngrl\PhpFirebaseCloudMessaging\Notification as PushNotification;
 
+/**
+ * @property string $title
+ * @property string $description
+ * @property mixed $data
+ */
 class Notification extends Model
 {
+    /** @var string */
+    public $title;
+    /** @var string */
+    public $description;
+    /** @var array */
+    public $data;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function rules()
+    {
+        return [
+            ['title', 'required'],
+            [['title', 'description', 'data'], 'trim'],
+            ['title', 'string', 'max' => 255],
+            ['data', 'default'],
+        ];
+    }
+
+    public function fields()
+    {
+        $fields = [
+            'title',
+            'description',
+            'data'
+        ];
+        return $fields;
+    }
+
+    // Static functions
     public static function subscribe($pushToken, $areaIds)
     {
         $server_key = getenv('FCM_KEY');
@@ -17,7 +53,6 @@ class Notification extends Model
         $client->setApiKey($server_key);
         $client->injectGuzzleHttpClient(new \GuzzleHttp\Client());
 
-        // Subscribe $device_id to a topic
         foreach ($areaIds as $topic) {
             $response = $client->addTopicSubscription($topic, [$pushToken]);
         }
@@ -30,7 +65,6 @@ class Notification extends Model
         $client->setApiKey($server_key);
         $client->injectGuzzleHttpClient(new \GuzzleHttp\Client());
 
-        // Subscribe $device_id to a topic
         foreach ($areaIds as $topic) {
             $response = $client->removeTopicSubscription($topic, [$pushToken]);
         }
