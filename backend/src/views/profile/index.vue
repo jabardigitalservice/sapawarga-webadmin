@@ -172,19 +172,36 @@ export default {
   .col-right {
     margin-top: 30px;
     margin-left: 20px;
-    margin-right: 20px !important
+    padding-right: 30px !important;
   }
+
 }
 
 @media only screen and (min-width: 1200px) and (max-width: 1570px) {
-  #map iframe {
+  .gmap_canvas {
+    background: none !important;
     width: 250px;
-    height: 200px;
-    border-radius: 5px;
+    height: 230px;
     margin-left: 20px;
-    -webkit-box-shadow: 0px 0px 25px -10px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px 0px 25px -10px rgba(0,0,0,0.75);
-    box-shadow: 0px 0px 25px -10px rgba(0,0,0,0.75);
+    border-radius: 5px;
+    margin-top: 20px;
+    -webkit-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.75);
+    iframe {
+      width: 250px;
+      height: 230px;
+    }
+  }
+
+  .map-title {
+    width: 250px;
+    margin-left: 20px;
+    margin-bottom: 10px;
+    margin-top: 50px;
+    color: #909399;
+    background-color: #dcdfe6;
+    padding: 10px;
   }
 }
 </style>
