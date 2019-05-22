@@ -31,7 +31,7 @@ class Notification extends Model
             ['title', 'required'],
             [['title', 'description', 'data'], 'trim'],
             ['title', 'string', 'max' => 255],
-            ['data', 'default'],
+            [['description', 'data'], 'default'],
         ];
     }
 

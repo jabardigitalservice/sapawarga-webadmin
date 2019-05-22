@@ -2,7 +2,7 @@
 
 class NotificationCest
 {
-    private $endpointNotification = '/v1/notification';
+    private $endpointNotification = '/v1/notifications';
 
     // Test cases for users
     public function userCannotCreateNotification(ApiTester $I)
@@ -25,9 +25,9 @@ class NotificationCest
         $I->amStaff();
 
         $I->sendPOST($this->endpointNotification, [
-            'title'      => 'Title',
-            'description'      => 'Description',
-            'data'    => [
+            'title'         => 'Title',
+            'description'   => 'Description',
+            'data'          => [
                 'push_notification' => true,
             ],
         ]);
