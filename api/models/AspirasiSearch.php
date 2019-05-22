@@ -12,6 +12,11 @@ use yii\data\ActiveDataProvider;
 class AspirasiSearch extends Aspirasi
 {
     /**
+     * @var \app\models\User
+     */
+    public $user;
+
+    /**
      * {@inheritdoc}
      */
     public function rules()
@@ -56,6 +61,10 @@ class AspirasiSearch extends Aspirasi
         $query->andFilterWhere(['author_id' => $this->author_id]);
 
         $query->andFilterWhere(['<>', 'status', Aspirasi::STATUS_DELETED]);
+
+        if ($this->user->role === User::ROLE_ADMIN) {
+            $query->andFilterWhere(['<>', 'status', Aspirasi::STATUS_DRAFT]);
+        }
 
         if (Arr::has($params, 'title')) {
             $query->andWhere(['like', 'title', Arr::get($params, 'title')]);
