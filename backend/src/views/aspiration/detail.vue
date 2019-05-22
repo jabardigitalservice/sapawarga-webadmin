@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import { fetchRecord } from '@/api/aspiration'
+import { fetchRecord, approval } from '@/api/aspiration'
 import VueGallery from 'vue-gallery'
 export default {
   components: {
@@ -115,18 +115,47 @@ export default {
     },
 
     async actionApprove() {
+      const id = this.id
+
       await this.$confirm('Apakah Anda yakin ingin memberikan persetujuan untuk aspirasi ini?', 'Konfirmasi', {
         confirmButtonText: this.$t('common.confirm'),
         cancelButtonText: this.$t('common.cancel'),
         type: 'success'
       })
+
+      try {
+        await approval(id, {
+          action: 'APPROVE'
+        })
+
+        this.$message.success(this.$t('crud.update-success'))
+
+        this.$router.push('/aspirasi/index')
+      } catch (e) {
+        console.log(e)
+      }
     },
 
     async actionReject() {
-      await this.$prompt('Apakah Anda yakin ingin menolak aspirasi ini? Masukkan catatan untuk pengguna.', 'Konfirmasi Penolakan', {
+      const id = this.id
+
+      const prompt = await this.$prompt('Apakah Anda yakin ingin menolak aspirasi ini? Masukkan catatan untuk pengguna.', 'Konfirmasi Penolakan', {
         confirmButtonText: 'Simpan',
         cancelButtonText: 'Batal'
       })
+
+      try {
+        await approval(id, {
+          action: 'REJECT',
+          note: prompt.value
+        })
+
+        this.$message.success(this.$t('crud.update-success'))
+
+        this.$router.push('/aspirasi/index')
+      } catch (e) {
+        console.log(e)
+      }
     }
   }
 }
