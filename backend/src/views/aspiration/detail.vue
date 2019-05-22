@@ -76,7 +76,7 @@ export default {
         this.title = title
         this.created_at = created_at
 
-        if (status === 10 || 3) {
+        if (status === 10 || status === 3) {
           this.status = false
         } else if (status === 5) {
           this.status = true
@@ -148,5 +148,5 @@ export default {
   width: 300px;
   height: 300px;
 }
-  
+
 </style>
