@@ -1054,7 +1054,9 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             ];
 
             // Update topic subscription
-            Notification::unsubscribe($this->push_token, $areaIds);
+            if ($this->push_token) {
+                Notification::unsubscribe($this->push_token, $areaIds);
+            }
 
             $this->push_token = $pushToken;
 

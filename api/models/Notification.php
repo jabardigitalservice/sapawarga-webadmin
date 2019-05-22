@@ -12,6 +12,7 @@ use sngrl\PhpFirebaseCloudMessaging\Notification as PushNotification;
  * @property string $title
  * @property string $description
  * @property mixed $data
+ * @property string $topic
  */
 class Notification extends Model
 {
@@ -21,6 +22,8 @@ class Notification extends Model
     public $description;
     /** @var array */
     public $data;
+    /** @var string */
+    public $topic;
 
     /**
      * {@inheritdoc}
@@ -31,6 +34,7 @@ class Notification extends Model
             ['title', 'required'],
             [['title', 'description', 'data'], 'trim'],
             ['title', 'string', 'max' => 255],
+            ['topic', 'default', 'value' => 'all'], // Default value for topic, send to all users
             [['description', 'data'], 'default'],
         ];
     }
@@ -40,7 +44,8 @@ class Notification extends Model
         $fields = [
             'title',
             'description',
-            'data'
+            'data',
+            'topic',
         ];
         return $fields;
     }
@@ -70,22 +75,22 @@ class Notification extends Model
         }
     }
 
-    public static function send($msg, $topics)
+    public function send()
     {
         $server_key = getenv('FCM_KEY');
         $client = new Client();
         $client->setApiKey($server_key);
         $client->injectGuzzleHttpClient(new \GuzzleHttp\Client());
 
-        $notification = new PushNotification($msg['title'], $msg['description']);
+        $notification = new PushNotification($this->title, $this->description);
         $notification->setClickAction('FCM_PLUGIN_ACTIVITY');
 
         $message = new Message();
         $message->setPriority('high');
-        $message->addRecipient(new Topic($topics));
+        $message->addRecipient(new Topic($this->topic));
         $message
             ->setNotification($notification)
-            ->setData($msg['data']);
+            ->setData($this->data);
 
         $response = $client->send($message);
     }
