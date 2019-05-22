@@ -47,6 +47,16 @@ export default {
   components: {
     'gallery': VueGallery
   },
+  filters: {
+    statusFilter(status) {
+      const statusMap = {
+        '10': 'success',
+        '0': 'info',
+        '-1': 'danger'
+      }
+      return statusMap[status]
+    }
+  },
   data() {
     return {
       id: 0,
@@ -85,7 +95,7 @@ export default {
         this.author = [
           {
             title: 'Dari',
-            content: ' : ' + author.name
+            content: author.name
           },
           {
             title: 'Email',
@@ -104,11 +114,11 @@ export default {
         this.aspirationDetail = [
           {
             title: 'Kategori',
-            content: ' : ' + category.name
+            content: category.name
           },
           {
             title: 'Aspirasi',
-            content: ' : ' + description
+            content: description
           }
         ]
       })
@@ -136,12 +146,22 @@ export default {
       }
     },
 
+    validateInput(input) {
+      if (_.isEmpty(input)) {
+        return 'Catatan harus diisi.'
+      }
+
+      return true
+    },
+
     async actionReject() {
       const id = this.id
 
       const prompt = await this.$prompt('Apakah Anda yakin ingin menolak aspirasi ini? Masukkan catatan untuk pengguna.', 'Konfirmasi Penolakan', {
         confirmButtonText: 'Simpan',
-        cancelButtonText: 'Batal'
+        cancelButtonText: 'Batal',
+        inputPlaceholder: 'Isikan catatan untuk pengguna',
+        inputValidator: this.validateInput
       })
 
       try {

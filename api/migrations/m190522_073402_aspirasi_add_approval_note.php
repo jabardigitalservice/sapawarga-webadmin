@@ -13,6 +13,7 @@ class m190522_073402_aspirasi_add_approval_note extends CustomMigration
     {
         $this->addColumn('aspirasi', 'approval_note', $this->text()->null());
         $this->addColumn('aspirasi', 'approved_by', $this->integer()->null());
+        $this->addColumn('aspirasi', 'approved_at', $this->integer()->null());
     }
 
     /**
@@ -22,5 +23,6 @@ class m190522_073402_aspirasi_add_approval_note extends CustomMigration
     {
         $this->dropColumn('aspirasi', 'approval_note');
         $this->dropColumn('aspirasi', 'approved_by');
+        $this->dropColumn('aspirasi', 'approved_at');
     }
 }
