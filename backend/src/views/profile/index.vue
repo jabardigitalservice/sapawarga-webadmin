@@ -19,35 +19,37 @@
         </div>
       </el-col>
       <el-col class="col-right" :xs="24" :sm="24" :md="24" :lg="17" :xl="17">
+          <el-table stripe :data="tableData" :show-header="false" border style="width: 100%">
+            <el-table-column prop="title" width="180"/>
+            <el-table-column prop="content"/>
+          </el-table>
+          <div class="social-media">
+            <p class="warn-content">Media Sosial</p>
+            <el-table stripe :data="twitterIcon" :show-header="false" border style="width: 100%">
+              <el-table-column width="180">
                 <a :href="`https://twitter.com/${twitterAccount}`" target="_blank">
-                <img class="social-media-admin twitter" :src="twitter">
-              </a>
-            </el-col>
-            <el-col :span="14">
-              <p>: {{ twitterAccount }}</p>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="6" style="margin-left:10px; padding-left: 50px">
-              <a :href="`${facebookAccount}`" target="_blank">
-                <img class="social-media-admin twitter" :src="facebook">
-              </a>
-            </el-col>
-            <el-col :span="14">
-              <p>: {{ facebookAccount }}</p>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="6" style="margin-left:10px; padding-left: 50px">
-              <a :href="`https://www.instagram.com/${instagramAccount}`" target="_blank">
-                <img class="social-media-admin twitter" :src="instagram">
-              </a>
-            </el-col>
-            <el-col :span="14">
-              <p>: {{ instagramAccount }}</p>
-            </el-col>
-          </el-row>
-        </el-card>
+                  <img class="social-media-admin twitter" :src="twitter" align="middle">
+                </a>
+              </el-table-column>
+              <el-table-column prop="content"/>
+            </el-table>
+            <el-table stripe :data="instagramIcon" :show-header="false" border style="width: 100%">
+              <el-table-column width="180">
+                <a :href="`https://www.instagram.com/${instagramAccount}`" target="_blank">
+                  <img class="social-media-admin twitter" :src="instagram">
+                </a>
+              </el-table-column>
+              <el-table-column prop="content"/>
+            </el-table>
+            <el-table stripe :data="facebookIcon" :show-header="false" border style="width: 100%">
+              <el-table-column width="180">
+                <a :href="`${facebookAccount}`" target="_blank">
+                  <img class="social-media-admin twitter" :src="facebook">
+                </a>
+              </el-table-column>
+              <el-table-column prop="content"/>
+            </el-table>
+          </div>
       </el-col>
     </el-row>
   </div>
