@@ -212,8 +212,8 @@ export default {
   }
 
 .warn-content {
-  color: #909399;
-  background-color: #dcdfe6;
+  // color: #909399;
+  // background-color: #dcdfe6;
 }
 
 .map-title {
@@ -221,16 +221,14 @@ export default {
   margin-left: 20px;
   margin-bottom: 10px;
   margin-top: 50px;
-  color: #909399;
-  background-color: #dcdfe6;
   padding: 10px;
 }
 
 .social-media-admin {
-  width: 50px;
-  height: 50px;
+  width: 30px;
+  height: 30px;
   display: block;
-  margin-left: 35%;
+  margin-left: 40%;
 }
 
 .social-media-card {
@@ -268,8 +266,6 @@ export default {
     margin-left: 20px;
     margin-bottom: 10px;
     margin-top: 50px;
-    color: #909399;
-    background-color: #dcdfe6;
     padding: 10px;
   }
 }
