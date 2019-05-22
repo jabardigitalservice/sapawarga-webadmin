@@ -3,6 +3,7 @@
 namespace app\modules\v1\controllers;
 
 use app\filters\auth\HttpBearerAuth;
+use app\models\Attachment\AspirasiPhotoForm;
 use app\models\Attachment\PhoneBookPhotoForm;
 use app\models\AttachmentForm;
 use Yii;
@@ -68,7 +69,7 @@ class AttachmentController extends ActiveController
                 [
                     'allow'   => true,
                     'actions' => ['create'],
-                    'roles'   => ['admin', 'manageSettings'],
+                    'roles'   => ['admin', 'manageSettings', 'user', 'staffRW'],
                 ],
             ],
         ];
@@ -85,6 +86,9 @@ class AttachmentController extends ActiveController
         switch ($type) {
             case 'phonebook_photo':
                 $model = new PhoneBookPhotoForm();
+                break;
+            case 'aspirasi_photo':
+                $model = new AspirasiPhotoForm();
                 break;
         }
 
