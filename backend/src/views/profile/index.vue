@@ -147,21 +147,56 @@ export default {
 }
 </script>
 
-<style lang="scss">
-#map iframe {
-  width: 400px;
-  height: 350px;
-  margin-left: 20px;
-  border-radius: 5px;
-  margin-top: 30px;
-  -webkit-box-shadow: 0px 0px 25px -10px rgba(0,0,0,0.75);
-  -moz-box-shadow: 0px 0px 25px -10px rgba(0,0,0,0.75);
-  box-shadow: 0px 0px 25px -10px rgba(0,0,0,0.75);
+<style lang="scss" scoped>
+.map {
+  margin-top: 50px;
+  height: 50px;
+  width: 270px;
 }
+
+.mapouter {
+    position: relative;
+    text-align: right;
+    height: 350px;
+    width: 400px;
+  }
+  .gmap_canvas {
+    background: none !important;
+    width: 400px;
+    height: 350px;
+    margin-left: 20px;
+    border-radius: 5px;
+    margin-top: 20px;
+    -webkit-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.75);
+
+    iframe {
+      width: 400px;
+      height: 350px;
+    }
+  }
+
+.warn-content {
+  color: #909399;
+  background-color: #dcdfe6;
+}
+
+.map-title {
+  width: 400px;
+  margin-left: 20px;
+  margin-bottom: 10px;
+  margin-top: 50px;
+  color: #909399;
+  background-color: #dcdfe6;
+  padding: 10px;
+}
+
 .social-media-admin {
-  width: 30px;
-  height: 30px;
-  margin-bottom: 30px;
+  width: 50px;
+  height: 50px;
+  display: block;
+  margin-left: 35%;
 }
 
 .social-media-card {
