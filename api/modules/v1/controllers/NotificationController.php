@@ -91,7 +91,7 @@ class NotificationController extends ActiveController
 
         $model->load(Yii::$app->getRequest()->getBodyParams(), '');
         if ($model->validate()) {
-            // TODO send notif
+            $model->send();
 
             $response = Yii::$app->getResponse();
             $response->setStatusCode(201);
