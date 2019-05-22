@@ -6,8 +6,8 @@
           <div slot="header" class="clearfix">
             <span>Dokumentasi</span>
           </div>
-          <gallery class="aspiration-gallery" :images="images" :index="index" @close="index = null"></gallery>
-          <div class="image" v-for="(image, imageIndex) in images" :key="image.value" @click="index = imageIndex" :style="{ backgroundImage: 'url(' + image + ')', width: '50px', height: '50px' }"></div>
+          <gallery class="aspiration-gallery" :images="images" :index="index" @close="index = null" />
+          <div v-for="(image, imageIndex) in images" :key="image.value" class="image" :style="{ backgroundImage: 'url(' + image + ')', width: '50px', height: '50px' }" @click="index = imageIndex" />
         </el-card>
       </el-col>
       <el-col class="col-right" :xs="24" :sm="24" :md="24" :lg="15" :xl="15">
@@ -59,7 +59,7 @@ export default {
         require('@/assets/twitter.svg'),
         require('@/assets/facebook.svg'),
         require('@/assets/instagram.svg'),
-        require('@/assets/user.png'),
+        require('@/assets/user.png')
       ],
       index: null
     }
