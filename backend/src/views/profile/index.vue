@@ -11,18 +11,10 @@
               id="gmap_canvas"
               :src="`https://maps.google.com/maps?q=${latitude},${longitude}&t=&z=16&ie=UTF8&iwloc=&output=embed`"
           </div>
-          <el-table stripe :data="tableData" :show-header="false" style="width: 100%">
-            <el-table-column prop="title" width="180" />
-            <el-table-column prop="content" />
-          </el-table>
-        </el-card>
-        <el-card class="social-media-card">
-          <div slot="header" class="clearfix">
-            <span>Sosial Media</span>
-          </div>
-          <el-row>
-            <el-col :span="6" style="margin-left:10px; padding-left: 50px">
-              <a :href="`https://twitter.com/${twitterAccount}`" target="_blank">
+        </div>
+      </el-col>
+      <el-col class="col-right" :xs="24" :sm="24" :md="24" :lg="17" :xl="17">
+                <a :href="`https://twitter.com/${twitterAccount}`" target="_blank">
                 <img class="social-media-admin twitter" :src="twitter">
               </a>
             </el-col>
