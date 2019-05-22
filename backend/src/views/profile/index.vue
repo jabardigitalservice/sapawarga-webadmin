@@ -63,86 +63,120 @@ export default {
     return {
       id: 0,
       imageUrl: null,
-      height: '220px',
+      height: "220px",
       tableData: [],
-      socialMedia: [],
+      instagramIcon: [],
+      twitterIcon: [],
+      facebookIcon: [],
       urlMap: null,
       latitude: null,
       longitude: null,
-      twitter: require('@/assets/twitter.svg'),
-      facebook: require('@/assets/facebook.svg'),
-      instagram: require('@/assets/instagram.svg'),
+      twitter: require("@/assets/twitter.svg"),
+      facebook: require("@/assets/facebook.svg"),
+      instagram: require("@/assets/instagram.svg"),
       twitterAccount: null,
       facebookAccount: null,
       instagramAccount: null
-    }
+    };
   },
 
   created() {
-    this.getDetail()
+    this.getDetail();
   },
 
   methods: {
     getDetail() {
       getInfo().then(response => {
-        const { name, address, kabkota, kecamatan, kelurahan, phone, lat, lon, photo_url, email, facebook, instagram, rt, rw, twitter, username, role_label
-        } = response.data
-        this.twitterAccount = twitter || '-'
-        this.facebookAccount = facebook || '-'
-        this.instagramAccount = instagram || '-'
-        this.imageUrl = ((photo_url !== null) ? photo_url : null)
-        this.latitude = lat
-        this.longitude = lon
-        this.tableData = [
+        const {
+          name,
+          address,
+          kabkota,
+          kecamatan,
+          kelurahan,
+          phone,
+          lat,
+          lon,
+          photo_url,
+          email,
+          facebook,
+          instagram,
+          rt,
+          rw,
+          twitter,
+          username,
+          role_label
+        } = response.data;
+        this.twitterAccount = twitter || "-";
+        this.facebookAccount = facebook || "-";
+        this.instagramAccount = instagram || "-";
+        this.imageUrl = photo_url !== null ? photo_url : null;
+        this.latitude = lat;
+        this.longitude = lon;
+        this.instagramIcon = [
           {
-            title: 'Nama',
-            content: ': ' + (name !== null ? name : '-')
-          },
-          {
-            title: 'Username',
-            content: ': ' + (username !== null ? username : '-')
-          },
-          {
-            title: 'Email',
-            content: ': ' + (email !== null ? email : '-')
-          },
-          {
-            title: 'Telepon',
-            content: ': ' + (phone !== null ? phone : '-')
-          },
-          {
-            title: 'Alamat Instansi',
-            content: ': ' + (address !== null ? address : '-')
-          },
-          {
-            title: 'RT',
-            content: ': ' + (rt !== null ? rw : '-')
-          },
-          {
-            title: 'RW',
-            content: ': ' + (rw !== null ? rw : '-')
-          },
-          {
-            title: 'Kelurahan',
-            content: ': ' + (kelurahan !== null ? kelurahan.name : '-')
-          },
-          {
-            title: 'Kecamatan',
-            content: ': ' + (kecamatan !== null ? kecamatan.name : '-')
-          },
-          {
-            title: 'Kab/Kota',
-            content: ': ' + (kabkota !== null ? kabkota.name : '-')
-          },
-          {
-            title: 'Peran',
-            content: ': ' + (role_label !== null ? role_label : '-')
+            content: ": " + (instagram !== null ? instagram : '-')
           }
         ]
-      })
+        this.twitterIcon = [
+          {
+            content: ": " + (twitter !== null ? twitter : '-')
+          }
+        ]
+        this.facebookIcon = [
+          {
+            content: ": " + (facebook !== null ? facebook : '-')
+          }
+        ]
+        this.tableData = [
+          {
+            title: "Nama",
+            content: ": " + (name !== null ? name : "-")
+          },
+          {
+            title: "Username",
+            content: ": " + (username !== null ? username : "-")
+          },
+          {
+            title: "Email",
+            content: ": " + (email !== null ? email : "-")
+          },
+          {
+            title: "Telepon",
+            content: ": " + (phone !== null ? phone : "-")
+          },
+          {
+            title: "Alamat Instansi",
+            content: ": " + (address !== null ? address : "-")
+          },
+          {
+            title: "RT",
+            content: ": " + (rt !== null ? rw : "-")
+          },
+          {
+            title: "RW",
+            content: ": " + (rw !== null ? rw : "-")
+          },
+          {
+            title: "Kelurahan",
+            content: ": " + (kelurahan !== null ? kelurahan.name : "-")
+          },
+          {
+            title: "Kecamatan",
+            content: ": " + (kecamatan !== null ? kecamatan.name : "-")
+          },
+          {
+            title: "Kab/Kota",
+            content: ": " + (kabkota !== null ? kabkota.name : "-")
+          },
+          {
+            title: "Peran",
+            content: ": " + (role_label !== null ? role_label : "-")
+          },
+        ];
+      });
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
