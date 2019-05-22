@@ -83,6 +83,7 @@ class Notification extends Model
         $client->injectGuzzleHttpClient(new \GuzzleHttp\Client());
 
         $notification = new PushNotification($this->title, $this->description);
+        $notification->setSound('default');
         $notification->setClickAction('FCM_PLUGIN_ACTIVITY');
 
         $message = new Message();
