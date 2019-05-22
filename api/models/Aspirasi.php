@@ -114,6 +114,8 @@ class Aspirasi extends \yii\db\ActiveRecord
 
     public function fields()
     {
+        $bucket = Yii::$app->fileStorage->getBucket('imageFiles');
+
         $fields = [
             'id',
             'author_id',
@@ -205,7 +207,20 @@ class Aspirasi extends \yii\db\ActiveRecord
                 }
                 return $statusLabel;
             },
-            'attachments',
+            'attachments' => function () use ($bucket) {
+                if ($this->attachments === null) {
+                    return null;
+                }
+
+                // @TODO too many callback function
+                return array_map(function ($item) use ($bucket) {
+                    return [
+                        'type' => $item['type'],
+                        'path' => $item['path'],
+                        'url'  => $bucket->getFileUrl($item['path']),
+                    ];
+                }, $this->attachments);
+            },
             'created_at',
             'updated_at',
         ];

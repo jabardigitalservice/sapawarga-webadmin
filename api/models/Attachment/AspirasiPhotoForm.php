@@ -76,5 +76,4 @@ class AspirasiPhotoForm extends AttachmentForm
     {
         return $this->imageProcessor->make($filePath)->fit(1200);
     }
-
 }
