@@ -2,14 +2,14 @@
   <div class="app-container">
     <p class="warn-content">Profile Admin</p>
     <el-row :gutter="10">
-      <el-col class="col-left" :xs="24" :sm="24" :md="24" :lg="7" :xl="5">
-        <PhotoBox class="image" :image="imageUrl" :height="height" />
-        <vue-friendly-iframe v-show="latitude && longitude !== null" id="map" :src="`https://maps.google.com/maps?q=${latitude},${longitude}&hl=es;z=14&amp;output=embed`" :style="{'border':0}" />
-      </el-col>
-      <el-col class="col-right" :xs="23" :sm="23" :md="23" :lg="16" :xl="18">
-        <el-card>
-          <div slot="header" class="clearfix">
-            <span>Profile Admin</span>
+      <el-col class="col-left" :xs="24" :sm="24" :md="24" :lg="7" :xl="7">
+        <PhotoBox class="image" :image="imageUrl" :height="height"/>
+        <p class="warn-content map-title">Lokasi Anda</p>
+        <div class="mapouter">
+          <div class="gmap_canvas">
+            <iframe
+              id="gmap_canvas"
+              :src="`https://maps.google.com/maps?q=${latitude},${longitude}&t=&z=16&ie=UTF8&iwloc=&output=embed`"
           </div>
           <el-table stripe :data="tableData" :show-header="false" style="width: 100%">
             <el-table-column prop="title" width="180" />
