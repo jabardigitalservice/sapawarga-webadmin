@@ -54,8 +54,8 @@
 </template>
 
 <script>
-import PhotoBox from '@/components/PhotoBox'
-import { getInfo } from '@/api/user'
+import PhotoBox from "@/components/PhotoBox";
+import { getInfo } from "@/api/user";
 
 export default {
   components: { PhotoBox },
