@@ -33,8 +33,8 @@
             <el-table-column prop="content" />
           </el-table>
         </el-card>
-        <el-button v-if="status" class="button-send" type="primary">{{ $t('crud.accept') }}</el-button>
-        <el-button v-if="status" class="button-send" type="info">{{ $t('crud.reject') }}</el-button>
+        <el-button v-if="status" class="button-send" type="primary" @click="actionApprove">{{ $t('crud.accept') }}</el-button>
+        <el-button v-if="status" class="button-send" type="info" @click="actionReject">{{ $t('crud.reject') }}</el-button>
       </el-col>
     </el-row>
   </div>
@@ -109,8 +109,23 @@ export default {
           {
             title: 'Aspirasi',
             content: ' : ' + description
-          },
+          }
         ]
+      })
+    },
+
+    async actionApprove() {
+      await this.$confirm('Apakah Anda yakin ingin memberikan persetujuan untuk aspirasi ini?', 'Konfirmasi', {
+        confirmButtonText: this.$t('common.confirm'),
+        cancelButtonText: this.$t('common.cancel'),
+        type: 'success'
+      })
+    },
+
+    async actionReject() {
+      await this.$prompt('Apakah Anda yakin ingin menolak aspirasi ini? Masukkan catatan untuk pengguna.', 'Konfirmasi Penolakan', {
+        confirmButtonText: 'Simpan',
+        cancelButtonText: 'Batal'
       })
     }
   }
