@@ -207,6 +207,7 @@ class Aspirasi extends \yii\db\ActiveRecord
                 }
                 return $statusLabel;
             },
+            'approval_note',
             'created_at',
             'updated_at',
         ];
