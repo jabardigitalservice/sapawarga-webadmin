@@ -6,6 +6,7 @@
           <div slot="header" class="clearfix">
             <span>Lampiran</span>
           </div>
+          <img :src="defaultImage || imageNone" :index="index" class="aspiration-gallery">
           <div class="aspiration-image">
             <gallery class="aspiration-gallery" :images="gambar" :index="index" />
             <div v-for="(image, imageIndex) in gambar" :key="image.src" :value="image.src" class="image" :style="{ backgroundImage: 'url(' + image + ')', width: '50px', height: '50px'}" @click="index = imageIndex" />
