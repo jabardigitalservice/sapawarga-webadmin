@@ -69,7 +69,6 @@ export default {
     },
     getDetail() {
       fetchRecord(this.id).then(response => {
-        console.log(response)
         const { title, created_at, author, category, description, status, status_label, attachments, approval_note } = response.data
         this.title = title
         this.created_at = created_at
@@ -78,6 +77,8 @@ export default {
         } else if (status === 5) {
           this.status = true
         }
+        this.images = attachments
+        this.defaultImage = attachments ? attachments[1].url : null
 
         this.author = [
           {
