@@ -30,3 +30,11 @@ export function update(id, data) {
     data
   })
 }
+
+export function approval(id, data) {
+  return request({
+    url: `/aspirasi/approval/${id}`,
+    method: 'post',
+    data
+  })
+}

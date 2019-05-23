@@ -20,7 +20,7 @@ export default {
     'broadcast-edit': 'Edit Broadcast',
     'broadcast-show': 'Detail Broadcast',
     'aspiration-manage': 'Aspirasi Masyarakat',
-    'aspiration-list': 'Daftar Aspirasi',
+    'aspiration-list': 'Aspirasi Masyarakat',
     'aspiration-detail': 'Detail Aspirasi'
   },
   crud: {
@@ -35,6 +35,8 @@ export default {
     'back': 'Kembali',
     'draft': 'Simpan sebagai Draft',
     'send': 'Kirim Pesan',
+    'accept': 'Terima',
+    'reject': 'Tolak',
 
     'insert-row': 'Tambah Baris Baru',
     'delete-row': 'Hapus',
