@@ -3,26 +3,21 @@
 namespace app\modules\v1\controllers;
 
 use app\filters\auth\HttpBearerAuth;
-use app\models\Attachment\AspirasiPhotoForm;
-use app\models\Attachment\PhoneBookPhotoForm;
-use app\models\AttachmentForm;
+use app\models\Notification;
 use Yii;
+use yii\base\Model;
 use yii\filters\AccessControl;
 use yii\filters\auth\CompositeAuth;
-use yii\web\UploadedFile;
+use yii\web\ForbiddenHttpException;
+use yii\web\NotFoundHttpException;
+use yii\web\ServerErrorHttpException;
 
-class AttachmentController extends ActiveController
+/**
+ * NotificationController implements the CRUD actions for Notification model.
+ */
+class NotificationController extends ActiveController
 {
-    public $modelClass = AttachmentForm::class;
-
-    public function actions()
-    {
-        return [
-            'options' => [
-                'class' => 'yii\rest\OptionsAction',
-            ],
-        ];
-    }
+    public $modelClass = Notification::class;
 
     public function behaviors()
     {
@@ -38,7 +33,12 @@ class AttachmentController extends ActiveController
         $behaviors['verbs'] = [
             'class'   => \yii\filters\VerbFilter::className(),
             'actions' => [
+                'index'  => ['get'],
+                'view'   => ['get'],
                 'create' => ['post'],
+                'update' => ['put'],
+                'delete' => ['delete'],
+                'public' => ['get'],
             ],
         ];
 
@@ -64,12 +64,12 @@ class AttachmentController extends ActiveController
         // setup access
         $behaviors['access'] = [
             'class' => AccessControl::className(),
-            'only'  => ['create'], //only be applied to
+            'only'  => ['index', 'view', 'create', 'update', 'delete'], //only be applied to
             'rules' => [
                 [
                     'allow'   => true,
-                    'actions' => ['create'],
-                    'roles'   => ['admin', 'manageSettings', 'user', 'staffRW'],
+                    'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                    'roles'   => ['admin', 'manageUsers'],
                 ],
             ],
         ];
@@ -77,51 +77,34 @@ class AttachmentController extends ActiveController
         return $behaviors;
     }
 
+    public function actions()
+    {
+        return [];
+    }
+
     public function actionCreate()
     {
-        $type = Yii::$app->request->post('type');
-
-        $model = null;
-
-        switch ($type) {
-            case 'phonebook_photo':
-                $model = new PhoneBookPhotoForm();
-                break;
-            case 'aspirasi_photo':
-                $model = new AspirasiPhotoForm();
-                break;
-        }
-
-        if ($model === null) {
-            $response = Yii::$app->getResponse();
-            $response->setStatusCode(400);
-
-            return ['Model type not set.'];
-        }
+        /* @var $model \yii\db\ActiveRecord */
+        $model = new $this->modelClass([
+            'scenario' => Model::SCENARIO_DEFAULT,
+        ]);
 
         $model->load(Yii::$app->getRequest()->getBodyParams(), '');
-        $model->file = UploadedFile::getInstanceByName('file');
+        if ($model->validate()) {
+            $model->send();
 
-        if (!$model->validate()) {
             $response = Yii::$app->getResponse();
+            $response->setStatusCode(201);
+        } elseif (!$model->hasErrors()) {
+            throw new ServerErrorHttpException('Failed to send notification for unknown reason.');
+        } else {
+            // Validation error
+            $response = \Yii::$app->getResponse();
             $response->setStatusCode(422);
 
             return $model->getErrors();
         }
 
-        if ($model->upload()) {
-            $relativePath = $model->getRelativeFilePath();
-            $url = $model->getFileUrl();
-
-            $responseData = [
-                'path' => $relativePath,
-                'url'  => $url,
-            ];
-
-            return $responseData;
-        }
-
-        $response = Yii::$app->getResponse();
-        $response->setStatusCode(400);
+        return $model;
     }
 }

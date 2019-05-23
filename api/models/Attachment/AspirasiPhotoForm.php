@@ -6,7 +6,7 @@ use app\models\AttachmentForm;
 use Intervention\Image\ImageManager;
 use Yii;
 
-class PhoneBookPhotoForm extends AttachmentForm
+class AspirasiPhotoForm extends AttachmentForm
 {
     public function rules()
     {
@@ -56,5 +56,24 @@ class PhoneBookPhotoForm extends AttachmentForm
         }
 
         return false;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getRelativePath()
+    {
+        return 'aspirasi';
+    }
+
+
+    /**
+     * @param $filePath
+     *
+     * @return \Intervention\Image\Image|\Intervention\Image\ImageManager
+     */
+    public function cropAndResizePhoto($filePath)
+    {
+        return $this->imageProcessor->make($filePath)->fit(1200);
     }
 }

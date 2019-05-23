@@ -211,11 +211,6 @@ class Broadcast extends \yii\db\ActiveRecord
                     'updated_at'        => $this->updated_at ?? time(),
                     'push_notification' => true,
                 ];
-                $message = [
-                    'title'         => $this->title,
-                    'description'   => $this->description,
-                    'data'          => $this->data,
-                ];
                 // By default,  send notification to all users
                 $topic = 'all';
                 if ($this->kel_id && $this->rw) {
@@ -227,7 +222,15 @@ class Broadcast extends \yii\db\ActiveRecord
                 } elseif ($this->kabkota_id) {
                     $topic = (string) $this->kabkota_id;
                 }
-                Notification::send($message, $topic);
+
+                $notifModel = new Notification();
+                $notifModel->setAttributes([
+                    'title'         => $this->title,
+                    'description'   => $this->description,
+                    'data'          => $this->data,
+                    'topic'         => $topic,
+                ]);
+                $notifModel->send();
             }
         }
 
