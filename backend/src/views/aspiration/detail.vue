@@ -199,23 +199,27 @@ export default {
 }
 
 .image {
-    display: inline-block;
-    background-size: 50px 50px;
-    background-repeat: no-repeat;
-    cursor: pointer;
-    margin: 5px;
-    align-content: center;
-  }
+  display: inline-block;
+  background-size: 65px 65px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  margin: 5px;
+  align-content: center;
+  width: 65px;
+  height: 65px;
+}
 
 .aspiration-image {
+  width: 100%;
+  display: inline-block;
   margin: auto;
 }
 
 .aspiration-gallery {
-  width: 300px;
-  height: 300px;
-  position: relative;
-  border-radius: 5px;
+  width: 400px;
+  height: 350px;
+  display: block;
+  border-radius: 7px;
   margin: auto;
 }
 
