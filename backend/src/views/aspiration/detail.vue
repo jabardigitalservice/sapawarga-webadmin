@@ -4,7 +4,7 @@
       <el-col class="col-left" :xs="24" :sm="24" :md="24" :lg="9" :xl="9">
         <el-card style="margin-bottom: 10px">
           <div slot="header" class="clearfix">
-            <span>Dokumentasi</span>
+            <span>Lampiran</span>
           </div>
           <div class="aspiration-image">
             <gallery class="aspiration-gallery" :images="gambar" :index="index" />
