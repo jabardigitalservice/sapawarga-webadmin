@@ -53,29 +53,9 @@ export default {
       status: false,
       author: [],
       aspirationDetail: [],
-      gambar: [
-        require('@/assets/twitter.svg'),
-        require('@/assets/facebook.svg'),
-        require('@/assets/user.png'),
-      ],
-      images: [
-        {
-          src: require('@/assets/twitter.svg'),
-          thumbnail: require('@/assets/twitter.svg'),
-        },
-        {
-          src: require('@/assets/facebook.svg'),
-          thumbnail: require('@/assets/facebook.svg')
-        },
-        {
-          src: require('@/assets/instagram.svg'),
-          thumbnail: require('@/assets/instagram.svg')
-        },
-        {
-          src: require('@/assets/user.png'),
-          thumbnail: require('@/assets/user.png')
-        }        
-      ],
+      imageNone: require('@/assets/none.png'),
+      defaultImage: null,
+      images: [],
       index: null
     }
   },
