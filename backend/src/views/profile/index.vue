@@ -154,7 +154,7 @@ export default {
           },
           {
             title: 'RT',
-            content: (rt !== null ? rw : '-')
+            content: rt || '-'
           },
           {
             title: 'RW',
