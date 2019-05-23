@@ -8,11 +8,8 @@
           </div>
           <img :src="defaultImage || imageNone" :index="index" class="aspiration-gallery">
           <div class="aspiration-image">
-            <gallery class="aspiration-gallery" :images="gambar" :index="index" />
-            <div v-for="(image, imageIndex) in gambar" :key="image.src" :value="image.src" class="image" :style="{ backgroundImage: 'url(' + image + ')', width: '50px', height: '50px'}" @click="index = imageIndex" />
+            <div v-for="(image, imageIndex) in images" :key="imageIndex" :value="image.url" class="image" :style="{ backgroundImage: 'url(' + image.url + ')'}" @click="imageGallery(imageIndex)" />
           </div>
-          <!-- <lingallery :width="100" :height="70" :items="images" :responsive="true" /> -->
-          <!-- <img :src="images[0].src"> -->
         </el-card>
       </el-col>
       <el-col class="col-right" :xs="24" :sm="24" :md="24" :lg="15" :xl="15">
@@ -47,13 +44,7 @@
 
 <script>
 import { fetchRecord, approval } from '@/api/aspiration'
-import VueGallery from 'vue-gallery'
-import Lingallery from 'lingallery'
 export default {
-  components: {
-    'gallery': VueGallery,
-    'lingallery': Lingallery
-  },
   data() {
     return {
       id: 0,
