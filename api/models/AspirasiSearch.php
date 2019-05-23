@@ -62,8 +62,22 @@ class AspirasiSearch extends Aspirasi
 
         $query->andFilterWhere(['<>', 'status', Aspirasi::STATUS_DELETED]);
 
-        if ($this->user->role === User::ROLE_ADMIN) {
-            $query->andFilterWhere(['<>', 'status', Aspirasi::STATUS_DRAFT]);
+        // Jika memiliki property user
+        // Misal, GET aspirasi/me
+        if (isset($this->user)) {
+            $statuses = [
+                Aspirasi::STATUS_DRAFT,
+                Aspirasi::STATUS_APPROVAL_PENDING,
+                Aspirasi::STATUS_APPROVAL_REJECTED,
+                Aspirasi::STATUS_PUBLISHED,
+            ];
+
+            $query->andFilterWhere(['in', 'status', $statuses]);
+        } else {
+            // List aspirasi utama, tampilkan hanya yang published
+            $statuses = [Aspirasi::STATUS_PUBLISHED];
+
+            $query->andFilterWhere(['in', 'status', $statuses]);
         }
 
         if (Arr::has($params, 'title')) {
