@@ -64,6 +64,9 @@ export default {
     this.getDetail()
   },
   methods: {
+    imageGallery(index) {
+      this.defaultImage = this.images[index].url
+    },
     getDetail() {
       fetchRecord(this.id).then(response => {
         console.log(response)
