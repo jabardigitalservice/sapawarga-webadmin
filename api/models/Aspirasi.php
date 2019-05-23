@@ -112,7 +112,8 @@ class Aspirasi extends \yii\db\ActiveRecord
             [['author_id', 'category_id', 'kabkota_id', 'kec_id', 'kel_id', 'status'], 'integer'],
             ['meta', 'default'],
             ['approval_note', 'default'],
-            ['approval_by', 'default'],
+            ['approved_by', 'default'],
+            ['approved_at', 'default'],
         ];
     }
 
