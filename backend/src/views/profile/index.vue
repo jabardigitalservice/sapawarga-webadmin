@@ -4,17 +4,19 @@
     <el-row :gutter="10">
       <el-col class="col-left" :xs="24" :sm="24" :md="24" :lg="7" :xl="7">
         <PhotoBox class="image" :image="imageUrl" :height="height" />
-        <p class="warn-content map-title">Lokasi Anda</p>
-        <div class="mapouter">
-          <div class="gmap_canvas">
-            <iframe
-              id="gmap_canvas"
-              :src="`https://maps.google.com/maps?q=${latitude},${longitude}&t=&z=16&ie=UTF8&iwloc=&output=embed`"
-              frameborder="0"
-              scrolling="no"
-              marginheight="0"
-              marginwidth="0"
-            />
+        <div v-if="latitude">
+          <p class="warn-content map-title">Lokasi Anda</p>
+          <div class="mapouter">
+            <div class="gmap_canvas">
+              <iframe
+                id="gmap_canvas"
+                :src="`https://maps.google.com/maps?q=${latitude},${longitude}&t=&z=16&ie=UTF8&iwloc=&output=embed`"
+                frameborder="0"
+                scrolling="no"
+                marginheight="0"
+                marginwidth="0"
+              />
+            </div>
           </div>
         </div>
       </el-col>
@@ -116,63 +118,63 @@ export default {
         this.longitude = lon
         this.instagramIcon = [
           {
-            content: ': ' + (instagram !== null ? instagram : '-')
+            content: instagram || '-'
           }
         ]
         this.twitterIcon = [
           {
-            content: ': ' + (twitter !== null ? twitter : '-')
+            content: twitter || '-'
           }
         ]
         this.facebookIcon = [
           {
-            content: ': ' + (facebook !== null ? facebook : '-')
+            content: facebook || '-'
           }
         ]
         this.tableData = [
           {
             title: 'Nama',
-            content: ': ' + (name !== null ? name : '-')
+            content: name || '-'
           },
           {
             title: 'Username',
-            content: ': ' + (username !== null ? username : '-')
+            content: username || '-'
           },
           {
             title: 'Email',
-            content: ': ' + (email !== null ? email : '-')
+            content: email || '-'
           },
           {
             title: 'Telepon',
-            content: ': ' + (phone !== null ? phone : '-')
+            content: phone || '-'
           },
           {
             title: 'Alamat Instansi',
-            content: ': ' + (address !== null ? address : '-')
+            content: address || '-'
           },
           {
             title: 'RT',
-            content: ': ' + (rt !== null ? rw : '-')
+            content: rt || '-'
           },
           {
             title: 'RW',
-            content: ': ' + (rw !== null ? rw : '-')
+            content: rw || '-'
           },
           {
             title: 'Kelurahan',
-            content: ': ' + (kelurahan !== null ? kelurahan.name : '-')
+            content: (kelurahan ? kelurahan.name : '-')
           },
           {
             title: 'Kecamatan',
-            content: ': ' + (kecamatan !== null ? kecamatan.name : '-')
+            content: (kecamatan ? kecamatan.name : '-')
           },
           {
             title: 'Kab/Kota',
-            content: ': ' + (kabkota !== null ? kabkota.name : '-')
+            content: (kabkota ? kabkota.name : '-')
           },
           {
             title: 'Peran',
-            content: ': ' + (role_label !== null ? role_label : '-')
+            content: role_label || '-'
           }
         ]
       })
