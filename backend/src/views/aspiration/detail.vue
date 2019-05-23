@@ -96,12 +96,7 @@ export default {
           {
             title: 'Alamat',
             content: author.address || '-'
-          },
-          {
-            title: 'Lampiran',
-            content: attachments || '-'
           }
-
         ]
 
         this.aspirationDetail = [
