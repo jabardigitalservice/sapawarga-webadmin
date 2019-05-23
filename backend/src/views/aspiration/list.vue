@@ -9,7 +9,7 @@
 
           <el-table-column prop="category.name" sortable="custom" label="Kategori" min-width="100" />
 
-          <el-table-column prop="status" sortable="custom" class-name="status-col" label="Status" width="150px">
+          <el-table-column prop="status" sortable="custom" class-name="status-col" label="Status" width="200px">
             <template slot-scope="{row}">
               <el-tag :type="row.status | statusFilter">
                 {{ row.status_label }}
@@ -50,7 +50,8 @@ export default {
       const statusMap = {
         '10': 'success',
         '0': 'info',
-        '-1': 'danger'
+        '5': 'warning',
+        '3': 'danger'
       }
       return statusMap[status]
     }

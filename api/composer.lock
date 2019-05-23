@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1a8f1accc5eb2dc66fe04aabf97b5bbb",
+    "content-hash": "a2bf8ffda13e3a3d1d3c36515fa702ad",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -228,55 +228,6 @@
                 "string"
             ],
             "time": "2018-01-09T20:05:19+00:00"
-        },
-        {
-            "name": "edwinhoksberg/php-fcm",
-            "version": "1.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/EdwinHoksberg/php-fcm.git",
-                "reference": "7be637139fe54ec23f37c8dba519bafa7543e336"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/EdwinHoksberg/php-fcm/zipball/7be637139fe54ec23f37c8dba519bafa7543e336",
-                "reference": "7be637139fe54ec23f37c8dba519bafa7543e336",
-                "shasum": ""
-            },
-            "require": {
-                "guzzlehttp/guzzle": "^6.3",
-                "php": ">= 7.0"
-            },
-            "require-dev": {
-                "mockery/mockery": "^1.0",
-                "phpunit/phpunit": "^6.5"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Fcm\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Edwin Hoksberg",
-                    "email": "mail@edwinhoksberg.nl"
-                }
-            ],
-            "description": "A library for sending Firebase cloud messages and managing user topic subscriptions, device groups and devices.",
-            "homepage": "https://github.com/EdwinHoksberg/php-fcm",
-            "keywords": [
-                "FCM",
-                "Firebase Cloud Messaging",
-                "firebase",
-                "google",
-                "notifications"
-            ],
-            "time": "2018-04-09T19:32:41+00:00"
         },
         {
             "name": "ezyang/htmlpurifier",
@@ -1184,6 +1135,59 @@
             ],
             "description": "A polyfill for getallheaders.",
             "time": "2016-02-11T07:05:27+00:00"
+        },
+        {
+            "name": "sngrl/php-firebase-cloud-messaging",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sngrl/php-firebase-cloud-messaging.git",
+                "reference": "e1a344c20c6d7dc4f89dcc5a56b17129d007d2b2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sngrl/php-firebase-cloud-messaging/zipball/e1a344c20c6d7dc4f89dcc5a56b17129d007d2b2",
+                "reference": "e1a344c20c6d7dc4f89dcc5a56b17129d007d2b2",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "*",
+                "php": ">=5.5"
+            },
+            "require-dev": {
+                "mockery/mockery": "*",
+                "phpunit/phpunit": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "sngrl\\PhpFirebaseCloudMessaging\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sngrl",
+                    "email": "i@sngrl.ru"
+                }
+            ],
+            "description": "PHP API for Firebase Cloud Messaging from Google",
+            "homepage": "https://github.com/sngrl/php-firebase-cloud-messaging",
+            "keywords": [
+                "FCM",
+                "android",
+                "chrome",
+                "cloud",
+                "firebase",
+                "google",
+                "ios",
+                "notifications",
+                "php"
+            ],
+            "time": "2017-06-26T15:58:02+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -4828,7 +4832,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "phpmd/phpmd": 0
+        "phpmd/phpmd": 0,
+        "sngrl/php-firebase-cloud-messaging": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

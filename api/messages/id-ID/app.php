@@ -36,7 +36,8 @@ return [
     'status.inactive' => 'Tidak Aktif',
     'status.deleted'  => 'Dihapus',
     'status.draft'  => 'Draft',
-    'status.published'   => 'Terkirim',
+    'status.sent'   => 'Terkirim',
+    'status.published'   => 'Dipublikasikan',
     'status.approval-pending'  => 'Menunggu Persetujuan',
     'status.approval-rejected' => 'Ditolak',
 ];
