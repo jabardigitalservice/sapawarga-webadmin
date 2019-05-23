@@ -80,7 +80,7 @@ class PhoneBookController extends ActiveController
                 [
                     'allow'   => true,
                     'actions' => ['index', 'view'],
-                    'roles'   => ['user'],
+                    'roles'   => ['user', 'staffRW'],
                 ],
             ],
         ];
