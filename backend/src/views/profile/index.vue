@@ -118,39 +118,39 @@ export default {
         this.longitude = lon
         this.instagramIcon = [
           {
-            content: (instagram !== null ? instagram : '-')
+            content: instagram || '-'
           }
         ]
         this.twitterIcon = [
           {
-            content: (twitter !== null ? twitter : '-')
+            content: twitter || '-'
           }
         ]
         this.facebookIcon = [
           {
-            content: (facebook !== null ? facebook : '-')
+            content: facebook || '-'
           }
         ]
         this.tableData = [
           {
             title: 'Nama',
-            content: (name !== null ? name : '-')
+            content: name || '-'
           },
           {
             title: 'Username',
-            content: (username !== null ? username : '-')
+            content: username || '-'
           },
           {
             title: 'Email',
-            content: (email !== null ? email : '-')
+            content: email || '-'
           },
           {
             title: 'Telepon',
-            content: (phone !== null ? phone : '-')
+            content: phone || '-'
           },
           {
             title: 'Alamat Instansi',
-            content: (address !== null ? address : '-')
+            content: address || '-'
           },
           {
             title: 'RT',
@@ -158,23 +158,23 @@ export default {
           },
           {
             title: 'RW',
-            content: (rw !== null ? rw : '-')
+            content: rw || '-'
           },
           {
             title: 'Kelurahan',
-            content: (kelurahan !== null ? kelurahan.name : '-')
+            content: (kelurahan ? kelurahan.name : '-')
           },
           {
             title: 'Kecamatan',
-            content: (kecamatan !== null ? kecamatan.name : '-')
+            content: (kecamatan ? kecamatan.name : '-')
           },
           {
             title: 'Kab/Kota',
-            content: (kabkota !== null ? kabkota.name : '-')
+            content: (kabkota ? kabkota.name : '-')
           },
           {
             title: 'Peran',
-            content: (role_label !== null ? role_label : '-')
+            content: role_label || '-'
           }
         ]
       })
