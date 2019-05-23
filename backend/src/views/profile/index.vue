@@ -4,17 +4,19 @@
     <el-row :gutter="10">
       <el-col class="col-left" :xs="24" :sm="24" :md="24" :lg="7" :xl="7">
         <PhotoBox class="image" :image="imageUrl" :height="height" />
-        <p class="warn-content map-title">Lokasi Anda</p>
-        <div class="mapouter">
-          <div class="gmap_canvas">
-            <iframe
-              id="gmap_canvas"
-              :src="`https://maps.google.com/maps?q=${latitude},${longitude}&t=&z=16&ie=UTF8&iwloc=&output=embed`"
-              frameborder="0"
-              scrolling="no"
-              marginheight="0"
-              marginwidth="0"
-            />
+        <div v-if="latitude">
+          <p class="warn-content map-title">Lokasi Anda</p>
+          <div class="mapouter">
+            <div class="gmap_canvas">
+              <iframe
+                id="gmap_canvas"
+                :src="`https://maps.google.com/maps?q=${latitude},${longitude}&t=&z=16&ie=UTF8&iwloc=&output=embed`"
+                frameborder="0"
+                scrolling="no"
+                marginheight="0"
+                marginwidth="0"
+              />
+            </div>
           </div>
         </div>
       </el-col>
