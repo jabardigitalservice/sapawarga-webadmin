@@ -82,9 +82,11 @@ export default {
     getDetail() {
       fetchRecord(this.id).then(response => {
         console.log(response)
-        const { title, created_at, author, category, description, status } = response.data
+        const { title, created_at, author, category, description, status_label } = response.data
         this.title = title
         this.created_at = created_at
+        
+
 
         if (status === 10 || status === 3) {
           this.status = false
@@ -119,6 +121,14 @@ export default {
           {
             title: 'Aspirasi',
             content: description
+          },
+          {
+            title: 'Status',
+            content: (<el-tag type="success">{status_label}</el-tag>)
+          },
+          {
+            title: 'Keterangan',
+            content: ''
           }
         ]
       })
