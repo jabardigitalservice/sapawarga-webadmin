@@ -118,63 +118,63 @@ export default {
         this.longitude = lon
         this.instagramIcon = [
           {
-            content: ': ' + (instagram !== null ? instagram : '-')
+            content: (instagram !== null ? instagram : '-')
           }
         ]
         this.twitterIcon = [
           {
-            content: ': ' + (twitter !== null ? twitter : '-')
+            content: (twitter !== null ? twitter : '-')
           }
         ]
         this.facebookIcon = [
           {
-            content: ': ' + (facebook !== null ? facebook : '-')
+            content: (facebook !== null ? facebook : '-')
           }
         ]
         this.tableData = [
           {
             title: 'Nama',
-            content: ': ' + (name !== null ? name : '-')
+            content: (name !== null ? name : '-')
           },
           {
             title: 'Username',
-            content: ': ' + (username !== null ? username : '-')
+            content: (username !== null ? username : '-')
           },
           {
             title: 'Email',
-            content: ': ' + (email !== null ? email : '-')
+            content: (email !== null ? email : '-')
           },
           {
             title: 'Telepon',
-            content: ': ' + (phone !== null ? phone : '-')
+            content: (phone !== null ? phone : '-')
           },
           {
             title: 'Alamat Instansi',
-            content: ': ' + (address !== null ? address : '-')
+            content: (address !== null ? address : '-')
           },
           {
             title: 'RT',
-            content: ': ' + (rt !== null ? rw : '-')
+            content: (rt !== null ? rw : '-')
           },
           {
             title: 'RW',
-            content: ': ' + (rw !== null ? rw : '-')
+            content: (rw !== null ? rw : '-')
           },
           {
             title: 'Kelurahan',
-            content: ': ' + (kelurahan !== null ? kelurahan.name : '-')
+            content: (kelurahan !== null ? kelurahan.name : '-')
           },
           {
             title: 'Kecamatan',
-            content: ': ' + (kecamatan !== null ? kecamatan.name : '-')
+            content: (kecamatan !== null ? kecamatan.name : '-')
           },
           {
             title: 'Kab/Kota',
-            content: ': ' + (kabkota !== null ? kabkota.name : '-')
+            content: (kabkota !== null ? kabkota.name : '-')
           },
           {
             title: 'Peran',
-            content: ': ' + (role_label !== null ? role_label : '-')
+            content: (role_label !== null ? role_label : '-')
           }
         ]
       })
