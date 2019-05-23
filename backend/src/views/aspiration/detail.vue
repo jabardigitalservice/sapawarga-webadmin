@@ -6,8 +6,12 @@
           <div slot="header" class="clearfix">
             <span>Dokumentasi</span>
           </div>
-          <gallery class="aspiration-gallery" :images="images" :index="index" @close="index = null" />
-          <div v-for="(image, imageIndex) in images" :key="image.value" class="image" :style="{ backgroundImage: 'url(' + image + ')', width: '50px', height: '50px' }" @click="index = imageIndex" />
+          <div class="aspiration-image">
+            <gallery class="aspiration-gallery" :images="gambar" :index="index" />
+            <div v-for="(image, imageIndex) in gambar" :key="image.src" :value="image.src" class="image" :style="{ backgroundImage: 'url(' + image + ')', width: '50px', height: '50px'}" @click="index = imageIndex" />
+          </div>
+          <!-- <lingallery :width="100" :height="70" :items="images" :responsive="true" /> -->
+          <!-- <img :src="images[0].src"> -->
         </el-card>
       </el-col>
       <el-col class="col-right" :xs="24" :sm="24" :md="24" :lg="15" :xl="15">
@@ -43,19 +47,11 @@
 <script>
 import { fetchRecord, approval } from '@/api/aspiration'
 import VueGallery from 'vue-gallery'
+import Lingallery from 'lingallery'
 export default {
   components: {
-    'gallery': VueGallery
-  },
-  filters: {
-    statusFilter(status) {
-      const statusMap = {
-        '10': 'success',
-        '0': 'info',
-        '-1': 'danger'
-      }
-      return statusMap[status]
-    }
+    'gallery': VueGallery,
+    'lingallery': Lingallery
   },
   data() {
     return {
@@ -65,11 +61,28 @@ export default {
       status: false,
       author: [],
       aspirationDetail: [],
-      images: [
+      gambar: [
         require('@/assets/twitter.svg'),
         require('@/assets/facebook.svg'),
-        require('@/assets/instagram.svg'),
-        require('@/assets/user.png')
+        require('@/assets/user.png'),
+      ],
+      images: [
+        {
+          src: require('@/assets/twitter.svg'),
+          thumbnail: require('@/assets/twitter.svg'),
+        },
+        {
+          src: require('@/assets/facebook.svg'),
+          thumbnail: require('@/assets/facebook.svg')
+        },
+        {
+          src: require('@/assets/instagram.svg'),
+          thumbnail: require('@/assets/instagram.svg')
+        },
+        {
+          src: require('@/assets/user.png'),
+          thumbnail: require('@/assets/user.png')
+        }        
       ],
       index: null
     }
@@ -82,12 +95,9 @@ export default {
     getDetail() {
       fetchRecord(this.id).then(response => {
         console.log(response)
-        const { title, created_at, author, category, description, status_label } = response.data
+        const { title, created_at, author, category, description, status, status_label, attachments } = response.data
         this.title = title
         this.created_at = created_at
-        
-
-
         if (status === 10 || status === 3) {
           this.status = false
         } else if (status === 5) {
@@ -97,20 +107,25 @@ export default {
         this.author = [
           {
             title: 'Dari',
-            content: author.name
+            content: author.name || '-'
           },
           {
             title: 'Email',
-            content: '-'
+            content: author.email || '-'
           },
           {
             title: 'Telepon',
-            content: '-'
+            content: author.phone || '-'
           },
           {
             title: 'Alamat',
-            content: '-'
+            content: author.address || '-'
+          },
+          {
+            title: 'Lampiran',
+            content: attachments || '-'
           }
+
         ]
 
         this.aspirationDetail = [
@@ -124,7 +139,7 @@ export default {
           },
           {
             title: 'Status',
-            content: (<el-tag type="success">{status_label}</el-tag>)
+            content: (status === 5 ? <el-tag type='warning'>{status_label}</el-tag> : status === 3 ? <el-tag type='danger'>{status_label}</el-tag> : status === 10 ? <el-tag type='success'>{status_label}</el-tag> : <el-tag type='info'>{status_label}</el-tag>)
           },
           {
             title: 'Keterangan',
@@ -209,18 +224,24 @@ export default {
 }
 
 .image {
-    float: left;
+    display: inline-block;
     background-size: 50px 50px;
     background-repeat: no-repeat;
-    // background-position: center center;
-    // background-color: blue;
     cursor: pointer;
     margin: 5px;
+    align-content: center;
   }
+
+.aspiration-image {
+  margin: auto;
+}
 
 .aspiration-gallery {
   width: 300px;
   height: 300px;
+  position: relative;
+  border-radius: 5px;
+  margin: auto;
 }
 
 </style>
