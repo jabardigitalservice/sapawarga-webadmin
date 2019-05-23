@@ -1045,8 +1045,6 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function updatePushToken($pushToken)
     {
         if ($this->push_token != $pushToken) {
-            $this->push_token = $pushToken;
-
             // Area ids will be used as topic name
             $areaIds = [
                 (string) $this->kabkota_id,
@@ -1056,6 +1054,12 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             ];
 
             // Update topic subscription
+            if ($this->push_token) {
+                Notification::unsubscribe($this->push_token, $areaIds);
+            }
+
+            $this->push_token = $pushToken;
+
             Notification::subscribe($pushToken, $areaIds);
         }
     }
