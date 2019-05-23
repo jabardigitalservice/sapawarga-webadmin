@@ -83,19 +83,19 @@ export default {
         this.author = [
           {
             title: 'Dari',
-            content: author.name || '-'
+            content: (author ? author.name : '-')
           },
           {
             title: 'Email',
-            content: author.email || '-'
+            content: (author ? author.email : '-')
           },
           {
             title: 'Telepon',
-            content: author.phone || '-'
+            content: (author ? author.phone : '-')
           },
           {
             title: 'Alamat',
-            content: author.address || '-'
+            content: (author ? author.address : '-')
           }
         ]
 
