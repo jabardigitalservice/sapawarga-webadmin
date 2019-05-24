@@ -187,15 +187,19 @@ class Broadcast extends \yii\db\ActiveRecord
     {
         $this->author_id = Yii::$app->user->getId();
 
+        return parent::beforeSave($insert);
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
         if (!YII_ENV_TEST) {
             // Check condition for push notification
             $isSendNotification = false;
             if ($insert) {
                 $isSendNotification = $this->status == self::STATUS_PUBLISHED;
             } else { // Update broadcast
-                $changedAttributes = $this->getDirtyAttributes(['status']);
                 if (array_key_exists('status', $changedAttributes)) {
-                    if ($changedAttributes['status'] == self::STATUS_PUBLISHED) {
+                    if ($this->status == self::STATUS_PUBLISHED) {
                         $isSendNotification = true;
                     }
                 }
@@ -204,6 +208,7 @@ class Broadcast extends \yii\db\ActiveRecord
             if ($isSendNotification) {
                 $this->data = [
                     'target'            => 'broadcast',
+                    'id'                => $this->id,
                     'author'            => $this->author->name,
                     'title'             => $this->title,
                     'category_name'     => $this->category->name,
@@ -234,7 +239,7 @@ class Broadcast extends \yii\db\ActiveRecord
             }
         }
 
-        return parent::beforeSave($insert);
+        return parent::afterSave($insert, $changedAttributes);
     }
 
     /**
