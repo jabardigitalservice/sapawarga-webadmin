@@ -79,7 +79,7 @@ class AttachmentController extends ActiveController
 
     public function actionCreate()
     {
-        $type = Yii::$app->request->post('type');
+        $type = Yii::$app->request->get('type');
 
         $model = null;
 
@@ -101,6 +101,7 @@ class AttachmentController extends ActiveController
 
         $model->load(Yii::$app->getRequest()->getBodyParams(), '');
         $model->file = UploadedFile::getInstanceByName('file');
+        $model->type = $type;
 
         if (!$model->validate()) {
             $response = Yii::$app->getResponse();
