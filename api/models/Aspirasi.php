@@ -250,7 +250,9 @@ class Aspirasi extends \yii\db\ActiveRecord
     /** @inheritdoc */
     public function beforeSave($insert)
     {
-        $this->author_id = Yii::$app->user->getId();
+        if ($insert) {
+            $this->author_id = Yii::$app->user->getId();
+        }
 
         return parent::beforeSave($insert);
     }
