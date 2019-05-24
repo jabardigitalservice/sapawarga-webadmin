@@ -4,10 +4,12 @@
       <el-col class="col-left" :xs="24" :sm="24" :md="24" :lg="9" :xl="9">
         <el-card style="margin-bottom: 10px">
           <div slot="header" class="clearfix">
-            <span>Dokumentasi</span>
+            <span>Lampiran</span>
           </div>
-          <gallery class="aspiration-gallery" :images="images" :index="index" @close="index = null" />
-          <div v-for="(image, imageIndex) in images" :key="image.value" class="image" :style="{ backgroundImage: 'url(' + image + ')', width: '50px', height: '50px' }" @click="index = imageIndex" />
+          <img :src="defaultImage || imageNone" :index="index" class="aspiration-gallery">
+          <div class="aspiration-image">
+            <div v-for="(image, imageIndex) in images" :key="imageIndex" :value="image.url" class="image" :style="{ backgroundImage: 'url(' + image.url + ')'}" @click="imageGallery(imageIndex)" />
+          </div>
         </el-card>
       </el-col>
       <el-col class="col-right" :xs="24" :sm="24" :md="24" :lg="15" :xl="15">
@@ -42,21 +44,7 @@
 
 <script>
 import { fetchRecord, approval } from '@/api/aspiration'
-import VueGallery from 'vue-gallery'
 export default {
-  components: {
-    'gallery': VueGallery
-  },
-  filters: {
-    statusFilter(status) {
-      const statusMap = {
-        '10': 'success',
-        '0': 'info',
-        '-1': 'danger'
-      }
-      return statusMap[status]
-    }
-  },
   data() {
     return {
       id: 0,
@@ -65,12 +53,9 @@ export default {
       status: false,
       author: [],
       aspirationDetail: [],
-      images: [
-        require('@/assets/twitter.svg'),
-        require('@/assets/facebook.svg'),
-        require('@/assets/instagram.svg'),
-        require('@/assets/user.png')
-      ],
+      imageNone: require('@/assets/none.png'),
+      defaultImage: null,
+      images: [],
       index: null
     }
   },
@@ -79,35 +64,38 @@ export default {
     this.getDetail()
   },
   methods: {
+    imageGallery(index) {
+      this.defaultImage = this.images[index].url
+    },
     getDetail() {
       fetchRecord(this.id).then(response => {
-        console.log(response)
-        const { title, created_at, author, category, description, status } = response.data
+        const { title, created_at, author, category, description, status, status_label, attachments, approval_note } = response.data
         this.title = title
         this.created_at = created_at
-
         if (status === 10 || status === 3) {
           this.status = false
         } else if (status === 5) {
           this.status = true
         }
+        this.images = attachments
+        this.defaultImage = attachments ? attachments[1].url : null
 
         this.author = [
           {
             title: 'Dari',
-            content: author.name
+            content: (author ? author.name : '-')
           },
           {
             title: 'Email',
-            content: '-'
+            content: (author ? author.email : '-')
           },
           {
             title: 'Telepon',
-            content: '-'
+            content: (author ? author.phone : '-')
           },
           {
             title: 'Alamat',
-            content: '-'
+            content: (author ? author.address : '-')
           }
         ]
 
@@ -119,6 +107,14 @@ export default {
           {
             title: 'Aspirasi',
             content: description
+          },
+          {
+            title: 'Status',
+            content: (status === 5 ? <el-tag type='warning'>{status_label}</el-tag> : status === 3 ? <el-tag type='danger'>{status_label}</el-tag> : status === 10 ? <el-tag type='success'>{status_label}</el-tag> : <el-tag type='info'>{status_label}</el-tag>)
+          },
+          {
+            title: 'Keterangan',
+            content: approval_note || '-'
           }
         ]
       })
@@ -199,18 +195,28 @@ export default {
 }
 
 .image {
-    float: left;
-    background-size: 50px 50px;
-    background-repeat: no-repeat;
-    // background-position: center center;
-    // background-color: blue;
-    cursor: pointer;
-    margin: 5px;
-  }
+  display: inline-block;
+  background-size: 65px 65px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  margin: 5px;
+  align-content: center;
+  width: 65px;
+  height: 65px;
+}
+
+.aspiration-image {
+  width: 100%;
+  display: inline-block;
+  margin: auto;
+}
 
 .aspiration-gallery {
-  width: 300px;
-  height: 300px;
+  width: 400px;
+  height: 350px;
+  display: block;
+  border-radius: 7px;
+  margin: auto;
 }
 
 </style>
