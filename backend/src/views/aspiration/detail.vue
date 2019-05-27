@@ -80,7 +80,21 @@ export default {
           this.status = true
         }
         this.images = attachments
-        this.defaultImage = attachments ? attachments[1].url : null
+        this.defaultImage = attachments ? attachments[0].url : null
+        // Responsive
+        if (attachments) {
+          if (attachments.length === 4) {
+            this.widthImage = '80%'
+          } else if (attachments.length === 3) {
+            this.widthImage = '60%'
+          } else if (attachments.length === 2) {
+            this.widthImage = '41%'
+          } else if (attachments.length === 1) {
+            this.widthImage = '20%'
+          } else if (attachments.length === 5) {
+            this.widthImage = '98%'
+          }
+        } 
 
         this.author = [
           {
