@@ -2,10 +2,10 @@
   <div class="components-container">
     <p class="warn-content"><a href="#">Nomor Telepon Penting</a></p>
     <el-row :gutter="20">
-      <el-col :span="5">
-        Gambar
+      <el-col :md="5">
+        <AttachmentUpload />
       </el-col>
-      <el-col :span="19">
+      <el-col :md="19">
         <el-form ref="form" :model="form" :rules="rules" :status-icon="true" label-width="160px">
           <el-form-item label="Nama Instansi" prop="name">
             <el-input v-model="form.name" placeholder="Contoh: Rumah Sakit Daerah Kota Tasikmalaya" />
@@ -66,6 +66,7 @@ import { validContainsSpecialCharacters, validCoordinate } from '@/utils/validat
 import InputSelectArea from '@/components/InputSelectArea'
 import InputMap from '@/components/InputMap'
 import InputCategory from '@/components/InputCategory'
+import AttachmentUpload from '@/components/AttachmentUpload'
 
 import ListPhoneNumber from './ListPhoneNumber'
 
@@ -89,7 +90,8 @@ export default {
     InputSelectArea,
     InputMap,
     InputCategory,
-    ListPhoneNumber
+    ListPhoneNumber,
+    AttachmentUpload
   },
   props: {
     isEdit: {
