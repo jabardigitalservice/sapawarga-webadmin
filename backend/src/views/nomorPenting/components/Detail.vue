@@ -3,7 +3,7 @@
     <p class="warn-content"><a href="#">Nomor Telepon Penting</a></p>
     <el-row :gutter="20">
       <el-col :md="5">
-        <AttachmentUpload />
+        <AttachmentPhotoUpload />
       </el-col>
       <el-col :md="19">
         <el-form ref="form" :model="form" :rules="rules" :status-icon="true" label-width="160px">
@@ -66,7 +66,7 @@ import { validContainsSpecialCharacters, validCoordinate } from '@/utils/validat
 import InputSelectArea from '@/components/InputSelectArea'
 import InputMap from '@/components/InputMap'
 import InputCategory from '@/components/InputCategory'
-import AttachmentUpload from '@/components/AttachmentUpload'
+import AttachmentPhotoUpload from '@/components/AttachmentPhotoUpload'
 
 import ListPhoneNumber from './ListPhoneNumber'
 
@@ -91,7 +91,7 @@ export default {
     InputMap,
     InputCategory,
     ListPhoneNumber,
-    AttachmentUpload
+    AttachmentPhotoUpload
   },
   props: {
     isEdit: {
