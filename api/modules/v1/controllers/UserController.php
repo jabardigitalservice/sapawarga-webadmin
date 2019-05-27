@@ -105,7 +105,7 @@ class UserController extends ActiveController
                 [
                     'allow' => true,
                     'actions' => ['me', 'me-photo'],
-                    'roles' => ['user']
+                    'roles' => ['user', 'staffRW']
                 ]
             ],
         ];

@@ -40,9 +40,10 @@ class AspirasiSearch extends Aspirasi
      *
      * @param array $params
      *
+     * @param bool $onlyMe
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $onlyMe = false)
     {
         $query = Aspirasi::find();
 
@@ -58,13 +59,8 @@ class AspirasiSearch extends Aspirasi
 
         // grid filtering conditions
         $query->andFilterWhere(['id' => $this->id]);
-        $query->andFilterWhere(['author_id' => $this->author_id]);
 
         $query->andFilterWhere(['<>', 'status', Aspirasi::STATUS_DELETED]);
-
-        if ($this->user->role === User::ROLE_ADMIN) {
-            $query->andFilterWhere(['<>', 'status', Aspirasi::STATUS_DRAFT]);
-        }
 
         if (Arr::has($params, 'title')) {
             $query->andWhere(['like', 'title', Arr::get($params, 'title')]);
@@ -74,11 +70,65 @@ class AspirasiSearch extends Aspirasi
             $query->andWhere(['like', 'description', Arr::get($params, 'description')]);
         }
 
+        // Untuk list GET /aspirasi/me
+        if ($onlyMe) {
+            return $this->getQueryMe($query, $params);
+        }
+
         return $this->getQueryAll($query, $params);
+    }
+
+    protected function getQueryMe($query, $params)
+    {
+        $query->andFilterWhere(['author_id' => $this->author_id]);
+
+        $statuses = [
+            Aspirasi::STATUS_DRAFT,
+            Aspirasi::STATUS_APPROVAL_PENDING,
+            Aspirasi::STATUS_APPROVAL_REJECTED,
+            Aspirasi::STATUS_PUBLISHED,
+        ];
+
+        $query->andFilterWhere(['in', 'status', $statuses]);
+
+        $pageLimit = Arr::get($params, 'limit');
+        $sortBy    = Arr::get($params, 'sort_by', 'created_at');
+        $sortOrder = Arr::get($params, 'sort_order', 'descending');
+        $sortOrder = $this->getSortOrder($sortOrder);
+
+        return new ActiveDataProvider([
+            'query' => $query,
+            'sort'=> ['defaultOrder' => [$sortBy => $sortOrder]],
+            'pagination' => [
+                'pageSize' => $pageLimit,
+            ],
+        ]);
     }
 
     protected function getQueryAll($query, $params)
     {
+        $filterStatusList = [];
+
+        // Jika User, hanya bisa melihat yang status published
+        if (in_array($this->user->role, [User::ROLE_USER, User::ROLE_STAFF_RW])) {
+            $filterStatusList = [
+                Aspirasi::STATUS_PUBLISHED,
+            ];
+        }
+
+        // Jika Admin, bisa melihat status berikut ini
+        if ($this->user->role === User::ROLE_ADMIN) {
+            $filterStatusList = [
+                Aspirasi::STATUS_APPROVAL_PENDING,
+                Aspirasi::STATUS_APPROVAL_REJECTED,
+                Aspirasi::STATUS_PUBLISHED,
+            ];
+        }
+
+        if (count($filterStatusList) > 0) {
+            $query->andFilterWhere(['in', 'status', $filterStatusList]);
+        }
+
         $pageLimit = Arr::get($params, 'limit');
         $sortBy    = Arr::get($params, 'sort_by', 'created_at');
         $sortOrder = Arr::get($params, 'sort_order', 'descending');

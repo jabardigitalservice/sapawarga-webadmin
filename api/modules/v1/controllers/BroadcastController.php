@@ -71,12 +71,12 @@ class BroadcastController extends ActiveController
                 [
                     'allow'   => true,
                     'actions' => ['index', 'view', 'create', 'update', 'delete'],
-                    'roles'   => ['admin', 'manageUsers'],
+                    'roles'   => ['admin', 'manageSettings'],
                 ],
                 [
                     'allow'   => true,
                     'actions' => ['index', 'view'],
-                    'roles'   => ['user'],
+                    'roles'   => ['user', 'staffRW'],
                 ],
             ],
         ];

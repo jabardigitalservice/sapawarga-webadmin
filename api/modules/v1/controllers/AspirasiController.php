@@ -223,7 +223,12 @@ class AspirasiController extends ActiveController
          */
         $model = $this->findModel($id);
 
-        $alreadyLiked = (int) $model->getLikes(['user_id' => $userId])->count();
+        $count = (new \yii\db\Query())
+            ->from('aspirasi_likes')
+            ->where(['user_id' => $userId, 'aspirasi_id' => $id])
+            ->count();
+
+        $alreadyLiked = (int) $count > 0;
 
         if ($alreadyLiked > 0) {
             $model->unlink('likes', $user, true);
@@ -248,7 +253,7 @@ class AspirasiController extends ActiveController
 
         $params = Yii::$app->request->getQueryParams();
 
-        return $search->search($params);
+        return $search->search($params, true);
     }
 
     /**

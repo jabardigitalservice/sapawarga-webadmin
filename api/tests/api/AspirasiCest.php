@@ -121,4 +121,36 @@ class AspirasiCest
             'status'  => 200,
         ]);
     }
+
+    public function postLikeAspirasi(ApiTester $I)
+    {
+        $I->amUser('user');
+
+        $I->sendPOST('/v1/aspirasi/likes/1');
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $I->seeResponseContainsJson([
+            'success' => true,
+            'status'  => 200,
+        ]);
+
+        $I->seeInDatabase('aspirasi_likes', ['user_id' => 36, 'aspirasi_id' => 1]);
+    }
+
+    public function postDislikeAspirasi(ApiTester $I)
+    {
+        $I->amUser('user');
+
+        $I->sendPOST('/v1/aspirasi/likes/1');
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $I->seeResponseContainsJson([
+            'success' => true,
+            'status'  => 200,
+        ]);
+
+        $I->dontSeeInDatabase('aspirasi_likes', ['user_id' => 36, 'aspirasi_id' => 1]);
+    }
 }
