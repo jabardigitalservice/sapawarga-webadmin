@@ -199,21 +199,20 @@ export default {
   background-size: 65px 65px;
   background-repeat: no-repeat;
   cursor: pointer;
-  margin: 5px;
-  align-content: center;
   width: 65px;
   height: 65px;
+  margin: 5px;
+  position: relative;
 }
 
 .aspiration-image {
-  width: 100%;
-  display: inline-block;
   margin: auto;
+  padding: 5px;
 }
 
 .aspiration-gallery {
-  width: 400px;
-  height: 350px;
+  width: 100%;
+  height: 60%;
   display: block;
   border-radius: 7px;
   margin: auto;
