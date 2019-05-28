@@ -58,12 +58,23 @@ export default {
       images: [],
       index: null,
       marginImageList: '0px',
-      widthImage: '98%'
+      widthImage: ''
     }
   },
   created() {
     this.id = this.$route.params && this.$route.params.id
     this.getDetail()
+  },
+  computed: {
+    ...mapState({
+      sidebar: state => state.app.sidebar
+    }),
+    classObj() {
+      return {
+        hideSidebar: !this.sidebar.opened,
+        openSidebar: this.sidebar.opened,
+      }
+    }
   },
   methods: {
     imageGallery(index) {
