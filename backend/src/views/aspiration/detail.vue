@@ -232,22 +232,16 @@ export default {
   position: relative;
 }
 
-.image0 {
-  // margin-left: 30%
-}
-
 .aspiration-image {
   margin: auto;
   padding: 5px;
+  width: 100%;
+  text-align: center;
 }
 
 .openSidebar {
   width: 50px;
   height: 50px;
-  
-  .openSidebar:first-child {
-    margin-left: 12px;
-  }
 }
 
 .hideSidebar {
