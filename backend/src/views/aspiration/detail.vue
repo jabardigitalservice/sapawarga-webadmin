@@ -92,7 +92,7 @@ export default {
           } else if (attachments.length === 1) {
             this.widthImage = '20%'
           } else if (attachments.length === 5) {
-            this.widthImage = '98%'
+            this.widthImage = '97%'
           }
         } 
 
