@@ -60,6 +60,7 @@ class UserController extends ActiveController
                 'update' => ['put'],
                 'delete' => ['delete'],
                 'login' => ['post'],
+                'logout' => ['post'],
                 'me' => ['get', 'post'],
                 'me-photo' => ['get', 'post'],
             ],
@@ -104,7 +105,7 @@ class UserController extends ActiveController
                 ],
                 [
                     'allow' => true,
-                    'actions' => ['me', 'me-photo'],
+                    'actions' => ['logout', 'me', 'me-photo'],
                     'roles' => ['user', 'staffRW']
                 ]
             ],
@@ -284,6 +285,21 @@ class UserController extends ActiveController
             $response->setStatusCode(422);
 
             return $model->getErrors();
+        }
+    }
+
+    public function actionLogout()
+    {
+        $user = User::findIdentity(\Yii::$app->user->getId());
+        if ($user) {
+            // Remove push notification key
+            $user->removePushToken();
+
+            $response = \Yii::$app->getResponse();
+            $response->setStatusCode(200);
+        } else {
+            // Validation error
+            throw new NotFoundHttpException('Object not found');
         }
     }
 
