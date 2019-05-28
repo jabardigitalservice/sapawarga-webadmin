@@ -94,20 +94,6 @@ export default {
         }
         this.images = attachments
         this.defaultImage = attachments ? attachments[0].url : null
-        // Responsive
-        if (attachments) {
-          if (attachments.length === 4) {
-            this.widthImage = '80%'
-          } else if (attachments.length === 3) {
-            this.widthImage = '60%'
-          } else if (attachments.length === 2) {
-            this.widthImage = '41%'
-          } else if (attachments.length === 1) {
-            this.widthImage = '20%'
-          } else if (attachments.length === 5) {
-            this.widthImage = '97%'
-          }
-        } 
 
         this.author = [
           {
