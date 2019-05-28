@@ -112,7 +112,7 @@ class PhoneBook extends \yii\db\ActiveRecord
             'seq',
             'cover_image_path',
             'cover_image_url' => function () use ($bucket) {
-                return $bucket->getFileUrl($this->cover_image_path);
+                return $this->cover_image_path ? $bucket->getFileUrl($this->cover_image_path) : null;
             },
             'meta',
             'status',

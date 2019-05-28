@@ -3,7 +3,7 @@
     <div class="user-image">
       <div class="image-preview">
         <div v-loading="loading">
-          <img class="preview" :src="image_url === null ? image_default : image_url">
+          <img class="preview" loading="lazy" :src="image_url === null ? image_default : image_url">
         </div>
       </div>
 
