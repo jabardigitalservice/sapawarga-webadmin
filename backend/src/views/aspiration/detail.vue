@@ -215,15 +215,31 @@ export default {
   background-size: 65px 65px;
   background-repeat: no-repeat;
   cursor: pointer;
-  width: 65px;
-  height: 65px;
   margin: 5px;
   position: relative;
+}
+
+.image0 {
+  // margin-left: 30%
 }
 
 .aspiration-image {
   margin: auto;
   padding: 5px;
+}
+
+.openSidebar {
+  width: 50px;
+  height: 50px;
+  
+  .openSidebar:first-child {
+    margin-left: 12px;
+  }
+}
+
+.hideSidebar {
+  width: 65px;
+  height: 65px;
 }
 
 .aspiration-gallery {
