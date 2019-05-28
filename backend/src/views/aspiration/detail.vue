@@ -7,8 +7,8 @@
             <span>Lampiran</span>
           </div>
           <img :src="defaultImage || imageNone" :index="index" class="aspiration-gallery">
-          <div class="aspiration-image" :style="{width:widthImage}">
-            <div v-for="(image, imageIndex) in images" :key="imageIndex" :value="image.url"  :class="['image', 'image'+imageIndex, classObj]" :style="{ backgroundImage: 'url(' + image.url + ')'}" @click="imageGallery(imageIndex)" />
+          <div class="aspiration-image">
+            <div v-for="(image, imageIndex) in images" :key="imageIndex" :value="image.url"  :class="['image', classObj]" :style="{ backgroundImage: 'url(' + image.url + ')'}" @click="imageGallery(imageIndex)" />
           </div>
         </el-card>
       </el-col>
