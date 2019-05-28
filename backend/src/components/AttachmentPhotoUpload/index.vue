@@ -9,7 +9,7 @@
 
       <el-button type="primary" style="width: 100%;" @click="launchFilePicker">Pilih Foto</el-button>
 
-      <input type="file" ref="file" accept="image/*" @change="onFileSelected">
+      <input ref="file" type="file" accept="image/*" @change="onFileSelected">
     </div>
   </div>
 </template>
@@ -18,14 +18,10 @@
 import { upload } from '@/api/attachments'
 
 export default {
-  props: {
-    initialUrl: {
-      //
-    }
-  },
+  props: ['initialUrl'], // eslint-disable-line
   data() {
     return {
-      image_default: require('@/assets/user.png'),
+      image_default: 'https://imgplaceholder.com/720x405/cccccc/757575/glyphicon-search?font-size=36',
       image: null,
       image_url: null,
       loading: false
@@ -38,6 +34,9 @@ export default {
       },
       immediate: true
     }
+  },
+  mounted() {
+    //
   },
   methods: {
     launchFilePicker() {
@@ -76,9 +75,6 @@ export default {
       this.$emit('onUpload', path, url)
       this.loading = false
     }
-  },
-  mounted() {
-    //
   }
 }
 </script>
