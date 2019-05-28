@@ -58,9 +58,7 @@ export default {
       imageNone: require('@/assets/none.png'),
       defaultImage: null,
       images: [],
-      index: null,
-      marginImageList: '0px',
-      widthImage: ''
+      index: null
     }
   },
   created() {
