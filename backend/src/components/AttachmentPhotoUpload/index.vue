@@ -1,67 +1,96 @@
 <template>
   <div>
-    <el-upload class="avatar-uploader" action="http://35.247.135.93.xip.io/api/v1/attachments" :thumbnail-mode="true" :data="requestData" :headers="requestHeaders">
-      <img v-if="imageUrl" :src="imageUrl" class="avatar">
-      <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-    </el-upload>
+    <div class="user-image">
+      <div class="image-preview">
+        <div v-loading="loading">
+          <img class="preview" :src="image_url === null ? image_default : image_url">
+        </div>
+      </div>
 
+      <el-button type="primary" style="width: 100%;" @click="launchFilePicker">Pilih Foto</el-button>
+
+      <input type="file" ref="file" accept="image/*" @change="onFileSelected">
+    </div>
   </div>
 </template>
 
 <script>
-import { getToken } from '@/utils/auth'
+import { upload } from '@/api/attachments'
 
 export default {
+  props: {
+    initialUrl: {
+      //
+    }
+  },
   data() {
     return {
-      requestHeaders: {
-        'Authorization': null
+      image_default: require('@/assets/user.png'),
+      image: null,
+      image_url: null,
+      loading: false
+    }
+  },
+  watch: {
+    initialUrl: {
+      handler: function(value) {
+        this.image_url = value
       },
-      requestData: {
-        type: 'phonebook_photo'
-      },
-      imageUrl: null
+      immediate: true
     }
   },
   methods: {
-    handleAvatarSuccess(res, file) {
-      //
+    launchFilePicker() {
+      this.$refs.file.click()
     },
-    beforeAvatarUpload(file) {
-      //
+    onFileSelected(event) {
+      this.image = event.target.files[0]
+      if (this.image) {
+        // create a new FileReader to read this image and convert to base64 format
+        var reader = new FileReader()
+        // Define a callback function to run, when FileReader finishes its job
+        reader.onload = (e) => {
+          // Note: arrow function used here, so that "this.imageData" refers to the imageData of Vue component
+          // Read image as base64 and set to imageData
+          // this.imageData = this.user.photo
+          this.imageData = e.target.result
+        }
+        // Start the reader job - read file as a data url (base64 format)
+        // this.preview = reader.readAsDataURL(this.image)
+        this.onUpload()
+      }
+    },
+
+    async onUpload() {
+      this.loading = true
+      const formData = new FormData()
+
+      formData.append('file', this.image, this.image.name)
+      formData.append('type', 'phonebook_photo')
+
+      const { data } = await upload(formData)
+      const { path, url } = data
+
+      this.image_url = url
+
+      this.$emit('onUpload', path, url)
+      this.loading = false
     }
   },
   mounted() {
-    const requestToken = getToken()
-
-    this.requestHeaders['Authorization'] = `Bearer ${requestToken}`
+    //
   }
 }
 </script>
 
-<style>
-  .avatar-uploader .el-upload {
-    border: 1px dashed #d9d9d9;
-    border-radius: 6px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-  }
-  .avatar-uploader .el-upload:hover {
-    border-color: #409EFF;
-  }
-  .avatar-uploader-icon {
-    font-size: 28px;
-    color: #8c939d;
-    width: 178px;
-    height: 178px;
-    line-height: 178px;
-    text-align: center;
-  }
-  .avatar {
+<style lang="scss">
+.user-image {
+  img.preview {
     width: 100%;
-    height: 178px;
-    display: block;
   }
-</style>
 
+  input[type="file"] {
+    display: none;
+  }
+}
+</style>

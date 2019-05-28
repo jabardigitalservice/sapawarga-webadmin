@@ -2,10 +2,10 @@
   <div class="components-container">
     <p class="warn-content"><a href="#">Nomor Telepon Penting</a></p>
     <el-row :gutter="20">
-      <el-col :md="5">
-        <AttachmentPhotoUpload />
+      <el-col :sm="8" :lg="5">
+        <AttachmentPhotoUpload :initial-url="form.cover_image_url" style="margin-bottom: 25px" @onUpload="photoUploaded"/>
       </el-col>
-      <el-col :md="19">
+      <el-col :sm="16" :lg="19">
         <el-form ref="form" :model="form" :rules="rules" :status-icon="true" label-width="160px">
           <el-form-item label="Nama Instansi" prop="name">
             <el-input v-model="form.name" placeholder="Contoh: Rumah Sakit Daerah Kota Tasikmalaya" />
@@ -80,6 +80,8 @@ const defaultForm = {
   kel_id: null,
   meta: null,
   seq: null,
+  cover_image_path: null,
+  cover_image_url: null,
   phone_numbers: [],
   latitude: null,
   longitude: null
@@ -212,6 +214,10 @@ export default {
         this.form.kec_id = null
         this.form.kel_id = null
       }
+    },
+
+    photoUploaded(path, url) {
+      this.form.cover_image_path = path
     },
 
     async submitForm() {

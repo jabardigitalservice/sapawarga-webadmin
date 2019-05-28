@@ -30,10 +30,11 @@ export default {
 
 <style lang="scss" scoped>
 img.preview {
-  width: 400px;
-  height: 350px;
+  width: 100%;
+  /*width: 400px;*/
+  /*height: 350px;*/
   border-radius: 5px;
-  margin-left: 20px;
+  /*margin-left: 20px;*/
   -webkit-box-shadow: 0px 0px 25px -10px rgba(0,0,0,0.75);
   -moz-box-shadow: 0px 0px 25px -10px rgba(0,0,0,0.75);
   box-shadow: 0px 0px 25px -10px rgba(0,0,0,0.75);
@@ -41,10 +42,11 @@ img.preview {
 
 @media only screen and (min-width: 1200px) and (max-width: 1570px) {
   img.preview {
-    width: 250px;
-    height: 200px;
+    width: 100%;
+    /*width: 250px;*/
+    /*height: 200px;*/
     border-radius: 5px;
-    margin-left: 20px;
+    /*margin-left: 20px;*/
     -webkit-box-shadow: 0px 0px 25px -10px rgba(0,0,0,0.75);
     -moz-box-shadow: 0px 0px 25px -10px rgba(0,0,0,0.75);
     box-shadow: 0px 0px 25px -10px rgba(0,0,0,0.75);

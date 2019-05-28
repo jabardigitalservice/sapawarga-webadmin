@@ -57,4 +57,14 @@ class PhoneBookPhotoForm extends AttachmentForm
 
         return false;
     }
+
+    /**
+     * @param $filePath
+     *
+     * @return \Intervention\Image\Image|\Intervention\Image\ImageManager
+     */
+    public function cropAndResizePhoto($filePath)
+    {
+        return $this->imageProcessor->make($filePath)->fit(1280, 720);
+    }
 }
