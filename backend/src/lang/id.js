@@ -61,6 +61,9 @@ export default {
     confirm: 'Ya',
     cancel: 'Batal'
   },
+  errors: {
+    'internal-server-error': 'Telah terjadi kesalahan sistem, silahkan muat ulang halaman ini.'
+  },
   navbar: {
     profile: 'Lihat Profil'
   }

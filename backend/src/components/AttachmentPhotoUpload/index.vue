@@ -62,18 +62,36 @@ export default {
 
     async onUpload() {
       this.loading = true
-      const formData = new FormData()
 
-      formData.append('file', this.image, this.image.name)
-      formData.append('type', 'phonebook_photo')
+      try {
+        const formData = new FormData()
 
-      const { data } = await upload(formData)
-      const { path, url } = data
+        formData.append('file', this.image, this.image.name)
+        formData.append('type', 'phonebook_photo')
 
-      this.image_url = url
+        const { data } = await upload(formData)
+        const { path, url } = data
 
-      this.$emit('onUpload', path, url)
-      this.loading = false
+        this.image_url = url
+
+        this.$emit('onUpload', path, url)
+      } catch (e) {
+        if (e.response && e.response.status === 422) {
+          this.$message({
+            message: e.response.data.data.file[0],
+            type: 'error'
+          })
+
+          return
+        }
+
+        this.$message({
+          message: this.$t('errors.internal-server-error'),
+          type: 'error'
+        })
+      } finally {
+        this.loading = false
+      }
     }
   }
 }
