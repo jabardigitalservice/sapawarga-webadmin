@@ -8,7 +8,7 @@
           </div>
           <img :src="defaultImage || imageNone" :index="index" class="aspiration-gallery">
           <div class="aspiration-image">
-            <div v-for="(image, imageIndex) in images" :key="imageIndex" :value="image.url"  :class="['image', classObj]" :style="{ backgroundImage: 'url(' + image.url + ')'}" @click="imageGallery(imageIndex)" />
+            <div v-for="(image, imageIndex) in images" :key="imageIndex" :value="image.url" :class="['image', classObj]" :style="{ backgroundImage: 'url(' + image.url + ')'}" @click="imageGallery(imageIndex)" />
           </div>
         </el-card>
       </el-col>
@@ -61,10 +61,6 @@ export default {
       index: null
     }
   },
-  created() {
-    this.id = this.$route.params && this.$route.params.id
-    this.getDetail()
-  },
   computed: {
     ...mapState({
       sidebar: state => state.app.sidebar,
@@ -77,6 +73,10 @@ export default {
         mobile: this.device === 'mobile'
       }
     }
+  },
+  created() {
+    this.id = this.$route.params && this.$route.params.id
+    this.getDetail()
   },
   methods: {
     imageGallery(index) {
