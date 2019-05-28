@@ -8,7 +8,7 @@
           </div>
           <img :src="defaultImage || imageNone" :index="index" class="aspiration-gallery">
           <div class="aspiration-image" :style="{width:widthImage}">
-            <div v-for="(image, imageIndex) in images" :key="imageIndex" :value="image.url"  :class="['image', 'image'+imageIndex]" :style="{ backgroundImage: 'url(' + image.url + ')'}" @click="imageGallery(imageIndex)" />
+            <div v-for="(image, imageIndex) in images" :key="imageIndex" :value="image.url"  :class="['image', 'image'+imageIndex, classObj]" :style="{ backgroundImage: 'url(' + image.url + ')'}" @click="imageGallery(imageIndex)" />
           </div>
         </el-card>
       </el-col>
