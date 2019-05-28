@@ -8,7 +8,7 @@
           </div>
           <img :src="defaultImage || imageNone" :index="index" class="aspiration-gallery">
           <div class="aspiration-image">
-            <div v-for="(image, imageIndex) in images" :key="imageIndex" :value="image.url" class="image" :style="{ backgroundImage: 'url(' + image.url + ')'}" @click="imageGallery(imageIndex)" />
+            <div v-for="(image, imageIndex) in images" :key="imageIndex" :value="image.url" :class="['image', classObj]" :style="{ backgroundImage: 'url(' + image.url + ')'}" @click="imageGallery(imageIndex)" />
           </div>
         </el-card>
       </el-col>
@@ -44,6 +44,8 @@
 
 <script>
 import { fetchRecord, approval } from '@/api/aspiration'
+import { mapState } from 'vuex'
+
 export default {
   data() {
     return {
@@ -57,6 +59,19 @@ export default {
       defaultImage: null,
       images: [],
       index: null
+    }
+  },
+  computed: {
+    ...mapState({
+      sidebar: state => state.app.sidebar,
+      device: state => state.app.device
+    }),
+    classObj() {
+      return {
+        hideSidebar: !this.sidebar.opened,
+        openSidebar: this.sidebar.opened,
+        mobile: this.device === 'mobile'
+      }
     }
   },
   created() {
@@ -78,7 +93,7 @@ export default {
           this.status = true
         }
         this.images = attachments
-        this.defaultImage = attachments ? attachments[1].url : null
+        this.defaultImage = attachments ? attachments[0].url : null
 
         this.author = [
           {
@@ -177,7 +192,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .aspiration-date {
   float: right;
   font-size: 14px;
@@ -200,20 +215,29 @@ export default {
   background-repeat: no-repeat;
   cursor: pointer;
   margin: 5px;
-  align-content: center;
+  position: relative;
+}
+
+.aspiration-image {
+  margin: auto;
+  padding: 5px;
+  width: 100%;
+  text-align: center;
+}
+
+.openSidebar {
+  width: 50px;
+  height: 50px;
+}
+
+.hideSidebar {
   width: 65px;
   height: 65px;
 }
 
-.aspiration-image {
-  width: 100%;
-  display: inline-block;
-  margin: auto;
-}
-
 .aspiration-gallery {
-  width: 400px;
-  height: 350px;
+  width: 100%;
+  height: 60%;
   display: block;
   border-radius: 7px;
   margin: auto;
