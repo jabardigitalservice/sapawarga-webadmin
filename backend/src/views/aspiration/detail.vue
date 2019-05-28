@@ -44,6 +44,8 @@
 
 <script>
 import { fetchRecord, approval } from '@/api/aspiration'
+import { mapState } from 'vuex'
+
 export default {
   data() {
     return {
