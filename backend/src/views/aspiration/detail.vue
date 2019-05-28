@@ -69,12 +69,14 @@ export default {
   },
   computed: {
     ...mapState({
-      sidebar: state => state.app.sidebar
+      sidebar: state => state.app.sidebar,
+      device: state => state.app.device
     }),
     classObj() {
       return {
         hideSidebar: !this.sidebar.opened,
         openSidebar: this.sidebar.opened,
+        mobile: this.device === 'mobile'
       }
     }
   },
