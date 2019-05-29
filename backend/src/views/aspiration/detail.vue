@@ -129,7 +129,7 @@ export default {
           },
           {
             title: 'Keterangan',
-            content: (approval_note ? approval_note : (approval_note && status === 5) ? approval_note : '-')
+            content: (approval_note || ((approval_note && status === 5) ? approval_note : '-'))
           }
         ]
       })
