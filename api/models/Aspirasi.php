@@ -93,6 +93,7 @@ class Aspirasi extends \yii\db\ActiveRecord
                 ['title', 'description', 'kabkota_id', 'kec_id', 'kel_id', 'author_id', 'category_id', 'status'],
                 'required',
             ],
+            ['category_id', 'validateCategoryID'],
             [['title', 'description', 'rw', 'meta'], 'trim'],
             ['title', 'string', 'max' => 255],
             ['title', 'string', 'min' => 5],
@@ -111,6 +112,10 @@ class Aspirasi extends \yii\db\ActiveRecord
             ['attachments', IsArrayValidator::class],
             [['author_id', 'category_id', 'kabkota_id', 'kec_id', 'kel_id', 'status'], 'integer'],
             ['meta', 'default'],
+            ['approval_note', 'required', 'when' => function($model){
+                return $model->status == self::STATUS_APPROVAL_REJECTED;
+            }],
+            ['approval_note', 'validateApprovalNote'],
             ['approval_note', 'default'],
             ['approved_by', 'default'],
             ['approved_at', 'default'],
@@ -274,6 +279,21 @@ class Aspirasi extends \yii\db\ActiveRecord
 
             if ($category_id->count() <= 0) {
                 $this->addError($attribute, Yii::t('app', 'error.id.invalid'));
+            }
+        }
+    }
+
+    /**
+     * Validate approval_note field, based on Aspirasi status
+     *
+     * @param $attribute
+     * @param $params
+     */
+    public function validateApprovalNote($attribute, $params)
+    {
+        if ($this->status == self::STATUS_PUBLISHED) {
+            if ($this->approval_note) {
+                $this->addError($attribute, Yii::t('app', 'error.approvalnote.exist'));
             }
         }
     }
