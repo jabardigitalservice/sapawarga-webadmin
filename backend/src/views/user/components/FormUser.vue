@@ -162,7 +162,7 @@
               <el-form-item label="Longitude" prop="longitude">
                 <el-input v-model="user.longitude" type="text" placeholder="Contoh: 107.633545" />
               </el-form-item>
-            </el-col>
+            </el-col> -->
           </el-row>
           <p class="warn-content">Media Sosial</p>
 
