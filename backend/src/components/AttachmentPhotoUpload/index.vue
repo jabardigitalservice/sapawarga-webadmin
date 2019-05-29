@@ -9,6 +9,7 @@
 
       <el-button type="primary" style="width: 100%;" @click="launchFilePicker">Pilih Foto</el-button>
 
+      <p><small><strong>Catatan:</strong><br>Ukuran maksimal 1280x720 pixel (Landscape)</small></p>
       <input ref="file" type="file" accept="image/*" @change="onFileSelected">
     </div>
   </div>
@@ -18,7 +19,15 @@
 import { upload } from '@/api/attachments'
 
 export default {
-  props: ['initialUrl'], // eslint-disable-line
+  props: {
+    initialUrl: { // eslint-disable-line
+      default: null
+    },
+    type: {
+      type: String,
+      required: true
+    }
+  },
   data() {
     return {
       image_default: 'https://imgplaceholder.com/720x405/cccccc/757575/glyphicon-search?font-size=36',
@@ -67,7 +76,7 @@ export default {
         const formData = new FormData()
 
         formData.append('file', this.image, this.image.name)
-        formData.append('type', 'phonebook_photo')
+        formData.append('type', this.type)
 
         const { data } = await upload(formData)
         const { path, url } = data
