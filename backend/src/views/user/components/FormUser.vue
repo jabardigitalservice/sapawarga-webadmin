@@ -233,6 +233,30 @@ export default {
       }
     }
 
+    const validatorCoordinateRequired = (rule, value, callback) => {
+      if (_.isEmpty(this.user.latitude[0]) === false && _.isEmpty(this.user.latitude[1]) === true) {
+        callback(new Error('Koordinat Lokasi (Longitude) harus diisi.'))
+      }
+
+      if (_.isEmpty(this.user.latitude[0]) === true && _.isEmpty(this.user.latitude[1]) === false) {
+        callback(new Error('Koordinat Lokasi (Latitude) harus diisi.'))
+      }
+
+      callback()
+    }
+
+    const validatorCoordinateInputNumber = (rule, value, callback) => {
+      if (_.isEmpty(this.user.latitude[0]) === false && validCoordinate(this.user.latitude[0]) === false) {
+        callback(new Error('Koordinat Lokasi (Latitude) hanya boleh menggunakan angka, titik, - atau +'))
+      }
+
+      if (_.isEmpty(this.user.latitude[1]) === false && validCoordinate(this.user.latitude[1]) === false) {
+        callback(new Error('Koordinat Lokasi (Longitude) hanya boleh menggunakan angka, titik, - atau +'))
+      }
+
+      callback()
+    }
+
     return {
       user: {
         username: '',
