@@ -739,6 +739,10 @@ export default {
         } else if (dataUser.role_id === 'staffKabkota') {
           this.user.kabkota = dataUser.kabkota.name
         }
+
+        const { lat, lon } = response.data
+        console.log(response.data)
+        this.user.latitude = [lat, lon]
         this.user.rw = dataUser.rw
         this.user.rt = dataUser.rt
         this.user.photo = urlPhoto
