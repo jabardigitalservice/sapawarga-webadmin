@@ -112,8 +112,8 @@ class Aspirasi extends \yii\db\ActiveRecord
             ['attachments', IsArrayValidator::class],
             [['author_id', 'category_id', 'kabkota_id', 'kec_id', 'kel_id', 'status'], 'integer'],
             ['meta', 'default'],
-            ['approval_note', 'required', 'when' => function($model){
-                return $model->status == self::STATUS_APPROVAL_REJECTED;
+            ['approval_note', 'required', 'when' => function ($model) {
+                return $model->status === self::STATUS_APPROVAL_REJECTED;
             }],
             ['approval_note', 'default'],
             ['approved_by', 'default'],

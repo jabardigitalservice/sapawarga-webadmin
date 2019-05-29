@@ -49,7 +49,7 @@ class AspirasiCest
             'kec_id'      => 446,
             'kel_id'      => 6082,
             'status'      => 0,
-            'category_id' => 1,
+            'category_id' => 9,
             'attachments' => [],
         ];
 
@@ -79,7 +79,7 @@ class AspirasiCest
             'kec_id'      => 446,
             'kel_id'      => 6082,
             'status'      => 0,
-            'category_id' => 1,
+            'category_id' => 9,
             'attachments' => [],
         ];
 

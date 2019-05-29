@@ -341,21 +341,6 @@ class AspirasiTest extends \Codeception\Test\Unit
         $this->assertFalse($model->hasErrors('approval_note'));
     }
 
-    public function testApprovalNoteNotEmpty()
-    {
-        $model = new Aspirasi();
-        $model->status = Aspirasi::STATUS_PUBLISHED;
-        $model->approval_note = 'reason for rejection';
-        $model->validate();
-
-        $this->assertTrue($model->hasErrors('approval_note'));
-
-        $model->approval_note = null;
-        $model->validate();
-
-        $this->assertFalse($model->hasErrors('approval_note'));
-    }
-
     /**
      * Make sure regular user cannot override certain protected attributes
      */
