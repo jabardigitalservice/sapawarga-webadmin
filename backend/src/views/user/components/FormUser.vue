@@ -276,7 +276,7 @@ export default {
         facebook: '',
         instagram: '',
         photo: '',
-        latitude: '',
+        latitude: [],
         longitude: ''
       },
       opsiPeran: [
