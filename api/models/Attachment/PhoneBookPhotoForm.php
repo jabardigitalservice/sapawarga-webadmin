@@ -18,7 +18,7 @@ class PhoneBookPhotoForm extends AttachmentForm
                 'file',
                 'file',
                 'skipOnEmpty' => false,
-                'extensions'  => 'png, jpg',
+                'extensions'  => 'png, jpg, jpeg',
                 'maxSize'     => $uploadMaxSize,
             ],
         ];
