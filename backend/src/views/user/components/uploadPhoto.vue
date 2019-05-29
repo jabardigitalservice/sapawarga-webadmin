@@ -8,6 +8,7 @@
               <img class="preview" :src="imageData">
             </div>
           </div>
+          <h5>Ukuran maksimal 640 x 640 piksel</h5>
           <label class="custom-file-upload primary-custome">
             <input type="file" accept="image/*" @change="onFileSelected">
             Pilih Foto
@@ -96,8 +97,9 @@ export default {
 </script>
 <style lang="scss" scoped>
 .user-image {
+  width: 100%;
   margin: auto;
-  width: 200px;
+  text-align: center;
 }
 input[type="file"] {
   display: none;
@@ -116,7 +118,6 @@ input[type="file"] {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   outline: none;
-  margin: 0;
   -webkit-transition: .1s;
   transition: .1s;
   font-weight: 400;
@@ -148,6 +149,7 @@ img.preview {
   -webkit-box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.43);
   background-color: blue;
 }
+
 @media only screen and (min-width: 1200px)  and (max-width: 1291px) {
   img.preview {
     width: 150px;
@@ -195,6 +197,13 @@ img.preview {
     border-color: #46a6ff;
     color: #FFFFFF;
   }
+}
+
+h5 {
+  font-weight: 300;
+  color: #606266;
+  margin-top: -15px;
+  margin-bottom: -5px;
 }
 
 @media only screen and (min-width: 1292px)  and (max-width: 1651px) {
