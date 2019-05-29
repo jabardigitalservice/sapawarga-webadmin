@@ -147,7 +147,13 @@
             </el-col>
           </el-row>
           <el-row>
-            <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
+            <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+              <el-form-item label="Koordinat Lokasi" prop="coordinates">
+                <InputMap v-model="user.latitude" />
+              </el-form-item>
+            </el-col>
+            {{user.latitude}}
+            <!-- <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
               <el-form-item label="Latitude" prop="latitude">
                 <el-input v-model="user.latitude" type="text" placeholder="Contoh: -6.943097" />
               </el-form-item>
@@ -192,8 +198,10 @@ import uploadPhoto from './uploadPhoto'
 import checkPermission from '@/utils/permission'
 import { requestArea, requestKecamatan, requestKelurahan, createUser, fetchUser, editUser } from '@/api/staff'
 import { Message } from 'element-ui'
+import InputMap from '@/components/InputMap'
+import { validContainsSpecialCharacters, validCoordinate } from '@/utils/validate'
 export default {
-  components: { uploadPhoto },
+  components: { uploadPhoto, InputMap },
   props: {
     isEdit: {
       type: Boolean,
