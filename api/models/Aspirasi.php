@@ -115,7 +115,6 @@ class Aspirasi extends \yii\db\ActiveRecord
             ['approval_note', 'required', 'when' => function($model){
                 return $model->status == self::STATUS_APPROVAL_REJECTED;
             }],
-            ['approval_note', 'validateApprovalNote'],
             ['approval_note', 'default'],
             ['approved_by', 'default'],
             ['approved_at', 'default'],
@@ -259,6 +258,10 @@ class Aspirasi extends \yii\db\ActiveRecord
             $this->author_id = Yii::$app->user->getId();
         }
 
+        if ($this->status == self::STATUS_PUBLISHED) {
+            $this->approval_note = null;
+        }
+
         return parent::beforeSave($insert);
     }
 
@@ -279,21 +282,6 @@ class Aspirasi extends \yii\db\ActiveRecord
 
             if ($category_id->count() <= 0) {
                 $this->addError($attribute, Yii::t('app', 'error.id.invalid'));
-            }
-        }
-    }
-
-    /**
-     * Validate approval_note field, based on Aspirasi status
-     *
-     * @param $attribute
-     * @param $params
-     */
-    public function validateApprovalNote($attribute, $params)
-    {
-        if ($this->status == self::STATUS_PUBLISHED) {
-            if ($this->approval_note) {
-                $this->addError($attribute, Yii::t('app', 'error.approvalnote.exist'));
             }
         }
     }
