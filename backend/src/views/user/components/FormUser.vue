@@ -756,8 +756,6 @@ export default {
         this.user.email = dataUser.email
         this.user.phone = dataUser.phone
         this.user.address = dataUser.address
-        this.user.latitude = dataUser.lat
-        this.user.longitude = dataUser.lon
         this.user.role = dataUser.role_id
       }).catch()
     },
