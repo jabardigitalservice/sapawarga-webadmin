@@ -23,6 +23,7 @@ return [
     'error.role.permission' => 'Anda tidak diperbolehkan untuk melakukan aksi ini.',
     'error.rw.pattern' => 'RW harus terdiri dari 3 karakter dan hanya boleh menggunakan karakter numerik (0-9).',
     'error.id.invalid' => 'id tidak valid.',
+    'error.approvalnote.exist' => 'Keterangan tidak boleh diisi',
 
     'role.admin' => 'Administrator',
     'role.staffProv' => 'Staf Provinsi',

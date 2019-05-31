@@ -93,6 +93,7 @@ class Aspirasi extends \yii\db\ActiveRecord
                 ['title', 'description', 'kabkota_id', 'kec_id', 'kel_id', 'author_id', 'category_id', 'status'],
                 'required',
             ],
+            ['category_id', 'validateCategoryID'],
             [['title', 'description', 'rw', 'meta'], 'trim'],
             ['title', 'string', 'max' => 255],
             ['title', 'string', 'min' => 5],
@@ -111,6 +112,9 @@ class Aspirasi extends \yii\db\ActiveRecord
             ['attachments', IsArrayValidator::class],
             [['author_id', 'category_id', 'kabkota_id', 'kec_id', 'kel_id', 'status'], 'integer'],
             ['meta', 'default'],
+            ['approval_note', 'required', 'when' => function ($model) {
+                return $model->status === self::STATUS_APPROVAL_REJECTED;
+            }],
             ['approval_note', 'default'],
             ['approved_by', 'default'],
             ['approved_at', 'default'],
@@ -252,6 +256,10 @@ class Aspirasi extends \yii\db\ActiveRecord
     {
         if ($insert) {
             $this->author_id = Yii::$app->user->getId();
+        }
+
+        if ($this->status == self::STATUS_PUBLISHED) {
+            $this->approval_note = null;
         }
 
         return parent::beforeSave($insert);

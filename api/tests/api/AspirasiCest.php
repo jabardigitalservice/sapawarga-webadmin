@@ -43,13 +43,13 @@ class AspirasiCest
 
         $data = [
             'title'       => 'Lorem ipsum',
-            'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+            'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit,
             sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
             'kabkota_id'  => 22,
             'kec_id'      => 446,
             'kel_id'      => 6082,
             'status'      => 0,
-            'category_id' => 1,
+            'category_id' => 9,
             'attachments' => [],
         ];
 
@@ -73,13 +73,13 @@ class AspirasiCest
 
         $data = [
             'title'       => 'Lorem ipsum',
-            'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+            'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit,
             sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
             'kabkota_id'  => 22,
             'kec_id'      => 446,
             'kel_id'      => 6082,
             'status'      => 0,
-            'category_id' => 1,
+            'category_id' => 9,
             'attachments' => [],
         ];
 
