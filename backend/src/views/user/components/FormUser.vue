@@ -1,14 +1,11 @@
 <template>
   <div class="app-container">
-    <!-- Penamaan variable dan bersih-bersih code -->
-    <!-- <p class="warn-content">Tambah Pengguna</p> -->
     <p class="warn-content">Profile Pengguna</p>
     <el-row :gutter="10">
       <!-- Left colomn -->
       <el-col :sm="24" :md="24" :lg="6" :xl="6" class="grid-content">
         <uploadPhoto :link-edit-photo="setLinkEditPhoto" @onUpload="getUrlPhoto" />
       </el-col>
-
       <!-- Center colomn -->
       <el-col :sm="24" :md="24" :lg="18" :xl="18" class="grid-content">
         <el-form
