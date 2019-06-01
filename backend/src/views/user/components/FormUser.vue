@@ -149,17 +149,6 @@
                 <InputMap v-model="user.coordinates" />
               </el-form-item>
             </el-col>
-            {{user.latitude}}
-            <!-- <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
-              <el-form-item label="Latitude" prop="latitude">
-                <el-input v-model="user.latitude" type="text" placeholder="Contoh: -6.943097" />
-              </el-form-item>
-            </el-col>
-            <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="form-right-side">
-              <el-form-item label="Longitude" prop="longitude">
-                <el-input v-model="user.longitude" type="text" placeholder="Contoh: 107.633545" />
-              </el-form-item>
-            </el-col> -->
           </el-row>
           <p class="warn-content">Media Sosial</p>
 
