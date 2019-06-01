@@ -695,8 +695,7 @@ export default {
         }
 
         const { lat, lon } = response.data
-        console.log(response.data)
-        this.user.latitude = [lat, lon]
+        this.user.coordinates = [lat, lon]
         this.user.rw = dataUser.rw
         this.user.rt = dataUser.rt
         this.user.photo = urlPhoto
