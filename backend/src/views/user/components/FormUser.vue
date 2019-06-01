@@ -114,7 +114,6 @@
                 </el-select>
               </el-form-item>
             </el-col>
-            <!-- <el-col :span="12" /> -->
           </el-row>
           <el-row>
             <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
