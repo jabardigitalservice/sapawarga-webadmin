@@ -480,38 +480,6 @@ export default {
           { validator: validatorCoordinateRequired, trigger: 'change' },
           { validator: validatorCoordinateInputNumber, trigger: 'change' }
         ],
-        latitude: [
-          // {
-          //   required: true,
-          //   message: 'Latitude harus diisi, jika tidak ada latitude isi dengan -',
-          //   trigger: 'blur'
-          // },
-          {
-            pattern: /^[0-9.+-]+$/,
-            message: 'Latitude hanya boleh menggunakan angka, titik, - atau +',
-            trigger: 'blur'
-          },
-          {
-            validator: validatorCoordinateRequired,
-            trigger: 'change'
-          }
-        ],
-        longitude: [
-          // {
-          //   required: true,
-          //   message: 'Longitude harus diisi, jika tidak ada longitude isi dengan -',
-          //   trigger: 'blur'
-          // },
-          {
-            pattern: /^[0-9.+-]+$/,
-            message: 'Longitude hanya boleh menggunakan angka, titik, - atau +',
-            trigger: 'blur'
-          },
-          {
-            validator: validatorCoordinateRequired,
-            trigger: 'change'
-          }
-        ],
         kabkota: [
           {
             required: true,
