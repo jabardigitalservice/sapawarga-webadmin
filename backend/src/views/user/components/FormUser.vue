@@ -146,7 +146,7 @@
           <el-row>
             <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
               <el-form-item label="Koordinat Lokasi" prop="coordinates">
-                <InputMap v-model="user.latitude" />
+                <InputMap v-model="user.coordinates" />
               </el-form-item>
             </el-col>
             {{user.latitude}}
