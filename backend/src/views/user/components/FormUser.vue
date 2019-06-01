@@ -185,7 +185,8 @@ import checkPermission from '@/utils/permission'
 import { requestArea, requestKecamatan, requestKelurahan, createUser, fetchUser, editUser } from '@/api/staff'
 import { Message } from 'element-ui'
 import InputMap from '@/components/InputMap'
-import { validContainsSpecialCharacters, validCoordinate } from '@/utils/validate'
+import { validCoordinate } from '@/utils/validate'
+
 export default {
   components: { uploadPhoto, InputMap },
   props: {
