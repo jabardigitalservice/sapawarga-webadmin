@@ -950,10 +950,6 @@ p {
   }
 }
 
-.form-right-side {
-  padding-left: 10px;
-}
-
 .el-row {
   margin-left: 0px;
   &:last-child {
@@ -978,7 +974,6 @@ p {
   background-color: #f9fafc;
 }
 .el-upload .avatar-uploader {
-  // border: 5px dashed #d9d9d9;
   border-radius: 6px;
   cursor: pointer;
   position: relative;
@@ -1000,12 +995,5 @@ p {
   height: 178px;
   display: block;
 }
-@media only screen and (max-width: 768px) {
-.form-right-side {
-  padding-left: 0px;
-}
-.form-right-side-padding {
-  margin-left: -10px;
-}
-}
+
 </style>
