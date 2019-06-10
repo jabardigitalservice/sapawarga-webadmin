@@ -1,15 +1,13 @@
 <template>
   <div class="app-container">
-    <!-- <p class="warn-content">Tambah Pengguna</p> -->
     <p class="warn-content">Profile Pengguna</p>
     <el-row :gutter="10">
       <!-- Left colomn -->
-      <el-col :sm="24" :md="24" :lg="5" :xl="6" class="grid-content">
+      <el-col :sm="24" :md="24" :lg="6" :xl="6" class="grid-content">
         <uploadPhoto :link-edit-photo="setLinkEditPhoto" @onUpload="getUrlPhoto" />
       </el-col>
-
       <!-- Center colomn -->
-      <el-col :sm="24" :md="24" :lg="19" :xl="14" class="grid-content">
+      <el-col :sm="24" :md="24" :lg="18" :xl="18" class="grid-content">
         <el-form
           ref="user"
           :model="user"
@@ -55,7 +53,7 @@
                 </el-select>
               </el-form-item>
             </el-col>
-            <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" :style="{paddingLeft: formRightSide}" class="form-right-side-padding">
+            <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" :style="{paddingLeft: formRightSide}">
               <el-form-item
                 v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && checkPermission(['admin', 'staffProv']))"
                 label="Kab/Kota"
@@ -100,7 +98,7 @@
                 </el-select>
               </el-form-item>
             </el-col>
-            <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" :style="{paddingLeft: formRightSide}" class="form-right-side-padding">
+            <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" :style="{paddingLeft: formRightSide}">
               <el-form-item
                 v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffKec') && ! checkPermission(['staffKel']))"
                 label="Kelurahan"
@@ -116,7 +114,6 @@
                 </el-select>
               </el-form-item>
             </el-col>
-            <!-- <el-col :span="12" /> -->
           </el-row>
           <el-row>
             <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
@@ -128,7 +125,7 @@
                 <el-input v-model="user.rw" type="text" placeholder="Contoh: 001" :disabled="(user.kelurahan == '' && checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec']) || isEdit)" />
               </el-form-item>
             </el-col>
-            <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="form-right-side">
+            <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" :style="{paddingLeft: formRightSide}">
               <el-form-item
                 v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffKec') && !(user.role == 'staffKel'))"
                 label="RT"
@@ -147,14 +144,9 @@
             </el-col>
           </el-row>
           <el-row>
-            <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
-              <el-form-item label="Latitude" prop="latitude">
-                <el-input v-model="user.latitude" type="text" placeholder="Contoh: -6.943097" />
-              </el-form-item>
-            </el-col>
-            <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="form-right-side">
-              <el-form-item label="Longitude" prop="longitude">
-                <el-input v-model="user.longitude" type="text" placeholder="Contoh: 107.633545" />
+            <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+              <el-form-item label="Koordinat Lokasi" prop="coordinates">
+                <InputMap v-model="user.coordinates" />
               </el-form-item>
             </el-col>
           </el-row>
@@ -192,8 +184,11 @@ import uploadPhoto from './uploadPhoto'
 import checkPermission from '@/utils/permission'
 import { requestArea, requestKecamatan, requestKelurahan, createUser, fetchUser, editUser } from '@/api/staff'
 import { Message } from 'element-ui'
+import InputMap from '@/components/InputMap'
+import { validCoordinate } from '@/utils/validate'
+
 export default {
-  components: { uploadPhoto },
+  components: { uploadPhoto, InputMap },
   props: {
     isEdit: {
       type: Boolean,
@@ -225,6 +220,30 @@ export default {
       }
     }
 
+    const validatorCoordinateRequired = (rule, value, callback) => {
+      if (_.isEmpty(this.user.coordinates[0]) === false && _.isEmpty(this.user.coordinates[1]) === true) {
+        callback(new Error('Koordinat Lokasi (Longitude) harus diisi.'))
+      }
+
+      if (_.isEmpty(this.user.coordinates[0]) === true && _.isEmpty(this.user.coordinates[1]) === false) {
+        callback(new Error('Koordinat Lokasi (Latitude) harus diisi.'))
+      }
+
+      callback()
+    }
+
+    const validatorCoordinateInputNumber = (rule, value, callback) => {
+      if (_.isEmpty(this.user.coordinates[0]) === false && validCoordinate(this.user.coordinates[0]) === false) {
+        callback(new Error('Koordinat Lokasi (Latitude) hanya boleh menggunakan angka, titik, - atau +'))
+      }
+
+      if (_.isEmpty(this.user.coordinates[1]) === false && validCoordinate(this.user.coordinates[1]) === false) {
+        callback(new Error('Koordinat Lokasi (Longitude) hanya boleh menggunakan angka, titik, - atau +'))
+      }
+
+      callback()
+    }
+
     return {
       user: {
         username: '',
@@ -244,8 +263,7 @@ export default {
         facebook: '',
         instagram: '',
         photo: '',
-        latitude: '',
-        longitude: ''
+        coordinates: []
       },
       opsiPeran: [
         {
@@ -458,30 +476,9 @@ export default {
             trigger: 'blur'
           }
         ],
-        latitude: [
-          {
-            required: true,
-            message: 'Latitude harus diisi, jika tidak ada latitude isi dengan -',
-            trigger: 'blur'
-          },
-          {
-            pattern: /^[0-9.+-]+$/,
-            message: 'Latitude hanya boleh menggunakan angka, titik, - atau +',
-            trigger: 'blur'
-          }
-        ],
-        longitude: [
-
-          {
-            required: true,
-            message: 'Longitude harus diisi, jika tidak ada longitude isi dengan -',
-            trigger: 'blur'
-          },
-          {
-            pattern: /^[0-9.+-]+$/,
-            message: 'Longitude hanya boleh menggunakan angka, titik, - atau +',
-            trigger: 'blur'
-          }
+        coordinates: [
+          { validator: validatorCoordinateRequired, trigger: 'change' },
+          { validator: validatorCoordinateInputNumber, trigger: 'change' }
         ],
         kabkota: [
           {
@@ -696,6 +693,9 @@ export default {
         } else if (dataUser.role_id === 'staffKabkota') {
           this.user.kabkota = dataUser.kabkota.name
         }
+
+        const { lat, lon } = response.data
+        this.user.coordinates = [lat, lon]
         this.user.rw = dataUser.rw
         this.user.rt = dataUser.rt
         this.user.photo = urlPhoto
@@ -709,8 +709,6 @@ export default {
         this.user.email = dataUser.email
         this.user.phone = dataUser.phone
         this.user.address = dataUser.address
-        this.user.latitude = dataUser.lat
-        this.user.longitude = dataUser.lon
         this.user.role = dataUser.role_id
       }).catch()
     },
@@ -734,9 +732,8 @@ export default {
             twitter: this.user.twitter,
             instagram: this.user.instagram,
             photo_url: this.user.photo,
-            lat: (this.user.latitude === '-') || (this.user.latitude === '.') || (this.user.latitude === ' + ') ? null : this.user.latitude,
-            lon: (this.user.longitude === '-') || (this.user.latitude === '.') || (this.user.latitude === ' + ') ? null : this.user.longitude
-
+            lat: this.user.coordinates[0],
+            lon: this.user.coordinates[1]
           }).then(() => {
             Message({
               message: 'Pengguna berhasil ditambahkan',
@@ -799,8 +796,8 @@ export default {
             twitter: this.user.twitter,
             instagram: this.user.instagram,
             photo_url: this.user.photo,
-            lat: (this.user.latitude === '-') || (this.user.latitude === '.') || (this.user.latitude === ' + ') ? null : this.user.latitude,
-            lon: (this.user.longitude === '-') || (this.user.latitude === '.') || (this.user.latitude === ' + ') ? null : this.user.longitude
+            lat: this.user.coordinates[0],
+            lon: this.user.coordinates[1]
           }
           if (this.user.confirmation !== '') {
             userEdit['password'] = this.user.confirmation
@@ -953,10 +950,6 @@ p {
   }
 }
 
-.form-right-side {
-  padding-left: 10px;
-}
-
 .el-row {
   margin-left: 0px;
   &:last-child {
@@ -981,7 +974,6 @@ p {
   background-color: #f9fafc;
 }
 .el-upload .avatar-uploader {
-  // border: 5px dashed #d9d9d9;
   border-radius: 6px;
   cursor: pointer;
   position: relative;
@@ -1003,12 +995,5 @@ p {
   height: 178px;
   display: block;
 }
-@media only screen and (max-width: 768px) {
-.form-right-side {
-  padding-left: 0px;
-}
-.form-right-side-padding {
-  margin-left: -10px;
-}
-}
+
 </style>
