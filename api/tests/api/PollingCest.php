@@ -135,6 +135,15 @@ class PollingCest
 
     public function staffDeleteTest(ApiTester $I)
     {
-        //
+        $I->amUser('staff');
+
+        $I->sendDELETE('/v1/polling/1');
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $I->seeResponseContainsJson([
+            'success' => true,
+            'status'  => 200,
+        ]);
     }
 }
