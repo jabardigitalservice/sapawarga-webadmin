@@ -1,74 +1,94 @@
 image: docker:latest
 
-services:
-  - docker:dind
+# services:
+#   - docker:dind
 
-variables:
-  IMAGETAG: $CI_COMMIT_REF_SLUG
+# variables:
+#   IMAGETAG: $CI_COMMIT_REF_SLUG
 
-before_script:
-  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-  - apk add --no-cache py-pip python-dev libffi-dev openssl-dev gcc libc-dev make
-  - pip install docker-compose
+# before_script:
+#   - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+#   - apk add --no-cache py-pip python-dev libffi-dev openssl-dev gcc libc-dev make
+#   - pip install docker-compose
   
 stages:
-  - build
-  - test
-  - release
+  - code_quality
+  # - build
+  # - test
+  # - release
 
-build_dev:
-  stage: build
-  only:
-    changes:
-      - api/**/*
-      - backend/**/*
-      - "*.yml"
+code_quality:
+  image: docker:stable
+  stage: code_quality
+  allow_failure: true
+  services:
+    - docker:stable-dind
+  variables:
+    DOCKER_DRIVER: overlay2
   script:
-    - docker-compose -f docker-compose.dev.yml build
-    - docker images
-    - docker-compose -f docker-compose.dev.yml push
+    - docker run
+        --env SOURCE_CODE="$PWD"
+        --volume "$PWD":/code
+        --volume /var/run/docker.sock:/var/run/docker.sock
+        "registry.gitlab.com/gitlab-org/security-products/codequality:11-8-stable" /code
+  artifacts:
+    reports:
+      codequality: gl-code-quality-report.json
+    expire_in: 1 week
 
-test_api:
-  stage: test
-  only:
-    changes:
-      - api/**/*
-      - "*.yml"
-  script:
-    - docker-compose -f docker-compose.dev.yml pull
-    - docker images
-    - docker-compose -f docker-compose.dev.yml up -d
-    - sleep 60
-    - docker ps
-    - docker-compose -f docker-compose.dev.yml exec -T api composer sniff
-    - docker-compose -f docker-compose.dev.yml exec -T api php yii seeder
-    - docker-compose -f docker-compose.dev.yml exec -T api composer run test
+# build_dev:
+#   stage: build
+#   only:
+#     changes:
+#       - api/**/*
+#       - backend/**/*
+#       - "*.yml"
+#   script:
+#     - docker-compose -f docker-compose.dev.yml build
+#     - docker images
+#     - docker-compose -f docker-compose.dev.yml push
 
-test_backend:
-  stage: test
-  only:
-    changes:
-      - backend/**/*
-      - "*.yml"
-  script:
-    - docker-compose -f docker-compose.dev.yml pull
-    - docker images
-    - docker-compose -f docker-compose.dev.yml up -d
-    - sleep 60
-    - docker ps
-    - docker-compose -f docker-compose.dev.yml exec -T backend npm run lint
-    - docker-compose -f docker-compose.dev.yml exec -T backend npm run test:unit
+# test_api:
+#   stage: test
+#   only:
+#     changes:
+#       - api/**/*
+#       - "*.yml"
+#   script:
+#     - docker-compose -f docker-compose.dev.yml pull
+#     - docker images
+#     - docker-compose -f docker-compose.dev.yml up -d
+#     - sleep 60
+#     - docker ps
+#     - docker-compose -f docker-compose.dev.yml exec -T api composer sniff
+#     - docker-compose -f docker-compose.dev.yml exec -T api php yii seeder
+#     - docker-compose -f docker-compose.dev.yml exec -T api composer run test
 
-release_all:
-  stage: release
-  only: 
-    - master
-  script:
-    - docker-compose -f docker-compose.dev.yml pull
-    - docker images
-    - docker tag registry.gitlab.com/jdsteam/sapa-warga/sapawarga-app/sapawarga-api:${IMAGETAG} registry.gitlab.com/jdsteam/sapa-warga/sapawarga-app/sapawarga-api:latest
-    - docker push registry.gitlab.com/jdsteam/sapa-warga/sapawarga-app/sapawarga-api:latest
-    - docker tag registry.gitlab.com/jdsteam/sapa-warga/sapawarga-app/sapawarga-backend:${IMAGETAG} registry.gitlab.com/jdsteam/sapa-warga/sapawarga-app/sapawarga-backend:latest
-    - docker push registry.gitlab.com/jdsteam/sapa-warga/sapawarga-app/sapawarga-backend:latest
-    - docker tag registry.gitlab.com/jdsteam/sapa-warga/sapawarga-app/sapawarga-nginx:${IMAGETAG} registry.gitlab.com/jdsteam/sapa-warga/sapawarga-app/sapawarga-nginx:latest
-    - docker push registry.gitlab.com/jdsteam/sapa-warga/sapawarga-app/sapawarga-nginx:latest
+# test_backend:
+#   stage: test
+#   only:
+#     changes:
+#       - backend/**/*
+#       - "*.yml"
+#   script:
+#     - docker-compose -f docker-compose.dev.yml pull
+#     - docker images
+#     - docker-compose -f docker-compose.dev.yml up -d
+#     - sleep 60
+#     - docker ps
+#     - docker-compose -f docker-compose.dev.yml exec -T backend npm run lint
+#     - docker-compose -f docker-compose.dev.yml exec -T backend npm run test:unit
+
+# release_all:
+#   stage: release
+#   only: 
+#     - master
+#   script:
+#     - docker-compose -f docker-compose.dev.yml pull
+#     - docker images
+#     - docker tag registry.gitlab.com/jdsteam/sapa-warga/sapawarga-app/sapawarga-api:${IMAGETAG} registry.gitlab.com/jdsteam/sapa-warga/sapawarga-app/sapawarga-api:latest
+#     - docker push registry.gitlab.com/jdsteam/sapa-warga/sapawarga-app/sapawarga-api:latest
+#     - docker tag registry.gitlab.com/jdsteam/sapa-warga/sapawarga-app/sapawarga-backend:${IMAGETAG} registry.gitlab.com/jdsteam/sapa-warga/sapawarga-app/sapawarga-backend:latest
+#     - docker push registry.gitlab.com/jdsteam/sapa-warga/sapawarga-app/sapawarga-backend:latest
+#     - docker tag registry.gitlab.com/jdsteam/sapa-warga/sapawarga-app/sapawarga-nginx:${IMAGETAG} registry.gitlab.com/jdsteam/sapa-warga/sapawarga-app/sapawarga-nginx:latest
+#     - docker push registry.gitlab.com/jdsteam/sapa-warga/sapawarga-app/sapawarga-nginx:latest
