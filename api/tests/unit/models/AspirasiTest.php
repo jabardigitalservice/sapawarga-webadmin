@@ -140,7 +140,7 @@ class AspirasiTest extends \Codeception\Test\Unit
 
         $model->validate();
 
-        $this->assertTrue($model->hasErrors('description'));
+        $this->assertFalse($model->hasErrors('description'));
     }
 
     public function testDescriptionNotSafe()
