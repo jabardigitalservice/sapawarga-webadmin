@@ -30,8 +30,8 @@ code_quality:
     - ls $PWD/api
     - ls ./api
     - docker run
-        --env SOURCE_CODE=$PWD/api
-        --volume $PWD/api:/code
+        --env SOURCE_CODE=./api
+        --volume ./api:/code
         --volume /var/run/docker.sock:/var/run/docker.sock
         "registry.gitlab.com/gitlab-org/security-products/codequality:11-8-stable" /code
   artifacts:
