@@ -26,7 +26,7 @@ code_quality:
   variables:
     DOCKER_DRIVER: overlay2
   script:
-    - echo $PWD
+    - echo $PWD/api
     - docker run
         --env SOURCE_CODE="$PWD"
         --volume "$PWD":/code
