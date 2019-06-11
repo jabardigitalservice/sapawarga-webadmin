@@ -182,7 +182,7 @@ export default {
           { validator: validatorCoordinateRequired, trigger: 'change' },
           { validator: validatorCoordinateInputNumber, trigger: 'change' },
           { validator: validatorCoordinateFinite,
-          trigger: 'change' }
+            trigger: 'change' }
         ],
         kec_id: [
           { required: true, message: 'Kecamatan harus diisi.', trigger: 'blur' }
