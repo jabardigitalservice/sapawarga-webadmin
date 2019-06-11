@@ -1,0 +1,267 @@
+<?php
+
+namespace tests\unit\models;
+
+use app\models\Polling;
+
+class PollingTest extends \Codeception\Test\Unit
+{
+    public function testValidateFillRequired()
+    {
+        $model = new Polling();
+
+        $this->assertFalse($model->validate());
+
+        $model->name        = 'test test';
+        $model->description = 'test test';
+        $model->status      = 10;
+        $model->kabkota_id  = 1;
+        $model->kec_id      = 1;
+        $model->kel_id      = 1;
+        $model->author_id   = 1;
+        $model->category_id = 1;
+
+        $this->assertTrue($model->validate());
+    }
+
+    public function testValidateRequired()
+    {
+        $model = new Polling();
+
+        $model->validate();
+
+        // Mandatory
+        $this->assertTrue($model->hasErrors('name'));
+        $this->assertTrue($model->hasErrors('description'));
+        $this->assertTrue($model->hasErrors('status'));
+        $this->assertTrue($model->hasErrors('kabkota_id'));
+        $this->assertTrue($model->hasErrors('kec_id'));
+        $this->assertTrue($model->hasErrors('kel_id'));
+        $this->assertTrue($model->hasErrors('author_id'));
+        $this->assertTrue($model->hasErrors('category_id'));
+    }
+
+    public function testNameValid()
+    {
+        $model = new Polling();
+
+        $model->name = 'Ini adalah judul';
+
+        $model->validate();
+
+        $this->assertFalse($model->hasErrors('name'));
+    }
+
+    public function testNameNotEmpty()
+    {
+        $model = new Polling();
+
+        $model->name = '';
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('name'));
+    }
+
+    public function testNameTooLong()
+    {
+        $model = new Polling();
+
+        $model->name = '9QDdyAqPd35eG06wTaaHilQIk2pEuoftrIBy5FNKdUUwMcyNMl1i3ObgeX9Qome73njU2iQtif8muLml
+                2VMPfbkrf2OLsL4wBkvF692wZ7CrkfsaZ6kDswGtFC0Bp2Bb3kL1VnRsrJm7X9AKg8k3gMeLtdeQcqFSyb7q
+                ydwBdmRUOSOYgwJLdDtheV7J4cSBYL8p7TmXhr57Vyg7zi2ewTEQ4XLVql3HJmHMXTqyQjWJKktycZNznK0uZ
+                lG5FNqAfOZjnyvZW4fityhY9Wf0DPYFro4mapRcLVtWiAqXYIGX';
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('name'));
+    }
+
+    public function testNameMinCharacters()
+    {
+        $model = new Polling();
+
+        $model->name = 'Coba';
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('name'));
+    }
+
+    public function testNameNotSafe()
+    {
+        $model = new Polling();
+
+        $model->name = '<script>alert()</script>';
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('name'));
+    }
+
+    public function testDescriptionValid()
+    {
+        $model = new Polling();
+
+        $model->description = 'Ini adalah deskripsi aspirasi';
+
+        $model->validate();
+
+        $this->assertFalse($model->hasErrors('description'));
+    }
+
+    public function testDescriptionNotEmpty()
+    {
+        $model = new Polling();
+
+        $model->description = '';
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('description'));
+    }
+
+    public function testDescriptionTooLong()
+    {
+        $model = new Polling();
+
+        $model->description = file_get_contents(__DIR__ . '/../../data/1000chars.txt');
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('description'));
+    }
+
+    public function testDescriptionMinCharacters()
+    {
+        $model = new Polling();
+
+        $model->description = 'Coba';
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('description'));
+    }
+
+    public function testDescriptionNotSafe()
+    {
+        $model = new Polling();
+
+        $model->description = '<script>alert()</script>';
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('description'));
+    }
+
+    public function testAreaMustInteger()
+    {
+        $model = new Polling();
+
+        $model->kabkota_id = 'test';
+        $model->kec_id     = 'test';
+        $model->kel_id     = 'test';
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('kabkota_id'));
+        $this->assertTrue($model->hasErrors('kec_id'));
+        $this->assertTrue($model->hasErrors('kel_id'));
+
+        $model->kabkota_id = 1;
+        $model->kec_id     = 1;
+        $model->kel_id     = 1;
+
+        $model->validate();
+
+        $this->assertFalse($model->hasErrors('kabkota_id'));
+        $this->assertFalse($model->hasErrors('kec_id'));
+        $this->assertFalse($model->hasErrors('kel_id'));
+    }
+
+    public function testCategoryIdMustInteger()
+    {
+        $model = new Polling();
+
+        $model->category_id = 'test';
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('category_id'));
+
+        $model->category_id = 1;
+
+        $model->validate();
+
+        $this->assertFalse($model->hasErrors('category_id'));
+    }
+
+    public function testStatusInputString()
+    {
+        $model = new Polling();
+
+        $model->status = 'OK';
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('status'));
+    }
+
+    public function testStatusInputEmpty()
+    {
+        $model = new Polling();
+
+        $model->status = '';
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('status'));
+    }
+
+    public function testStatusInputInteger()
+    {
+        $model = new Polling();
+
+        $model->status = 1;
+
+        $model->validate();
+
+        $this->assertFalse($model->hasErrors('status'));
+    }
+
+    public function testStatusInputAllowedInteger()
+    {
+        $model = new Polling();
+
+        // Status = DRAFT
+        $model->status = 1;
+
+        $model->validate();
+
+        $this->assertFalse($model->hasErrors('status'));
+
+        // Status = PENDING APPROVAL
+        $model->status = 2;
+
+        $model->validate();
+
+        $this->assertFalse($model->hasErrors('status'));
+
+        // Status = APPROVED
+        $model->status = 10;
+
+        $model->validate();
+
+        $this->assertFalse($model->hasErrors('status'));
+    }
+
+    public function testCreate()
+    {
+        $model         = new Polling();
+        $model->status = 10;
+
+        $model->validate();
+
+        $this->assertFalse($model->hasErrors('status'));
+    }
+}
