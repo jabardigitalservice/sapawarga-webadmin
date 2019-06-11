@@ -77,6 +77,8 @@ server.use(jsonServer.rewriter({
   '/api/v1/aspirasi/:id': '/aspirasi/:id',
   '/api/v1/broadcast': '/broadcast',
   '/api/v1/broadcast/:id': '/broadcast/:id',
+  '/api/v1/polling': '/polling',
+  '/api/v1/polling/:id': '/polling/:id',
   '/api/v1/upload': '/upload',
 }))
 
