@@ -490,7 +490,8 @@ export default {
         ],
         coordinates: [
           { validator: validatorCoordinateRequired, trigger: 'change' },
-          { validator: validatorCoordinateInputNumber, trigger: 'change' }
+          { validator: validatorCoordinateInputNumber, trigger: 'change' },
+          { validator: validatorCoordinateFinite, trigger: 'change' }
         ],
         kabkota: [
           {
