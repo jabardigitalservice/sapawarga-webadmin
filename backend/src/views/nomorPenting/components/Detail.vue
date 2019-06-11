@@ -2,10 +2,10 @@
   <div class="components-container">
     <p class="warn-content"><a href="#">Nomor Telepon Penting</a></p>
     <el-row :gutter="20">
-      <el-col :span="5">
-        Gambar
+      <el-col :sm="8" :lg="5">
+        <AttachmentPhotoUpload type="phonebook_photo" :initial-url="form.cover_image_url" style="margin-bottom: 25px" @onUpload="photoUploaded" />
       </el-col>
-      <el-col :span="19">
+      <el-col :sm="16" :lg="19">
         <el-form ref="form" :model="form" :rules="rules" :status-icon="true" label-width="160px">
           <el-form-item label="Nama Instansi" prop="name">
             <el-input v-model="form.name" placeholder="Contoh: Rumah Sakit Daerah Kota Tasikmalaya" />
@@ -66,6 +66,7 @@ import { validContainsSpecialCharacters, validCoordinate } from '@/utils/validat
 import InputSelectArea from '@/components/InputSelectArea'
 import InputMap from '@/components/InputMap'
 import InputCategory from '@/components/InputCategory'
+import AttachmentPhotoUpload from '@/components/AttachmentPhotoUpload'
 
 import ListPhoneNumber from './ListPhoneNumber'
 
@@ -79,6 +80,8 @@ const defaultForm = {
   kel_id: null,
   meta: null,
   seq: null,
+  cover_image_path: null,
+  cover_image_url: null,
   phone_numbers: [],
   latitude: null,
   longitude: null
@@ -89,7 +92,8 @@ export default {
     InputSelectArea,
     InputMap,
     InputCategory,
-    ListPhoneNumber
+    ListPhoneNumber,
+    AttachmentPhotoUpload
   },
   props: {
     isEdit: {
@@ -210,6 +214,10 @@ export default {
         this.form.kec_id = null
         this.form.kel_id = null
       }
+    },
+
+    photoUploaded(path, url) {
+      this.form.cover_image_path = path
     },
 
     async submitForm() {

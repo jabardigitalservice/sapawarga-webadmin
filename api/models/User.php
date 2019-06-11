@@ -1042,9 +1042,9 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         return '';
     }
 
-    public function updatePushToken($pushToken)
+    public function removePushToken()
     {
-        if ($this->push_token != $pushToken) {
+        if ($this->push_token) {
             // Area ids will be used as topic name
             $areaIds = [
                 (string) $this->kabkota_id,
@@ -1053,12 +1053,26 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
                 "{$this->kel_id}_{$this->rw}",
             ];
 
-            // Update topic subscription
-            if ($this->push_token) {
-                Notification::unsubscribe($this->push_token, $areaIds);
-            }
+            Notification::unsubscribe($this->push_token, $areaIds);
+            $this->push_token = null;
+            $this->save(false);
+        }
+    }
+
+    public function updatePushToken($pushToken)
+    {
+        if ($this->push_token != $pushToken) {
+            $this->removePushToken();
 
             $this->push_token = $pushToken;
+
+            // Area ids will be used as topic name
+            $areaIds = [
+                (string) $this->kabkota_id,
+                (string) $this->kec_id,
+                (string) $this->kel_id,
+                "{$this->kel_id}_{$this->rw}",
+            ];
 
             Notification::subscribe($pushToken, $areaIds);
         }

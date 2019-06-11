@@ -1,7 +1,8 @@
-SELECT id, name, description, address, phone_numbers,
+SELECT id, category, name, description, address, phone_numbers,
        latitude, longitude, distance
   FROM (
  SELECT pb.id,
+        cat.name as category,
         pb.name,
         pb.description,
         pb.address,
@@ -15,6 +16,7 @@ SELECT id, name, description, address, phone_numbers,
                  + SIN(RADIANS(c.latpoint))
                  * SIN(RADIANS(pb.latitude)))) AS distance
   FROM phonebooks AS pb
+  LEFT JOIN categories as cat ON pb.category_id=cat.id
   JOIN (   /* these are the query parameters */
         SELECT  :latitude AS latpoint, :longitude AS longpoint,
                 :radius AS radius, 111.045 AS distance_unit

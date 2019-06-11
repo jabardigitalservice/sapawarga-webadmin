@@ -57,6 +57,13 @@ server.post('/api/v1/attachments', (req, res) => {
   })
 })
 
+server.post('/api/v1/polling/vote/:id', (req, res) => {
+  res.json({
+    status: 200,
+    success: true
+  })
+})
+
 server.use(jsonServer.bodyParser)
 server.use((req, res, next) => {
   if (req.method === 'POST') {
@@ -77,6 +84,8 @@ server.use(jsonServer.rewriter({
   '/api/v1/aspirasi/:id': '/aspirasi/:id',
   '/api/v1/broadcast': '/broadcast',
   '/api/v1/broadcast/:id': '/broadcast/:id',
+  '/api/v1/polling': '/polling',
+  '/api/v1/polling/:id': '/polling/:id',
   '/api/v1/upload': '/upload',
 }))
 

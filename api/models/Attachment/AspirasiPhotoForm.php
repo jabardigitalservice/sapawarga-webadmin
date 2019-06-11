@@ -18,7 +18,7 @@ class AspirasiPhotoForm extends AttachmentForm
                 'file',
                 'file',
                 'skipOnEmpty' => false,
-                'extensions'  => 'png, jpg',
+                'extensions'  => 'png, jpg, jpeg',
                 'maxSize'     => $uploadMaxSize,
             ],
         ];
@@ -74,6 +74,6 @@ class AspirasiPhotoForm extends AttachmentForm
      */
     public function cropAndResizePhoto($filePath)
     {
-        return $this->imageProcessor->make($filePath)->fit(1200);
+        return $this->imageProcessor->make($filePath)->fit(1280, 720);
     }
 }

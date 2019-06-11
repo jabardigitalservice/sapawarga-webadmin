@@ -11,4 +11,5 @@ VALUES
     ('aspirasi','Infrastruktur',NULL,10,1557803314,1557803314),
     ('aspirasi','Sumber Daya Manusia',NULL,10,1557803314,1557803314),
     ('aspirasi','Ekonomi',NULL,10,1557803314,1557803314),
-    ('aspirasi','Sosial dan Budaya',NULL,10,1557803314,1557803314);
+    ('aspirasi','Sosial dan Budaya',NULL,10,1557803314,1557803314),
+    ('phonebook','Sosial',NULL,10,1557803314,1557803314);

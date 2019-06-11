@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-row :gutter="10">
       <el-col class="col-left" :xs="24" :sm="24" :md="24" :lg="7" :xl="5">
-        <PhotoBox class="image" :image="imageUrl" :height="height" />
+        <PhotoBox class="image" :image="imageUrl" />
         <vue-friendly-iframe v-show="latitude && longitude !== null" id="map" :src="`https://maps.google.com/maps?q=${latitude},${longitude}&hl=es;z=14&amp;output=embed`" :style="{'border':0}" />
       </el-col>
       <el-col class="col-right" :xs="23" :sm="23" :md="23" :lg="16" :xl="18">
@@ -46,10 +46,10 @@ export default {
   methods: {
     getDetail() {
       fetchRecord(this.id).then(response => {
-        const { name, address, description, category, seq, kabkota, kecamatan, kelurahan, phone_numbers, latitude, longitude, cover_image_path
+        const { name, address, description, category, seq, kabkota, kecamatan, kelurahan, phone_numbers, latitude, longitude, cover_image_path, cover_image_url
         } = response.data
 
-        this.imageUrl = ((cover_image_path !== null) ? cover_image_path : null)
+        this.imageUrl = ((cover_image_path !== null) ? cover_image_url : null)
         this.latitude = latitude
         this.longitude = longitude
         const textPhoneMsg = phone_numbers.map(e => e.type + ': ' + e.phone_number).join(', ')
