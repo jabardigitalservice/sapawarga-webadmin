@@ -141,6 +141,18 @@ export default {
       callback()
     }
 
+    const validatorCoordinateFinite = (rule, value, callback) => {
+      if (isFinite(this.coordinates[0]) === false) {
+        callback(new Error('Koordinat Lokasi (Latitude) tidak sesuai'))
+      }
+
+      if (isFinite(this.coordinates[1]) === false) {
+        callback(new Error('Koordinat Lokasi (Longitude) tidak sesuai'))
+      }
+
+      callback()
+    }
+
     return {
       modalAddPhoneNumberVisible: false,
       form: Object.assign({}, defaultForm),
@@ -168,7 +180,9 @@ export default {
         ],
         coordinates: [
           { validator: validatorCoordinateRequired, trigger: 'change' },
-          { validator: validatorCoordinateInputNumber, trigger: 'change' }
+          { validator: validatorCoordinateInputNumber, trigger: 'change' },
+          { validator: validatorCoordinateFinite,
+            trigger: 'change' }
         ],
         kec_id: [
           { required: true, message: 'Kecamatan harus diisi.', trigger: 'blur' }
@@ -222,8 +236,6 @@ export default {
 
     async submitForm() {
       const valid = await this.$refs.form.validate()
-
-      console.log(valid)
 
       if (!valid) {
         return

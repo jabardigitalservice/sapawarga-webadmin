@@ -244,6 +244,18 @@ export default {
       callback()
     }
 
+    const validatorCoordinateFinite = (rule, value, callback) => {
+      if (isFinite(this.user.coordinates[0]) === false) {
+        callback(new Error('Koordinat Lokasi (Latitude) tidak sesuai'))
+      }
+
+      if (isFinite(this.user.coordinates[1]) === false) {
+        callback(new Error('Koordinat Lokasi (Longitude) tidak sesuai'))
+      }
+
+      callback()
+    }
+
     return {
       user: {
         username: '',
@@ -478,7 +490,8 @@ export default {
         ],
         coordinates: [
           { validator: validatorCoordinateRequired, trigger: 'change' },
-          { validator: validatorCoordinateInputNumber, trigger: 'change' }
+          { validator: validatorCoordinateInputNumber, trigger: 'change' },
+          { validator: validatorCoordinateFinite, trigger: 'change' }
         ],
         kabkota: [
           {
