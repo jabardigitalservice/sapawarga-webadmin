@@ -57,6 +57,13 @@ server.post('/api/v1/attachments', (req, res) => {
   })
 })
 
+server.post('/api/v1/polling/vote/:id', (req, res) => {
+  res.json({
+    status: 200,
+    success: true
+  })
+})
+
 server.use(jsonServer.bodyParser)
 server.use((req, res, next) => {
   if (req.method === 'POST') {
