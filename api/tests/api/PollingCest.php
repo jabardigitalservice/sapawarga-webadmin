@@ -212,4 +212,24 @@ class PollingCest
 
         $I->seeInDatabase('polling', ['id' => 4, 'status' => -1]);
     }
+
+    public function postVoteTest(ApiTester $I)
+    {
+        $I->amUser('user');
+
+        $latestId = 4;
+
+        $data = [
+            'id' => 1,
+        ];
+
+        $I->sendPUT('/v1/polling/vote/' . $latestId, $data);
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $I->seeResponseContainsJson([
+            'success' => true,
+            'status'  => 200,
+        ]);
+    }
 }

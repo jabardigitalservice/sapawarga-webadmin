@@ -331,26 +331,26 @@ class PollingTest extends \Codeception\Test\Unit
     {
         $model = new Polling();
 
-        // Status = DRAFT
-        $model->status = 1;
+        // Status = INACTIVE
+        $model->status = 0;
 
         $model->validate();
 
         $this->assertFalse($model->hasErrors('status'));
 
-        // Status = PENDING APPROVAL
-        $model->status = 2;
-
-        $model->validate();
-
-        $this->assertFalse($model->hasErrors('status'));
-
-        // Status = APPROVED
+        // Status = ACTIVE
         $model->status = 10;
 
         $model->validate();
 
         $this->assertFalse($model->hasErrors('status'));
+
+        // Status = RANDOM
+        $model->status = 100;
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('status'));
     }
 
     public function testCreate()
