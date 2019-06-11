@@ -141,6 +141,18 @@ export default {
       callback()
     }
 
+    const validatorCoordinateFinite = (rule, value, callback) => {
+      if (isFinite(this.coordinates[0]) === false) {
+        callback(new Error('Koordinat Lokasi (Latitude) tidak sesuai'))
+      }
+
+      if (isFinite(this.coordinates[1]) === false) {
+        callback(new Error('Koordinat Lokasi (Longitude) tidak sesuai'))
+      }
+
+      callback()
+    }
+
     return {
       modalAddPhoneNumberVisible: false,
       form: Object.assign({}, defaultForm),
