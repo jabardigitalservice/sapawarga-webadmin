@@ -223,8 +223,6 @@ export default {
     async submitForm() {
       const valid = await this.$refs.form.validate()
 
-      console.log(valid)
-
       if (!valid) {
         return
       }
