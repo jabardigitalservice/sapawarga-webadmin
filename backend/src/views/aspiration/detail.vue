@@ -228,6 +228,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.warning-row {
+    background: oldlace;
+  }
+
+.success-row {
+    background: #f0f9eb;
+  }
+
 .aspiration-date {
   float: right;
   font-size: 14px;
