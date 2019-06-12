@@ -17,7 +17,7 @@ class PollingTest extends \Codeception\Test\Unit
         $model->excerpt     = 'test test';
         $model->question    = 'test test';
         $model->status      = 10;
-        $model->start_date  = '2019-01-01';
+        $model->start_date  = '2019-06-01';
         $model->end_date    = '2019-12-01';
         $model->category_id = 1;
 
@@ -418,6 +418,118 @@ class PollingTest extends \Codeception\Test\Unit
         $model->validate();
 
         $this->assertTrue($model->hasErrors('status'));
+    }
+
+    public function testStartDateValidValue()
+    {
+        $model = new Polling();
+
+        $model->start_date = '2019-06-01';
+
+        $model->validate();
+
+        $this->assertFalse($model->hasErrors('start_date'));
+    }
+
+    public function testStartDateInvalidStringValue()
+    {
+        $model = new Polling();
+
+        $model->start_date = 'xxx';
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('start_date'));
+    }
+
+    public function testStartDateInvalidIntegerValue()
+    {
+        $model = new Polling();
+
+        $model->start_date = 100;
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('start_date'));
+    }
+
+    public function testStartDateInvalidBooleanValue()
+    {
+        $model = new Polling();
+
+        $model->start_date = true;
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('start_date'));
+    }
+
+    public function testEndDateValidValue()
+    {
+        $model = new Polling();
+
+        $model->end_date = '2019-06-01';
+
+        $model->validate();
+
+        $this->assertFalse($model->hasErrors('end_date'));
+    }
+
+    public function testEndDateInvalidStringValue()
+    {
+        $model = new Polling();
+
+        $model->end_date = 'xxx';
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('end_date'));
+    }
+
+    public function testEndDateInvalidIntegerValue()
+    {
+        $model = new Polling();
+
+        $model->end_date = 100;
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('end_date'));
+    }
+
+    public function testEndDateInvalidBooleanValue()
+    {
+        $model = new Polling();
+
+        $model->end_date = true;
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('end_date'));
+    }
+
+    public function testEndDateAfterStartDate()
+    {
+        $model = new Polling();
+
+        $model->start_date = '2019-06-01';
+        $model->end_date   = '2019-09-01';
+
+        $model->validate();
+
+        $this->assertFalse($model->hasErrors('end_date'));
+    }
+
+    public function testEndDateBeforeStartDate()
+    {
+        $model = new Polling();
+
+        $model->start_date = '2019-09-01';
+        $model->end_date   = '2019-06-01';
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('end_date'));
     }
 
     public function testCreate()

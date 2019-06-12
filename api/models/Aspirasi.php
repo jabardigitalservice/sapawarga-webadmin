@@ -99,8 +99,6 @@ class Aspirasi extends \yii\db\ActiveRecord
                     'author_id',
                     'category_id',
                     'status',
-                    'start_date',
-                    'end_date',
                 ],
                 'required',
             ],

@@ -90,6 +90,15 @@ class Polling extends \yii\db\ActiveRecord
             [['category_id', 'kabkota_id', 'kec_id', 'kel_id', 'status'], 'integer'],
             ['category_id', 'validateCategoryID'],
             ['meta', 'default'],
+
+            [['start_date', 'end_date'], 'date', 'format' => 'php:Y-m-d'],
+            [
+                'start_date',
+                'compare',
+                'compareAttribute'       => 'end_date',
+                'operator'               => '<',
+            ],
+
             ['status', 'in', 'range' => [-1, 0, 10]],
         ];
     }
