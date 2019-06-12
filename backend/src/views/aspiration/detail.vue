@@ -59,10 +59,12 @@ export default {
       status: false,
       author: [],
       aspirationDetail: [],
+      approvalNote: [],
       imageNone: require('@/assets/none.png'),
       defaultImage: null,
       images: [],
-      index: null
+      index: null,
+      note: null
     }
   },
   computed: {
