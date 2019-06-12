@@ -716,6 +716,164 @@
       "updated_at": 1554706345
     }
   ],
+  "notifications": [
+    {
+      "id": 1,
+      "title": "Tambahkan akun media sosial di profil Anda",
+      "description": "Tambahkan detil akun Facebook, Twitter, dan Instagram di dalam profil Anda.",
+      "kabkota_id": null,
+      "kabkota": null,
+      "kec_id": null,
+      "kecamatan": null,
+      "kel_id": null,
+      "kelurahan": null,
+      "rw": null,
+      "status": 10,
+      "status_label": "Aktif",
+      "author_id": 1,
+      "author": {
+        "id": 1,
+        "name": "Administrator"
+      },
+      "category_id": 1,
+      "category": {
+        "id": 1,
+        "name": "Edit Profil"
+      },
+      "created_at": 1556079159,
+      "updated_at": 1556079159
+    },
+    {
+      "id": 2,
+      "title": "Bingung cari nomor telepon RS terdekat?",
+      "description": "Temukan informasi nomor telepon instansi penting seperti rumah sakit, polsek, dan kantor kelurahan, hanya di aplikasi Sapa Warga.",
+      "kabkota_id": null,
+      "kabkota": null,
+      "kec_id": null,
+      "kecamatan": null,
+      "kel_id": null,
+      "kelurahan": null,
+      "rw": null,
+      "status": 10,
+      "status_label": "Aktif",
+      "author_id": 1,
+      "author": {
+        "id": 1,
+        "name": "Administrator"
+      },
+      "category_id": 2,
+      "category": {
+        "id": 2,
+        "name": "Nomor Penting"
+      },
+      "created_at": 1556079159,
+      "updated_at": 1556079159
+    },
+    {
+      "id": 3,
+      "title": "Perbaiki jalan rusak hanya dalam hitungan hari",
+      "description": "Lapor jalan rusah lebih mudah dengan fitur Aspirasi dari Sapa Warga. Laporan langsung didisposisikan ke dinas terkait untuk ditindaklanjuti.",
+      "kabkota_id": null,
+      "kabkota": null,
+      "kec_id": null,
+      "kecamatan": null,
+      "kel_id": null,
+      "kelurahan": null,
+      "rw": null,
+      "status": 10,
+      "status_label": "Aktif",
+      "author_id": 1,
+      "author": {
+        "id": 1,
+        "name": "Administrator"
+      },
+      "category_id": 3,
+      "category": {
+        "id": 3,
+        "name": "Lapor"
+      },
+      "created_at": 1556079159,
+      "updated_at": 1556079159
+    },
+    {
+      "id": 4,
+      "title": "Saya ingin ada banyak lapangan kerja di kampung saya",
+      "description": "Sampaikan ide-ide Anda untuk Jawa Barat dengan fitur Aspirasi dari Sapa Warga. Pilih topiknya, sampaikan aspirasi Anda secara bertanggungjawab.",
+      "kabkota_id": null,
+      "kabkota": null,
+      "kec_id": null,
+      "kecamatan": null,
+      "kel_id": null,
+      "kelurahan": null,
+      "rw": null,
+      "status": 10,
+      "status_label": "Aktif",
+      "author_id": 1,
+      "author": {
+        "id": 1,
+        "name": "Administrator"
+      },
+      "category_id": 4,
+      "category": {
+        "id": 4,
+        "name": "Aspirasi"
+      },
+      "created_at": 1556079159,
+      "updated_at": 1556079159
+    },
+    {
+      "id": 5,
+      "title": "Gimana ya cara ngurus surat pengantar RT/RW?",
+      "description": "Untuk para RW, temukan cara mengurus surat pengantar dan dokumen lainnya di sini.",
+      "kabkota_id": null,
+      "kabkota": null,
+      "kec_id": null,
+      "kecamatan": null,
+      "kel_id": null,
+      "kelurahan": null,
+      "rw": null,
+      "status": 10,
+      "status_label": "Aktif",
+      "author_id": 1,
+      "author": {
+        "id": 1,
+        "name": "Administrator"
+      },
+      "category_id": 5,
+      "category": {
+        "id": 5,
+        "name": "Administrasi"
+      },
+      "created_at": 1556079159,
+      "updated_at": 1556079159
+    },
+    {
+      "id": 6,
+      "title": "Draft Notification",
+      "description": "Draft",
+      "kabkota_id": null,
+      "kabkota": null,
+      "kec_id": null,
+      "kecamatan": null,
+      "kel_id": null,
+      "kelurahan": null,
+      "rw": null,
+      "status": 0,
+      "status_label": "Aktif",
+      "author_id": 1,
+      "author": {
+        "id": 1,
+        "name": "Administrator"
+      },
+      "category_id": 5,
+      "category": {
+        "id": 5,
+        "name": "Administrasi"
+      },
+      "created_at": 1556079159,
+      "updated_at": 1556079159
+    }
+  ],
   "upload": {
     "photo_url": "http://103.122.5.71/api/storage/image/avatars/Lv9rvmvCMHt09yEbd30ggPl4cR81UJcH.jpg"
   }
