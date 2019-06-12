@@ -11,6 +11,7 @@ import userRouter from './modules/user'
 import nomorPentingRouter from './modules/nomorPenting'
 import broadcastRouter from './modules/broadcast'
 import aspirationRouter from './modules/aspiration'
+import pollingRouter from './modules/polling'
 
 /** note: sub-menu only appear when children.length>=1
  *  detail see  https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -116,6 +117,7 @@ export const asyncRoutes = [
   nomorPentingRouter,
   broadcastRouter,
   aspirationRouter,
+  pollingRouter,
 
   {
     path: '/permission',
