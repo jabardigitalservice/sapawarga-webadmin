@@ -14,11 +14,11 @@ class PollingTest extends \Codeception\Test\Unit
 
         $model->name        = 'test test';
         $model->description = 'test test';
+        $model->excerpt     = 'test test';
+        $model->question    = 'test test';
         $model->status      = 10;
-        $model->kabkota_id  = 1;
-        $model->kec_id      = 1;
-        $model->kel_id      = 1;
-        $model->author_id   = 1;
+        $model->start_date  = '2019-01-01';
+        $model->end_date    = '2019-12-01';
         $model->category_id = 1;
 
         $this->assertTrue($model->validate());
@@ -33,11 +33,11 @@ class PollingTest extends \Codeception\Test\Unit
         // Mandatory
         $this->assertTrue($model->hasErrors('name'));
         $this->assertTrue($model->hasErrors('description'));
+        $this->assertTrue($model->hasErrors('excerpt'));
+        $this->assertTrue($model->hasErrors('question'));
         $this->assertTrue($model->hasErrors('status'));
-        $this->assertTrue($model->hasErrors('kabkota_id'));
-        $this->assertTrue($model->hasErrors('kec_id'));
-        $this->assertTrue($model->hasErrors('kel_id'));
-        $this->assertTrue($model->hasErrors('author_id'));
+        $this->assertTrue($model->hasErrors('start_date'));
+        $this->assertTrue($model->hasErrors('end_date'));
         $this->assertTrue($model->hasErrors('category_id'));
     }
 
@@ -85,7 +85,7 @@ class PollingTest extends \Codeception\Test\Unit
 
         $model->validate();
 
-        $this->assertTrue($model->hasErrors('name'));
+        $this->assertFalse($model->hasErrors('name'));
     }
 
     public function testNameMaxCharacters()
@@ -154,7 +154,7 @@ class PollingTest extends \Codeception\Test\Unit
 
         $model->validate();
 
-        $this->assertTrue($model->hasErrors('description'));
+        $this->assertFalse($model->hasErrors('description'));
     }
 
     public function testDescriptionMaxCharacters()
@@ -162,9 +162,7 @@ class PollingTest extends \Codeception\Test\Unit
         $model = new Polling();
 
         // max 255 chars
-        $model->description = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. 
-            Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. 
-            Donec quam felis, ultricies nec, pellentesque eu, pretium quis,';
+        $model->description = file_get_contents(__DIR__ . '/../../data/1000chars.txt');
 
         $model->validate();
 
@@ -223,7 +221,7 @@ class PollingTest extends \Codeception\Test\Unit
 
         $model->validate();
 
-        $this->assertTrue($model->hasErrors('excerpt'));
+        $this->assertFalse($model->hasErrors('excerpt'));
     }
 
     public function testExcerptMaxCharacters()
@@ -320,7 +318,7 @@ class PollingTest extends \Codeception\Test\Unit
     {
         $model = new Polling();
 
-        $model->status = 1;
+        $model->status = 10;
 
         $model->validate();
 
@@ -330,6 +328,13 @@ class PollingTest extends \Codeception\Test\Unit
     public function testStatusInputAllowedInteger()
     {
         $model = new Polling();
+
+        // Status = DELETED
+        $model->status = -1;
+
+        $model->validate();
+
+        $this->assertFalse($model->hasErrors('status'));
 
         // Status = INACTIVE
         $model->status = 0;
