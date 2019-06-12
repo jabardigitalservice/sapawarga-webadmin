@@ -222,11 +222,11 @@ export default {
 
     const validatorCoordinateRequired = (rule, value, callback) => {
       if (_.isEmpty(this.user.coordinates[0]) === false && _.isEmpty(this.user.coordinates[1]) === true) {
-        callback(new Error('Koordinat Lokasi (Longitude) harus diisi.'))
+        callback(new Error('Koordinat Lokasi harus diisi.'))
       }
 
       if (_.isEmpty(this.user.coordinates[0]) === true && _.isEmpty(this.user.coordinates[1]) === false) {
-        callback(new Error('Koordinat Lokasi (Latitude) harus diisi.'))
+        callback(new Error('Koordinat Lokasi harus diisi.'))
       }
 
       callback()
@@ -234,11 +234,23 @@ export default {
 
     const validatorCoordinateInputNumber = (rule, value, callback) => {
       if (_.isEmpty(this.user.coordinates[0]) === false && validCoordinate(this.user.coordinates[0]) === false) {
-        callback(new Error('Koordinat Lokasi (Latitude) hanya boleh menggunakan angka, titik, - atau +'))
+        callback(new Error('Koordinat Lokasi hanya boleh menggunakan angka, titik, - atau +'))
       }
 
       if (_.isEmpty(this.user.coordinates[1]) === false && validCoordinate(this.user.coordinates[1]) === false) {
-        callback(new Error('Koordinat Lokasi (Longitude) hanya boleh menggunakan angka, titik, - atau +'))
+        callback(new Error('Koordinat Lokasi hanya boleh menggunakan angka, titik, - atau +'))
+      }
+
+      callback()
+    }
+
+    const validatorCoordinateFinite = (rule, value, callback) => {
+      if (isFinite(this.user.coordinates[0]) === false) {
+        callback(new Error('Koordinat Lokasi tidak sesuai'))
+      }
+
+      if (isFinite(this.user.coordinates[1]) === false) {
+        callback(new Error('Koordinat Lokasi tidak sesuai'))
       }
 
       callback()
@@ -478,7 +490,8 @@ export default {
         ],
         coordinates: [
           { validator: validatorCoordinateRequired, trigger: 'change' },
-          { validator: validatorCoordinateInputNumber, trigger: 'change' }
+          { validator: validatorCoordinateInputNumber, trigger: 'change' },
+          { validator: validatorCoordinateFinite, trigger: 'change' }
         ],
         kabkota: [
           {

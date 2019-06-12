@@ -99,7 +99,7 @@ class Aspirasi extends \yii\db\ActiveRecord
             ['title', 'string', 'min' => 5],
             ['title', InputCleanValidator::class],
             ['description', 'string', 'max' => 1024 * 3],
-            ['description', 'string', 'min' => 5],
+            // ['description', 'string', 'min' => 5],
             ['description', InputCleanValidator::class],
             [
                 'rw',

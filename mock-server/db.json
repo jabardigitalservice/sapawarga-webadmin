@@ -594,6 +594,137 @@
       "updated_at": 1556079159
     }
   ],
+  "polling": [
+    {
+      "id": 1,
+      "name": "Siapakah Presiden pilihan Anda?",
+      "description": "Qui ut magni odit dolor ut. Quia ea sed eum quisquam. Consectetur sed quis voluptatum harum ut accusamus sint. Voluptatibus tempore quibusdam esse sit repellat porro deleniti.",
+      "excerpt": "Qui ut magni odit dolor ut. Quia ea sed eum quisquam.",
+      "question": "Siapakah Presiden pilihan Anda?",
+      "start_date": "2019-06-01",
+      "end_date": "2019-08-01",
+      "category_id": 1,
+      "category": {
+        "id": 1,
+        "name": "Test Category"
+      },
+      "kabkota_id": 22,
+      "kabkota": {
+        "id": 22,
+        "name": "Kota Bandung"
+      },
+      "kec_id": 446,
+      "kecamatan": {
+        "id": 446,
+        "name": "Bandung Wetan"
+      },
+      "kel_id": null,
+      "kelurahan": null,
+      "rw": null,
+      "votes_count": 30,
+      "answers": [
+        {
+          "id": 1,
+          "body": "Joko Widodo"
+        },
+        {
+          "id": 2,
+          "body": "Prabowo Subianto"
+        }
+      ],
+      "meta": null,
+      "status": 10,
+      "status_label": "Aktif",
+      "created_at": 1554706345,
+      "updated_at": 1554706345
+    },
+    {
+      "id": 2,
+      "name": "Bagaimana layanan Pemprov Jabar?",
+      "description": "Qui ut magni odit dolor ut. Quia ea sed eum quisquam. Consectetur sed quis voluptatum harum ut accusamus sint. Voluptatibus tempore quibusdam esse sit repellat porro deleniti.",
+      "excerpt": "Qui ut magni odit dolor ut. Quia ea sed eum quisquam.",
+      "question": "Bagaimana layanan Pemprov Jabar?",
+      "start_date": "2019-06-01",
+      "end_date": "2019-08-01",
+      "category_id": 1,
+      "category": {
+        "id": 1,
+        "name": "Test Category"
+      },
+      "kabkota_id": 22,
+      "kabkota": {
+        "id": 22,
+        "name": "Kota Bandung"
+      },
+      "kec_id": 446,
+      "kecamatan": {
+        "id": 446,
+        "name": "Bandung Wetan"
+      },
+      "kel_id": null,
+      "kelurahan": null,
+      "rw": null,
+      "votes_count": 20,
+      "answers": [
+        {
+          "id": 3,
+          "body": "Memuaskan"
+        },
+        {
+          "id": 4,
+          "body": "Tidak Memuaskan"
+        }
+      ],
+      "meta": null,
+      "status": 10,
+      "status_label": "Aktif",
+      "created_at": 1554706345,
+      "updated_at": 1554706345
+    },
+    {
+      "id": 3,
+      "name": "Murahkah harga barang kebutuhan pokok saat ini?",
+      "description": "Qui ut magni odit dolor ut. Quia ea sed eum quisquam. Consectetur sed quis voluptatum harum ut accusamus sint. Voluptatibus tempore quibusdam esse sit repellat porro deleniti.",
+      "excerpt": "Qui ut magni odit dolor ut. Quia ea sed eum quisquam.",
+      "question": "Murahkah harga barang kebutuhan pokok saat ini?",
+      "start_date": "2019-06-01",
+      "end_date": "2019-08-01",
+      "category_id": 1,
+      "category": {
+        "id": 1,
+        "name": "Test Category"
+      },
+      "kabkota_id": 22,
+      "kabkota": {
+        "id": 22,
+        "name": "Kota Bandung"
+      },
+      "kec_id": 446,
+      "kecamatan": {
+        "id": 446,
+        "name": "Bandung Wetan"
+      },
+      "kel_id": null,
+      "kelurahan": null,
+      "rw": null,
+      "votes_count": 10,
+      "answers": [
+        {
+          "id": 5,
+          "body": "Terjangkau"
+        },
+        {
+          "id": 6,
+          "body": "Tidak Terjangkau"
+        }
+      ],
+      "meta": null,
+      "status": 10,
+      "status_label": "Aktif",
+      "created_at": 1554706345,
+      "updated_at": 1554706345
+    }
+  ],
   "upload": {
     "photo_url": "http://103.122.5.71/api/storage/image/avatars/Lv9rvmvCMHt09yEbd30ggPl4cR81UJcH.jpg"
   }
