@@ -34,6 +34,10 @@
             <el-table-column prop="title" width="180" />
             <el-table-column prop="content" />
           </el-table>
+          <el-table :data="approvalNote" :show-header="false" style="width: 100%" :row-class-name="tableRowClassName">
+            <el-table-column prop="title" width="180" />
+            <el-table-column prop="content" />
+          </el-table>
         </el-card>
         <el-button v-if="status" class="button-send" type="primary" @click="actionApprove">{{ $t('crud.accept') }}</el-button>
         <el-button v-if="status" class="button-send" type="info" @click="actionReject">{{ $t('crud.reject') }}</el-button>
