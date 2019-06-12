@@ -47,6 +47,10 @@ class PollingCest
             'success' => true,
             'status'  => 200,
         ]);
+
+        $data = $I->grabDataFromResponseByJsonPath('$.data');
+
+        $I->assertEquals('Siapakah Presiden pilihan Anda?', $data['name']);
     }
 
     public function getStaffShowTest(ApiTester $I)
