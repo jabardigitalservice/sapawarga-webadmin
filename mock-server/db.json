@@ -600,6 +600,9 @@
       "name": "Siapakah Presiden pilihan Anda?",
       "description": "Qui ut magni odit dolor ut. Quia ea sed eum quisquam. Consectetur sed quis voluptatum harum ut accusamus sint. Voluptatibus tempore quibusdam esse sit repellat porro deleniti.",
       "excerpt": "Qui ut magni odit dolor ut. Quia ea sed eum quisquam.",
+      "question": "Siapakah Presiden pilihan Anda?",
+      "start_date": "2019-06-01",
+      "end_date": "2019-08-01",
       "category_id": 1,
       "category": {
         "id": 1,
@@ -640,6 +643,9 @@
       "name": "Bagaimana layanan Pemprov Jabar?",
       "description": "Qui ut magni odit dolor ut. Quia ea sed eum quisquam. Consectetur sed quis voluptatum harum ut accusamus sint. Voluptatibus tempore quibusdam esse sit repellat porro deleniti.",
       "excerpt": "Qui ut magni odit dolor ut. Quia ea sed eum quisquam.",
+      "question": "Bagaimana layanan Pemprov Jabar?",
+      "start_date": "2019-06-01",
+      "end_date": "2019-08-01",
       "category_id": 1,
       "category": {
         "id": 1,
@@ -680,6 +686,9 @@
       "name": "Murahkah harga barang kebutuhan pokok saat ini?",
       "description": "Qui ut magni odit dolor ut. Quia ea sed eum quisquam. Consectetur sed quis voluptatum harum ut accusamus sint. Voluptatibus tempore quibusdam esse sit repellat porro deleniti.",
       "excerpt": "Qui ut magni odit dolor ut. Quia ea sed eum quisquam.",
+      "question": "Murahkah harga barang kebutuhan pokok saat ini?",
+      "start_date": "2019-06-01",
+      "end_date": "2019-08-01",
       "category_id": 1,
       "category": {
         "id": 1,
