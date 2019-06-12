@@ -1,0 +1,35 @@
+import Layout from '@/layout'
+
+const pollingRouter = {
+  name: 'Polling',
+  path: '/polling',
+  component: Layout,
+  redirect: '/polling/index',
+  meta: {
+    title: 'polling-manage',
+    roles: ['admin'],
+    icon: 'peoples'
+  },
+  children: [
+    {
+      name: 'polling-list',
+      path: 'index',
+      component: () => import('@/views/polling/list'),
+      meta: {
+        title: 'polling-list',
+        roles: ['admin']
+      }
+    },
+    {
+      name: 'polling-create',
+      path: 'create',
+      component: () => import('@/views/polling/create'),
+      meta: {
+        title: 'polling-create',
+        roles: ['admin']
+      }
+    }
+  ]
+}
+
+export default pollingRouter
