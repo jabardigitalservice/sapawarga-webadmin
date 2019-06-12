@@ -108,6 +108,7 @@ export default {
         }
         this.images = attachments
         this.defaultImage = attachments ? attachments[0].url : null
+        this.note = approval_note
 
         this.author = [
           {
