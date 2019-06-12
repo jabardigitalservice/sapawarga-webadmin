@@ -142,11 +142,31 @@ export default {
             title: 'Status',
             content: (status === 5 ? <el-tag type='warning'>{status_label}</el-tag> : status === 3 ? <el-tag type='danger'>{status_label}</el-tag> : status === 10 ? <el-tag type='success'>{status_label}</el-tag> : <el-tag type='info'>{status_label}</el-tag>)
           },
+          // {
+          //   title: 'Keterangan',
+          //   content: (status === 3 || (approval_note && status === 5) ? approval_note : '-')
+          // }
+        ]
+
+        this.approvalNote = [
           {
             title: 'Keterangan',
             content: (status === 3 || (approval_note && status === 5) ? approval_note : '-')
-          }
+          },
+          {
+            title: 'Keterangan',
+            content: (status === 3 || (approval_note && status === 5) ? approval_note : '-')
+          },
+          {
+            title: 'Keterangan',
+            content: (status === 3 || (approval_note && status === 5) ? approval_note : '-')
+          },
+          {
+            title: 'Keterangan',
+            content: (status === 3 || (approval_note && status === 5) ? approval_note : '-')
+          },
         ]
+        
       })
     },
 
