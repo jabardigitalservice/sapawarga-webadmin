@@ -88,14 +88,6 @@ export default {
     imageGallery(index) {
       this.defaultImage = this.images[index].url
     },
-    tableRowClassName({row, rowIndex}) {
-        if (rowIndex === 0) {
-          return 'warning-row';
-        } else if (rowIndex === 1) {
-          return 'success-row';
-        }
-        return '';
-      },
     getDetail() {
       fetchRecord(this.id).then(response => {
         const { title, created_at, author, category, description, status, status_label, attachments, approval_note } = response.data
@@ -141,32 +133,15 @@ export default {
           {
             title: 'Status',
             content: (status === 5 ? <el-tag type='warning'>{status_label}</el-tag> : status === 3 ? <el-tag type='danger'>{status_label}</el-tag> : status === 10 ? <el-tag type='success'>{status_label}</el-tag> : <el-tag type='info'>{status_label}</el-tag>)
-          },
-          // {
-          //   title: 'Keterangan',
-          //   content: (status === 3 || (approval_note && status === 5) ? approval_note : '-')
-          // }
+          }
         ]
 
         this.approvalNote = [
           {
             title: 'Keterangan',
             content: (status === 3 || (approval_note && status === 5) ? approval_note : '-')
-          },
-          {
-            title: 'Keterangan',
-            content: (status === 3 || (approval_note && status === 5) ? approval_note : '-')
-          },
-          {
-            title: 'Keterangan',
-            content: (status === 3 || (approval_note && status === 5) ? approval_note : '-')
-          },
-          {
-            title: 'Keterangan',
-            content: (status === 3 || (approval_note && status === 5) ? approval_note : '-')
-          },
+          }
         ]
-        
       })
     },
 
@@ -228,14 +203,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.warning-row {
-    background: oldlace;
-  }
-
-.success-row {
-    background: #f0f9eb;
-  }
-
 .aspiration-date {
   float: right;
   font-size: 14px;
