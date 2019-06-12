@@ -4,7 +4,7 @@ namespace app\models;
 
 use yii\base\Model;
 use sngrl\PhpFirebaseCloudMessaging\Client;
-use sngrl\PhpFirebaseCloudMessaging\Message;
+use sngrl\PhpFirebaseCloudMessaging\Message as PushMessage;
 use sngrl\PhpFirebaseCloudMessaging\Recipient\Topic;
 use sngrl\PhpFirebaseCloudMessaging\Notification as PushNotification;
 
@@ -14,7 +14,7 @@ use sngrl\PhpFirebaseCloudMessaging\Notification as PushNotification;
  * @property mixed $data
  * @property string $topic
  */
-class Notification extends Model
+class Message extends Model
 {
     /** @var string */
     public $title;
@@ -86,7 +86,7 @@ class Notification extends Model
         $notification->setSound('default');
         $notification->setClickAction('FCM_PLUGIN_ACTIVITY');
 
-        $message = new Message();
+        $message = new PushMessage();
         $message->setPriority('high');
         $message->addRecipient(new Topic($this->topic));
         $message

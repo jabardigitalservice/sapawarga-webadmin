@@ -228,7 +228,7 @@ class Broadcast extends \yii\db\ActiveRecord
                     $topic = (string) $this->kabkota_id;
                 }
 
-                $notifModel = new Notification();
+                $notifModel = new Message();
                 $notifModel->setAttributes([
                     'title'         => $this->title,
                     'description'   => $this->description,
