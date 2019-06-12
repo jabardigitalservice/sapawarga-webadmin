@@ -34,6 +34,10 @@
             <el-table-column prop="title" width="180" />
             <el-table-column prop="content" />
           </el-table>
+          <el-table v-if="note !== null" :data="approvalNote" :show-header="false" style="width: 100%">
+            <el-table-column prop="title" width="180" />
+            <el-table-column prop="content" />
+          </el-table>
         </el-card>
         <el-button v-if="status" class="button-send" type="primary" @click="actionApprove">{{ $t('crud.accept') }}</el-button>
         <el-button v-if="status" class="button-send" type="info" @click="actionReject">{{ $t('crud.reject') }}</el-button>
@@ -55,10 +59,12 @@ export default {
       status: false,
       author: [],
       aspirationDetail: [],
+      approvalNote: [],
       imageNone: require('@/assets/none.png'),
       defaultImage: null,
       images: [],
-      index: null
+      index: null,
+      note: null
     }
   },
   computed: {
@@ -94,6 +100,7 @@ export default {
         }
         this.images = attachments
         this.defaultImage = attachments ? attachments[0].url : null
+        this.note = approval_note
 
         this.author = [
           {
@@ -126,7 +133,10 @@ export default {
           {
             title: 'Status',
             content: (status === 5 ? <el-tag type='warning'>{status_label}</el-tag> : status === 3 ? <el-tag type='danger'>{status_label}</el-tag> : status === 10 ? <el-tag type='success'>{status_label}</el-tag> : <el-tag type='info'>{status_label}</el-tag>)
-          },
+          }
+        ]
+
+        this.approvalNote = [
           {
             title: 'Keterangan',
             content: (status === 3 || (approval_note && status === 5) ? approval_note : '-')
