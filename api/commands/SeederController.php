@@ -39,6 +39,9 @@ class SeederController extends Controller
         echo 'Seeding Notifications...' . PHP_EOL;
         $this->actionNotification();
 
+        echo 'Seeding Polling...' . PHP_EOL;
+        $this->actionPolling();
+
         Yii::$app->db->createCommand()->checkIntegrity(true)->execute();
     }
 
@@ -146,6 +149,13 @@ class SeederController extends Controller
         Yii::$app->db->createCommand('TRUNCATE notifications')->execute();
 
         $sql = file_get_contents(__DIR__ . '/../migrations/seeder/notification.sql');
+    }
+
+    public function actionPolling()
+    {
+        Yii::$app->db->createCommand('TRUNCATE polling')->execute();
+
+        $sql = file_get_contents(__DIR__ . '/../migrations/seeder/polling.sql');
         Yii::$app->db->createCommand($sql)->execute();
     }
 

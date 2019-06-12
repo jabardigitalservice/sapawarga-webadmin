@@ -48,6 +48,15 @@ class m190612_065226_create_table_polling extends CustomMigration
         ]);
 
         $this->addForeignKey(
+            'fk-polling-category_id',
+            'polling',
+            'category_id',
+            'categories',
+            'id',
+            'CASCADE'
+        );
+
+        $this->addForeignKey(
             'fk-polling_answers-polling_id',
             'polling_answers',
             'polling_id',
