@@ -88,6 +88,14 @@ export default {
     imageGallery(index) {
       this.defaultImage = this.images[index].url
     },
+    tableRowClassName({row, rowIndex}) {
+        if (rowIndex === 0) {
+          return 'warning-row';
+        } else if (rowIndex === 1) {
+          return 'success-row';
+        }
+        return '';
+      },
     getDetail() {
       fetchRecord(this.id).then(response => {
         const { title, created_at, author, category, description, status, status_label, attachments, approval_note } = response.data
