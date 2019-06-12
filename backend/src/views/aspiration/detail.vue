@@ -34,7 +34,7 @@
             <el-table-column prop="title" width="180" />
             <el-table-column prop="content" />
           </el-table>
-          <el-table :data="approvalNote" :show-header="false" style="width: 100%" :row-class-name="tableRowClassName">
+          <el-table v-if="note !== null" :data="approvalNote" :show-header="false" style="width: 100%">
             <el-table-column prop="title" width="180" />
             <el-table-column prop="content" />
           </el-table>
