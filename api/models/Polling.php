@@ -74,7 +74,7 @@ class Polling extends \yii\db\ActiveRecord
                 'required',
             ],
             [['name', 'description', 'excerpt', 'question', 'rw', 'meta'], 'trim'],
-            [['name', 'excerpt'], 'string', 'max' => 255],
+            [['name', 'excerpt', 'question'], 'string', 'max' => 255],
             [['name', 'description', 'excerpt', 'question'], InputCleanValidator::class],
 
             ['description', 'string', 'max' => 1024 * 3],

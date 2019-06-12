@@ -92,14 +92,12 @@ class PollingTest extends \Codeception\Test\Unit
     {
         $model = new Polling();
 
-        // max 255 chars
-        $model->name = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. 
-            Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. 
-            Donec quam felis, ultricies nec, pellentesque eu, pretium quis,';
+        // allow 255 chars
+        $model->name = file_get_contents(__DIR__ . '/../../data/255chars.txt');
 
         $model->validate();
 
-        $this->assertTrue($model->hasErrors('name'));
+        $this->assertFalse($model->hasErrors('name'));
     }
 
     public function testNameNotSafe()
@@ -228,14 +226,12 @@ class PollingTest extends \Codeception\Test\Unit
     {
         $model = new Polling();
 
-        // max 255 chars
-        $model->excerpt = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. 
-            Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. 
-            Donec quam felis, ultricies nec, pellentesque eu, pretium quis,';
+        // allow 255 chars
+        $model->excerpt = file_get_contents(__DIR__ . '/../../data/255chars.txt');
 
         $model->validate();
 
-        $this->assertTrue($model->hasErrors('excerpt'));
+        $this->assertFalse($model->hasErrors('excerpt'));
     }
 
     public function testExcerptNotSafe()
@@ -249,6 +245,72 @@ class PollingTest extends \Codeception\Test\Unit
         $this->assertTrue($model->hasErrors('excerpt'));
     }
 
+    public function testQuestionValid()
+    {
+        $model = new Polling();
+
+        $model->question = 'Ini adalah deskripsi aspirasi';
+
+        $model->validate();
+
+        $this->assertFalse($model->hasErrors('question'));
+    }
+
+    public function testQuestionNotEmpty()
+    {
+        $model = new Polling();
+
+        $model->question = '';
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('question'));
+    }
+
+    public function testQuestionTooLong()
+    {
+        $model = new Polling();
+
+        $model->question = file_get_contents(__DIR__ . '/../../data/1000chars.txt');
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('question'));
+    }
+
+    public function testQuestionMinCharacters()
+    {
+        $model = new Polling();
+
+        $model->question = 'Coba';
+
+        $model->validate();
+
+        $this->assertFalse($model->hasErrors('question'));
+    }
+
+    public function testQuestionMaxCharacters()
+    {
+        $model = new Polling();
+
+        // allow 255 chars
+        $model->question = file_get_contents(__DIR__ . '/../../data/255chars.txt');
+
+        $model->validate();
+
+        $this->assertFalse($model->hasErrors('question'));
+    }
+
+    public function testQuestionNotSafe()
+    {
+        $model = new Polling();
+
+        $model->question = '<script>alert()</script>';
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('question'));
+    }
 
     public function testAreaMustInteger()
     {
