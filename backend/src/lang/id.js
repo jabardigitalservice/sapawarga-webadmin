@@ -24,7 +24,8 @@ export default {
     'aspiration-detail': 'Detail Aspirasi',
     'polling-manage': 'Polling',
     'polling-list': 'Daftar Polling',
-    'polling-create': 'Tambah Polling'
+    'polling-create': 'Tambah Polling',
+    'polling-detail': 'Detail Polling'
   },
   crud: {
     'list-empty': 'Belum ada data.',
@@ -40,6 +41,7 @@ export default {
     'send': 'Kirim Pesan',
     'accept': 'Terima',
     'reject': 'Tolak',
+    'send-polling': 'Publikasikan Polling',
 
     'insert-row': 'Tambah Baris Baru',
     'delete-row': 'Hapus',
