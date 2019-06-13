@@ -425,6 +425,7 @@ class PollingTest extends \Codeception\Test\Unit
         $model = new Polling();
 
         $model->start_date = '2019-06-01';
+        $model->end_date   = '2019-09-01';
 
         $model->validate();
 
@@ -468,7 +469,8 @@ class PollingTest extends \Codeception\Test\Unit
     {
         $model = new Polling();
 
-        $model->end_date = '2019-06-01';
+        $model->start_date = '2019-06-01';
+        $model->end_date   = '2019-09-01';
 
         $model->validate();
 
@@ -529,7 +531,7 @@ class PollingTest extends \Codeception\Test\Unit
 
         $model->validate();
 
-        $this->assertTrue($model->hasErrors('end_date'));
+        $this->assertTrue($model->hasErrors('start_date'));
     }
 
     public function testCreate()
