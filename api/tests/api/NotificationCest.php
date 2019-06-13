@@ -129,7 +129,7 @@ class NotificationCest
     {
         $I->amStaff();
 
-        $I->sendGET("{$this->endpointNotification}?category_id=5");
+        $I->sendGET("{$this->endpointNotification}?category_id=14");
         $I->canSeeResponseCodeIs(200);
         $I->seeResponseIsJson();
 
@@ -139,15 +139,15 @@ class NotificationCest
         ]);
 
         $I->seeResponseContainsJson([
-            'category_id' => 5,
+            'category_id' => 14,
         ]);
 
         $I->cantSeeResponseContainsJson([
-            'category_id' => 6,
+            'category_id' => 15,
         ]);
 
         $I->cantSeeResponseContainsJson([
-            'category_id' => 7,
+            'category_id' => 16,
         ]);
     }
 
