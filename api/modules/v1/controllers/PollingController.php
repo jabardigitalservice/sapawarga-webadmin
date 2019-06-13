@@ -39,10 +39,6 @@ class PollingController extends ActiveController
                 'create'   => ['post'],
                 'update'   => ['put'],
                 'delete'   => ['delete'],
-                'public'   => ['get'],
-                'approval' => ['post'],
-                'likes'    => ['post'],
-                'me'       => ['get'],
             ],
         ];
 
@@ -68,16 +64,16 @@ class PollingController extends ActiveController
         // setup access
         $behaviors['access'] = [
             'class' => AccessControl::className(),
-            'only'  => ['index', 'view', 'create', 'update', 'delete', 'approval', 'likes', 'me'],
+            'only'  => ['index', 'view', 'create', 'update', 'delete'],
             'rules' => [
                 [
                     'allow'   => true,
-                    'actions' => ['index', 'view', 'create', 'update', 'delete', 'me', 'likes', 'approval'],
+                    'actions' => ['index', 'view', 'create', 'update', 'delete'],
                     'roles'   => ['admin', 'manageSettings'],
                 ],
                 [
                     'allow'   => true,
-                    'actions' => ['index', 'view', 'create', 'update', 'delete', 'me', 'likes'],
+                    'actions' => ['index', 'view'],
                     'roles'   => ['user', 'staffRW'],
                 ],
             ],
@@ -101,14 +97,42 @@ class PollingController extends ActiveController
         return $actions;
     }
 
+    /**
+     * @return Polling|array
+     * @throws ServerErrorHttpException
+     * @throws \yii\base\InvalidConfigException
+     */
     public function actionCreate()
     {
-        //
+        $model = new Polling();
+
+        $model->load(Yii::$app->getRequest()->getBodyParams(), '');
+
+        if ($model->validate() === false) {
+            $response = Yii::$app->getResponse();
+            $response->setStatusCode(422);
+
+            return $model->getErrors();
+        }
+
+        if ($model->save()) {
+            $response = Yii::$app->getResponse();
+            $response->setStatusCode(201);
+
+            return $model;
+        }
+
+        throw new ServerErrorHttpException('Failed to create the object for unknown reason.');
     }
 
     public function actionUpdate($id)
     {
-        //
+        $model = $this->findModel($id);
+
+        $response = Yii::$app->getResponse();
+        $response->setStatusCode(200);
+
+        return $model;
     }
 
     /**
@@ -138,9 +162,7 @@ class PollingController extends ActiveController
      */
     public function checkAccess($action, $model = null, $params = [])
     {
-        if (in_array($action, ['update', 'delete']) && $model->author_id !== Yii::$app->user->getId()) {
-            throw new ForbiddenHttpException();
-        }
+        //
     }
 
     /**

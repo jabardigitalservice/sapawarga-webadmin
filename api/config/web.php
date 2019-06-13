@@ -199,6 +199,17 @@ $config = [
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',
+                    'controller' => 'v1/polling',
+                    'pluralize' => false,
+                    'tokens' => [
+                        '{id}' => '<id:\d+>',
+                    ],
+                    'extraPatterns' => [
+                        //
+                    ]
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
                     'controller' => 'v1/notification',
                     'tokens' => [
                         '{id}' => '<id:\d+>',
