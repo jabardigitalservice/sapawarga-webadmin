@@ -18,7 +18,7 @@ class AspirasiPhotoForm extends AttachmentForm
                 'file',
                 'file',
                 'skipOnEmpty' => false,
-                'extensions'  => 'png, jpg, jpeg',
+                'mimeTypes'   => 'image/jpeg, image/jpg, image/png',
                 'maxSize'     => $uploadMaxSize,
             ],
         ];
