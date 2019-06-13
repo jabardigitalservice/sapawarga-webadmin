@@ -28,6 +28,16 @@ const pollingRouter = {
         title: 'polling-create',
         roles: ['admin']
       }
+    },
+    {
+      name: 'polling-detail',
+      path: 'detail/:id',
+      component: () => import('@/views/polling/detail'),
+      hidden: true,
+      meta: {
+        title: 'polling-detail',
+        roles: ['admin']
+      }
     }
   ]
 }
