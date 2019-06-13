@@ -10,7 +10,7 @@ export function fetchList(query) {
 
 export function fetchRecord(id) {
   return request({
-    url: `/polling/${id}`,
+    url: `http://35.247.135.93:3000/api/v1/polling/${id}`,
     method: 'get'
   })
 }
