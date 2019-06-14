@@ -15,6 +15,12 @@ class NotificationTest extends \Codeception\Test\Unit
         $model->title       = 'test';
         $model->description = 'test';
 
+        $model->kabkota_id  = 1;
+        $model->kec_id      = 1;
+        $model->kel_id      = 1;
+        $model->rw          = '001';
+        $model->status      = 10;
+
         $this->assertTrue($model->validate());
     }
 
@@ -25,9 +31,22 @@ class NotificationTest extends \Codeception\Test\Unit
         $model->title       = null;
         $model->description = null;
 
+        $model->kabkota_id  = null;
+        $model->kec_id      = null;
+        $model->kel_id      = null;
+        $model->rw          = null;
+        $model->status      = null;
+
         $this->assertFalse($model->validate());
 
         $this->assertTrue($model->hasErrors('title'));
+        $this->assertTrue($model->hasErrors('status'));
+
+        $this->assertFalse($model->hasErrors('description'));
+        $this->assertFalse($model->hasErrors('kabkota_id'));
+        $this->assertFalse($model->hasErrors('kec_id'));
+        $this->assertFalse($model->hasErrors('kel_id'));
+        $this->assertFalse($model->hasErrors('rw'));
     }
 
     public function testTitleTooLong()
@@ -52,5 +71,25 @@ class NotificationTest extends \Codeception\Test\Unit
         $model->validate();
 
         $this->assertFalse($model->hasErrors('title'));
+    }
+
+    public function testRWValidation()
+    {
+        $model       = new Notification();
+        $model->rw   = '1';
+        $model->validate();
+        $this->assertTrue($model->hasErrors('rw'));
+
+        $model->rw   = '0001';
+        $model->validate();
+        $this->assertTrue($model->hasErrors('rw'));
+
+        $model->rw   = '_a1A.';
+        $model->validate();
+        $this->assertTrue($model->hasErrors('rw'));
+
+        $model->rw   = '001';
+        $model->validate();
+        $this->assertFalse($model->hasErrors('rw'));
     }
 }

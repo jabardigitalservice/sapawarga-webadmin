@@ -12,4 +12,7 @@ VALUES
     ('aspirasi','Sumber Daya Manusia',NULL,10,1557803314,1557803314),
     ('aspirasi','Ekonomi',NULL,10,1557803314,1557803314),
     ('aspirasi','Sosial dan Budaya',NULL,10,1557803314,1557803314),
-    ('phonebook','Sosial',NULL,10,1557803314,1557803314);
+    ('phonebook','Sosial',NULL,10,1557803314,1557803314),
+    ('notification','Survey Terbaru',NULL,10,1557803314,1557803314),
+    ('notification','Polling Terbaru',NULL,10,1557803314,1557803314),
+    ('notification','Update Aplikasi',NULL,10,1557803314,1557803314);

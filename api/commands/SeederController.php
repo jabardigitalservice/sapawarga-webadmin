@@ -36,6 +36,9 @@ class SeederController extends Controller
         echo 'Seeding Aspirasi...' . PHP_EOL;
         $this->actionAspirasi();
 
+        echo 'Seeding Notifications...' . PHP_EOL;
+        $this->actionNotification();
+
         Yii::$app->db->createCommand()->checkIntegrity(true)->execute();
     }
 
@@ -135,6 +138,14 @@ class SeederController extends Controller
         Yii::$app->db->createCommand('TRUNCATE aspirasi')->execute();
 
         $sql = file_get_contents(__DIR__ . '/../migrations/seeder/aspirasi.sql');
+        Yii::$app->db->createCommand($sql)->execute();
+    }
+
+    public function actionNotification()
+    {
+        Yii::$app->db->createCommand('TRUNCATE notifications')->execute();
+
+        $sql = file_get_contents(__DIR__ . '/../migrations/seeder/notification.sql');
         Yii::$app->db->createCommand($sql)->execute();
     }
 

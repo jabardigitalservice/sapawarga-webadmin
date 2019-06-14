@@ -2,28 +2,67 @@
 
 namespace app\models;
 
-use yii\base\Model;
-use sngrl\PhpFirebaseCloudMessaging\Client;
-use sngrl\PhpFirebaseCloudMessaging\Message;
-use sngrl\PhpFirebaseCloudMessaging\Recipient\Topic;
-use sngrl\PhpFirebaseCloudMessaging\Notification as PushNotification;
+use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
+ * This is the model class for table "notifications".
+ *
+ * @property int $id
+ * @property int $author_id
+ * @property int $category_id
  * @property string $title
  * @property string $description
- * @property mixed $data
- * @property string $topic
+ * @property int $kabkota_id
+ * @property int $kec_id
+ * @property int $kel_id
+ * @property string $rw
+ * @property mixed $meta
+ * @property int $status
  */
-class Notification extends Model
+class Notification extends \yii\db\ActiveRecord
 {
-    /** @var string */
-    public $title;
-    /** @var string */
-    public $description;
-    /** @var array */
+    const STATUS_DELETED = -1;
+    const STATUS_DRAFT = 0;
+    const STATUS_PUBLISHED = 10;
+
+    const CATEGORY_TYPE = 'notification';
+
+    /** @var  array push notification metadata */
     public $data;
-    /** @var string */
-    public $topic;
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function tableName()
+    {
+        return 'notifications';
+    }
+
+    public function getAuthor()
+    {
+        return $this->hasOne(User::class, ['id' => 'author_id']);
+    }
+
+    public function getCategory()
+    {
+        return $this->hasOne(Category::class, ['id' => 'category_id']);
+    }
+
+    public function getKelurahan()
+    {
+        return $this->hasOne(Area::className(), ['id' => 'kel_id']);
+    }
+
+    public function getKecamatan()
+    {
+        return $this->hasOne(Area::className(), ['id' => 'kec_id']);
+    }
+
+    public function getKabkota()
+    {
+        return $this->hasOne(Area::className(), ['id' => 'kabkota_id']);
+    }
 
     /**
      * {@inheritdoc}
@@ -31,68 +70,196 @@ class Notification extends Model
     public function rules()
     {
         return [
-            ['title', 'required'],
-            [['title', 'description', 'data'], 'trim'],
+            [['title', 'status'], 'required'],
+            [['title', 'description', 'rw', 'meta'], 'trim'],
             ['title', 'string', 'max' => 255],
-            ['topic', 'default', 'value' => 'all'], // Default value for topic, send to all users
-            [['description', 'data'], 'default'],
+            ['rw', 'string', 'length' => 3],
+            [
+                'rw',
+                'match',
+                'pattern' => '/^[0-9]{3}$/',
+                'message' => Yii::t('app', 'error.rw.pattern')
+            ],
+            ['rw', 'default'],
+            [['author_id', 'category_id', 'kabkota_id', 'kec_id', 'kel_id', 'status'], 'integer'],
+            ['category_id', 'validateCategoryID'],
+            ['meta', 'default'],
         ];
     }
 
     public function fields()
     {
         $fields = [
+            'id',
+            'author_id',
+            'author' => function () {
+                return [
+                    'id'            => $this->author->id,
+                    'name'          => $this->author->name,
+                    'role_label'    => $this->author->getRoleLabel(),
+                ];
+            },
+            'category_id',
+            'category' => function () {
+                return [
+                    'id'   => $this->category->id,
+                    'name' => $this->category->name,
+                ];
+            },
             'title',
             'description',
-            'data',
-            'topic',
+            'kabkota_id',
+            'kabkota' => function () {
+                if ($this->kabkota) {
+                    return [
+                        'id'   => $this->kabkota->id,
+                        'name' => $this->kabkota->name,
+                    ];
+                } else {
+                    return null;
+                }
+            },
+            'kec_id',
+            'kecamatan' => function () {
+                if ($this->kecamatan) {
+                    return [
+                        'id'   => $this->kecamatan->id,
+                        'name' => $this->kecamatan->name,
+                    ];
+                } else {
+                    return null;
+                }
+            },
+            'kel_id',
+            'kelurahan' => function () {
+                if ($this->kelurahan) {
+                    return [
+                        'id'   => $this->kelurahan->id,
+                        'name' => $this->kelurahan->name,
+                    ];
+                } else {
+                    return null;
+                }
+            },
+            'rw',
+            'meta',
+            'status',
+            'status_label' => function () {
+                $statusLabel = '';
+                switch ($this->status) {
+                    case self::STATUS_PUBLISHED:
+                        $statusLabel = Yii::t('app', 'status.published');
+                        break;
+                    case self::STATUS_DRAFT:
+                        $statusLabel = Yii::t('app', 'status.draft');
+                        break;
+                    case self::STATUS_DELETED:
+                        $statusLabel = Yii::t('app', 'status.deleted');
+                        break;
+                }
+                return $statusLabel;
+            },
+            'data' => function () {
+                return $this->data;
+            },
+            'created_at',
+            'updated_at',
         ];
+
         return $fields;
     }
 
-    // Static functions
-    public static function subscribe($pushToken, $areaIds)
+    /** @inheritdoc */
+    public function behaviors()
     {
-        $server_key = getenv('FCM_KEY');
-        $client = new Client();
-        $client->setApiKey($server_key);
-        $client->injectGuzzleHttpClient(new \GuzzleHttp\Client());
-
-        foreach ($areaIds as $topic) {
-            $response = $client->addTopicSubscription($topic, [$pushToken]);
-        }
+        return [
+            [
+                'class'              => TimestampBehavior::className(),
+                'createdAtAttribute' => 'created_at',
+                'updatedAtAttribute' => 'updated_at',
+                'value'              => time(),
+            ],
+        ];
     }
 
-    public static function unsubscribe($pushToken, $areaIds)
+    /** @inheritdoc */
+    public function beforeSave($insert)
     {
-        $server_key = getenv('FCM_KEY');
-        $client = new Client();
-        $client->setApiKey($server_key);
-        $client->injectGuzzleHttpClient(new \GuzzleHttp\Client());
+        $this->author_id = Yii::$app->user->getId();
 
-        foreach ($areaIds as $topic) {
-            $response = $client->removeTopicSubscription($topic, [$pushToken]);
-        }
+        return parent::beforeSave($insert);
     }
 
-    public function send()
+    public function afterSave($insert, $changedAttributes)
     {
-        $server_key = getenv('FCM_KEY');
-        $client = new Client();
-        $client->setApiKey($server_key);
-        $client->injectGuzzleHttpClient(new \GuzzleHttp\Client());
+        if (!YII_ENV_TEST) {
+            // Check condition for push notification
+            $isSendNotification = false;
+            if ($insert) {
+                $isSendNotification = $this->status == self::STATUS_PUBLISHED;
+            } else { // Update notification
+                if (array_key_exists('status', $changedAttributes)) {
+                    if ($this->status == self::STATUS_PUBLISHED) {
+                        $isSendNotification = true;
+                    }
+                }
+            }
 
-        $notification = new PushNotification($this->title, $this->description);
-        $notification->setSound('default');
-        $notification->setClickAction('FCM_PLUGIN_ACTIVITY');
+            if ($isSendNotification) {
+                $this->data = [
+                    'target'            => 'notification',
+                    'id'                => $this->id,
+                    'author'            => $this->author->name,
+                    'title'             => $this->title,
+                    'category_name'     => $this->category->name,
+                    'description'       => $this->description,
+                    'updated_at'        => $this->updated_at ?? time(),
+                    'push_notification' => true,
+                ];
+                // By default,  send notification to all users
+                $topic = 'all';
+                if ($this->kel_id && $this->rw) {
+                    $topic = "{$this->kel_id}_{$this->rw}";
+                } elseif ($this->kel_id) {
+                    $topic = (string) $this->kel_id;
+                } elseif ($this->kec_id) {
+                    $topic = (string) $this->kec_id;
+                } elseif ($this->kabkota_id) {
+                    $topic = (string) $this->kabkota_id;
+                }
 
-        $message = new Message();
-        $message->setPriority('high');
-        $message->addRecipient(new Topic($this->topic));
-        $message
-            ->setNotification($notification)
-            ->setData($this->data);
+                $notifModel = new Message();
+                $notifModel->setAttributes([
+                    'title'         => $this->title,
+                    'description'   => $this->description,
+                    'data'          => $this->data,
+                    'topic'         => $topic,
+                ]);
+                $notifModel->send();
+            }
+        }
 
-        $response = $client->send($message);
+        return parent::afterSave($insert, $changedAttributes);
+    }
+
+    /**
+     * Checks if category_id is current user's id
+     *
+     * @param $attribute
+     * @param $params
+     */
+    public function validateCategoryID($attribute, $params)
+    {
+        $request = Yii::$app->request;
+
+        if ($request->isPost || $request->isPut) {
+            $category_id = Category::find()
+                ->where(['id' => $this->$attribute])
+                ->andWhere(['type' => self::CATEGORY_TYPE]);
+
+            if ($category_id->count() <= 0) {
+                $this->addError($attribute, Yii::t('app', 'error.id.invalid'));
+            }
+        }
     }
 }
