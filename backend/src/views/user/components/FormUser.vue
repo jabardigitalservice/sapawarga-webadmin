@@ -245,11 +245,11 @@ export default {
     }
 
     const validatorCoordinateFinite = (rule, value, callback) => {
-      if (isFinite(this.user.coordinates[0]) === false) {
+      if (_.isEmpty(this.user.coordinates[0]) === false && isFinite(this.user.coordinates[0]) === false) {
         callback(new Error('Koordinat Lokasi tidak sesuai'))
       }
 
-      if (isFinite(this.user.coordinates[1]) === false) {
+      if (_.isEmpty(this.user.coordinates[1]) === false && isFinite(this.user.coordinates[1]) === false) {
         callback(new Error('Koordinat Lokasi tidak sesuai'))
       }
 
