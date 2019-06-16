@@ -15,7 +15,7 @@ VALUES
     ('phonebook','Sosial',NULL,10,1557803314,1557803314),
     ('notification','Survey Terbaru',NULL,10,1557803314,1557803314),
     ('notification','Polling Terbaru',NULL,10,1557803314,1557803314),
-    ('notification','Update Aplikasi',NULL,10,1557803314,1557803314);
+    ('notification','Update Aplikasi',NULL,10,1557803314,1557803314),
     ('polling','Infrastruktur',NULL,10,1557803314,1557803314),
     ('polling','Ekonomi',NULL,10,1557803314,1557803314),
     ('polling','Kesehatan',NULL,10,1557803314,1557803314);

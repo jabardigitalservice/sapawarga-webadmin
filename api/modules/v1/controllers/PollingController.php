@@ -39,6 +39,7 @@ class PollingController extends ActiveController
                 'create'   => ['post'],
                 'update'   => ['put'],
                 'delete'   => ['delete'],
+                'vote'     => ['put']
             ],
         ];
 
@@ -64,7 +65,7 @@ class PollingController extends ActiveController
         // setup access
         $behaviors['access'] = [
             'class' => AccessControl::className(),
-            'only'  => ['index', 'view', 'create', 'update', 'delete'],
+            'only'  => ['index', 'view', 'create', 'update', 'delete', 'vote'],
             'rules' => [
                 [
                     'allow'   => true,
@@ -73,7 +74,7 @@ class PollingController extends ActiveController
                 ],
                 [
                     'allow'   => true,
-                    'actions' => ['index', 'view'],
+                    'actions' => ['index', 'view', 'vote'],
                     'roles'   => ['user', 'staffRW'],
                 ],
             ],
@@ -129,10 +130,23 @@ class PollingController extends ActiveController
     {
         $model = $this->findModel($id);
 
-        $response = Yii::$app->getResponse();
-        $response->setStatusCode(200);
+        $model->load(Yii::$app->getRequest()->getBodyParams(), '');
 
-        return $model;
+        if ($model->validate() === false) {
+            $response = Yii::$app->getResponse();
+            $response->setStatusCode(422);
+
+            return $model->getErrors();
+        }
+
+        if ($model->save()) {
+            $response = Yii::$app->getResponse();
+            $response->setStatusCode(200);
+
+            return $model;
+        }
+
+        throw new ServerErrorHttpException('Failed to update the object for unknown reason.');
     }
 
     /**
@@ -146,7 +160,28 @@ class PollingController extends ActiveController
      */
     public function actionDelete($id)
     {
-        //
+        $model = $this->findModel($id);
+
+        $this->checkAccess('delete', $model, $id);
+
+        $model->status = Polling::STATUS_DELETED;
+
+        if ($model->save(false) === false) {
+            throw new ServerErrorHttpException('Failed to delete the object for unknown reason.');
+        }
+
+        $response = Yii::$app->getResponse();
+        $response->setStatusCode(204);
+
+        return 'ok';
+    }
+
+    public function actionVote($id)
+    {
+        $response = Yii::$app->getResponse();
+        $response->setStatusCode(200);
+
+        return 'ok';
     }
 
     /**

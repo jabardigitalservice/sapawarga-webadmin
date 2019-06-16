@@ -205,7 +205,8 @@ $config = [
                         '{id}' => '<id:\d+>',
                     ],
                     'extraPatterns' => [
-                        //
+                        'PUT vote/{id}' => 'vote',
+                        'OPTIONS vote/{id}' => 'options',
                     ]
                 ],
                 [
