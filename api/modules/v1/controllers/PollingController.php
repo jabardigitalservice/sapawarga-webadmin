@@ -4,8 +4,10 @@ namespace app\modules\v1\controllers;
 
 use app\filters\auth\HttpBearerAuth;
 use app\models\Polling;
+use app\models\PollingAnswer;
 use app\models\PollingSearch;
 use app\models\User;
+use Illuminate\Support\Arr;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\auth\CompositeAuth;
@@ -105,9 +107,10 @@ class PollingController extends ActiveController
      */
     public function actionCreate()
     {
-        $model = new Polling();
+        $model   = new Polling();
+        $request = Yii::$app->getRequest()->getBodyParams();
 
-        $model->load(Yii::$app->getRequest()->getBodyParams(), '');
+        $model->load($request, '');
 
         if ($model->validate() === false) {
             $response = Yii::$app->getResponse();
@@ -116,7 +119,17 @@ class PollingController extends ActiveController
             return $model->getErrors();
         }
 
-        if ($model->save()) {
+
+
+        if ($model->save(false)) {
+            $inputAnswers = Arr::get($request, 'answers');
+
+            foreach ($inputAnswers as $inputAnswer) {
+                $answer       = new PollingAnswer();
+                $answer->body = Arr::get($inputAnswer, 'body');
+                $answer->link('polling', $model);
+            }
+
             $response = Yii::$app->getResponse();
             $response->setStatusCode(201);
 
