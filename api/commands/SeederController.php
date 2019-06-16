@@ -149,6 +149,7 @@ class SeederController extends Controller
         Yii::$app->db->createCommand('TRUNCATE notifications')->execute();
 
         $sql = file_get_contents(__DIR__ . '/../migrations/seeder/notification.sql');
+        Yii::$app->db->createCommand($sql)->execute();
     }
 
     public function actionPolling()
