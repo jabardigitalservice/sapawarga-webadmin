@@ -154,6 +154,7 @@ class Polling extends ActiveRecord
                 }
             },
             'rw',
+            'answers',
             'meta',
             'status',
             'status_label' => function () {
