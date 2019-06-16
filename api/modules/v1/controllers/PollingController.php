@@ -92,7 +92,7 @@ class PollingController extends ActiveController
         unset($actions['create']);
         unset($actions['update']);
 
-        // $actions['index']['prepareDataProvider'] = [$this, 'prepareDataProvider'];
+        $actions['index']['prepareDataProvider'] = [$this, 'prepareDataProvider'];
         $actions['view']['findModel']            = [$this, 'findModel'];
 
         return $actions;
@@ -221,13 +221,8 @@ class PollingController extends ActiveController
 
     public function prepareDataProvider()
     {
-        $userId = Yii::$app->user->getId();
-        $user   = User::findIdentity($userId);
-
         $search = new PollingSearch();
         $params = Yii::$app->request->getQueryParams();
-
-        $search->user = $user;
 
         return $search->search($params);
     }

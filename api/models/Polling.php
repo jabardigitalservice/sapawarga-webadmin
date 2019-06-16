@@ -5,6 +5,7 @@ namespace app\models;
 use app\validator\InputCleanValidator;
 use Yii;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "polling".
@@ -24,16 +25,13 @@ use yii\behaviors\TimestampBehavior;
  * @property mixed $meta
  * @property int $status
  */
-class Polling extends \yii\db\ActiveRecord
+class Polling extends ActiveRecord
 {
     const STATUS_DELETED = -1;
     const STATUS_DRAFT = 0;
     const STATUS_PUBLISHED = 10;
 
     const CATEGORY_TYPE = 'polling';
-
-    /** @var  array push notification metadata */
-    public $data;
 
     /**
      * {@inheritdoc}
@@ -61,6 +59,11 @@ class Polling extends \yii\db\ActiveRecord
     public function getKabkota()
     {
         return $this->hasOne(Area::className(), ['id' => 'kabkota_id']);
+    }
+
+    public function getAnswers()
+    {
+        return $this->hasMany(PollingAnswer::class, ['polling_id' => 'id']);
     }
 
     /**
