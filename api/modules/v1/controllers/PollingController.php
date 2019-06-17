@@ -342,7 +342,15 @@ class PollingController extends ActiveController
 
     public function prepareDataProvider()
     {
+        $userId = Yii::$app->user->getId();
+        $user   = User::findIdentity($userId);
+
         $search = new PollingSearch();
+
+        if ($user->role !== User::ROLE_ADMIN) {
+            $search->scenario = PollingSearch::SCENARIO_LIST_USER;
+        }
+
         $params = Yii::$app->request->getQueryParams();
 
         return $search->search($params);

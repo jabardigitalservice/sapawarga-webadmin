@@ -11,6 +11,8 @@ use yii\data\ActiveDataProvider;
  */
 class PollingSearch extends Polling
 {
+    const SCENARIO_LIST_USER = 'list-user';
+
     /**
      * Creates data provider instance with search query applied
      *
@@ -26,6 +28,14 @@ class PollingSearch extends Polling
         $query->andFilterWhere(['id' => $this->id]);
 
         $query->andFilterWhere(['<>', 'status', Polling::STATUS_DELETED]);
+
+        if ($this->scenario === self::SCENARIO_LIST_USER) {
+            $filterStatusList = [
+                Polling::STATUS_PUBLISHED
+            ];
+
+            $query->andFilterWhere(['in', 'status', $filterStatusList]);
+        }
 
         return $this->getQueryAll($query, $params);
     }
