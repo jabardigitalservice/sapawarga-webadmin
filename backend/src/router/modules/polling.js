@@ -30,6 +30,16 @@ const pollingRouter = {
       }
     },
     {
+      name: 'polling-edit',
+      path: 'edit/:id',
+      component: () => import('@/views/polling/edit'),
+      hidden: true,
+      meta: {
+        title: 'polling-edit',
+        roles: ['admin']
+      }
+    },
+    {
       name: 'polling-detail',
       path: 'detail/:id',
       component: () => import('@/views/polling/detail'),
