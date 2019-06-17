@@ -52,10 +52,11 @@ export default {
     getDetail() {
       fetchRecord(this.id).then(response => {
         const { kabkota, kecamatan, kelurahan, rw, name, category, description, excerpt, start_date, end_date, question, status, status_label, answers } = response.data
-        
-        // count down date
-        let dateFirst = new Date(start_date).getTime()
-          }
+        this.polling = response.data
+
+        function logArrayAnswers(value, index, array) {
+          return <el-radio label=''>{ value.body }</el-radio>
+        }
 
         if (status === 10) {
           this.btnKirimDisable = true
