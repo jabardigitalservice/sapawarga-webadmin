@@ -167,6 +167,9 @@ export default {
     fetchData(id) {
       fetchRecord(id).then(response => {
         this.broadcast = response.data
+        if (this.broadcast.status === 10) {
+          this.$router.push('/broadcast/index')
+        }
       }).catch(err => {
         console.log(err)
       })
