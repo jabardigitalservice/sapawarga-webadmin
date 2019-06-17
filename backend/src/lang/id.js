@@ -25,7 +25,8 @@ export default {
     'polling-manage': 'Polling',
     'polling-list': 'Daftar Polling',
     'polling-create': 'Tambah Polling',
-    'polling-detail': 'Detail Polling'
+    'polling-detail': 'Detail Polling',
+    'polling-edit': 'Edit Polling'
   },
   crud: {
     'list-empty': 'Belum ada data.',
