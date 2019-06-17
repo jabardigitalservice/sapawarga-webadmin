@@ -22,7 +22,7 @@
             <el-table-column prop="content" />
           </el-table>
         </el-card>
-        <el-button v-if="btnKirimDisable" class="button-send" type="primary" @click="submitForm(status.active)">{{ $t('crud.send-polling') }}</el-button>
+        <el-button v-if="!btnKirimDisable" class="button-send" type="primary" @click="submitForm(status.active)">{{ $t('crud.send-polling') }}</el-button>
       </el-col>
     </el-row>
   </div>
