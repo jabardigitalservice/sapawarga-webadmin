@@ -144,6 +144,14 @@ export default {
           }
         ]
       })
+    async submitForm(status) {
+      const id = this.$route.params && this.$route.params.id
+      const data = {}
+      Object.assign(data, this.polling)
+      data.status = status
+      await update(id, data)
+      this.$message.success(this.$t('crud.publish-polling'))
+      this.$router.push('/polling/index')
     }
   }
 
