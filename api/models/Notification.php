@@ -149,7 +149,6 @@ class Notification extends \yii\db\ActiveRecord
                 }
             },
             'rw',
-            'meta',
             'status',
             'status_label' => function () {
                 $statusLabel = '';
