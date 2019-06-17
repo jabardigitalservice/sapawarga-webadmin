@@ -21,7 +21,12 @@ export default {
     'broadcast-show': 'Detail Broadcast',
     'aspiration-manage': 'Aspirasi Masyarakat',
     'aspiration-list': 'Aspirasi Masyarakat',
-    'aspiration-detail': 'Detail Aspirasi'
+    'aspiration-detail': 'Detail Aspirasi',
+    'polling-manage': 'Polling',
+    'polling-list': 'Daftar Polling',
+    'polling-create': 'Tambah Polling',
+    'polling-detail': 'Detail Polling',
+    'polling-edit': 'Edit Polling'
   },
   crud: {
     'list-empty': 'Belum ada data.',
@@ -37,6 +42,8 @@ export default {
     'send': 'Kirim Pesan',
     'accept': 'Terima',
     'reject': 'Tolak',
+    'send-polling': 'Publikasikan Polling',
+    'publish-polling': 'Polling berhasil dipublikasikan',
 
     'insert-row': 'Tambah Baris Baru',
     'delete-row': 'Hapus',
