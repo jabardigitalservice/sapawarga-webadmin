@@ -51,32 +51,11 @@ export default {
   methods: {
     getDetail() {
       fetchRecord(this.id).then(response => {
-        console.log(response)
         const { kabkota, kecamatan, kelurahan, rw, name, category, description, excerpt, start_date, end_date, question, status, status_label, answers } = response.data
         
         // count down date
         let dateFirst = new Date(start_date).getTime()
-        let dateSecond = new Date('June 10, 2019 15:37:25').getTime()
-
-        let interval = setInterval(() => {
-
-          
-          let currentDate = new Date().getTime()
-
-          let distance = dateSecond - currentDate
-          let days = Math.floor(distance / (1000 * 60 * 60 * 24))
-          let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
-          let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))
-          let seconds = Math.floor((distance % (1000 * 60)) / 1000)
-
-          console.log(days, hours, minutes, seconds)
-
-          if (distance < 0) {
-            clearInterval(interval);
-            console.log('EXPIRED')
           }
-
-        }, 2000)
 
         if (status === 10) {
           this.btnKirimDisable = true
