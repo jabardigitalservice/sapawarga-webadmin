@@ -2,58 +2,43 @@
 
 namespace app\models;
 
+use app\validator\InputCleanValidator;
 use Yii;
 use yii\behaviors\TimestampBehavior;
-use app\validator\InputCleanValidator;
-use app\validator\IsArrayValidator;
+use yii\db\ActiveRecord;
 
 /**
- * This is the model class for table "aspirasi".
+ * This is the model class for table "polling".
  *
  * @property int $id
- * @property int $author_id
  * @property int $category_id
- * @property string $title
+ * @property string $name
  * @property string $description
+ * @property string $excerpt
+ * @property string $question
+ * @property string $start_date
+ * @property string $end_date
  * @property int $kabkota_id
  * @property int $kec_id
  * @property int $kel_id
  * @property string $rw
- * @property mixed $attachments
  * @property mixed $meta
  * @property int $status
- * @property string $approval_note
- * @property int $approved_by
  */
-class Aspirasi extends \yii\db\ActiveRecord
+class Polling extends ActiveRecord
 {
     const STATUS_DELETED = -1;
     const STATUS_DRAFT = 0;
-    const STATUS_APPROVAL_PENDING = 5;
-    const STATUS_APPROVAL_REJECTED = 3;
     const STATUS_PUBLISHED = 10;
 
-    const CATEGORY_TYPE = 'aspirasi';
-
-    const SCENARIO_USER_CREATE = 'user-create';
+    const CATEGORY_TYPE = 'polling';
 
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'aspirasi';
-    }
-
-    public function getLikes()
-    {
-        return $this->hasMany(User::class, ['id' => 'user_id'])
-            ->viaTable('aspirasi_likes', ['aspirasi_id' => 'id']);
-    }
-
-    public function getAuthor()
-    {
-        return $this->hasOne(User::class, ['id' => 'author_id']);
+        return 'polling';
     }
 
     public function getCategory()
@@ -76,11 +61,9 @@ class Aspirasi extends \yii\db\ActiveRecord
         return $this->hasOne(Area::className(), ['id' => 'kabkota_id']);
     }
 
-    public function scenarios()
+    public function getAnswers()
     {
-        $scenarios = parent::scenarios();
-
-        return $scenarios;
+        return $this->hasMany(PollingAnswer::class, ['polling_id' => 'id']);
     }
 
     /**
@@ -90,26 +73,16 @@ class Aspirasi extends \yii\db\ActiveRecord
     {
         return [
             [
-                [
-                    'title',
-                    'description',
-                    'kabkota_id',
-                    'kec_id',
-                    'kel_id',
-                    'author_id',
-                    'category_id',
-                    'status',
-                ],
+                ['name', 'description', 'excerpt', 'question', 'status', 'start_date', 'end_date', 'category_id'],
                 'required',
             ],
-            ['category_id', 'validateCategoryID'],
-            [['title', 'description', 'rw', 'meta'], 'trim'],
-            ['title', 'string', 'max' => 255],
-            ['title', 'string', 'min' => 5],
-            ['title', InputCleanValidator::class],
+            [['name', 'description', 'excerpt', 'question', 'rw', 'meta'], 'trim'],
+            [['name', 'excerpt', 'question'], 'string', 'max' => 255],
+            [['name', 'description', 'excerpt', 'question'], InputCleanValidator::class],
+
             ['description', 'string', 'max' => 1024 * 3],
-            // ['description', 'string', 'min' => 5],
-            ['description', InputCleanValidator::class],
+
+            ['rw', 'string', 'length' => 3],
             [
                 'rw',
                 'match',
@@ -117,40 +90,26 @@ class Aspirasi extends \yii\db\ActiveRecord
                 'message' => Yii::t('app', 'error.rw.pattern'),
             ],
             ['rw', 'default'],
-            ['attachments', 'default'],
-            ['attachments', IsArrayValidator::class],
-            [['author_id', 'category_id', 'kabkota_id', 'kec_id', 'kel_id', 'status'], 'integer'],
+            [['category_id', 'kabkota_id', 'kec_id', 'kel_id', 'status'], 'integer'],
+            ['category_id', 'validateCategoryID'],
             ['meta', 'default'],
+
+            [['start_date', 'end_date'], 'date', 'format' => 'php:Y-m-d'],
             [
-                'approval_note',
-                'required',
-                'when' => function ($model) {
-                    return $model->status === self::STATUS_APPROVAL_REJECTED;
-                },
+                'start_date',
+                'compare',
+                'compareAttribute'       => 'end_date',
+                'operator'               => '<',
             ],
-            ['approval_note', 'default'],
-            ['approved_by', 'default'],
-            ['approved_at', 'default'],
+
+            ['status', 'in', 'range' => [-1, 0, 10]],
         ];
     }
 
     public function fields()
     {
-        $bucket = Yii::$app->fileStorage->getBucket('imageFiles');
-
         $fields = [
             'id',
-            'author_id',
-            'author'       => function () {
-                return [
-                    'id'         => $this->author->id,
-                    'name'       => $this->author->name,
-                    'role_label' => $this->author->getRoleLabel(),
-                    'email'      => $this->author->email,
-                    'phone'      => $this->author->phone,
-                    'address'    => $this->author->address,
-                ];
-            },
             'category_id',
             'category'     => function () {
                 return [
@@ -158,8 +117,10 @@ class Aspirasi extends \yii\db\ActiveRecord
                     'name' => $this->category->name,
                 ];
             },
-            'title',
+            'name',
+            'question',
             'description',
+            'excerpt',
             'kabkota_id',
             'kabkota'      => function () {
                 if ($this->kabkota) {
@@ -193,19 +154,8 @@ class Aspirasi extends \yii\db\ActiveRecord
                     return null;
                 }
             },
-            'likes_count'  => function () {
-                return (int)$this->getLikes()->count();
-            },
-            'likes_users'  => function () {
-                // @TODO too many callback function
-                return array_map(function ($item) {
-                    return [
-                        'id'   => $item->id,
-                        'name' => $item->name,
-                    ];
-                }, $this->likes);
-            },
             'rw',
+            'answers',
             'meta',
             'status',
             'status_label' => function () {
@@ -220,29 +170,8 @@ class Aspirasi extends \yii\db\ActiveRecord
                     case self::STATUS_DELETED:
                         $statusLabel = Yii::t('app', 'status.deleted');
                         break;
-                    case self::STATUS_APPROVAL_PENDING:
-                        $statusLabel = Yii::t('app', 'status.approval-pending');
-                        break;
-                    case self::STATUS_APPROVAL_REJECTED:
-                        $statusLabel = Yii::t('app', 'status.approval-rejected');
-                        break;
                 }
                 return $statusLabel;
-            },
-            'approval_note',
-            'attachments'  => function () use ($bucket) {
-                if ($this->attachments === null) {
-                    return null;
-                }
-
-                // @TODO too many callback function
-                return array_map(function ($item) use ($bucket) {
-                    return [
-                        'type' => $item['type'],
-                        'path' => $item['path'],
-                        'url'  => $bucket->getFileUrl($item['path']),
-                    ];
-                }, $this->attachments);
             },
             'created_at',
             'updated_at',
@@ -262,20 +191,6 @@ class Aspirasi extends \yii\db\ActiveRecord
                 'value'              => time(),
             ],
         ];
-    }
-
-    /** @inheritdoc */
-    public function beforeSave($insert)
-    {
-        if ($insert) {
-            $this->author_id = Yii::$app->user->getId();
-        }
-
-        if ($this->status == self::STATUS_PUBLISHED) {
-            $this->approval_note = null;
-        }
-
-        return parent::beforeSave($insert);
     }
 
     /**
