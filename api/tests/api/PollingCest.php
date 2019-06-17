@@ -129,20 +129,20 @@ class PollingCest
             'category_id' => 17,
         ]);
 
-//        $I->seeInDatabase('polling_answers', [
-//            'id'   => 7,
-//            'body' => 'Option A',
-//        ]);
-//
-//        $I->seeInDatabase('polling_answers', [
-//            'id'   => 8,
-//            'body' => 'Option B',
-//        ]);
-//
-//        $I->seeInDatabase('polling_answers', [
-//            'id'   => 9,
-//            'body' => 'Option C',
-//        ]);
+        $I->seeInDatabase('polling_answers', [
+            'polling_id' => 4,
+            'body'       => 'Option A',
+        ]);
+
+        $I->seeInDatabase('polling_answers', [
+            'polling_id' => 4,
+            'body'       => 'Option B',
+        ]);
+
+        $I->seeInDatabase('polling_answers', [
+            'polling_id' => 4,
+            'body'       => 'Option C',
+        ]);
     }
 
     public function postUpdateTest(ApiTester $I)
