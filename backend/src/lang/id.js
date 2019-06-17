@@ -42,6 +42,7 @@ export default {
     'accept': 'Terima',
     'reject': 'Tolak',
     'send-polling': 'Publikasikan Polling',
+    'publish-polling': 'Polling berhasil dipublikasikan',
 
     'insert-row': 'Tambah Baris Baru',
     'delete-row': 'Hapus',
