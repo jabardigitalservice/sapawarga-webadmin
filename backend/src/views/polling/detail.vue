@@ -84,6 +84,18 @@ export default {
           this.btnKirimDisable = false
         }
 
+        // count down date
+        let expired = false
+        const dateSecond = new Date(end_date).getTime()
+        const currentDate = new Date().getTime()
+
+        const distance = dateSecond - currentDate
+
+        if (distance < 0) {
+          expired = true
+        }
+        // end of count down date
+
         this.tableDataTarget = [
           {
             title: 'Kota',
