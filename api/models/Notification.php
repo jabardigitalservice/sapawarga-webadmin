@@ -28,6 +28,13 @@ class Notification extends \yii\db\ActiveRecord
 
     const CATEGORY_TYPE = 'notification';
 
+    // Memetakan category name dengan target name
+    const TARGET_MAP = [
+        'Survey Terbaru'    => 'notifikasi',
+        'Polling Terbaru'   => 'notifikasi',
+        'Update Aplikasi'   => 'url',
+    ];
+
     /** @var  array push notification metadata */
     public $data;
 
@@ -206,16 +213,7 @@ class Notification extends \yii\db\ActiveRecord
             }
 
             if ($isSendNotification) {
-                $this->data = [
-                    'target'            => 'notification',
-                    'id'                => $this->id,
-                    'author'            => $this->author->name,
-                    'title'             => $this->title,
-                    'category_name'     => $this->category->name,
-                    'description'       => $this->description,
-                    'updated_at'        => $this->updated_at ?? time(),
-                    'push_notification' => true,
-                ];
+                $this->data = $this->generateData();
                 // By default,  send notification to all users
                 $topic = 'all';
                 if ($this->kel_id && $this->rw) {
@@ -261,5 +259,16 @@ class Notification extends \yii\db\ActiveRecord
                 $this->addError($attribute, Yii::t('app', 'error.id.invalid'));
             }
         }
+    }
+
+    protected function generateData()
+    {
+        $data = [
+            'push_notification' => true,
+            'title'             => $this->title,
+            'target'            => self::TARGET_MAP[$this->category->name],
+            'meta'              => $this->meta,
+        ];
+        return $data;
     }
 }
