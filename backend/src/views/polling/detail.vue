@@ -36,7 +36,12 @@ export default {
       id: 0,
       tableDataTarget: [],
       tableDataPolling: [],
-      btnKirimDisable: false
+      btnKirimDisable: false,
+      polling: null,
+      status: {
+        draft: 0,
+        active: 10
+      }
     }
   },
   created() {
