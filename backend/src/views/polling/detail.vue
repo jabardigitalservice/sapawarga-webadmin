@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { fetchRecord } from '@/api/polling'
+import { fetchRecord, update } from '@/api/polling'
 export default {
   data() {
     return {
