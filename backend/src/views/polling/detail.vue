@@ -129,7 +129,7 @@ export default {
             content: question || '-'
           },
           {
-            content: answers.map(logArrayElements)
+            content: answers.map(logArrayAnswers)
           }
         ]
       })
