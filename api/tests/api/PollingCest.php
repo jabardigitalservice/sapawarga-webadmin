@@ -232,6 +232,26 @@ class PollingCest
         ]);
     }
 
+    public function postVoteAlreadyTest(ApiTester $I)
+    {
+        $I->amUser('user');
+
+        $latestId = 4;
+
+        $data = [
+            'id' => 1,
+        ];
+
+        $I->sendPUT('/v1/polling/' . $latestId . '/vote', $data);
+        $I->canSeeResponseCodeIs(422);
+        $I->seeResponseIsJson();
+
+        $I->seeResponseContainsJson([
+            'success' => false,
+            'status'  => 422,
+        ]);
+    }
+
     public function createAnswerTest(ApiTester $I)
     {
         $I->amStaff();

@@ -6,6 +6,7 @@ use app\filters\auth\HttpBearerAuth;
 use app\models\Polling;
 use app\models\PollingAnswer;
 use app\models\PollingSearch;
+use app\models\PollingVote;
 use app\models\User;
 use Illuminate\Support\Arr;
 use Yii;
@@ -14,6 +15,7 @@ use yii\filters\auth\CompositeAuth;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\ServerErrorHttpException;
+use yii\web\UnprocessableEntityHttpException;
 
 /**
  * PollingController implements the CRUD actions for Polling model.
@@ -211,6 +213,28 @@ class PollingController extends ActiveController
 
     public function actionVote($id)
     {
+        $request   = Yii::$app->getRequest()->getBodyParams();
+        $pollingId = $id;
+        $answerId  = Arr::get($request, 'id');
+        $userId    = Yii::$app->user->getId();
+
+        $exist = PollingVote::find()
+            ->where(['polling_id' => $pollingId, 'answer_id' => $answerId, 'user_id' => $userId])
+            ->exists();
+
+        if ($exist) {
+            throw new UnprocessableEntityHttpException('Already voted.');
+        }
+
+        $model             = new PollingVote();
+        $model->polling_id = $id;
+        $model->answer_id  = $answerId;
+        $model->user_id    = $userId;
+
+        if ($model->save() === false) {
+            throw new ServerErrorHttpException('Failed to create the object for unknown reason.');
+        }
+
         $response = Yii::$app->getResponse();
         $response->setStatusCode(200);
 
