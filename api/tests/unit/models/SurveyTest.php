@@ -7,26 +7,25 @@ use Codeception\Test\Unit;
 
 class SurveyTest extends Unit
 {
-    public function testTitleValid()
+    public function testTitleRequired()
     {
         $model = new Survey();
-
-        $model->title = 'Ini adalah judul';
 
         $model->validate();
 
-        $this->assertFalse($model->hasErrors('title'));
-    }
-
-    public function testTitleNotEmpty()
-    {
-        $model = new Survey();
+        $this->assertTrue($model->hasErrors('title'));
 
         $model->title = '';
 
         $model->validate();
 
         $this->assertTrue($model->hasErrors('title'));
+
+        $model->title = 'Ini adalah judul';
+
+        $model->validate();
+
+        $this->assertFalse($model->hasErrors('title'));
     }
 
     public function testTitleTooLong()
