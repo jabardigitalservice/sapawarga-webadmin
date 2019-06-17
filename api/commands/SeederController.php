@@ -154,6 +154,8 @@ class SeederController extends Controller
 
     public function actionPolling()
     {
+        Yii::$app->db->createCommand('TRUNCATE polling_votes')->execute();
+        Yii::$app->db->createCommand('TRUNCATE polling_answers')->execute();
         Yii::$app->db->createCommand('TRUNCATE polling')->execute();
 
         $sql = file_get_contents(__DIR__ . '/../migrations/seeder/polling.sql');

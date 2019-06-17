@@ -163,11 +163,6 @@ class PollingCest
             'kel_id'      => 3,
             'status'      => 0,
             'category_id' => 18,
-            'answers'     => [
-                ['id' => 7, 'body' => 'Option A'],
-                ['id' => 8, 'body' => 'Option B'],
-                ['body' => 'Option D'],
-            ],
         ];
 
         $I->sendPUT('/v1/polling/' . $latestId, $data);
@@ -190,21 +185,6 @@ class PollingCest
             'status'      => 0,
             'category_id' => 18,
         ]);
-
-//        $I->seeInDatabase('polling_answers', [
-//            'id'   => 7,
-//            'body' => 'Option A',
-//        ]);
-//
-//        $I->seeInDatabase('polling_answers', [
-//            'id'   => 8,
-//            'body' => 'Option B',
-//        ]);
-//
-//        $I->seeInDatabase('polling_answers', [
-//            'id'   => 10,
-//            'body' => 'Option D',
-//        ]);
     }
 
     public function userDeleteTest(ApiTester $I)
@@ -227,12 +207,6 @@ class PollingCest
 
         $I->sendDELETE('/v1/polling/4');
         $I->canSeeResponseCodeIs(204);
-//        $I->seeResponseIsJson();
-//
-//        $I->seeResponseContainsJson([
-//            'success' => true,
-//            'status'  => 204,
-//        ]);
 
         $I->seeInDatabase('polling', ['id' => 4, 'status' => -1]);
     }
@@ -255,5 +229,61 @@ class PollingCest
             'success' => true,
             'status'  => 200,
         ]);
+    }
+
+    public function createAnswerTest(ApiTester $I)
+    {
+        $I->amStaff();
+
+        $data = [
+            'body' => 'Answer 1',
+        ];
+
+        $I->sendPOST('/v1/polling/1/answers', $data);
+        $I->canSeeResponseCodeIs(201);
+        $I->seeResponseIsJson();
+
+        $I->seeResponseContainsJson([
+            'success' => true,
+            'status'  => 201,
+        ]);
+
+        $I->seeInDatabase('polling_answers', [
+            'polling_id' => 1,
+            'body'       => 'Answer 1',
+        ]);
+    }
+
+    public function updateAnswerTest(ApiTester $I)
+    {
+        $I->amStaff();
+
+        $data = [
+            'body' => 'Answer 1 Updated',
+        ];
+
+        $I->sendPUT('/v1/polling/1/answers/10', $data);
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $I->seeResponseContainsJson([
+            'success' => true,
+            'status'  => 200,
+        ]);
+
+        $I->seeInDatabase('polling_answers', [
+            'polling_id' => 1,
+            'body'       => 'Answer 1 Updated',
+        ]);
+    }
+
+    public function answerDeleteTest(ApiTester $I)
+    {
+        $I->amStaff();
+
+        $I->sendDELETE('/v1/polling/1/answers/10');
+        $I->canSeeResponseCodeIs(204);
+
+        $I->dontSeeInDatabase('polling_answers', ['polling_id' => 1, 'body' => 'Answer 1 Updated']);
     }
 }
