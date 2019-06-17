@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function fetchList(query) {
   return request({
-    url: 'http://35.247.135.93:3000/api/v1/polling',
+    url: '/polling',
     method: 'get',
     params: query
   })
@@ -10,7 +10,7 @@ export function fetchList(query) {
 
 export function fetchRecord(id) {
   return request({
-    url: `http://35.247.135.93:3000/api/v1/polling/${id}`,
+    url: `/polling/${id}`,
     method: 'get'
   })
 }
