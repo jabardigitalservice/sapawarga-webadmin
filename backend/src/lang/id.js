@@ -55,7 +55,8 @@ export default {
     'activate-confirm': 'Anda yakin ingin mengaktifkan data ini?',
     'deactivate-confirm': 'Anda yakin ingin menonaktifkan data ini?',
     'activate-success': 'Data berhasil diaktifkan.',
-    'deactivate-success': 'Data berhasil dinonaktifkan.'
+    'deactivate-success': 'Data berhasil dinonaktifkan.',
+    'broadcast-error-edit-published': 'Sudah dipublish, tidak dapat di edit.'
   },
   common: {
     confirm: 'Ya',

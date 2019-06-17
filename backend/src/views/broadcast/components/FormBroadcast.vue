@@ -168,6 +168,7 @@ export default {
       fetchRecord(id).then(response => {
         this.broadcast = response.data
         if (this.broadcast.status === 10) {
+          this.$message.error(this.$t('crud.broadcast-error-edit-published'))
           this.$router.push('/broadcast/index')
         }
       }).catch(err => {
