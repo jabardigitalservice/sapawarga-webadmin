@@ -118,6 +118,7 @@ class Polling extends ActiveRecord
                 ];
             },
             'name',
+            'question',
             'description',
             'excerpt',
             'kabkota_id',

@@ -51,6 +51,7 @@ class PollingCest
         $data = $I->grabDataFromResponseByJsonPath('$.data')[0];
 
         $I->assertEquals('Siapakah Presiden pilihan Anda?', $data['name']);
+        $I->assertEquals('Siapakah Presiden pilihan Anda?', $data['question']);
     }
 
     public function getStaffShowTest(ApiTester $I)
