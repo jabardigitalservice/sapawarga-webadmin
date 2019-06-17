@@ -106,44 +106,42 @@ export default {
         this.tableDataPolling = [
           {
             title: 'Nama Survey',
-            content: name
+            content: name || '-'
           },
           {
             title: 'Kategori',
-            content: category.name
+            content: (category !== null ? category.name : '-')
           },
           {
             title: 'Deskripsi',
-            content: description
+            content: description || '-'
           },
           {
             title: 'Pengantar',
-            content: excerpt
+            content: excerpt || '-'
           },
           {
             title: 'Dimulai dari',
-            content: start_date
+            content: start_date || '-'
           },
           {
             title: 'Sampai',
-            content: end_date
+            content: end_date || '-'
           },
           {
             title: 'Status',
-            content: (status === 5 ? <el-tag type='warning'>{status_label}</el-tag> : status === 3 ? <el-tag type='danger'>{status_label}</el-tag> : status === 10 ? <el-tag type='success'>{status_label}</el-tag> : <el-tag type='info'>{status_label}</el-tag>)
+            content: (status === 10 && expired === true ? <el-tag type='danger'>Berakhir</el-tag> : status === 10 && expired === false ? <el-tag type='success'>Sedang Berlangsung</el-tag> : <el-tag type='info'>{status_label}</el-tag>)
           },
           {
             title: 'Pertanyaan',
-            content: question
+            content: question || '-'
           },
           {
-            content: (<el-radio label="">{ answers[0].body }</el-radio>)
-          },
-          {
-            content: (<el-radio label="">{ answers[1].body }</el-radio>)
+            content: answers.map(logArrayElements)
           }
         ]
       })
+    },
     async submitForm(status) {
       const id = this.$route.params && this.$route.params.id
       const data = {}
