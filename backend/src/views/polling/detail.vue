@@ -87,11 +87,11 @@ export default {
         this.tableDataTarget = [
           {
             title: 'Kota',
-            content:  ((kabkota !== null) ? kabkota.name : 'Semua Kab/Kota')
+            content: ((kabkota !== null) ? kabkota.name : 'Semua Kab/Kota')
           },
           {
             title: 'Kecamatan',
-            content:  ((kecamatan !== null) ? kecamatan.name : 'Semua Kecamatan')
+            content: ((kecamatan !== null) ? kecamatan.name : 'Semua Kecamatan')
           },
           {
             title: 'Kelurahan/Desa',
@@ -154,7 +154,6 @@ export default {
       this.$router.push('/polling/index')
     }
   }
-
 }
 </script>
 <style lang="scss" scoped>
