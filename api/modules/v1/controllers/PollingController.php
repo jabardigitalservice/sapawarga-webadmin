@@ -36,12 +36,15 @@ class PollingController extends ActiveController
         $behaviors['verbs'] = [
             'class'   => \yii\filters\VerbFilter::className(),
             'actions' => [
-                'index'    => ['get'],
-                'view'     => ['get'],
-                'create'   => ['post'],
-                'update'   => ['put'],
-                'delete'   => ['delete'],
-                'vote'     => ['put']
+                'index'         => ['get'],
+                'view'          => ['get'],
+                'create'        => ['post'],
+                'update'        => ['put'],
+                'delete'        => ['delete'],
+                'vote'          => ['put'],
+                'answer-create' => ['post'],
+                'answer-update' => ['put'],
+                'answer-delete' => ['delete'],
             ],
         ];
 
@@ -67,11 +70,30 @@ class PollingController extends ActiveController
         // setup access
         $behaviors['access'] = [
             'class' => AccessControl::className(),
-            'only'  => ['index', 'view', 'create', 'update', 'delete', 'vote'],
+            'only'  => [
+                'index',
+                'view',
+                'create',
+                'update',
+                'delete',
+                'vote',
+                'answer-create',
+                'answer-update',
+                'answer-delete',
+            ],
             'rules' => [
                 [
                     'allow'   => true,
-                    'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                    'actions' => [
+                        'index',
+                        'view',
+                        'create',
+                        'update',
+                        'delete',
+                        'answer-create',
+                        'answer-update',
+                        'answer-delete',
+                    ],
                     'roles'   => ['admin', 'manageSettings'],
                 ],
                 [
@@ -118,8 +140,6 @@ class PollingController extends ActiveController
 
             return $model->getErrors();
         }
-
-
 
         if ($model->save(false)) {
             $inputAnswers = Arr::get($request, 'answers');
@@ -195,6 +215,70 @@ class PollingController extends ActiveController
         $response->setStatusCode(200);
 
         return 'ok';
+    }
+
+    public function actionAnswerCreate($id)
+    {
+        $model   = new PollingAnswer();
+        $request = Yii::$app->getRequest()->getBodyParams();
+
+        $model->polling_id = $id;
+
+        $model->load($request, '');
+
+        if ($model->validate() === false) {
+            $response = Yii::$app->getResponse();
+            $response->setStatusCode(422);
+
+            return $model->getErrors();
+        }
+
+        if ($model->save(false)) {
+            $response = Yii::$app->getResponse();
+            $response->setStatusCode(201);
+
+            return $model;
+        }
+
+        throw new ServerErrorHttpException('Failed to create the object for unknown reason.');
+    }
+
+    public function actionAnswerUpdate($id, $answerId)
+    {
+        $model = PollingAnswer::find()
+            ->where(['id' => $answerId, 'polling_id' => $id])
+            ->one();
+
+        $model->load(Yii::$app->getRequest()->getBodyParams(), '');
+
+        if ($model->validate() === false) {
+            $response = Yii::$app->getResponse();
+            $response->setStatusCode(422);
+
+            return $model->getErrors();
+        }
+
+        if ($model->save()) {
+            $response = Yii::$app->getResponse();
+            $response->setStatusCode(200);
+
+            return $model;
+        }
+
+        throw new ServerErrorHttpException('Failed to update the object for unknown reason.');
+    }
+
+    public function actionAnswerDelete($id, $answerId)
+    {
+        $model = PollingAnswer::find()
+            ->where(['id' => $answerId, 'polling_id' => $id])
+            ->one();
+
+        if ($model->delete() === false) {
+            throw new ServerErrorHttpException('Failed to delete the object for unknown reason.');
+        }
+
+        Yii::$app->getResponse()->setStatusCode(204);
     }
 
     /**

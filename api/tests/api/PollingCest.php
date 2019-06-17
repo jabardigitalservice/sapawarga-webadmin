@@ -247,7 +247,7 @@ class PollingCest
             'id' => 1,
         ];
 
-        $I->sendPUT('/v1/polling/vote/' . $latestId, $data);
+        $I->sendPUT('/v1/polling/' . $latestId . '/vote', $data);
         $I->canSeeResponseCodeIs(200);
         $I->seeResponseIsJson();
 

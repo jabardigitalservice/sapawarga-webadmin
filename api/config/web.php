@@ -203,10 +203,16 @@ $config = [
                     'pluralize' => false,
                     'tokens' => [
                         '{id}' => '<id:\d+>',
+                        '{answerId}' => '<answerId:\d+>',
                     ],
                     'extraPatterns' => [
-                        'PUT vote/{id}' => 'vote',
-                        'OPTIONS vote/{id}' => 'options',
+                        'POST {id}/answers' => 'answer-create',
+                        'OPTIONS {id}/answers' => 'options',
+                        'PUT {id}/answers/{answerId}' => 'answer-update',
+                        'DELETE {id}/answers/{answerId}' => 'answer-delete',
+                        'OPTIONS {id}/answers/{answerId}' => 'options',
+                        'PUT {id}/vote' => 'vote',
+                        'OPTIONS {id}/vote' => 'options',
                     ]
                 ],
                 [
