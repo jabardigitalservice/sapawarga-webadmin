@@ -40,7 +40,14 @@ class UserPhotoUploadForm extends Model
 
         return [
             [['image'], 'required'],
-            [['image'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg', 'maxSize' => $uploadMaxSize],
+
+            [
+                'image',
+                'file',
+                'skipOnEmpty' => false,
+                'mimeTypes'   => 'image/jpeg, image/jpg, image/png',
+                'maxSize'     => $uploadMaxSize,
+            ],
         ];
     }
 
