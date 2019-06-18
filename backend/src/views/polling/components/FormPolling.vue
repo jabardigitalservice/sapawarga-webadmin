@@ -219,4 +219,16 @@ export default {
 el-radio {
   display: inline-flex;
 }
+
+.polling-button {
+  margin-top: 50px;
+}
+
+.add-answer {
+  float: right;
+}
+
+.answer {
+  float: right;
+}
 </style>
