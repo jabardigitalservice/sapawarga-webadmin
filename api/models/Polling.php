@@ -156,6 +156,8 @@ class Polling extends ActiveRecord
             },
             'rw',
             'answers',
+            'start_date',
+            'end_date',
             'meta',
             'status',
             'status_label' => function () {
