@@ -9,7 +9,7 @@ class SurveyCest
 
     public function getListTest(ApiTester $I)
     {
-        $I->amUser('survey');
+        $I->amUser('user');
 
         $I->sendGET('/v1/survey');
         $I->canSeeResponseCodeIs(200);
@@ -23,6 +23,16 @@ class SurveyCest
 
     public function getShowTest(ApiTester $I)
     {
+        $I->haveInDatabase('survey', [
+            'id'           => 1,
+            'title'        => 'Lorem ipsum.',
+            'status'       => 0,
+            'category_id'  => 20,
+            'external_url' => 'http://google.com',
+            'created_at'   => '1554706345',
+            'updated_at'   => '1554706345',
+        ]);
+
         $I->amStaff();
 
         $I->sendGET('/v1/survey/1');
@@ -59,6 +69,7 @@ class SurveyCest
             'title'        => 'Lorem ipsum',
             'external_url' => 'http://google.com',
             'category_id'  => 20,
+            'status'       => 0,
         ];
 
         $I->sendPOST('/v1/survey', $data);
@@ -71,7 +82,6 @@ class SurveyCest
         ]);
 
         $I->seeInDatabase('survey', [
-            'id'           => 1,
             'title'        => 'Lorem ipsum',
             'external_url' => 'http://google.com',
             'category_id'  => 20,
@@ -96,12 +106,23 @@ class SurveyCest
 
     public function postUpdateTest(ApiTester $I)
     {
-        $I->amUser('user');
+        $I->haveInDatabase('survey', [
+            'id'           => 1,
+            'title'        => 'Lorem ipsum.',
+            'status'       => 0,
+            'category_id'  => 20,
+            'external_url' => 'http://google.com',
+            'created_at'   => '1554706345',
+            'updated_at'   => '1554706345',
+        ]);
+
+        $I->amStaff();
 
         $data = [
-            'title'        => 'Lorem ipsum',
-            'external_url' => 'http://google.com',
-            'category_id'  => 20,
+            'title'        => 'Lorem ipsum updated',
+            'external_url' => 'http://google-updated.com',
+            'category_id'  => 21,
+            'status'       => 0,
         ];
 
         $I->sendPUT('/v1/survey/1', $data);
@@ -114,10 +135,9 @@ class SurveyCest
         ]);
 
         $I->seeInDatabase('survey', [
-            'id'           => 1,
             'title'        => 'Lorem ipsum updated',
             'external_url' => 'http://google-updated.com',
-            'category_id'  => 20,
+            'category_id'  => 21,
         ]);
     }
 
@@ -131,10 +151,20 @@ class SurveyCest
 
     public function deleteTest(ApiTester $I)
     {
+        $I->haveInDatabase('survey', [
+            'id'           => 1,
+            'title'        => 'Lorem ipsum.',
+            'status'       => 0,
+            'category_id'  => 20,
+            'external_url' => 'http://google.com',
+            'created_at'   => '1554706345',
+            'updated_at'   => '1554706345',
+        ]);
+
         $I->amStaff();
 
         $I->sendDELETE('/v1/survey/1');
-        $I->canSeeResponseCodeIs(201);
+        $I->canSeeResponseCodeIs(204);
 
         $I->seeInDatabase('survey', ['id' => 1, 'status' => -1]);
     }
