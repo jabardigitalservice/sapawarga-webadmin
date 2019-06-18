@@ -27,6 +27,7 @@ code_quality:
   script:
     - docker run
         --env SOURCE_CODE=$PWD
+        --env CONTAINER_TIMEOUT_SECONDS=3600
         --volume $PWD:/code
         --volume /var/run/docker.sock:/var/run/docker.sock
         "registry.gitlab.com/gitlab-org/security-products/codequality:11-8-stable" /code
