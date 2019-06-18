@@ -208,6 +208,105 @@ export default {
         ]
       }
     }
+  },
+  created() {
+    if (this.isEdit) {
+      const id = this.$route.params && this.$route.params.id
+      this.fetchData(id)
+    }
+  },
+  methods: {
+    fetchData(id) {
+      fetchRecord(id).then(response => {
+        this.polling = response.data
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    async submitForm(status) {
+
+      const valid = await this.$refs.polling.validate()
+
+      if (!valid) {
+        return
+      }
+
+      try {
+        this.loading = true
+        const data = {}
+
+        Object.assign(data, this.polling)
+
+        data.status = status
+
+
+        if (this.isEdit) {
+          const id = this.$route.params && this.$route.params.id
+
+          await update(id, data)
+
+          this.$message.info(this.$t('crud.draft-polling-success'))
+
+          this.$router.push('/polling/index')
+        } else {
+          await create(data)
+          console.log(data)
+          if (status === 10) {
+            this.$message.success(this.$t('crud.send-polling-success'))
+            this.$router.push('/polling/index')
+          } else if (status === 0) {
+            this.$message.info(this.$t('crud.draft-polling-success'))
+            this.$router.push('/polling/index')
+          }
+        }
+      } catch (err) {
+        console.log(err)
+      } finally {
+        this.loading = false
+      }
+    },
+    addAnswer() {
+      this.polling.answers.push({
+        id: this.polling.answers.length + 1,
+        body: ''
+      });
+    },
+    removeAnswer(item) {
+      let index = this.polling.answers.indexOf(item);
+      if (index !== -1) {
+        this.polling.answers.splice(index, 1);
+      }
+    },
+    selectAnswer(label) {
+      if (label === 'yes') {
+        this.polling.answers = [{
+          id: 1,
+          body: 'Ya'
+        },
+        {
+          id: 2,
+          body: 'Tidak'
+        }]
+      } else if (label === 'multiple') {
+        this.polling.answers = [{
+          id: 1,
+          body: 'Baik'
+        },
+        {
+          id: 2,
+          body: 'Cukup'
+        },
+        {
+          id: 3,
+          body: 'Kurang'
+        }]
+      } else {
+        this.polling.answers = [{
+          id: 1,
+          body: ''
+        }]
+      }
+    }
   }
 
 }
