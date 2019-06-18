@@ -62,33 +62,57 @@
                 placeholder="Tulis pesan, maksimal 280 karakter"
               />
             </el-form-item>
-            <el-form-item label="Dimulai dari" prop="date">
+            <el-form-item label="Dimulai dari" prop="">
               <el-date-picker
                 v-model="polling.start_date"
                 type="date"
                 placeholder="Pilih tanggal">
               </el-date-picker>
+              <!-- <el-input v-model="polling.start_date" type="date" placeholder="Masukan tanggal" /> -->
+              {{polling.start_date}}
             </el-form-item>
             <el-form-item label="Sampai" prop="">
-              <el-date-picker
+              <!-- <el-date-picker
                 v-model="polling.end_date"
                 type="date"
                 placeholder="Pilih tanggal">
-              </el-date-picker>
+              </el-date-picker> -->
+              <el-input v-model="polling.end_date" type="date" placeholder="Masukan tanggal" />
             </el-form-item>
 
             <el-form-item label="Pertanyaan" prop="question">
-              <el-input v-model="polling.title" type="text" placeholder="Nama Survey" />
+              <el-input v-model="polling.question" type="text" placeholder="Pertanyaan" />
             </el-form-item>
 
             <el-form-item label="Tipe Pertanyaan" prop="">
               <el-radio-group v-model="polling.question_type">
-                <el-radio label="yesNo">Ya / Tidak</el-radio>
-                <el-radio label="multiple">Multiple</el-radio>
-                <el-radio label="custome">Custome</el-radio>
+                <el-radio label="yesNo" @change="selectAnswer('yes')">Ya / Tidak</el-radio>
+                <el-radio label="multiple" @change="selectAnswer('multiple')">Multiple</el-radio>
+                <el-radio label="custome" @change="selectAnswer('custome')">Custom</el-radio>
               </el-radio-group>
             </el-form-item>
-            <el-form-item>
+
+            <div v-if="polling.question_type === 'custome'">
+              <el-form-item
+                v-for="(answer) in polling.answers"
+                :key="answer.id"
+                :rules="{
+                  required: true, message: 'domain can not be null', trigger: 'blur'
+                }"
+              >
+                <el-row>
+                  <el-col :span="20">
+                    <el-input v-model="answer.body" type="text" placeholder="Jawaban" />
+                  </el-col>
+                  <el-col :span="4">
+                    <el-button type="danger" class="answer" @click.prevent="removeAnswer(answer)">Hapus</el-button>
+                  </el-col>
+                </el-row>
+              </el-form-item>
+              <el-button type="success" @click="addAnswer" class="add-answer">Jawaban Lain</el-button>
+            </div>
+
+            <el-form-item class="polling-button">
               <el-button type="info" :loading="loading" @click="submitForm(status.draft)">{{ $t('crud.draft') }}</el-button>
               <el-button v-show="!isEdit" type="primary" :loading="loading" @click="submitForm(status.active)"> {{ $t('crud.send-polling') }}</el-button>
             </el-form-item>
