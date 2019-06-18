@@ -58,7 +58,7 @@ test_api:
   script:
     - docker-compose -f docker-compose.dev.yml pull
     - docker images
-    - docker-compose -f docker-compose.dev.yml up -d
+    - COMPOSE_HTTP_TIMEOUT=200 docker-compose -f docker-compose.dev.yml up -d
     - sleep 60
     - docker ps
     - docker-compose -f docker-compose.dev.yml exec -T api composer sniff
