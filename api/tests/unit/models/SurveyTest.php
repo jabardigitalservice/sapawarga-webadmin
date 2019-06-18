@@ -75,4 +75,92 @@ class SurveyTest extends Unit
 
         $this->assertTrue($model->hasErrors('title'));
     }
+
+    public function testCategoryRequired()
+    {
+        $model = new Survey();
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('category_id'));
+
+        $model->category_id = '';
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('category_id'));
+
+        $model->category_id = 1;
+
+        $model->validate();
+
+        $this->assertFalse($model->hasErrors('category_id'));
+    }
+
+    public function testCategoryInteger()
+    {
+        $model = new Survey();
+
+        $model->category_id = 1;
+
+        $model->validate();
+
+        $this->assertFalse($model->hasErrors('category_id'));
+
+        $model->category_id = 'xxx';
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('category_id'));
+
+        $model->category_id = true;
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('category_id'));
+    }
+
+    public function testUrlRequired()
+    {
+        $model = new Survey();
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('external_url'));
+
+        $model->external_url = '';
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('external_url'));
+
+        $model->external_url = 'http://google.com';
+
+        $model->validate();
+
+        $this->assertFalse($model->hasErrors('external_url'));
+    }
+
+    public function testUrlScheme()
+    {
+        $model = new Survey();
+
+        $model->external_url = 'test';
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('external_url'));
+
+        $model->external_url = 'test.com';
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('external_url'));
+
+        $model->external_url = 'http://google.com';
+
+        $model->validate();
+
+        $this->assertFalse($model->hasErrors('external_url'));
+    }
 }
