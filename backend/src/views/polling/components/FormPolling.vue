@@ -138,37 +138,37 @@ export default {
             trigger: 'change'
           }
         ],
-        title: [
+        name: [
           {
             required: true,
-            message: 'Judul pesan harus diisi',
+            message: 'Nama polling harus diisi',
             trigger: 'blur'
           },
           {
             min: 10,
-            message: 'Judul pesan minimal 10 karakter',
+            message: 'Nama polling minimal 10 karakter',
             trigger: 'blur'
           },
           {
             max: 60,
-            message: 'Judul pesan maksimal 60 karakter',
+            message: 'Nama polling maksimal 60 karakter',
             trigger: 'blur'
           }
         ],
         question: [
           {
             required: true,
-            message: 'Judul pesan harus diisi',
+            message: 'Pertanyaan harus diisi',
             trigger: 'blur'
           },
           {
             min: 10,
-            message: 'Judul pesan minimal 10 karakter',
+            message: 'Pertanyaan minimal 10 karakter',
             trigger: 'blur'
           },
           {
             max: 60,
-            message: 'Judul pesan maksimal 60 karakter',
+            message: 'Pertanyaan maksimal 60 karakter',
             trigger: 'blur'
           }
         ],
@@ -178,24 +178,24 @@ export default {
         description: [
           {
             required: true,
-            message: 'Pesan harus diisi',
+            message: 'Deskripsi harus diisi',
             trigger: 'blur'
           },
           {
             max: 280,
-            message: 'Pesan maksimal 280 karakter',
+            message: 'Deskripsi maksimal 280 karakter',
             trigger: 'blur'
           }
         ],
         excerpt: [
           {
             required: true,
-            message: 'Pesan harus diisi',
+            message: 'Pengantar harus diisi',
             trigger: 'blur'
           },
           {
             max: 280,
-            message: 'Pesan maksimal 280 karakter',
+            message: 'Pengantar maksimal 280 karakter',
             trigger: 'blur'
           }
         ],
