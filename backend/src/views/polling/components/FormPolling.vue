@@ -40,11 +40,11 @@
             label-position="left"
             :status-icon="true"
           >
-            <el-form-item label="Nama Survey" prop="title">
-              <el-input v-model="polling.title" type="text" placeholder="Nama Survey" />
+            <el-form-item label="Nama Survey" prop="name">
+              <el-input v-model="polling.name" type="text" placeholder="Nama Survey" />
             </el-form-item>
             <el-form-item label="Kategori" prop="category_id">
-              <InputCategory v-model="polling.category_id" category-type="broadcast" prop="category" />
+              <InputCategory v-model="polling.category_id" category-type="polling" prop="category" />
             </el-form-item>
             <el-form-item label="Deskripsi" prop="description">
               <el-input
