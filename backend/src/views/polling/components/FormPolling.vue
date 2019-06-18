@@ -117,19 +117,28 @@ export default {
   data() {
     return {
       loading: false,
+      status: {
+        draft: 0,
+        active: 10
+      },
       width: '300%',
       polling: {
         kabkota_id: null,
         kec_id: null,
         kel_id: null,
         rw: null,
-        title: null,
+        name: null,
+        question: null,
         category_id: null,
         description: null,
         excerpt: null,
         start_date: null,
         end_date: null,
-        question_type: null
+        question_type: null,
+        answers: [{
+          id: 1,
+          body: ''
+        }]
       },
       rules: {
         wilayah: [
