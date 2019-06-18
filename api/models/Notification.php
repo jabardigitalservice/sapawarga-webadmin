@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use yii\behaviors\TimestampBehavior;
+use app\components\ModelHelper;
 
 /**
  * This is the model class for table "notifications".
@@ -240,24 +241,14 @@ class Notification extends \yii\db\ActiveRecord
     }
 
     /**
-     * Checks if category_id is current user's id
+     * Checks if category type is notification
      *
      * @param $attribute
      * @param $params
      */
     public function validateCategoryID($attribute, $params)
     {
-        $request = Yii::$app->request;
-
-        if ($request->isPost || $request->isPut) {
-            $category_id = Category::find()
-                ->where(['id' => $this->$attribute])
-                ->andWhere(['type' => self::CATEGORY_TYPE]);
-
-            if ($category_id->count() <= 0) {
-                $this->addError($attribute, Yii::t('app', 'error.id.invalid'));
-            }
-        }
+        ModelHelper::validateCategoryID($this, $attribute);
     }
 
     protected function generateData()
