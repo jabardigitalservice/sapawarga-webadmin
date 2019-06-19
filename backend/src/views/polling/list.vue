@@ -24,21 +24,21 @@
               {{ row.end_date | moment('D MMMM YYYY HH:mm') }}
             </template>
           </el-table-column>
-          <el-table-column prop="status" sortable="custom" class-name="status-col" label="Status" width="150">
+          <el-table-column prop="status" sortable="custom" class-name="status-col" label="Status" width="200">
             <template slot-scope="{row}">
-              <el-tag :type="row.status | statusFilter">
-                {{ row.status_label }}
+              <el-tag :type="getStatusColor(row)">
+                {{ getStatusLabel(row) }}
               </el-tag>
             </template>
           </el-table-column>
-          <el-table-column align="center" label="Actions" width="200">
+          <el-table-column align="center" label="Actions" width="250">
             <template slot-scope="scope">
               <router-link :to="'/polling/detail/'+scope.row.id">
                 <el-button type="white" size="mini">
                   View
                 </el-button>
               </router-link>
-              <router-link :to="'/polling/edit/'+scope.row.id">
+              <router-link :to="(scope.row.status !== 10 ? '/polling/edit/'+scope.row.id : '')">
                 <el-button type="white" size="mini" :disabled="scope.row.status === 10">
                   Edit
                 </el-button>
