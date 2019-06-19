@@ -69,8 +69,8 @@
                 :editable="false"
                 :clearable="false"
                 format="dd-MM-yyyy"
-                placeholder="Pilih tanggal">
-              </el-date-picker>
+                placeholder="Pilih tanggal"
+              />
             </el-form-item>
             <el-form-item label="Sampai" prop="">
               <el-date-picker
@@ -79,8 +79,8 @@
                 :editable="false"
                 :clearable="false"
                 format="dd-MM-yyyy"
-                placeholder="Pilih tanggal">
-              </el-date-picker>
+                placeholder="Pilih tanggal"
+              />
             </el-form-item>
 
             <el-form-item label="Pertanyaan" prop="question">
@@ -112,7 +112,7 @@
                   </el-col>
                 </el-row>
               </el-form-item>
-              <el-button type="success" @click="addAnswer" class="add-answer">Jawaban Lain</el-button>
+              <el-button type="success" class="add-answer" @click="addAnswer">Jawaban Lain</el-button>
             </div>
 
             <el-form-item class="polling-button">
@@ -132,7 +132,7 @@ import InputSelectArea from '@/components/InputSelectArea'
 import { create, fetchRecord, update } from '@/api/polling'
 
 const moment = require('moment')
-moment().format();
+moment().format()
 
 export default {
   components: {
@@ -146,7 +146,6 @@ export default {
     }
   },
   data() {
-
     const question_type = (rule, value, callback) => {
       if (this.question_type === null) {
         callback(new Error('Tipe pertanyaan harus diisi'))
@@ -252,7 +251,7 @@ export default {
           {
             validator: question_type,
             trigger: 'blur'
-          },
+          }
         ]
       }
     }
@@ -272,7 +271,6 @@ export default {
       })
     },
     async submitForm(status) {
-
       const valid = await this.$refs.polling.validate()
 
       if (!valid) {
@@ -317,12 +315,12 @@ export default {
       this.polling.answers.push({
         id: this.polling.answers.length + 1,
         body: ''
-      });
+      })
     },
     removeAnswer(item) {
-      let index = this.polling.answers.indexOf(item);
+      const index = this.polling.answers.indexOf(item)
       if (index !== -1) {
-        this.polling.answers.splice(index, 1);
+        this.polling.answers.splice(index, 1)
       }
     },
     selectAnswer(label) {
