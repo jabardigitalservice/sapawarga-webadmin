@@ -1,5 +1,5 @@
 <template>
   <div class="app-container">
-    <h1>Detail Survey</h1>
+    <p class="warn-content"><a href="#">Detail Survey</a></p>
   </div>
 </template>

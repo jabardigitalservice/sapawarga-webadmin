@@ -1,5 +1,6 @@
 <template>
   <div class="app-container">
+    <p class="warn-content"><a href="#">Edit Survey</a></p>
     <Form />
   </div>
 </template>
