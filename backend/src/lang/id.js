@@ -63,6 +63,8 @@ export default {
     'update-success': 'Perubahan data berhasil disimpan.',
     'send-success': 'Pesan berhasil dikirim',
     'draft-success': 'Pesan berhasil disimpan di draft',
+    'send-polling-success': 'Polling berhasil dipublikasikan',
+    'draft-polling-success': 'Polling berasil disimpan di draft',
 
     'user-activate-confirm': 'Anda yakin ingin mengaktifkan pengguna ini?',
     'user-deactivate-confirm': 'Anda yakin ingin menonaktifkan pengguna ini?',
