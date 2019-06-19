@@ -127,6 +127,10 @@
 import InputCategory from '@/components/InputCategory'
 import InputSelectArea from '@/components/InputSelectArea'
 import { create, fetchRecord, update } from '@/api/polling'
+
+const moment = require('moment')
+moment().format();
+
 export default {
   components: {
     InputCategory,
