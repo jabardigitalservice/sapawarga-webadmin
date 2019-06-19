@@ -11,6 +11,7 @@
             label-position="left"
             :rules="rules"
             :status-icon="true"
+            :disabled="isEdit === true && checkStatus !== 0"
           >
             <el-form-item label="Wilayah" prop="wilayah">
               <InputSelectArea
@@ -39,6 +40,7 @@
             label-width="150px"
             label-position="left"
             :status-icon="true"
+            :disabled="isEdit === true && checkStatus !== 0"
           >
             <el-form-item label="Nama Polling" prop="name">
               <el-input v-model="polling.name" type="text" placeholder="Nama Polling" />
@@ -116,7 +118,7 @@
             </div>
 
             <el-form-item class="polling-button">
-              <el-button type="info" :loading="loading" @click="submitForm(status.draft)">{{ $t('crud.draft') }}</el-button>
+              <el-button v-show="checkStatus === 0 || checkStatus === null" type="info" :loading="loading" @click="submitForm(status.draft)">{{ $t('crud.draft') }}</el-button>
               <el-button v-show="!isEdit" type="primary" :loading="loading" @click="submitForm(status.active)"> {{ $t('crud.send-polling') }}</el-button>
             </el-form-item>
           </el-form>
@@ -159,17 +161,18 @@ export default {
         draft: 0,
         active: 10
       },
+      checkStatus: null,
       width: '300%',
       start_date: moment().format('YYYY-MM-DD'),
       end_date: moment(Date.now() + 24 * 60 * 60 * 1000).format('YYYY-MM-DD'),
       question_type: null,
+      question: null,
       polling: {
         kabkota_id: null,
         kec_id: null,
         kel_id: null,
         rw: null,
         name: null,
-        question: null,
         category_id: null,
         description: null,
         excerpt: null,
