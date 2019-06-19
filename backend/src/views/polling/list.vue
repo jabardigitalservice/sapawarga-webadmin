@@ -11,7 +11,7 @@
             </router-link>
           </el-col>
         </el-row>
-        <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%">
+        <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%" @sort-change="changeSort">
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
           <el-table-column prop="name" sortable="custom" label="Nama Polling" min-width="250" />
           <el-table-column prop="start_date" sortable="custom" label="Mulai" width="170" align="center">
