@@ -230,11 +230,10 @@ export default {
             trigger: 'blur'
           }
         ],
-        date: [
+        question_type: [
           {
-            required: true,
-            message: 'Tanggal harus diisi',
-            trigger: 'change'
+            validator: question_type,
+            trigger: 'blur'
           },
         ]
       }
