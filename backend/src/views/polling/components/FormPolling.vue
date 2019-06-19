@@ -64,20 +64,23 @@
             </el-form-item>
             <el-form-item label="Dimulai dari" prop="">
               <el-date-picker
-                v-model="polling.start_date"
+                v-model="start_date"
                 type="date"
+                :editable="false"
+                :clearable="false"
+                format="dd-MM-yyyy"
                 placeholder="Pilih tanggal">
               </el-date-picker>
-              <!-- <el-input v-model="polling.start_date" type="date" placeholder="Masukan tanggal" /> -->
-              {{polling.start_date}}
             </el-form-item>
             <el-form-item label="Sampai" prop="">
-              <!-- <el-date-picker
-                v-model="polling.end_date"
+              <el-date-picker
+                v-model="end_date"
                 type="date"
+                :editable="false"
+                :clearable="false"
+                format="dd-MM-yyyy"
                 placeholder="Pilih tanggal">
-              </el-date-picker> -->
-              <el-input v-model="polling.end_date" type="date" placeholder="Masukan tanggal" />
+              </el-date-picker>
             </el-form-item>
 
             <el-form-item label="Pertanyaan" prop="question">
