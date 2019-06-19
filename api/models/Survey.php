@@ -90,6 +90,8 @@ class Survey extends ActiveRecord
             },
             'title',
             'external_url',
+            'start_date',
+            'end_date',
             'meta',
             'status',
             'status_label' => function () {
