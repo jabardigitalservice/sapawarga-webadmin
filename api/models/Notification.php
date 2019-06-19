@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use yii\behaviors\TimestampBehavior;
+use app\components\ModelHelper;
 
 /**
  * This is the model class for table "notifications".
@@ -27,6 +28,13 @@ class Notification extends \yii\db\ActiveRecord
     const STATUS_PUBLISHED = 10;
 
     const CATEGORY_TYPE = 'notification';
+
+    // Memetakan category name dengan target name
+    const TARGET_MAP = [
+        'Survey Terbaru'    => 'notifikasi',
+        'Polling Terbaru'   => 'notifikasi',
+        'Update Aplikasi'   => 'url',
+    ];
 
     /** @var  array push notification metadata */
     public $data;
@@ -142,7 +150,6 @@ class Notification extends \yii\db\ActiveRecord
                 }
             },
             'rw',
-            'meta',
             'status',
             'status_label' => function () {
                 $statusLabel = '';
@@ -206,16 +213,7 @@ class Notification extends \yii\db\ActiveRecord
             }
 
             if ($isSendNotification) {
-                $this->data = [
-                    'target'            => 'notification',
-                    'id'                => $this->id,
-                    'author'            => $this->author->name,
-                    'title'             => $this->title,
-                    'category_name'     => $this->category->name,
-                    'description'       => $this->description,
-                    'updated_at'        => $this->updated_at ?? time(),
-                    'push_notification' => true,
-                ];
+                $this->data = $this->generateData();
                 // By default,  send notification to all users
                 $topic = 'all';
                 if ($this->kel_id && $this->rw) {
@@ -243,23 +241,24 @@ class Notification extends \yii\db\ActiveRecord
     }
 
     /**
-     * Checks if category_id is current user's id
+     * Checks if category type is notification
      *
      * @param $attribute
      * @param $params
      */
     public function validateCategoryID($attribute, $params)
     {
-        $request = Yii::$app->request;
+        ModelHelper::validateCategoryID($this, $attribute);
+    }
 
-        if ($request->isPost || $request->isPut) {
-            $category_id = Category::find()
-                ->where(['id' => $this->$attribute])
-                ->andWhere(['type' => self::CATEGORY_TYPE]);
-
-            if ($category_id->count() <= 0) {
-                $this->addError($attribute, Yii::t('app', 'error.id.invalid'));
-            }
-        }
+    protected function generateData()
+    {
+        $data = [
+            'push_notification' => true,
+            'title'             => $this->title,
+            'target'            => self::TARGET_MAP[$this->category->name],
+            'meta'              => $this->meta,
+        ];
+        return $data;
     }
 }
