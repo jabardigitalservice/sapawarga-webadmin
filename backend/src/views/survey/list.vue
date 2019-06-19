@@ -29,7 +29,6 @@
             </template>
           </el-table-column>
 
-
           <el-table-column prop="status" sortable="custom" class-name="status-col" label="Status" width="150">
             <template slot-scope="{row}">
               <el-tag :type="getStatusColor(row)">
