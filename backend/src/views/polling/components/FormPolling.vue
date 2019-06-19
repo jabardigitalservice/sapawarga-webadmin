@@ -269,7 +269,8 @@ export default {
         Object.assign(data, this.polling)
 
         data.status = status
-
+        data.start_date = moment(this.start_date).format('YYYY-MM-DD')
+        data.end_date = moment(this.end_date).format('YYYY-MM-DD')
 
         if (this.isEdit) {
           const id = this.$route.params && this.$route.params.id
