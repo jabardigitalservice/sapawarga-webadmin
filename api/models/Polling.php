@@ -67,6 +67,11 @@ class Polling extends ActiveRecord
         return $this->hasMany(PollingAnswer::class, ['polling_id' => 'id']);
     }
 
+    public function getVotes()
+    {
+        return $this->hasMany(PollingVote::class, ['polling_id' => 'id']);
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -159,6 +164,9 @@ class Polling extends ActiveRecord
             'answers',
             'start_date',
             'end_date',
+            'votes_count' => function () {
+                return (int) $this->getVotes()->count();
+            },
             'meta',
             'status',
             'status_label' => function () {
