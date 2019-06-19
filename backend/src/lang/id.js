@@ -31,7 +31,12 @@ export default {
     'polling-list': 'Daftar Polling',
     'polling-create': 'Tambah Polling',
     'polling-detail': 'Detail Polling',
-    'polling-edit': 'Edit Polling'
+    'polling-edit': 'Edit Polling',
+    'survey-manage': 'Survey',
+    'survey-list': 'Daftar Survey',
+    'survey-create': 'Tambah Survey',
+    'survey-detail': 'Detail Survey',
+    'survey-edit': 'Edit Survey'
   },
   crud: {
     'list-empty': 'Belum ada data.',
