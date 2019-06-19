@@ -84,15 +84,15 @@
               <el-input v-model="polling.question" type="text" placeholder="Pertanyaan" />
             </el-form-item>
 
-            <el-form-item label="Tipe Pertanyaan" prop="">
-              <el-radio-group v-model="polling.question_type">
+            <el-form-item v-if="!isEdit" label="Tipe Pertanyaan" prop="question_type">
+              <el-radio-group v-model="question_type">
                 <el-radio label="yesNo" @change="selectAnswer('yes')">Ya / Tidak</el-radio>
                 <el-radio label="multiple" @change="selectAnswer('multiple')">Multiple</el-radio>
                 <el-radio label="custome" @change="selectAnswer('custome')">Custom</el-radio>
               </el-radio-group>
             </el-form-item>
 
-            <div v-if="polling.question_type === 'custome'">
+            <div v-if="question_type === 'custome'">
               <el-form-item
                 v-for="(answer) in polling.answers"
                 :key="answer.id"
