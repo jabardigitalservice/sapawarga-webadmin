@@ -158,6 +158,9 @@ export default {
         active: 10
       },
       width: '300%',
+      start_date: moment().format('YYYY-MM-DD'),
+      end_date: moment(Date.now() + 24 * 60 * 60 * 1000).format('YYYY-MM-DD'),
+      question_type: null,
       polling: {
         kabkota_id: null,
         kec_id: null,
