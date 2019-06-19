@@ -25,6 +25,7 @@ class Survey extends ActiveRecord
 {
     const STATUS_DELETED = -1;
     const STATUS_DRAFT = 0;
+    const STATUS_DISABLED = 1;
     const STATUS_PUBLISHED = 10;
 
     const CATEGORY_TYPE = 'survey';
@@ -73,7 +74,7 @@ class Survey extends ActiveRecord
 
             ['external_url', 'url'],
 
-            ['status', 'in', 'range' => [-1, 0, 10]],
+            ['status', 'in', 'range' => [-1, 0, 1, 10]],
         ];
     }
 
@@ -90,6 +91,8 @@ class Survey extends ActiveRecord
             },
             'title',
             'external_url',
+            'start_date',
+            'end_date',
             'meta',
             'status',
             'status_label' => function () {
@@ -97,6 +100,9 @@ class Survey extends ActiveRecord
                 switch ($this->status) {
                     case self::STATUS_PUBLISHED:
                         $statusLabel = Yii::t('app', 'status.published');
+                        break;
+                    case self::STATUS_DISABLED:
+                        $statusLabel = Yii::t('app', 'status.inactive');
                         break;
                     case self::STATUS_DRAFT:
                         $statusLabel = Yii::t('app', 'status.draft');
