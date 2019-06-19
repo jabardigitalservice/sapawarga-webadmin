@@ -22,7 +22,7 @@ class SurveySearch extends Survey
      */
     public function search($params)
     {
-        $query = Survey::find()->with('category', 'kelurahan', 'kecamatan', 'kabkota', 'answers');
+        $query = Survey::find()->with('category', 'kelurahan', 'kecamatan', 'kabkota');
 
         // grid filtering conditions
         $query->andFilterWhere(['id' => $this->id]);
