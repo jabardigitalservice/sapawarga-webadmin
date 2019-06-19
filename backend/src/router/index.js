@@ -10,6 +10,7 @@ import Layout from '@/layout'
 import userRouter from './modules/user'
 import nomorPentingRouter from './modules/nomorPenting'
 import broadcastRouter from './modules/broadcast'
+import notificationRouter from './modules/notification'
 import aspirationRouter from './modules/aspiration'
 import pollingRouter from './modules/polling'
 
@@ -116,6 +117,7 @@ export const asyncRoutes = [
   userRouter,
   nomorPentingRouter,
   broadcastRouter,
+  notificationRouter,
   aspirationRouter,
   pollingRouter,
 
