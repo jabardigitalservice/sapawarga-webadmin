@@ -156,9 +156,6 @@ export default {
         category_id: null,
         description: null,
         excerpt: null,
-        start_date: null,
-        end_date: null,
-        question_type: null,
         answers: [{
           id: 1,
           body: ''
@@ -284,7 +281,6 @@ export default {
           this.$router.push('/polling/index')
         } else {
           await create(data)
-          console.log(data)
           if (status === 10) {
             this.$message.success(this.$t('crud.send-polling-success'))
             this.$router.push('/polling/index')
