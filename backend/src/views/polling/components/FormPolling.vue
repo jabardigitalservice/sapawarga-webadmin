@@ -139,6 +139,14 @@ export default {
     }
   },
   data() {
+
+    const question_type = (rule, value, callback) => {
+      if (this.question_type === null) {
+        callback(new Error('Tipe pertanyaan harus diisi'))
+      }
+      callback()
+    }
+
     return {
       loading: false,
       status: {
