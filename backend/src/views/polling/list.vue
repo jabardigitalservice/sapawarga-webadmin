@@ -54,6 +54,7 @@
 <script>
 import { fetchList } from '@/api/polling'
 import Pagination from '@/components/Pagination'
+import moment from 'moment'
 export default {
   components: { Pagination },
   filters: {
