@@ -1,3 +1,11 @@
 <template>
-  <h1>Ini create polling</h1>
+  <FormPolling :is-edit="true" />
 </template>
+<script>
+import FormPolling from './components/FormPolling'
+
+export default {
+  name: 'CreateForm',
+  components: { FormPolling }
+}
+</script>
