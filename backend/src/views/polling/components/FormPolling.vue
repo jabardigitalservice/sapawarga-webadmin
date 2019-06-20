@@ -155,6 +155,34 @@ export default {
       callback()
     }
 
+    const whitespaceName = (rule, value, callback) => {
+      if (value.includes('  ')) {
+        callback(new Error('Nama polling yang diisi tidak valid'))
+      }
+      callback()
+    }
+
+    const whitespaceDescription = (rule, value, callback) => {
+      if (value.includes('  ')) {
+        callback(new Error('Deskripsi yang diisi tidak valid'))
+      }
+      callback()
+    }
+
+    const whitespaceExcerpt = (rule, value, callback) => {
+      if (value.includes('  ')) {
+        callback(new Error('Pengantar yang diisi tidak valid'))
+      }
+      callback()
+    }
+
+    const whitespaceQuestion = (rule, value, callback) => {
+      if (value.includes('  ')) {
+        callback(new Error('Pertanyaan yang diisi tidak valid'))
+      }
+      callback()
+    }
+
     return {
       loading: false,
       status: {
