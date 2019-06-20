@@ -320,6 +320,17 @@ export default {
       }
     }
   },
+  watch: {
+    'polling.kel_id'() {
+      this.resetRw()
+    },
+    'polling.kec_id'() {
+      this.resetRw()
+    },
+    'polling.kabkota_id'() {
+      this.resetRw()
+    }
+  },
   created() {
     if (this.isEdit) {
       const id = this.$route.params && this.$route.params.id
