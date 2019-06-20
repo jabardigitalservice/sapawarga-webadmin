@@ -327,6 +327,12 @@ export default {
     }
   },
   methods: {
+    resetRw() {
+      if(this.polling.kel_id === null || this.polling.kec_id === null || this.polling.kabkota_id === null) {
+        this.polling.kel_id = null
+        this.polling.rw = null
+      }
+    },
     fetchData(id) {
       fetchRecord(id).then(response => {
         this.polling = response.data
