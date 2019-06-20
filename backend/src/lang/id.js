@@ -31,7 +31,12 @@ export default {
     'polling-list': 'Daftar Polling',
     'polling-create': 'Tambah Polling',
     'polling-detail': 'Detail Polling',
-    'polling-edit': 'Edit Polling'
+    'polling-edit': 'Edit Polling',
+    'survey-manage': 'Survey',
+    'survey-list': 'Daftar Survey',
+    'survey-create': 'Tambah Survey',
+    'survey-detail': 'Detail Survey',
+    'survey-edit': 'Edit Survey'
   },
   crud: {
     'list-empty': 'Belum ada data.',
@@ -58,6 +63,8 @@ export default {
     'update-success': 'Perubahan data berhasil disimpan.',
     'send-success': 'Pesan berhasil dikirim',
     'draft-success': 'Pesan berhasil disimpan di draft',
+    'send-polling-success': 'Polling berhasil dipublikasikan',
+    'draft-polling-success': 'Polling berasil disimpan di draft',
 
     'user-activate-confirm': 'Anda yakin ingin mengaktifkan pengguna ini?',
     'user-deactivate-confirm': 'Anda yakin ingin menonaktifkan pengguna ini?',
