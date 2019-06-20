@@ -16,28 +16,33 @@
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%" @sort-change="changeSort">
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
 
-          <el-table-column prop="title" sortable="custom" label="Nama Survey" min-width="250" />
+          <el-table-column prop="title" sortable="custom" label="Nama Survey" />
 
-          <el-table-column prop="start_date" sortable="custom" label="Mulai" width="170" align="center">
+          <el-table-column prop="start_date" sortable="custom" label="Mulai" width="150" align="center">
             <template slot-scope="{row}">
               {{ row.start_date | moment('D MMMM YYYY') }}
             </template>
           </el-table-column>
-          <el-table-column prop="end_date" sortable="custom" label="Berakhir" width="170" align="center">
+          <el-table-column prop="end_date" sortable="custom" label="Berakhir" width="150" align="center">
             <template slot-scope="{row}">
               {{ row.end_date | moment('D MMMM YYYY') }}
             </template>
           </el-table-column>
 
-          <el-table-column prop="status" sortable="custom" class-name="status-col" label="Status" width="150">
+          <el-table-column prop="status" sortable="custom" class-name="status-col" label="Status" width="200">
             <template slot-scope="{row}">
               <el-tag :type="getStatusColor(row)">
                 {{ getStatusLabel(row) }}
               </el-tag>
             </template>
           </el-table-column>
-          <el-table-column align="center" label="Actions" width="200">
+          <el-table-column align="center" label="Actions" width="250">
             <template slot-scope="scope">
+              <a :href="scope.row.external_url" target="_blank">
+                <el-button type="white" size="mini">
+                  Preview
+                </el-button>
+              </a>
               <router-link :to="'/survey/detail/'+scope.row.id">
                 <el-button type="white" size="mini">
                   View

@@ -56,6 +56,9 @@ export default {
     'send-polling': 'Publikasikan Polling',
     'publish-polling': 'Polling berhasil dipublikasikan',
 
+    'survey-send': 'Publikasikan Survey',
+    'survey-published': 'Survey berhasil dipublikasikan.',
+
     'insert-row': 'Tambah Baris Baru',
     'delete-row': 'Hapus',
     'delete-row-confirm': 'Anda yakin ingin menghapus data ini?',
