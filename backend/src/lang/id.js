@@ -85,7 +85,8 @@ export default {
     cancel: 'Batal'
   },
   errors: {
-    'internal-server-error': 'Telah terjadi kesalahan sistem, silahkan muat ulang halaman ini.'
+    'internal-server-error': 'Telah terjadi kesalahan sistem, silahkan muat ulang halaman ini.',
+    'polling-start_date': 'Tanggal berakhir polling tidak dapat lebih kecil dari tanggal mulai polling'
   },
   navbar: {
     profile: 'Lihat Profil'
