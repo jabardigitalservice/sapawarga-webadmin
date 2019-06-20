@@ -77,7 +77,7 @@ export default {
           },
           {
             title: 'URL Survey',
-            content: external_url
+            content: <a href={external_url} target='_blank'>{external_url}</a>
           },
           {
             title: 'Status',
