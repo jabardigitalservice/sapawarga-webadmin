@@ -14,23 +14,23 @@
 
           <el-form-item label="Tanggal Mulai" prop="start_date">
             <el-date-picker
-                    v-model="form.start_date"
-                    type="date"
-                    :editable="false"
-                    :clearable="false"
-                    format="dd-MM-yyyy"
-                    placeholder="Pilih tanggal"
+              v-model="form.start_date"
+              type="date"
+              :editable="false"
+              :clearable="false"
+              format="dd-MM-yyyy"
+              placeholder="Pilih tanggal"
             />
           </el-form-item>
 
           <el-form-item label="Tanggal Berakhir" prop="end_date">
             <el-date-picker
-                    v-model="form.end_date"
-                    type="date"
-                    :editable="false"
-                    :clearable="false"
-                    format="dd-MM-yyyy"
-                    placeholder="Pilih tanggal"
+              v-model="form.end_date"
+              type="date"
+              :editable="false"
+              :clearable="false"
+              format="dd-MM-yyyy"
+              placeholder="Pilih tanggal"
             />
           </el-form-item>
 
@@ -39,8 +39,8 @@
           </el-form-item>
 
           <el-form-item>
-            <el-button type="primary" :loading="loading" @click="submitDraft">{{ $t('crud.draft') }}</el-button>
-            <el-button :loading="loading" @click="submitProcess">{{ $t('crud.save-publish') }}</el-button>
+            <el-button v-if="form.status === 0" :loading="loading" @click="submitDraft">{{ $t('crud.draft') }}</el-button>
+            <el-button type="primary" :loading="loading" @click="submitProcess">{{ $t('crud.save-publish') }}</el-button>
 
             <router-link :to="'/survey/index'">
               <el-button type="info">{{ $t('crud.cancel') }}</el-button>
@@ -157,12 +157,12 @@ export default {
 
           this.$message.success(this.$t('crud.update-success'))
 
-          // this.$router.push('/survey/index')
+          this.$router.push('/survey/index')
         } else {
           await create(data)
           this.$message.success(this.$t('crud.create-success'))
 
-          // this.$router.push('/survey/index')
+          this.$router.push('/survey/index')
         }
       } catch (e) {
         console.log(e)
