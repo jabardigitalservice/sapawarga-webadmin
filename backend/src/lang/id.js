@@ -48,6 +48,7 @@ export default {
     'delete': 'Hapus',
     'cancel': 'Batal',
     'back': 'Kembali',
+    'back-to-list': 'Kembali ke Daftar',
     'draft': 'Simpan sebagai Draft',
     'save-publish': 'Simpan dan Aktifkan',
     'send': 'Kirim Pesan',

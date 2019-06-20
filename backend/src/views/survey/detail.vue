@@ -14,11 +14,13 @@
           </el-table>
         </el-card>
 
-        <el-button type="primary" style="margin-top: 25px">{{ $t('crud.survey-send') }}</el-button>
+        <div style="margin-top: 25px">
+          <el-button v-if="record && record.status === 0" type="primary" @click="submitForm">{{ $t('crud.survey-send') }}</el-button>
 
-        <router-link :to="'/survey/index'">
-          <el-button type="info">{{ $t('crud.cancel') }}</el-button>
-        </router-link>
+          <router-link :to="'/survey/index'">
+            <el-button type="info">{{ $t('crud.back-to-list') }}</el-button>
+          </router-link>
+        </div>
 
       </el-col>
     </el-row>
@@ -26,7 +28,9 @@
 </template>
 
 <script>
+import moment from 'moment'
 import { fetchRecord, update } from '@/api/survey'
+
 export default {
   data() {
     return {
@@ -56,11 +60,11 @@ export default {
           },
           {
             title: 'Tanggal Mulai',
-            content: start_date || '-'
+            content: moment(start_date).format('D MMMM YYYY')
           },
           {
             title: 'Tanggal Berakhir',
-            content: end_date || '-'
+            content: moment(end_date).format('D MMMM YYYY')
           },
           {
             title: 'URL Survey',
@@ -74,12 +78,13 @@ export default {
       })
     },
 
-    async submitForm(status) {
+    async submitForm() {
       const id = this.$route.params && this.$route.params.id
-      const data = {}
+      const statusActive = 10
 
-      Object.assign(data, this.polling)
-      data.status = status
+      const data = {
+        status: statusActive
+      }
 
       await update(id, data)
       this.$message.success(this.$t('crud.publish-polling'))
