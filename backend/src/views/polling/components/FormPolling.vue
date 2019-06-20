@@ -156,28 +156,28 @@ export default {
     }
 
     const whitespaceName = (rule, value, callback) => {
-      if (value.includes('  ')) {
+      if (value.includes('  ') || value.startsWith(' ') || value.endsWith(' ')) {
         callback(new Error('Nama polling yang diisi tidak valid'))
       }
       callback()
     }
 
     const whitespaceDescription = (rule, value, callback) => {
-      if (value.includes('  ')) {
+      if (value.includes('  ') || value.startsWith(' ') || value.endsWith(' ')) {
         callback(new Error('Deskripsi yang diisi tidak valid'))
       }
       callback()
     }
 
     const whitespaceExcerpt = (rule, value, callback) => {
-      if (value.includes('  ')) {
+      if (value.includes('  ') || value.startsWith(' ') || value.endsWith(' ')) {
         callback(new Error('Pengantar yang diisi tidak valid'))
       }
       callback()
     }
 
     const whitespaceQuestion = (rule, value, callback) => {
-      if (value.includes('  ')) {
+      if (value.includes('  ') || value.startsWith(' ') || value.endsWith(' ')) {
         callback(new Error('Pertanyaan yang diisi tidak valid'))
       }
       callback()
