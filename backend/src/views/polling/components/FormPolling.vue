@@ -396,7 +396,7 @@ export default {
       } catch (err) {
         const errorDate = err.response.data.data.start_date
         if (errorDate) {
-          this.$message.error(this.$t('errors.polling-start_date'))
+          this.$message.error(this.$t('errors.polling-compare-date'))
         }
       } finally {
         this.loading = false
