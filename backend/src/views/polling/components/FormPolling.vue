@@ -119,7 +119,7 @@
 
             <el-form-item class="polling-button">
               <el-button v-show="checkStatus === 0 || checkStatus === null" type="info" :loading="loading" @click="submitForm(status.draft)">{{ $t('crud.draft') }}</el-button>
-              <el-button v-show="!isEdit" type="primary" :loading="loading" @click="submitForm(status.active)"> {{ $t('crud.send-polling') }}</el-button>
+              <el-button v-show="!isEdit" type="primary" :loading="loading" @click="actionApprove(status.active)"> {{ $t('crud.send-polling') }}</el-button>
             </el-form-item>
           </el-form>
 
@@ -451,6 +451,35 @@ export default {
           id: 1,
           body: ''
         }]
+      }
+    },
+    async actionApprove(status) {
+      // const id = this.id
+
+      const valid = await this.$refs.polling.validate()
+
+      if (!valid) {
+        return
+      }
+
+      await this.$confirm(`Apakah anda yakin akan mengirimkan Pesan : ${this.polling.name} [Tujuan] ?`, 'Konfirmasi', {
+        confirmButtonText: this.$t('common.confirm'),
+        cancelButtonText: this.$t('common.cancel'),
+        type: 'success'
+      })
+
+      try {
+        /* await approval(id, {
+          action: 'APPROVE'
+        }) */
+
+        submitForm(status)
+
+        /* this.$message.success(this.$t('crud.update-success'))
+
+        this.$router.push('/aspirasi/index') */
+      } catch (e) {
+        console.log(e)
       }
     }
   }
