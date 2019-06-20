@@ -48,6 +48,7 @@ export default {
     'delete': 'Hapus',
     'cancel': 'Batal',
     'back': 'Kembali',
+    'back-to-list': 'Kembali ke Daftar',
     'draft': 'Simpan sebagai Draft',
     'save-publish': 'Simpan dan Aktifkan',
     'send': 'Kirim Pesan',
@@ -55,6 +56,9 @@ export default {
     'reject': 'Tolak',
     'send-polling': 'Publikasikan Polling',
     'publish-polling': 'Polling berhasil dipublikasikan',
+
+    'survey-send': 'Publikasikan Survey',
+    'survey-published': 'Survey berhasil dipublikasikan.',
 
     'insert-row': 'Tambah Baris Baru',
     'delete-row': 'Hapus',
