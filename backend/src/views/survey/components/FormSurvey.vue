@@ -8,8 +8,7 @@
           description="Data sudah aktif, Anda tidak bisa mengubah data ini."
           show-icon
           style="margin-bottom: 15px"
-        >
-        </el-alert>
+        />
 
         <el-form ref="form" :model="form" :rules="rules" :status-icon="true" label-width="160px">
 
@@ -167,16 +166,14 @@ export default {
     },
 
     async submitDraft() {
-      this.form.status = 0
-      await this.submitForm()
+      await this.submitForm(true)
     },
 
     async submitProcess() {
-      this.form.status = 10
-      await this.submitForm()
+      await this.submitForm(false)
     },
 
-    async submitForm() {
+    async submitForm(draft) {
       const valid = await this.$refs.form.validate()
 
       if (!valid) {
@@ -189,6 +186,12 @@ export default {
         const data = {}
 
         Object.assign(data, this.form)
+
+        if (draft) {
+          data.status = 0
+        } else {
+          data.status = 10
+        }
 
         data.start_date = moment(data.start_date).format('YYYY-MM-DD')
         data.end_date = moment(data.end_date).format('YYYY-MM-DD')
