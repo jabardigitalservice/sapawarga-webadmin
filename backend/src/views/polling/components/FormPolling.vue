@@ -132,6 +132,7 @@
 import InputCategory from '@/components/InputCategory'
 import InputSelectArea from '@/components/InputSelectArea'
 import { create, fetchRecord, update } from '@/api/polling'
+import { Message } from 'element-ui'
 
 const moment = require('moment')
 moment().format()
@@ -393,7 +394,10 @@ export default {
           }
         }
       } catch (err) {
-        console.log(err)
+        const errorDate = err.response.data.data.start_date
+        if (errorDate) {
+          this.$message.error(this.$t('errors.polling-start_date'))
+        }
       } finally {
         this.loading = false
       }
