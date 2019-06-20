@@ -192,6 +192,44 @@ class Polling extends ActiveRecord
         return $fields;
     }
 
+    public function afterSave($insert, $changedAttributes)
+    {
+        if (!YII_ENV_TEST) {
+            // Check condition for push notification
+            $isSendNotification = false;
+            if ($insert) {
+                $isSendNotification = $this->status == self::STATUS_PUBLISHED;
+            } else { // Update notification
+                if (array_key_exists('status', $changedAttributes)) {
+                    if ($this->status == self::STATUS_PUBLISHED) {
+                        $isSendNotification = true;
+                    }
+                }
+            }
+
+            if ($isSendNotification) {
+                $notifModel = new Notification();
+                $notifModel->setAttributes([
+                    'category_id' => 15,
+                    'title'=> "Polling Baru: {$this->name}",
+                    'description'=> $this->description,
+                    'kabkota_id'=> $this->kabkota_id,
+                    'kec_id'=> $this->kec_id,
+                    'kel_id'=> $this->kel_id,
+                    'rw'=> $this->rw,
+                    'status'=> Notification::STATUS_PUBLISHED,
+                    'meta' => [
+                        'target'=> 'polling',
+                        'id'=>$this->id
+                    ]
+                ]);
+                $notifModel->save(false);
+            }
+        }
+
+        return parent::afterSave($insert, $changedAttributes);
+    }
+
     /** @inheritdoc */
     public function behaviors()
     {
