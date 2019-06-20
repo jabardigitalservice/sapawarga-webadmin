@@ -19,7 +19,7 @@
               :editable="false"
               :clearable="false"
               format="dd-MM-yyyy"
-              placeholder="Pilih tanggal"
+              placeholder="Pilih Tanggal"
             />
           </el-form-item>
 
@@ -30,7 +30,7 @@
               :editable="false"
               :clearable="false"
               format="dd-MM-yyyy"
-              placeholder="Pilih tanggal"
+              placeholder="Pilih Tanggal"
             />
           </el-form-item>
 
