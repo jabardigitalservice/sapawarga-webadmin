@@ -2,6 +2,15 @@
   <div>
     <el-row :gutter="20">
       <el-col :sm="24">
+        <el-alert
+          v-if="form.status === 10"
+          type="error"
+          description="Data sudah aktif, Anda tidak bisa mengubah data ini."
+          show-icon
+          style="margin-bottom: 15px"
+        >
+        </el-alert>
+
         <el-form ref="form" :model="form" :rules="rules" :status-icon="true" label-width="160px">
 
           <el-form-item label="Judul Survey" prop="title">
@@ -40,7 +49,7 @@
 
           <el-form-item>
             <el-button v-if="form.status === null || form.status === 0" :loading="loading" @click="submitDraft">{{ $t('crud.draft') }}</el-button>
-            <el-button type="primary" :loading="loading" @click="submitProcess">{{ $t('crud.save-publish') }}</el-button>
+            <el-button v-if="form.status === null || form.status === 0" type="primary" :loading="loading" @click="submitProcess">{{ $t('crud.save-publish') }}</el-button>
 
             <router-link :to="'/survey/index'">
               <el-button type="info">{{ $t('crud.cancel') }}</el-button>
