@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use yii\behaviors\TimestampBehavior;
+use app\components\ModelHelper;
 use app\validator\InputCleanValidator;
 use app\validator\IsArrayValidator;
 
@@ -90,7 +91,16 @@ class Aspirasi extends \yii\db\ActiveRecord
     {
         return [
             [
-                ['title', 'description', 'kabkota_id', 'kec_id', 'kel_id', 'author_id', 'category_id', 'status'],
+                [
+                    'title',
+                    'description',
+                    'kabkota_id',
+                    'kec_id',
+                    'kel_id',
+                    'author_id',
+                    'category_id',
+                    'status',
+                ],
                 'required',
             ],
             ['category_id', 'validateCategoryID'],
@@ -112,9 +122,13 @@ class Aspirasi extends \yii\db\ActiveRecord
             ['attachments', IsArrayValidator::class],
             [['author_id', 'category_id', 'kabkota_id', 'kec_id', 'kel_id', 'status'], 'integer'],
             ['meta', 'default'],
-            ['approval_note', 'required', 'when' => function ($model) {
-                return $model->status === self::STATUS_APPROVAL_REJECTED;
-            }],
+            [
+                'approval_note',
+                'required',
+                'when' => function ($model) {
+                    return $model->status === self::STATUS_APPROVAL_REJECTED;
+                },
+            ],
             ['approval_note', 'default'],
             ['approved_by', 'default'],
             ['approved_at', 'default'],
@@ -133,9 +147,9 @@ class Aspirasi extends \yii\db\ActiveRecord
                     'id'         => $this->author->id,
                     'name'       => $this->author->name,
                     'role_label' => $this->author->getRoleLabel(),
-                    'email'       => $this->author->email,
-                    'phone'       => $this->author->phone,
-                    'address'       => $this->author->address,
+                    'email'      => $this->author->email,
+                    'phone'      => $this->author->phone,
+                    'address'    => $this->author->address,
                 ];
             },
             'category_id',
@@ -180,10 +194,10 @@ class Aspirasi extends \yii\db\ActiveRecord
                     return null;
                 }
             },
-            'likes_count' => function () {
-                return (int) $this->getLikes()->count();
+            'likes_count'  => function () {
+                return (int)$this->getLikes()->count();
             },
-            'likes_users' => function () {
+            'likes_users'  => function () {
                 // @TODO too many callback function
                 return array_map(function ($item) {
                     return [
@@ -217,7 +231,7 @@ class Aspirasi extends \yii\db\ActiveRecord
                 return $statusLabel;
             },
             'approval_note',
-            'attachments' => function () use ($bucket) {
+            'attachments'  => function () use ($bucket) {
                 if ($this->attachments === null) {
                     return null;
                 }
@@ -266,23 +280,13 @@ class Aspirasi extends \yii\db\ActiveRecord
     }
 
     /**
-     * Checks if category_id is current user's id
+     * Checks if category type is aspirasi
      *
      * @param $attribute
      * @param $params
      */
     public function validateCategoryID($attribute, $params)
     {
-        $request = Yii::$app->request;
-
-        if ($request->isPost || $request->isPut) {
-            $category_id = Category::find()
-                ->where(['id' => $this->$attribute])
-                ->andWhere(['type' => self::CATEGORY_TYPE]);
-
-            if ($category_id->count() <= 0) {
-                $this->addError($attribute, Yii::t('app', 'error.id.invalid'));
-            }
-        }
+        ModelHelper::validateCategoryID($this, $attribute);
     }
 }

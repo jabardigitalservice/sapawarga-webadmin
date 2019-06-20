@@ -66,10 +66,19 @@ export default {
 
         // count down date
         let expired = false
+        let beforeStart = false
+
+        const dateStart = new Date(start_date).getTime()
         const dateSecond = new Date(end_date).getTime()
         const currentDate = new Date().getTime()
 
+        const checkStartDate = currentDate - dateStart
         const distance = dateSecond - currentDate
+
+        console.log(checkStartDate)
+        if (checkStartDate < 0) {
+          beforeStart = true
+        }
 
         if (distance < 0) {
           expired = true
@@ -122,7 +131,7 @@ export default {
           },
           {
             title: 'Status',
-            content: (status === 10 && expired === true ? <el-tag type='danger'>Berakhir</el-tag> : status === 10 && expired === false ? <el-tag type='success'>Sedang Berlangsung</el-tag> : <el-tag type='info'>{status_label}</el-tag>)
+            content: (status === 1 ? <el-tag type='danger'>Tidak Aktif</el-tag> : status === 10 && expired === true && beforeStart === false ? <el-tag type='warning'>Berakhir</el-tag> : status === 10 && expired === false && beforeStart === false ? <el-tag type='success'>Sedang Berlangsung</el-tag> : status === 10 && beforeStart === true && expired === false ? <el-tag type='primary'>Dipublikasikan</el-tag> : <el-tag type='info'>{status_label}</el-tag>)
           },
           {
             title: 'Pertanyaan',

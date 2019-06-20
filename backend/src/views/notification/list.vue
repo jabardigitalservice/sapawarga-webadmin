@@ -7,7 +7,7 @@
       <el-col :lg="24">
         <el-row style="margin: 10px 0px">
           <el-col :span="12">
-            <router-link :to="{ path: '/broadcast/create' }">
+            <router-link :to="{ path: '/notification/create' }">
               <el-button type="primary" size="small" icon="el-icon-plus">
                 Tambah Pesan Baru
               </el-button>
@@ -42,12 +42,12 @@
 
           <el-table-column align="center" label="Actions" width="250px">
             <template slot-scope="scope">
-              <router-link :to="'/broadcast/show/'+scope.row.id">
+              <router-link :to="'/notification/show/'+scope.row.id">
                 <el-button type="white" size="mini">
                   View
                 </el-button>
               </router-link>
-              <router-link :to="(scope.row.status !== 10 ? '/broadcast/edit/' +scope.row.id : '')">
+              <router-link :to="(scope.row.status !== 10 ? '/notification/edit/' +scope.row.id : '')">
                 <el-button type="white" size="mini" :disabled="scope.row.status === 10">
                   Edit
                 </el-button>
@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import { fetchList } from '@/api/broadcast'
+import { fetchList } from '@/api/notification'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 
 export default {

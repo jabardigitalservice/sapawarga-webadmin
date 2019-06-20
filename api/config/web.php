@@ -199,6 +199,34 @@ $config = [
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',
+                    'controller' => 'v1/polling',
+                    'pluralize' => false,
+                    'tokens' => [
+                        '{id}' => '<id:\d+>',
+                        '{answerId}' => '<answerId:\d+>',
+                    ],
+                    'extraPatterns' => [
+                        'POST {id}/answers' => 'answer-create',
+                        'OPTIONS {id}/answers' => 'options',
+                        'PUT {id}/answers/{answerId}' => 'answer-update',
+                        'DELETE {id}/answers/{answerId}' => 'answer-delete',
+                        'OPTIONS {id}/answers/{answerId}' => 'options',
+                        'GET {id}/vote' => 'vote-check',
+                        'PUT {id}/vote' => 'vote',
+                        'OPTIONS {id}/vote' => 'options',
+                    ]
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'v1/survey',
+                    'pluralize' => false,
+                    'tokens' => [
+                        '{id}' => '<id:\d+>',
+                    ],
+                    'extraPatterns' => []
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
                     'controller' => 'v1/notification',
                     'tokens' => [
                         '{id}' => '<id:\d+>',

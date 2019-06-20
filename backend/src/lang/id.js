@@ -19,6 +19,11 @@ export default {
     'broadcast-list': 'Daftar Broadcast',
     'broadcast-edit': 'Edit Broadcast',
     'broadcast-show': 'Detail Broadcast',
+    'notification-manage': 'Notification',
+    'notification-create': 'Tambah Pesan',
+    'notification-list': 'Daftar Notification',
+    'notification-edit': 'Edit Notification',
+    'notification-show': 'Detail Notification',
     'aspiration-manage': 'Aspirasi Masyarakat',
     'aspiration-list': 'Aspirasi Masyarakat',
     'aspiration-detail': 'Detail Aspirasi',
@@ -26,7 +31,12 @@ export default {
     'polling-list': 'Daftar Polling',
     'polling-create': 'Tambah Polling',
     'polling-detail': 'Detail Polling',
-    'polling-edit': 'Edit Polling'
+    'polling-edit': 'Edit Polling',
+    'survey-manage': 'Survey',
+    'survey-list': 'Daftar Survey',
+    'survey-create': 'Tambah Survey',
+    'survey-detail': 'Detail Survey',
+    'survey-edit': 'Edit Survey'
   },
   crud: {
     'list-empty': 'Belum ada data.',
@@ -65,7 +75,9 @@ export default {
     'deactivate-confirm': 'Anda yakin ingin menonaktifkan data ini?',
     'activate-success': 'Data berhasil diaktifkan.',
     'deactivate-success': 'Data berhasil dinonaktifkan.',
-    'polling-error-edit-published': 'Sudah dipublish, tidak dapat diedit.'
+    'polling-error-edit-published': 'Sudah dipublish, tidak dapat diedit.',
+    'broadcast-error-edit-published': 'Sudah dipublish, tidak dapat di edit.',
+    'notification-error-edit-published': 'Sudah dipublish, tidak dapat di edit.'
   },
   common: {
     confirm: 'Ya',

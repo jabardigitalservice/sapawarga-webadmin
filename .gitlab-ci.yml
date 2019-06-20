@@ -27,6 +27,8 @@ code_quality:
   script:
     - docker run
         --env SOURCE_CODE=$PWD
+        --env CONTAINER_TIMEOUT_SECONDS=3600
+        --env CODECLIMATE_DEBUG=1
         --volume $PWD:/code
         --volume /var/run/docker.sock:/var/run/docker.sock
         "registry.gitlab.com/gitlab-org/security-products/codequality:11-8-stable" /code
@@ -57,7 +59,7 @@ test_api:
   script:
     - docker-compose -f docker-compose.dev.yml pull
     - docker images
-    - docker-compose -f docker-compose.dev.yml up -d
+    - COMPOSE_HTTP_TIMEOUT=500 docker-compose -f docker-compose.dev.yml up -d
     - sleep 60
     - docker ps
     - docker-compose -f docker-compose.dev.yml exec -T api composer sniff
@@ -73,7 +75,7 @@ test_backend:
   script:
     - docker-compose -f docker-compose.dev.yml pull
     - docker images
-    - docker-compose -f docker-compose.dev.yml up -d
+    - COMPOSE_HTTP_TIMEOUT=500 docker-compose -f docker-compose.dev.yml up -d
     - sleep 60
     - docker ps
     - docker-compose -f docker-compose.dev.yml exec -T backend npm run lint
