@@ -358,9 +358,18 @@ export default {
       })
     },
     async submitForm(status) {
+
       const valid = await this.$refs.polling.validate()
 
       if (!valid) {
+        return
+      }
+
+      const now = moment().startOf('day');
+      const distance = (moment(this.start_date)).isBefore(now)
+
+      if (distance === true) {
+        this.$message.error(this.$t('errors.polling-start-date'))
         return
       }
 
