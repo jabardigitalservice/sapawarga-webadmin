@@ -232,6 +232,10 @@ export default {
             max: 60,
             message: 'Nama polling maksimal 60 karakter',
             trigger: 'blur'
+          },
+          {
+            validator: whitespaceName,
+            trigger: 'blur'
           }
         ],
         question: [
@@ -249,6 +253,10 @@ export default {
             max: 60,
             message: 'Pertanyaan maksimal 60 karakter',
             trigger: 'blur'
+          },
+          {
+            validator: whitespaceQuestion,
+            trigger: 'blur'
           }
         ],
         category_id: [
@@ -264,6 +272,10 @@ export default {
             max: 280,
             message: 'Deskripsi maksimal 280 karakter',
             trigger: 'blur'
+          },
+          {
+            validator: whitespaceDescription,
+            trigger: 'blur'
           }
         ],
         excerpt: [
@@ -275,6 +287,10 @@ export default {
           {
             max: 280,
             message: 'Pengantar maksimal 280 karakter',
+            trigger: 'blur'
+          },
+          {
+            validator: whitespaceExcerpt,
             trigger: 'blur'
           }
         ],
