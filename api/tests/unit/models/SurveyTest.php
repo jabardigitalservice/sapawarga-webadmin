@@ -112,12 +112,6 @@ class SurveyTest extends Unit
         $model->validate();
 
         $this->assertTrue($model->hasErrors('category_id'));
-
-        $model->category_id = true;
-
-        $model->validate();
-
-        $this->assertTrue($model->hasErrors('category_id'));
     }
 
     public function testUrlRequired()
