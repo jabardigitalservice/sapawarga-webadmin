@@ -299,6 +299,23 @@ export default {
             validator: question_type,
             trigger: 'blur'
           }
+        ],
+        rw: [
+          {
+            pattern: /^[0-9]+$/,
+            message: 'RW harus menggunakan angka',
+            trigger: 'blur'
+          },
+          {
+            max: 3,
+            message: 'RW harus 3 angka, contoh 001',
+            trigger: 'blur'
+          },
+          {
+            min: 3,
+            message: 'RW harus 3 angka, contoh 001',
+            trigger: 'blur'
+          }
         ]
       }
     }
