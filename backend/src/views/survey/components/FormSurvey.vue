@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row :gutter="20">
-      <el-col :sm="24">
+      <el-col :xs="24" :sm="16">
         <el-alert
           v-if="form.status === 10"
           type="error"
@@ -17,7 +17,7 @@
           </el-form-item>
 
           <el-form-item label="Kategori" prop="category_id">
-            <InputCategory v-model="form.category_id" category-type="survey" prop="category" />
+            <InputCategory v-model="form.category_id" category-type="survey" prop="category" style="width: 100%" />
           </el-form-item>
 
           <el-form-item label="Tanggal Mulai" prop="start_date">
