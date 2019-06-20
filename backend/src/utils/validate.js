@@ -72,3 +72,9 @@ export function isArray(arg) {
   }
   return Array.isArray(arg)
 }
+
+export function validUrl(str) {
+  const reg = /^(http|https):/
+
+  return reg.test(str)
+}

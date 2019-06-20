@@ -57,6 +57,7 @@
 import moment from 'moment'
 
 import { fetchRecord, create, update } from '@/api/survey'
+import { validUrl } from '@/utils/validate'
 
 import InputCategory from '@/components/InputCategory'
 
@@ -85,7 +86,7 @@ export default {
       const endDate = moment(this.form.end_date)
 
       if (endDate.isBefore(startDate) === true) {
-        callback(new Error('Tanggal Mulai harus setelah Tanggal Mulai.'))
+        callback(new Error('Tanggal Mulai harus sebelum Tanggal Selesai.'))
       }
 
       callback()
@@ -97,6 +98,14 @@ export default {
 
       if (startDate.isAfter(endDate) === true) {
         callback(new Error('Tanggal Berakhir harus setelah Tanggal Mulai.'))
+      }
+
+      callback()
+    }
+
+    const validatorUrl = (rule, value, callback) => {
+      if (validUrl(value) === false) {
+        callback(new Error('URL tidak valid.'))
       }
 
       callback()
@@ -121,7 +130,8 @@ export default {
           { validator: validatorEndDate, trigger: 'change' }
         ],
         external_url: [
-          { required: true, message: 'URL Survey harus diisi.', trigger: 'blur' }
+          { required: true, message: 'URL Survey harus diisi.', trigger: 'blur' },
+          { validator: validatorUrl, trigger: 'blur' }
         ]
       },
       tempRoute: {}
