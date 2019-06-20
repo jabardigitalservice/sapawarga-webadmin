@@ -176,7 +176,7 @@ export default {
   },
   methods: {
     resetRw() {
-      if(this.broadcast.kel_id === null || this.broadcast.kec_id === null || this.broadcast.kabkota_id === null) {
+      if (this.broadcast.kel_id === null || this.broadcast.kec_id === null || this.broadcast.kabkota_id === null) {
         this.broadcast.kel_id = null
         this.broadcast.rw = null
       }
