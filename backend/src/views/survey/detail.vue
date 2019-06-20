@@ -31,6 +31,8 @@
 import moment from 'moment'
 import { fetchRecord, update } from '@/api/survey'
 
+import { getStatusColor, getStatusLabel } from './status'
+
 export default {
   data() {
     return {
@@ -45,18 +47,25 @@ export default {
   methods: {
     getDetail(id) {
       fetchRecord(id).then(response => {
-        const { title, category, start_date, end_date, external_url, status } = response.data
+        const { title, category, start_date, end_date, external_url, status, status_label } = response.data
 
         this.record = response.data
+
+        const row = {
+          start_date: start_date,
+          end_date: end_date,
+          status: status,
+          status_label: status_label
+        }
 
         this.tableDataRecord = [
           {
             title: 'Nama Survey',
-            content: title || '-'
+            content: title
           },
           {
             title: 'Kategori',
-            content: (category !== null ? category.name : '-')
+            content: category.name
           },
           {
             title: 'Tanggal Mulai',
@@ -68,11 +77,11 @@ export default {
           },
           {
             title: 'URL Survey',
-            content: external_url || '-'
+            content: external_url
           },
           {
             title: 'Status',
-            content: status || '-'
+            content: <el-tag type={getStatusColor(row)}>{getStatusLabel(row)}</el-tag>
           }
         ]
       })

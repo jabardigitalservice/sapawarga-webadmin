@@ -31,8 +31,8 @@
 
           <el-table-column prop="status" sortable="custom" class-name="status-col" label="Status" width="200">
             <template slot-scope="{row}">
-              <el-tag :type="getStatusColor(row)">
-                {{ getStatusLabel(row) }}
+              <el-tag :type="statusColor(row)">
+                {{ statusLabel(row) }}
               </el-tag>
             </template>
           </el-table-column>
@@ -62,10 +62,11 @@
   </div>
 </template>
 <script>
-import moment from 'moment'
-
 import { fetchList } from '@/api/survey'
 import Pagination from '@/components/Pagination'
+
+import { getStatusColor, getStatusLabel } from './status'
+
 export default {
   components: { Pagination },
   data() {
@@ -86,48 +87,8 @@ export default {
     this.getList()
   },
   methods: {
-    getStatusColor(row) {
-      const now = moment()
-      const startDate = moment(row.start_date).startOf('day')
-      const endDate = moment(row.end_date).endOf('day')
-
-      const isRunning = now.isBetween(startDate, endDate, null, '[]')
-
-      if (row.status === 10 && isRunning) {
-        return 'success'
-      }
-
-      if (row.status === 10 && now.isAfter(endDate)) {
-        return 'warning'
-      }
-
-      if (row.status === 1) {
-        return 'danger'
-      }
-
-      if (row.status === 0) {
-        return 'info'
-      }
-
-      return row.status_label
-    },
-    getStatusLabel(row) {
-      const now = moment()
-      const startDate = moment(row.start_date).startOf('day')
-      const endDate = moment(row.end_date).endOf('day')
-
-      const isRunning = now.isBetween(startDate, endDate, null, '[]')
-
-      if (row.status === 10 && isRunning) {
-        return 'Sedang Berlangsung'
-      }
-
-      if (row.status === 10 && now.isAfter(endDate)) {
-        return 'Berakhir'
-      }
-
-      return row.status_label
-    },
+    statusColor: getStatusColor,
+    statusLabel: getStatusLabel,
     getList() {
       this.listLoading = true
       fetchList(this.listQuery).then(response => {
