@@ -97,81 +97,98 @@ class Notification extends \yii\db\ActiveRecord
 
     public function fields()
     {
-        $fields = [
-            'id',
-            'author_id',
-            'author' => function () {
-                return [
-                    'id'            => $this->author->id,
-                    'name'          => $this->author->name,
-                    'role_label'    => $this->author->getRoleLabel(),
-                ];
-            },
-            'category_id',
-            'category' => function () {
-                return [
-                    'id'   => $this->category->id,
-                    'name' => $this->category->name,
-                ];
-            },
-            'title',
-            'description',
-            'kabkota_id',
-            'kabkota' => function () {
-                if ($this->kabkota) {
+        $fields = [];
+        $user = User::findIdentity(Yii::$app->user->getId());
+        
+        if ($user->role <= User::ROLE_STAFF_RW) {
+            $fields = [
+                'id',
+                'title',
+                'target' => function () {
+                    return self::TARGET_MAP[$this->category->name];
+                },
+                'meta',
+                'push_notification' => function () {
+                    return true;
+                }
+            ];
+        } else {
+            $fields = [
+                'id',
+                'author_id',
+                'author' => function () {
                     return [
-                        'id'   => $this->kabkota->id,
-                        'name' => $this->kabkota->name,
+                        'id'            => $this->author->id,
+                        'name'          => $this->author->name,
+                        'role_label'    => $this->author->getRoleLabel(),
                     ];
-                } else {
-                    return null;
-                }
-            },
-            'kec_id',
-            'kecamatan' => function () {
-                if ($this->kecamatan) {
+                },
+                'category_id',
+                'category' => function () {
                     return [
-                        'id'   => $this->kecamatan->id,
-                        'name' => $this->kecamatan->name,
+                        'id'   => $this->category->id,
+                        'name' => $this->category->name,
                     ];
-                } else {
-                    return null;
-                }
-            },
-            'kel_id',
-            'kelurahan' => function () {
-                if ($this->kelurahan) {
-                    return [
-                        'id'   => $this->kelurahan->id,
-                        'name' => $this->kelurahan->name,
-                    ];
-                } else {
-                    return null;
-                }
-            },
-            'rw',
-            'status',
-            'status_label' => function () {
-                $statusLabel = '';
-                switch ($this->status) {
-                    case self::STATUS_PUBLISHED:
-                        $statusLabel = Yii::t('app', 'status.published');
-                        break;
-                    case self::STATUS_DRAFT:
-                        $statusLabel = Yii::t('app', 'status.draft');
-                        break;
-                    case self::STATUS_DELETED:
-                        $statusLabel = Yii::t('app', 'status.deleted');
-                        break;
-                }
-                return $statusLabel;
-            },
-            'data' => function () {
-                return $this->data;
-            },
-            'created_at',
-            'updated_at',
-        ];
+                },
+                'title',
+                'description',
+                'kabkota_id',
+                'kabkota' => function () {
+                    if ($this->kabkota) {
+                        return [
+                            'id'   => $this->kabkota->id,
+                            'name' => $this->kabkota->name,
+                        ];
+                    } else {
+                        return null;
+                    }
+                },
+                'kec_id',
+                'kecamatan' => function () {
+                    if ($this->kecamatan) {
+                        return [
+                            'id'   => $this->kecamatan->id,
+                            'name' => $this->kecamatan->name,
+                        ];
+                    } else {
+                        return null;
+                    }
+                },
+                'kel_id',
+                'kelurahan' => function () {
+                    if ($this->kelurahan) {
+                        return [
+                            'id'   => $this->kelurahan->id,
+                            'name' => $this->kelurahan->name,
+                        ];
+                    } else {
+                        return null;
+                    }
+                },
+                'rw',
+                'status',
+                'status_label' => function () {
+                    $statusLabel = '';
+                    switch ($this->status) {
+                        case self::STATUS_PUBLISHED:
+                            $statusLabel = Yii::t('app', 'status.published');
+                            break;
+                        case self::STATUS_DRAFT:
+                            $statusLabel = Yii::t('app', 'status.draft');
+                            break;
+                        case self::STATUS_DELETED:
+                            $statusLabel = Yii::t('app', 'status.deleted');
+                            break;
+                    }
+                    return $statusLabel;
+                },
+                'data' => function () {
+                    return $this->data;
+                },
+                'created_at',
+                'updated_at',
+            ];
+        }
 
         return $fields;
     }
