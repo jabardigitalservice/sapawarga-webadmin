@@ -65,6 +65,7 @@ class Survey extends ActiveRecord
     {
         return [
             [['title', 'status', 'external_url', 'category_id'], 'required'],
+            [['title', 'status', 'external_url', 'category_id'], 'trim'],
 
             ['title', 'string', 'max' => 255],
             ['title', InputCleanValidator::class],
@@ -73,6 +74,14 @@ class Survey extends ActiveRecord
             ['category_id', 'validateCategoryID'],
 
             ['external_url', 'url'],
+
+            [['start_date', 'end_date'], 'date', 'format' => 'php:Y-m-d'],
+            [
+                'start_date',
+                'compare',
+                'compareAttribute'       => 'end_date',
+                'operator'               => '<',
+            ],
 
             ['status', 'in', 'range' => [-1, 0, 1, 10]],
         ];

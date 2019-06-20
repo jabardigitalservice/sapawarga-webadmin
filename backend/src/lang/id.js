@@ -49,6 +49,7 @@ export default {
     'cancel': 'Batal',
     'back': 'Kembali',
     'draft': 'Simpan sebagai Draft',
+    'save-publish': 'Simpan dan Aktifkan',
     'send': 'Kirim Pesan',
     'accept': 'Terima',
     'reject': 'Tolak',
