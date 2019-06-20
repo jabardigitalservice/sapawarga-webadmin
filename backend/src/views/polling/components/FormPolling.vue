@@ -315,10 +315,6 @@ export default {
 
       try {
         this.loading = true
-        // this.polling.name.trim()
-        this.polling.question.trim()
-        this.polling.description.trim()
-        this.polling.excerpt.trim()
 
         const data = {}
 
