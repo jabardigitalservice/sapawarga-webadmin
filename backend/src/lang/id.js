@@ -75,6 +75,7 @@ export default {
     'deactivate-confirm': 'Anda yakin ingin menonaktifkan data ini?',
     'activate-success': 'Data berhasil diaktifkan.',
     'deactivate-success': 'Data berhasil dinonaktifkan.',
+    'polling-error-edit-published': 'Sudah dipublish, tidak dapat diedit.',
     'broadcast-error-edit-published': 'Sudah dipublish, tidak dapat di edit.',
     'notification-error-edit-published': 'Sudah dipublish, tidak dapat di edit.'
   },

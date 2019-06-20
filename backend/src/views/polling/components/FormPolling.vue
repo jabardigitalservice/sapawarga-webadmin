@@ -11,6 +11,7 @@
             label-position="left"
             :rules="rules"
             :status-icon="true"
+            :disabled="isEdit === true && checkStatus !== 0"
           >
             <el-form-item label="Wilayah" prop="wilayah">
               <InputSelectArea
@@ -39,6 +40,7 @@
             label-width="150px"
             label-position="left"
             :status-icon="true"
+            :disabled="isEdit === true && checkStatus !== 0"
           >
             <el-form-item label="Nama Polling" prop="name">
               <el-input v-model="polling.name" type="text" placeholder="Nama Polling" />
@@ -116,7 +118,7 @@
             </div>
 
             <el-form-item class="polling-button">
-              <el-button type="info" :loading="loading" @click="submitForm(status.draft)">{{ $t('crud.draft') }}</el-button>
+              <el-button v-show="checkStatus === 0 || checkStatus === null" type="info" :loading="loading" @click="submitForm(status.draft)">{{ $t('crud.draft') }}</el-button>
               <el-button v-show="!isEdit" type="primary" :loading="loading" @click="submitForm(status.active)"> {{ $t('crud.send-polling') }}</el-button>
             </el-form-item>
           </el-form>
@@ -153,12 +155,41 @@ export default {
       callback()
     }
 
+    const whitespaceName = (rule, value, callback) => {
+      if (value.includes('  ') || value.startsWith(' ') || value.endsWith(' ')) {
+        callback(new Error('Nama polling yang diisi tidak valid'))
+      }
+      callback()
+    }
+
+    const whitespaceDescription = (rule, value, callback) => {
+      if (value.includes('  ') || value.startsWith(' ') || value.endsWith(' ')) {
+        callback(new Error('Deskripsi yang diisi tidak valid'))
+      }
+      callback()
+    }
+
+    const whitespaceExcerpt = (rule, value, callback) => {
+      if (value.includes('  ') || value.startsWith(' ') || value.endsWith(' ')) {
+        callback(new Error('Pengantar yang diisi tidak valid'))
+      }
+      callback()
+    }
+
+    const whitespaceQuestion = (rule, value, callback) => {
+      if (value.includes('  ') || value.startsWith(' ') || value.endsWith(' ')) {
+        callback(new Error('Pertanyaan yang diisi tidak valid'))
+      }
+      callback()
+    }
+
     return {
       loading: false,
       status: {
         draft: 0,
         active: 10
       },
+      checkStatus: null,
       width: '300%',
       start_date: moment().format('YYYY-MM-DD'),
       end_date: moment(Date.now() + 24 * 60 * 60 * 1000).format('YYYY-MM-DD'),
@@ -201,6 +232,10 @@ export default {
             max: 60,
             message: 'Nama polling maksimal 60 karakter',
             trigger: 'blur'
+          },
+          {
+            validator: whitespaceName,
+            trigger: 'blur'
           }
         ],
         question: [
@@ -218,6 +253,10 @@ export default {
             max: 60,
             message: 'Pertanyaan maksimal 60 karakter',
             trigger: 'blur'
+          },
+          {
+            validator: whitespaceQuestion,
+            trigger: 'blur'
           }
         ],
         category_id: [
@@ -233,6 +272,10 @@ export default {
             max: 280,
             message: 'Deskripsi maksimal 280 karakter',
             trigger: 'blur'
+          },
+          {
+            validator: whitespaceDescription,
+            trigger: 'blur'
           }
         ],
         excerpt: [
@@ -244,6 +287,10 @@ export default {
           {
             max: 280,
             message: 'Pengantar maksimal 280 karakter',
+            trigger: 'blur'
+          },
+          {
+            validator: whitespaceExcerpt,
             trigger: 'blur'
           }
         ],
@@ -266,6 +313,11 @@ export default {
     fetchData(id) {
       fetchRecord(id).then(response => {
         this.polling = response.data
+        this.checkStatus = response.data.status
+        if (this.checkStatus === 10) {
+          this.$message.error(this.$t('crud.polling-error-edit-published'))
+          this.$router.push('/polling/index')
+        }
       }).catch(err => {
         console.log(err)
       })
@@ -279,6 +331,7 @@ export default {
 
       try {
         this.loading = true
+
         const data = {}
 
         Object.assign(data, this.polling)
