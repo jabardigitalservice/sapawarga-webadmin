@@ -157,4 +157,118 @@ class SurveyTest extends Unit
 
         $this->assertFalse($model->hasErrors('external_url'));
     }
+
+    public function testStartDateValidValue()
+    {
+        $model = new Survey();
+
+        $model->start_date = '2019-06-01';
+        $model->end_date   = '2019-09-01';
+
+        $model->validate();
+
+        $this->assertFalse($model->hasErrors('start_date'));
+    }
+
+    public function testStartDateInvalidStringValue()
+    {
+        $model = new Survey();
+
+        $model->start_date = 'xxx';
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('start_date'));
+    }
+
+    public function testStartDateInvalidIntegerValue()
+    {
+        $model = new Survey();
+
+        $model->start_date = 100;
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('start_date'));
+    }
+
+    public function testStartDateInvalidBooleanValue()
+    {
+        $model = new Survey();
+
+        $model->start_date = true;
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('start_date'));
+    }
+
+    public function testEndDateValidValue()
+    {
+        $model = new Survey();
+
+        $model->start_date = '2019-06-01';
+        $model->end_date   = '2019-09-01';
+
+        $model->validate();
+
+        $this->assertFalse($model->hasErrors('end_date'));
+    }
+
+    public function testEndDateInvalidStringValue()
+    {
+        $model = new Survey();
+
+        $model->end_date = 'xxx';
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('end_date'));
+    }
+
+    public function testEndDateInvalidIntegerValue()
+    {
+        $model = new Survey();
+
+        $model->end_date = 100;
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('end_date'));
+    }
+
+    public function testEndDateInvalidBooleanValue()
+    {
+        $model = new Survey();
+
+        $model->end_date = true;
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('end_date'));
+    }
+
+    public function testEndDateAfterStartDate()
+    {
+        $model = new Survey();
+
+        $model->start_date = '2019-06-01';
+        $model->end_date   = '2019-09-01';
+
+        $model->validate();
+
+        $this->assertFalse($model->hasErrors('end_date'));
+    }
+
+    public function testEndDateBeforeStartDate()
+    {
+        $model = new Survey();
+
+        $model->start_date = '2019-09-01';
+        $model->end_date   = '2019-06-01';
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('start_date'));
+    }
 }
