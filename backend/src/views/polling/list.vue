@@ -11,7 +11,7 @@
             </router-link>
           </el-col>
         </el-row>
-        <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%">
+        <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%" @sort-change="changeSort">
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
           <el-table-column prop="name" sortable="custom" label="Nama Polling" min-width="250" />
           <el-table-column prop="start_date" sortable="custom" label="Mulai" width="170" align="center">
@@ -24,21 +24,21 @@
               {{ row.end_date | moment('D MMMM YYYY HH:mm') }}
             </template>
           </el-table-column>
-          <el-table-column prop="status" sortable="custom" class-name="status-col" label="Status" width="150">
+          <el-table-column prop="status" sortable="custom" class-name="status-col" label="Status" width="200">
             <template slot-scope="{row}">
-              <el-tag :type="row.status | statusFilter">
-                {{ row.status_label }}
+              <el-tag :type="getStatusColor(row)">
+                {{ getStatusLabel(row) }}
               </el-tag>
             </template>
           </el-table-column>
-          <el-table-column align="center" label="Actions" width="200">
+          <el-table-column align="center" label="Actions" width="250">
             <template slot-scope="scope">
               <router-link :to="'/polling/detail/'+scope.row.id">
                 <el-button type="white" size="mini">
                   View
                 </el-button>
               </router-link>
-              <router-link :to="'/polling/edit/'+scope.row.id">
+              <router-link :to="(scope.row.status !== 10 ? '/polling/edit/'+scope.row.id : '')">
                 <el-button type="white" size="mini" :disabled="scope.row.status === 10">
                   Edit
                 </el-button>
@@ -54,6 +54,7 @@
 <script>
 import { fetchList } from '@/api/polling'
 import Pagination from '@/components/Pagination'
+import moment from 'moment'
 export default {
   components: { Pagination },
   filters: {
@@ -99,8 +100,55 @@ export default {
         this.listLoading = false
       })
     },
+    getStatusColor(row) {
+      const now = moment()
+      const startDate = moment(row.start_date).startOf('day')
+      const endDate = moment(row.end_date).endOf('day')
+
+      const isRunning = now.isBetween(startDate, endDate, null, '[]')
+
+      if (row.status === 10 && isRunning) {
+        return 'success'
+      }
+
+      if (row.status === 10 && now.isAfter(endDate)) {
+        return 'warning'
+      }
+
+      if (row.status === 1) {
+        return 'danger'
+      }
+
+      if (row.status === 0) {
+        return 'info'
+      }
+
+      return row.status_label
+    },
+    getStatusLabel(row) {
+      const now = moment()
+      const startDate = moment(row.start_date).startOf('day')
+      const endDate = moment(row.end_date).endOf('day')
+
+      const isRunning = now.isBetween(startDate, endDate, null, '[]')
+
+      if (row.status === 10 && isRunning) {
+        return 'Sedang Berlangsung'
+      }
+
+      if (row.status === 10 && now.isAfter(endDate)) {
+        return 'Berakhir'
+      }
+
+      return row.status_label
+    },
     getTableRowNumbering(index) {
       return ((this.listQuery.page - 1) * this.listQuery.limit) + (index + 1)
+    },
+    changeSort(e) {
+      this.listQuery.sort_by = e.prop
+      this.listQuery.sort_order = e.order
+      this.getList()
     }
   }
 
