@@ -157,6 +157,17 @@ export default {
       }
     }
   },
+  watch: {
+    'broadcast.kel_id'() {
+      this.resetRw()
+    },
+    'broadcast.kec_id'() {
+      this.resetRw()
+    },
+    'broadcast.kabkota_id'() {
+      this.resetRw()
+    }
+  },
   created() {
     if (this.isEdit) {
       const id = this.$route.params && this.$route.params.id
