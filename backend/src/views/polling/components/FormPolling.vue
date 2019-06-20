@@ -132,7 +132,6 @@
 import InputCategory from '@/components/InputCategory'
 import InputSelectArea from '@/components/InputSelectArea'
 import { create, fetchRecord, update } from '@/api/polling'
-import { Message } from 'element-ui'
 
 const moment = require('moment')
 moment().format()
@@ -340,7 +339,7 @@ export default {
   },
   methods: {
     resetRw() {
-      if(this.polling.kel_id === null || this.polling.kec_id === null || this.polling.kabkota_id === null) {
+      if (this.polling.kel_id === null || this.polling.kec_id === null || this.polling.kabkota_id === null) {
         this.polling.kel_id = null
         this.polling.rw = null
       }
@@ -358,14 +357,18 @@ export default {
       })
     },
     async submitForm(status) {
-
-      const valid = await this.$refs.polling.validate()
-
-      if (!valid) {
-        return
+      if (this.polling.kabkota_id === null) {
+        this.polling.kec_id = null
+        this.polling.kel_id = null
+        this.polling.rw = null
+      } else if (this.polling.kec_id === null) {
+        this.polling.kel_id = null
+        this.polling.rw = null
+      } else if (this.polling.kel_id === null) {
+        this.polling.rw = null
       }
 
-      const now = moment().startOf('day');
+      const now = moment().startOf('day')
       const distance = (moment(this.start_date)).isBefore(now)
 
       if (distance === true) {
@@ -469,15 +472,7 @@ export default {
       })
 
       try {
-        /* await approval(id, {
-          action: 'APPROVE'
-        }) */
-
-        submitForm(status)
-
-        /* this.$message.success(this.$t('crud.update-success'))
-
-        this.$router.push('/aspirasi/index') */
+        this.submitForm(status)
       } catch (e) {
         console.log(e)
       }
