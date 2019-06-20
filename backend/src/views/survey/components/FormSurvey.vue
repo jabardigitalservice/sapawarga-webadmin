@@ -65,7 +65,7 @@
 import moment from 'moment'
 
 import { fetchRecord, create, update } from '@/api/survey'
-import { validUrl } from '@/utils/validate'
+import { containsWhitespace, validUrl } from '@/utils/validate'
 
 import InputCategory from '@/components/InputCategory'
 
@@ -89,6 +89,14 @@ export default {
     }
   },
   data() {
+    const validatorTitleWhitespace = (rule, value, callback) => {
+      if (containsWhitespace(value) === true) {
+        callback(new Error('Judul Survey memiliki terlalu banyak karakter spasi.'))
+      }
+
+      callback()
+    }
+
     const validatorStartDate = (rule, value, callback) => {
       const startDate = moment(this.form.start_date)
       const endDate = moment(this.form.end_date)
@@ -124,7 +132,8 @@ export default {
       loading: false,
       rules: {
         title: [
-          { required: true, message: 'Judul Survey harus diisi.', trigger: 'blur' }
+          { required: true, message: 'Judul Survey harus diisi.', trigger: 'blur' },
+          { validator: validatorTitleWhitespace, trigger: 'blur' }
         ],
         category_id: [
           { required: true, message: 'Kategori harus diisi.', trigger: 'change' }
