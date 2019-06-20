@@ -164,6 +164,12 @@ export default {
     }
   },
   methods: {
+    resetRw() {
+      if(this.broadcast.kel_id === null || this.broadcast.kec_id === null || this.broadcast.kabkota_id === null) {
+        this.broadcast.kel_id = null
+        this.broadcast.rw = null
+      }
+    },
     fetchData(id) {
       fetchRecord(id).then(response => {
         this.broadcast = response.data
