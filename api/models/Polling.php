@@ -30,6 +30,7 @@ class Polling extends ActiveRecord
 {
     const STATUS_DELETED = -1;
     const STATUS_DRAFT = 0;
+    const STATUS_DISABLED = 1;
     const STATUS_PUBLISHED = 10;
 
     const CATEGORY_TYPE = 'polling';
@@ -108,7 +109,7 @@ class Polling extends ActiveRecord
                 'operator'               => '<',
             ],
 
-            ['status', 'in', 'range' => [-1, 0, 10]],
+            ['status', 'in', 'range' => [-1, 0, 1, 10]],
         ];
     }
 
