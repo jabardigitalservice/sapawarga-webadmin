@@ -24,7 +24,12 @@
               />
             </el-form-item>
             <el-form-item class="rw" prop="rw">
-              <el-input v-model="notification.rw" placeholder="Semua RW" type="text" :disabled="notification.kel_id === null" />
+              <el-input
+                v-model="notification.rw"
+                placeholder="Semua RW"
+                type="text"
+                :disabled="notification.kel_id === null"
+              />
             </el-form-item>
           </el-form>
         </div>
@@ -41,10 +46,18 @@
             :status-icon="true"
           >
             <el-form-item label="Judul Pesan" prop="title">
-              <el-input v-model="notification.title" type="text" placeholder="Judul minimal 10 karakter dan maksimal 60 karakter" />
+              <el-input
+                v-model="notification.title"
+                type="text"
+                placeholder="Judul minimal 10 karakter dan maksimal 60 karakter"
+              />
             </el-form-item>
             <el-form-item label="Kategori" prop="category_id">
-              <InputCategory v-model="notification.category_id" category-type="notification" prop="category" />
+              <InputCategory
+                v-model="notification.category_id"
+                category-type="notification"
+                prop="category"
+              />
             </el-form-item>
             <el-form-item label="Isi Pesan" prop="description">
               <el-input
@@ -55,8 +68,18 @@
               />
             </el-form-item>
             <el-form-item>
-              <el-button type="info" :disabled="notification.status === 10" :loading="loading" @click="submitForm(status.draft)">{{ $t('crud.draft') }}</el-button>
-              <el-button v-show="!isEdit" type="primary" :loading="loading" @click="submitForm(status.active)"> {{ $t('crud.send') }}</el-button>
+              <el-button
+                type="info"
+                :disabled="notification.status === 10"
+                :loading="loading"
+                @click="submitForm(status.draft)"
+              >{{ $t('crud.draft') }}</el-button>
+              <el-button
+                v-show="!isEdit"
+                type="primary"
+                :loading="loading"
+                @click="actionApprove(status.active)"
+              >{{ $t('crud.send') }}</el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -80,6 +103,20 @@ export default {
     }
   },
   data() {
+    const whitespaceName = (rule, value, callback) => {
+      if (value.includes('  ') || value.startsWith(' ') || value.endsWith(' ')) {
+        callback(new Error('Judul notifikasi yang diisi tidak valid'))
+      }
+      callback()
+    }
+
+    const whitespaceDesc = (rule, value, callback) => {
+      if (value.includes('  ') || value.startsWith(' ') || value.endsWith(' ')) {
+        callback(new Error('Deskripsi yang diisi tidak valid'))
+      }
+      callback()
+    }
+
     return {
       loading: false,
       status: {
@@ -112,11 +149,18 @@ export default {
             max: 60,
             message: 'Judul pesan maksimal 60 karakter',
             trigger: 'blur'
+          },
+          {
+            validator: whitespaceName,
+            trigger: 'blur'
           }
-
         ],
         category_id: [
-          { required: true, message: 'Kategori harus diisi.', trigger: 'change' }
+          {
+            required: true,
+            message: 'Kategori harus diisi.',
+            trigger: 'change'
+          }
         ],
         description: [
           {
@@ -127,6 +171,10 @@ export default {
           {
             max: 280,
             message: 'Pesan maksimal 280 karakter',
+            trigger: 'blur'
+          },
+          {
+            validator: whitespaceDesc,
             trigger: 'blur'
           }
         ],
@@ -157,6 +205,17 @@ export default {
       }
     }
   },
+  watch: {
+    'notification.kel_id'() {
+      this.resetRw()
+    },
+    'notification.kec_id'() {
+      this.resetRw()
+    },
+    'notification.kabkota_id'() {
+      this.resetRw()
+    }
+  },
   created() {
     if (this.isEdit) {
       const id = this.$route.params && this.$route.params.id
@@ -164,18 +223,39 @@ export default {
     }
   },
   methods: {
+    resetRw() {
+      if (this.notification.kel_id === null || this.notification.kec_id === null || this.notification.kabkota_id === null) {
+        this.notification.kel_id = null
+        this.notification.rw = null
+      }
+    },
     fetchData(id) {
-      fetchRecord(id).then(response => {
-        this.notification = response.data
-        if (this.notification.status === 10) {
-          this.$message.error(this.$t('crud.notification-error-edit-published'))
-          this.$router.push('/notification/index')
-        }
-      }).catch(err => {
-        console.log(err)
-      })
+      fetchRecord(id)
+        .then(response => {
+          this.notification = response.data
+          if (this.notification.status === 10) {
+            this.$message.error(
+              this.$t('crud.notification-error-edit-published')
+            )
+            this.$router.push('/notification/index')
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
     },
     async submitForm(status) {
+      if (this.notification.kabkota_id === null) {
+        this.notification.kec_id = null
+        this.notification.kel_id = null
+        this.notification.rw = null
+      } else if (this.notification.kec_id === null) {
+        this.notification.kel_id = null
+        this.notification.rw = null
+      } else if (this.notification.kel_id === null) {
+        this.notification.rw = null
+      }
+
       const valid = await this.$refs.notification.validate()
 
       if (!valid) {
@@ -201,10 +281,10 @@ export default {
         } else {
           await create(data)
           if (status === 10) {
-            this.$message.success(this.$t('crud.send-success'))
+            this.$message.success(this.$t('crud.send-notification-success'))
             this.$router.push('/notification/index')
           } else if (status === 0) {
-            this.$message.info(this.$t('crud.draft-success'))
+            this.$message.info(this.$t('crud.draft-notification-success'))
             this.$router.push('/notification/index')
           }
         }
@@ -213,17 +293,35 @@ export default {
       } finally {
         this.loading = false
       }
+    },
+    async actionApprove(status) {
+      const valid = await this.$refs.notification.validate()
+
+      if (!valid) {
+        return
+      }
+
+      await this.$confirm(`Apakah anda yakin akan mengirimkan notifikasi : ${this.notification.title} ?`, 'Konfirmasi', {
+        confirmButtonText: this.$t('common.confirm'),
+        cancelButtonText: this.$t('common.cancel'),
+        type: 'success'
+      })
+
+      try {
+        this.submitForm(status)
+      } catch (e) {
+        console.log(e)
+      }
     }
   }
-
 }
 </script>
 <style lang="scss" scoped>
-.notification-target, .notification-message {
+.notification-target,
+.notification-message {
   margin: 20px;
 }
 .rw {
   margin-top: -7px;
 }
-
 </style>
