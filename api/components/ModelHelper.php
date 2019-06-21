@@ -27,4 +27,26 @@ class ModelHelper
             }
         }
     }
+
+    /**
+     * Checks if a new model needs to send a notification
+     *
+     * @param $insert
+     * @param $changedAttributes
+     * @param $model
+     */
+    public static function isSendNotification($insert, $changedAttributes, $model)
+    {
+        $isSend = false;
+        if ($insert) { // Model is created
+            $isSend = $model->status == $model::STATUS_PUBLISHED;
+        } else { // Model is updated
+            if (array_key_exists('status', $changedAttributes)) {
+                if ($model->status == $model::STATUS_PUBLISHED) {
+                    $isSend = true;
+                }
+            }
+        }
+        return $isSend;
+    }
 }
