@@ -106,10 +106,10 @@
                 }"
               >
                 <el-row>
-                  <el-col :span="20">
+                  <el-col :sm="18" :md="18" :lg="20" :xl="20">
                     <el-input v-model="answer.body" type="text" placeholder="Jawaban" />
                   </el-col>
-                  <el-col :span="4">
+                  <el-col :sm="4" :md="4" :lg="4" :xl="4">
                     <el-button type="danger" class="answer" @click.prevent="removeAnswer(answer)">Hapus</el-button>
                   </el-col>
                 </el-row>
@@ -118,8 +118,8 @@
             </div>
 
             <el-form-item class="polling-button">
-              <el-button v-show="checkStatus === 0 || checkStatus === null" type="info" :loading="loading" @click="submitForm(status.draft)">{{ $t('crud.draft') }}</el-button>
-              <el-button v-show="!isEdit" type="primary" :loading="loading" @click="submitForm(status.active)"> {{ $t('crud.send-polling') }}</el-button>
+              <el-button class="draft-button" v-show="checkStatus === 0 || checkStatus === null" type="info" :loading="loading" @click="submitForm(status.draft)">{{ $t('crud.draft') }}</el-button>
+              <el-button v-show="!isEdit" type="primary" :loading="loading" @click="actionApprove(status.active)"> {{ $t('crud.send-polling') }}</el-button>
             </el-form-item>
           </el-form>
 
@@ -299,8 +299,36 @@ export default {
             validator: question_type,
             trigger: 'blur'
           }
+        ],
+        rw: [
+          {
+            pattern: /^[0-9]+$/,
+            message: 'RW harus menggunakan angka',
+            trigger: 'blur'
+          },
+          {
+            max: 3,
+            message: 'RW harus 3 angka, contoh 001',
+            trigger: 'blur'
+          },
+          {
+            min: 3,
+            message: 'RW harus 3 angka, contoh 001',
+            trigger: 'blur'
+          }
         ]
       }
+    }
+  },
+  watch: {
+    'polling.kel_id'() {
+      this.resetRw()
+    },
+    'polling.kec_id'() {
+      this.resetRw()
+    },
+    'polling.kabkota_id'() {
+      this.resetRw()
     }
   },
   created() {
@@ -310,6 +338,12 @@ export default {
     }
   },
   methods: {
+    resetRw() {
+      if (this.polling.kel_id === null || this.polling.kec_id === null || this.polling.kabkota_id === null) {
+        this.polling.kel_id = null
+        this.polling.rw = null
+      }
+    },
     fetchData(id) {
       fetchRecord(id).then(response => {
         this.polling = response.data
@@ -323,9 +357,22 @@ export default {
       })
     },
     async submitForm(status) {
-      const valid = await this.$refs.polling.validate()
+      if (this.polling.kabkota_id === null) {
+        this.polling.kec_id = null
+        this.polling.kel_id = null
+        this.polling.rw = null
+      } else if (this.polling.kec_id === null) {
+        this.polling.kel_id = null
+        this.polling.rw = null
+      } else if (this.polling.kel_id === null) {
+        this.polling.rw = null
+      }
 
-      if (!valid) {
+      const now = moment().startOf('day')
+      const distance = (moment(this.start_date)).isBefore(now)
+
+      if (distance === true) {
+        this.$message.error(this.$t('errors.polling-start-date'))
         return
       }
 
@@ -359,7 +406,10 @@ export default {
           }
         }
       } catch (err) {
-        console.log(err)
+        const errorDate = err.response.data.data.start_date
+        if (errorDate) {
+          this.$message.error(this.$t('errors.polling-compare-date'))
+        }
       } finally {
         this.loading = false
       }
@@ -405,6 +455,26 @@ export default {
           body: ''
         }]
       }
+    },
+    async actionApprove(status) {
+
+      const valid = await this.$refs.polling.validate()
+
+      if (!valid) {
+        return
+      }
+
+      await this.$confirm(`Apakah anda yakin akan mengirimkan Pesan : ${this.polling.name} [Tujuan] ?`, 'Konfirmasi', {
+        confirmButtonText: this.$t('common.confirm'),
+        cancelButtonText: this.$t('common.cancel'),
+        type: 'success'
+      })
+
+      try {
+        this.submitForm(status)
+      } catch (e) {
+        console.log(e)
+      }
     }
   }
 
@@ -419,7 +489,7 @@ el-radio {
 }
 
 .polling-button {
-  margin-top: 50px;
+  margin-top: 70px;
 }
 
 .add-answer {
@@ -427,6 +497,11 @@ el-radio {
 }
 
 .answer {
-  float: right;
+  float: left;
+  margin-left: 15px;
+}
+
+.draft-button {
+  margin-bottom: 7px;
 }
 </style>

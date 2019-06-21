@@ -30,6 +30,7 @@
 
 <script>
 import { fetchRecord, update } from '@/api/polling'
+import moment from 'moment'
 export default {
   data() {
     return {
@@ -68,9 +69,11 @@ export default {
         let expired = false
         let beforeStart = false
 
-        const dateStart = new Date(start_date).getTime()
-        const dateSecond = new Date(end_date).getTime()
-        const currentDate = new Date().getTime()
+        // const dateStart = new Date(start_date).getTime()
+        const dateStart = moment(start_date).endOf('day')
+        // const dateSecond = new Date(end_date).getTime()
+        const dateSecond = moment(end_date).endOf('day')
+        const currentDate = moment()
 
         const checkStartDate = currentDate - dateStart
         const distance = dateSecond - currentDate
