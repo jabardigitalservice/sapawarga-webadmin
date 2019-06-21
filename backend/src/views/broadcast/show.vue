@@ -22,7 +22,7 @@
             <el-table-column prop="content" />
           </el-table>
         </el-card>
-        <el-button v-if="!btnKirimDisable" class="button-send" type="primary" @click="submitForm(status.active)">{{ $t('crud.send') }}</el-button>
+        <el-button v-if="!btnKirimDisable" class="button-send" type="primary" @click="actionApprove(status.active)">{{ $t('crud.send') }}</el-button>
       </el-col>
     </el-row>
   </div>
@@ -66,34 +66,34 @@ export default {
         this.tableDataTarget = [
           {
             title: 'Kota',
-            content: ' : ' + ((kabkota !== null) ? kabkota.name : 'Semua Kab/Kota')
+            content: ((kabkota !== null) ? kabkota.name : 'Semua Kab/Kota')
           },
           {
             title: 'Kecamatan',
-            content: ' : ' + ((kecamatan !== null) ? kecamatan.name : 'Semua Kecamatan')
+            content: ((kecamatan !== null) ? kecamatan.name : 'Semua Kecamatan')
           },
           {
             title: 'Kelurahan/Desa',
-            content: ' : ' + ((kelurahan !== null) ? kelurahan.name : 'Semua Kelurahan')
+            content: ((kelurahan !== null) ? kelurahan.name : 'Semua Kelurahan')
           },
           {
             title: 'RW',
-            content: ' : ' + ((rw !== null) ? rw : 'Semua RW')
+            content: ((rw !== null) ? rw : 'Semua RW')
           }
         ]
 
         this.tableDataPesan = [
           {
             title: 'Judul Pesan',
-            content: ': ' + (title !== null ? title : '-')
+            content: (title !== null ? title : '-')
           },
           {
             title: 'Kategori',
-            content: ': ' + (category !== null ? category.name : '-')
+            content: (category !== null ? category.name : '-')
           },
           {
             title: 'Isi Pesan',
-            content: ': ' + (description !== null ? description : '-')
+            content: (description !== null ? description : '-')
           }
         ]
       })
@@ -106,6 +106,19 @@ export default {
       await update(id, data)
       this.$message.success(this.$t('crud.send-success'))
       this.$router.push('/broadcast/index')
+    },
+    async actionApprove(status) {
+      await this.$confirm(`Apakah Anda yakin akan mengirimkan pesan: ${this.broadcast.title} ?`, 'Konfirmasi', {
+        confirmButtonText: this.$t('common.confirm'),
+        cancelButtonText: this.$t('common.cancel'),
+        type: 'success'
+      })
+
+      try {
+        this.submitForm(status)
+      } catch (e) {
+        console.log(e)
+      }
     }
   }
 }
