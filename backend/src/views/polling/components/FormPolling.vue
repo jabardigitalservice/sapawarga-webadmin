@@ -106,10 +106,10 @@
                 }"
               >
                 <el-row>
-                  <el-col :span="20">
+                  <el-col :sm="18" :md="18" :lg="20" :xl="20">
                     <el-input v-model="answer.body" type="text" placeholder="Jawaban" />
                   </el-col>
-                  <el-col :span="4">
+                  <el-col :sm="4" :md="4" :lg="4" :xl="4">
                     <el-button type="danger" class="answer" @click.prevent="removeAnswer(answer)">Hapus</el-button>
                   </el-col>
                 </el-row>
@@ -118,7 +118,7 @@
             </div>
 
             <el-form-item class="polling-button">
-              <el-button v-show="checkStatus === 0 || checkStatus === null" type="info" :loading="loading" @click="submitForm(status.draft)">{{ $t('crud.draft') }}</el-button>
+              <el-button class="draft-button" v-show="checkStatus === 0 || checkStatus === null" type="info" :loading="loading" @click="submitForm(status.draft)">{{ $t('crud.draft') }}</el-button>
               <el-button v-show="!isEdit" type="primary" :loading="loading" @click="actionApprove(status.active)"> {{ $t('crud.send-polling') }}</el-button>
             </el-form-item>
           </el-form>
@@ -490,7 +490,7 @@ el-radio {
 }
 
 .polling-button {
-  margin-top: 50px;
+  margin-top: 70px;
 }
 
 .add-answer {
@@ -498,6 +498,11 @@ el-radio {
 }
 
 .answer {
-  float: right;
+  float: left;
+  margin-left: 15px;
+}
+
+.draft-button {
+  margin-bottom: 7px;
 }
 </style>
