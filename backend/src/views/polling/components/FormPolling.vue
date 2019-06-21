@@ -457,7 +457,6 @@ export default {
       }
     },
     async actionApprove(status) {
-      // const id = this.id
 
       const valid = await this.$refs.polling.validate()
 
