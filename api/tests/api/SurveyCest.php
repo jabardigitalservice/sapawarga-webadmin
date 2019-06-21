@@ -21,6 +21,20 @@ class SurveyCest
         ]);
     }
 
+    public function getUserRwListTest(ApiTester $I)
+    {
+        $I->amUser('staffrw');
+
+        $I->sendGET('/v1/survey');
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $I->seeResponseContainsJson([
+            'success' => true,
+            'status'  => 200,
+        ]);
+    }
+
     public function getShowTest(ApiTester $I)
     {
         $I->haveInDatabase('survey', [
