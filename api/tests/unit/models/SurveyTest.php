@@ -271,4 +271,17 @@ class SurveyTest extends Unit
 
         $this->assertTrue($model->hasErrors('start_date'));
     }
+
+    public function testErrorEndDateSameStartDate()
+    {
+        $model = new Survey();
+
+        $model->start_date = '2019-09-01';
+        $model->end_date   = '2019-09-01';
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('start_date'));
+        $this->assertTrue($model->hasErrors('end_date'));
+    }
 }

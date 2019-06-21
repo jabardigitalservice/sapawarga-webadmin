@@ -83,6 +83,12 @@ class Survey extends ActiveRecord
                 'compareAttribute'       => 'end_date',
                 'operator'               => '<',
             ],
+            [
+                'end_date',
+                'compare',
+                'compareAttribute'       => 'start_date',
+                'operator'               => '>',
+            ],
 
             ['status', 'in', 'range' => [-1, 0, 1, 10]],
         ];
