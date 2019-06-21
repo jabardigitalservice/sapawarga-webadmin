@@ -464,7 +464,7 @@ export default {
         return
       }
 
-      await this.$confirm(`Apakah anda yakin akan mengirimkan Pesan : ${this.polling.name} [Tujuan] ?`, 'Konfirmasi', {
+      await this.$confirm(`Apakah Anda yakin akan mengirimkan Pesan: ${this.polling.name} ?`, 'Konfirmasi', {
         confirmButtonText: this.$t('common.confirm'),
         cancelButtonText: this.$t('common.cancel'),
         type: 'success'
