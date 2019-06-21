@@ -105,7 +105,7 @@ export const constantRoutes = [
         component: () => import('@/views/profile/index'),
         name: 'Dashboard',
         meta: {
-          title: 'dashboard',
+          title: 'profile',
           icon: 'dashboard',
           noCache: true,
           affix: true
