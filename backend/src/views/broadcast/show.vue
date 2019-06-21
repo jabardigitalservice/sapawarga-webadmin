@@ -108,7 +108,6 @@ export default {
       this.$router.push('/broadcast/index')
     },
     async actionApprove(status) {
-
       await this.$confirm(`Apakah Anda yakin akan mengirimkan pesan: ${this.broadcast.title} ?`, 'Konfirmasi', {
         confirmButtonText: this.$t('common.confirm'),
         cancelButtonText: this.$t('common.cancel'),

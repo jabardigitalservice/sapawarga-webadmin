@@ -153,7 +153,6 @@ export default {
       this.$router.push('/polling/index')
     },
     async actionApprove(status) {
-
       await this.$confirm(`Apakah Anda yakin akan mengirimkan polling: ${this.polling.name} ?`, 'Konfirmasi', {
         confirmButtonText: this.$t('common.confirm'),
         cancelButtonText: this.$t('common.cancel'),
