@@ -110,7 +110,7 @@ export default {
       callback()
     }
 
-     const whitespaceDesc = (rule, value, callback) => {
+    const whitespaceDesc = (rule, value, callback) => {
       if (value.includes('  ') || value.startsWith(' ') || value.endsWith(' ')) {
         callback(new Error('Deskripsi yang diisi tidak valid'))
       }
@@ -173,7 +173,7 @@ export default {
             message: 'Pesan maksimal 280 karakter',
             trigger: 'blur'
           },
-           {
+          {
             validator: whitespaceDesc,
             trigger: 'blur'
           }
