@@ -80,6 +80,20 @@ export default {
     }
   },
   data() {
+    const whitespaceTitle = (rule, value, callback) => {
+      if (value.includes('  ') || value.startsWith(' ') || value.endsWith(' ')) {
+        callback(new Error('Judul broadcast yang diisi tidak valid'))
+      }
+      callback()
+    }
+
+    const whitespaceDescription = (rule, value, callback) => {
+      if (value.includes('  ') || value.startsWith(' ') || value.endsWith(' ')) {
+        callback(new Error('Deskripsi yang diisi tidak valid'))
+      }
+      callback()
+    }
+
     return {
       loading: false,
       status: {
@@ -112,6 +126,10 @@ export default {
             max: 60,
             message: 'Judul pesan maksimal 60 karakter',
             trigger: 'blur'
+          },
+          {
+            validator: whitespaceTitle,
+            trigger: 'blur'
           }
 
         ],
@@ -127,6 +145,10 @@ export default {
           {
             max: 280,
             message: 'Pesan maksimal 280 karakter',
+            trigger: 'blur'
+          },
+          {
+            validator: whitespaceDescription,
             trigger: 'blur'
           }
         ],
@@ -193,10 +215,15 @@ export default {
       })
     },
     async submitForm(status) {
-      const valid = await this.$refs.broadcast.validate()
-
-      if (!valid) {
-        return
+      if (this.broadcast.kabkota_id === null) {
+        this.broadcast.kec_id = null
+        this.broadcast.kel_id = null
+        this.broadcast.rw = null
+      } else if (this.broadcast.kec_id === null) {
+        this.broadcast.kel_id = null
+        this.broadcast.rw = null
+      } else if (this.broadcast.kel_id === null) {
+        this.broadcast.rw = null
       }
 
       try {
@@ -232,7 +259,6 @@ export default {
       }
     },
     async actionApprove(status) {
-      // const id = this.id
 
       const valid = await this.$refs.broadcast.validate()
 
