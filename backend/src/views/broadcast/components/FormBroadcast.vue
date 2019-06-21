@@ -89,7 +89,7 @@ export default {
 
     const whitespaceDescription = (rule, value, callback) => {
       if (value.includes('  ') || value.startsWith(' ') || value.endsWith(' ')) {
-        callback(new Error('Deskripsi yang diisi tidak valid'))
+        callback(new Error('Pesan yang diisi tidak valid'))
       }
       callback()
     }
