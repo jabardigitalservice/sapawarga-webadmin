@@ -103,7 +103,7 @@ class PollingController extends ActiveController
                 [
                     'allow'   => true,
                     'actions' => ['index', 'view', 'vote', 'vote-check'],
-                    'roles'   => ['pollingList', 'staffRW'],
+                    'roles'   => ['pollingList'],
                 ],
             ],
         ];

@@ -21,6 +21,20 @@ class PollingCest
         ]);
     }
 
+    public function getUserRwListTest(ApiTester $I)
+    {
+        $I->amUser('staffrw');
+
+        $I->sendGET('/v1/polling');
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $I->seeResponseContainsJson([
+            'success' => true,
+            'status'  => 200,
+        ]);
+    }
+
     public function getStaffListTest(ApiTester $I)
     {
         $I->amStaff();
@@ -215,6 +229,26 @@ class PollingCest
     public function postVoteTest(ApiTester $I)
     {
         $I->amUser('user');
+
+        $latestId = 4;
+
+        $data = [
+            'id' => 1,
+        ];
+
+        $I->sendPUT('/v1/polling/' . $latestId . '/vote', $data);
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $I->seeResponseContainsJson([
+            'success' => true,
+            'status'  => 200,
+        ]);
+    }
+
+    public function postUserRwVoteTest(ApiTester $I)
+    {
+        $I->amUser('staffrw');
 
         $latestId = 4;
 
