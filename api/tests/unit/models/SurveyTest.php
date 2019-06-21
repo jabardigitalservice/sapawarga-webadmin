@@ -42,23 +42,50 @@ class SurveyTest extends Unit
         $this->assertTrue($model->hasErrors('title'));
     }
 
-    public function testTitleMinCharacters()
+    public function testTitleMinCharactersShouldFail()
     {
         $model = new Survey();
 
-        $model->title = 'Coba';
+        // allow min 10 chars
+        $model->title = '123';
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('title'));
+    }
+
+    public function testTitleMinCharactersSuccess()
+    {
+        $model = new Survey();
+
+        // allow min 10 chars
+        $model->title = '1234567890';
 
         $model->validate();
 
         $this->assertFalse($model->hasErrors('title'));
     }
 
-    public function testTitleMaxCharacters()
+    public function testTitleMaxCharactersShouldFail()
     {
         $model = new Survey();
 
-        // allow 255 chars
-        $model->title = file_get_contents(__DIR__ . '/../../data/255chars.txt');
+        // max 60 chars
+        // 61 chars should fail
+        $model->title = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aex';
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('title'));
+    }
+
+    public function testTitleMaxCharactersSuccess()
+    {
+        $model = new Survey();
+
+        // max 60 chars
+        // 60 chars should success
+        $model->title = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ae';
 
         $model->validate();
 

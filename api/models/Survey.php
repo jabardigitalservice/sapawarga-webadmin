@@ -68,7 +68,8 @@ class Survey extends ActiveRecord
             [['title', 'status', 'external_url', 'category_id'], 'required'],
             [['title', 'status', 'external_url', 'category_id'], 'trim'],
 
-            ['title', 'string', 'max' => 255],
+            ['title', 'string', 'min' => 10],
+            ['title', 'string', 'max' => 60],
             ['title', InputCleanValidator::class],
 
             ['category_id', 'integer'],
