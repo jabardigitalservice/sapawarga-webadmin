@@ -208,9 +208,10 @@ class Polling extends ActiveRecord
             }
 
             if ($isSendNotification) {
+                $category_id = Category::findOne(['name' => Notification::CATEGORY_LABEL_POLLING])->id;
                 $notifModel = new Notification();
                 $notifModel->setAttributes([
-                    'category_id' => 15,
+                    'category_id' => $category_id,
                     'title'=> "Polling Baru: {$this->name}",
                     'description'=> $this->description,
                     'kabkota_id'=> $this->kabkota_id,

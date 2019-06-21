@@ -29,11 +29,16 @@ class Notification extends \yii\db\ActiveRecord
 
     const CATEGORY_TYPE = 'notification';
 
+    const CATEGORY_LABEL_SURVEY = 'Survey Terbaru';
+    const CATEGORY_LABEL_POLLING = 'Polling Terbaru';
+    const CATEGORY_LABEL_UPDATE = 'Update Aplikasi';
+    
+
     // Memetakan category name dengan target name
     const TARGET_MAP = [
-        'Survey Terbaru'    => 'notifikasi',
-        'Polling Terbaru'   => 'notifikasi',
-        'Update Aplikasi'   => 'url',
+        self::CATEGORY_LABEL_SURVEY     => 'notifikasi',
+        self::CATEGORY_LABEL_POLLING    => 'notifikasi',
+        self::CATEGORY_LABEL_UPDATE     => 'url',
     ];
 
     /** @var  array push notification metadata */
