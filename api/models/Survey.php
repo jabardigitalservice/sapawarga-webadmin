@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\components\ModelHelper;
 use app\validator\InputCleanValidator;
 use Yii;
 use yii\behaviors\TimestampBehavior;
@@ -127,6 +128,35 @@ class Survey extends ActiveRecord
         ];
 
         return $fields;
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        if (!YII_ENV_TEST) {
+            $isSendNotification = ModelHelper::isSendNotification($insert, $changedAttributes, $this);
+
+            if ($isSendNotification) {
+                $category_id = Category::findOne(['name' => Notification::CATEGORY_LABEL_SURVEY])->id;
+                $notifModel = new Notification();
+                $notifModel->setAttributes([
+                    'category_id' => $category_id,
+                    'title'=> "Survey Baru: {$this->title}",
+                    'description'=> null,
+                    'kabkota_id'=> $this->kabkota_id,
+                    'kec_id'=> $this->kec_id,
+                    'kel_id'=> $this->kel_id,
+                    'rw'=> $this->rw,
+                    'status'=> Notification::STATUS_PUBLISHED,
+                    'meta' => [
+                        'target'=> 'survey',
+                        'id'=>$this->id
+                    ]
+                ]);
+                $notifModel->save(false);
+            }
+        }
+
+        return parent::afterSave($insert, $changedAttributes);
     }
 
     /** @inheritdoc */
