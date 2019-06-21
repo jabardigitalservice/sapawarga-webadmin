@@ -22,7 +22,7 @@
             <el-table-column prop="content" />
           </el-table>
         </el-card>
-        <el-button v-if="!btnKirimDisable" class="button-send" type="primary" @click="submitForm(status.active)">{{ $t('crud.send-polling') }}</el-button>
+        <el-button v-if="!btnKirimDisable" class="button-send" type="primary" @click="actionApprove(status.active)">{{ $t('crud.send-polling') }}</el-button>
       </el-col>
     </el-row>
   </div>
@@ -30,6 +30,7 @@
 
 <script>
 import { fetchRecord, update } from '@/api/polling'
+import moment from 'moment'
 export default {
   data() {
     return {
@@ -68,14 +69,13 @@ export default {
         let expired = false
         let beforeStart = false
 
-        const dateStart = new Date(start_date).getTime()
-        const dateSecond = new Date(end_date).getTime()
-        const currentDate = new Date().getTime()
+        const dateStart = moment(start_date).endOf('day')
+        const dateSecond = moment(end_date).endOf('day')
+        const currentDate = moment()
 
         const checkStartDate = currentDate - dateStart
         const distance = dateSecond - currentDate
 
-        console.log(checkStartDate)
         if (checkStartDate < 0) {
           beforeStart = true
         }
@@ -151,6 +151,19 @@ export default {
       await update(id, data)
       this.$message.success(this.$t('crud.publish-polling'))
       this.$router.push('/polling/index')
+    },
+    async actionApprove(status) {
+      await this.$confirm(`Apakah Anda yakin akan mengirimkan polling: ${this.polling.name} ?`, 'Konfirmasi', {
+        confirmButtonText: this.$t('common.confirm'),
+        cancelButtonText: this.$t('common.cancel'),
+        type: 'success'
+      })
+
+      try {
+        this.submitForm(status)
+      } catch (e) {
+        console.log(e)
+      }
     }
   }
 }
