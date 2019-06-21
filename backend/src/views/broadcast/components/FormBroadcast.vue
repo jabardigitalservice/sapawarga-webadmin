@@ -56,7 +56,7 @@
             </el-form-item>
             <el-form-item>
               <el-button type="info" :disabled="broadcast.status === 10" :loading="loading" @click="submitForm(status.draft)">{{ $t('crud.draft') }}</el-button>
-              <el-button v-show="!isEdit" type="primary" :loading="loading" @click="submitForm(status.active)"> {{ $t('crud.send') }}</el-button>
+              <el-button v-show="!isEdit" type="primary" :loading="loading" @click="actionApprove(status.active)"> {{ $t('crud.send') }}</el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -229,6 +229,27 @@ export default {
         console.log(err)
       } finally {
         this.loading = false
+      }
+    },
+    async actionApprove(status) {
+      // const id = this.id
+
+      const valid = await this.$refs.broadcast.validate()
+
+      if (!valid) {
+        return
+      }
+
+      await this.$confirm(`Apakah anda yakin akan mengirimkan Pesan : ${this.broadcast.title} [Tujuan] ?`, 'Konfirmasi', {
+        confirmButtonText: this.$t('common.confirm'),
+        cancelButtonText: this.$t('common.cancel'),
+        type: 'success'
+      })
+
+      try {
+        this.submitForm(status)
+      } catch (e) {
+        console.log(e)
       }
     }
   }
