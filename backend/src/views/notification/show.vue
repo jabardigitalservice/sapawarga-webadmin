@@ -108,7 +108,6 @@ export default {
       this.$router.push('/notification/index')
     },
     async actionApprove(status) {
-
       await this.$confirm(`Apakah Anda yakin akan mengirimkan notifikasi: ${this.notification.title} ?`, 'Konfirmasi', {
         confirmButtonText: this.$t('common.confirm'),
         cancelButtonText: this.$t('common.cancel'),

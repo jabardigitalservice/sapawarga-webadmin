@@ -72,7 +72,7 @@
                 type="info"
                 :disabled="notification.status === 10"
                 :loading="loading"
-                 @click="submitForm(status.draft)"
+                @click="submitForm(status.draft)"
               >{{ $t('crud.draft') }}</el-button>
               <el-button
                 v-show="!isEdit"
@@ -103,6 +103,20 @@ export default {
     }
   },
   data() {
+    const whitespaceName = (rule, value, callback) => {
+      if (value.includes('  ') || value.startsWith(' ') || value.endsWith(' ')) {
+        callback(new Error('Judul notifikasi yang diisi tidak valid'))
+      }
+      callback()
+    }
+
+     const whitespaceDesc = (rule, value, callback) => {
+      if (value.includes('  ') || value.startsWith(' ') || value.endsWith(' ')) {
+        callback(new Error('Deskripsi yang diisi tidak valid'))
+      }
+      callback()
+    }
+
     return {
       loading: false,
       status: {
@@ -135,6 +149,10 @@ export default {
             max: 60,
             message: 'Judul pesan maksimal 60 karakter',
             trigger: 'blur'
+          },
+          {
+            validator: whitespaceName,
+            trigger: 'blur'
           }
         ],
         category_id: [
@@ -153,6 +171,10 @@ export default {
           {
             max: 280,
             message: 'Pesan maksimal 280 karakter',
+            trigger: 'blur'
+          },
+           {
+            validator: whitespaceDesc,
             trigger: 'blur'
           }
         ],
@@ -184,15 +206,15 @@ export default {
     }
   },
   watch: {
-  'notification.kel_id'() {
-    this.resetRw()
-  },
-  'notification.kec_id'() {
-    this.resetRw()
-  },
-  'notification.kabkota_id'() {
-    this.resetRw()
-  }
+    'notification.kel_id'() {
+      this.resetRw()
+    },
+    'notification.kec_id'() {
+      this.resetRw()
+    },
+    'notification.kabkota_id'() {
+      this.resetRw()
+    }
   },
   created() {
     if (this.isEdit) {
@@ -223,8 +245,7 @@ export default {
         })
     },
     async submitForm(status) {
-
-       if (this.notification.kabkota_id === null) {
+      if (this.notification.kabkota_id === null) {
         this.notification.kec_id = null
         this.notification.kel_id = null
         this.notification.rw = null
@@ -274,7 +295,6 @@ export default {
       }
     },
     async actionApprove(status) {
-
       const valid = await this.$refs.notification.validate()
 
       if (!valid) {

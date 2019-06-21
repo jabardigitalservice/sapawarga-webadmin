@@ -259,7 +259,6 @@ export default {
       }
     },
     async actionApprove(status) {
-
       const valid = await this.$refs.broadcast.validate()
 
       if (!valid) {
