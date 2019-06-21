@@ -221,7 +221,7 @@ class Notification extends \yii\db\ActiveRecord
         if ($this->category->name == self::CATEGORY_LABEL_UPDATE) {
             $this->meta = [
                 'target'    => 'url',
-		        'url'       => self::URL_STORE_ANDROID,
+                'url'       => self::URL_STORE_ANDROID,
             ];
         }
 
@@ -288,7 +288,7 @@ class Notification extends \yii\db\ActiveRecord
         if ($this->category->name == self::CATEGORY_LABEL_UPDATE) {
             $notif_meta = [
                 'target'    => 'url',
-		        'url'       => self::URL_STORE_ANDROID,
+                'url'       => self::URL_STORE_ANDROID,
             ];
         } else {
             $notif_meta = $this->meta;
