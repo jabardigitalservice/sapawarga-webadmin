@@ -22,7 +22,7 @@
             <el-table-column prop="content" />
           </el-table>
         </el-card>
-        <el-button v-if="!btnKirimDisable" class="button-send" type="primary" @click="submitForm(status.active)">{{ $t('crud.send') }}</el-button>
+        <el-button v-if="!btnKirimDisable" class="button-send" type="primary" @click="actionApprove(status.active)">{{ $t('crud.send') }}</el-button>
       </el-col>
     </el-row>
   </div>
@@ -104,8 +104,21 @@ export default {
       Object.assign(data, this.notification)
       data.status = status
       await update(id, data)
-      this.$message.success(this.$t('crud.send-success'))
+      this.$message.success(this.$t('crud.send-notification-success'))
       this.$router.push('/notification/index')
+    },
+    async actionApprove(status) {
+      await this.$confirm(`Apakah Anda yakin akan mengirimkan notifikasi: ${this.notification.title} ?`, 'Konfirmasi', {
+        confirmButtonText: this.$t('common.confirm'),
+        cancelButtonText: this.$t('common.cancel'),
+        type: 'success'
+      })
+
+      try {
+        this.submitForm(status)
+      } catch (e) {
+        console.log(e)
+      }
     }
   }
 }
