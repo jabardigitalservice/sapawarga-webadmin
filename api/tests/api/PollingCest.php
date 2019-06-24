@@ -41,7 +41,7 @@ class PollingCest
     {
         $I->haveInDatabase('polling', [
             'id'          => 1,
-            'title'       => 'Lorem ipsum.',
+            'name'        => 'Lorem ipsum.',
             'question'    => 'Lorem ipsum updated',
             'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
             'excerpt'     => 'Lorem ipsum dolor sit amet',
@@ -68,7 +68,7 @@ class PollingCest
     {
         $I->haveInDatabase('polling', [
             'id'          => 1,
-            'title'       => 'Lorem ipsum.',
+            'name'        => 'Lorem ipsum.',
             'question'    => 'Lorem ipsum updated',
             'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
             'excerpt'     => 'Lorem ipsum dolor sit amet',
@@ -96,7 +96,7 @@ class PollingCest
     {
         $I->haveInDatabase('polling', [
             'id'          => 1,
-            'title'       => 'Lorem ipsum.',
+            'name'        => 'Lorem ipsum.',
             'question'    => 'Lorem ipsum updated',
             'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
             'excerpt'     => 'Lorem ipsum dolor sit amet',
@@ -121,7 +121,7 @@ class PollingCest
     {
         $I->haveInDatabase('polling', [
             'id'          => 1,
-            'title'       => 'Lorem ipsum.',
+            'name'        => 'Lorem ipsum.',
             'question'    => 'Lorem ipsum updated',
             'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
             'excerpt'     => 'Lorem ipsum dolor sit amet',
@@ -146,7 +146,7 @@ class PollingCest
     {
         $I->haveInDatabase('polling', [
             'id'          => 1,
-            'title'       => 'Lorem ipsum.',
+            'name'        => 'Lorem ipsum.',
             'question'    => 'Lorem ipsum updated',
             'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
             'excerpt'     => 'Lorem ipsum dolor sit amet',
@@ -171,7 +171,7 @@ class PollingCest
     {
         $I->haveInDatabase('polling', [
             'id'          => 1,
-            'title'       => 'Lorem ipsum.',
+            'name'        => 'Lorem ipsum.',
             'question'    => 'Lorem ipsum updated',
             'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
             'excerpt'     => 'Lorem ipsum dolor sit amet',
@@ -198,7 +198,7 @@ class PollingCest
     {
         $I->haveInDatabase('polling', [
             'id'          => 1,
-            'title'       => 'Lorem ipsum.',
+            'name'        => 'Lorem ipsum.',
             'question'    => 'Lorem ipsum updated',
             'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
             'excerpt'     => 'Lorem ipsum dolor sit amet',
@@ -223,7 +223,7 @@ class PollingCest
     {
         $I->haveInDatabase('polling', [
             'id'          => 1,
-            'title'       => 'Lorem ipsum.',
+            'name'        => 'Lorem ipsum.',
             'question'    => 'Lorem ipsum updated',
             'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
             'excerpt'     => 'Lorem ipsum dolor sit amet',
@@ -250,7 +250,7 @@ class PollingCest
     {
         $I->haveInDatabase('polling', [
             'id'          => 1,
-            'title'       => 'Lorem ipsum.',
+            'name'        => 'Lorem ipsum.',
             'question'    => 'Lorem ipsum updated',
             'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
             'excerpt'     => 'Lorem ipsum dolor sit amet',
@@ -277,7 +277,7 @@ class PollingCest
     {
         $I->haveInDatabase('polling', [
             'id'          => 1,
-            'title'       => 'Lorem ipsum.',
+            'name'        => 'Lorem ipsum.',
             'question'    => 'Lorem ipsum updated',
             'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
             'excerpt'     => 'Lorem ipsum dolor sit amet',
@@ -304,7 +304,7 @@ class PollingCest
     {
         $I->haveInDatabase('polling', [
             'id'          => 1,
-            'title'       => 'Lorem ipsum.',
+            'name'        => 'Lorem ipsum.',
             'question'    => 'Lorem ipsum updated',
             'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
             'excerpt'     => 'Lorem ipsum dolor sit amet',
@@ -329,7 +329,7 @@ class PollingCest
     {
         $I->haveInDatabase('polling', [
             'id'          => 1,
-            'title'       => 'Lorem ipsum.',
+            'name'        => 'Lorem ipsum.',
             'question'    => 'Lorem ipsum updated',
             'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
             'excerpt'     => 'Lorem ipsum dolor sit amet',
@@ -354,7 +354,7 @@ class PollingCest
     {
         $I->haveInDatabase('polling', [
             'id'          => 1,
-            'title'       => 'Lorem ipsum.',
+            'name'        => 'Lorem ipsum.',
             'question'    => 'Lorem ipsum updated',
             'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
             'excerpt'     => 'Lorem ipsum dolor sit amet',
@@ -368,7 +368,7 @@ class PollingCest
 
         $I->haveInDatabase('polling', [
             'id'          => 2,
-            'title'       => 'Lorem ipsum.',
+            'name'        => 'Lorem ipsum.',
             'question'    => 'Lorem ipsum updated',
             'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
             'excerpt'     => 'Lorem ipsum dolor sit amet',
@@ -382,7 +382,7 @@ class PollingCest
 
         $I->haveInDatabase('polling', [
             'id'          => 3,
-            'title'       => 'Lorem ipsum.',
+            'name'        => 'Lorem ipsum.',
             'question'    => 'Lorem ipsum updated',
             'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
             'excerpt'     => 'Lorem ipsum dolor sit amet',
@@ -409,6 +409,20 @@ class PollingCest
 
     public function getUserShowTest(ApiTester $I)
     {
+        $I->haveInDatabase('polling', [
+            'id'          => 1,
+            'name'        => 'Lorem ipsum.',
+            'question'    => 'Lorem ipsum updated',
+            'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            'excerpt'     => 'Lorem ipsum dolor sit amet',
+            'status'      => 10,
+            'category_id' => 20,
+            'start_date'  => (new Carbon())->toDateString(),
+            'end_date'    => (new Carbon())->addDays(7)->toDateString(),
+            'created_at'  => '1554706345',
+            'updated_at'  => '1554706345',
+        ]);
+
         $I->amUser('user');
 
         $I->sendGET('/v1/polling/1');
@@ -422,12 +436,26 @@ class PollingCest
 
         $data = $I->grabDataFromResponseByJsonPath('$.data')[0];
 
-        $I->assertEquals('Siapakah Presiden pilihan Anda?', $data['name']);
-        $I->assertEquals('Siapakah Presiden pilihan Anda?', $data['question']);
+        $I->assertEquals('Lorem ipsum.', $data['name']);
+        $I->assertEquals('Lorem ipsum updated', $data['question']);
     }
 
     public function getStaffShowTest(ApiTester $I)
     {
+        $I->haveInDatabase('polling', [
+            'id'          => 1,
+            'name'        => 'Lorem ipsum.',
+            'question'    => 'Lorem ipsum updated',
+            'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            'excerpt'     => 'Lorem ipsum dolor sit amet',
+            'status'      => 10,
+            'category_id' => 20,
+            'start_date'  => (new Carbon())->toDateString(),
+            'end_date'    => (new Carbon())->addDays(7)->toDateString(),
+            'created_at'  => '1554706345',
+            'updated_at'  => '1554706345',
+        ]);
+
         $I->amStaff();
 
         $I->sendGET('/v1/polling/1');
@@ -442,6 +470,20 @@ class PollingCest
 
     public function postUserCreateTest(ApiTester $I)
     {
+        $I->haveInDatabase('polling', [
+            'id'          => 1,
+            'name'        => 'Lorem ipsum.',
+            'question'    => 'Lorem ipsum updated',
+            'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            'excerpt'     => 'Lorem ipsum dolor sit amet',
+            'status'      => 10,
+            'category_id' => 20,
+            'start_date'  => (new Carbon())->toDateString(),
+            'end_date'    => (new Carbon())->addDays(7)->toDateString(),
+            'created_at'  => '1554706345',
+            'updated_at'  => '1554706345',
+        ]);
+
         $I->amUser('user');
 
         $data = [];
@@ -489,7 +531,6 @@ class PollingCest
         ]);
 
         $I->seeInDatabase('polling', [
-            'id'          => 4,
             'name'        => 'Lorem ipsum',
             'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
             'excerpt'     => 'Lorem ipsum dolor sit amet',
@@ -548,7 +589,7 @@ class PollingCest
         ]);
 
         $I->seeInDatabase('polling', [
-            'id'          => 4,
+            'id'          => $latestId,
             'name'        => 'Lorem ipsum updated',
             'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. updated',
             'excerpt'     => 'Lorem ipsum dolor sit amet updated',
@@ -562,9 +603,23 @@ class PollingCest
 
     public function userDeleteTest(ApiTester $I)
     {
+        $I->haveInDatabase('polling', [
+            'id'          => 1,
+            'name'        => 'Lorem ipsum.',
+            'question'    => 'Lorem ipsum updated',
+            'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            'excerpt'     => 'Lorem ipsum dolor sit amet',
+            'status'      => 10,
+            'category_id' => 20,
+            'start_date'  => (new Carbon())->toDateString(),
+            'end_date'    => (new Carbon())->addDays(7)->toDateString(),
+            'created_at'  => '1554706345',
+            'updated_at'  => '1554706345',
+        ]);
+
         $I->amUser('user');
 
-        $I->sendDELETE('/v1/polling/4');
+        $I->sendDELETE('/v1/polling/1');
         $I->canSeeResponseCodeIs(403);
         $I->seeResponseIsJson();
 
@@ -576,25 +631,51 @@ class PollingCest
 
     public function staffDeleteTest(ApiTester $I)
     {
+        $I->haveInDatabase('polling', [
+            'id'          => 1,
+            'name'        => 'Lorem ipsum.',
+            'question'    => 'Lorem ipsum updated',
+            'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            'excerpt'     => 'Lorem ipsum dolor sit amet',
+            'status'      => 10,
+            'category_id' => 20,
+            'start_date'  => (new Carbon())->toDateString(),
+            'end_date'    => (new Carbon())->addDays(7)->toDateString(),
+            'created_at'  => '1554706345',
+            'updated_at'  => '1554706345',
+        ]);
+
         $I->amStaff();
 
-        $I->sendDELETE('/v1/polling/4');
+        $I->sendDELETE('/v1/polling/1');
         $I->canSeeResponseCodeIs(204);
 
-        $I->seeInDatabase('polling', ['id' => 4, 'status' => -1]);
+        $I->seeInDatabase('polling', ['id' => 1, 'status' => -1]);
     }
 
     public function postVoteTest(ApiTester $I)
     {
-        $I->amUser('user');
+        $I->haveInDatabase('polling', [
+            'id'          => 1,
+            'name'        => 'Lorem ipsum.',
+            'question'    => 'Lorem ipsum updated',
+            'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            'excerpt'     => 'Lorem ipsum dolor sit amet',
+            'status'      => 10,
+            'category_id' => 20,
+            'start_date'  => (new Carbon())->toDateString(),
+            'end_date'    => (new Carbon())->addDays(7)->toDateString(),
+            'created_at'  => '1554706345',
+            'updated_at'  => '1554706345',
+        ]);
 
-        $latestId = 4;
+        $I->amUser('user');
 
         $data = [
             'id' => 1,
         ];
 
-        $I->sendPUT('/v1/polling/' . $latestId . '/vote', $data);
+        $I->sendPUT('/v1/polling/1/vote', $data);
         $I->canSeeResponseCodeIs(200);
         $I->seeResponseIsJson();
 
@@ -606,15 +687,27 @@ class PollingCest
 
     public function postUserRwVoteTest(ApiTester $I)
     {
-        $I->amUser('staffrw');
+        $I->haveInDatabase('polling', [
+            'id'          => 1,
+            'name'        => 'Lorem ipsum.',
+            'question'    => 'Lorem ipsum updated',
+            'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            'excerpt'     => 'Lorem ipsum dolor sit amet',
+            'status'      => 10,
+            'category_id' => 20,
+            'start_date'  => (new Carbon())->toDateString(),
+            'end_date'    => (new Carbon())->addDays(7)->toDateString(),
+            'created_at'  => '1554706345',
+            'updated_at'  => '1554706345',
+        ]);
 
-        $latestId = 4;
+        $I->amUser('staffrw');
 
         $data = [
             'id' => 1,
         ];
 
-        $I->sendPUT('/v1/polling/' . $latestId . '/vote', $data);
+        $I->sendPUT('/v1/polling/1/vote', $data);
         $I->canSeeResponseCodeIs(200);
         $I->seeResponseIsJson();
 
@@ -626,15 +719,27 @@ class PollingCest
 
     public function postVoteAlreadyTest(ApiTester $I)
     {
-        $I->amUser('user');
+        $I->haveInDatabase('polling', [
+            'id'          => 1,
+            'name'        => 'Lorem ipsum.',
+            'question'    => 'Lorem ipsum updated',
+            'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            'excerpt'     => 'Lorem ipsum dolor sit amet',
+            'status'      => 10,
+            'category_id' => 20,
+            'start_date'  => (new Carbon())->toDateString(),
+            'end_date'    => (new Carbon())->addDays(7)->toDateString(),
+            'created_at'  => '1554706345',
+            'updated_at'  => '1554706345',
+        ]);
 
-        $latestId = 4;
+        $I->amUser('user');
 
         $data = [
             'id' => 1,
         ];
 
-        $I->sendPUT('/v1/polling/' . $latestId . '/vote', $data);
+        $I->sendPUT('/v1/polling/1/vote', $data);
         $I->canSeeResponseCodeIs(422);
         $I->seeResponseIsJson();
 
@@ -646,6 +751,20 @@ class PollingCest
 
     public function createAnswerTest(ApiTester $I)
     {
+        $I->haveInDatabase('polling', [
+            'id'          => 1,
+            'name'        => 'Lorem ipsum.',
+            'question'    => 'Lorem ipsum updated',
+            'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            'excerpt'     => 'Lorem ipsum dolor sit amet',
+            'status'      => 10,
+            'category_id' => 20,
+            'start_date'  => (new Carbon())->toDateString(),
+            'end_date'    => (new Carbon())->addDays(7)->toDateString(),
+            'created_at'  => '1554706345',
+            'updated_at'  => '1554706345',
+        ]);
+
         $I->amStaff();
 
         $data = [
@@ -669,6 +788,20 @@ class PollingCest
 
     public function updateAnswerTest(ApiTester $I)
     {
+        $I->haveInDatabase('polling', [
+            'id'          => 1,
+            'name'        => 'Lorem ipsum.',
+            'question'    => 'Lorem ipsum updated',
+            'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            'excerpt'     => 'Lorem ipsum dolor sit amet',
+            'status'      => 10,
+            'category_id' => 20,
+            'start_date'  => (new Carbon())->toDateString(),
+            'end_date'    => (new Carbon())->addDays(7)->toDateString(),
+            'created_at'  => '1554706345',
+            'updated_at'  => '1554706345',
+        ]);
+
         $I->amStaff();
 
         $data = [
@@ -692,6 +825,20 @@ class PollingCest
 
     public function answerDeleteTest(ApiTester $I)
     {
+        $I->haveInDatabase('polling', [
+            'id'          => 1,
+            'name'        => 'Lorem ipsum.',
+            'question'    => 'Lorem ipsum updated',
+            'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            'excerpt'     => 'Lorem ipsum dolor sit amet',
+            'status'      => 10,
+            'category_id' => 20,
+            'start_date'  => (new Carbon())->toDateString(),
+            'end_date'    => (new Carbon())->addDays(7)->toDateString(),
+            'created_at'  => '1554706345',
+            'updated_at'  => '1554706345',
+        ]);
+
         $I->amStaff();
 
         $I->sendDELETE('/v1/polling/1/answers/10');
