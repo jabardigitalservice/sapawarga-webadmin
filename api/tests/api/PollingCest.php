@@ -1,5 +1,7 @@
 <?php
 
+use Carbon\Carbon;
+
 class PollingCest
 {
     public function _before(ApiTester $I)
@@ -35,18 +37,374 @@ class PollingCest
         ]);
     }
 
-    public function getStaffListTest(ApiTester $I)
+    public function getUserListPublishedShowTest(ApiTester $I)
     {
+        $I->haveInDatabase('polling', [
+            'id'          => 1,
+            'title'       => 'Lorem ipsum.',
+            'question'    => 'Lorem ipsum updated',
+            'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            'excerpt'     => 'Lorem ipsum dolor sit amet',
+            'status'      => 10,
+            'category_id' => 20,
+            'start_date'  => (new Carbon())->toDateString(),
+            'end_date'    => (new Carbon())->addDays(7)->toDateString(),
+            'created_at'  => '1554706345',
+            'updated_at'  => '1554706345',
+        ]);
+
+        $I->amUser('staffrw');
+
+        $I->sendGET('/v1/polling');
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $data = $I->grabDataFromResponseByJsonPath('$.data.items[0]');
+
+        $I->assertEquals(1, $data[0]['id']);
+    }
+
+    public function getAdminListPublishedShowTest(ApiTester $I)
+    {
+        $I->haveInDatabase('polling', [
+            'id'          => 1,
+            'title'       => 'Lorem ipsum.',
+            'question'    => 'Lorem ipsum updated',
+            'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            'excerpt'     => 'Lorem ipsum dolor sit amet',
+            'status'      => 10,
+            'category_id' => 20,
+            'start_date'  => (new Carbon())->toDateString(),
+            'end_date'    => (new Carbon())->addDays(7)->toDateString(),
+            'created_at'  => '1554706345',
+            'updated_at'  => '1554706345',
+        ]);
+
         $I->amStaff();
 
         $I->sendGET('/v1/polling');
         $I->canSeeResponseCodeIs(200);
         $I->seeResponseIsJson();
 
-        $I->seeResponseContainsJson([
-            'success' => true,
-            'status'  => 200,
+        $data = $I->grabDataFromResponseByJsonPath('$.data.items[0]');
+
+        $I->assertEquals(1, $data[0]['id']);
+    }
+
+
+    public function getUserListDeletedDontShowTest(ApiTester $I)
+    {
+        $I->haveInDatabase('polling', [
+            'id'          => 1,
+            'title'       => 'Lorem ipsum.',
+            'question'    => 'Lorem ipsum updated',
+            'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            'excerpt'     => 'Lorem ipsum dolor sit amet',
+            'status'      => -1,
+            'category_id' => 20,
+            'start_date'  => (new Carbon())->toDateString(),
+            'end_date'    => (new Carbon())->addDays(7)->toDateString(),
+            'created_at'  => '1554706345',
+            'updated_at'  => '1554706345',
         ]);
+
+        $I->amUser('staffrw');
+
+        $I->sendGET('/v1/polling');
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $I->seeHttpHeader('X-Pagination-Total-Count', 0);
+    }
+
+    public function getAdminListDeletedDontShowTest(ApiTester $I)
+    {
+        $I->haveInDatabase('polling', [
+            'id'          => 1,
+            'title'       => 'Lorem ipsum.',
+            'question'    => 'Lorem ipsum updated',
+            'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            'excerpt'     => 'Lorem ipsum dolor sit amet',
+            'status'      => -1,
+            'category_id' => 20,
+            'start_date'  => (new Carbon())->toDateString(),
+            'end_date'    => (new Carbon())->addDays(7)->toDateString(),
+            'created_at'  => '1554706345',
+            'updated_at'  => '1554706345',
+        ]);
+
+        $I->amStaff();
+
+        $I->sendGET('/v1/polling');
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $I->seeHttpHeader('X-Pagination-Total-Count', 0);
+    }
+
+    public function getUserListDisabledDontShowTest(ApiTester $I)
+    {
+        $I->haveInDatabase('polling', [
+            'id'          => 1,
+            'title'       => 'Lorem ipsum.',
+            'question'    => 'Lorem ipsum updated',
+            'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            'excerpt'     => 'Lorem ipsum dolor sit amet',
+            'status'      => 1,
+            'category_id' => 20,
+            'start_date'  => (new Carbon())->toDateString(),
+            'end_date'    => (new Carbon())->addDays(7)->toDateString(),
+            'created_at'  => '1554706345',
+            'updated_at'  => '1554706345',
+        ]);
+
+        $I->amUser('staffrw');
+
+        $I->sendGET('/v1/polling');
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $I->seeHttpHeader('X-Pagination-Total-Count', 0);
+    }
+
+    public function getAdminListDisabledShowTest(ApiTester $I)
+    {
+        $I->haveInDatabase('polling', [
+            'id'          => 1,
+            'title'       => 'Lorem ipsum.',
+            'question'    => 'Lorem ipsum updated',
+            'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            'excerpt'     => 'Lorem ipsum dolor sit amet',
+            'status'      => 1,
+            'category_id' => 20,
+            'start_date'  => (new Carbon())->toDateString(),
+            'end_date'    => (new Carbon())->addDays(7)->toDateString(),
+            'created_at'  => '1554706345',
+            'updated_at'  => '1554706345',
+        ]);
+
+        $I->amStaff();
+
+        $I->sendGET('/v1/polling');
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $data = $I->grabDataFromResponseByJsonPath('$.data.items[0]');
+
+        $I->assertEquals(1, $data[0]['id']);
+    }
+
+    public function getUserListDraftDontShowTest(ApiTester $I)
+    {
+        $I->haveInDatabase('polling', [
+            'id'          => 1,
+            'title'       => 'Lorem ipsum.',
+            'question'    => 'Lorem ipsum updated',
+            'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            'excerpt'     => 'Lorem ipsum dolor sit amet',
+            'status'      => 0,
+            'category_id' => 20,
+            'start_date'  => (new Carbon())->toDateString(),
+            'end_date'    => (new Carbon())->addDays(7)->toDateString(),
+            'created_at'  => '1554706345',
+            'updated_at'  => '1554706345',
+        ]);
+
+        $I->amUser('staffrw');
+
+        $I->sendGET('/v1/polling');
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $I->seeHttpHeader('X-Pagination-Total-Count', 0);
+    }
+
+    public function getAdminListDraftShowTest(ApiTester $I)
+    {
+        $I->haveInDatabase('polling', [
+            'id'          => 1,
+            'title'       => 'Lorem ipsum.',
+            'question'    => 'Lorem ipsum updated',
+            'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            'excerpt'     => 'Lorem ipsum dolor sit amet',
+            'status'      => 0,
+            'category_id' => 20,
+            'start_date'  => (new Carbon())->toDateString(),
+            'end_date'    => (new Carbon())->addDays(7)->toDateString(),
+            'created_at'  => '1554706345',
+            'updated_at'  => '1554706345',
+        ]);
+
+        $I->amStaff();
+
+        $I->sendGET('/v1/polling');
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $data = $I->grabDataFromResponseByJsonPath('$.data.items[0]');
+
+        $I->assertEquals(1, $data[0]['id']);
+    }
+
+    public function getUserListActiveDateTest(ApiTester $I)
+    {
+        $I->haveInDatabase('polling', [
+            'id'          => 1,
+            'title'       => 'Lorem ipsum.',
+            'question'    => 'Lorem ipsum updated',
+            'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            'excerpt'     => 'Lorem ipsum dolor sit amet',
+            'status'      => 10,
+            'category_id' => 20,
+            'start_date'  => (new Carbon())->toDateString(),
+            'end_date'    => (new Carbon())->addDays(7)->toDateString(),
+            'created_at'  => '1554706345',
+            'updated_at'  => '1554706345',
+        ]);
+
+        $I->amUser('staffrw');
+
+        $I->sendGET('/v1/polling');
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $data = $I->grabDataFromResponseByJsonPath('$.data.items[0]');
+
+        $I->assertEquals(1, $data[0]['id']);
+    }
+
+    public function getUserListActiveEndDateTest(ApiTester $I)
+    {
+        $I->haveInDatabase('polling', [
+            'id'          => 1,
+            'title'       => 'Lorem ipsum.',
+            'question'    => 'Lorem ipsum updated',
+            'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            'excerpt'     => 'Lorem ipsum dolor sit amet',
+            'status'      => 10,
+            'category_id' => 20,
+            'start_date'  => (new Carbon())->subDays(7)->toDateString(),
+            'end_date'    => (new Carbon())->toDateString(),
+            'created_at'  => '1554706345',
+            'updated_at'  => '1554706345',
+        ]);
+
+        $I->amUser('staffrw');
+
+        $I->sendGET('/v1/polling');
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $data = $I->grabDataFromResponseByJsonPath('$.data.items[0]');
+
+        $I->assertEquals(1, $data[0]['id']);
+    }
+
+    public function getUserListCannotSeePastDateTest(ApiTester $I)
+    {
+        $I->haveInDatabase('polling', [
+            'id'          => 1,
+            'title'       => 'Lorem ipsum.',
+            'question'    => 'Lorem ipsum updated',
+            'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            'excerpt'     => 'Lorem ipsum dolor sit amet',
+            'status'      => 10,
+            'category_id' => 20,
+            'start_date'  => (new Carbon())->subDays(7)->toDateString(),
+            'end_date'    => (new Carbon())->subDays(1)->toDateString(),
+            'created_at'  => '1554706345',
+            'updated_at'  => '1554706345',
+        ]);
+
+        $I->amUser('staffrw');
+
+        $I->sendGET('/v1/polling');
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $I->seeHttpHeader('X-Pagination-Total-Count', 0);
+    }
+
+    public function getUserListCannotSeeFutureDateTest(ApiTester $I)
+    {
+        $I->haveInDatabase('polling', [
+            'id'          => 1,
+            'title'       => 'Lorem ipsum.',
+            'question'    => 'Lorem ipsum updated',
+            'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            'excerpt'     => 'Lorem ipsum dolor sit amet',
+            'status'      => 10,
+            'category_id' => 20,
+            'start_date'  => (new Carbon())->addDays(7)->toDateString(),
+            'end_date'    => (new Carbon())->addDays(14)->toDateString(),
+            'created_at'  => '1554706345',
+            'updated_at'  => '1554706345',
+        ]);
+
+        $I->amUser('staffrw');
+
+        $I->sendGET('/v1/polling');
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $I->seeHttpHeader('X-Pagination-Total-Count', 0);
+    }
+
+    public function getAdminListAllDateTest(ApiTester $I)
+    {
+        $I->haveInDatabase('polling', [
+            'id'          => 1,
+            'title'       => 'Lorem ipsum.',
+            'question'    => 'Lorem ipsum updated',
+            'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            'excerpt'     => 'Lorem ipsum dolor sit amet',
+            'status'      => 10,
+            'category_id' => 20,
+            'start_date'  => (new Carbon())->toDateString(),
+            'end_date'    => (new Carbon())->addDays(7)->toDateString(),
+            'created_at'  => '1554706345',
+            'updated_at'  => '1554706345',
+        ]);
+
+        $I->haveInDatabase('polling', [
+            'id'          => 2,
+            'title'       => 'Lorem ipsum.',
+            'question'    => 'Lorem ipsum updated',
+            'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            'excerpt'     => 'Lorem ipsum dolor sit amet',
+            'status'      => 10,
+            'category_id' => 20,
+            'start_date'  => (new Carbon())->subDays(7),
+            'end_date'    => (new Carbon())->subDays(1)->toDateString(),
+            'created_at'  => '1554706345',
+            'updated_at'  => '1554706345',
+        ]);
+
+        $I->haveInDatabase('polling', [
+            'id'          => 3,
+            'title'       => 'Lorem ipsum.',
+            'question'    => 'Lorem ipsum updated',
+            'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            'excerpt'     => 'Lorem ipsum dolor sit amet',
+            'status'      => 10,
+            'category_id' => 20,
+            'start_date'  => (new Carbon())->addDays(7),
+            'end_date'    => (new Carbon())->addDays(14)->toDateString(),
+            'created_at'  => '1554706345',
+            'updated_at'  => '1554706345',
+        ]);
+
+        $I->amStaff();
+
+        $I->sendGET('/v1/polling');
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $data = $I->grabDataFromResponseByJsonPath('$.data.items');
+
+        $I->assertEquals(1, $data[0][0]['id']);
+        $I->assertEquals(2, $data[0][1]['id']);
+        $I->assertEquals(3, $data[0][2]['id']);
     }
 
     public function getUserShowTest(ApiTester $I)
