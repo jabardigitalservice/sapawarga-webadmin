@@ -91,6 +91,7 @@
 import InputCategory from '@/components/InputCategory'
 import InputSelectArea from '@/components/InputSelectArea'
 import { create, fetchRecord, update } from '@/api/notification'
+import { containsWhitespace } from '@/utils/validate'
 export default {
   components: {
     InputCategory,
@@ -104,14 +105,14 @@ export default {
   },
   data() {
     const whitespaceName = (rule, value, callback) => {
-      if (value.includes('  ') || value.startsWith(' ') || value.endsWith(' ')) {
+      if (containsWhitespace(value) === true) {
         callback(new Error('Judul notifikasi yang diisi tidak valid'))
       }
       callback()
     }
 
     const whitespaceDesc = (rule, value, callback) => {
-      if (value.includes('  ') || value.startsWith(' ') || value.endsWith(' ')) {
+      if (containsWhitespace(value) === true) {
         callback(new Error('Deskripsi yang diisi tidak valid'))
       }
       callback()
