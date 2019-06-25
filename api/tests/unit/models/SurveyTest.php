@@ -70,9 +70,9 @@ class SurveyTest extends Unit
     {
         $model = new Survey();
 
-        // max 60 chars
-        // 61 chars should fail
-        $model->title = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aex';
+        // max 100 chars
+        // 101 chars should fail
+        $model->title = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean ma';
 
         $model->validate();
 
@@ -83,9 +83,9 @@ class SurveyTest extends Unit
     {
         $model = new Survey();
 
-        // max 60 chars
-        // 60 chars should success
-        $model->title = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ae';
+        // max 100 chars
+        // 100 chars should success
+        $model->title = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean m';
 
         $model->validate();
 

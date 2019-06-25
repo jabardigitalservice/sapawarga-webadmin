@@ -807,7 +807,7 @@ class PollingCest
         $I->amStaff();
 
         $data = [
-            'name'        => 'Lorem ipsum',
+            'name'        => 'Lorem Ipsum Dolor Sit Amet',
             'question'    => 'Lorem ipsum updated',
             'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
             'excerpt'     => 'Lorem ipsum dolor sit amet',
@@ -835,7 +835,7 @@ class PollingCest
         ]);
 
         $I->seeInDatabase('polling', [
-            'name'        => 'Lorem ipsum',
+            'name'        => 'Lorem Ipsum Dolor Sit Amet',
             'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
             'excerpt'     => 'Lorem ipsum dolor sit amet',
             'start_date'  => '2019-06-01',
