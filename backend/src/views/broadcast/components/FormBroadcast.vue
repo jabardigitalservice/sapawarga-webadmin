@@ -180,13 +180,23 @@ export default {
     }
   },
   watch: {
-    'broadcast.kel_id'() {
+    'broadcast.kel_id'(oldVal, newVal) {
+      if (newVal !== null) {
+        this.broadcast.rw = null
+      }
       this.resetRw()
     },
-    'broadcast.kec_id'() {
+    'broadcast.kec_id'(oldVal, newVal) {
+      if (newVal !== null) {
+        this.broadcast.rw = null
+      }
       this.resetRw()
     },
-    'broadcast.kabkota_id'() {
+    'broadcast.kabkota_id'(oldVal, newVal) {
+      if (newVal !== null) {
+        this.broadcast.kel_id = null
+        this.broadcast.rw = null
+      }
       this.resetRw()
     }
   },
