@@ -194,18 +194,8 @@ class Broadcast extends \yii\db\ActiveRecord
     public function afterSave($insert, $changedAttributes)
     {
         if (!YII_ENV_TEST) {
-            // Check condition for push notification
-            $isSendNotification = false;
-            if ($insert) {
-                $isSendNotification = $this->status == self::STATUS_PUBLISHED;
-            } else { // Update broadcast
-                if (array_key_exists('status', $changedAttributes)) {
-                    if ($this->status == self::STATUS_PUBLISHED) {
-                        $isSendNotification = true;
-                    }
-                }
-            }
-
+            $isSendNotification = ModelHelper::isSendNotification($insert, $changedAttributes, $this);
+            
             if ($isSendNotification) {
                 $this->data = [
                     'target'            => 'broadcast',

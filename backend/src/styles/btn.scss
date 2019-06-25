@@ -13,6 +13,10 @@
   }
 }
 
+.el-button + .el-button {
+  margin-left: auto;
+}
+
 .blue-btn {
   @include colorBtn($blue)
 }

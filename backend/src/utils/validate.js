@@ -72,3 +72,15 @@ export function isArray(arg) {
   }
   return Array.isArray(arg)
 }
+
+export function validUrl(str) {
+  const reg = /^(http:\/\/|https:\/\/)[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/
+
+  return reg.test(str)
+}
+
+export function containsWhitespace(str) {
+  const reg = /^\s+|\s+$/g
+
+  return reg.test(str)
+}

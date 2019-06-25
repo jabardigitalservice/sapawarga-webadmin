@@ -29,12 +29,19 @@ class Notification extends \yii\db\ActiveRecord
 
     const CATEGORY_TYPE = 'notification';
 
+    const CATEGORY_LABEL_SURVEY = 'Survey Terbaru';
+    const CATEGORY_LABEL_POLLING = 'Polling Terbaru';
+    const CATEGORY_LABEL_UPDATE = 'Update Aplikasi';
+    
+
     // Memetakan category name dengan target name
     const TARGET_MAP = [
-        'Survey Terbaru'    => 'notifikasi',
-        'Polling Terbaru'   => 'notifikasi',
-        'Update Aplikasi'   => 'url',
+        self::CATEGORY_LABEL_SURVEY     => 'notifikasi',
+        self::CATEGORY_LABEL_POLLING    => 'notifikasi',
+        self::CATEGORY_LABEL_UPDATE     => 'url',
     ];
+
+    const URL_STORE_ANDROID = 'https://play.google.com/store/apps/details?id=com.sapawarga.jds';
 
     /** @var  array push notification metadata */
     public $data;
@@ -97,81 +104,98 @@ class Notification extends \yii\db\ActiveRecord
 
     public function fields()
     {
-        $fields = [
-            'id',
-            'author_id',
-            'author' => function () {
-                return [
-                    'id'            => $this->author->id,
-                    'name'          => $this->author->name,
-                    'role_label'    => $this->author->getRoleLabel(),
-                ];
-            },
-            'category_id',
-            'category' => function () {
-                return [
-                    'id'   => $this->category->id,
-                    'name' => $this->category->name,
-                ];
-            },
-            'title',
-            'description',
-            'kabkota_id',
-            'kabkota' => function () {
-                if ($this->kabkota) {
+        $fields = [];
+        $user = User::findIdentity(Yii::$app->user->getId());
+        
+        if ($user->role <= User::ROLE_STAFF_RW) {
+            $fields = [
+                'id',
+                'title',
+                'target' => function () {
+                    return self::TARGET_MAP[$this->category->name];
+                },
+                'meta',
+                'push_notification' => function () {
+                    return true;
+                }
+            ];
+        } else {
+            $fields = [
+                'id',
+                'author_id',
+                'author' => function () {
                     return [
-                        'id'   => $this->kabkota->id,
-                        'name' => $this->kabkota->name,
+                        'id'            => $this->author->id,
+                        'name'          => $this->author->name,
+                        'role_label'    => $this->author->getRoleLabel(),
                     ];
-                } else {
-                    return null;
-                }
-            },
-            'kec_id',
-            'kecamatan' => function () {
-                if ($this->kecamatan) {
+                },
+                'category_id',
+                'category' => function () {
                     return [
-                        'id'   => $this->kecamatan->id,
-                        'name' => $this->kecamatan->name,
+                        'id'   => $this->category->id,
+                        'name' => $this->category->name,
                     ];
-                } else {
-                    return null;
-                }
-            },
-            'kel_id',
-            'kelurahan' => function () {
-                if ($this->kelurahan) {
-                    return [
-                        'id'   => $this->kelurahan->id,
-                        'name' => $this->kelurahan->name,
-                    ];
-                } else {
-                    return null;
-                }
-            },
-            'rw',
-            'status',
-            'status_label' => function () {
-                $statusLabel = '';
-                switch ($this->status) {
-                    case self::STATUS_PUBLISHED:
-                        $statusLabel = Yii::t('app', 'status.published');
-                        break;
-                    case self::STATUS_DRAFT:
-                        $statusLabel = Yii::t('app', 'status.draft');
-                        break;
-                    case self::STATUS_DELETED:
-                        $statusLabel = Yii::t('app', 'status.deleted');
-                        break;
-                }
-                return $statusLabel;
-            },
-            'data' => function () {
-                return $this->data;
-            },
-            'created_at',
-            'updated_at',
-        ];
+                },
+                'title',
+                'description',
+                'kabkota_id',
+                'kabkota' => function () {
+                    if ($this->kabkota) {
+                        return [
+                            'id'   => $this->kabkota->id,
+                            'name' => $this->kabkota->name,
+                        ];
+                    } else {
+                        return null;
+                    }
+                },
+                'kec_id',
+                'kecamatan' => function () {
+                    if ($this->kecamatan) {
+                        return [
+                            'id'   => $this->kecamatan->id,
+                            'name' => $this->kecamatan->name,
+                        ];
+                    } else {
+                        return null;
+                    }
+                },
+                'kel_id',
+                'kelurahan' => function () {
+                    if ($this->kelurahan) {
+                        return [
+                            'id'   => $this->kelurahan->id,
+                            'name' => $this->kelurahan->name,
+                        ];
+                    } else {
+                        return null;
+                    }
+                },
+                'rw',
+                'status',
+                'status_label' => function () {
+                    $statusLabel = '';
+                    switch ($this->status) {
+                        case self::STATUS_PUBLISHED:
+                            $statusLabel = Yii::t('app', 'status.published');
+                            break;
+                        case self::STATUS_DRAFT:
+                            $statusLabel = Yii::t('app', 'status.draft');
+                            break;
+                        case self::STATUS_DELETED:
+                            $statusLabel = Yii::t('app', 'status.deleted');
+                            break;
+                    }
+                    return $statusLabel;
+                },
+                'data' => function () {
+                    return $this->data;
+                },
+                'created_at',
+                'updated_at',
+            ];
+        }
 
         return $fields;
     }
@@ -194,23 +218,21 @@ class Notification extends \yii\db\ActiveRecord
     {
         $this->author_id = Yii::$app->user->getId();
 
+        // Add meta for 'Update Apikasi' Notification category
+        if ($this->category->name == self::CATEGORY_LABEL_UPDATE) {
+            $this->meta = [
+                'target'    => 'url',
+                'url'       => self::URL_STORE_ANDROID,
+            ];
+        }
+
         return parent::beforeSave($insert);
     }
 
     public function afterSave($insert, $changedAttributes)
     {
         if (!YII_ENV_TEST) {
-            // Check condition for push notification
-            $isSendNotification = false;
-            if ($insert) {
-                $isSendNotification = $this->status == self::STATUS_PUBLISHED;
-            } else { // Update notification
-                if (array_key_exists('status', $changedAttributes)) {
-                    if ($this->status == self::STATUS_PUBLISHED) {
-                        $isSendNotification = true;
-                    }
-                }
-            }
+            $isSendNotification = ModelHelper::isSendNotification($insert, $changedAttributes, $this);
 
             if ($isSendNotification) {
                 $this->data = $this->generateData();
@@ -253,11 +275,21 @@ class Notification extends \yii\db\ActiveRecord
 
     protected function generateData()
     {
+        $notif_meta = null;
+        if ($this->category->name == self::CATEGORY_LABEL_UPDATE) {
+            $notif_meta = [
+                'target'    => 'url',
+                'url'       => self::URL_STORE_ANDROID,
+            ];
+        } else {
+            $notif_meta = $this->meta;
+        }
+
         $data = [
             'push_notification' => true,
             'title'             => $this->title,
             'target'            => self::TARGET_MAP[$this->category->name],
-            'meta'              => $this->meta,
+            'meta'              => $notif_meta,
         ];
         return $data;
     }

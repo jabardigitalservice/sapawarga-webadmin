@@ -11,6 +11,7 @@
             label-position="left"
             :rules="rules"
             :status-icon="true"
+            :disabled="isEdit === true && checkStatus !== 0"
           >
             <el-form-item label="Wilayah" prop="wilayah">
               <InputSelectArea
@@ -39,6 +40,7 @@
             label-width="150px"
             label-position="left"
             :status-icon="true"
+            :disabled="isEdit === true && checkStatus !== 0"
           >
             <el-form-item label="Nama Polling" prop="name">
               <el-input v-model="polling.name" type="text" placeholder="Nama Polling" />
@@ -104,10 +106,10 @@
                 }"
               >
                 <el-row>
-                  <el-col :span="20">
+                  <el-col :sm="18" :md="18" :lg="20" :xl="20">
                     <el-input v-model="answer.body" type="text" placeholder="Jawaban" />
                   </el-col>
-                  <el-col :span="4">
+                  <el-col :sm="4" :md="4" :lg="4" :xl="4">
                     <el-button type="danger" class="answer" @click.prevent="removeAnswer(answer)">Hapus</el-button>
                   </el-col>
                 </el-row>
@@ -116,8 +118,8 @@
             </div>
 
             <el-form-item class="polling-button">
-              <el-button type="info" :loading="loading" @click="submitForm(status.draft)">{{ $t('crud.draft') }}</el-button>
-              <el-button v-show="!isEdit" type="primary" :loading="loading" @click="submitForm(status.active)"> {{ $t('crud.send-polling') }}</el-button>
+              <el-button v-show="checkStatus === 0 || checkStatus === null" class="draft-button" type="info" :loading="loading" @click="submitForm(status.draft)">{{ $t('crud.draft') }}</el-button>
+              <el-button v-show="!isEdit" type="primary" :loading="loading" @click="actionApprove(status.active)"> {{ $t('crud.send-polling') }}</el-button>
             </el-form-item>
           </el-form>
 
@@ -153,12 +155,41 @@ export default {
       callback()
     }
 
+    const whitespaceName = (rule, value, callback) => {
+      if (value.includes('  ') || value.startsWith(' ') || value.endsWith(' ')) {
+        callback(new Error('Nama polling yang diisi tidak valid'))
+      }
+      callback()
+    }
+
+    const whitespaceDescription = (rule, value, callback) => {
+      if (value.includes('  ') || value.startsWith(' ') || value.endsWith(' ')) {
+        callback(new Error('Deskripsi yang diisi tidak valid'))
+      }
+      callback()
+    }
+
+    const whitespaceExcerpt = (rule, value, callback) => {
+      if (value.includes('  ') || value.startsWith(' ') || value.endsWith(' ')) {
+        callback(new Error('Pengantar yang diisi tidak valid'))
+      }
+      callback()
+    }
+
+    const whitespaceQuestion = (rule, value, callback) => {
+      if (value.includes('  ') || value.startsWith(' ') || value.endsWith(' ')) {
+        callback(new Error('Pertanyaan yang diisi tidak valid'))
+      }
+      callback()
+    }
+
     return {
       loading: false,
       status: {
         draft: 0,
         active: 10
       },
+      checkStatus: null,
       width: '300%',
       start_date: moment().format('YYYY-MM-DD'),
       end_date: moment(Date.now() + 24 * 60 * 60 * 1000).format('YYYY-MM-DD'),
@@ -201,6 +232,10 @@ export default {
             max: 60,
             message: 'Nama polling maksimal 60 karakter',
             trigger: 'blur'
+          },
+          {
+            validator: whitespaceName,
+            trigger: 'blur'
           }
         ],
         question: [
@@ -218,6 +253,10 @@ export default {
             max: 60,
             message: 'Pertanyaan maksimal 60 karakter',
             trigger: 'blur'
+          },
+          {
+            validator: whitespaceQuestion,
+            trigger: 'blur'
           }
         ],
         category_id: [
@@ -233,6 +272,10 @@ export default {
             max: 280,
             message: 'Deskripsi maksimal 280 karakter',
             trigger: 'blur'
+          },
+          {
+            validator: whitespaceDescription,
+            trigger: 'blur'
           }
         ],
         excerpt: [
@@ -245,6 +288,10 @@ export default {
             max: 280,
             message: 'Pengantar maksimal 280 karakter',
             trigger: 'blur'
+          },
+          {
+            validator: whitespaceExcerpt,
+            trigger: 'blur'
           }
         ],
         question_type: [
@@ -252,8 +299,36 @@ export default {
             validator: question_type,
             trigger: 'blur'
           }
+        ],
+        rw: [
+          {
+            pattern: /^[0-9]+$/,
+            message: 'RW harus menggunakan angka',
+            trigger: 'blur'
+          },
+          {
+            max: 3,
+            message: 'RW harus 3 angka, contoh 001',
+            trigger: 'blur'
+          },
+          {
+            min: 3,
+            message: 'RW harus 3 angka, contoh 001',
+            trigger: 'blur'
+          }
         ]
       }
+    }
+  },
+  watch: {
+    'polling.kel_id'() {
+      this.resetRw()
+    },
+    'polling.kec_id'() {
+      this.resetRw()
+    },
+    'polling.kabkota_id'() {
+      this.resetRw()
     }
   },
   created() {
@@ -263,22 +338,47 @@ export default {
     }
   },
   methods: {
+    resetRw() {
+      if (this.polling.kel_id === null || this.polling.kec_id === null || this.polling.kabkota_id === null) {
+        this.polling.kel_id = null
+        this.polling.rw = null
+      }
+    },
     fetchData(id) {
       fetchRecord(id).then(response => {
         this.polling = response.data
+        this.checkStatus = response.data.status
+        if (this.checkStatus === 10) {
+          this.$message.error(this.$t('crud.polling-error-edit-published'))
+          this.$router.push('/polling/index')
+        }
       }).catch(err => {
         console.log(err)
       })
     },
     async submitForm(status) {
-      const valid = await this.$refs.polling.validate()
+      if (this.polling.kabkota_id === null) {
+        this.polling.kec_id = null
+        this.polling.kel_id = null
+        this.polling.rw = null
+      } else if (this.polling.kec_id === null) {
+        this.polling.kel_id = null
+        this.polling.rw = null
+      } else if (this.polling.kel_id === null) {
+        this.polling.rw = null
+      }
 
-      if (!valid) {
+      const now = moment().startOf('day')
+      const distance = (moment(this.start_date)).isBefore(now)
+
+      if (distance === true) {
+        this.$message.error(this.$t('errors.polling-start-date'))
         return
       }
 
       try {
         this.loading = true
+
         const data = {}
 
         Object.assign(data, this.polling)
@@ -306,7 +406,10 @@ export default {
           }
         }
       } catch (err) {
-        console.log(err)
+        const errorDate = err.response.data.data.start_date
+        if (errorDate) {
+          this.$message.error(this.$t('errors.polling-compare-date'))
+        }
       } finally {
         this.loading = false
       }
@@ -352,6 +455,25 @@ export default {
           body: ''
         }]
       }
+    },
+    async actionApprove(status) {
+      const valid = await this.$refs.polling.validate()
+
+      if (!valid) {
+        return
+      }
+
+      await this.$confirm(`Apakah anda yakin akan mengirimkan polling : ${this.polling.name} ?`, 'Konfirmasi', {
+        confirmButtonText: this.$t('common.confirm'),
+        cancelButtonText: this.$t('common.cancel'),
+        type: 'success'
+      })
+
+      try {
+        this.submitForm(status)
+      } catch (e) {
+        console.log(e)
+      }
     }
   }
 
@@ -366,7 +488,7 @@ el-radio {
 }
 
 .polling-button {
-  margin-top: 50px;
+  margin-top: 70px;
 }
 
 .add-answer {
@@ -374,6 +496,11 @@ el-radio {
 }
 
 .answer {
-  float: right;
+  float: left;
+  margin-left: 15px;
+}
+
+.draft-button {
+  margin-bottom: 7px;
 }
 </style>

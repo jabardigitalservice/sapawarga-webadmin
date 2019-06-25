@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\components\ModelHelper;
 use app\validator\InputCleanValidator;
 use Yii;
 use yii\behaviors\TimestampBehavior;
@@ -25,6 +26,7 @@ class Survey extends ActiveRecord
 {
     const STATUS_DELETED = -1;
     const STATUS_DRAFT = 0;
+    const STATUS_DISABLED = 1;
     const STATUS_PUBLISHED = 10;
 
     const CATEGORY_TYPE = 'survey';
@@ -64,6 +66,7 @@ class Survey extends ActiveRecord
     {
         return [
             [['title', 'status', 'external_url', 'category_id'], 'required'],
+            [['title', 'status', 'external_url', 'category_id'], 'trim'],
 
             ['title', 'string', 'max' => 255],
             ['title', InputCleanValidator::class],
@@ -73,7 +76,15 @@ class Survey extends ActiveRecord
 
             ['external_url', 'url'],
 
-            ['status', 'in', 'range' => [-1, 0, 10]],
+            [['start_date', 'end_date'], 'date', 'format' => 'php:Y-m-d'],
+            [
+                'start_date',
+                'compare',
+                'compareAttribute'       => 'end_date',
+                'operator'               => '<',
+            ],
+
+            ['status', 'in', 'range' => [-1, 0, 1, 10]],
         ];
     }
 
@@ -90,6 +101,8 @@ class Survey extends ActiveRecord
             },
             'title',
             'external_url',
+            'start_date',
+            'end_date',
             'meta',
             'status',
             'status_label' => function () {
@@ -97,6 +110,9 @@ class Survey extends ActiveRecord
                 switch ($this->status) {
                     case self::STATUS_PUBLISHED:
                         $statusLabel = Yii::t('app', 'status.published');
+                        break;
+                    case self::STATUS_DISABLED:
+                        $statusLabel = Yii::t('app', 'status.inactive');
                         break;
                     case self::STATUS_DRAFT:
                         $statusLabel = Yii::t('app', 'status.draft');
@@ -112,6 +128,35 @@ class Survey extends ActiveRecord
         ];
 
         return $fields;
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        if (!YII_ENV_TEST) {
+            $isSendNotification = ModelHelper::isSendNotification($insert, $changedAttributes, $this);
+
+            if ($isSendNotification) {
+                $category_id = Category::findOne(['name' => Notification::CATEGORY_LABEL_SURVEY])->id;
+                $notifModel = new Notification();
+                $notifModel->setAttributes([
+                    'category_id' => $category_id,
+                    'title'=> "Survey Baru: {$this->title}",
+                    'description'=> null,
+                    'kabkota_id'=> $this->kabkota_id,
+                    'kec_id'=> $this->kec_id,
+                    'kel_id'=> $this->kel_id,
+                    'rw'=> $this->rw,
+                    'status'=> Notification::STATUS_PUBLISHED,
+                    'meta' => [
+                        'target'=> 'survey',
+                        'id'=>$this->id
+                    ]
+                ]);
+                $notifModel->save(false);
+            }
+        }
+
+        return parent::afterSave($insert, $changedAttributes);
     }
 
     /** @inheritdoc */

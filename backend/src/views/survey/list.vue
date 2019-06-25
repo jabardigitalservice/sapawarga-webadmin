@@ -1,44 +1,54 @@
 <template>
   <div class="app-container">
     <el-row :gutter="20">
-      <el-col :span="24">
+      <el-col :sm="24">
+
         <el-row style="margin: 10px 0px">
           <el-col :span="12">
-            <router-link :to="{ path: '/polling/create' }">
+            <router-link :to="{ path: '/survey/create' }">
               <el-button type="primary" size="small" icon="el-icon-plus">
-                Tambah Polling Baru
+                Tambah Survey Baru
               </el-button>
             </router-link>
           </el-col>
         </el-row>
+
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%" @sort-change="changeSort">
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
-          <el-table-column prop="name" sortable="custom" label="Nama Polling" min-width="250" />
-          <el-table-column prop="start_date" sortable="custom" label="Mulai" width="170" align="center">
+
+          <el-table-column prop="title" sortable="custom" label="Nama Survey" />
+
+          <el-table-column prop="start_date" sortable="custom" label="Mulai" width="150" align="center">
             <template slot-scope="{row}">
               {{ row.start_date | moment('D MMMM YYYY') }}
             </template>
           </el-table-column>
-          <el-table-column prop="end_date" sortable="custom" label="Berakhir" width="170" align="center">
+          <el-table-column prop="end_date" sortable="custom" label="Berakhir" width="150" align="center">
             <template slot-scope="{row}">
               {{ row.end_date | moment('D MMMM YYYY') }}
             </template>
           </el-table-column>
+
           <el-table-column prop="status" sortable="custom" class-name="status-col" label="Status" width="200">
             <template slot-scope="{row}">
-              <el-tag :type="getStatusColor(row)">
-                {{ getStatusLabel(row) }}
+              <el-tag :type="statusColor(row)">
+                {{ statusLabel(row) }}
               </el-tag>
             </template>
           </el-table-column>
           <el-table-column align="center" label="Actions" width="250">
             <template slot-scope="scope">
-              <router-link :to="'/polling/detail/'+scope.row.id">
+              <a :href="scope.row.external_url" target="_blank">
+                <el-button type="white" size="mini">
+                  Preview
+                </el-button>
+              </a>
+              <router-link :to="'/survey/detail/'+scope.row.id">
                 <el-button type="white" size="mini">
                   View
                 </el-button>
               </router-link>
-              <router-link :to="(scope.row.status !== 10 ? '/polling/edit/'+scope.row.id : '')">
+              <router-link :to="scope.row.status === 0 ? `/survey/edit/${scope.row.id}` : ``">
                 <el-button type="white" size="mini" :disabled="scope.row.status === 10">
                   Edit
                 </el-button>
@@ -52,28 +62,13 @@
   </div>
 </template>
 <script>
-import { fetchList } from '@/api/polling'
+import { fetchList } from '@/api/survey'
 import Pagination from '@/components/Pagination'
-import moment from 'moment'
+
+import { getStatusColor, getStatusLabel } from './status'
+
 export default {
   components: { Pagination },
-  filters: {
-    statusFilter(status) {
-      const statusMap = {
-        '10': 'success',
-        '0': 'info',
-        '5': 'warning',
-        '3': 'danger'
-      }
-      return statusMap[status]
-    }
-  },
-  props: {
-    roleId: {
-      type: String,
-      default: null
-    }
-  },
   data() {
     return {
       list: null,
@@ -92,6 +87,8 @@ export default {
     this.getList()
   },
   methods: {
+    statusColor: getStatusColor,
+    statusLabel: getStatusLabel,
     getList() {
       this.listLoading = true
       fetchList(this.listQuery).then(response => {
@@ -99,48 +96,6 @@ export default {
         this.total = response.data._meta.totalCount
         this.listLoading = false
       })
-    },
-    getStatusColor(row) {
-      const now = moment()
-      const startDate = moment(row.start_date).startOf('day')
-      const endDate = moment(row.end_date).endOf('day')
-
-      const isRunning = now.isBetween(startDate, endDate, null, '[]')
-
-      if (row.status === 10 && isRunning) {
-        return 'success'
-      }
-
-      if (row.status === 10 && now.isAfter(endDate)) {
-        return 'warning'
-      }
-
-      if (row.status === 1) {
-        return 'danger'
-      }
-
-      if (row.status === 0) {
-        return 'info'
-      }
-
-      return row.status_label
-    },
-    getStatusLabel(row) {
-      const now = moment()
-      const startDate = moment(row.start_date).startOf('day')
-      const endDate = moment(row.end_date).endOf('day')
-
-      const isRunning = now.isBetween(startDate, endDate, null, '[]')
-
-      if (row.status === 10 && isRunning) {
-        return 'Sedang Berlangsung'
-      }
-
-      if (row.status === 10 && now.isAfter(endDate)) {
-        return 'Berakhir'
-      }
-
-      return row.status_label
     },
     getTableRowNumbering(index) {
       return ((this.listQuery.page - 1) * this.listQuery.limit) + (index + 1)

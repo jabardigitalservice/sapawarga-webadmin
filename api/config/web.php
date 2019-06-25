@@ -211,6 +211,7 @@ $config = [
                         'PUT {id}/answers/{answerId}' => 'answer-update',
                         'DELETE {id}/answers/{answerId}' => 'answer-delete',
                         'OPTIONS {id}/answers/{answerId}' => 'options',
+                        'GET {id}/vote' => 'vote-check',
                         'PUT {id}/vote' => 'vote',
                         'OPTIONS {id}/vote' => 'options',
                     ]

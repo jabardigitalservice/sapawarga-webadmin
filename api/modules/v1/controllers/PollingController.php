@@ -44,6 +44,7 @@ class PollingController extends ActiveController
                 'update'        => ['put'],
                 'delete'        => ['delete'],
                 'vote'          => ['put'],
+                'vote-check'    => ['get'],
                 'answer-create' => ['post'],
                 'answer-update' => ['put'],
                 'answer-delete' => ['delete'],
@@ -79,6 +80,7 @@ class PollingController extends ActiveController
                 'update',
                 'delete',
                 'vote',
+                'vote-check',
                 'answer-create',
                 'answer-update',
                 'answer-delete',
@@ -96,12 +98,12 @@ class PollingController extends ActiveController
                         'answer-update',
                         'answer-delete',
                     ],
-                    'roles'   => ['admin', 'manageSettings'],
+                    'roles'   => ['admin', 'managePolling'],
                 ],
                 [
                     'allow'   => true,
-                    'actions' => ['index', 'view', 'vote'],
-                    'roles'   => ['user', 'staffRW'],
+                    'actions' => ['index', 'view', 'vote', 'vote-check'],
+                    'roles'   => ['pollingList'],
                 ],
             ],
         ];
@@ -239,6 +241,27 @@ class PollingController extends ActiveController
         $response->setStatusCode(200);
 
         return 'ok';
+    }
+
+    public function actionVoteCheck($id)
+    {
+        $request   = Yii::$app->getRequest()->getBodyParams();
+        $pollingId = $id;
+        $answerId  = Arr::get($request, 'id');
+        $userId    = Yii::$app->user->getId();
+
+        $exist = PollingVote::find()
+            ->where(['polling_id' => $pollingId, 'answer_id' => $answerId, 'user_id' => $userId])
+            ->exists();
+
+        $response = Yii::$app->getResponse();
+        $response->setStatusCode(200);
+
+        if ($exist) {
+            return ['is_voted' => true];
+        }
+
+        return ['is_voted' => false];
     }
 
     public function actionAnswerCreate($id)

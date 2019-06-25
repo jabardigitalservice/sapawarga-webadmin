@@ -31,7 +31,12 @@ export default {
     'polling-list': 'Daftar Polling',
     'polling-create': 'Tambah Polling',
     'polling-detail': 'Detail Polling',
-    'polling-edit': 'Edit Polling'
+    'polling-edit': 'Edit Polling',
+    'survey-manage': 'Survey',
+    'survey-list': 'Daftar Survey',
+    'survey-create': 'Tambah Survey',
+    'survey-detail': 'Detail Survey',
+    'survey-edit': 'Edit Survey'
   },
   crud: {
     'list-empty': 'Belum ada data.',
@@ -43,12 +48,17 @@ export default {
     'delete': 'Hapus',
     'cancel': 'Batal',
     'back': 'Kembali',
+    'back-to-list': 'Kembali ke Daftar',
     'draft': 'Simpan sebagai Draft',
+    'save-publish': 'Simpan dan Aktifkan',
     'send': 'Kirim Pesan',
     'accept': 'Terima',
     'reject': 'Tolak',
     'send-polling': 'Publikasikan Polling',
     'publish-polling': 'Polling berhasil dipublikasikan',
+
+    'survey-send': 'Publikasikan Survey',
+    'survey-published': 'Survey berhasil dipublikasikan.',
 
     'insert-row': 'Tambah Baris Baru',
     'delete-row': 'Hapus',
@@ -60,6 +70,8 @@ export default {
     'draft-success': 'Pesan berhasil disimpan di draft',
     'send-polling-success': 'Polling berhasil dipublikasikan',
     'draft-polling-success': 'Polling berasil disimpan di draft',
+    'send-notification-success': 'Notifikasi berhasil di kirim',
+    'draft-notification-success': 'Notifikasi berhasil di simpan di draft',
 
     'user-activate-confirm': 'Anda yakin ingin mengaktifkan pengguna ini?',
     'user-deactivate-confirm': 'Anda yakin ingin menonaktifkan pengguna ini?',
@@ -70,6 +82,7 @@ export default {
     'deactivate-confirm': 'Anda yakin ingin menonaktifkan data ini?',
     'activate-success': 'Data berhasil diaktifkan.',
     'deactivate-success': 'Data berhasil dinonaktifkan.',
+    'polling-error-edit-published': 'Sudah dipublish, tidak dapat diedit.',
     'broadcast-error-edit-published': 'Sudah dipublish, tidak dapat di edit.',
     'notification-error-edit-published': 'Sudah dipublish, tidak dapat di edit.'
   },
@@ -78,7 +91,9 @@ export default {
     cancel: 'Batal'
   },
   errors: {
-    'internal-server-error': 'Telah terjadi kesalahan sistem, silahkan muat ulang halaman ini.'
+    'internal-server-error': 'Telah terjadi kesalahan sistem, silahkan muat ulang halaman ini.',
+    'polling-compare-date': 'Tanggal berakhir polling tidak boleh lebih kecil dari tanggal mulai polling.',
+    'polling-start-date': 'Tanggal mulai polling tidak boleh lebih kecil dari tanggal hari ini.'
   },
   navbar: {
     profile: 'Lihat Profil'
