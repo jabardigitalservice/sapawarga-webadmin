@@ -6,7 +6,9 @@ class SurveyCest
 {
     public function _before(ApiTester $I)
     {
-        //
+        Yii::$app->db->createCommand()->checkIntegrity(false)->execute();
+
+        Yii::$app->db->createCommand('TRUNCATE survey')->execute();
     }
 
     public function getListTest(ApiTester $I)
