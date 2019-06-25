@@ -8,6 +8,8 @@ use yii\db\ActiveRecord;
 
 class AreaBehavior extends Behavior
 {
+    public $withRw = true;
+
     public function events()
     {
         return [
@@ -37,7 +39,10 @@ class AreaBehavior extends Behavior
     {
         $model->kec_id = null;
         $model->kel_id = null;
-        $model->rw     = null;
+
+        if ($this->withRw) {
+            $model->rw = null;
+        }
 
         return $model;
     }
@@ -45,14 +50,19 @@ class AreaBehavior extends Behavior
     protected function resetKecamatanDown($model)
     {
         $model->kel_id = null;
-        $model->rw     = null;
+
+        if ($this->withRw) {
+            $model->rw = null;
+        }
 
         return $model;
     }
 
     protected function resetKelurahanDown($model)
     {
-        $model->rw = null;
+        if ($this->withRw) {
+            $model->rw = null;
+        }
 
         return $model;
     }
