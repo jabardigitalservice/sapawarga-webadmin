@@ -132,6 +132,7 @@
 import InputCategory from '@/components/InputCategory'
 import InputSelectArea from '@/components/InputSelectArea'
 import { create, fetchRecord, update } from '@/api/polling'
+import { containsWhitespace, validUrl } from '@/utils/validate'
 
 const moment = require('moment')
 moment().format()
@@ -156,28 +157,28 @@ export default {
     }
 
     const whitespaceName = (rule, value, callback) => {
-      if (value.includes('  ') || value.startsWith(' ') || value.endsWith(' ')) {
+      if (containsWhitespace(value) === true) {
         callback(new Error('Nama polling yang diisi tidak valid'))
       }
       callback()
     }
 
     const whitespaceDescription = (rule, value, callback) => {
-      if (value.includes('  ') || value.startsWith(' ') || value.endsWith(' ')) {
+      if (containsWhitespace(value) === true) {
         callback(new Error('Deskripsi yang diisi tidak valid'))
       }
       callback()
     }
 
     const whitespaceExcerpt = (rule, value, callback) => {
-      if (value.includes('  ') || value.startsWith(' ') || value.endsWith(' ')) {
+      if (containsWhitespace(value) === true) {
         callback(new Error('Pengantar yang diisi tidak valid'))
       }
       callback()
     }
 
     const whitespaceQuestion = (rule, value, callback) => {
-      if (value.includes('  ') || value.startsWith(' ') || value.endsWith(' ')) {
+      if (containsWhitespace(value) === true) {
         callback(new Error('Pertanyaan yang diisi tidak valid'))
       }
       callback()
