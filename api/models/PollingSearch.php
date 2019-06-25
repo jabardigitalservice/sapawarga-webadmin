@@ -50,6 +50,8 @@ class PollingSearch extends Polling
         $query->andFilterWhere(['<=', 'start_date', $today->toDateString()]);
         $query->andFilterWhere(['>=', 'end_date', $today->toDateString()]);
 
+        $this->filterByArea($query, $params);
+
         return $this->getQueryAll($query, $params);
     }
 
@@ -80,5 +82,22 @@ class PollingSearch extends Polling
                 return SORT_ASC;
                 break;
         }
+    }
+
+    protected function filterByArea(&$query, $params)
+    {
+        if (Arr::has($params, 'kabkota_id')) {
+            $query->andFilterWhere(['kabkota_id' => $params['kabkota_id']]);
+        }
+
+        if (Arr::has($params, 'kec_id')) {
+            $query->andFilterWhere(['kec_id' => $params['kec_id']]);
+        }
+
+        if (Arr::has($params, 'kel_id')) {
+            $query->andFilterWhere(['kel_id' => $params['kel_id']]);
+        }
+
+        return $query;
     }
 }

@@ -50,6 +50,10 @@ class PollingCest
             'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
             'excerpt'     => 'Lorem ipsum dolor sit amet',
             'status'      => 10,
+            'kabkota_id'  => 22,
+            'kec_id'      => 431,
+            'kel_id'      => null,
+            'rw'          => null,
             'category_id' => 20,
             'start_date'  => (new Carbon())->toDateString(),
             'end_date'    => (new Carbon())->addDays(7)->toDateString(),
@@ -76,6 +80,10 @@ class PollingCest
             'question'    => 'Lorem ipsum updated',
             'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
             'excerpt'     => 'Lorem ipsum dolor sit amet',
+            'kabkota_id'  => 22,
+            'kec_id'      => 431,
+            'kel_id'      => null,
+            'rw'          => null,
             'status'      => 10,
             'category_id' => 20,
             'start_date'  => (new Carbon())->toDateString(),
@@ -105,6 +113,10 @@ class PollingCest
             'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
             'excerpt'     => 'Lorem ipsum dolor sit amet',
             'status'      => -1,
+            'kabkota_id'  => 22,
+            'kec_id'      => 431,
+            'kel_id'      => null,
+            'rw'          => null,
             'category_id' => 20,
             'start_date'  => (new Carbon())->toDateString(),
             'end_date'    => (new Carbon())->addDays(7)->toDateString(),
@@ -130,6 +142,10 @@ class PollingCest
             'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
             'excerpt'     => 'Lorem ipsum dolor sit amet',
             'status'      => -1,
+            'kabkota_id'  => 22,
+            'kec_id'      => 431,
+            'kel_id'      => null,
+            'rw'          => null,
             'category_id' => 20,
             'start_date'  => (new Carbon())->toDateString(),
             'end_date'    => (new Carbon())->addDays(7)->toDateString(),
@@ -155,6 +171,10 @@ class PollingCest
             'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
             'excerpt'     => 'Lorem ipsum dolor sit amet',
             'status'      => 1,
+            'kabkota_id'  => 22,
+            'kec_id'      => 431,
+            'kel_id'      => null,
+            'rw'          => null,
             'category_id' => 20,
             'start_date'  => (new Carbon())->toDateString(),
             'end_date'    => (new Carbon())->addDays(7)->toDateString(),
@@ -180,6 +200,10 @@ class PollingCest
             'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
             'excerpt'     => 'Lorem ipsum dolor sit amet',
             'status'      => 1,
+            'kabkota_id'  => 22,
+            'kec_id'      => 431,
+            'kel_id'      => null,
+            'rw'          => null,
             'category_id' => 20,
             'start_date'  => (new Carbon())->toDateString(),
             'end_date'    => (new Carbon())->addDays(7)->toDateString(),
@@ -207,6 +231,10 @@ class PollingCest
             'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
             'excerpt'     => 'Lorem ipsum dolor sit amet',
             'status'      => 0,
+            'kabkota_id'  => 22,
+            'kec_id'      => 431,
+            'kel_id'      => null,
+            'rw'          => null,
             'category_id' => 20,
             'start_date'  => (new Carbon())->toDateString(),
             'end_date'    => (new Carbon())->addDays(7)->toDateString(),
@@ -232,6 +260,10 @@ class PollingCest
             'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
             'excerpt'     => 'Lorem ipsum dolor sit amet',
             'status'      => 0,
+            'kabkota_id'  => 22,
+            'kec_id'      => 431,
+            'kel_id'      => null,
+            'rw'          => null,
             'category_id' => 20,
             'start_date'  => (new Carbon())->toDateString(),
             'end_date'    => (new Carbon())->addDays(7)->toDateString(),
@@ -259,6 +291,10 @@ class PollingCest
             'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
             'excerpt'     => 'Lorem ipsum dolor sit amet',
             'status'      => 10,
+            'kabkota_id'  => 22,
+            'kec_id'      => 431,
+            'kel_id'      => null,
+            'rw'          => null,
             'category_id' => 20,
             'start_date'  => (new Carbon())->toDateString(),
             'end_date'    => (new Carbon())->addDays(7)->toDateString(),
@@ -286,6 +322,10 @@ class PollingCest
             'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
             'excerpt'     => 'Lorem ipsum dolor sit amet',
             'status'      => 10,
+            'kabkota_id'  => 22,
+            'kec_id'      => 431,
+            'kel_id'      => null,
+            'rw'          => null,
             'category_id' => 20,
             'start_date'  => (new Carbon())->subDays(7)->toDateString(),
             'end_date'    => (new Carbon())->toDateString(),
@@ -313,6 +353,10 @@ class PollingCest
             'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
             'excerpt'     => 'Lorem ipsum dolor sit amet',
             'status'      => 10,
+            'kabkota_id'  => 22,
+            'kec_id'      => 431,
+            'kel_id'      => null,
+            'rw'          => null,
             'category_id' => 20,
             'start_date'  => (new Carbon())->subDays(7)->toDateString(),
             'end_date'    => (new Carbon())->subDays(1)->toDateString(),
@@ -338,6 +382,10 @@ class PollingCest
             'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
             'excerpt'     => 'Lorem ipsum dolor sit amet',
             'status'      => 10,
+            'kabkota_id'  => 22,
+            'kec_id'      => 431,
+            'kel_id'      => null,
+            'rw'          => null,
             'category_id' => 20,
             'start_date'  => (new Carbon())->addDays(7)->toDateString(),
             'end_date'    => (new Carbon())->addDays(14)->toDateString(),
@@ -363,6 +411,10 @@ class PollingCest
             'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
             'excerpt'     => 'Lorem ipsum dolor sit amet',
             'status'      => 10,
+            'kabkota_id'  => 22,
+            'kec_id'      => 431,
+            'kel_id'      => null,
+            'rw'          => null,
             'category_id' => 20,
             'start_date'  => (new Carbon())->toDateString(),
             'end_date'    => (new Carbon())->addDays(7)->toDateString(),
@@ -377,6 +429,10 @@ class PollingCest
             'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
             'excerpt'     => 'Lorem ipsum dolor sit amet',
             'status'      => 10,
+            'kabkota_id'  => 22,
+            'kec_id'      => 431,
+            'kel_id'      => null,
+            'rw'          => null,
             'category_id' => 20,
             'start_date'  => (new Carbon())->subDays(7),
             'end_date'    => (new Carbon())->subDays(1)->toDateString(),
@@ -391,6 +447,10 @@ class PollingCest
             'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
             'excerpt'     => 'Lorem ipsum dolor sit amet',
             'status'      => 10,
+            'kabkota_id'  => 22,
+            'kec_id'      => 431,
+            'kel_id'      => null,
+            'rw'          => null,
             'category_id' => 20,
             'start_date'  => (new Carbon())->addDays(7),
             'end_date'    => (new Carbon())->addDays(14)->toDateString(),
@@ -409,6 +469,186 @@ class PollingCest
         $I->assertEquals(1, $data[0][0]['id']);
         $I->assertEquals(2, $data[0][1]['id']);
         $I->assertEquals(3, $data[0][2]['id']);
+    }
+
+    public function getListByUserAreaKabkota(ApiTester $I)
+    {
+        $I->haveInDatabase('polling', [
+            'id'          => 1,
+            'name'        => 'Lorem ipsum.',
+            'question'    => 'Lorem ipsum updated',
+            'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            'excerpt'     => 'Lorem ipsum dolor sit amet',
+            'kabkota_id'  => 22,
+            'kec_id'      => null,
+            'kel_id'      => null,
+            'rw'          => null,
+            'status'      => 10,
+            'category_id' => 20,
+            'start_date'  => (new Carbon())->toDateString(),
+            'end_date'    => (new Carbon())->addDays(7)->toDateString(),
+            'created_at'  => '1554706345',
+            'updated_at'  => '1554706345',
+        ]);
+
+        $I->amUser('user');
+
+        $I->sendGET('/v1/polling');
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $data = $I->grabDataFromResponseByJsonPath('$.data.items');
+
+        $I->assertEquals(1, $data[0][0]['id']);
+    }
+
+    public function getListByUserCannotSeeOtherAreaKabkota(ApiTester $I)
+    {
+        $I->haveInDatabase('polling', [
+            'id'          => 1,
+            'name'        => 'Lorem ipsum.',
+            'question'    => 'Lorem ipsum updated',
+            'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            'excerpt'     => 'Lorem ipsum dolor sit amet',
+            'kabkota_id'  => 21,
+            'kec_id'      => null,
+            'kel_id'      => null,
+            'rw'          => null,
+            'status'      => 10,
+            'category_id' => 20,
+            'start_date'  => (new Carbon())->toDateString(),
+            'end_date'    => (new Carbon())->addDays(7)->toDateString(),
+            'created_at'  => '1554706345',
+            'updated_at'  => '1554706345',
+        ]);
+
+        $I->amUser('user');
+
+        $I->sendGET('/v1/polling');
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $I->seeHttpHeader('X-Pagination-Total-Count', 0);
+    }
+
+    public function getListByUserAreaKecamatan(ApiTester $I)
+    {
+        $I->haveInDatabase('polling', [
+            'id'          => 1,
+            'name'        => 'Lorem ipsum.',
+            'question'    => 'Lorem ipsum updated',
+            'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            'excerpt'     => 'Lorem ipsum dolor sit amet',
+            'kabkota_id'  => 22,
+            'kec_id'      => 446,
+            'kel_id'      => null,
+            'rw'          => null,
+            'status'      => 10,
+            'category_id' => 20,
+            'start_date'  => (new Carbon())->toDateString(),
+            'end_date'    => (new Carbon())->addDays(7)->toDateString(),
+            'created_at'  => '1554706345',
+            'updated_at'  => '1554706345',
+        ]);
+
+        $I->amUser('user');
+
+        $I->sendGET('/v1/polling');
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $data = $I->grabDataFromResponseByJsonPath('$.data.items');
+
+        $I->assertEquals(1, $data[0][0]['id']);
+    }
+
+    public function getListByUserCannotSeeOtherAreaKecamatan(ApiTester $I)
+    {
+        $I->haveInDatabase('polling', [
+            'id'          => 1,
+            'name'        => 'Lorem ipsum.',
+            'question'    => 'Lorem ipsum updated',
+            'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            'excerpt'     => 'Lorem ipsum dolor sit amet',
+            'kabkota_id'  => 22,
+            'kec_id'      => 447,
+            'kel_id'      => null,
+            'rw'          => null,
+            'status'      => 10,
+            'category_id' => 20,
+            'start_date'  => (new Carbon())->toDateString(),
+            'end_date'    => (new Carbon())->addDays(7)->toDateString(),
+            'created_at'  => '1554706345',
+            'updated_at'  => '1554706345',
+        ]);
+
+        $I->amUser('user');
+
+        $I->sendGET('/v1/polling');
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $I->seeHttpHeader('X-Pagination-Total-Count', 0);
+    }
+
+    public function getListByUserAreaKelurahan(ApiTester $I)
+    {
+        $I->haveInDatabase('polling', [
+            'id'          => 1,
+            'name'        => 'Lorem ipsum.',
+            'question'    => 'Lorem ipsum updated',
+            'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            'excerpt'     => 'Lorem ipsum dolor sit amet',
+            'kabkota_id'  => 22,
+            'kec_id'      => 446,
+            'kel_id'      => 6178,
+            'rw'          => null,
+            'status'      => 10,
+            'category_id' => 20,
+            'start_date'  => (new Carbon())->toDateString(),
+            'end_date'    => (new Carbon())->addDays(7)->toDateString(),
+            'created_at'  => '1554706345',
+            'updated_at'  => '1554706345',
+        ]);
+
+        $I->amUser('user');
+
+        $I->sendGET('/v1/polling');
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $data = $I->grabDataFromResponseByJsonPath('$.data.items');
+
+        $I->assertEquals(1, $data[0][0]['id']);
+    }
+
+    public function getListByUserCannotSeeOtherAreaKelurahan(ApiTester $I)
+    {
+        $I->haveInDatabase('polling', [
+            'id'          => 1,
+            'name'        => 'Lorem ipsum.',
+            'question'    => 'Lorem ipsum updated',
+            'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            'excerpt'     => 'Lorem ipsum dolor sit amet',
+            'kabkota_id'  => 22,
+            'kec_id'      => 446,
+            'kel_id'      => 6179,
+            'rw'          => null,
+            'status'      => 10,
+            'category_id' => 20,
+            'start_date'  => (new Carbon())->toDateString(),
+            'end_date'    => (new Carbon())->addDays(7)->toDateString(),
+            'created_at'  => '1554706345',
+            'updated_at'  => '1554706345',
+        ]);
+
+        $I->amUser('user');
+
+        $I->sendGET('/v1/polling');
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $I->seeHttpHeader('X-Pagination-Total-Count', 0);
     }
 
     public function getUserShowTest(ApiTester $I)
