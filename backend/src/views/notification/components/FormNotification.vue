@@ -206,13 +206,23 @@ export default {
     }
   },
   watch: {
-    'notification.kel_id'() {
+    'notification.kabkota_id'(oldVal, newVal) {
+      if (newVal !== null) {
+        this.notification.kel_id = null
+        this.notification.rw = null
+      }
       this.resetRw()
     },
-    'notification.kec_id'() {
+    'notification.kec_id'(oldVal, newVal) {
+      if (newVal !== null) {
+        this.notification.rw = null
+      }
       this.resetRw()
     },
-    'notification.kabkota_id'() {
+    'notification.kel_id'(oldVal, newVal) {
+      if (newVal !== null) {
+        this.notification.rw = null
+      }
       this.resetRw()
     }
   },
