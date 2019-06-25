@@ -41,7 +41,7 @@
             :status-icon="true"
           >
             <el-form-item label="Judul Pesan" prop="title">
-              <el-input v-model="broadcast.title" type="text" placeholder="Judul minimal 10 karakter dan maksimal 60 karakter" />
+              <el-input v-model="broadcast.title" type="text" placeholder="Judul minimal 10 karakter dan maksimal 100 karakter" />
             </el-form-item>
             <el-form-item label="Kategori" prop="category_id">
               <InputCategory v-model="broadcast.category_id" category-type="broadcast" prop="category" />
@@ -51,7 +51,7 @@
                 v-model="broadcast.description"
                 type="textarea"
                 :rows="8"
-                placeholder="Tulis pesan, maksimal 280 karakter"
+                placeholder="Tulis pesan broadcast"
               />
             </el-form-item>
             <el-form-item>
@@ -123,8 +123,8 @@ export default {
             trigger: 'blur'
           },
           {
-            max: 60,
-            message: 'Judul pesan maksimal 60 karakter',
+            max: 100,
+            message: 'Judul pesan maksimal 100 karakter',
             trigger: 'blur'
           },
           {
@@ -140,11 +140,6 @@ export default {
           {
             required: true,
             message: 'Pesan harus diisi',
-            trigger: 'blur'
-          },
-          {
-            max: 280,
-            message: 'Pesan maksimal 280 karakter',
             trigger: 'blur'
           },
           {
