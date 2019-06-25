@@ -251,7 +251,7 @@ class PollingController extends ActiveController
         $userId    = Yii::$app->user->getId();
 
         $exist = PollingVote::find()
-            ->where(['polling_id' => $pollingId, 'answer_id' => $answerId, 'user_id' => $userId])
+            ->where(['polling_id' => $pollingId, 'user_id' => $userId])
             ->exists();
 
         $response = Yii::$app->getResponse();

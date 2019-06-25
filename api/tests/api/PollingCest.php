@@ -1035,6 +1035,93 @@ class PollingCest
         ]);
     }
 
+    public function getUserNoVoteTest(ApiTester $I)
+    {
+        $I->haveInDatabase('polling', [
+            'id'          => 1,
+            'name'        => 'Lorem ipsum.',
+            'question'    => 'Lorem ipsum updated',
+            'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            'excerpt'     => 'Lorem ipsum dolor sit amet',
+            'status'      => 10,
+            'category_id' => 20,
+            'start_date'  => (new Carbon())->toDateString(),
+            'end_date'    => (new Carbon())->addDays(7)->toDateString(),
+            'created_at'  => '1554706345',
+            'updated_at'  => '1554706345',
+        ]);
+
+        $I->haveInDatabase('polling_answers', [
+            'id'         => 1,
+            'polling_id' => 1,
+            'body'       => 'Option A',
+            'created_at' => '1554706345',
+            'updated_at' => '1554706345',
+        ]);
+
+        $I->amUser('user');
+
+        $I->sendGET('/v1/polling/1/vote');
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $I->seeResponseContainsJson([
+            'success' => true,
+            'status'  => 200,
+            'data'    => [
+                'is_voted' => false,
+            ],
+        ]);
+    }
+
+    public function getUserAlreadyVoteTest(ApiTester $I)
+    {
+        $I->haveInDatabase('polling', [
+            'id'          => 1,
+            'name'        => 'Lorem ipsum.',
+            'question'    => 'Lorem ipsum updated',
+            'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            'excerpt'     => 'Lorem ipsum dolor sit amet',
+            'status'      => 10,
+            'category_id' => 20,
+            'start_date'  => (new Carbon())->toDateString(),
+            'end_date'    => (new Carbon())->addDays(7)->toDateString(),
+            'created_at'  => '1554706345',
+            'updated_at'  => '1554706345',
+        ]);
+
+        $I->haveInDatabase('polling_answers', [
+            'id'         => 1,
+            'polling_id' => 1,
+            'body'       => 'Option A',
+            'created_at' => '1554706345',
+            'updated_at' => '1554706345',
+        ]);
+
+        $I->haveInDatabase('polling_votes', [
+            'id'         => 1,
+            'polling_id' => 1,
+            'answer_id'  => 1,
+            'user_id'    => 36,
+            'created_at' => '1554706345',
+            'updated_at' => '1554706345',
+        ]);
+
+        $I->amUser('user');
+
+        $I->sendGET('/v1/polling/1/vote');
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $I->seeResponseContainsJson([
+            'success' => true,
+            'status'  => 200,
+            'data'    => [
+                'is_voted' => true,
+            ],
+        ]);
+    }
+
     public function createAnswerTest(ApiTester $I)
     {
         $I->haveInDatabase('polling', [
