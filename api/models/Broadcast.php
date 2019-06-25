@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use Jdsteam\Sapawarga\Behaviors\AreaBehavior;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use app\components\ModelHelper;
@@ -180,6 +181,7 @@ class Broadcast extends \yii\db\ActiveRecord
                 'updatedAtAttribute' => 'updated_at',
                 'value'              => time(),
             ],
+            AreaBehavior::class,
         ];
     }
 
@@ -195,7 +197,7 @@ class Broadcast extends \yii\db\ActiveRecord
     {
         if (!YII_ENV_TEST) {
             $isSendNotification = ModelHelper::isSendNotification($insert, $changedAttributes, $this);
-            
+
             if ($isSendNotification) {
                 $this->data = [
                     'target'            => 'broadcast',

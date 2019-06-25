@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use Jdsteam\Sapawarga\Behaviors\AreaBehavior;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use app\components\ModelHelper;
@@ -32,7 +33,7 @@ class Notification extends \yii\db\ActiveRecord
     const CATEGORY_LABEL_SURVEY = 'Survey Terbaru';
     const CATEGORY_LABEL_POLLING = 'Polling Terbaru';
     const CATEGORY_LABEL_UPDATE = 'Update Aplikasi';
-    
+
 
     // Memetakan category name dengan target name
     const TARGET_MAP = [
@@ -106,7 +107,7 @@ class Notification extends \yii\db\ActiveRecord
     {
         $fields = [];
         $user = User::findIdentity(Yii::$app->user->getId());
-        
+
         if ($user->role <= User::ROLE_STAFF_RW) {
             $fields = [
                 'id',
@@ -210,6 +211,7 @@ class Notification extends \yii\db\ActiveRecord
                 'updatedAtAttribute' => 'updated_at',
                 'value'              => time(),
             ],
+            AreaBehavior::class,
         ];
     }
 
@@ -225,6 +227,7 @@ class Notification extends \yii\db\ActiveRecord
                 'url'       => self::URL_STORE_ANDROID,
             ];
         }
+
 
         return parent::beforeSave($insert);
     }
