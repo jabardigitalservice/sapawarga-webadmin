@@ -41,7 +41,7 @@
             :status-icon="true"
           >
             <el-form-item label="Judul Pesan" prop="title">
-              <el-input v-model="broadcast.title" type="text" placeholder="Judul minimal 10 karakter dan maksimal 100 karakter" />
+              <el-input v-model="broadcast.title" type="text" placeholder="Judul Pesan" />
             </el-form-item>
             <el-form-item label="Kategori" prop="category_id">
               <InputCategory v-model="broadcast.category_id" category-type="broadcast" prop="category" />

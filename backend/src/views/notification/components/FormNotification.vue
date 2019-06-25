@@ -49,7 +49,7 @@
               <el-input
                 v-model="notification.title"
                 type="text"
-                placeholder="Judul minimal 10 karakter dan maksimal 100 karakter"
+                placeholder="Judul Notifikasi"
               />
             </el-form-item>
             <el-form-item label="Kategori" prop="category_id">
