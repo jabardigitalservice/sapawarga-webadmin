@@ -68,6 +68,7 @@
 import InputCategory from '@/components/InputCategory'
 import InputSelectArea from '@/components/InputSelectArea'
 import { create, fetchRecord, update } from '@/api/broadcast'
+import { containsWhitespace } from '@/utils/validate'
 export default {
   components: {
     InputCategory,
@@ -81,14 +82,14 @@ export default {
   },
   data() {
     const whitespaceTitle = (rule, value, callback) => {
-      if (value.includes('  ') || value.startsWith(' ') || value.endsWith(' ')) {
+      if (containsWhitespace(value) === true) {
         callback(new Error('Judul broadcast yang diisi tidak valid'))
       }
       callback()
     }
 
     const whitespaceDescription = (rule, value, callback) => {
-      if (value.includes('  ') || value.startsWith(' ') || value.endsWith(' ')) {
+      if (containsWhitespace(value) === true) {
         callback(new Error('Pesan yang diisi tidak valid'))
       }
       callback()
