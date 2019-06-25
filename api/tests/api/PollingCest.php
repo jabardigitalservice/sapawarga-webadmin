@@ -6,7 +6,11 @@ class PollingCest
 {
     public function _before(ApiTester $I)
     {
-        //
+        Yii::$app->db->createCommand()->checkIntegrity(false)->execute();
+
+        Yii::$app->db->createCommand('TRUNCATE polling_votes')->execute();
+        Yii::$app->db->createCommand('TRUNCATE polling_answers')->execute();
+        Yii::$app->db->createCommand('TRUNCATE polling')->execute();
     }
 
     public function getUserListTest(ApiTester $I)
@@ -544,26 +548,35 @@ class PollingCest
         ]);
 
         $I->seeInDatabase('polling_answers', [
-            'polling_id' => 4,
-            'body'       => 'Option A',
+            'body' => 'Option A',
         ]);
 
         $I->seeInDatabase('polling_answers', [
-            'polling_id' => 4,
-            'body'       => 'Option B',
+            'body' => 'Option B',
         ]);
 
         $I->seeInDatabase('polling_answers', [
-            'polling_id' => 4,
-            'body'       => 'Option C',
+            'body' => 'Option C',
         ]);
     }
 
     public function postUpdateTest(ApiTester $I)
     {
-        $I->amStaff();
+        $I->haveInDatabase('polling', [
+            'id'          => 1,
+            'name'        => 'Lorem ipsum.',
+            'question'    => 'Lorem ipsum updated',
+            'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            'excerpt'     => 'Lorem ipsum dolor sit amet',
+            'status'      => 10,
+            'category_id' => 20,
+            'start_date'  => (new Carbon())->toDateString(),
+            'end_date'    => (new Carbon())->addDays(7)->toDateString(),
+            'created_at'  => '1554706345',
+            'updated_at'  => '1554706345',
+        ]);
 
-        $latestId = 4;
+        $I->amStaff();
 
         $data = [
             'name'        => 'Lorem ipsum updated',
@@ -579,7 +592,7 @@ class PollingCest
             'category_id' => 18,
         ];
 
-        $I->sendPUT('/v1/polling/' . $latestId, $data);
+        $I->sendPUT('/v1/polling/1', $data);
         $I->canSeeResponseCodeIs(200);
         $I->seeResponseIsJson();
 
@@ -589,7 +602,7 @@ class PollingCest
         ]);
 
         $I->seeInDatabase('polling', [
-            'id'          => $latestId,
+            'id'          => 1,
             'name'        => 'Lorem ipsum updated',
             'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. updated',
             'excerpt'     => 'Lorem ipsum dolor sit amet updated',
@@ -669,6 +682,14 @@ class PollingCest
             'updated_at'  => '1554706345',
         ]);
 
+        $I->haveInDatabase('polling_answers', [
+            'id'         => 1,
+            'polling_id' => 1,
+            'body'       => 'Option A',
+            'created_at' => '1554706345',
+            'updated_at' => '1554706345',
+        ]);
+
         $I->amUser('user');
 
         $data = [
@@ -701,6 +722,14 @@ class PollingCest
             'updated_at'  => '1554706345',
         ]);
 
+        $I->haveInDatabase('polling_answers', [
+            'id'         => 1,
+            'polling_id' => 1,
+            'body'       => 'Option A',
+            'created_at' => '1554706345',
+            'updated_at' => '1554706345',
+        ]);
+
         $I->amUser('staffrw');
 
         $data = [
@@ -731,6 +760,23 @@ class PollingCest
             'end_date'    => (new Carbon())->addDays(7)->toDateString(),
             'created_at'  => '1554706345',
             'updated_at'  => '1554706345',
+        ]);
+
+        $I->haveInDatabase('polling_answers', [
+            'id'         => 1,
+            'polling_id' => 1,
+            'body'       => 'Option A',
+            'created_at' => '1554706345',
+            'updated_at' => '1554706345',
+        ]);
+
+        $I->haveInDatabase('polling_votes', [
+            'id'         => 1,
+            'polling_id' => 1,
+            'answer_id'  => 1,
+            'user_id'    => 36,
+            'created_at' => '1554706345',
+            'updated_at' => '1554706345',
         ]);
 
         $I->amUser('user');
@@ -802,13 +848,21 @@ class PollingCest
             'updated_at'  => '1554706345',
         ]);
 
+        $I->haveInDatabase('polling_answers', [
+            'id'         => 1,
+            'polling_id' => 1,
+            'body'       => 'Option A',
+            'created_at' => '1554706345',
+            'updated_at' => '1554706345',
+        ]);
+
         $I->amStaff();
 
         $data = [
             'body' => 'Answer 1 Updated',
         ];
 
-        $I->sendPUT('/v1/polling/1/answers/10', $data);
+        $I->sendPUT('/v1/polling/1/answers/1', $data);
         $I->canSeeResponseCodeIs(200);
         $I->seeResponseIsJson();
 
@@ -839,9 +893,17 @@ class PollingCest
             'updated_at'  => '1554706345',
         ]);
 
+        $I->haveInDatabase('polling_answers', [
+            'id'         => 1,
+            'polling_id' => 1,
+            'body'       => 'Option A',
+            'created_at' => '1554706345',
+            'updated_at' => '1554706345',
+        ]);
+
         $I->amStaff();
 
-        $I->sendDELETE('/v1/polling/1/answers/10');
+        $I->sendDELETE('/v1/polling/1/answers/1');
         $I->canSeeResponseCodeIs(204);
 
         $I->dontSeeInDatabase('polling_answers', ['polling_id' => 1, 'body' => 'Answer 1 Updated']);
