@@ -1,10 +1,14 @@
 <?php
 
+use Carbon\Carbon;
+
 class SurveyCest
 {
     public function _before(ApiTester $I)
     {
-        //
+        Yii::$app->db->createCommand()->checkIntegrity(false)->execute();
+
+        Yii::$app->db->createCommand('TRUNCATE survey')->execute();
     }
 
     public function getListTest(ApiTester $I)
@@ -33,6 +37,346 @@ class SurveyCest
             'success' => true,
             'status'  => 200,
         ]);
+    }
+
+    public function getUserListPublishedShowTest(ApiTester $I)
+    {
+        $I->haveInDatabase('survey', [
+            'id'           => 1,
+            'title'        => 'Lorem ipsum.',
+            'status'       => 10,
+            'category_id'  => 20,
+            'start_date'   => (new Carbon())->toDateString(),
+            'end_date'     => (new Carbon())->addDays(7)->toDateString(),
+            'external_url' => 'http://google.com',
+            'created_at'   => '1554706345',
+            'updated_at'   => '1554706345',
+        ]);
+
+        $I->amUser('staffrw');
+
+        $I->sendGET('/v1/survey');
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $data = $I->grabDataFromResponseByJsonPath('$.data.items[0]');
+
+        $I->assertEquals(1, $data[0]['id']);
+    }
+
+    public function getAdminListPublishedShowTest(ApiTester $I)
+    {
+        $I->haveInDatabase('survey', [
+            'id'           => 1,
+            'title'        => 'Lorem ipsum.',
+            'status'       => 10,
+            'category_id'  => 20,
+            'start_date'   => (new Carbon())->toDateString(),
+            'end_date'     => (new Carbon())->addDays(7)->toDateString(),
+            'external_url' => 'http://google.com',
+            'created_at'   => '1554706345',
+            'updated_at'   => '1554706345',
+        ]);
+
+        $I->amStaff();
+
+        $I->sendGET('/v1/survey');
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $data = $I->grabDataFromResponseByJsonPath('$.data.items[0]');
+
+        $I->assertEquals(1, $data[0]['id']);
+    }
+
+
+    public function getUserListDeletedDontShowTest(ApiTester $I)
+    {
+        $I->haveInDatabase('survey', [
+            'id'           => 1,
+            'title'        => 'Lorem ipsum.',
+            'status'       => -1,
+            'category_id'  => 20,
+            'start_date'   => (new Carbon())->toDateString(),
+            'end_date'     => (new Carbon())->addDays(7)->toDateString(),
+            'external_url' => 'http://google.com',
+            'created_at'   => '1554706345',
+            'updated_at'   => '1554706345',
+        ]);
+
+        $I->amUser('staffrw');
+
+        $I->sendGET('/v1/survey');
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $I->seeHttpHeader('X-Pagination-Total-Count', 0);
+    }
+
+    public function getAdminListDeletedDontShowTest(ApiTester $I)
+    {
+        $I->haveInDatabase('survey', [
+            'id'           => 1,
+            'title'        => 'Lorem ipsum.',
+            'status'       => -1,
+            'category_id'  => 20,
+            'start_date'   => (new Carbon())->toDateString(),
+            'end_date'     => (new Carbon())->addDays(7)->toDateString(),
+            'external_url' => 'http://google.com',
+            'created_at'   => '1554706345',
+            'updated_at'   => '1554706345',
+        ]);
+
+        $I->amStaff();
+
+        $I->sendGET('/v1/survey');
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $I->seeHttpHeader('X-Pagination-Total-Count', 0);
+    }
+
+    public function getUserListDisabledDontShowTest(ApiTester $I)
+    {
+        $I->haveInDatabase('survey', [
+            'id'           => 1,
+            'title'        => 'Lorem ipsum.',
+            'status'       => 1,
+            'category_id'  => 20,
+            'start_date'   => (new Carbon())->toDateString(),
+            'end_date'     => (new Carbon())->addDays(7)->toDateString(),
+            'external_url' => 'http://google.com',
+            'created_at'   => '1554706345',
+            'updated_at'   => '1554706345',
+        ]);
+
+        $I->amUser('staffrw');
+
+        $I->sendGET('/v1/survey');
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $I->seeHttpHeader('X-Pagination-Total-Count', 0);
+    }
+
+    public function getAdminListDisabledShowTest(ApiTester $I)
+    {
+        $I->haveInDatabase('survey', [
+            'id'           => 1,
+            'title'        => 'Lorem ipsum.',
+            'status'       => 1,
+            'category_id'  => 20,
+            'start_date'   => (new Carbon())->toDateString(),
+            'end_date'     => (new Carbon())->addDays(7)->toDateString(),
+            'external_url' => 'http://google.com',
+            'created_at'   => '1554706345',
+            'updated_at'   => '1554706345',
+        ]);
+
+        $I->amStaff();
+
+        $I->sendGET('/v1/survey');
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $data = $I->grabDataFromResponseByJsonPath('$.data.items[0]');
+
+        $I->assertEquals(1, $data[0]['id']);
+    }
+
+    public function getUserListDraftDontShowTest(ApiTester $I)
+    {
+        $I->haveInDatabase('survey', [
+            'id'           => 1,
+            'title'        => 'Lorem ipsum.',
+            'status'       => 0,
+            'category_id'  => 20,
+            'start_date'   => (new Carbon())->toDateString(),
+            'end_date'     => (new Carbon())->addDays(7)->toDateString(),
+            'external_url' => 'http://google.com',
+            'created_at'   => '1554706345',
+            'updated_at'   => '1554706345',
+        ]);
+
+        $I->amUser('staffrw');
+
+        $I->sendGET('/v1/survey');
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $I->seeHttpHeader('X-Pagination-Total-Count', 0);
+    }
+
+    public function getAdminListDraftShowTest(ApiTester $I)
+    {
+        $I->haveInDatabase('survey', [
+            'id'           => 1,
+            'title'        => 'Lorem ipsum.',
+            'status'       => 0,
+            'category_id'  => 20,
+            'start_date'   => (new Carbon())->toDateString(),
+            'end_date'     => (new Carbon())->addDays(7)->toDateString(),
+            'external_url' => 'http://google.com',
+            'created_at'   => '1554706345',
+            'updated_at'   => '1554706345',
+        ]);
+
+        $I->amStaff();
+
+        $I->sendGET('/v1/survey');
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $data = $I->grabDataFromResponseByJsonPath('$.data.items[0]');
+
+        $I->assertEquals(1, $data[0]['id']);
+    }
+
+    public function getUserListActiveDateTest(ApiTester $I)
+    {
+        $I->haveInDatabase('survey', [
+            'id'           => 1,
+            'title'        => 'Lorem ipsum.',
+            'status'       => 10,
+            'category_id'  => 20,
+            'start_date'   => (new Carbon())->toDateString(),
+            'end_date'     => (new Carbon())->addDays(7)->toDateString(),
+            'external_url' => 'http://google.com',
+            'created_at'   => '1554706345',
+            'updated_at'   => '1554706345',
+        ]);
+
+        $I->amUser('staffrw');
+
+        $I->sendGET('/v1/survey');
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $data = $I->grabDataFromResponseByJsonPath('$.data.items[0]');
+
+        $I->assertEquals(1, $data[0]['id']);
+    }
+
+    public function getUserListActiveEndDateTest(ApiTester $I)
+    {
+        $I->haveInDatabase('survey', [
+            'id'           => 1,
+            'title'        => 'Lorem ipsum.',
+            'status'       => 10,
+            'category_id'  => 20,
+            'start_date'   => (new Carbon())->subDays(7)->toDateString(),
+            'end_date'     => (new Carbon())->toDateString(),
+            'external_url' => 'http://google.com',
+            'created_at'   => '1554706345',
+            'updated_at'   => '1554706345',
+        ]);
+
+        $I->amUser('staffrw');
+
+        $I->sendGET('/v1/survey');
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $data = $I->grabDataFromResponseByJsonPath('$.data.items[0]');
+
+        $I->assertEquals(1, $data[0]['id']);
+    }
+
+    public function getUserListCannotSeePastDateTest(ApiTester $I)
+    {
+        $I->haveInDatabase('survey', [
+            'id'           => 1,
+            'title'        => 'Lorem ipsum.',
+            'status'       => 10,
+            'category_id'  => 20,
+            'start_date'   => (new Carbon())->subDays(7)->toDateString(),
+            'end_date'     => (new Carbon())->subDays(1)->toDateString(),
+            'external_url' => 'http://google.com',
+            'created_at'   => '1554706345',
+            'updated_at'   => '1554706345',
+        ]);
+
+        $I->amUser('staffrw');
+
+        $I->sendGET('/v1/survey');
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $I->seeHttpHeader('X-Pagination-Total-Count', 0);
+    }
+
+    public function getUserListCannotSeeFutureDateTest(ApiTester $I)
+    {
+        $I->haveInDatabase('survey', [
+            'id'           => 1,
+            'title'        => 'Lorem ipsum.',
+            'status'       => 10,
+            'category_id'  => 20,
+            'start_date'   => (new Carbon())->addDays(7)->toDateString(),
+            'end_date'     => (new Carbon())->addDays(14)->toDateString(),
+            'external_url' => 'http://google.com',
+            'created_at'   => '1554706345',
+            'updated_at'   => '1554706345',
+        ]);
+
+        $I->amUser('staffrw');
+
+        $I->sendGET('/v1/survey');
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $I->seeHttpHeader('X-Pagination-Total-Count', 0);
+    }
+
+    public function getAdminListAllDateTest(ApiTester $I)
+    {
+        $I->haveInDatabase('survey', [
+            'id'           => 1,
+            'title'        => 'Lorem ipsum.',
+            'status'       => 10,
+            'category_id'  => 20,
+            'start_date'   => (new Carbon())->toDateString(),
+            'end_date'     => (new Carbon())->addDays(7)->toDateString(),
+            'external_url' => 'http://google.com',
+            'created_at'   => '1554706345',
+            'updated_at'   => '1554706345',
+        ]);
+
+        $I->haveInDatabase('survey', [
+            'id'           => 2,
+            'title'        => 'Lorem ipsum.',
+            'status'       => 10,
+            'category_id'  => 20,
+            'start_date'   => (new Carbon())->subDays(7),
+            'end_date'     => (new Carbon())->subDays(1)->toDateString(),
+            'external_url' => 'http://google.com',
+            'created_at'   => '1554706345',
+            'updated_at'   => '1554706345',
+        ]);
+
+        $I->haveInDatabase('survey', [
+            'id'           => 3,
+            'title'        => 'Lorem ipsum.',
+            'status'       => 10,
+            'category_id'  => 20,
+            'start_date'   => (new Carbon())->addDays(7),
+            'end_date'     => (new Carbon())->addDays(14)->toDateString(),
+            'external_url' => 'http://google.com',
+            'created_at'   => '1554706345',
+            'updated_at'   => '1554706345',
+        ]);
+
+        $I->amStaff();
+
+        $I->sendGET('/v1/survey');
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $data = $I->grabDataFromResponseByJsonPath('$.data.items');
+
+        $I->assertEquals(1, $data[0][0]['id']);
+        $I->assertEquals(2, $data[0][1]['id']);
+        $I->assertEquals(3, $data[0][2]['id']);
     }
 
     public function getShowTest(ApiTester $I)

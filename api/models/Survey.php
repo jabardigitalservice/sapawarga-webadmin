@@ -68,7 +68,8 @@ class Survey extends ActiveRecord
             [['title', 'status', 'external_url', 'category_id'], 'required'],
             [['title', 'status', 'external_url', 'category_id'], 'trim'],
 
-            ['title', 'string', 'max' => 255],
+            ['title', 'string', 'min' => 10],
+            ['title', 'string', 'max' => 100],
             ['title', InputCleanValidator::class],
 
             ['category_id', 'integer'],
@@ -82,6 +83,12 @@ class Survey extends ActiveRecord
                 'compare',
                 'compareAttribute'       => 'end_date',
                 'operator'               => '<',
+            ],
+            [
+                'end_date',
+                'compare',
+                'compareAttribute'       => 'start_date',
+                'operator'               => '>',
             ],
 
             ['status', 'in', 'range' => [-1, 0, 1, 10]],
