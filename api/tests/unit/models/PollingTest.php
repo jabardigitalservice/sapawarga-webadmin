@@ -544,6 +544,70 @@ class PollingTest extends \Codeception\Test\Unit
         $this->assertFalse($model->hasErrors('status'));
     }
 
+    public function testKabupatenValid()
+    {
+        $model             = new Polling();
+        $model->kabkota_id = 22;
+        $model->kec_id     = null;
+        $model->kel_id     = null;
+        $model->rw         = null;
+
+        $model->save(false);
+
+        $this->assertNotNull($model->kabkota_id);
+        $this->assertNull($model->kec_id);
+        $this->assertNull($model->kel_id);
+        $this->assertNull($model->rw);
+    }
+
+    public function testKecamatanValid()
+    {
+        $model             = new Polling();
+        $model->kabkota_id = 22;
+        $model->kec_id     = 431;
+        $model->kel_id     = null;
+        $model->rw         = null;
+
+        $model->save(false);
+
+        $this->assertNotNull($model->kabkota_id);
+        $this->assertNotNull($model->kec_id);
+        $this->assertNull($model->kel_id);
+        $this->assertNull($model->rw);
+    }
+
+    public function testKelurahanValid()
+    {
+        $model             = new Polling();
+        $model->kabkota_id = 22;
+        $model->kec_id     = 431;
+        $model->kel_id     = 6093;
+        $model->rw         = null;
+
+        $model->save(false);
+
+        $this->assertNotNull($model->kabkota_id);
+        $this->assertNotNull($model->kec_id);
+        $this->assertNotNull($model->kel_id);
+        $this->assertNull($model->rw);
+    }
+
+    public function testRwValid()
+    {
+        $model             = new Polling();
+        $model->kabkota_id = 22;
+        $model->kec_id     = 431;
+        $model->kel_id     = 6093;
+        $model->rw         = '001';
+
+        $model->save(false);
+
+        $this->assertNotNull($model->kabkota_id);
+        $this->assertNotNull($model->kec_id);
+        $this->assertNotNull($model->kel_id);
+        $this->assertNotNull($model->rw);
+    }
+
     public function testKecamatanShouldNull()
     {
         $model             = new Polling();
