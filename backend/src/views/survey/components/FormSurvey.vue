@@ -91,12 +91,11 @@ export default {
   data() {
     const validatorTitleWhitespace = (rule, value, callback) => {
       if (containsWhitespace(value) === true) {
-        callback(new Error('Judul Survey memiliki terlalu banyak karakter spasi.'))
+        callback(new Error('Judul Survey yang diisi tidak valid.'))
       }
 
       callback()
     }
-
     const validatorStartDate = (rule, value, callback) => {
       const startDate = moment(this.form.start_date)
       const endDate = moment(this.form.end_date)
@@ -133,6 +132,8 @@ export default {
       rules: {
         title: [
           { required: true, message: 'Judul Survey harus diisi.', trigger: 'blur' },
+          { min: 10, message: 'Judul Survey minimal 10 karakter', trigger: 'blur' },
+          { max: 100, message: 'Judul Survey maksimal 100 karakter', trigger: 'blur' },
           { validator: validatorTitleWhitespace, trigger: 'blur' }
         ],
         category_id: [
