@@ -321,13 +321,23 @@ export default {
     }
   },
   watch: {
-    'polling.kel_id'() {
+    'polling.kel_id'(oldVal, newVal) {
+      if (newVal !== null) {
+        this.polling.rw = null
+      }
       this.resetRw()
     },
-    'polling.kec_id'() {
+    'polling.kec_id'(oldVal, newVal) {
+      if (newVal !== null) {
+        this.polling.rw = null
+      }
       this.resetRw()
     },
-    'polling.kabkota_id'() {
+    'polling.kabkota_id'(oldVal, newVal) {
+      if (newVal !== null) {
+        this.polling.kel_id = null
+        this.polling.rw = null
+      }
       this.resetRw()
     }
   },
