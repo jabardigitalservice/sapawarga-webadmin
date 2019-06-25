@@ -53,7 +53,7 @@
                 v-model="polling.description"
                 type="textarea"
                 :rows="4"
-                placeholder="Tulis pesan, maksimal 280 karakter"
+                placeholder="Deskripsi"
               />
             </el-form-item>
             <el-form-item label="Pengantar" prop="excerpt">
@@ -61,7 +61,7 @@
                 v-model="polling.excerpt"
                 type="textarea"
                 :rows="4"
-                placeholder="Tulis pesan, maksimal 280 karakter"
+                placeholder="Pengantar"
               />
             </el-form-item>
             <el-form-item label="Dimulai dari" prop="">
@@ -229,8 +229,8 @@ export default {
             trigger: 'blur'
           },
           {
-            max: 60,
-            message: 'Nama polling maksimal 60 karakter',
+            max: 100,
+            message: 'Nama polling maksimal 100 karakter',
             trigger: 'blur'
           },
           {
@@ -250,8 +250,8 @@ export default {
             trigger: 'blur'
           },
           {
-            max: 60,
-            message: 'Pertanyaan maksimal 60 karakter',
+            max: 100,
+            message: 'Pertanyaan maksimal 100 karakter',
             trigger: 'blur'
           },
           {
@@ -269,11 +269,6 @@ export default {
             trigger: 'blur'
           },
           {
-            max: 280,
-            message: 'Deskripsi maksimal 280 karakter',
-            trigger: 'blur'
-          },
-          {
             validator: whitespaceDescription,
             trigger: 'blur'
           }
@@ -282,11 +277,6 @@ export default {
           {
             required: true,
             message: 'Pengantar harus diisi',
-            trigger: 'blur'
-          },
-          {
-            max: 280,
-            message: 'Pengantar maksimal 280 karakter',
             trigger: 'blur'
           },
           {
