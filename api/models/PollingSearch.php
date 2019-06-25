@@ -90,15 +90,18 @@ class PollingSearch extends Polling
         $kabKotaId = Arr::get($params, 'kabkota_id');
         $kecId     = Arr::get($params, 'kec_id');
         $kelId     = Arr::get($params, 'kel_id');
+        $rw        = Arr::get($params, 'rw');
 
         $query->andWhere('
-            (kabkota_id = :kabkota_id AND kec_id IS NULL AND kel_id IS NULL) OR 
-            (kabkota_id = :kabkota_id AND kec_id = :kec_id AND kel_id IS NULL) OR 
-            (kabkota_id = :kabkota_id AND kec_id = :kec_id AND kel_id = :kel_id)', [
+            (kabkota_id = :kabkota_id AND kec_id IS NULL AND kel_id IS NULL AND rw IS NULL) OR 
+            (kabkota_id = :kabkota_id AND kec_id = :kec_id AND kel_id IS NULL AND rw IS NULL) OR 
+            (kabkota_id = :kabkota_id AND kec_id = :kec_id AND kel_id = :kel_id AND rw IS NULL) OR
+            (kabkota_id = :kabkota_id AND kec_id = :kec_id AND kel_id = :kel_id AND rw = :rw)', [
 
             ':kabkota_id' => $kabKotaId,
             ':kec_id'     => $kecId,
             ':kel_id'     => $kelId,
+            ':rw'         => $rw,
         ]);
 
         return $query;

@@ -651,6 +651,66 @@ class PollingCest
         $I->seeHttpHeader('X-Pagination-Total-Count', 0);
     }
 
+    public function getListByUserAreaRw(ApiTester $I)
+    {
+        $I->haveInDatabase('polling', [
+            'id'          => 1,
+            'name'        => 'Lorem ipsum.',
+            'question'    => 'Lorem ipsum updated',
+            'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            'excerpt'     => 'Lorem ipsum dolor sit amet',
+            'kabkota_id'  => 22,
+            'kec_id'      => 431,
+            'kel_id'      => 6093,
+            'rw'          => '001',
+            'status'      => 10,
+            'category_id' => 20,
+            'start_date'  => (new Carbon())->toDateString(),
+            'end_date'    => (new Carbon())->addDays(7)->toDateString(),
+            'created_at'  => '1554706345',
+            'updated_at'  => '1554706345',
+        ]);
+
+        $I->amUser('staffrw');
+
+        $I->sendGET('/v1/polling');
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $data = $I->grabDataFromResponseByJsonPath('$.data.items');
+
+        $I->assertEquals(1, $data[0][0]['id']);
+    }
+
+    public function getListByUserCannotSeeOtherAreaRw(ApiTester $I)
+    {
+        $I->haveInDatabase('polling', [
+            'id'          => 1,
+            'name'        => 'Lorem ipsum.',
+            'question'    => 'Lorem ipsum updated',
+            'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            'excerpt'     => 'Lorem ipsum dolor sit amet',
+            'kabkota_id'  => 22,
+            'kec_id'      => 431,
+            'kel_id'      => 6093,
+            'rw'          => '002',
+            'status'      => 10,
+            'category_id' => 20,
+            'start_date'  => (new Carbon())->toDateString(),
+            'end_date'    => (new Carbon())->addDays(7)->toDateString(),
+            'created_at'  => '1554706345',
+            'updated_at'  => '1554706345',
+        ]);
+
+        $I->amUser('user');
+
+        $I->sendGET('/v1/polling');
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $I->seeHttpHeader('X-Pagination-Total-Count', 0);
+    }
+
     public function getUserShowTest(ApiTester $I)
     {
         $I->haveInDatabase('polling', [
