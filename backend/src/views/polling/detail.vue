@@ -69,7 +69,7 @@ export default {
         let expired = false
         let beforeStart = false
 
-        const dateStart = moment(start_date).endOf('day')
+        const dateStart = moment(start_date).startOf('day')
         const dateSecond = moment(end_date).endOf('day')
         const currentDate = moment()
 
