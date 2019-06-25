@@ -132,7 +132,7 @@
 import InputCategory from '@/components/InputCategory'
 import InputSelectArea from '@/components/InputSelectArea'
 import { create, fetchRecord, update } from '@/api/polling'
-import { containsWhitespace, validUrl } from '@/utils/validate'
+import { containsWhitespace } from '@/utils/validate'
 
 const moment = require('moment')
 moment().format()
