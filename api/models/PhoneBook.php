@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use Jdsteam\Sapawarga\Behaviors\AreaBehavior;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 
@@ -158,6 +159,10 @@ class PhoneBook extends \yii\db\ActiveRecord
                 'createdAtAttribute' => 'created_at',
                 'updatedAtAttribute' => 'updated_at',
                 'value'              => time(),
+            ],
+            [
+                'class'  => AreaBehavior::class,
+                'withRw' => false,
             ],
         ];
     }
