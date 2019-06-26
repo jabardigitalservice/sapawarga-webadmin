@@ -45,7 +45,7 @@
             <el-input
               v-model="news.content"
               type="textarea"
-              :rows="12"
+              :rows="10"
               placeholder="Konten Berita"
             />
           </el-form-item>
@@ -75,7 +75,26 @@ export default {
         external_url: null,
         content: null
       },
-      rules: {}
+      options: [
+        {
+          value: 'Detik'
+        },
+        {
+          value: 'Kompas'
+        },
+        {
+          value: 'Tempo'
+        },
+        {
+          value: 'Pikiran'
+        },
+        {
+          value: 'Tribun News'
+        },
+        {
+          value: 'Republika'
+        }
+      ],
       rules: {
         title: [
           {
