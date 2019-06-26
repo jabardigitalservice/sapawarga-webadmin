@@ -51,7 +51,7 @@
           </el-form-item>
 
           <el-form-item>
-            <el-button type="primary" :loading="loading" @click="submitForm">{{ $t('crud.save-create') }}</el-button>
+            <el-button type="primary" :loading="loading" @click="submitForm">{{ $t('crud.save-news') }}</el-button>
           </el-form-item>
 
         </el-form>
