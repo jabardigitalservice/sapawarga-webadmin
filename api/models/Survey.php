@@ -156,7 +156,7 @@ class Survey extends ActiveRecord
                     'status'=> Notification::STATUS_PUBLISHED,
                     'meta' => [
                         'target'=> 'survey',
-                        'id'=>$this->id
+                        'url'=>$this->external_url
                     ]
                 ]);
                 $notifModel->save(false);
