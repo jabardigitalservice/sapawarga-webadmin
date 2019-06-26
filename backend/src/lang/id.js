@@ -41,7 +41,7 @@ export default {
     'news-list': 'Daftar Berita',
     'news-create': 'Tambah Berita',
     'news-edit': 'Edit Berita',
-    'news-detail': 'Detail Berita',
+    'news-detail': 'Detail Berita'
 
   },
   crud: {
