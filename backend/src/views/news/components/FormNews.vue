@@ -10,18 +10,25 @@
           style="margin-bottom: 15px"
         /> -->
 
-        <el-form ref="form" :model="news" :rules="rules" :status-icon="true" label-width="160px">
+        <el-form ref="news" :model="news" :rules="rules" :status-icon="true" label-width="160px">
           <el-form-item label="Judul Berita" prop="title">
             <el-input v-model="news.title" type="text" placeholder="Judul Berita" />
           </el-form-item>
 
-          <el-form-item label="Kategori" prop="category_id">
-            <InputCategory v-model="news.category_id" category-type="survey" prop="category" />
+          <el-form-item label="Sumber" prop="source">
+            <el-select v-model="news.source" placeholder="Pilih Sumber">
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.value"
+                :value="item.value"
+              />
+            </el-select>
           </el-form-item>
 
-          <el-form-item label="Tanggal Berita" prop="start_date">
+          <el-form-item label="Tanggal Berita" prop="date">
             <el-date-picker
-              v-model="news.start_date"
+              v-model="news.date"
               type="date"
               :editable="false"
               :clearable="false"
