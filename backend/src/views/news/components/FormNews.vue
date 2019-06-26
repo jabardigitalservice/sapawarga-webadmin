@@ -61,11 +61,8 @@
   </div>
 </template>
 <script>
-import InputCategory from '@/components/InputCategory'
+import { containsWhitespace, validUrl } from '@/utils/validate'
 export default {
-  components: {
-    InputCategory
-  },
   data() {
     const validatorTitleWhitespace = (rule, value, callback) => {
       if (containsWhitespace(value) === true) {
