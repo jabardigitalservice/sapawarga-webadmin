@@ -20,6 +20,7 @@ module.exports = {
   coverageDirectory: '<rootDir>/tests/unit/coverage',
   'collectCoverage': true,
   'coverageReporters': [
+    'html',
     'lcov',
     'text-summary'
   ],
