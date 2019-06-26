@@ -73,7 +73,7 @@ const defaultForm = {
   title: null,
   category_id: null,
   start_date: moment().startOf('day'),
-  end_date: moment(Date.now() + 24 * 60 * 60 * 1000).format('YYYY-MM-DD'),
+  end_date: moment().add(1, 'days').format('YYYY-MM-DD'),
   external_url: null,
   status: null
 }
