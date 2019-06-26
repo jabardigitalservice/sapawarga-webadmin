@@ -172,6 +172,28 @@ export default {
             trigger: 'blur'
           }
         ]
+      }
+    }
+  },
+  methods: {
+    async submitForm() {
+      const valid = await this.$refs.news.validate()
+
+      if (!valid) {
+        return
+      }
+
+      try {
+        this.loading = true
+
+        const data = {}
+
+        Object.assign(data, this.news)
+      } catch (e) {
+        console.log(e)
+      } finally {
+        this.loading = false
+      }
     }
   }
 }
