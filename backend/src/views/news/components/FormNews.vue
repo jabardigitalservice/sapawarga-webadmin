@@ -67,6 +67,28 @@ export default {
     InputCategory
   },
   data() {
+    const validatorTitleWhitespace = (rule, value, callback) => {
+      if (containsWhitespace(value) === true) {
+        callback(new Error('Judul Berita yang diisi tidak valid'))
+      }
+      callback()
+    }
+
+    const validatorTitleWhitespaceContent = (rule, value, callback) => {
+      if (containsWhitespace(value) === true) {
+        callback(new Error('Judul Berita yang diisi tidak valid'))
+      }
+      callback()
+    }
+
+    const validatorUrl = (rule, value, callback) => {
+      if (validUrl(value) === false) {
+        callback(new Error('URL tidak valid.'))
+      }
+
+      callback()
+    }
+
     return {
       news: {
         title: null,
