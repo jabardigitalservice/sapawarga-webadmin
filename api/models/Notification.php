@@ -44,6 +44,9 @@ class Notification extends \yii\db\ActiveRecord
 
     const URL_STORE_ANDROID = 'https://play.google.com/store/apps/details?id=com.sapawarga.jds';
 
+    // Default topic untuk semua user
+    const TOPIC_DEFAULT = 'kabkota';
+
     /** @var  array push notification metadata */
     public $data;
 
@@ -240,7 +243,7 @@ class Notification extends \yii\db\ActiveRecord
             if ($isSendNotification) {
                 $this->data = $this->generateData();
                 // By default,  send notification to all users
-                $topic = 'all';
+                $topic = self::TOPIC_DEFAULT;
                 if ($this->kel_id && $this->rw) {
                     $topic = "{$this->kel_id}_{$this->rw}";
                 } elseif ($this->kel_id) {
