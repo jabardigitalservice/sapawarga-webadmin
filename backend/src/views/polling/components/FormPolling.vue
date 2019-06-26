@@ -193,7 +193,7 @@ export default {
       checkStatus: null,
       width: '300%',
       start_date: moment().format('YYYY-MM-DD'),
-      end_date: moment(Date.now() + 24 * 60 * 60 * 1000).format('YYYY-MM-DD'),
+      end_date: moment().add(1, 'days').format('YYYY-MM-DD'),
       question_type: null,
       polling: {
         kabkota_id: null,
