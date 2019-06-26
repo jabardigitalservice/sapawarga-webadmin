@@ -60,6 +60,7 @@
     </el-row>
   </div>
 </template>
+
 <script>
 import { containsWhitespace, validUrl } from '@/utils/validate'
 export default {
@@ -87,10 +88,11 @@ export default {
     }
 
     return {
+      loading: false,
       news: {
         title: null,
-        category_id: null,
-        start_date: null,
+        source: null,
+        date: null,
         external_url: null,
         content: null
       },
