@@ -69,4 +69,74 @@ class PhoneBookTest extends \Codeception\Test\Unit
         $this->assertFalse($model->hasErrors('cover_image_path'));
         $this->assertFalse($model->hasErrors('meta'));
     }
+
+    public function testKabupatenValid()
+    {
+        $model             = new PhoneBook();
+        $model->kabkota_id = 22;
+        $model->kec_id     = null;
+        $model->kel_id     = null;
+
+        $model->save(false);
+
+        $this->assertNotNull($model->kabkota_id);
+        $this->assertNull($model->kec_id);
+        $this->assertNull($model->kel_id);
+    }
+
+    public function testKecamatanValid()
+    {
+        $model             = new PhoneBook();
+        $model->kabkota_id = 22;
+        $model->kec_id     = 431;
+        $model->kel_id     = null;
+
+        $model->save(false);
+
+        $this->assertNotNull($model->kabkota_id);
+        $this->assertNotNull($model->kec_id);
+        $this->assertNull($model->kel_id);
+    }
+
+    public function testKelurahanValid()
+    {
+        $model             = new PhoneBook();
+        $model->kabkota_id = 22;
+        $model->kec_id     = 431;
+        $model->kel_id     = 6093;
+
+        $model->save(false);
+
+        $this->assertNotNull($model->kabkota_id);
+        $this->assertNotNull($model->kec_id);
+        $this->assertNotNull($model->kel_id);
+    }
+
+    public function testKecamatanShouldNull()
+    {
+        $model             = new PhoneBook();
+        $model->kabkota_id = null;
+        $model->kec_id     = 431;
+        $model->kel_id     = 6093;
+
+        $model->save(false);
+
+        $this->assertNull($model->kabkota_id);
+        $this->assertNull($model->kec_id);
+        $this->assertNull($model->kel_id);
+    }
+
+    public function testKelurahanShouldNull()
+    {
+        $model             = new PhoneBook();
+        $model->kabkota_id = 22;
+        $model->kec_id     = null;
+        $model->kel_id     = 6093;
+
+        $model->save(false);
+
+        $this->assertNotNull($model->kabkota_id);
+        $this->assertNull($model->kec_id);
+        $this->assertNull($model->kel_id);
+    }
 }

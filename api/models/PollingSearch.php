@@ -2,7 +2,9 @@
 
 namespace app\models;
 
+use Carbon\Carbon;
 use Illuminate\Support\Arr;
+use phpDocumentor\Reflection\Types\Array_;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
@@ -30,12 +32,26 @@ class PollingSearch extends Polling
         $query->andFilterWhere(['<>', 'status', Polling::STATUS_DELETED]);
 
         if ($this->scenario === self::SCENARIO_LIST_USER) {
-            $filterStatusList = [
-                Polling::STATUS_PUBLISHED
-            ];
-
-            $query->andFilterWhere(['in', 'status', $filterStatusList]);
+            return $this->getQueryListUser($query, $params);
         }
+
+        return $this->getQueryAll($query, $params);
+    }
+
+    protected function getQueryListUser($query, $params)
+    {
+        $filterStatusList = [
+            Survey::STATUS_PUBLISHED,
+        ];
+
+        $query->andFilterWhere(['in', 'status', $filterStatusList]);
+
+        $today = new Carbon();
+
+        $query->andFilterWhere(['<=', 'start_date', $today->toDateString()]);
+        $query->andFilterWhere(['>=', 'end_date', $today->toDateString()]);
+
+        $this->filterByUserArea($query, $params);
 
         return $this->getQueryAll($query, $params);
     }
@@ -48,8 +64,8 @@ class PollingSearch extends Polling
         $sortOrder = $this->getSortOrder($sortOrder);
 
         return new ActiveDataProvider([
-            'query' => $query,
-            'sort'=> ['defaultOrder' => [$sortBy => $sortOrder]],
+            'query'      => $query,
+            'sort'       => ['defaultOrder' => [$sortBy => $sortOrder]],
             'pagination' => [
                 'pageSize' => $pageLimit,
             ],
@@ -67,5 +83,27 @@ class PollingSearch extends Polling
                 return SORT_ASC;
                 break;
         }
+    }
+
+    protected function filterByUserArea(&$query, $params)
+    {
+        $kabKotaId = Arr::get($params, 'kabkota_id');
+        $kecId     = Arr::get($params, 'kec_id');
+        $kelId     = Arr::get($params, 'kel_id');
+        $rw        = Arr::get($params, 'rw');
+
+        $query->andWhere('
+            (kabkota_id = :kabkota_id AND kec_id IS NULL AND kel_id IS NULL AND rw IS NULL) OR 
+            (kabkota_id = :kabkota_id AND kec_id = :kec_id AND kel_id IS NULL AND rw IS NULL) OR 
+            (kabkota_id = :kabkota_id AND kec_id = :kec_id AND kel_id = :kel_id AND rw IS NULL) OR
+            (kabkota_id = :kabkota_id AND kec_id = :kec_id AND kel_id = :kel_id AND rw = :rw)', [
+
+            ':kabkota_id' => $kabKotaId,
+            ':kec_id'     => $kecId,
+            ':kel_id'     => $kelId,
+            ':rw'         => $rw,
+        ]);
+
+        return $query;
     }
 }

@@ -2,6 +2,7 @@ actor: ApiTester
 modules:
     enabled:
         - Asserts
+        - Yii2
         - REST:
             url: http://localhost
             depends: PhpBrowser

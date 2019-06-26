@@ -251,7 +251,7 @@ class PollingController extends ActiveController
         $userId    = Yii::$app->user->getId();
 
         $exist = PollingVote::find()
-            ->where(['polling_id' => $pollingId, 'answer_id' => $answerId, 'user_id' => $userId])
+            ->where(['polling_id' => $pollingId, 'user_id' => $userId])
             ->exists();
 
         $response = Yii::$app->getResponse();
@@ -365,6 +365,8 @@ class PollingController extends ActiveController
 
     public function prepareDataProvider()
     {
+        $params = Yii::$app->request->getQueryParams();
+
         $userId = Yii::$app->user->getId();
         $user   = User::findIdentity($userId);
 
@@ -372,9 +374,12 @@ class PollingController extends ActiveController
 
         if ($user->role !== User::ROLE_ADMIN) {
             $search->scenario = PollingSearch::SCENARIO_LIST_USER;
-        }
 
-        $params = Yii::$app->request->getQueryParams();
+            $params['kabkota_id'] = $user->kabkota_id;
+            $params['kec_id']     = $user->kec_id;
+            $params['kel_id']     = $user->kel_id;
+            $params['rw']         = $user->rw;
+        }
 
         return $search->search($params);
     }

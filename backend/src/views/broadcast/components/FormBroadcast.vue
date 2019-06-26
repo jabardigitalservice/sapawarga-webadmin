@@ -41,7 +41,7 @@
             :status-icon="true"
           >
             <el-form-item label="Judul Pesan" prop="title">
-              <el-input v-model="broadcast.title" type="text" placeholder="Judul minimal 10 karakter dan maksimal 60 karakter" />
+              <el-input v-model="broadcast.title" type="text" placeholder="Judul Pesan" />
             </el-form-item>
             <el-form-item label="Kategori" prop="category_id">
               <InputCategory v-model="broadcast.category_id" category-type="broadcast" prop="category" />
@@ -51,7 +51,7 @@
                 v-model="broadcast.description"
                 type="textarea"
                 :rows="8"
-                placeholder="Tulis pesan, maksimal 280 karakter"
+                placeholder="Tulis pesan broadcast"
               />
             </el-form-item>
             <el-form-item>
@@ -68,6 +68,7 @@
 import InputCategory from '@/components/InputCategory'
 import InputSelectArea from '@/components/InputSelectArea'
 import { create, fetchRecord, update } from '@/api/broadcast'
+import { containsWhitespace } from '@/utils/validate'
 export default {
   components: {
     InputCategory,
@@ -81,14 +82,14 @@ export default {
   },
   data() {
     const whitespaceTitle = (rule, value, callback) => {
-      if (value.includes('  ') || value.startsWith(' ') || value.endsWith(' ')) {
+      if (containsWhitespace(value) === true) {
         callback(new Error('Judul broadcast yang diisi tidak valid'))
       }
       callback()
     }
 
     const whitespaceDescription = (rule, value, callback) => {
-      if (value.includes('  ') || value.startsWith(' ') || value.endsWith(' ')) {
+      if (containsWhitespace(value) === true) {
         callback(new Error('Pesan yang diisi tidak valid'))
       }
       callback()
@@ -123,8 +124,8 @@ export default {
             trigger: 'blur'
           },
           {
-            max: 60,
-            message: 'Judul pesan maksimal 60 karakter',
+            max: 100,
+            message: 'Judul pesan maksimal 100 karakter',
             trigger: 'blur'
           },
           {
@@ -140,11 +141,6 @@ export default {
           {
             required: true,
             message: 'Pesan harus diisi',
-            trigger: 'blur'
-          },
-          {
-            max: 280,
-            message: 'Pesan maksimal 280 karakter',
             trigger: 'blur'
           },
           {
@@ -180,13 +176,23 @@ export default {
     }
   },
   watch: {
-    'broadcast.kel_id'() {
+    'broadcast.kel_id'(oldVal, newVal) {
+      if (newVal !== null) {
+        this.broadcast.rw = null
+      }
       this.resetRw()
     },
-    'broadcast.kec_id'() {
+    'broadcast.kec_id'(oldVal, newVal) {
+      if (newVal !== null) {
+        this.broadcast.rw = null
+      }
       this.resetRw()
     },
-    'broadcast.kabkota_id'() {
+    'broadcast.kabkota_id'(oldVal, newVal) {
+      if (newVal !== null) {
+        this.broadcast.kel_id = null
+        this.broadcast.rw = null
+      }
       this.resetRw()
     }
   },

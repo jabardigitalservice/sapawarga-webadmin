@@ -45,11 +45,11 @@
             label-position="left"
             :status-icon="true"
           >
-            <el-form-item label="Judul Pesan" prop="title">
+            <el-form-item label="Judul Notifikasi" prop="title">
               <el-input
                 v-model="notification.title"
                 type="text"
-                placeholder="Judul minimal 10 karakter dan maksimal 60 karakter"
+                placeholder="Judul Notifikasi"
               />
             </el-form-item>
             <el-form-item label="Kategori" prop="category_id">
@@ -64,7 +64,7 @@
                 v-model="notification.description"
                 type="textarea"
                 :rows="8"
-                placeholder="Tulis pesan, maksimal 280 karakter"
+                placeholder="Tulis pesan notifikasi"
               />
             </el-form-item>
             <el-form-item>
@@ -91,6 +91,7 @@
 import InputCategory from '@/components/InputCategory'
 import InputSelectArea from '@/components/InputSelectArea'
 import { create, fetchRecord, update } from '@/api/notification'
+import { containsWhitespace } from '@/utils/validate'
 export default {
   components: {
     InputCategory,
@@ -104,14 +105,14 @@ export default {
   },
   data() {
     const whitespaceName = (rule, value, callback) => {
-      if (value.includes('  ') || value.startsWith(' ') || value.endsWith(' ')) {
+      if (containsWhitespace(value) === true) {
         callback(new Error('Judul notifikasi yang diisi tidak valid'))
       }
       callback()
     }
 
     const whitespaceDesc = (rule, value, callback) => {
-      if (value.includes('  ') || value.startsWith(' ') || value.endsWith(' ')) {
+      if (containsWhitespace(value) === true) {
         callback(new Error('Deskripsi yang diisi tidak valid'))
       }
       callback()
@@ -137,17 +138,17 @@ export default {
         title: [
           {
             required: true,
-            message: 'Judul pesan harus diisi',
+            message: 'Judul notifikasi harus diisi',
             trigger: 'blur'
           },
           {
             min: 10,
-            message: 'Judul pesan minimal 10 karakter',
+            message: 'Judul notifikasi minimal 10 karakter',
             trigger: 'blur'
           },
           {
-            max: 60,
-            message: 'Judul pesan maksimal 60 karakter',
+            max: 100,
+            message: 'Judul notifikasi maksimal 100 karakter',
             trigger: 'blur'
           },
           {
@@ -166,11 +167,6 @@ export default {
           {
             required: true,
             message: 'Pesan harus diisi',
-            trigger: 'blur'
-          },
-          {
-            max: 280,
-            message: 'Pesan maksimal 280 karakter',
             trigger: 'blur'
           },
           {
@@ -206,13 +202,23 @@ export default {
     }
   },
   watch: {
-    'notification.kel_id'() {
+    'notification.kabkota_id'(oldVal, newVal) {
+      if (newVal !== null) {
+        this.notification.kel_id = null
+        this.notification.rw = null
+      }
       this.resetRw()
     },
-    'notification.kec_id'() {
+    'notification.kec_id'(oldVal, newVal) {
+      if (newVal !== null) {
+        this.notification.rw = null
+      }
       this.resetRw()
     },
-    'notification.kabkota_id'() {
+    'notification.kel_id'(oldVal, newVal) {
+      if (newVal !== null) {
+        this.notification.rw = null
+      }
       this.resetRw()
     }
   },

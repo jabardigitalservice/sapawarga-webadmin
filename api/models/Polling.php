@@ -4,6 +4,7 @@ namespace app\models;
 
 use app\components\ModelHelper;
 use app\validator\InputCleanValidator;
+use Jdsteam\Sapawarga\Behaviors\AreaBehavior;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
@@ -84,6 +85,8 @@ class Polling extends ActiveRecord
                 'required',
             ],
             [['name', 'description', 'excerpt', 'question', 'rw', 'meta'], 'trim'],
+            [['name', 'question'], 'string', 'min' => 10],
+            [['name', 'question'], 'string', 'max' => 100],
             [['name', 'excerpt', 'question'], 'string', 'max' => 255],
             [['name', 'description', 'excerpt', 'question'], InputCleanValidator::class],
 
@@ -231,6 +234,7 @@ class Polling extends ActiveRecord
                 'updatedAtAttribute' => 'updated_at',
                 'value'              => time(),
             ],
+            AreaBehavior::class,
         ];
     }
 

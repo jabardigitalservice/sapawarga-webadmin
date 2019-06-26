@@ -92,4 +92,116 @@ class BroadcastTest extends \Codeception\Test\Unit
         $model->validate();
         $this->assertFalse($model->hasErrors('rw'));
     }
+
+    public function testKabupatenValid()
+    {
+        $model             = new Broadcast();
+        $model->kabkota_id = 22;
+        $model->kec_id     = null;
+        $model->kel_id     = null;
+        $model->rw         = null;
+
+        $model->save(false);
+
+        $this->assertNotNull($model->kabkota_id);
+        $this->assertNull($model->kec_id);
+        $this->assertNull($model->kel_id);
+        $this->assertNull($model->rw);
+    }
+
+    public function testKecamatanValid()
+    {
+        $model             = new Broadcast();
+        $model->kabkota_id = 22;
+        $model->kec_id     = 431;
+        $model->kel_id     = null;
+        $model->rw         = null;
+
+        $model->save(false);
+
+        $this->assertNotNull($model->kabkota_id);
+        $this->assertNotNull($model->kec_id);
+        $this->assertNull($model->kel_id);
+        $this->assertNull($model->rw);
+    }
+
+    public function testKelurahanValid()
+    {
+        $model             = new Broadcast();
+        $model->kabkota_id = 22;
+        $model->kec_id     = 431;
+        $model->kel_id     = 6093;
+        $model->rw         = null;
+
+        $model->save(false);
+
+        $this->assertNotNull($model->kabkota_id);
+        $this->assertNotNull($model->kec_id);
+        $this->assertNotNull($model->kel_id);
+        $this->assertNull($model->rw);
+    }
+
+    public function testRwValid()
+    {
+        $model             = new Broadcast();
+        $model->kabkota_id = 22;
+        $model->kec_id     = 431;
+        $model->kel_id     = 6093;
+        $model->rw         = '001';
+
+        $model->save(false);
+
+        $this->assertNotNull($model->kabkota_id);
+        $this->assertNotNull($model->kec_id);
+        $this->assertNotNull($model->kel_id);
+        $this->assertNotNull($model->rw);
+    }
+
+    public function testKecamatanShouldNull()
+    {
+        $model             = new Broadcast();
+        $model->kabkota_id = null;
+        $model->kec_id     = 431;
+        $model->kel_id     = 6093;
+        $model->rw         = '001';
+
+        $model->save(false);
+
+        $this->assertNull($model->kabkota_id);
+        $this->assertNull($model->kec_id);
+        $this->assertNull($model->kel_id);
+        $this->assertNull($model->rw);
+    }
+
+    public function testKelurahanShouldNull()
+    {
+        $model             = new Broadcast();
+        $model->kabkota_id = 22;
+        $model->kec_id     = null;
+        $model->kel_id     = 6093;
+        $model->rw         = '001';
+
+        $model->save(false);
+
+        $this->assertNotNull($model->kabkota_id);
+        $this->assertNull($model->kec_id);
+        $this->assertNull($model->kel_id);
+        $this->assertNull($model->rw);
+    }
+
+    public function testRwShouldNull()
+    {
+        $model             = new Broadcast();
+        $model->kabkota_id = 22;
+        $model->kec_id     = 431;
+        $model->kel_id     = null;
+        $model->rw         = '001';
+
+        $model->save(false);
+
+        $this->assertNotNull($model->kabkota_id);
+        $this->assertNotNull($model->kec_id);
+        $this->assertNull($model->kel_id);
+        $this->assertNull($model->rw);
+    }
 }

@@ -42,23 +42,50 @@ class SurveyTest extends Unit
         $this->assertTrue($model->hasErrors('title'));
     }
 
-    public function testTitleMinCharacters()
+    public function testTitleMinCharactersShouldFail()
     {
         $model = new Survey();
 
-        $model->title = 'Coba';
+        // allow min 10 chars
+        $model->title = '123';
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('title'));
+    }
+
+    public function testTitleMinCharactersSuccess()
+    {
+        $model = new Survey();
+
+        // allow min 10 chars
+        $model->title = '1234567890';
 
         $model->validate();
 
         $this->assertFalse($model->hasErrors('title'));
     }
 
-    public function testTitleMaxCharacters()
+    public function testTitleMaxCharactersShouldFail()
     {
         $model = new Survey();
 
-        // allow 255 chars
-        $model->title = file_get_contents(__DIR__ . '/../../data/255chars.txt');
+        // max 100 chars
+        // 101 chars should fail
+        $model->title = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean ma';
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('title'));
+    }
+
+    public function testTitleMaxCharactersSuccess()
+    {
+        $model = new Survey();
+
+        // max 100 chars
+        // 100 chars should success
+        $model->title = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean m';
 
         $model->validate();
 
@@ -270,5 +297,18 @@ class SurveyTest extends Unit
         $model->validate();
 
         $this->assertTrue($model->hasErrors('start_date'));
+    }
+
+    public function testErrorEndDateSameStartDate()
+    {
+        $model = new Survey();
+
+        $model->start_date = '2019-09-01';
+        $model->end_date   = '2019-09-01';
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('start_date'));
+        $this->assertTrue($model->hasErrors('end_date'));
     }
 }
