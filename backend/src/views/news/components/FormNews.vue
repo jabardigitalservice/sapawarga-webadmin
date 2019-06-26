@@ -41,7 +41,7 @@
             <el-input v-model="news.external_url" type="text" placeholder="http://form.google.com" />
           </el-form-item>
 
-          <el-form-item label="Konten Berita" prop="">
+          <el-form-item label="Konten Berita" prop="content">
             <el-input
               v-model="news.content"
               type="textarea"
@@ -76,6 +76,64 @@ export default {
         content: null
       },
       rules: {}
+      rules: {
+        title: [
+          {
+            required: true,
+            message: 'Judul Berita harus diisi',
+            trigger: 'blur'
+          },
+          {
+            min: 10,
+            message: 'Judul Berita minimal 10 karakter',
+            trigger: 'blur'
+          },
+          {
+            max: 100,
+            message: 'Judul Berita maksimal 100 karakter',
+            trigger: 'blur'
+          },
+          {
+            validator: validatorTitleWhitespace,
+            trigger: 'blur'
+          }
+        ],
+        source: [
+          {
+            required: true,
+            message: 'Sumber Berita harus diisi',
+            trigger: 'change'
+          }
+        ],
+        date: [
+          {
+            required: true,
+            message: 'Tanggal harus diisi',
+            trigger: 'change'
+          }
+        ],
+        external_url: [
+          {
+            required: true,
+            message: 'URL Survey harus diisi',
+            trigger: 'blur'
+          },
+          {
+            validator: validatorUrl,
+            trigger: 'blur'
+          }
+        ],
+        content: [
+          {
+            required: true,
+            message: 'Konten Berita harus diisi',
+            trigger: 'blur'
+          },
+          {
+            validator: validatorTitleWhitespaceContent,
+            trigger: 'blur'
+          }
+        ]
     }
   }
 }
