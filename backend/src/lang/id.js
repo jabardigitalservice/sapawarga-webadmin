@@ -95,7 +95,7 @@ export default {
     'polling-compare-date': 'Tanggal berakhir polling tidak boleh lebih kecil dari tanggal mulai polling.',
     'polling-start-date': 'Tanggal mulai polling tidak boleh lebih kecil dari tanggal hari ini.',
     'survey-start-date': 'Tanggal mulai survey tidak boleh lebih kecil dari tanggal hari ini.',
-    'survey-compare-date': 'Tanggal berakhir survey tidak boleh lebih kecil dari tanggal mulai survey.',
+    'survey-compare-date': 'Tanggal berakhir survey tidak boleh lebih kecil dari tanggal mulai survey.'
 
   },
   navbar: {
