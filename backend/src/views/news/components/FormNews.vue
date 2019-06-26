@@ -64,6 +64,12 @@
 <script>
 import { containsWhitespace, validUrl } from '@/utils/validate'
 export default {
+  props: {
+    isEdit: {
+      type: Boolean,
+      default: false
+    }
+  },
   data() {
     const validatorTitleWhitespace = (rule, value, callback) => {
       if (containsWhitespace(value) === true) {
@@ -193,7 +199,6 @@ export default {
         Object.assign(data, this.news)
 
         // call api
-
       } catch (e) {
         console.log(e)
       } finally {
