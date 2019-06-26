@@ -8,7 +8,7 @@ const surveyRouter = {
   meta: {
     title: 'survey-manage',
     roles: ['admin'],
-    icon: 'peoples'
+    icon: 'clipboard'
   },
   children: [
     {
