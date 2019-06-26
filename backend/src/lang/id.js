@@ -36,7 +36,12 @@ export default {
     'survey-list': 'Daftar Survey',
     'survey-create': 'Tambah Survey',
     'survey-detail': 'Detail Survey',
-    'survey-edit': 'Edit Survey'
+    'survey-edit': 'Edit Survey',
+    'news-manage': 'Berita',
+    'news-list': 'Daftar Berita',
+    'news-create': 'Tambah Berita',
+    'news-edit': 'Edit Berita',
+
   },
   crud: {
     'list-empty': 'Belum ada data.',
