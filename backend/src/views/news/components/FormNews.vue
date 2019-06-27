@@ -63,6 +63,7 @@
 
 <script>
 import { containsWhitespace, validUrl } from '@/utils/validate'
+import { fetchRecord, create, update } from '@/api/survey'
 export default {
   props: {
     isEdit: {
@@ -184,6 +185,13 @@ export default {
     }
   },
   methods: {
+    fetchData(id) {
+      fetchRecord(id).then(response => {
+        this.news = response.data
+      }).catch(err => {
+        console.log(err)
+      })
+    },
     async submitForm() {
       const valid = await this.$refs.news.validate()
 
@@ -198,7 +206,22 @@ export default {
 
         Object.assign(data, this.news)
 
-        // call api
+        if (this.isEdit) {
+          const id = this.$route.params && this.$route.params.id
+
+          await update(id, data)
+
+          this.$message.success(this.$t('crud.create-success'))
+
+          this.$route.push('/news/index')
+
+        } else {
+          await create(data)
+
+          this.$message.success(this.$t('crud.create-success'))
+
+          this.$router.push('/survey/index')
+        }
       } catch (e) {
         console.log(e)
       } finally {
