@@ -133,42 +133,42 @@ class NewsTest extends Unit
 
         $model->validate();
 
-        $this->assertTrue($model->hasErrors('external_url'));
+        $this->assertTrue($model->hasErrors('source_url'));
 
-        $model->external_url = '';
-
-        $model->validate();
-
-        $this->assertTrue($model->hasErrors('external_url'));
-
-        $model->external_url = 'http://google.com';
+        $model->source_url = '';
 
         $model->validate();
 
-        $this->assertFalse($model->hasErrors('external_url'));
+        $this->assertTrue($model->hasErrors('source_url'));
+
+        $model->source_url = 'http://google.com';
+
+        $model->validate();
+
+        $this->assertFalse($model->hasErrors('source_url'));
     }
 
     public function testUrlScheme()
     {
         $model = new News();
 
-        $model->external_url = 'test';
+        $model->source_url = 'test';
 
         $model->validate();
 
-        $this->assertTrue($model->hasErrors('external_url'));
+        $this->assertTrue($model->hasErrors('source_url'));
 
-        $model->external_url = 'test.com';
-
-        $model->validate();
-
-        $this->assertTrue($model->hasErrors('external_url'));
-
-        $model->external_url = 'http://google.com';
+        $model->source_url = 'test.com';
 
         $model->validate();
 
-        $this->assertFalse($model->hasErrors('external_url'));
+        $this->assertTrue($model->hasErrors('source_url'));
+
+        $model->source_url = 'http://google.com';
+
+        $model->validate();
+
+        $this->assertFalse($model->hasErrors('source_url'));
     }
 
     public function testSourceDateRequired()
@@ -365,7 +365,7 @@ class NewsTest extends Unit
     {
         $model = new News();
 
-        $model->status = 1;
+        $model->status = 0;
 
         $model->validate();
 

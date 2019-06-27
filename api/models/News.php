@@ -2,22 +2,30 @@
 
 namespace app\models;
 
+use app\validator\InputCleanValidator;
 use Yii;
 use yii\behaviors\BlameableBehavior;
+use yii\behaviors\SluggableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 
 /**
- * This is the model class for table "news_channels".
+ * This is the model class for table "news".
  *
  * @property int $id
- * @property string $name
- * @property string $website
- * @property string $icon_url
+ * @property string $title
+ * @property string $slug
+ * @property string $cover_path
+ * @property string $source_url
+ * @property string $source_date
+ * @property string $content
+ * @property string $featured
+ * @property string $channel_id
  * @property array $meta
+ * @property int $seq
  * @property int $status
  */
-class NewsChannel extends ActiveRecord
+class News extends ActiveRecord
 {
     const STATUS_DELETED = -1;
     const STATUS_DISABLED = 0;
@@ -28,7 +36,7 @@ class NewsChannel extends ActiveRecord
      */
     public static function tableName()
     {
-        return 'news_channels';
+        return 'news';
     }
 
     /**
@@ -37,13 +45,32 @@ class NewsChannel extends ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'string', 'max' => 100],
-            [['name', 'website', 'icon_url'], 'trim'],
-            [['name', 'website', 'icon_url'], 'safe'],
+            ['title', 'string', 'max' => 100],
+            ['title', 'string', 'min' => 10],
+            ['title', InputCleanValidator::class],
 
-            [['name', 'status'], 'required'],
+            [['title', 'cover_path', 'source_url', 'source_date', 'content'], 'trim'],
+            [['title', 'content', 'cover_path', 'source_url'], 'safe'],
 
+            [
+                ['title', 'channel_id', 'cover_path', 'source_url', 'source_date', 'content', 'featured', 'status'],
+                'required',
+            ],
+
+            ['content', 'string', 'max' => 5000],
+
+            ['source_date', 'date', 'format' => 'php:Y-m-d'],
+            ['source_url', 'url'],
+
+            ['meta', 'default'],
+
+            ['featured', 'boolean'],
+
+            ['channel_id', 'integer'],
             ['status', 'integer'],
+            ['seq', 'integer'],
+
+            ['status', 'in', 'range' => [-1, 0, 10]],
         ];
     }
 
@@ -51,9 +78,7 @@ class NewsChannel extends ActiveRecord
     {
         $fields = [
             'id',
-            'name',
-            'icon_url',
-            'website',
+            'title',
             'meta',
             'status',
             'status_label' => function () {
@@ -84,12 +109,16 @@ class NewsChannel extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id'       => 'ID',
-            'website'  => 'Website',
-            'icon_url' => 'Icon URL',
-            'name'     => 'Name',
-            'meta'     => 'Meta',
-            'status'   => 'Status',
+            'id'          => 'ID',
+            'title'       => 'Sumber',
+            'channel_id'  => 'Website',
+            'cover_path'  => 'Cover Path',
+            'source_date' => 'Tanggal Berita',
+            'source_url'  => 'URL Berita',
+            'contet'      => 'Konten Berita',
+            'featured'    => 'Berita Pilihan',
+            'meta'        => 'Meta',
+            'status'      => 'Status',
         ];
     }
 
@@ -102,6 +131,10 @@ class NewsChannel extends ActiveRecord
                 'createdAtAttribute' => 'created_at',
                 'updatedAtAttribute' => 'updated_at',
                 'value'              => time(),
+            ],
+            [
+                'class'     => SluggableBehavior::class,
+                'attribute' => 'title',
             ],
             BlameableBehavior::class,
         ];

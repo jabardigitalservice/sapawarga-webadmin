@@ -26,7 +26,7 @@ class m190627_041940_create_table_news extends CustomMigration
 
         $this->createTable('news', [
             'id'          => $this->primaryKey(),
-            'channel_id' => $this->integer()->null(),
+            'channel_id'  => $this->integer()->null(),
             'title'       => $this->string()->null(),
             'slug'        => $this->string()->null(),
             'cover_path'  => $this->string()->null(),
@@ -35,6 +35,7 @@ class m190627_041940_create_table_news extends CustomMigration
             'content'     => $this->text()->null(),
             'featured'    => $this->boolean()->null(),
             'meta'        => $this->json()->null(),
+            'seq'         => $this->integer()->null(),
             'status'      => $this->integer()->null(),
             'created_at'  => $this->integer()->null(),
             'created_by'  => $this->integer()->null(),
@@ -57,7 +58,7 @@ class m190627_041940_create_table_news extends CustomMigration
      */
     public function safeDown()
     {
-        $this->dropTable('news_channels');
         $this->dropTable('news');
+        $this->dropTable('news_channels');
     }
 }
