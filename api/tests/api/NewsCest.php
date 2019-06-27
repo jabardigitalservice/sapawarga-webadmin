@@ -272,16 +272,173 @@ class NewsCest
 
         $I->amUser('staffrw');
 
-        $I->sendGET('/v1/survey/1');
+        $I->sendGET('/v1/news/1');
         $I->canSeeResponseCodeIs(200);
         $I->seeResponseIsJson();
 
-        $I->sendGET('/v1/survey/2');
+        $I->sendGET('/v1/news/2');
         $I->canSeeResponseCodeIs(200);
         $I->seeResponseIsJson();
 
-        $I->sendGET('/v1/survey/3');
+        $I->sendGET('/v1/news/3');
         $I->canSeeResponseCodeIs(200);
         $I->seeResponseIsJson();
+    }
+
+    public function postUserCreateUnauthorizedTest(ApiTester $I)
+    {
+        $I->amUser('staffrw');
+
+        $data = [];
+
+        $I->sendPOST('/v1/news', $data);
+        $I->canSeeResponseCodeIs(403);
+        $I->seeResponseIsJson();
+    }
+
+    public function postAdminCreateTest(ApiTester $I)
+    {
+        $I->amStaff();
+
+        $data = [
+            'title'       => 'Lorem ipsum',
+            'channel_id'  => 1,
+            'content'     => 'Maecenas porttitor suscipit ex vitae hendrerit. Nunc sollicitudin quam et libero fringilla, eget varius nunc hendrerit.',
+            'featured'    => false,
+            'source_date' => '2019-06-20',
+            'source_url'  => 'https://google.com',
+            'cover_path'  => 'covers/test.jpg',
+            'status'      => 0,
+        ];
+
+        $I->sendPOST('/v1/news', $data);
+        $I->canSeeResponseCodeIs(201);
+        $I->seeResponseIsJson();
+
+        $I->seeResponseContainsJson([
+            'success' => true,
+            'status'  => 201,
+        ]);
+
+        $I->seeInDatabase('news', [
+            'title'       => 'Lorem ipsum',
+            'channel_id'  => 1,
+            'content'     => 'Maecenas porttitor suscipit ex vitae hendrerit. Nunc sollicitudin quam et libero fringilla, eget varius nunc hendrerit.',
+            'featured'    => false,
+            'source_date' => '2019-06-20',
+            'source_url'  => 'https://google.com',
+            'cover_path'  => 'covers/test.jpg',
+            'status'      => 0,
+        ]);
+    }
+
+    public function postUserUpdateUnauthorizedTest(ApiTester $I)
+    {
+        $I->haveInDatabase('news', [
+            'id'          => 1,
+            'channel_id'  => 1,
+            'title'       => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+            'slug'        => 'lorem-ipsum-dolor-sit-amet-consectetur-adipiscing-elit',
+            'content'     => 'Maecenas porttitor suscipit ex vitae hendrerit. Nunc sollicitudin quam et libero fringilla, eget varius nunc hendrerit.',
+            'featured'    => false,
+            'source_date' => '2019-06-20',
+            'source_url'  => 'https://google.com',
+            'cover_path'  => 'covers/test.jpg',
+            'status'      => 10,
+            'created_at'  => '1554706345',
+            'updated_at'  => '1554706345',
+        ]);
+
+        $I->amUser('staffrw');
+
+        $data = [];
+
+        $I->sendPUT('/v1/news/1', $data);
+        $I->canSeeResponseCodeIs(403);
+        $I->seeResponseIsJson();
+    }
+
+    public function postAdminUpdateTest(ApiTester $I)
+    {
+        $I->haveInDatabase('news', [
+            'id'          => 1,
+            'channel_id'  => 1,
+            'title'       => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+            'slug'        => 'lorem-ipsum-dolor-sit-amet-consectetur-adipiscing-elit',
+            'content'     => 'Maecenas porttitor suscipit ex vitae hendrerit. Nunc sollicitudin quam et libero fringilla, eget varius nunc hendrerit.',
+            'featured'    => false,
+            'source_date' => '2019-06-20',
+            'source_url'  => 'https://google.com',
+            'cover_path'  => 'covers/test.jpg',
+            'status'      => 10,
+            'created_at'  => '1554706345',
+            'updated_at'  => '1554706345',
+        ]);
+
+        $I->amStaff();
+
+        $data = [
+            'title'       => 'Lorem ipsum',
+            'channel_id'  => 1,
+            'content'     => 'Maecenas porttitor suscipit ex vitae hendrerit. Nunc sollicitudin quam et libero fringilla, eget varius nunc hendrerit.',
+            'featured'    => false,
+            'source_date' => '2019-06-20',
+            'source_url'  => 'https://google.com',
+            'cover_path'  => 'covers/test.jpg',
+            'status'      => 0,
+        ];
+
+        $I->sendPUT('/v1/news/1', $data);
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $I->seeResponseContainsJson([
+            'success' => true,
+            'status'  => 200,
+        ]);
+
+        $I->seeInDatabase('news', [
+            'title'       => 'Lorem ipsum',
+            'channel_id'  => 1,
+            'content'     => 'Maecenas porttitor suscipit ex vitae hendrerit. Nunc sollicitudin quam et libero fringilla, eget varius nunc hendrerit.',
+            'featured'    => false,
+            'source_date' => '2019-06-20',
+            'source_url'  => 'https://google.com',
+            'cover_path'  => 'covers/test.jpg',
+            'status'      => 0,
+        ]);
+    }
+
+    public function deleteUserUnauthorizedTest(ApiTester $I)
+    {
+        $I->amUser('staffrw');
+
+        $I->sendDELETE('/v1/news/1');
+        $I->canSeeResponseCodeIs(403);
+    }
+
+    public function deleteAdminTest(ApiTester $I)
+    {
+        $I->haveInDatabase('news', [
+            'id'          => 1,
+            'channel_id'  => 1,
+            'title'       => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+            'slug'        => 'lorem-ipsum-dolor-sit-amet-consectetur-adipiscing-elit',
+            'content'     => 'Maecenas porttitor suscipit ex vitae hendrerit. Nunc sollicitudin quam et libero fringilla, eget varius nunc hendrerit.',
+            'featured'    => false,
+            'source_date' => '2019-06-20',
+            'source_url'  => 'https://google.com',
+            'cover_path'  => 'covers/test.jpg',
+            'status'      => 10,
+            'created_at'  => '1554706345',
+            'updated_at'  => '1554706345',
+        ]);
+
+        $I->amStaff();
+
+        $I->sendDELETE('/v1/news/1');
+        $I->canSeeResponseCodeIs(204);
+
+        $I->seeInDatabase('news', ['id' => 1, 'status' => -1]);
     }
 }
