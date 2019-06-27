@@ -208,6 +208,7 @@ export default {
   watch: {
     'notification.kabkota_id'(oldVal, newVal) {
       if (newVal !== null) {
+        this.notification.kec_id = null
         this.notification.kel_id = null
         this.notification.rw = null
       }
@@ -215,6 +216,7 @@ export default {
     },
     'notification.kec_id'(oldVal, newVal) {
       if (newVal !== null) {
+        this.notification.kel_id = null
         this.notification.rw = null
       }
       this.resetRw()
