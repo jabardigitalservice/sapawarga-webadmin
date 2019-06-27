@@ -63,7 +63,7 @@
 
 <script>
 import { containsWhitespace, validUrl } from '@/utils/validate'
-import { fetchRecord, create, update } from '@/api/survey'
+import { fetchRecord, create, update } from '@/api/news'
 export default {
   props: {
     isEdit: {
