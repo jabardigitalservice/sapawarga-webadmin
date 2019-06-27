@@ -206,6 +206,9 @@ export default {
 
         Object.assign(data, this.news)
 
+        data.status = 10
+        data.featured = true
+
         if (this.isEdit) {
           const id = this.$route.params && this.$route.params.id
 
@@ -217,10 +220,11 @@ export default {
 
         } else {
           await create(data)
+          console.log('data berhasil dibuat')
 
           this.$message.success(this.$t('crud.create-success'))
 
-          this.$router.push('/survey/index')
+          this.$router.push('/news/index')
         }
       } catch (e) {
         console.log(e)
