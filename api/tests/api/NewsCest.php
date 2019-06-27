@@ -146,13 +146,12 @@ class NewsCest
             'status'  => 200,
         ]);
 
-        $I->seeHttpHeader('X-Pagination-Total-Count', 3);
+        $I->seeHttpHeader('X-Pagination-Total-Count', 2);
 
         $data = $I->grabDataFromResponseByJsonPath('$.data.items');
 
         $I->assertEquals(1, $data[0][0]['id']);
-        $I->assertEquals(2, $data[0][1]['id']);
-        $I->assertEquals(3, $data[0][2]['id']);
+        $I->assertEquals(3, $data[0][1]['id']);
     }
 
     public function getUserCanShowTest(ApiTester $I)
@@ -207,16 +206,16 @@ class NewsCest
 
         $I->amUser('staffrw');
 
-        $I->sendGET('/v1/survey/1');
+        $I->sendGET('/v1/news/1');
         $I->canSeeResponseCodeIs(200);
         $I->seeResponseIsJson();
 
-        $I->sendGET('/v1/survey/2');
+        $I->sendGET('/v1/news/2');
         $I->canSeeResponseCodeIs(404);
         $I->seeResponseIsJson();
 
-        $I->sendGET('/v1/survey/3');
-        $I->canSeeResponseCodeIs(404);
+        $I->sendGET('/v1/news/3');
+        $I->canSeeResponseCodeIs(200);
         $I->seeResponseIsJson();
     }
 
@@ -277,7 +276,7 @@ class NewsCest
         $I->seeResponseIsJson();
 
         $I->sendGET('/v1/news/2');
-        $I->canSeeResponseCodeIs(200);
+        $I->canSeeResponseCodeIs(404);
         $I->seeResponseIsJson();
 
         $I->sendGET('/v1/news/3');
