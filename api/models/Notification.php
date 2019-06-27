@@ -222,15 +222,7 @@ class Notification extends \yii\db\ActiveRecord
     public function beforeSave($insert)
     {
         $this->author_id = Yii::$app->user->getId();
-
-        // Add meta for 'Update Apikasi' Notification category
-        if ($this->category->name == self::CATEGORY_LABEL_UPDATE) {
-            $this->meta = [
-                'target'    => 'url',
-                'url'       => self::URL_STORE_ANDROID,
-            ];
-        }
-
+        $this->generateMeta();
 
         return parent::beforeSave($insert);
     }
@@ -298,5 +290,36 @@ class Notification extends \yii\db\ActiveRecord
             'meta'              => $notif_meta,
         ];
         return $data;
+    }
+
+     /**
+     * Generates default meta based on category name
+     */
+    protected function generateMeta()
+    {
+        switch ($this->category->name) {
+            case self::CATEGORY_LABEL_POLLING:
+                if (!$this->meta) {
+                    $this->meta = [
+                        'target'    => 'polling',
+                    ];
+                }
+                break;
+            case self::CATEGORY_LABEL_SURVEY:
+                if (!$this->meta) {
+                    $this->meta = [
+                        'target'    => 'survey',
+                    ];
+                }
+                break;
+            case self::CATEGORY_LABEL_UPDATE:
+                $this->meta = [
+                    'target'    => 'url',
+                    'url'       => self::URL_STORE_ANDROID,
+                ];
+                break;
+            default:
+                break;
+        }
     }
 }
