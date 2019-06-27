@@ -102,7 +102,7 @@
                 v-for="(answer) in polling.answers"
                 :key="answer.id"
                 :rules="{
-                  required: true, message: 'domain can not be null', trigger: 'blur'
+                  required: true, message: 'Jawaban harus diisi', trigger: 'blur'
                 }"
               >
                 <el-row>
@@ -360,6 +360,12 @@ export default {
       })
     },
     async submitForm(status) {
+      const valid = await this.$refs.polling.validate()
+
+      if (!valid) {
+        return
+      }
+
       if (this.polling.kabkota_id === null) {
         this.polling.kec_id = null
         this.polling.kel_id = null
