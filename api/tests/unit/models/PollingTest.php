@@ -208,7 +208,7 @@ class PollingTest extends \Codeception\Test\Unit
 
         $model->validate();
 
-        $this->assertTrue($model->hasErrors('excerpt'));
+        $this->assertFalse($model->hasErrors('excerpt'));
     }
 
     public function testExcerptMinCharacters()
