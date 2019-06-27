@@ -188,12 +188,14 @@ export default {
     },
     'broadcast.kec_id'(oldVal, newVal) {
       if (newVal !== null) {
+        this.broadcast.kel_id = null
         this.broadcast.rw = null
       }
       this.resetRw()
     },
     'broadcast.kabkota_id'(oldVal, newVal) {
       if (newVal !== null) {
+        this.broadcast.kec_id = null
         this.broadcast.kel_id = null
         this.broadcast.rw = null
       }
