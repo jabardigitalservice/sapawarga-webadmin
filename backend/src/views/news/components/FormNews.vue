@@ -15,20 +15,20 @@
             <el-input v-model="news.title" type="text" placeholder="Judul Berita" />
           </el-form-item>
 
-          <el-form-item label="Sumber" prop="source">
-            <el-select v-model="news.source" placeholder="Pilih Sumber">
+          <el-form-item label="Sumber" prop="channel_id">
+            <el-select v-model="news.channel_id" placeholder="Pilih Sumber">
               <el-option
                 v-for="item in options"
                 :key="item.value"
-                :label="item.value"
+                :label="item.label"
                 :value="item.value"
               />
             </el-select>
           </el-form-item>
 
-          <el-form-item label="Tanggal Berita" prop="date">
+          <el-form-item label="Tanggal Berita" prop="source_date">
             <el-date-picker
-              v-model="news.date"
+              v-model="news.source_date"
               type="date"
               :editable="false"
               :clearable="false"
@@ -37,8 +37,8 @@
             />
           </el-form-item>
 
-          <el-form-item label="URL Berita" prop="external_url">
-            <el-input v-model="news.external_url" type="text" placeholder="http://form.google.com" />
+          <el-form-item label="URL Berita" prop="source_url">
+            <el-input v-model="news.source_url" type="text" placeholder="http://form.google.com" />
           </el-form-item>
 
           <el-form-item label="Konten Berita" prop="content">
@@ -98,29 +98,35 @@ export default {
       loading: false,
       news: {
         title: null,
-        source: null,
-        date: null,
-        external_url: null,
+        channel_id: null,
+        source_date: null,
+        source_url: null,
         content: null
       },
       options: [
         {
-          value: 'Detik'
+          value: 1,
+          label: 'Detik'
         },
         {
-          value: 'Kompas'
+          value: 2,
+          label: 'Kompas'
         },
         {
-          value: 'Tempo'
+          value: 3,
+          label: 'Tempo'
         },
         {
-          value: 'Pikiran'
+          value: 4,
+          label: 'Pikiran'
         },
         {
-          value: 'Tribun News'
+          value: 5,
+          label: 'Tribun News'
         },
         {
-          value: 'Republika'
+          value: 6,
+          label: 'Republika'
         }
       ],
       rules: {
@@ -145,24 +151,24 @@ export default {
             trigger: 'blur'
           }
         ],
-        source: [
+        channel_id: [
           {
             required: true,
             message: 'Sumber Berita harus diisi',
             trigger: 'change'
           }
         ],
-        date: [
+        source_date: [
           {
             required: true,
             message: 'Tanggal harus diisi',
             trigger: 'change'
           }
         ],
-        external_url: [
+        source_url: [
           {
             required: true,
-            message: 'URL Survey harus diisi',
+            message: 'URL Berita harus diisi',
             trigger: 'blur'
           },
           {
