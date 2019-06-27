@@ -320,12 +320,14 @@ export default {
     },
     'polling.kec_id'(oldVal, newVal) {
       if (newVal !== null) {
+        this.polling.kel_id = null
         this.polling.rw = null
       }
       this.resetRw()
     },
     'polling.kabkota_id'(oldVal, newVal) {
       if (newVal !== null) {
+        this.polling.kec_id = null
         this.polling.kel_id = null
         this.polling.rw = null
       }
