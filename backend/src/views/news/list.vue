@@ -11,6 +11,17 @@
             <el-table-column prop="content" />
           </el-table>
         </el-card>
+        <!-- <div class="warn-content map-title" style="display: inline-flex;
+    width: 100%;">
+          <p class="total">Total Kanal</p>
+          <p class="angka" style="margin-left: 70%;">100</p>
+        </div> -->
+        <el-card class="top-space" v-if="tableDataStatistikTotal.length">
+          <el-table stripe :data="tableDataStatistikTotal" :show-header="false" style="width: 100%">
+            <el-table-column prop="title" />
+            <el-table-column prop="content" />
+          </el-table>
+        </el-card>
       </el-col>
       <!-- <el-col class="col-right" :xs="24" :sm="24" :md="24" :lg="14" :xl="14">
         <el-card>
@@ -29,10 +40,34 @@
 </template>
 
 <script>
+import { fetchList } from '@/api/news'
+import Pagination from '@/components/Pagination'
+
 export default {
+  components: { Pagination },
+  filters: {
+    statusFilter(status) {
+      const statusMap = {
+        '10': 'success',
+        '0': 'info',
+        '5': 'warning',
+        '3': 'danger'
+      }
+      return statusMap[status]
+    }
+  },
   data() {
     return {
-      tableDataStatistik: []
+      list: null,
+      total: 0,
+      listLoading: true,
+      listQuery: {
+        title: null,
+        page: 1,
+        limit: 10
+      },
+      tableDataStatistik: [],
+      tableDataStatistikTotal: [{title: 'Semua Kategori', content: this.total}],
     }
   }
 }
@@ -44,5 +79,9 @@ export default {
     margin-top: 20px;
     margin-right: 20px !important
   }
+}
+
+.top-space {
+  margin-top: 20px;
 }
 </style>
