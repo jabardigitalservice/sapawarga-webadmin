@@ -896,7 +896,9 @@
       "channel_id": 1,
       "channel": {
         "id": 1,
-        "name": "Detik.com"
+        "name": "Detik",
+        "website": "https://detik.com",
+        "icon_url": "https://i.ibb.co/ZX1HDcY/detik.png",
       },
       "source_url": "https://news.detik.com/berita/d-4601894/bpn-ingatkan-lagi-pesan-prabowo-tak-perlu-datang-ke-mk",
       "meta": null,
@@ -917,7 +919,9 @@
       "channel_id": 1,
       "channel": {
         "id": 1,
-        "name": "Detik.com"
+        "name": "Detik",
+        "website": "https://detik.com",
+        "icon_url": "https://i.ibb.co/ZX1HDcY/detik.png",
       },
       "source_url": "https://news.detik.com/berita-jawa-barat/d-4601897/tipu-tipu-orang-tua-siswa-di-bandung-akali-sistem-zonasi",
       "meta": null,
@@ -938,7 +942,9 @@
       "channel_id": 1,
       "channel": {
         "id": 1,
-        "name": "Detik.com"
+        "name": "Detik",
+        "website": "https://detik.com",
+        "icon_url": "https://i.ibb.co/ZX1HDcY/detik.png",
       },
       "source_url": "https://news.detik.com/berita/d-4601892/bobol-minimarket-8-kali-fahrul-ditangkap-polisi",
       "meta": null,
