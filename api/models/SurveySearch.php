@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -30,12 +31,24 @@ class SurveySearch extends Survey
         $query->andFilterWhere(['<>', 'status', Survey::STATUS_DELETED]);
 
         if ($this->scenario === self::SCENARIO_LIST_USER) {
-            $filterStatusList = [
-                Survey::STATUS_PUBLISHED
-            ];
-
-            $query->andFilterWhere(['in', 'status', $filterStatusList]);
+            return $this->getQueryListUser($query, $params);
         }
+
+        return $this->getQueryAll($query, $params);
+    }
+
+    protected function getQueryListUser($query, $params)
+    {
+        $filterStatusList = [
+            Survey::STATUS_PUBLISHED
+        ];
+
+        $query->andFilterWhere(['in', 'status', $filterStatusList]);
+
+        $today = new Carbon();
+
+        $query->andFilterWhere(['<=', 'start_date', $today->toDateString()]);
+        $query->andFilterWhere(['>=', 'end_date', $today->toDateString()]);
 
         return $this->getQueryAll($query, $params);
     }

@@ -16,12 +16,12 @@
           <el-table-column prop="name" sortable="custom" label="Nama Polling" min-width="250" />
           <el-table-column prop="start_date" sortable="custom" label="Mulai" width="170" align="center">
             <template slot-scope="{row}">
-              {{ row.start_date | moment('D MMMM YYYY HH:mm') }}
+              {{ row.start_date | moment('D MMMM YYYY') }}
             </template>
           </el-table-column>
           <el-table-column prop="end_date" sortable="custom" label="Berakhir" width="170" align="center">
             <template slot-scope="{row}">
-              {{ row.end_date | moment('D MMMM YYYY HH:mm') }}
+              {{ row.end_date | moment('D MMMM YYYY') }}
             </template>
           </el-table-column>
           <el-table-column prop="status" sortable="custom" class-name="status-col" label="Status" width="200">

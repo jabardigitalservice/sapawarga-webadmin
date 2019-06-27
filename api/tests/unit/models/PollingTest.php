@@ -12,10 +12,10 @@ class PollingTest extends \Codeception\Test\Unit
 
         $this->assertFalse($model->validate());
 
-        $model->name        = 'test test';
+        $model->name        = 'test test test test';
         $model->description = 'test test';
-        $model->excerpt     = 'test test';
-        $model->question    = 'test test';
+        $model->excerpt     = 'test test ';
+        $model->question    = 'test test test test';
         $model->status      = 10;
         $model->start_date  = '2019-06-01';
         $model->end_date    = '2019-12-01';
@@ -85,7 +85,7 @@ class PollingTest extends \Codeception\Test\Unit
 
         $model->validate();
 
-        $this->assertFalse($model->hasErrors('name'));
+        $this->assertTrue($model->hasErrors('name'));
     }
 
     public function testNameMaxCharacters()
@@ -97,7 +97,7 @@ class PollingTest extends \Codeception\Test\Unit
 
         $model->validate();
 
-        $this->assertFalse($model->hasErrors('name'));
+        $this->assertTrue($model->hasErrors('name'));
     }
 
     public function testNameNotSafe()
@@ -208,7 +208,7 @@ class PollingTest extends \Codeception\Test\Unit
 
         $model->validate();
 
-        $this->assertTrue($model->hasErrors('excerpt'));
+        $this->assertFalse($model->hasErrors('excerpt'));
     }
 
     public function testExcerptMinCharacters()
@@ -282,7 +282,7 @@ class PollingTest extends \Codeception\Test\Unit
     {
         $model = new Polling();
 
-        $model->question = 'Coba';
+        $model->question = 'Lorem ipsum';
 
         $model->validate();
 
@@ -293,12 +293,12 @@ class PollingTest extends \Codeception\Test\Unit
     {
         $model = new Polling();
 
-        // allow 255 chars
-        $model->question = file_get_contents(__DIR__ . '/../../data/255chars.txt');
+        // allow 100 chars
+        $model->question = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean ma';
 
         $model->validate();
 
-        $this->assertFalse($model->hasErrors('question'));
+        $this->assertTrue($model->hasErrors('question'));
     }
 
     public function testQuestionNotSafe()
@@ -542,5 +542,117 @@ class PollingTest extends \Codeception\Test\Unit
         $model->validate();
 
         $this->assertFalse($model->hasErrors('status'));
+    }
+
+    public function testKabupatenValid()
+    {
+        $model             = new Polling();
+        $model->kabkota_id = 22;
+        $model->kec_id     = null;
+        $model->kel_id     = null;
+        $model->rw         = null;
+
+        $model->save(false);
+
+        $this->assertNotNull($model->kabkota_id);
+        $this->assertNull($model->kec_id);
+        $this->assertNull($model->kel_id);
+        $this->assertNull($model->rw);
+    }
+
+    public function testKecamatanValid()
+    {
+        $model             = new Polling();
+        $model->kabkota_id = 22;
+        $model->kec_id     = 431;
+        $model->kel_id     = null;
+        $model->rw         = null;
+
+        $model->save(false);
+
+        $this->assertNotNull($model->kabkota_id);
+        $this->assertNotNull($model->kec_id);
+        $this->assertNull($model->kel_id);
+        $this->assertNull($model->rw);
+    }
+
+    public function testKelurahanValid()
+    {
+        $model             = new Polling();
+        $model->kabkota_id = 22;
+        $model->kec_id     = 431;
+        $model->kel_id     = 6093;
+        $model->rw         = null;
+
+        $model->save(false);
+
+        $this->assertNotNull($model->kabkota_id);
+        $this->assertNotNull($model->kec_id);
+        $this->assertNotNull($model->kel_id);
+        $this->assertNull($model->rw);
+    }
+
+    public function testRwValid()
+    {
+        $model             = new Polling();
+        $model->kabkota_id = 22;
+        $model->kec_id     = 431;
+        $model->kel_id     = 6093;
+        $model->rw         = '001';
+
+        $model->save(false);
+
+        $this->assertNotNull($model->kabkota_id);
+        $this->assertNotNull($model->kec_id);
+        $this->assertNotNull($model->kel_id);
+        $this->assertNotNull($model->rw);
+    }
+
+    public function testKecamatanShouldNull()
+    {
+        $model             = new Polling();
+        $model->kabkota_id = null;
+        $model->kec_id     = 431;
+        $model->kel_id     = 6093;
+        $model->rw         = '001';
+
+        $model->save(false);
+
+        $this->assertNull($model->kabkota_id);
+        $this->assertNull($model->kec_id);
+        $this->assertNull($model->kel_id);
+        $this->assertNull($model->rw);
+    }
+
+    public function testKelurahanShouldNull()
+    {
+        $model             = new Polling();
+        $model->kabkota_id = 22;
+        $model->kec_id     = null;
+        $model->kel_id     = 6093;
+        $model->rw         = '001';
+
+        $model->save(false);
+
+        $this->assertNotNull($model->kabkota_id);
+        $this->assertNull($model->kec_id);
+        $this->assertNull($model->kel_id);
+        $this->assertNull($model->rw);
+    }
+
+    public function testRwShouldNull()
+    {
+        $model             = new Polling();
+        $model->kabkota_id = 22;
+        $model->kec_id     = 431;
+        $model->kel_id     = null;
+        $model->rw         = '001';
+
+        $model->save(false);
+
+        $this->assertNotNull($model->kabkota_id);
+        $this->assertNotNull($model->kec_id);
+        $this->assertNull($model->kel_id);
+        $this->assertNull($model->rw);
     }
 }

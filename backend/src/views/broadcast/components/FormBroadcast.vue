@@ -41,7 +41,7 @@
             :status-icon="true"
           >
             <el-form-item label="Judul Pesan" prop="title">
-              <el-input v-model="broadcast.title" type="text" placeholder="Judul minimal 10 karakter dan maksimal 60 karakter" />
+              <el-input v-model="broadcast.title" type="text" placeholder="Judul Pesan" />
             </el-form-item>
             <el-form-item label="Kategori" prop="category_id">
               <InputCategory v-model="broadcast.category_id" category-type="broadcast" prop="category" />
@@ -51,12 +51,12 @@
                 v-model="broadcast.description"
                 type="textarea"
                 :rows="8"
-                placeholder="Tulis pesan, maksimal 280 karakter"
+                placeholder="Tulis pesan broadcast"
               />
             </el-form-item>
             <el-form-item>
               <el-button type="info" :disabled="broadcast.status === 10" :loading="loading" @click="submitForm(status.draft)">{{ $t('crud.draft') }}</el-button>
-              <el-button v-show="!isEdit" type="primary" :loading="loading" @click="submitForm(status.active)"> {{ $t('crud.send') }}</el-button>
+              <el-button v-show="!isEdit" type="primary" :loading="loading" @click="actionApprove(status.active)"> {{ $t('crud.send') }}</el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -68,6 +68,7 @@
 import InputCategory from '@/components/InputCategory'
 import InputSelectArea from '@/components/InputSelectArea'
 import { create, fetchRecord, update } from '@/api/broadcast'
+import { containsWhitespace } from '@/utils/validate'
 export default {
   components: {
     InputCategory,
@@ -80,6 +81,20 @@ export default {
     }
   },
   data() {
+    const whitespaceTitle = (rule, value, callback) => {
+      if (containsWhitespace(value) === true) {
+        callback(new Error('Judul broadcast yang diisi tidak valid'))
+      }
+      callback()
+    }
+
+    const whitespaceDescription = (rule, value, callback) => {
+      if (containsWhitespace(value) === true) {
+        callback(new Error('Pesan yang diisi tidak valid'))
+      }
+      callback()
+    }
+
     return {
       loading: false,
       status: {
@@ -109,8 +124,12 @@ export default {
             trigger: 'blur'
           },
           {
-            max: 60,
-            message: 'Judul pesan maksimal 60 karakter',
+            max: 100,
+            message: 'Judul pesan maksimal 100 karakter',
+            trigger: 'blur'
+          },
+          {
+            validator: whitespaceTitle,
             trigger: 'blur'
           }
 
@@ -125,8 +144,7 @@ export default {
             trigger: 'blur'
           },
           {
-            max: 280,
-            message: 'Pesan maksimal 280 karakter',
+            validator: whitespaceDescription,
             trigger: 'blur'
           }
         ],
@@ -157,6 +175,29 @@ export default {
       }
     }
   },
+  watch: {
+    'broadcast.kel_id'(oldVal, newVal) {
+      if (newVal !== null) {
+        this.broadcast.rw = null
+      }
+      this.resetRw()
+    },
+    'broadcast.kec_id'(oldVal, newVal) {
+      if (newVal !== null) {
+        this.broadcast.kel_id = null
+        this.broadcast.rw = null
+      }
+      this.resetRw()
+    },
+    'broadcast.kabkota_id'(oldVal, newVal) {
+      if (newVal !== null) {
+        this.broadcast.kec_id = null
+        this.broadcast.kel_id = null
+        this.broadcast.rw = null
+      }
+      this.resetRw()
+    }
+  },
   created() {
     if (this.isEdit) {
       const id = this.$route.params && this.$route.params.id
@@ -164,6 +205,12 @@ export default {
     }
   },
   methods: {
+    resetRw() {
+      if (this.broadcast.kel_id === null || this.broadcast.kec_id === null || this.broadcast.kabkota_id === null) {
+        this.broadcast.kel_id = null
+        this.broadcast.rw = null
+      }
+    },
     fetchData(id) {
       fetchRecord(id).then(response => {
         this.broadcast = response.data
@@ -176,10 +223,15 @@ export default {
       })
     },
     async submitForm(status) {
-      const valid = await this.$refs.broadcast.validate()
-
-      if (!valid) {
-        return
+      if (this.broadcast.kabkota_id === null) {
+        this.broadcast.kec_id = null
+        this.broadcast.kel_id = null
+        this.broadcast.rw = null
+      } else if (this.broadcast.kec_id === null) {
+        this.broadcast.kel_id = null
+        this.broadcast.rw = null
+      } else if (this.broadcast.kel_id === null) {
+        this.broadcast.rw = null
       }
 
       try {
@@ -212,6 +264,25 @@ export default {
         console.log(err)
       } finally {
         this.loading = false
+      }
+    },
+    async actionApprove(status) {
+      const valid = await this.$refs.broadcast.validate()
+
+      if (!valid) {
+        return
+      }
+
+      await this.$confirm(`Apakah Anda yakin akan mengirimkan pesan: ${this.broadcast.title} ?`, 'Konfirmasi', {
+        confirmButtonText: this.$t('common.confirm'),
+        cancelButtonText: this.$t('common.cancel'),
+        type: 'success'
+      })
+
+      try {
+        this.submitForm(status)
+      } catch (e) {
+        console.log(e)
       }
     }
   }

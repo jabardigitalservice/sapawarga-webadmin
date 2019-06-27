@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\components\ModelHelper;
 use app\validator\InputCleanValidator;
 use Yii;
 use yii\behaviors\TimestampBehavior;
@@ -65,14 +66,30 @@ class Survey extends ActiveRecord
     {
         return [
             [['title', 'status', 'external_url', 'category_id'], 'required'],
+            [['title', 'status', 'external_url', 'category_id'], 'trim'],
 
-            ['title', 'string', 'max' => 255],
+            ['title', 'string', 'min' => 10],
+            ['title', 'string', 'max' => 100],
             ['title', InputCleanValidator::class],
 
             ['category_id', 'integer'],
             ['category_id', 'validateCategoryID'],
 
             ['external_url', 'url'],
+
+            [['start_date', 'end_date'], 'date', 'format' => 'php:Y-m-d'],
+            [
+                'start_date',
+                'compare',
+                'compareAttribute'       => 'end_date',
+                'operator'               => '<',
+            ],
+            [
+                'end_date',
+                'compare',
+                'compareAttribute'       => 'start_date',
+                'operator'               => '>',
+            ],
 
             ['status', 'in', 'range' => [-1, 0, 1, 10]],
         ];
@@ -118,6 +135,35 @@ class Survey extends ActiveRecord
         ];
 
         return $fields;
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        if (!YII_ENV_TEST) {
+            $isSendNotification = ModelHelper::isSendNotification($insert, $changedAttributes, $this);
+
+            if ($isSendNotification) {
+                $category_id = Category::findOne(['name' => Notification::CATEGORY_LABEL_SURVEY])->id;
+                $notifModel = new Notification();
+                $notifModel->setAttributes([
+                    'category_id' => $category_id,
+                    'title'=> "Survey Baru: {$this->title}",
+                    'description'=> null,
+                    'kabkota_id'=> $this->kabkota_id,
+                    'kec_id'=> $this->kec_id,
+                    'kel_id'=> $this->kel_id,
+                    'rw'=> $this->rw,
+                    'status'=> Notification::STATUS_PUBLISHED,
+                    'meta' => [
+                        'target'=> 'survey',
+                        'url'=>$this->external_url
+                    ]
+                ]);
+                $notifModel->save(false);
+            }
+        }
+
+        return parent::afterSave($insert, $changedAttributes);
     }
 
     /** @inheritdoc */

@@ -4,6 +4,7 @@ namespace app\models;
 
 use app\components\ModelHelper;
 use app\validator\InputCleanValidator;
+use Jdsteam\Sapawarga\Behaviors\AreaBehavior;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
@@ -30,6 +31,7 @@ class Polling extends ActiveRecord
 {
     const STATUS_DELETED = -1;
     const STATUS_DRAFT = 0;
+    const STATUS_DISABLED = 1;
     const STATUS_PUBLISHED = 10;
 
     const CATEGORY_TYPE = 'polling';
@@ -83,7 +85,8 @@ class Polling extends ActiveRecord
                 'required',
             ],
             [['name', 'description', 'excerpt', 'question', 'rw', 'meta'], 'trim'],
-            [['name', 'excerpt', 'question'], 'string', 'max' => 255],
+            [['name', 'question'], 'string', 'min' => 10],
+            [['name', 'question'], 'string', 'max' => 100],
             [['name', 'description', 'excerpt', 'question'], InputCleanValidator::class],
 
             ['description', 'string', 'max' => 1024 * 3],
@@ -108,7 +111,7 @@ class Polling extends ActiveRecord
                 'operator'               => '<',
             ],
 
-            ['status', 'in', 'range' => [-1, 0, 10]],
+            ['status', 'in', 'range' => [-1, 0, 1, 10]],
         ];
     }
 
@@ -191,6 +194,35 @@ class Polling extends ActiveRecord
         return $fields;
     }
 
+    public function afterSave($insert, $changedAttributes)
+    {
+        if (!YII_ENV_TEST) {
+            $isSendNotification = ModelHelper::isSendNotification($insert, $changedAttributes, $this);
+
+            if ($isSendNotification) {
+                $category_id = Category::findOne(['name' => Notification::CATEGORY_LABEL_POLLING])->id;
+                $notifModel = new Notification();
+                $notifModel->setAttributes([
+                    'category_id' => $category_id,
+                    'title'=> "Polling Baru: {$this->name}",
+                    'description'=> $this->description,
+                    'kabkota_id'=> $this->kabkota_id,
+                    'kec_id'=> $this->kec_id,
+                    'kel_id'=> $this->kel_id,
+                    'rw'=> $this->rw,
+                    'status'=> Notification::STATUS_PUBLISHED,
+                    'meta' => [
+                        'target'=> 'polling',
+                        'id'=>$this->id
+                    ]
+                ]);
+                $notifModel->save(false);
+            }
+        }
+
+        return parent::afterSave($insert, $changedAttributes);
+    }
+
     /** @inheritdoc */
     public function behaviors()
     {
@@ -201,6 +233,7 @@ class Polling extends ActiveRecord
                 'updatedAtAttribute' => 'updated_at',
                 'value'              => time(),
             ],
+            AreaBehavior::class,
         ];
     }
 
