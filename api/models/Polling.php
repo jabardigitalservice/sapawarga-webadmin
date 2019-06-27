@@ -89,7 +89,7 @@ class Polling extends ActiveRecord
             [['name', 'question'], 'string', 'max' => 100],
             [['name', 'description', 'excerpt', 'question'], InputCleanValidator::class],
 
-            ['description', 'string', 'max' => 1024 * 3],
+            [['description', 'excerpt'], 'string', 'max' => 1024 * 12],
 
             ['rw', 'string', 'length' => 3],
             [
