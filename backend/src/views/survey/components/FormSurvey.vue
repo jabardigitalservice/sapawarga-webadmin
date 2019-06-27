@@ -72,8 +72,8 @@ import InputCategory from '@/components/InputCategory'
 const defaultForm = {
   title: null,
   category_id: null,
-  start_date: null,
-  end_date: null,
+  start_date: moment().startOf('day'),
+  end_date: moment().add(1, 'days').format('YYYY-MM-DD'),
   external_url: null,
   status: null
 }
@@ -190,6 +190,14 @@ export default {
         return
       }
 
+      const now = moment().startOf('day')
+      const distance = (moment(this.form.start_date)).isBefore(now)
+
+      if (distance === true) {
+        this.$message.error(this.$t('errors.survey-start-date'))
+        return
+      }
+
       try {
         this.loading = true
 
@@ -220,8 +228,11 @@ export default {
 
           this.$router.push('/survey/index')
         }
-      } catch (e) {
-        console.log(e)
+      } catch (err) {
+        const errorDate = err.response.data.data
+        if (errorDate) {
+          this.$message.error(this.$t('errors.survey-compare-date'))
+        }
       } finally {
         this.loading = false
       }

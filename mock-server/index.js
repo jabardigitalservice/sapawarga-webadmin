@@ -88,6 +88,9 @@ server.use(jsonServer.rewriter({
   '/api/v1/notifications/:id': '/notifications/:id',
   '/api/v1/polling': '/polling',
   '/api/v1/polling/:id': '/polling/:id',
+  '/api/v1/news': '/news',
+  '/api/v1/news/featured': '/news',
+  '/api/v1/news/:id': '/news/:id',
   '/api/v1/upload': '/upload',
 }))
 

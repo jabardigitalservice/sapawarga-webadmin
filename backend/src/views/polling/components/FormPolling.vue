@@ -193,7 +193,7 @@ export default {
       checkStatus: null,
       width: '300%',
       start_date: moment().format('YYYY-MM-DD'),
-      end_date: moment(Date.now() + 24 * 60 * 60 * 1000).format('YYYY-MM-DD'),
+      end_date: moment().add(1, 'days').format('YYYY-MM-DD'),
       question_type: null,
       polling: {
         kabkota_id: null,
@@ -320,12 +320,14 @@ export default {
     },
     'polling.kec_id'(oldVal, newVal) {
       if (newVal !== null) {
+        this.polling.kel_id = null
         this.polling.rw = null
       }
       this.resetRw()
     },
     'polling.kabkota_id'(oldVal, newVal) {
       if (newVal !== null) {
+        this.polling.kec_id = null
         this.polling.kel_id = null
         this.polling.rw = null
       }

@@ -30,6 +30,9 @@ class Broadcast extends \yii\db\ActiveRecord
 
     const CATEGORY_TYPE = 'broadcast';
 
+    // Default topic untuk semua user
+    const TOPIC_DEFAULT = 'kabkota';
+
     /** @var  array push notification metadata */
     public $data;
 
@@ -210,7 +213,7 @@ class Broadcast extends \yii\db\ActiveRecord
                     'push_notification' => true,
                 ];
                 // By default,  send notification to all users
-                $topic = 'all';
+                $topic = self::TOPIC_DEFAULT;
                 if ($this->kel_id && $this->rw) {
                     $topic = "{$this->kel_id}_{$this->rw}";
                 } elseif ($this->kel_id) {

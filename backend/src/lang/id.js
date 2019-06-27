@@ -111,8 +111,11 @@ export default {
   },
   errors: {
     'internal-server-error': 'Telah terjadi kesalahan sistem, silahkan muat ulang halaman ini.',
-    'polling-compare-date': 'Tanggal berakhir polling tidak boleh lebih kecil dari tanggal mulai polling.',
-    'polling-start-date': 'Tanggal mulai polling tidak boleh lebih kecil dari tanggal hari ini.'
+    'polling-compare-date': 'Tanggal berakhir polling harus lebih besar dari tanggal mulai polling.',
+    'polling-start-date': 'Tanggal mulai polling tidak boleh lebih kecil dari tanggal hari ini.',
+    'survey-start-date': 'Tanggal mulai survey tidak boleh lebih kecil dari tanggal hari ini.',
+    'survey-compare-date': 'Tanggal berakhir survey harus lebih besar dari tanggal mulai survey.'
+
   },
   navbar: {
     profile: 'Lihat Profil'

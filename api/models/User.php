@@ -1054,6 +1054,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             ];
 
             Message::unsubscribe($this->push_token, $areaIds);
+            Message::unsubscribe($this->push_token, [Notification::TOPIC_DEFAULT]);
             $this->push_token = null;
             $this->save(false);
         }
@@ -1074,6 +1075,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
                 "{$this->kel_id}_{$this->rw}",
             ];
 
+            Message::subscribe($pushToken, [Notification::TOPIC_DEFAULT]);
             Message::subscribe($pushToken, $areaIds);
         }
     }
