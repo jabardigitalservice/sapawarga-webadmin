@@ -14,7 +14,10 @@ describe('News List', () => {
     ]
 
     const wrapper = shallowMount(NewsList, {
-      localVue
+      localVue,
+      stubs: {
+        fetchList: true
+      }
     })
     wrapper.setData({ tableDataStatistik: channel })
 
