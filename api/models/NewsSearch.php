@@ -26,6 +26,14 @@ class NewsSearch extends News
         // grid filtering conditions
         $query->andFilterWhere(['id' => $this->id]);
 
+        $filterChannelId = Arr::get($params, 'channel_id');
+        $searchKeyword   = Arr::get($params, 'search');
+
+        $query->andFilterWhere(['channel_id' => $filterChannelId]);
+
+        $query->andFilterWhere(['like', 'title', $searchKeyword]);
+        $query->orFilterWhere(['like', 'content', $searchKeyword]);
+
         $query->andFilterWhere(['<>', 'status', News::STATUS_DELETED]);
 
         if ($this->scenario === self::SCENARIO_LIST_USER) {
