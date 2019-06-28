@@ -42,12 +42,15 @@
           </el-form-item>
 
           <el-form-item label="Konten Berita" prop="content">
-            <el-input
+            <!-- <el-input
               v-model="news.content"
               type="textarea"
               :rows="10"
               placeholder="Konten Berita"
-            />
+            /> -->
+            <div>
+              <tinymce v-model="news.content" :height="300" />
+            </div>
           </el-form-item>
 
           <el-form-item>
@@ -64,7 +67,9 @@
 <script>
 import { containsWhitespace, validUrl } from '@/utils/validate'
 import { fetchRecord, create, update } from '@/api/news'
+import Tinymce from '@/components/Tinymce'
 export default {
+  components: { Tinymce },
   props: {
     isEdit: {
       type: Boolean,
