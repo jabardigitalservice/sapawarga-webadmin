@@ -222,7 +222,9 @@ class Notification extends \yii\db\ActiveRecord
     public function beforeSave($insert)
     {
         $this->author_id = Yii::$app->user->getId();
-        $this->generateMeta();
+        if (!$this->meta) {
+            $this->generateMeta();
+        }
 
         return parent::beforeSave($insert);
     }
@@ -299,18 +301,14 @@ class Notification extends \yii\db\ActiveRecord
     {
         switch ($this->category->name) {
             case self::CATEGORY_LABEL_POLLING:
-                if (!$this->meta) {
-                    $this->meta = [
-                        'target'    => 'polling',
-                    ];
-                }
+                $this->meta = [
+                    'target'    => 'polling',
+                ];
                 break;
             case self::CATEGORY_LABEL_SURVEY:
-                if (!$this->meta) {
-                    $this->meta = [
-                        'target'    => 'survey',
-                    ];
-                }
+                $this->meta = [
+                    'target'    => 'survey',
+                ];
                 break;
             case self::CATEGORY_LABEL_UPDATE:
                 $this->meta = [
