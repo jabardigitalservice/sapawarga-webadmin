@@ -220,6 +220,8 @@ export default {
         data.status = 10
         data.featured = true
 
+        console.log(data)
+
         if (this.isEdit) {
           const id = this.$route.params && this.$route.params.id
 
