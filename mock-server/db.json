@@ -901,7 +901,9 @@
         "icon_url": "https://i.ibb.co/ZX1HDcY/detik.png"
       },
       "source_url": "https://news.detik.com/berita/d-4601894/bpn-ingatkan-lagi-pesan-prabowo-tak-perlu-datang-ke-mk",
-      "meta": null,
+      "meta": {
+        "read_count": 1
+      },
       "status": 10,
       "status_label": "Aktif",
       "created_at": 1554706345,
@@ -924,7 +926,9 @@
         "icon_url": "https://i.ibb.co/ZX1HDcY/detik.png"
       },
       "source_url": "https://news.detik.com/berita-jawa-barat/d-4601897/tipu-tipu-orang-tua-siswa-di-bandung-akali-sistem-zonasi",
-      "meta": null,
+      "meta": {
+        "read_count": 0
+      },
       "status": 10,
       "status_label": "Aktif",
       "created_at": 1554706345,
@@ -947,7 +951,9 @@
         "icon_url": "https://i.ibb.co/ZX1HDcY/detik.png"
       },
       "source_url": "https://news.detik.com/berita/d-4601892/bobol-minimarket-8-kali-fahrul-ditangkap-polisi",
-      "meta": null,
+      "meta": {
+        "read_count": 2
+      },
       "status": 10,
       "status_label": "Aktif",
       "created_at": 1554706345,
