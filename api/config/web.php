@@ -227,6 +227,27 @@ $config = [
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',
+                    'controller' => 'v1/news-channel',
+                    'pluralize' => false,
+                    'tokens' => [
+                        '{id}' => '<id:\d+>',
+                    ],
+                    'extraPatterns' => []
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'v1/news',
+                    'pluralize' => false,
+                    'tokens' => [
+                        '{id}' => '<id:\d+>',
+                    ],
+                    'extraPatterns' => [
+                        'GET stats/channel' => 'stats-channel',
+                        'OPTIONS stats/channel' => 'options',
+                    ]
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
                     'controller' => 'v1/notification',
                     'tokens' => [
                         '{id}' => '<id:\d+>',
