@@ -43,6 +43,11 @@ class NewsController extends ActiveController
             ],
         ];
 
+        return $this->behaviorCors($behaviors);
+    }
+
+    protected function behaviorCors($behaviors)
+    {
         // remove authentication filter
         $auth = $behaviors['authenticator'];
         unset($behaviors['authenticator']);
@@ -62,6 +67,11 @@ class NewsController extends ActiveController
         // avoid authentication on CORS-pre-flight requests (HTTP OPTIONS method)
         $behaviors['authenticator']['except'] = ['options', 'public'];
 
+        return $this->behaviorAccess($behaviors);
+    }
+
+    protected function behaviorAccess($behaviors)
+    {
         // setup access
         $behaviors['access'] = [
             'class' => AccessControl::className(),
@@ -89,65 +99,11 @@ class NewsController extends ActiveController
 
         // Override Delete Action
         unset($actions['delete']);
-        unset($actions['create']);
-        unset($actions['update']);
 
         $actions['index']['prepareDataProvider'] = [$this, 'prepareDataProvider'];
         $actions['view']['findModel']            = [$this, 'findModel'];
 
         return $actions;
-    }
-
-    /**
-     * @return News|array
-     * @throws ServerErrorHttpException
-     * @throws \yii\base\InvalidConfigException
-     */
-    public function actionCreate()
-    {
-        $model   = new News();
-        $request = Yii::$app->getRequest()->getBodyParams();
-
-        $model->load($request, '');
-
-        if ($model->validate() === false) {
-            $response = Yii::$app->getResponse();
-            $response->setStatusCode(422);
-
-            return $model->getErrors();
-        }
-
-        if ($model->save(false)) {
-            $response = Yii::$app->getResponse();
-            $response->setStatusCode(201);
-
-            return $model;
-        }
-
-        throw new ServerErrorHttpException('Failed to create the object for unknown reason.');
-    }
-
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        $model->load(Yii::$app->getRequest()->getBodyParams(), '');
-
-        if ($model->validate() === false) {
-            $response = Yii::$app->getResponse();
-            $response->setStatusCode(422);
-
-            return $model->getErrors();
-        }
-
-        if ($model->save()) {
-            $response = Yii::$app->getResponse();
-            $response->setStatusCode(200);
-
-            return $model;
-        }
-
-        throw new ServerErrorHttpException('Failed to update the object for unknown reason.');
     }
 
     /**

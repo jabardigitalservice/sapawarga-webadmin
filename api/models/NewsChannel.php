@@ -56,26 +56,31 @@ class NewsChannel extends ActiveRecord
             'website',
             'meta',
             'status',
-            'status_label' => function () {
-                $statusLabel = '';
-                switch ($this->status) {
-                    case self::STATUS_ACTIVE:
-                        $statusLabel = Yii::t('app', 'status.active');
-                        break;
-                    case self::STATUS_DISABLED:
-                        $statusLabel = Yii::t('app', 'status.inactive');
-                        break;
-                    case self::STATUS_DELETED:
-                        $statusLabel = Yii::t('app', 'status.deleted');
-                        break;
-                }
-                return $statusLabel;
-            },
+            'status_label' => $this->getStatusLabel(),
             'created_at',
             'updated_at',
         ];
 
         return $fields;
+    }
+
+    protected function getStatusLabel()
+    {
+        $statusLabel = '';
+
+        switch ($this->status) {
+            case self::STATUS_ACTIVE:
+                $statusLabel = Yii::t('app', 'status.active');
+                break;
+            case self::STATUS_DISABLED:
+                $statusLabel = Yii::t('app', 'status.inactive');
+                break;
+            case self::STATUS_DELETED:
+                $statusLabel = Yii::t('app', 'status.deleted');
+                break;
+        }
+
+        return $statusLabel;
     }
 
     /**
