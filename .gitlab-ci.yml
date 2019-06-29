@@ -16,6 +16,7 @@ stages:
   - build
   - test
   - release
+  - deploy
 
 # code_quality:
 #   image: docker:stable
