@@ -101,13 +101,13 @@ deploy_staging:
   # only: 
   #   - master
   before_script:
-    - echo $SSH_STAGING_KEY_PRIVATE
-    - echo $SSH_STAGING_USERNAME
-    - echo $STAGING_HOST
     - 'which ssh-agent || ( apk update && apk add openssh-client )'
     - mkdir -p ~/.ssh
     - eval $(ssh-agent -s)
     - chmod 400 $SSH_STAGING_KEY_PRIVATE
     - ssh-add $SSH_STAGING_KEY_PRIVATE
   script:
-    - ssh -o StrictHostKeyChecking=no ${SSH_STAGING_USERNAME}@${STAGING_HOST} "pwd"
+    - ssh -o StrictHostKeyChecking=no ${SSH_STAGING_USERNAME}@${STAGING_HOST} "sudo docker ps"
+    - ssh -o StrictHostKeyChecking=no ${SSH_STAGING_USERNAME}@${STAGING_HOST} "sudo docker pull registry.gitlab.com/jdsteam/sapa-warga/sapawarga-app/sapawarga-api:latest"
+    - ssh -o StrictHostKeyChecking=no ${SSH_STAGING_USERNAME}@${STAGING_HOST} "sudo docker pull registry.gitlab.com/jdsteam/sapa-warga/sapawarga-app/sapawarga-backend:latest"
+    - ssh -o StrictHostKeyChecking=no ${SSH_STAGING_USERNAME}@${STAGING_HOST} "sudo docker pull registry.gitlab.com/jdsteam/sapa-warga/sapawarga-app/sapawarga-nginx:latest"
