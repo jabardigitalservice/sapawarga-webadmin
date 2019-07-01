@@ -206,6 +206,12 @@ export default {
         console.log(err)
       })
     },
+
+    photoUploaded(path, url) {
+      this.news.cover_path = path
+      console.log(this.news.cover_path)
+    },
+
     async submitForm() {
       const valid = await this.$refs.news.validate()
 
