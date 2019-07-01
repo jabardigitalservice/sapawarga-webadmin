@@ -708,4 +708,39 @@ class NewsCest
 
         $I->seeInDatabase('news', ['id' => 1, 'status' => -1]);
     }
+
+    public function getUserIncrementReadCountTest(ApiTester $I)
+    {
+        $read_count = 0;
+        $I->haveInDatabase('news', [
+            'id'          => 1,
+            'channel_id'  => 1,
+            'title'       => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+            'slug'        => 'lorem-ipsum-dolor-sit-amet-consectetur-adipiscing-elit',
+            'content'     => 'Maecenas porttitor suscipit ex vitae hendrerit. Nunc sollicitudin quam et libero fringilla, eget varius nunc hendrerit.',
+            'featured'    => false,
+            'source_date' => '2019-06-20',
+            'source_url'  => 'https://google.com',
+            'cover_path'  => 'covers/test.jpg',
+            'meta'        => json_encode(['read_count' => $read_count]),
+            'status'      => 10,
+            'created_at'  => '1554706345',
+            'updated_at'  => '1554706345',
+        ]);
+
+        $I->amUser('staffrw');
+
+        $I->sendGET('/v1/news/1');
+        $I->canSeeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $I->seeResponseContainsJson([
+            'success' => true,
+            'status'  => 200,
+        ]);
+
+        $new_read_count = $I->grabDataFromResponseByJsonPath('$.data.meta.read_count');
+
+        $I->assertEquals($read_count + 1, $new_read_count[0]);
+    }
 }

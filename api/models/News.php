@@ -33,6 +33,10 @@ class News extends ActiveRecord
     const STATUS_DISABLED = 0;
     const STATUS_ACTIVE = 10;
 
+    const META_DEFAULT = [
+        'read_count' => 0,
+    ];
+
     /**
      * {@inheritdoc}
      */
@@ -171,5 +175,17 @@ class News extends ActiveRecord
             ],
             BlameableBehavior::class,
         ];
+    }
+
+    /** @inheritdoc */
+    public function beforeSave($insert)
+    {
+        if ($insert) { // Model is created
+            $this->meta = [
+                'read_count' => 0
+            ];
+        }
+        
+        return parent::beforeSave($insert);
     }
 }
