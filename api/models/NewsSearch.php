@@ -21,7 +21,7 @@ class NewsSearch extends News
      */
     public function search($params)
     {
-        $query = News::find();
+        $query = News::find()->with('channel');
 
         // grid filtering conditions
         $query->andFilterWhere(['id' => $this->id]);
@@ -45,7 +45,7 @@ class NewsSearch extends News
 
     public function featuredList($params)
     {
-        $query = News::find();
+        $query = News::find()->with('channel');
 
         $query->andFilterWhere(['id' => $this->id]);
         $query->andFilterWhere(['featured' => true]);
