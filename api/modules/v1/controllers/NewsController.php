@@ -165,6 +165,12 @@ class NewsController extends ActiveController
             throw new NotFoundHttpException("Object not found: $id");
         }
 
+        // Increment read_count by 1
+        $meta = $model->meta;
+        $meta['read_count']++;
+        $model->meta = $meta;
+        $model->save(false);
+
         return $model;
     }
 

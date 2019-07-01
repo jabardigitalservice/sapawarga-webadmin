@@ -627,7 +627,7 @@ class NewsCest
 
     public function getUserIncrementReadCountTest(ApiTester $I)
     {
-        $read_count = 1;
+        $read_count = 0;
         $I->haveInDatabase('news', [
             'id'          => 1,
             'channel_id'  => 1,

@@ -139,4 +139,16 @@ class News extends ActiveRecord
             BlameableBehavior::class,
         ];
     }
+
+    /** @inheritdoc */
+    public function beforeSave($insert)
+    {
+        if ($insert) { // Model is created
+            $this->meta = [
+                'read_count' => 0
+            ];
+        }
+        
+        return parent::beforeSave($insert);
+    }
 }
