@@ -42,11 +42,27 @@
 
           <el-table-column align="center" label="Actions" width="150px">
             <template slot-scope="scope">
-              <router-link :to="'/aspirasi/detail/'+scope.row.id">
+              <router-link :to="'/news/detail/'+scope.row.id">
                 <el-button type="white" size="medium">
                   Lihat
                 </el-button>
               </router-link>
+              <router-link :to="'/news/edit/'+scope.row.id">
+                <el-button type="white" size="medium">
+                  Edit
+                </el-button>
+              </router-link>
+              <router-link :to="'/news/delete/'+scope.row.id">
+                <el-button type="white" size="medium">
+                  Hapus
+                </el-button>
+              </router-link>
+              <el-button v-if="scope.row.status === 10" type="danger" size="mini" @click="deactivateNews(scope.row.id)">
+                Deactivate
+              </el-button>
+              <el-button v-if="scope.row.status === 0" type="success" size="mini" @click="activateNews(scope.row.id)">
+                Activate
+              </el-button>
             </template>
           </el-table-column>
         </el-table>
