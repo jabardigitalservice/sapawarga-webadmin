@@ -2,18 +2,18 @@
 
 namespace tests\models\Attachment;
 
-use app\models\Attachment\PhoneBookPhotoForm;
+use app\models\Attachment\NewsPhotoForm;
 use Intervention\Image\Gd\Driver;
 use Intervention\Image\Image;
 use Intervention\Image\ImageManager;
 use Mockery as m;
 use yii\web\UploadedFile;
 
-class PhoneBookPhotoFormTest extends \Codeception\Test\Unit
+class NewsPhotoFormTest extends \Codeception\Test\Unit
 {
     public function testValidateRequired()
     {
-        $model = new PhoneBookPhotoForm();
+        $model = new NewsPhotoForm();
 
         $this->assertFalse($model->validate());
 
@@ -21,7 +21,7 @@ class PhoneBookPhotoFormTest extends \Codeception\Test\Unit
         $this->assertTrue($model->hasErrors('type'));
     }
 
-    public function testValidatePhoneBookPhotoSuccess()
+    public function testValidateSuccess()
     {
         $_FILES = [
             'file' => [
@@ -33,14 +33,14 @@ class PhoneBookPhotoFormTest extends \Codeception\Test\Unit
             ],
         ];
 
-        $model           = new PhoneBookPhotoForm();
+        $model           = new NewsPhotoForm();
         $model->file     = UploadedFile::getInstanceByName('file');
-        $model->type     = 'phonebook_photo';
+        $model->type     = 'news_photo';
 
         $this->assertTrue($model->validate());
     }
 
-    public function testValidatePhoneBookPhotoInvalidFileType()
+    public function testValidateInvalidFileType()
     {
         $_FILES = [
             'file' => [
@@ -52,9 +52,9 @@ class PhoneBookPhotoFormTest extends \Codeception\Test\Unit
             ],
         ];
 
-        $model           = new PhoneBookPhotoForm();
+        $model           = new NewsPhotoForm();
         $model->file     = UploadedFile::getInstanceByName('file');
-        $model->type     = 'phonebook_photo';
+        $model->type     = 'news_photo';
 
         $this->assertFalse($model->validate());
 
@@ -73,9 +73,9 @@ class PhoneBookPhotoFormTest extends \Codeception\Test\Unit
             ],
         ];
 
-        $model           = new PhoneBookPhotoForm();
+        $model           = new NewsPhotoForm();
         $model->file     = UploadedFile::getInstanceByName('file');
-        $model->type     = 'phonebook_photo';
+        $model->type     = 'news_photo';
 
         $model->validate();
 
@@ -94,16 +94,16 @@ class PhoneBookPhotoFormTest extends \Codeception\Test\Unit
             ],
         ];
 
-        $model           = new PhoneBookPhotoForm();
+        $model           = new NewsPhotoForm();
         $model->file     = UploadedFile::getInstanceByName('file');
-        $model->type     = 'phonebook_photo';
+        $model->type     = 'news_photo';
 
         $model->validate();
 
         $this->assertFalse($model->hasErrors('file'));
     }
 
-    public function testValidatePhoneBookPhotoFileSizeValid()
+    public function testValidateFileSizeValid()
     {
         $_FILES = [
             'file' => [
@@ -115,14 +115,14 @@ class PhoneBookPhotoFormTest extends \Codeception\Test\Unit
             ],
         ];
 
-        $model           = new PhoneBookPhotoForm();
+        $model           = new NewsPhotoForm();
         $model->file     = UploadedFile::getInstanceByName('file');
-        $model->type     = 'phonebook_photo';
+        $model->type     = 'news_photo';
 
         $this->assertTrue($model->validate());
     }
 
-    public function testValidatePhoneBookPhotoFileSizeBig()
+    public function testValidateFileSizeBig()
     {
         $_FILES = [
             'file' => [
@@ -134,9 +134,9 @@ class PhoneBookPhotoFormTest extends \Codeception\Test\Unit
             ],
         ];
 
-        $model           = new PhoneBookPhotoForm();
+        $model           = new NewsPhotoForm();
         $model->file     = UploadedFile::getInstanceByName('file');
-        $model->type     = 'phonebook_photo';
+        $model->type     = 'news_photo';
 
         $this->assertFalse($model->validate());
 
@@ -157,7 +157,7 @@ class PhoneBookPhotoFormTest extends \Codeception\Test\Unit
             return $image;
         });
 
-        $model = new PhoneBookPhotoForm();
+        $model = new NewsPhotoForm();
         $model->setImageProcessor($imageProcessor);
 
         $image = $model->cropAndResizePhoto($tempFilePath);
