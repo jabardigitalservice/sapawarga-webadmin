@@ -657,6 +657,6 @@ class NewsCest
 
         $new_read_count = $I->grabDataFromResponseByJsonPath('$.data.meta.read_count');
 
-        $I->assertEquals($read_count + 1, $new_read_count);
+        $I->assertEquals($read_count + 1, $new_read_count[0]);
     }
 }
