@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="components-container">
     <el-row :gutter="20">
-      <el-col :xs="24" :sm="16">
+      <el-col :xs="24" :sm="8" :lg="5">
         <!-- <el-alert
           v-if="form.status === 10"
           type="error"
@@ -54,11 +54,6 @@
           </el-form-item>
 
           <el-form-item>
-            <uploadPhoto />
-            <singleImage />
-          </el-form-item>
-
-          <el-form-item>
             <el-button type="primary" :loading="loading" @click="submitForm">{{ $t('crud.save-news') }}</el-button>
           </el-form-item>
 
@@ -70,14 +65,13 @@
 </template>
 
 <script>
-import singleImage from '@/components/Upload/singleImage'
-import uploadPhoto from '@/views/user/components/uploadPhoto'
+import AttachmentPhotoUpload from '@/components/AttachmentPhotoUpload'
 import { containsWhitespace, validUrl } from '@/utils/validate'
 import { fetchRecord, create, update } from '@/api/news'
 import Tinymce from '@/components/Tinymce'
 import moment from 'moment'
 export default {
-  components: { Tinymce, singleImage, uploadPhoto },
+  components: { Tinymce, AttachmentPhotoUpload },
   props: {
     isEdit: {
       type: Boolean,
@@ -115,7 +109,7 @@ export default {
         source_date: null,
         source_url: null,
         content: null,
-        cover_path: 'covers/test.jpg'
+        cover_path: null,
       },
       options: [
         {
@@ -244,7 +238,7 @@ export default {
 
         } else {
           await create(data)
-          console.log('data berhasil dibuat')
+          console.log(data)
 
           this.$message.success(this.$t('crud.create-success'))
 
