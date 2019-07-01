@@ -8,17 +8,26 @@
           </div>
           <el-table stripe :data="tableDataStatistik" :show-header="false" style="width: 100%">
             <el-table-column prop="title" />
-            <el-table-column prop="content" />
+            <el-table-column prop="count" />
           </el-table>
         </el-card>
-        <el-card v-if="tableDataStatistikTotal.length" class="top-space">
+        <el-card class="top-space">
           <el-table stripe :data="tableDataStatistikTotal" :show-header="false" style="width: 100%">
             <el-table-column prop="title" />
-            <el-table-column prop="content" />
+            <el-table-column prop="count" />
           </el-table>
         </el-card>
       </el-col>
       <el-col class="col-right" :xs="24" :sm="24" :md="24" :lg="14" :xl="14">
+        <el-row style="margin: 10px 0px">
+          <el-col :span="12">
+            <router-link :to="{ path: '/news/create' }">
+              <el-button type="primary" size="small" icon="el-icon-plus">
+                Tambah Berita Baru
+              </el-button>
+            </router-link>
+          </el-col>
+        </el-row>
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width; 100%" @sort-change="changeSort">
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
 
@@ -44,7 +53,7 @@
             <template slot-scope="scope">
               <router-link :to="'/news/detail/'+scope.row.id">
                 <el-button type="white" size="medium">
-                  Lihat
+                  View
                 </el-button>
               </router-link>
               <router-link :to="'/news/edit/'+scope.row.id">
@@ -52,15 +61,13 @@
                   Edit
                 </el-button>
               </router-link>
-              <router-link :to="'/news/delete/'+scope.row.id">
-                <el-button type="white" size="medium">
-                  Hapus
-                </el-button>
-              </router-link>
-              <el-button v-if="scope.row.status === 10" type="danger" size="mini" @click="deactivateNews(scope.row.id)">
+              <el-button type="danger" size="medium">
+                Delete
+              </el-button>
+              <el-button v-if="scope.row.status === 10" type="white" size="mini">
                 Deactivate
               </el-button>
-              <el-button v-if="scope.row.status === 0" type="success" size="mini" @click="activateNews(scope.row.id)">
+              <el-button v-if="scope.row.status === 0" type="success" size="mini">
                 Activate
               </el-button>
             </template>
@@ -73,7 +80,7 @@
 </template>
 
 <script>
-import { fetchList } from '@/api/news'
+import { fetchList, fetchStatistic } from '@/api/news'
 import Pagination from '@/components/Pagination'
 
 export default {
@@ -100,15 +107,12 @@ export default {
         limit: 10
       },
       tableDataStatistik: [],
-      tableDataStatistikTotal: []
-
-      /* dummy data
-      tableDataStatistik: [{ title: 'Kompas', content: 10 }, { title: 'Detik', content: 10 }],
-      tableDataStatistikTotal: [{ title: 'Semua Kategori', content: 20 }] */
+      tableDataStatistikTotal: [{ title: 'Semua Kategori', count: 0 }]
     }
   },
   created() {
     this.getList()
+    this.getStatistic()
   },
 
   methods: {
@@ -135,6 +139,16 @@ export default {
       this.listQuery.sort_by = e.prop
       this.listQuery.sort_order = e.order
       this.getList()
+    },
+
+    getStatistic() {
+      this.listLoading = true
+      fetchStatistic().then(response => {
+        this.tableDataStatistik = response.data.items
+        const totalChannels = this.tableDataStatistik.reduce((a, b) => a + b.count, 0)
+        this.tableDataStatistikTotal[0].count = totalChannels
+        this.listLoading = false
+      })
     }
   }
 }
