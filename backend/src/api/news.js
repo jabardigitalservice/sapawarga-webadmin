@@ -17,7 +17,7 @@ export function fetchRecord(id) {
 
 export function create(data) {
   return request({
-    url: 'http://35.247.135.93:3000/api/v1/news',
+    url: '/news',
     method: 'post',
     data
   })
