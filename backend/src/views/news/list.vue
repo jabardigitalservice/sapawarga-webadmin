@@ -11,30 +11,47 @@
             <el-table-column prop="content" />
           </el-table>
         </el-card>
-        <!-- <div class="warn-content map-title" style="display: inline-flex;
-    width: 100%;">
-          <p class="total">Total Kanal</p>
-          <p class="angka" style="margin-left: 70%;">100</p>
-        </div> -->
-        <el-card class="top-space" v-if="tableDataStatistikTotal.length">
+        <el-card v-if="tableDataStatistikTotal.length" class="top-space">
           <el-table stripe :data="tableDataStatistikTotal" :show-header="false" style="width: 100%">
             <el-table-column prop="title" />
             <el-table-column prop="content" />
           </el-table>
         </el-card>
       </el-col>
-      <!-- <el-col class="col-right" :xs="24" :sm="24" :md="24" :lg="14" :xl="14">
-        <el-card>
-          <div slot="header" class="clearfix">
-            <span>Isi Pesan</span>
-          </div>
-          <el-table stripe :data="tableDataPesan" :show-header="false" style="width: 100%">
-            <el-table-column prop="title" width="180" />
-            <el-table-column prop="content" />
-          </el-table>
-        </el-card>
-        <el-button v-if="!btnKirimDisable" class="button-send" type="primary" @click="actionApprove(status.active)">{{ $t('crud.send') }}</el-button>
-      </el-col> -->
+      <el-col class="col-right" :xs="24" :sm="24" :md="24" :lg="14" :xl="14">
+        <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width; 100%" @sort-change="changeSort">
+          <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
+
+          <el-table-column prop="title" sortable="custom" label="Judul Aspirasi" min-width="200" />
+
+          <el-table-column prop="category.name" sortable="custom" label="Kategori" min-width="100" />
+
+          <el-table-column prop="status" sortable="custom" class-name="status-col" label="Status" width="200px">
+            <template slot-scope="{row}">
+              <el-tag :type="row.status | statusFilter">
+                {{ row.status_label }}
+              </el-tag>
+            </template>
+          </el-table-column>
+
+          <el-table-column prop="created_at" sortable="custom" label="Dibuat" width="150">
+            <template slot-scope="{row}">
+              {{ row.created_at | moment('D MMMM YYYY HH:mm') }}
+            </template>
+          </el-table-column>
+
+          <el-table-column align="center" label="Actions" width="150px">
+            <template slot-scope="scope">
+              <router-link :to="'/aspirasi/detail/'+scope.row.id">
+                <el-button type="white" size="medium">
+                  Lihat
+                </el-button>
+              </router-link>
+            </template>
+          </el-table-column>
+        </el-table>
+        <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
+      </el-col>
     </el-row>
   </div>
 </template>
@@ -67,7 +84,41 @@ export default {
         limit: 10
       },
       tableDataStatistik: [],
-      tableDataStatistikTotal: [{title: 'Semua Kategori', content: this.total}],
+      tableDataStatistikTotal: []
+
+      /* dummy data 
+      tableDataStatistik: [{ title: 'Kompas', content: 10 }, { title: 'Detik', content: 10 }],
+      tableDataStatistikTotal: [{ title: 'Semua Kategori', content: 20 }] */
+    }
+  },
+  created() {
+    this.getList()
+  },
+
+  methods: {
+    getList() {
+      this.listLoading = true
+      fetchList(this.listQuery).then(response => {
+        this.list = response.data.items
+        this.total = response.data._meta.totalCount
+        this.listLoading = false
+      })
+    },
+
+    resetFilter() {
+      Object.assign(this.$data.listQuery, this.$options.data().listQuery)
+
+      this.getList()
+    },
+
+    getTableRowNumbering(index) {
+      return ((this.listQuery.page - 1) * this.listQuery.limit) + (index + 1)
+    },
+
+    changeSort(e) {
+      this.listQuery.sort_by = e.prop
+      this.listQuery.sort_order = e.order
+      this.getList()
     }
   }
 }
