@@ -16,6 +16,7 @@ use yii\db\ActiveRecord;
  * @property string $title
  * @property string $slug
  * @property string $cover_path
+ * @property string $cover_path_url
  * @property string $source_url
  * @property string $source_date
  * @property string $content
@@ -82,14 +83,16 @@ class News extends ActiveRecord
 
     public function fields()
     {
+        $bucket = Yii::$app->fileStorage->getBucket('imageFiles');
+
         $fields = [
             'id',
             'title',
             'content',
             'featured',
             'cover_path',
-            'cover_path_url' => function () {
-                return '';
+            'cover_path_url' => function () use ($bucket) {
+                return $bucket->getFileUrl($this->cover_path);
             },
             'source_date',
             'source_url',
@@ -104,26 +107,33 @@ class News extends ActiveRecord
             },
             'meta',
             'status',
-            'status_label'   => function () {
-                $statusLabel = '';
-                switch ($this->status) {
-                    case self::STATUS_ACTIVE:
-                        $statusLabel = Yii::t('app', 'status.active');
-                        break;
-                    case self::STATUS_DISABLED:
-                        $statusLabel = Yii::t('app', 'status.inactive');
-                        break;
-                    case self::STATUS_DELETED:
-                        $statusLabel = Yii::t('app', 'status.deleted');
-                        break;
-                }
-                return $statusLabel;
+            'status_label' => function () {
+                return $this->getStatusLabel();
             },
             'created_at',
             'updated_at',
         ];
 
         return $fields;
+    }
+
+    protected function getStatusLabel()
+    {
+        $statusLabel = '';
+
+        switch ($this->status) {
+            case self::STATUS_ACTIVE:
+                $statusLabel = Yii::t('app', 'status.active');
+                break;
+            case self::STATUS_DISABLED:
+                $statusLabel = Yii::t('app', 'status.inactive');
+                break;
+            case self::STATUS_DELETED:
+                $statusLabel = Yii::t('app', 'status.deleted');
+                break;
+        }
+
+        return $statusLabel;
     }
 
     /**

@@ -4,6 +4,7 @@ namespace app\modules\v1\controllers;
 
 use app\filters\auth\HttpBearerAuth;
 use app\models\Attachment\AspirasiPhotoForm;
+use app\models\Attachment\NewsPhotoForm;
 use app\models\Attachment\PhoneBookPhotoForm;
 use app\models\AttachmentForm;
 use Yii;
@@ -89,6 +90,9 @@ class AttachmentController extends ActiveController
                 break;
             case 'aspirasi_photo':
                 $model = new AspirasiPhotoForm();
+                break;
+            case 'news_photo':
+                $model = new NewsPhotoForm();
                 break;
         }
 
