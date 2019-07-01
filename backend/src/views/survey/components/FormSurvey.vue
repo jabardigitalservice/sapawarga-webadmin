@@ -72,7 +72,7 @@ import InputCategory from '@/components/InputCategory'
 const defaultForm = {
   title: null,
   category_id: null,
-  start_date: moment().startOf('day'),
+  start_date: moment().format('YYYY-MM-DD'),
   end_date: moment().add(1, 'days').format('YYYY-MM-DD'),
   external_url: null,
   status: null
@@ -170,6 +170,19 @@ export default {
     fetchData(id) {
       fetchRecord(id).then(response => {
         this.form = response.data
+        const now = moment().format('YYYY-MM-DD')
+        const tommorow = moment().add(1, 'days').format('YYYY-MM-DD')
+
+        if (moment(response.data.start_date).isAfter(now)) {
+          this.form.start_date = response.data.start_date
+        } else {
+          this.form.start_date = now
+        }
+        if (moment(response.data.end_date).isAfter(tommorow)) {
+          this.form.end_date = response.data.end_date
+        } else {
+          this.form.end_date = tommorow
+        }
       }).catch(err => {
         console.log(err)
       })
@@ -211,7 +224,7 @@ export default {
           data.status = 10
         }
 
-        data.start_date = moment(data.start_date).format('YYYY-MM-DD')
+        data.start_date = moment(this.form.start_date).format('YYYY-MM-DD')
         data.end_date = moment(data.end_date).format('YYYY-MM-DD')
 
         if (this.isEdit) {
