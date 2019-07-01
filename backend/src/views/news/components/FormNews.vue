@@ -245,7 +245,6 @@ export default {
           this.$message.success(this.$t('crud.create-success'))
 
           this.$route.push('/news/index')
-
         } else {
           await create(data)
           console.log(data)
