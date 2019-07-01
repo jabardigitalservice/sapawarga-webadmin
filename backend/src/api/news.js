@@ -16,6 +16,13 @@ export function fetchRecord(id) {
   })
 }
 
+export function fetchStatistic() {
+  return request({
+    url: '/news-channels',
+    method: 'get'
+  })
+}
+
 export function create(data) {
   return request({
     url: '/news',
