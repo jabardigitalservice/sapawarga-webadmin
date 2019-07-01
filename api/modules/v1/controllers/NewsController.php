@@ -5,7 +5,6 @@ namespace app\modules\v1\controllers;
 use app\filters\auth\HttpBearerAuth;
 use app\models\News;
 use app\models\NewsSearch;
-use Illuminate\Support\Arr;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\auth\CompositeAuth;
@@ -167,6 +166,9 @@ class NewsController extends ActiveController
 
         // Increment read_count by 1
         $meta = $model->meta;
+        if (!$meta) {
+            $meta = News::META_DEFAULT;
+        }
         $meta['read_count']++;
         $model->meta = $meta;
         $model->save(false);

@@ -31,6 +31,10 @@ class News extends ActiveRecord
     const STATUS_DISABLED = 0;
     const STATUS_ACTIVE = 10;
 
+    const META_DEFAULT = [
+        'read_count' => 0,
+    ];
+
     /**
      * {@inheritdoc}
      */
