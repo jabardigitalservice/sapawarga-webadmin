@@ -86,7 +86,7 @@ export default {
       tableDataStatistik: [],
       tableDataStatistikTotal: []
 
-      /* dummy data 
+      /* dummy data
       tableDataStatistik: [{ title: 'Kompas', content: 10 }, { title: 'Detik', content: 10 }],
       tableDataStatistikTotal: [{ title: 'Semua Kategori', content: 20 }] */
     }
