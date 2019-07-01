@@ -1,5 +1,6 @@
 import request from '@/utils/request'
 
+// url: 'http://35.247.135.93:3000/api/v1/news',
 export function fetchList(query) {
   return request({
     url: '/news',
