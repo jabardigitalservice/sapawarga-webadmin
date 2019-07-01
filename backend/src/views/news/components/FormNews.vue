@@ -54,6 +54,11 @@
           </el-form-item>
 
           <el-form-item>
+            <uploadPhoto />
+            <singleImage />
+          </el-form-item>
+
+          <el-form-item>
             <el-button type="primary" :loading="loading" @click="submitForm">{{ $t('crud.save-news') }}</el-button>
           </el-form-item>
 
