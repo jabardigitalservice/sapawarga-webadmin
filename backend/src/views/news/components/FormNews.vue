@@ -45,12 +45,6 @@
           </el-form-item>
 
           <el-form-item label="Konten Berita" prop="content">
-            <!-- <el-input
-              v-model="news.content"
-              type="textarea"
-              :rows="10"
-              placeholder="Konten Berita"
-            /> -->
             <div>
               <tinymce v-model="news.content" :height="300" />
             </div>
@@ -206,6 +200,7 @@ export default {
     fetchData(id) {
       fetchRecord(id).then(response => {
         this.news = response.data
+        console.log(response.data)
       }).catch(err => {
         console.log(err)
       })
