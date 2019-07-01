@@ -20,7 +20,7 @@
             <InputCategory v-model="form.category_id" category-type="survey" prop="category" style="width: 100%" />
           </el-form-item>
 
-          <el-form-item label="Tanggal Mulai" prop="start_date">
+          <el-form-item label="Tanggal Mulai">
             <el-date-picker
               v-model="form.start_date"
               type="date"
@@ -31,7 +31,7 @@
             />
           </el-form-item>
 
-          <el-form-item label="Tanggal Berakhir" prop="end_date">
+          <el-form-item label="Tanggal Berakhir">
             <el-date-picker
               v-model="form.end_date"
               type="date"
@@ -96,27 +96,6 @@ export default {
 
       callback()
     }
-    const validatorStartDate = (rule, value, callback) => {
-      const startDate = moment(this.form.start_date)
-      const endDate = moment(this.form.end_date)
-
-      if (endDate.isBefore(startDate) === true) {
-        callback(new Error('Tanggal Mulai harus sebelum Tanggal Selesai.'))
-      }
-
-      callback()
-    }
-
-    const validatorEndDate = (rule, value, callback) => {
-      const startDate = moment(this.form.start_date)
-      const endDate = moment(this.form.end_date)
-
-      if (startDate.isAfter(endDate) === true) {
-        callback(new Error('Tanggal Berakhir harus setelah Tanggal Mulai.'))
-      }
-
-      callback()
-    }
 
     const validatorUrl = (rule, value, callback) => {
       if (validUrl(value) === false) {
@@ -138,14 +117,6 @@ export default {
         ],
         category_id: [
           { required: true, message: 'Kategori harus diisi.', trigger: 'change' }
-        ],
-        start_date: [
-          { required: true, message: 'Tanggal Mulai harus diisi.', trigger: 'change' },
-          { validator: validatorStartDate, trigger: 'change' }
-        ],
-        end_date: [
-          { required: true, message: 'Tanggal Berakhir harus diisi.', trigger: 'change' },
-          { validator: validatorEndDate, trigger: 'change' }
         ],
         external_url: [
           { required: true, message: 'URL Survey harus diisi.', trigger: 'blur' },
