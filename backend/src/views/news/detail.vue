@@ -32,7 +32,6 @@ export default {
   methods: {
     getDetail() {
       fetchRecord(this.id).then(response => {
-        console.log(response.data)
         const { status_label, title, created_at } = response.data
         this.news = response.data
 
