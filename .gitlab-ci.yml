@@ -107,7 +107,5 @@ deploy_staging:
     - chmod 400 $SSH_STAGING_KEY_PRIVATE
     - ssh-add $SSH_STAGING_KEY_PRIVATE
   script:
+    - ssh -o StrictHostKeyChecking=no ${SSH_STAGING_USERNAME}@${STAGING_HOST} "cd /home/development/projects/sapawarga-app && git pull && sudo docker-compose pull && sudo docker-compose down && sudo docker-compose up -d"
     - ssh -o StrictHostKeyChecking=no ${SSH_STAGING_USERNAME}@${STAGING_HOST} "sudo docker ps"
-    - ssh -o StrictHostKeyChecking=no ${SSH_STAGING_USERNAME}@${STAGING_HOST} "sudo docker pull registry.gitlab.com/jdsteam/sapa-warga/sapawarga-app/sapawarga-api:latest"
-    - ssh -o StrictHostKeyChecking=no ${SSH_STAGING_USERNAME}@${STAGING_HOST} "sudo docker pull registry.gitlab.com/jdsteam/sapa-warga/sapawarga-app/sapawarga-backend:latest"
-    - ssh -o StrictHostKeyChecking=no ${SSH_STAGING_USERNAME}@${STAGING_HOST} "sudo docker pull registry.gitlab.com/jdsteam/sapa-warga/sapawarga-app/sapawarga-nginx:latest"
