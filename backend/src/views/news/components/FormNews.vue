@@ -106,7 +106,8 @@ export default {
         channel_id: null,
         source_date: null,
         source_url: null,
-        content: null
+        content: null,
+        cover_path: 'covers/test.jpg'
       },
       options: [
         {
