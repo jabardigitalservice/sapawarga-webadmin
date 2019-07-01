@@ -217,6 +217,8 @@ export default {
 
         Object.assign(data, this.news)
 
+        data.source_date = moment(data.source_date).format('YYYY-MM-DD')
+
         data.status = 10
         data.featured = true
 
