@@ -236,7 +236,7 @@ class PollingTest extends \Codeception\Test\Unit
     {
         $model = new Polling();
 
-        $model->question = file_get_contents(__DIR__ . '/../../data/1000chars.txt');
+        $model->question = file_get_contents(__DIR__ . '/../../data/10000chars.txt');
 
         $model->validate();
 

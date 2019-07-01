@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\validator\InputCleanValidator;
 use Jdsteam\Sapawarga\Behaviors\AreaBehavior;
 use Yii;
 use yii\behaviors\TimestampBehavior;
@@ -91,7 +92,10 @@ class Notification extends \yii\db\ActiveRecord
         return [
             [['title', 'status'], 'required'],
             [['title', 'description', 'rw', 'meta'], 'trim'],
-            ['title', 'string', 'max' => 255],
+            ['title', 'string', 'max' => 100],
+            ['title', InputCleanValidator::class],
+            ['description', 'string', 'max' => 1000],
+            ['description', InputCleanValidator::class],
             ['rw', 'string', 'length' => 3],
             [
                 'rw',
