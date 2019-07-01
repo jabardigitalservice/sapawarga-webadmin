@@ -21,6 +21,7 @@ use yii\db\ActiveRecord;
  * @property string $content
  * @property string $featured
  * @property string $channel_id
+ * @property \app\models\NewsChannel $channel
  * @property array $meta
  * @property int $seq
  * @property int $status
@@ -37,6 +38,11 @@ class News extends ActiveRecord
     public static function tableName()
     {
         return 'news';
+    }
+
+    public function getChannel()
+    {
+        return $this->hasOne(NewsChannel::class, ['id' => 'channel_id']);
     }
 
     /**
@@ -79,9 +85,26 @@ class News extends ActiveRecord
         $fields = [
             'id',
             'title',
+            'content',
+            'featured',
+            'cover_path',
+            'cover_path_url' => function () {
+                return '';
+            },
+            'source_date',
+            'source_url',
+            'channel_id',
+            'channel'        => function () {
+                return [
+                    'id'       => $this->channel->id,
+                    'name'     => $this->channel->name,
+                    'website'  => $this->channel->website,
+                    'icon_url' => $this->channel->icon_url,
+                ];
+            },
             'meta',
             'status',
-            'status_label' => function () {
+            'status_label'   => function () {
                 $statusLabel = '';
                 switch ($this->status) {
                     case self::STATUS_ACTIVE:
@@ -115,7 +138,7 @@ class News extends ActiveRecord
             'cover_path'  => 'Cover Path',
             'source_date' => 'Tanggal Berita',
             'source_url'  => 'URL Berita',
-            'contet'      => 'Konten Berita',
+            'content'     => 'Konten Berita',
             'featured'    => 'Berita Pilihan',
             'meta'        => 'Meta',
             'status'      => 'Status',

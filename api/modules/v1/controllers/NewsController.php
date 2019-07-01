@@ -5,7 +5,6 @@ namespace app\modules\v1\controllers;
 use app\filters\auth\HttpBearerAuth;
 use app\models\News;
 use app\models\NewsSearch;
-use Illuminate\Support\Arr;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\auth\CompositeAuth;
@@ -40,6 +39,7 @@ class NewsController extends ActiveController
                 'update' => ['put'],
                 'delete' => ['delete'],
                 'public' => ['get'],
+                'featured' => ['get'],
             ],
         ];
 
@@ -75,16 +75,16 @@ class NewsController extends ActiveController
         // setup access
         $behaviors['access'] = [
             'class' => AccessControl::className(),
-            'only' => ['index', 'view', 'create', 'update', 'delete'], //only be applied to
+            'only' => ['index', 'view', 'create', 'update', 'delete', 'featured'], //only be applied to
             'rules' => [
                 [
                     'allow' => true,
-                    'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                    'actions' => ['index', 'view', 'create', 'update', 'delete', 'featured'],
                     'roles' => ['newsManage'],
                 ],
                 [
                     'allow' => true,
-                    'actions' => ['index', 'view'],
+                    'actions' => ['index', 'view', 'featured'],
                     'roles' => ['newsList'],
                 ],
             ],
@@ -133,6 +133,15 @@ class NewsController extends ActiveController
         return 'ok';
     }
 
+    public function actionFeatured()
+    {
+        $params = Yii::$app->request->getQueryParams();
+
+        $search = new NewsSearch();
+
+        return $search->featuredList($params);
+    }
+
     /**
      * Checks the privilege of the current user.
      *
@@ -151,7 +160,7 @@ class NewsController extends ActiveController
 
     /**
      * @param $id
-     * @return mixed|Polling
+     * @return mixed|\app\models\News
      * @throws \yii\web\NotFoundHttpException
      */
     public function findModel($id)

@@ -242,6 +242,8 @@ $config = [
                         '{id}' => '<id:\d+>',
                     ],
                     'extraPatterns' => [
+                        'GET featured' => 'featured',
+                        'OPTIONS featured' => 'options',
                         'GET stats/channel' => 'stats-channel',
                         'OPTIONS stats/channel' => 'options',
                     ]

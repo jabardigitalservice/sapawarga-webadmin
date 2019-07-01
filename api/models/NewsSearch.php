@@ -43,6 +43,20 @@ class NewsSearch extends News
         return $this->getQueryAll($query, $params);
     }
 
+    public function featuredList($params)
+    {
+        $query = News::find();
+
+        $query->andFilterWhere(['id' => $this->id]);
+        $query->andFilterWhere(['featured' => true]);
+        $query->andFilterWhere(['status' => News::STATUS_ACTIVE]);
+
+        $params['sort_by']    = 'seq';
+        $params['sort_order'] = 'ascending';
+
+        return $this->getQueryAll($query, $params);
+    }
+
     protected function getQueryListUser($query, $params)
     {
         $filterStatusList = [
@@ -57,7 +71,7 @@ class NewsSearch extends News
     protected function getQueryAll($query, $params)
     {
         $pageLimit = Arr::get($params, 'limit');
-        $sortBy    = Arr::get($params, 'sort_by', 'created_at');
+        $sortBy    = Arr::get($params, 'sort_by', 'source_date');
         $sortOrder = Arr::get($params, 'sort_order', 'descending');
         $sortOrder = $this->getSortOrder($sortOrder);
 
