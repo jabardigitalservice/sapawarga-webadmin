@@ -16,11 +16,13 @@ use yii\db\ActiveRecord;
  * @property string $title
  * @property string $slug
  * @property string $cover_path
+ * @property string $cover_path_url
  * @property string $source_url
  * @property string $source_date
  * @property string $content
  * @property string $featured
  * @property string $channel_id
+ * @property \app\models\NewsChannel $channel
  * @property array $meta
  * @property int $seq
  * @property int $status
@@ -37,6 +39,11 @@ class News extends ActiveRecord
     public static function tableName()
     {
         return 'news';
+    }
+
+    public function getChannel()
+    {
+        return $this->hasOne(NewsChannel::class, ['id' => 'channel_id']);
     }
 
     /**
@@ -76,31 +83,57 @@ class News extends ActiveRecord
 
     public function fields()
     {
+        $bucket = Yii::$app->fileStorage->getBucket('imageFiles');
+
         $fields = [
             'id',
             'title',
+            'content',
+            'featured',
+            'cover_path',
+            'cover_path_url' => function () use ($bucket) {
+                return $bucket->getFileUrl($this->cover_path);
+            },
+            'source_date',
+            'source_url',
+            'channel_id',
+            'channel'        => function () {
+                return [
+                    'id'       => $this->channel->id,
+                    'name'     => $this->channel->name,
+                    'website'  => $this->channel->website,
+                    'icon_url' => $this->channel->icon_url,
+                ];
+            },
             'meta',
             'status',
             'status_label' => function () {
-                $statusLabel = '';
-                switch ($this->status) {
-                    case self::STATUS_ACTIVE:
-                        $statusLabel = Yii::t('app', 'status.active');
-                        break;
-                    case self::STATUS_DISABLED:
-                        $statusLabel = Yii::t('app', 'status.inactive');
-                        break;
-                    case self::STATUS_DELETED:
-                        $statusLabel = Yii::t('app', 'status.deleted');
-                        break;
-                }
-                return $statusLabel;
+                return $this->getStatusLabel();
             },
             'created_at',
             'updated_at',
         ];
 
         return $fields;
+    }
+
+    protected function getStatusLabel()
+    {
+        $statusLabel = '';
+
+        switch ($this->status) {
+            case self::STATUS_ACTIVE:
+                $statusLabel = Yii::t('app', 'status.active');
+                break;
+            case self::STATUS_DISABLED:
+                $statusLabel = Yii::t('app', 'status.inactive');
+                break;
+            case self::STATUS_DELETED:
+                $statusLabel = Yii::t('app', 'status.deleted');
+                break;
+        }
+
+        return $statusLabel;
     }
 
     /**
@@ -115,7 +148,7 @@ class News extends ActiveRecord
             'cover_path'  => 'Cover Path',
             'source_date' => 'Tanggal Berita',
             'source_url'  => 'URL Berita',
-            'contet'      => 'Konten Berita',
+            'content'     => 'Konten Berita',
             'featured'    => 'Berita Pilihan',
             'meta'        => 'Meta',
             'status'      => 'Status',

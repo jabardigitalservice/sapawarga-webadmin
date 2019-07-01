@@ -56,7 +56,9 @@ class NewsChannel extends ActiveRecord
             'website',
             'meta',
             'status',
-            'status_label' => $this->getStatusLabel(),
+            'status_label' => function () {
+                return $this->getStatusLabel();
+            },
             'created_at',
             'updated_at',
         ];
