@@ -20,7 +20,7 @@
             <InputCategory v-model="form.category_id" category-type="survey" prop="category" style="width: 100%" />
           </el-form-item>
 
-          <el-form-item label="Tanggal Mulai" prop="start_date">
+          <el-form-item label="Tanggal Mulai" prop="">
             <el-date-picker
               v-model="form.start_date"
               type="date"
@@ -31,7 +31,7 @@
             />
           </el-form-item>
 
-          <el-form-item label="Tanggal Berakhir" prop="end_date">
+          <el-form-item label="Tanggal Berakhir" prop="">
             <el-date-picker
               v-model="form.end_date"
               type="date"
