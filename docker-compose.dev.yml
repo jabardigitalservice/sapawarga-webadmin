@@ -1,44 +1,10 @@
 version: '3'
 services:
-  nginx:
-    build:
-      context: ./nginx
-      dockerfile: Dockerfile
-    image: registry.gitlab.com/jdsteam/sapa-warga/sapawarga-app/sapawarga-nginx:${IMAGETAG}
-    networks:
-      - internal
-    volumes:
-      - ./nginx:/etc/nginx/html
-    depends_on:
-      - api
-      - backend
-      - memcached
-    ports:
-      - 80:80
-      - 443:443
-
-  api:
-    build:
-      context: ./api
-    image: registry.gitlab.com/jdsteam/sapa-warga/sapawarga-app/sapawarga-api:${IMAGETAG}
-    networks:
-      - internal
-    depends_on:
-      - database
-    env_file:
-      - .env-dev
-    volumes:
-      - ./api:/srv
-      - /srv/vendor
-      - vol_storage:/srv/web/storage
-
   backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
     image: registry.gitlab.com/jdsteam/sapa-warga/sapawarga-app/sapawarga-backend:${IMAGETAG}
-    depends_on:
-      - api
     networks:
       - internal
     volumes:
@@ -46,29 +12,6 @@ services:
       - /app/node_modules
       - /app/dist
 
-  database:
-    image: mysql:5.7
-    networks:
-      - internal
-    ports:
-      - 3306:3306
-    env_file:
-      - .env-dev
-    volumes:
-      - vol_mysql_data:/var/lib/mysql
-    command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
-
-  memcached:
-    image: memcached:latest
-    networks:
-      - internal
-
 networks:
   internal:
     driver: bridge
-
-volumes:
-  vol_storage:
-    driver: local
-  vol_mysql_data:
-    driver: local

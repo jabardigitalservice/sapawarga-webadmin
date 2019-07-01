@@ -1,9 +1,5 @@
 version: "2"
 exclude_patterns:
-  - frontend/
-  - mock-server/
-  - nginx/
-  - assets/
   - backend/.github/
   - backend/build/
   - backend/dist/
@@ -13,7 +9,3 @@ exclude_patterns:
   - backend/public/
   - backend/tests/
   - backend/src/vendor/
-  - api/vendor/
-  - api/tests/
-  - api/web/
-  - api/migrations/
