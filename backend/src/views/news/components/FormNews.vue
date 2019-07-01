@@ -65,11 +65,14 @@
 </template>
 
 <script>
+import singleImage from '@/components/Upload/singleImage'
+import uploadPhoto from '@/views/user/components/uploadPhoto'
 import { containsWhitespace, validUrl } from '@/utils/validate'
 import { fetchRecord, create, update } from '@/api/news'
 import Tinymce from '@/components/Tinymce'
+import moment from 'moment'
 export default {
-  components: { Tinymce },
+  components: { Tinymce, singleImage, uploadPhoto },
   props: {
     isEdit: {
       type: Boolean,
