@@ -30,7 +30,8 @@ export default {
   },
   data() {
     return {
-      image_default: 'https://imgplaceholder.com/720x405/cccccc/757575/glyphicon-search?font-size=36',
+      // image_default: 'https://imgplaceholder.com/720x405/cccccc/757575/glyphicon-search?font-size=36',
+      image_default: require('@/assets/none.png'),
       image: null,
       image_url: null,
       loading: false
