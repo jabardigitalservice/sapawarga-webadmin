@@ -204,7 +204,6 @@ export default {
     fetchData(id) {
       fetchRecord(id).then(response => {
         this.news = response.data
-        console.log(response.data)
       }).catch(err => {
         console.log(err)
       })
@@ -212,7 +211,6 @@ export default {
 
     photoUploaded(path, url) {
       this.news.cover_path = path
-      console.log(this.news.cover_path)
     },
 
     async submitForm() {
@@ -234,8 +232,6 @@ export default {
         data.status = 0
         data.featured = false
 
-        console.log(data)
-
         if (this.isEdit) {
           const id = this.$route.params && this.$route.params.id
 
@@ -246,7 +242,6 @@ export default {
           this.$route.push('/news/index')
         } else {
           await create(data)
-          console.log(data)
 
           this.$message.success(this.$t('crud.create-success'))
 
