@@ -743,4 +743,47 @@ class NewsCest
 
         $I->assertEquals($read_count + 1, $new_read_count[0]);
     }
+
+    public function getAdminStatisticsTest(ApiTester $I)
+    {
+        $I->haveInDatabase('news_channels', [
+            'id'         => 2,
+            'name'       => 'Kompas',
+            'created_at' => '1554706345',
+            'updated_at' => '1554706345',
+        ]);
+        
+
+        $I->haveInDatabase('news', [
+            'id'          => 1,
+            'channel_id'  => 1,
+            'title'       => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+            'slug'        => 'lorem-ipsum-dolor-sit-amet-consectetur-adipiscing-elit',
+            'content'     => 'Maecenas porttitor suscipit ex vitae hendrerit. Nunc sollicitudin quam et libero fringilla, eget varius nunc hendrerit.',
+            'featured'    => false,
+            'source_date' => '2019-06-20',
+            'source_url'  => 'https://google.com',
+            'cover_path'  => 'covers/test.jpg',
+            'status'      => 10,
+            'created_at'  => '1554706345',
+            'updated_at'  => '1554706345',
+        ]);
+
+        $I->amStaff();
+
+        $I->sendGET('/v1/news/statistics');
+        $I->seeResponseContainsJson([
+            'success' => true,
+            'status'  => 200,
+        ]);
+
+        $I->seeHttpHeader('X-Pagination-Total-Count', 2);
+
+        $data = $I->grabDataFromResponseByJsonPath('$.data.items');
+
+        $I->assertEquals(1, $data[0][0]['id']);
+        $I->assertEquals(1, $data[0][0]['count']);
+        $I->assertEquals(2, $data[0][1]['id']);
+        $I->assertEquals(0, $data[0][1]['count']);
+    }
 }
