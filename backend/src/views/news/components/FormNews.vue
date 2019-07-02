@@ -257,7 +257,11 @@ export default {
     fetchData(id) {
       fetchRecord(id).then(response => {
         this.news = response.data
-        console.log(response.data)
+
+        if (response.data.status === 10) {
+          this.$message.error(this.$t('crud.polling-error-edit-published'))
+          this.$router.push('/news/index')
+        }
       }).catch(err => {
         console.log(err)
       })
