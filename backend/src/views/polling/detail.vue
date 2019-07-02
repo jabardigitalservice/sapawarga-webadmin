@@ -123,11 +123,11 @@ export default {
           },
           {
             title: 'Dimulai dari',
-            content: moment(start_date).format('DD-MM-YYYY') || '-'
+            content: moment(start_date).format('D MMMM YYYY') || '-'
           },
           {
             title: 'Sampai',
-            content: moment(end_date).format('DD-MM-YYYY') || '-'
+            content: moment(end_date).format('D MMMM YYYY') || '-'
           },
           {
             title: 'Status',

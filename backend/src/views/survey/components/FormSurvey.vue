@@ -20,7 +20,7 @@
             <InputCategory v-model="form.category_id" category-type="survey" prop="category" style="width: 100%" />
           </el-form-item>
 
-          <el-form-item label="Tanggal Mulai" prop="start_date">
+          <el-form-item label="Tanggal Mulai">
             <el-date-picker
               v-model="form.start_date"
               type="date"
@@ -31,7 +31,7 @@
             />
           </el-form-item>
 
-          <el-form-item label="Tanggal Berakhir" prop="end_date">
+          <el-form-item label="Tanggal Berakhir">
             <el-date-picker
               v-model="form.end_date"
               type="date"
@@ -72,7 +72,7 @@ import InputCategory from '@/components/InputCategory'
 const defaultForm = {
   title: null,
   category_id: null,
-  start_date: moment().startOf('day'),
+  start_date: moment().format('YYYY-MM-DD'),
   end_date: moment().add(1, 'days').format('YYYY-MM-DD'),
   external_url: null,
   status: null
@@ -92,27 +92,6 @@ export default {
     const validatorTitleWhitespace = (rule, value, callback) => {
       if (containsWhitespace(value) === true) {
         callback(new Error('Judul Survey yang diisi tidak valid.'))
-      }
-
-      callback()
-    }
-    const validatorStartDate = (rule, value, callback) => {
-      const startDate = moment(this.form.start_date)
-      const endDate = moment(this.form.end_date)
-
-      if (endDate.isBefore(startDate) === true) {
-        callback(new Error('Tanggal Mulai harus sebelum Tanggal Selesai.'))
-      }
-
-      callback()
-    }
-
-    const validatorEndDate = (rule, value, callback) => {
-      const startDate = moment(this.form.start_date)
-      const endDate = moment(this.form.end_date)
-
-      if (startDate.isAfter(endDate) === true) {
-        callback(new Error('Tanggal Berakhir harus setelah Tanggal Mulai.'))
       }
 
       callback()
@@ -139,14 +118,6 @@ export default {
         category_id: [
           { required: true, message: 'Kategori harus diisi.', trigger: 'change' }
         ],
-        start_date: [
-          { required: true, message: 'Tanggal Mulai harus diisi.', trigger: 'change' },
-          { validator: validatorStartDate, trigger: 'change' }
-        ],
-        end_date: [
-          { required: true, message: 'Tanggal Berakhir harus diisi.', trigger: 'change' },
-          { validator: validatorEndDate, trigger: 'change' }
-        ],
         external_url: [
           { required: true, message: 'URL Survey harus diisi.', trigger: 'blur' },
           { validator: validatorUrl, trigger: 'blur' }
@@ -170,6 +141,19 @@ export default {
     fetchData(id) {
       fetchRecord(id).then(response => {
         this.form = response.data
+        const now = moment().format('YYYY-MM-DD')
+        const tommorow = moment().add(1, 'days').format('YYYY-MM-DD')
+
+        if (moment(response.data.start_date).isAfter(now)) {
+          this.form.start_date = response.data.start_date
+        } else {
+          this.form.start_date = now
+        }
+        if (moment(response.data.end_date).isAfter(tommorow)) {
+          this.form.end_date = response.data.end_date
+        } else {
+          this.form.end_date = tommorow
+        }
       }).catch(err => {
         console.log(err)
       })
@@ -211,7 +195,7 @@ export default {
           data.status = 10
         }
 
-        data.start_date = moment(data.start_date).format('YYYY-MM-DD')
+        data.start_date = moment(this.form.start_date).format('YYYY-MM-DD')
         data.end_date = moment(data.end_date).format('YYYY-MM-DD')
 
         if (this.isEdit) {

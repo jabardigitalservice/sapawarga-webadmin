@@ -41,7 +41,7 @@
             :status-icon="true"
           >
             <el-form-item label="Judul Pesan" prop="title">
-              <el-input v-model="broadcast.title" type="text" placeholder="Judul Pesan" />
+              <el-input v-model="broadcast.title" type="text" placeholder="Judul Pesan (minimum 10 karakter, maksimum 100 karakter)" />
             </el-form-item>
             <el-form-item label="Kategori" prop="category_id">
               <InputCategory v-model="broadcast.category_id" category-type="broadcast" prop="category" />
@@ -51,7 +51,7 @@
                 v-model="broadcast.description"
                 type="textarea"
                 :rows="8"
-                placeholder="Tulis pesan broadcast"
+                placeholder="Tulis pesan broadcast (maksimum 1000 karakter)"
               />
             </el-form-item>
             <el-form-item>
@@ -140,7 +140,12 @@ export default {
         description: [
           {
             required: true,
-            message: 'Pesan harus diisi',
+            message: 'Isi pesan harus diisi',
+            trigger: 'blur'
+          },
+          {
+            max: 1000,
+            message: 'Isi pesan maksimal 1000 karakter',
             trigger: 'blur'
           },
           {
