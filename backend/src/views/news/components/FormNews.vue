@@ -89,14 +89,14 @@ export default {
 
     const validatorTitleWhitespaceContent = (rule, value, callback) => {
       if (containsWhitespace(value) === true) {
-        callback(new Error('Judul Berita yang diisi tidak valid'))
+        callback(new Error('Konten Berita yang diisi tidak valid'))
       }
       callback()
     }
 
     const validatorUrl = (rule, value, callback) => {
       if (validUrl(value) === false) {
-        callback(new Error('URL tidak valid.'))
+        callback(new Error('URL tidak valid'))
       }
 
       callback()
