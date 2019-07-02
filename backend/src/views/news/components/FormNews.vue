@@ -163,8 +163,8 @@ export default {
         }
       ],
       featuredOptions: [
-        { value: 1, label: 'Berita Utama'},
-        { value: 0, label: 'List'}
+        { value: 1, label: 'Berita Utama' },
+        { value: 0, label: 'List' }
       ],
       rules: {
         title: [
