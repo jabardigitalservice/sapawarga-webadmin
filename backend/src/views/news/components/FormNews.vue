@@ -235,6 +235,20 @@ export default {
             validator: validatorTitleWhitespaceContent,
             trigger: 'blur'
           }
+        ],
+        status: [
+          {
+            required: true,
+            message: 'Status Berita harus diisi',
+            trigger: 'blur'
+          }
+        ],
+        featured: [
+          {
+            required: true,
+            message: 'Prioritas Berita harus diisi',
+            trigger: 'blur'
+          }
         ]
       }
     }
