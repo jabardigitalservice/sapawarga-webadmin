@@ -52,6 +52,10 @@
 
           <el-form-item>
             <el-button type="primary" :loading="loading" @click="submitForm">{{ $t('crud.save-news') }}</el-button>
+
+            <router-link :to="'/news/index'">
+              <el-button type="info">{{ $t('crud.cancel') }}</el-button>
+            </router-link>
           </el-form-item>
 
         </el-form>
@@ -227,8 +231,8 @@ export default {
 
         data.source_date = moment(data.source_date).format('YYYY-MM-DD')
 
-        data.status = 10
-        data.featured = true
+        data.status = 0
+        data.featured = false
 
         console.log(data)
 
