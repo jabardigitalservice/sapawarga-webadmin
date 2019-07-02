@@ -149,19 +149,7 @@ export default {
         },
         {
           value: 3,
-          label: 'Tempo'
-        },
-        {
-          value: 4,
-          label: 'Pikiran'
-        },
-        {
-          value: 5,
-          label: 'Tribun News'
-        },
-        {
-          value: 6,
-          label: 'Republika'
+          label: 'Tribun Jabar'
         }
       ],
       statusOptions: [
@@ -275,7 +263,6 @@ export default {
 
     photoUploaded(path, url) {
       this.news.cover_path = path
-      console.log(this.news.cover_path)
     },
 
     async submitForm() {
