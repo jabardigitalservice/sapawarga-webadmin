@@ -73,7 +73,8 @@
           </el-form-item>
 
           <el-form-item>
-            <el-button type="primary" :loading="loading" @click="submitForm">{{ $t('crud.save-news') }}</el-button>
+            <el-button v-if="isEdit" type="primary" :loading="loading" @click="submitForm">{{ $t('crud.save-update') }}</el-button>
+            <el-button v-else type="primary" :loading="loading" @click="submitForm">{{ $t('crud.save-news') }}</el-button>
 
             <router-link :to="'/news/index'">
               <el-button type="info">{{ $t('crud.cancel') }}</el-button>
