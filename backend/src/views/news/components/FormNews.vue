@@ -5,13 +5,13 @@
         <AttachmentPhotoUpload type="news_photo" :initial-url="news.cover_url" style="margin-bottom: 25px" @onUpload="photoUploaded" />
       </el-col>
       <el-col :xs="24" :sm="16" :lg="19">
-        <!-- <el-alert
-          v-if="form.status === 10"
+        <el-alert
+          v-if="news.status === 10"
           type="error"
           description="Data sudah aktif, Anda tidak bisa mengubah data ini."
           show-icon
           style="margin-bottom: 15px"
-        /> -->
+        />
 
         <el-form ref="news" :model="news" :rules="rules" :status-icon="true" label-width="160px">
           <el-form-item label="Judul Berita" prop="title">
