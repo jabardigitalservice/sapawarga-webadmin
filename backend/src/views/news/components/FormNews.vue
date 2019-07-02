@@ -253,6 +253,12 @@ export default {
       }
     }
   },
+  created() {
+    if (this.isEdit) {
+      const id = this.$route.params && this.$route.params.id
+      this.fetchData(id)
+    }
+  },
   methods: {
     fetchData(id) {
       fetchRecord(id).then(response => {
