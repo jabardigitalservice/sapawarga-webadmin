@@ -253,7 +253,10 @@ export default {
           this.$router.push('/news/index')
         }
       } catch (e) {
-        console.log(e)
+        const imageError = e.response.data.data[0].field
+        if (imageError === 'cover_path') {
+          this.$message.error(this.$t('errors.news-image-null'))
+        }
       } finally {
         this.loading = false
       }
