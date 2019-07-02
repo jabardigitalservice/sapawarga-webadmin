@@ -284,22 +284,18 @@ export default {
 
         data.source_date = moment(data.source_date).format('YYYY-MM-DD')
 
-        data.status = 0
-        data.featured = false
-
-        console.log(data)
-
         if (this.isEdit) {
           const id = this.$route.params && this.$route.params.id
 
           await update(id, data)
 
-          this.$message.success(this.$t('crud.create-success'))
+          this.$message.success(this.$t('crud.update-success'))
 
-          this.$route.push('/news/index')
+          this.$router.push('/news/index')
         } else {
+          data.status = 0
+          data.featured = false
           await create(data)
-          console.log(data)
 
           this.$message.success(this.$t('crud.create-success'))
 
