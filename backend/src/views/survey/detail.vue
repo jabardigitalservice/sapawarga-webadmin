@@ -15,7 +15,7 @@
         </el-card>
 
         <div style="margin-top: 25px">
-          <el-button v-if="record && record.status === 0" type="primary" @click="submitForm">{{ $t('crud.survey-send') }}</el-button>
+          <el-button v-if="record && record.status === 0" :disabled="btnDisableDate" type="primary" @click="submitForm">{{ $t('crud.survey-send') }}</el-button>
 
           <router-link :to="'/survey/index'">
             <el-button type="info">{{ $t('crud.back-to-list') }}</el-button>
@@ -37,7 +37,8 @@ export default {
   data() {
     return {
       tableDataRecord: [],
-      record: null
+      record: null,
+      btnDisableDate: false
     }
   },
   created() {
@@ -57,6 +58,21 @@ export default {
           status: status,
           status_label: status_label
         }
+
+        const dateStart = moment(start_date).startOf('day')
+        // const dateSecond = moment(end_date).endOf('day')
+        const currentDate = moment()
+
+        const checkStartDate = currentDate - dateStart
+        // const distance = dateSecond - currentDate
+
+        if (checkStartDate < 0) {
+          this.btnDisableDate = true
+        }
+
+        // if (distance < 0) {
+
+        // }
 
         this.tableDataRecord = [
           {
