@@ -107,7 +107,7 @@ export default {
       news: {
         title: null,
         channel_id: null,
-        source_date: null,
+        source_date: moment().startOf('day'),
         source_url: null,
         content: null,
         cover_path: null,
