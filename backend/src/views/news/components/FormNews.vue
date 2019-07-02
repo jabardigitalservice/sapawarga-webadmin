@@ -2,7 +2,7 @@
   <div class="components-container">
     <el-row :gutter="20">
       <el-col :xs="24" :sm="8" :lg="5">
-        <AttachmentPhotoUpload type="news_photo" :initial-url="news.cover_url" style="margin-bottom: 25px" @onUpload="photoUploaded" />
+        <AttachmentPhotoUpload type="news_photo" :initial-url="news.cover_path_url" style="margin-bottom: 25px" @onUpload="photoUploaded" />
       </el-col>
       <el-col :xs="24" :sm="16" :lg="19">
         <el-alert
