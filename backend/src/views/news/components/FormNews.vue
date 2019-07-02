@@ -164,6 +164,20 @@ export default {
           label: 'Republika'
         }
       ],
+      statusOptions: [
+        {
+          value: 10,
+          label: 'Aktif'
+        },
+        {
+          value: 0,
+          label: 'Tidak aktif'
+        }
+      ],
+      featuredOptions: [
+        { value: 1, label: 'Berita Utama'},
+        { value: 0, label: 'List'}
+      ],
       rules: {
         title: [
           {
