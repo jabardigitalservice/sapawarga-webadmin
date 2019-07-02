@@ -40,6 +40,28 @@
             />
           </el-form-item>
 
+          <el-form-item v-if="isEdit" label="Status" prop="status">
+            <el-select v-model="news.status" placeholder="Pilih status">
+              <el-option
+                v-for="item in statusOptions"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              />
+            </el-select>
+          </el-form-item>
+
+          <el-form-item v-if="isEdit" label="Set Prioritas" prop="featured">
+            <el-select v-model="news.featured" placeholder="Pilih prioritas">
+              <el-option
+                v-for="item in featuredOptions"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              />
+            </el-select>
+          </el-form-item>
+
           <el-form-item label="URL Berita" prop="source_url">
             <el-input v-model="news.source_url" type="text" placeholder="http://form.google.com" />
           </el-form-item>
