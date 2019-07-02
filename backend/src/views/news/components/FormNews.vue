@@ -134,7 +134,9 @@ export default {
         source_url: null,
         content: null,
         cover_path: null,
-        cover_url: null
+        cover_path_url: null,
+        status: null,
+        featured: null
       },
       options: [
         {
