@@ -149,6 +149,29 @@ export default {
         this.tableDataStatistikTotal[0].count = totalChannels
         this.listLoading = false
       })
+    },
+
+    async deleteNews(id) {
+      try {
+        await this.$confirm(this.$t('crud.delete-confirm'), 'warning', {
+          confirmButtonText: this.$t('common.confirm'),
+          cancelButtonText: this.$t('common.cancel'),
+          type: 'warning'
+        })
+
+        this.listLoading = true
+
+        await deleteData(id)
+
+        this.$message({
+          type: 'success',
+          message: this.$t('crud.delete-success')
+        })
+
+        this.getList()
+      } catch (e) {
+        console.log(e)
+      }
     }
   }
 }
