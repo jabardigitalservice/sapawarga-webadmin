@@ -80,7 +80,7 @@
 </template>
 
 <script>
-import { fetchList, fetchStatistic } from '@/api/news'
+import { fetchList, fetchStatistic, deleteData } from '@/api/news'
 import Pagination from '@/components/Pagination'
 
 export default {
