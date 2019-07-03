@@ -86,7 +86,7 @@ export default {
     'draft-success': 'Pesan berhasil disimpan di draft',
 
     'send-polling-success': 'Polling berhasil dipublikasikan',
-    'draft-polling-success': 'Polling berasil disimpan di draft',
+    'draft-polling-success': 'Polling berhasil disimpan di draft',
 
     'send-notification-success': 'Notifikasi berhasil di kirim',
     'draft-notification-success': 'Notifikasi berhasil di simpan di draft',
