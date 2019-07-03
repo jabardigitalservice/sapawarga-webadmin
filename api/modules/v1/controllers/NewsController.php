@@ -5,6 +5,7 @@ namespace app\modules\v1\controllers;
 use app\filters\auth\HttpBearerAuth;
 use app\models\News;
 use app\models\NewsSearch;
+use app\models\NewsStatistics;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\auth\CompositeAuth;
@@ -40,6 +41,7 @@ class NewsController extends ActiveController
                 'delete' => ['delete'],
                 'public' => ['get'],
                 'featured' => ['get'],
+                'statistics' => ['get'],
             ],
         ];
 
@@ -79,7 +81,7 @@ class NewsController extends ActiveController
             'rules' => [
                 [
                     'allow' => true,
-                    'actions' => ['index', 'view', 'create', 'update', 'delete', 'featured'],
+                    'actions' => ['index', 'view', 'create', 'update', 'delete', 'featured', 'statistics'],
                     'roles' => ['newsManage'],
                 ],
                 [
@@ -140,6 +142,13 @@ class NewsController extends ActiveController
         $search = new NewsSearch();
 
         return $search->featuredList($params);
+    }
+
+    public function actionStatistics()
+    {
+        $params = Yii::$app->request->getQueryParams();
+        $statistics = new NewsStatistics();
+        return $statistics->getStatistics($params);
     }
 
     /**
