@@ -133,17 +133,6 @@ class PollingTest extends \Codeception\Test\Unit
         $this->assertTrue($model->hasErrors('description'));
     }
 
-    public function testDescriptionTooLong()
-    {
-        $model = new Polling();
-
-        $model->description = file_get_contents(__DIR__ . '/../../data/1000chars.txt');
-
-        $model->validate();
-
-        $this->assertTrue($model->hasErrors('description'));
-    }
-
     public function testDescriptionMinCharacters()
     {
         $model = new Polling();
@@ -157,14 +146,7 @@ class PollingTest extends \Codeception\Test\Unit
 
     public function testDescriptionMaxCharacters()
     {
-        $model = new Polling();
-
-        // max 255 chars
-        $model->description = file_get_contents(__DIR__ . '/../../data/1000chars.txt');
-
-        $model->validate();
-
-        $this->assertTrue($model->hasErrors('description'));
+        // Maximum TEXT
     }
 
     public function testDescriptionNotSafe()
@@ -200,17 +182,6 @@ class PollingTest extends \Codeception\Test\Unit
         $this->assertTrue($model->hasErrors('excerpt'));
     }
 
-    public function testExcerptTooLong()
-    {
-        $model = new Polling();
-
-        $model->excerpt = file_get_contents(__DIR__ . '/../../data/1000chars.txt');
-
-        $model->validate();
-
-        $this->assertFalse($model->hasErrors('excerpt'));
-    }
-
     public function testExcerptMinCharacters()
     {
         $model = new Polling();
@@ -224,15 +195,9 @@ class PollingTest extends \Codeception\Test\Unit
 
     public function testExcerptMaxCharacters()
     {
-        $model = new Polling();
-
-        // allow 255 chars
-        $model->excerpt = file_get_contents(__DIR__ . '/../../data/255chars.txt');
-
-        $model->validate();
-
-        $this->assertFalse($model->hasErrors('excerpt'));
+        // Maximum TEXT
     }
+
 
     public function testExcerptNotSafe()
     {
@@ -271,7 +236,7 @@ class PollingTest extends \Codeception\Test\Unit
     {
         $model = new Polling();
 
-        $model->question = file_get_contents(__DIR__ . '/../../data/1000chars.txt');
+        $model->question = file_get_contents(__DIR__ . '/../../data/10000chars.txt');
 
         $model->validate();
 

@@ -18,7 +18,7 @@ export function fetchRecord(id) {
 
 export function fetchStatistic() {
   return request({
-    url: '/news-channels',
+    url: '/news/statistics',
     method: 'get'
   })
 }

@@ -22,7 +22,7 @@
             <el-table-column prop="content" />
           </el-table>
         </el-card>
-        <el-button v-if="!btnKirimDisable" class="button-send" type="primary" @click="actionApprove(status.active)">{{ $t('crud.send-polling') }}</el-button>
+        <el-button v-if="!btnKirimDisable" :disabled="btnDisableDate" class="button-send" type="primary" @click="actionApprove(status.active)">{{ $t('crud.send-polling') }}</el-button>
       </el-col>
     </el-row>
   </div>
@@ -38,6 +38,7 @@ export default {
       tableDataTarget: [],
       tableDataPolling: [],
       btnKirimDisable: false,
+      btnDisableDate: false,
       polling: null,
       status: {
         draft: 0,
@@ -78,6 +79,7 @@ export default {
 
         if (checkStartDate < 0) {
           beforeStart = true
+          this.btnDisableDate = true
         }
 
         if (distance < 0) {
@@ -123,11 +125,11 @@ export default {
           },
           {
             title: 'Dimulai dari',
-            content: start_date || '-'
+            content: moment(start_date).format('D MMMM YYYY') || '-'
           },
           {
             title: 'Sampai',
-            content: end_date || '-'
+            content: moment(end_date).format('D MMMM YYYY') || '-'
           },
           {
             title: 'Status',

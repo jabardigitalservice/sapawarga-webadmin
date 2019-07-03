@@ -49,7 +49,7 @@
               <el-input
                 v-model="notification.title"
                 type="text"
-                placeholder="Judul Notifikasi"
+                placeholder="Judul Notifikasi (minimum 10 karakter, maksimum 100 karakter)"
               />
             </el-form-item>
             <el-form-item label="Kategori" prop="category_id">
@@ -64,7 +64,7 @@
                 v-model="notification.description"
                 type="textarea"
                 :rows="8"
-                placeholder="Tulis pesan notifikasi"
+                placeholder="Tulis pesan notifikasi (maksimum 1000 karakter)"
               />
             </el-form-item>
             <el-form-item>
@@ -166,7 +166,12 @@ export default {
         description: [
           {
             required: true,
-            message: 'Pesan harus diisi',
+            message: 'Isi pesan harus diisi',
+            trigger: 'blur'
+          },
+          {
+            max: 1000,
+            message: 'Isi pesan maksimal 1000 karakter',
             trigger: 'blur'
           },
           {

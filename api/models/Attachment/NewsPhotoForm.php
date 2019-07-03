@@ -3,11 +3,17 @@
 namespace app\models\Attachment;
 
 use app\models\AttachmentForm;
-use Intervention\Image\ImageManager;
-use Yii;
 
-class PhoneBookPhotoForm extends AttachmentForm
+class NewsPhotoForm extends AttachmentForm
 {
+    /**
+     * @return string
+     */
+    protected function getRelativePath()
+    {
+        return 'news';
+    }
+
     /**
      * @param $filePath
      *

@@ -2,16 +2,16 @@
   <div class="components-container">
     <el-row :gutter="20">
       <el-col :xs="24" :sm="8" :lg="5">
-        <AttachmentPhotoUpload type="news_photo" :initial-url="news.cover_url" style="margin-bottom: 25px" @onUpload="photoUploaded" />
+        <AttachmentPhotoUpload type="news_photo" :initial-url="news.cover_path_url" style="margin-bottom: 25px" @onUpload="photoUploaded" />
       </el-col>
       <el-col :xs="24" :sm="16" :lg="19">
-        <!-- <el-alert
-          v-if="form.status === 10"
+        <el-alert
+          v-if="news.status === 10"
           type="error"
           description="Data sudah aktif, Anda tidak bisa mengubah data ini."
           show-icon
           style="margin-bottom: 15px"
-        /> -->
+        />
 
         <el-form ref="news" :model="news" :rules="rules" :status-icon="true" label-width="160px">
           <el-form-item label="Judul Berita" prop="title">
@@ -40,6 +40,28 @@
             />
           </el-form-item>
 
+          <el-form-item v-if="isEdit" label="Status" prop="status">
+            <el-select v-model="news.status" placeholder="Pilih status">
+              <el-option
+                v-for="item in statusOptions"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              />
+            </el-select>
+          </el-form-item>
+
+          <el-form-item v-if="isEdit" label="Set Prioritas" prop="featured">
+            <el-select v-model="news.featured" placeholder="Pilih prioritas">
+              <el-option
+                v-for="item in featuredOptions"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              />
+            </el-select>
+          </el-form-item>
+
           <el-form-item label="URL Berita" prop="source_url">
             <el-input v-model="news.source_url" type="text" placeholder="http://form.google.com" />
           </el-form-item>
@@ -51,7 +73,8 @@
           </el-form-item>
 
           <el-form-item>
-            <el-button type="primary" :loading="loading" @click="submitForm">{{ $t('crud.save-news') }}</el-button>
+            <el-button v-if="isEdit" type="primary" :loading="loading" @click="submitForm">{{ $t('crud.save-update') }}</el-button>
+            <el-button v-else type="primary" :loading="loading" @click="submitForm">{{ $t('crud.save-news') }}</el-button>
 
             <router-link :to="'/news/index'">
               <el-button type="info">{{ $t('crud.cancel') }}</el-button>
@@ -111,7 +134,9 @@ export default {
         source_url: null,
         content: null,
         cover_path: null,
-        cover_url: null
+        cover_path_url: null,
+        status: null,
+        featured: null
       },
       options: [
         {
@@ -124,20 +149,22 @@ export default {
         },
         {
           value: 3,
-          label: 'Tempo'
-        },
-        {
-          value: 4,
-          label: 'Pikiran'
-        },
-        {
-          value: 5,
-          label: 'Tribun News'
-        },
-        {
-          value: 6,
-          label: 'Republika'
+          label: 'Tribun Jabar'
         }
+      ],
+      statusOptions: [
+        {
+          value: 10,
+          label: 'Aktif'
+        },
+        {
+          value: 0,
+          label: 'Tidak aktif'
+        }
+      ],
+      featuredOptions: [
+        { value: 1, label: 'Berita Utama' },
+        { value: 0, label: 'List' }
       ],
       rules: {
         title: [
@@ -196,14 +223,39 @@ export default {
             validator: validatorTitleWhitespaceContent,
             trigger: 'blur'
           }
+        ],
+        status: [
+          {
+            required: true,
+            message: 'Status Berita harus diisi',
+            trigger: 'blur'
+          }
+        ],
+        featured: [
+          {
+            required: true,
+            message: 'Prioritas Berita harus diisi',
+            trigger: 'blur'
+          }
         ]
       }
+    }
+  },
+  created() {
+    if (this.isEdit) {
+      const id = this.$route.params && this.$route.params.id
+      this.fetchData(id)
     }
   },
   methods: {
     fetchData(id) {
       fetchRecord(id).then(response => {
         this.news = response.data
+
+        if (response.data.status === 10) {
+          this.$message.error(this.$t('crud.polling-error-edit-published'))
+          this.$router.push('/news/index')
+        }
       }).catch(err => {
         console.log(err)
       })
@@ -229,18 +281,17 @@ export default {
 
         data.source_date = moment(data.source_date).format('YYYY-MM-DD')
 
-        data.status = 0
-        data.featured = false
-
         if (this.isEdit) {
           const id = this.$route.params && this.$route.params.id
 
           await update(id, data)
 
-          this.$message.success(this.$t('crud.create-success'))
+          this.$message.success(this.$t('crud.update-success'))
 
-          this.$route.push('/news/index')
+          this.$router.push('/news/index')
         } else {
+          data.status = 0
+          data.featured = false
           await create(data)
 
           this.$message.success(this.$t('crud.create-success'))

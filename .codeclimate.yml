@@ -15,3 +15,5 @@ exclude_patterns:
   - backend/src/vendor/
   - api/vendor/
   - api/tests/
+  - api/web/
+  - api/migrations/

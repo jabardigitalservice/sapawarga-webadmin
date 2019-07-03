@@ -49,28 +49,63 @@ class BroadcastTest extends \Codeception\Test\Unit
         $this->assertFalse($model->hasErrors('rw'));
     }
 
-    public function testTitleTooLong()
+    public function testTitleMaximumCharactersShouldSuccess()
     {
         $model        = new Broadcast();
-        $model->title = 'l5WdQPtZ8J6pEf1vZl2eynOuFP4g8qHXXeyYvE4h0y72QCesFoSyQUGqmVKpbv3tqeqITczwX1DLIFKdX6CjrCoNbJiOGQXzaDhRB5Q45wtPl9OaZDa6dz4jzk58GsXQfAiihEGd9nKCudaoXSBqxf2AITfSlAJ0kH2KaikUBOLrMHniFBPbIs2byQTPVqQ8FbwfJoxjJyga4oSHxPQlDVdgb9DQ1LI3fIMklRHc4itLdlsmOWBxcEVw47nPoIQ6';
+        $model->title = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean m';
+
+        $model->validate();
+
+        $this->assertFalse($model->hasErrors('title'));
+    }
+
+    public function testTitleMaximumCharactersShouldFail()
+    {
+        $model        = new Broadcast();
+        $model->title = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean mx';
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('title'));
+    }
+
+    public function testTitleNotSafeShouldFail()
+    {
+        $model = new Broadcast();
+
+        $model->title = '<script>alert()</script>';
 
         $model->validate();
 
         $this->assertTrue($model->hasErrors('title'));
     }
 
-    public function testTitleMaxCharactersValid()
+    public function testDescriptionMaximumCharactersShouldSuccess()
     {
-        $model        = new Broadcast();
-        $model->title = 'Broadcast Title';
+        $model              = new Broadcast();
+        $model->description = file_get_contents(__DIR__ . '/../../data/1000chars.txt');
         $model->validate();
 
-        $this->assertFalse($model->hasErrors('title'));
+        $this->assertFalse($model->hasErrors('description'));
+    }
 
-        $model->title = 'l5WdQPtZ8J6pEf1vZl2eynOuFP4g8qHXXeyYvE4h0y72QCesFoSyQUGqmVKpbv3tqeqITczwX1DLIFKdX6CjrCoNbJiOGQXzaDhRB5Q45wtPl9OaZDa6dz4jzk58GsXQfAiihEGd9nKCudaoXSBqxf2AITfSlAJ0kH2KaikUBOLrMHniFBPbIs2byQTPVqQ8FbwfJoxjJyga4oSHxPQlDVdgb9DQ1LI3fIMklRHc4itLdlsmOWBxcEVw47nPoIQ';
+    public function testDescriptionMaximumCharactersShouldFail()
+    {
+        $model              = new Broadcast();
+        $model->description = file_get_contents(__DIR__ . '/../../data/1000chars.txt') . 'x';
         $model->validate();
 
-        $this->assertFalse($model->hasErrors('title'));
+        $this->assertTrue($model->hasErrors('description'));
+    }
+
+    public function testDescriptionNotSafeShouldFail()
+    {
+        $model = new Broadcast();
+
+        $model->description = '<script>alert()</script>';
+
+        $model->validate();
+
+        $this->assertTrue($model->hasErrors('description'));
     }
 
     public function testRWValidation()

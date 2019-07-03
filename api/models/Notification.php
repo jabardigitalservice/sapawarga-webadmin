@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\validator\InputCleanValidator;
 use Jdsteam\Sapawarga\Behaviors\AreaBehavior;
 use Yii;
 use yii\behaviors\TimestampBehavior;
@@ -91,7 +92,10 @@ class Notification extends \yii\db\ActiveRecord
         return [
             [['title', 'status'], 'required'],
             [['title', 'description', 'rw', 'meta'], 'trim'],
-            ['title', 'string', 'max' => 255],
+            ['title', 'string', 'max' => 100],
+            ['title', InputCleanValidator::class],
+            ['description', 'string', 'max' => 1000],
+            ['description', InputCleanValidator::class],
             ['rw', 'string', 'length' => 3],
             [
                 'rw',
@@ -222,15 +226,9 @@ class Notification extends \yii\db\ActiveRecord
     public function beforeSave($insert)
     {
         $this->author_id = Yii::$app->user->getId();
-
-        // Add meta for 'Update Apikasi' Notification category
-        if ($this->category->name == self::CATEGORY_LABEL_UPDATE) {
-            $this->meta = [
-                'target'    => 'url',
-                'url'       => self::URL_STORE_ANDROID,
-            ];
+        if (!$this->meta) {
+            $this->generateMeta();
         }
-
 
         return parent::beforeSave($insert);
     }
@@ -298,5 +296,32 @@ class Notification extends \yii\db\ActiveRecord
             'meta'              => $notif_meta,
         ];
         return $data;
+    }
+
+     /**
+     * Generates default meta based on category name
+     */
+    protected function generateMeta()
+    {
+        switch ($this->category->name) {
+            case self::CATEGORY_LABEL_POLLING:
+                $this->meta = [
+                    'target'    => 'polling',
+                ];
+                break;
+            case self::CATEGORY_LABEL_SURVEY:
+                $this->meta = [
+                    'target'    => 'survey',
+                ];
+                break;
+            case self::CATEGORY_LABEL_UPDATE:
+                $this->meta = [
+                    'target'    => 'url',
+                    'url'       => self::URL_STORE_ANDROID,
+                ];
+                break;
+            default:
+                break;
+        }
     }
 }

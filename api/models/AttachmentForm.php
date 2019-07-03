@@ -4,6 +4,7 @@ namespace app\models;
 
 use Illuminate\Support\Str;
 use Intervention\Image\ImageManager;
+use Yii;
 use yii\base\Model;
 use yii\web\UploadedFile;
 use yii2tech\filestorage\BucketInterface;
@@ -31,6 +32,56 @@ class AttachmentForm extends Model
      * @var string
      */
     protected $relativeFilePath;
+
+    public function rules()
+    {
+        $uploadMaxSize = Yii::$app->params['upload_max_size'];
+
+        return [
+            [['file', 'type'], 'required'],
+            [
+                'file',
+                'file',
+                'skipOnEmpty' => false,
+                'mimeTypes'   => 'image/jpeg, image/jpg, image/png',
+                'maxSize'     => $uploadMaxSize,
+            ],
+        ];
+    }
+
+    /**
+     * @return bool
+     */
+    public function upload()
+    {
+        /**
+         * @var \yii2tech\filestorage\BucketInterface $bucket
+         */
+        $bucket = Yii::$app->fileStorage->getBucket('imageFiles');
+        $imageProcessor = new ImageManager();
+
+        $this->setBucket($bucket);
+        $this->setImageProcessor($imageProcessor);
+
+        $tempFilePath = $this->file->tempName;
+
+        return $this->save($tempFilePath);
+    }
+
+    /**
+     * @param string $tempFilePath
+     * @return bool
+     */
+    public function save($tempFilePath)
+    {
+        if ($image = $this->cropAndResizePhoto($tempFilePath)) {
+            $this->relativeFilePath = $this->createFilePath();
+
+            return $this->bucket->saveFileContent($this->relativeFilePath, $image->encode());
+        }
+
+        return false;
+    }
 
     /**
      * @return string
