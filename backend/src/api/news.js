@@ -46,3 +46,10 @@ export function approval(id, data) {
     data
   })
 }
+
+export function deleteData(id) {
+  return request({
+    url: `/news/${id}`,
+    method: 'delete'
+  })
+}
