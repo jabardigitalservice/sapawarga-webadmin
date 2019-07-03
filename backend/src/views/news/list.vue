@@ -31,9 +31,9 @@
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width; 100%" @sort-change="changeSort">
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
 
-          <el-table-column prop="title" sortable="custom" label="Judul Aspirasi" min-width="200" />
+          <el-table-column prop="title" sortable="custom" label="Judul Berita" min-width="200" />
 
-          <el-table-column prop="category.name" sortable="custom" label="Kategori" min-width="100" />
+          <el-table-column prop="channel.name" label="Sumber" min-width="100" />
 
           <el-table-column prop="status" sortable="custom" class-name="status-col" label="Status" width="200px">
             <template slot-scope="{row}">
@@ -43,7 +43,7 @@
             </template>
           </el-table-column>
 
-          <el-table-column prop="created_at" sortable="custom" label="Dibuat" width="150">
+          <el-table-column prop="created_at" sortable="custom" label="Tanggal" width="150">
             <template slot-scope="{row}">
               {{ row.created_at | moment('D MMMM YYYY HH:mm') }}
             </template>
