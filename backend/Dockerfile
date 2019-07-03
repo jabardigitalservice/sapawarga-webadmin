@@ -31,8 +31,8 @@ RUN yarn build
 COPY image-files/ /
 RUN chmod 700 /usr/local/bin/docker-entrypoint.sh
 
-# Install nginx
-RUN apk --update add nginx
+# Install nginx, nano, bash, and python
+RUN apk --update add nginx bash nano python
 
 # Expose port 80
 EXPOSE 80

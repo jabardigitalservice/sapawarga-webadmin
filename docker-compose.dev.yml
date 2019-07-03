@@ -7,10 +7,8 @@ services:
     image: registry.gitlab.com/jdsteam/sapa-warga/sapawarga-app/sapawarga-backend:${IMAGETAG}
     networks:
       - internal
-    volumes:
-      - ./backend:/app
-      - /app/node_modules
-      - /app/dist
+    ports: 
+      - 80:80
 
 networks:
   internal:
