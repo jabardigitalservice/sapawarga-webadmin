@@ -59,8 +59,8 @@ test_backend:
 
 release_all:
   stage: release
-  only: 
-    - master
+  # only: 
+  #   - master
   script:
     - docker-compose -f docker-compose.dev.yml pull
     - docker images
@@ -69,8 +69,8 @@ release_all:
 
 deploy_staging:
   stage: deploy
-  only: 
-    - master
+  # only: 
+  #   - master
   before_script:
     - 'which ssh-agent || ( apk update && apk add openssh-client )'
     - mkdir -p ~/.ssh
