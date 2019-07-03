@@ -63,7 +63,7 @@ export default {
           },
           {
             title: 'Konten Berita',
-            content: content || 'Error'
+            content: this.strip(content) || 'Error'
           }
         ]
       })
