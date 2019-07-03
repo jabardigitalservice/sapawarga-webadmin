@@ -4,7 +4,7 @@ services:
     # build:
     #   context: ./backend
     #   dockerfile: Dockerfile
-    image: registry.gitlab.com/jdsteam/sapa-warga/sapawarga-app/sapawarga-backend:latest
+    image: registry.gitlab.com/jdsteam/sapa-warga/sapawarga-webadmin/sapawarga-backend:latest
     networks:
       - internal
     ports: 
