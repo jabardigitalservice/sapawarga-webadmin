@@ -17,7 +17,8 @@
 </template>
 
 <script>
-import { fetchRecord } from '@/api/news'
+import moment from 'moment'
+import newsApi from '@/api/news'
 export default {
   data() {
     return {
@@ -25,28 +26,28 @@ export default {
       news: null
     }
   },
-  created() {
+  mounted() {
     this.id = this.$route.params && this.$route.params.id
     this.getDetail()
   },
   methods: {
     getDetail() {
-      fetchRecord(this.id).then(response => {
-        const { status_label, title, created_at } = response.data
+      newsApi.fetchRecord(this.id).then(response => {
+        const { status_label, title, channel, source_date, featured, source_url, content } = response.data
         this.news = response.data
 
         this.tableDataNews = [
           {
             title: 'Judul Berita',
-            content: title || '-'
+            content: title || 'Error'
           },
           {
             title: 'Sumber',
-            content: status_label || '-'
+            content: (channel ? channel.name : 'Error')
           },
           {
             title: 'Tanggal Berita',
-            content: created_at || '-'
+            content: (source_date ? moment(source_date).format('DD-MM-YYYY') : 'Error')
           },
           {
             title: 'Status',
@@ -54,15 +55,15 @@ export default {
           },
           {
             title: 'Prioritas Berita',
-            content: status_label || '-'
+            content: (featured === 1 ? 'Halaman Utama' : 'List')
           },
           {
             title: 'URL Berita',
-            content: status_label || '-'
+            content: source_url || 'Error'
           },
           {
             title: 'Konten Berita',
-            content: status_label || '-'
+            content: content || 'Error'
           }
         ]
       })

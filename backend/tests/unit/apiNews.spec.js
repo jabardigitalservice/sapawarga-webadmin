@@ -1,7 +1,9 @@
 import flushPromises from "flush-promises"
 import nock from "nock"
-import { fetchList, fetchRecord } from "@/api/news"
-import newsListFixture from "./fixtures/newsList"
+import { fetchList } from "@/api/news"
+import newsApi from '@/api/news'
+import newsListFixture from './fixtures/newsList'
+import newsDetailFixture from './fixtures/newsDetail'
 
 describe("API News", () => {
 
@@ -26,13 +28,13 @@ describe("API News", () => {
 
     const request = nock("http://localhost")
     .get(`/news/${idNews}`)
-    .reply(200, expectedOneNews)
+    .reply(200, newsDetailFixture)
 
-    const result = await fetchRecord(idNews)
+    const result = await newsApi.fetchRecord(idNews)
     await flushPromises()
 
     expect(result).toBeDefined()
-    expect(result).toEqual(expectedOneNews)
+    expect(result).toEqual(newsDetailFixture)
     expect(request.isDone()).toBe(true)
   })
 });
