@@ -53,3 +53,9 @@ export function deleteData(id) {
     method: 'delete'
   })
 }
+
+const exportFunctions = {
+  fetchRecord
+}
+
+export default exportFunctions
