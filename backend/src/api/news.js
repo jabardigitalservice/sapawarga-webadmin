@@ -9,7 +9,7 @@ export function fetchList(query) {
   })
 }
 
-export function fetchRecord(id) {
+function fetchRecord(id) {
   return request({
     url: `/news/${id}`,
     method: 'get'
