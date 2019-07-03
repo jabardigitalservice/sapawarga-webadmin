@@ -61,7 +61,7 @@
                   Edit
                 </el-button>
               </router-link>
-              <el-button type="danger" size="medium">
+              <el-button type="danger" size="medium" @click="deleteNews(scope.row.id)">
                 Delete
               </el-button>
               <el-button v-if="scope.row.status === 10" type="white" size="mini">
