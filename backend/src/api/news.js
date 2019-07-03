@@ -9,7 +9,7 @@ export function fetchList(query) {
   })
 }
 
-export function fetchRecord(id) {
+function fetchRecord(id) {
   return request({
     url: `/news/${id}`,
     method: 'get'
@@ -46,3 +46,9 @@ export function approval(id, data) {
     data
   })
 }
+
+const exportFunctions = {
+  fetchRecord
+}
+
+export default exportFunctions
