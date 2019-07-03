@@ -246,6 +246,8 @@ $config = [
                         'OPTIONS featured' => 'options',
                         'GET stats/channel' => 'stats-channel',
                         'OPTIONS stats/channel' => 'options',
+                        'GET statistics' => 'statistics',
+                        'OPTIONS statistics' => 'options',
                     ]
                 ],
                 [
