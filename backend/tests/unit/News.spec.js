@@ -55,7 +55,7 @@ describe('News detail', () => {
       },
       {
         title: 'Tanggal Berita',
-        content: moment(newsDetailFixture.data.source_date).format('DD-MM-YYYY')
+        content: '10-07-2019'
       },
       {
         title: 'Status',
@@ -71,7 +71,7 @@ describe('News detail', () => {
       },
       {
         title: 'Konten Berita',
-        content: newsDetailFixture.data.content
+        content: 'Ini berita terbaru bulan juni'
       }
     ]
 

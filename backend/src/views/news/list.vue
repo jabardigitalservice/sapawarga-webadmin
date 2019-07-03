@@ -43,9 +43,9 @@
             </template>
           </el-table-column>
 
-          <el-table-column prop="created_at" sortable="custom" label="Tanggal" width="150">
+          <el-table-column prop="source_date" sortable="custom" label="Tanggal" width="150">
             <template slot-scope="{row}">
-              {{ row.created_at | moment('D MMMM YYYY HH:mm') }}
+              {{ row.source_date | moment('D MMMM YYYY') }}
             </template>
           </el-table-column>
 
