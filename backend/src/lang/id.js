@@ -101,6 +101,9 @@ export default {
     'activate-success': 'Data berhasil diaktifkan.',
     'deactivate-success': 'Data berhasil dinonaktifkan.',
 
+    'delete-confirm': 'Anda yakin ingin menghapus data ini?',
+    'delete-success': 'Data berhasil dihapus.',
+
     'polling-error-edit-published': 'Sudah dipublish, tidak dapat diedit.',
     'broadcast-error-edit-published': 'Sudah dipublish, tidak dapat di edit.',
     'notification-error-edit-published': 'Sudah dipublish, tidak dapat di edit.'
