@@ -41,10 +41,6 @@ code_quality:
 
 build_dev:
   stage: build
-  only:
-    changes:
-      - backend/**/*
-      - "*.yml"
   script:
     - docker-compose -f docker-compose.dev.yml build
     - docker images
@@ -52,10 +48,6 @@ build_dev:
 
 test_backend:
   stage: test
-  only:
-    changes:
-      - backend/**/*
-      - "*.yml"
   script:
     - docker-compose -f docker-compose.dev.yml pull
     - docker images
