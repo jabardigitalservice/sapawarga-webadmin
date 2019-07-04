@@ -46,7 +46,7 @@ build_dev:
     - docker images
     - docker-compose -f docker-compose.dev.yml push
 
-test_backend:
+test_webadmin:
   stage: test
   script:
     - docker-compose -f docker-compose.dev.yml pull
@@ -54,8 +54,8 @@ test_backend:
     - COMPOSE_HTTP_TIMEOUT=500 docker-compose -f docker-compose.dev.yml up -d
     - sleep 60
     - docker ps
-    - docker-compose -f docker-compose.dev.yml exec -T backend npm run lint
-    - docker-compose -f docker-compose.dev.yml exec -T backend npm run test:unit
+    - docker-compose -f docker-compose.dev.yml exec -T app npm run lint
+    - docker-compose -f docker-compose.dev.yml exec -T app npm run test:unit
 
 release_all:
   stage: release
@@ -64,8 +64,8 @@ release_all:
   script:
     - docker-compose -f docker-compose.dev.yml pull
     - docker images
-    - docker tag registry.gitlab.com/jdsteam/sapa-warga/sapawarga-webadmin/sapawarga-backend:${IMAGETAG} registry.gitlab.com/jdsteam/sapa-warga/sapawarga-webadmin/sapawarga-backend:latest
-    - docker push registry.gitlab.com/jdsteam/sapa-warga/sapawarga-webadmin/sapawarga-backend:latest
+    - docker tag registry.gitlab.com/jdsteam/sapa-warga/sapawarga-webadmin:${IMAGETAG} registry.gitlab.com/jdsteam/sapa-warga/sapawarga-webadmin:latest
+    - docker push registry.gitlab.com/jdsteam/sapa-warga/sapawarga-webadmin:latest
 
 deploy_staging:
   stage: deploy
