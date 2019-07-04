@@ -12,7 +12,7 @@
             <el-input v-model="listQuery.source" placeholder="Sumber" />
           </el-form-item>
         </el-col>
-        <el-col :span="6">
+        <el-col :span="5">
           <el-form-item style="margin-bottom: 0">
             <el-input v-model="listQuery.viewers" placeholder="Jumlah Pengunjung" />
           </el-form-item>
@@ -60,7 +60,6 @@ export default {
     checkPermission,
 
     submitSearch() {
-      console.log(this.listQuery);
       this.$emit("submit-search");
     },
 

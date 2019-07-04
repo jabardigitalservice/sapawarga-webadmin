@@ -84,6 +84,7 @@
 
 <script>
 import { fetchList, fetchStatistic, deleteData } from '@/api/news'
+import moment from 'moment'
 import Pagination from '@/components/Pagination'
 import ListFilter from './_listfilter'
 
@@ -109,6 +110,7 @@ export default {
         title: null,
         search: null,
         source: null,
+        source_date: null,
         page: 1,
         limit: 10
       },
@@ -124,7 +126,14 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
-      fetchList(this.listQuery).then(response => {
+
+       const data = {}
+
+        Object.assign(data, this.listQuery)
+
+        data.source_date = moment(data.source_date).format('YYYY-MM-DD')
+
+      fetchList(data).then(response => {
         this.list = response.data.items
         this.total = response.data._meta.totalCount
         this.listLoading = false
