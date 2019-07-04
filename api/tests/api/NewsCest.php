@@ -744,6 +744,14 @@ class NewsCest
         $I->assertEquals($read_count + 1, $new_read_count[0]);
     }
 
+    public function getUserStatisticsUnauthorizedTest(ApiTester $I)
+    {
+        $I->amUser('staffrw');
+
+        $I->sendGET('/v1/news/statistics');
+        $I->canSeeResponseCodeIs(403);
+    }
+
     public function getAdminStatisticsTest(ApiTester $I)
     {
         $I->haveInDatabase('news_channels', [
