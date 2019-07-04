@@ -73,7 +73,7 @@ class NewsJabarController extends Controller
                 [
                     'allow' => true,
                     'actions' => ['index'],
-                    'roles'   => ['admin', 'manageStaffs'],
+                    'roles'   => ['admin', 'manageStaffs', 'staffRW', 'user'],
                 ],
             ],
         ];
@@ -104,7 +104,9 @@ class NewsJabarController extends Controller
 
         $response = Yii::$app->getResponse();
         $response->format = \yii\web\Response::FORMAT_JSON;
-        $response->data = $this->parseNewsResponse($curlResponse);
+        $response->data = [
+            'items' => $this->parseNewsResponse($curlResponse)
+        ];
         $response->setStatusCode(200);
 
         return $response;
@@ -112,7 +114,7 @@ class NewsJabarController extends Controller
 
     protected function parseNewsResponse($rawResponse)
     {
-        $func = function($value) {
+        $func = function ($value) {
             return [
                 'id'            => $value['ID'],
                 'title'         => $value['post_title'],

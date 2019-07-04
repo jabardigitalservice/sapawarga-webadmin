@@ -1,9 +1,8 @@
-
 <?php
 
 class NewsJabarCest
 {
-    public function getNewsJabarStaffUnauthorizedTest(ApiTester $I)
+    public function getUserNewsJabarTest(ApiTester $I)
     {
         $I->amUser('staffrw');
 
@@ -16,6 +15,8 @@ class NewsJabarCest
             'status'  => 200,
         ]);
 
-        $I->seeHttpHeader('X-Pagination-Total-Count', 6);
+        $items = $I->grabDataFromResponseByJsonPath('$.data.items');
+
+        $I->assertEquals(6, count($items[0]));
     }
 }
