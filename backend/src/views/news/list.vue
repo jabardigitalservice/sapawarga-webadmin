@@ -167,10 +167,7 @@ export default {
       this.listLoading = true
       fetchStatistic().then(response => {
         this.tableDataStatistik = response.data.items
-        const totalChannels = this.tableDataStatistik.reduce(
-          (a, b) => a + b.count,
-          0
-        )
+        const totalChannels = this.tableDataStatistik.reduce((a, b) => a + parseInt(b.count), 0)
         this.tableDataStatistikTotal[0].count = totalChannels
         this.listLoading = false
       })

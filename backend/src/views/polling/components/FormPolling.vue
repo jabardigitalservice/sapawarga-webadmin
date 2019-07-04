@@ -119,7 +119,7 @@
 
             <el-form-item class="polling-button">
               <el-button v-show="checkStatus === 0 || checkStatus === null" class="draft-button" type="info" :loading="loading" @click="submitForm(status.draft)">{{ $t('crud.draft') }}</el-button>
-              <el-button v-show="!isEdit" type="primary" :loading="loading" @click="actionApprove(status.active)"> {{ $t('crud.send-polling') }}</el-button>
+              <el-button v-show="!isEdit" :disabled="btnDisableDate" type="primary" :loading="loading" @click="actionApprove(status.active)"> {{ $t('crud.send-polling') }}</el-button>
             </el-form-item>
           </el-form>
 
@@ -192,6 +192,7 @@ export default {
       },
       checkStatus: null,
       width: '300%',
+      btnDisableDate: false,
       start_date: moment().format('YYYY-MM-DD'),
       end_date: moment().add(1, 'days').format('YYYY-MM-DD'),
       question_type: null,
@@ -332,6 +333,18 @@ export default {
         this.polling.rw = null
       }
       this.resetRw()
+    },
+    start_date(e) {
+      const currentDate = moment()
+      const dateStart = moment(this.start_date).startOf('day')
+
+      const checkStartDate = currentDate - dateStart
+
+      if (checkStartDate < 0) {
+        this.btnDisableDate = true
+      } else {
+        this.btnDisableDate = false
+      }
     }
   },
   created() {
