@@ -236,6 +236,15 @@ $config = [
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',
+                    'controller' => 'v1/news-jabar',
+                    'pluralize' => false,
+                    'tokens' => [
+                        '{id}' => '<id:\d+>',
+                    ],
+                    'extraPatterns' => []
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
                     'controller' => 'v1/news',
                     'pluralize' => false,
                     'tokens' => [

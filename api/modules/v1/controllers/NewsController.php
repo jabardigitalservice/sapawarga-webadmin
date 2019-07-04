@@ -77,7 +77,7 @@ class NewsController extends ActiveController
         // setup access
         $behaviors['access'] = [
             'class' => AccessControl::className(),
-            'only' => ['index', 'view', 'create', 'update', 'delete', 'featured'], //only be applied to
+            'only' => ['index', 'view', 'create', 'update', 'delete', 'featured', 'statistics'], //only be applied to
             'rules' => [
                 [
                     'allow' => true,
