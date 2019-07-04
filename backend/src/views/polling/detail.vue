@@ -84,6 +84,7 @@ export default {
 
         if (distance < 0) {
           expired = true
+          this.btnDisableDate = true
         }
         // end of count down date
 
