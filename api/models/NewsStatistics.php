@@ -25,6 +25,7 @@ class NewsStatistics extends News
                 LEFT JOIN (
                     SELECT news.channel_id, COUNT(news.channel_id) as news_count
                     FROM news
+                    WHERE news.status <> :status_deleted
                     GROUP BY news.channel_id
                 ) as stat
                 ON news_channels.id = stat.channel_id';
@@ -35,6 +36,7 @@ class NewsStatistics extends News
 
         return new SqlDataProvider([
             'sql'      => $sql,
+            'params'   => [':status_deleted' => News::STATUS_DELETED],
             'sort'     => [
                 'defaultOrder'  => [$sortBy => $sortOrder],
                 'attributes'    => [
