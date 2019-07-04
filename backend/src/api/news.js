@@ -47,6 +47,13 @@ export function approval(id, data) {
   })
 }
 
+export function deleteData(id) {
+  return request({
+    url: `/news/${id}`,
+    method: 'delete'
+  })
+}
+
 const exportFunctions = {
   fetchRecord
 }

@@ -8,7 +8,12 @@
           </div>
           <el-table stripe :data="tableDataNews" :show-header="false" style="width: 100%">
             <el-table-column prop="title" width="180" />
-            <el-table-column prop="content" />
+            <el-table-column prop="content">
+              <template slot-scope="{row}">
+                <a v-if="validUrl(row.content)" :href="row.content" target="_blank" class="link">{{ row.content }}</a>
+                <span v-else>{{ row.content }}</span>
+              </template>
+            </el-table-column>
           </el-table>
         </el-card>
       </el-col>
@@ -63,11 +68,34 @@ export default {
           },
           {
             title: 'Konten Berita',
-            content: content || 'Error'
+            content: this.strip(content) || 'Error'
           }
         ]
       })
+    },
+
+    strip(html) {
+      var tmp = document.createElement('DIV')
+      tmp.innerHTML = html
+      return tmp.textContent || tmp.innerText || ''
+    },
+
+    validUrl(str) {
+      var pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
+        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+        '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+        '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+        '(\\#[-a-z\\d_]*)?$', 'i') // fragment locator
+      return !!pattern.test(str)
     }
   }
 }
 </script>
+
+<style>
+.link {
+  color: blue;
+  text-decoration: underline;
+}
+</style>

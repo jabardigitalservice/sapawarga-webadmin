@@ -43,9 +43,9 @@
             </template>
           </el-table-column>
 
-          <el-table-column prop="created_at" sortable="custom" label="Tanggal" width="150">
+          <el-table-column prop="source_date" sortable="custom" label="Tanggal" width="150">
             <template slot-scope="{row}">
-              {{ row.created_at | moment('D MMMM YYYY HH:mm') }}
+              {{ row.source_date | moment('D MMMM YYYY') }}
             </template>
           </el-table-column>
 
@@ -61,7 +61,7 @@
                   Edit
                 </el-button>
               </router-link>
-              <el-button type="danger" size="medium">
+              <el-button type="danger" size="medium" @click="deleteNews(scope.row.id)">
                 Delete
               </el-button>
               <el-button v-if="scope.row.status === 10" type="white" size="mini">
@@ -80,7 +80,7 @@
 </template>
 
 <script>
-import { fetchList, fetchStatistic } from '@/api/news'
+import { fetchList, fetchStatistic, deleteData } from '@/api/news'
 import Pagination from '@/components/Pagination'
 
 export default {
@@ -149,6 +149,29 @@ export default {
         this.tableDataStatistikTotal[0].count = totalChannels
         this.listLoading = false
       })
+    },
+
+    async deleteNews(id) {
+      try {
+        await this.$confirm(this.$t('crud.delete-confirm'), 'warning', {
+          confirmButtonText: this.$t('common.confirm'),
+          cancelButtonText: this.$t('common.cancel'),
+          type: 'warning'
+        })
+
+        this.listLoading = true
+
+        await deleteData(id)
+
+        this.$message({
+          type: 'success',
+          message: this.$t('crud.delete-success')
+        })
+
+        this.getList()
+      } catch (e) {
+        console.log(e)
+      }
     }
   }
 }

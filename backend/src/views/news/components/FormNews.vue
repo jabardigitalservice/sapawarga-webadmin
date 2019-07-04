@@ -91,7 +91,8 @@
 <script>
 import AttachmentPhotoUpload from '@/components/AttachmentPhotoUpload'
 import { containsWhitespace, validUrl } from '@/utils/validate'
-import { fetchRecord, create, update } from '@/api/news'
+import { create, update } from '@/api/news'
+import newsApi from '@/api/news'
 import Tinymce from '@/components/Tinymce'
 import moment from 'moment'
 export default {
@@ -249,7 +250,7 @@ export default {
   },
   methods: {
     fetchData(id) {
-      fetchRecord(id).then(response => {
+      newsApi.fetchRecord(id).then(response => {
         this.news = response.data
 
         if (response.data.status === 10) {

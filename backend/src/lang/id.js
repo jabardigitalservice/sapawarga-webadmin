@@ -86,7 +86,7 @@ export default {
     'draft-success': 'Pesan berhasil disimpan di draft',
 
     'send-polling-success': 'Polling berhasil dipublikasikan',
-    'draft-polling-success': 'Polling berasil disimpan di draft',
+    'draft-polling-success': 'Polling berhasil disimpan di draft',
 
     'send-notification-success': 'Notifikasi berhasil di kirim',
     'draft-notification-success': 'Notifikasi berhasil di simpan di draft',
@@ -100,6 +100,9 @@ export default {
     'deactivate-confirm': 'Anda yakin ingin menonaktifkan data ini?',
     'activate-success': 'Data berhasil diaktifkan.',
     'deactivate-success': 'Data berhasil dinonaktifkan.',
+
+    'delete-confirm': 'Anda yakin ingin menghapus data ini?',
+    'delete-success': 'Data berhasil dihapus.',
 
     'polling-error-edit-published': 'Sudah dipublish, tidak dapat diedit.',
     'broadcast-error-edit-published': 'Sudah dipublish, tidak dapat di edit.',
