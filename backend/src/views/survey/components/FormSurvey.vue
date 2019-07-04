@@ -160,14 +160,14 @@ export default {
     //
   },
   watch: {
-    'form.start_date' (e) {
+    'form.start_date'(e) {
       const currentDate = moment()
       const dateStart = moment(this.form.start_date).startOf('day')
 
       const checkStartDate = currentDate - dateStart
 
       if (checkStartDate < 0) {
-          this.btnDisableDate = true
+        this.btnDisableDate = true
       } else {
         this.btnDisableDate = false
       }

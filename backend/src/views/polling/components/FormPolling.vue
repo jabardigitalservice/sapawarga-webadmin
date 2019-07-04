@@ -341,7 +341,7 @@ export default {
       const checkStartDate = currentDate - dateStart
 
       if (checkStartDate < 0) {
-          this.btnDisableDate = true
+        this.btnDisableDate = true
       } else {
         this.btnDisableDate = false
       }
