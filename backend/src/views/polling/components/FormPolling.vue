@@ -335,7 +335,6 @@ export default {
       this.resetRw()
     },
     start_date(e) {
-      console.log(e)
       const currentDate = moment()
       const dateStart = moment(this.start_date).startOf('day')
 
