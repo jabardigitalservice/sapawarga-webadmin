@@ -4,17 +4,17 @@
       <el-row :gutter="10" type="flex">
         <el-col :span="6">
           <el-form-item style="margin-bottom: 0">
-            <el-input v-model="listQuery.name" placeholder="Judul" />
+            <el-input v-model="listQuery.search" placeholder="Judul" />
           </el-form-item>
         </el-col>
         <el-col :span="4">
           <el-form-item style="margin-bottom: 0">
-            <el-input v-model="listQuery.phone" placeholder="Sumber" />
+            <el-input v-model="listQuery.source" placeholder="Sumber" />
           </el-form-item>
         </el-col>
         <el-col :span="6">
           <el-form-item style="margin-bottom: 0">
-            <el-input v-model="listQuery.phone" placeholder="Jumlah Pengunjung" />
+            <el-input v-model="listQuery.viewers" placeholder="Jumlah Pengunjung" />
           </el-form-item>
         </el-col>
         <el-col :span="2">
@@ -56,41 +56,17 @@ export default {
     }
   },
 
-  computed: {
-    // filterAreaParentId() {
-    //   const authUser = this.$store.state.user
-    //   if (checkPermission(['staffKabkota'])) {
-    //     return parseInt(authUser.kabkota_id)
-    //   }
-    //   if (checkPermission(['staffKec'])) {
-    //     return parseInt(authUser.kec_id)
-    //   }
-    //   return null
-    // }
-  },
-
   methods: {
     checkPermission,
 
     submitSearch() {
+      console.log(this.listQuery);
       this.$emit("submit-search");
     },
 
     resetFilter() {
       this.$emit("reset-search");
     }
-
-    // changeKabkota(id) {
-    //   this.listQuery.kabkota_id = id
-    // },
-
-    // changeKecamatan(id) {
-    //   this.listQuery.kec_id = id
-    // },
-
-    // changeKelurahan(id) {
-    //   this.listQuery.kel_id = id
-    // }
   }
 };
 </script>

@@ -107,6 +107,8 @@ export default {
       listLoading: true,
       listQuery: {
         title: null,
+        search: null,
+        source: null,
         page: 1,
         limit: 10
       },
