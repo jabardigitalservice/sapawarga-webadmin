@@ -22,61 +22,70 @@
         <el-row style="margin: 10px 0px">
           <el-col :span="12">
             <router-link :to="{ path: '/news/create' }">
-              <el-button type="primary" size="small" icon="el-icon-plus">
-                Tambah Berita Baru
-              </el-button>
+              <el-button type="primary" size="small" icon="el-icon-plus">Tambah Berita Baru</el-button>
             </router-link>
           </el-col>
         </el-row>
 
-        <ListFilter :list-query.sync="listQuery" @submit-search="getList" @reset-search="resetFilter" />
+        <ListFilter
+          :list-query.sync="listQuery"
+          @submit-search="getList"
+          @reset-search="resetFilter"
+        />
 
-        <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width; 100%" @sort-change="changeSort">
+        <el-table
+          v-loading="listLoading"
+          :data="list"
+          border
+          stripe
+          fit
+          highlight-current-row
+          style="width; 100%"
+          @sort-change="changeSort"
+        >
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
 
           <el-table-column prop="title" sortable="custom" label="Judul Berita" min-width="200" />
 
           <el-table-column prop="channel.name" label="Sumber" min-width="100" />
 
-          <el-table-column prop="status" sortable="custom" class-name="status-col" label="Status" width="200px">
+          <el-table-column
+            prop="status"
+            sortable="custom"
+            class-name="status-col"
+            label="Status"
+            width="200px"
+          >
             <template slot-scope="{row}">
-              <el-tag :type="row.status | statusFilter">
-                {{ row.status_label }}
-              </el-tag>
+              <el-tag :type="row.status | statusFilter">{{ row.status_label }}</el-tag>
             </template>
           </el-table-column>
 
           <el-table-column prop="source_date" sortable="custom" label="Tanggal" width="150">
-            <template slot-scope="{row}">
-              {{ row.source_date | moment('D MMMM YYYY') }}
-            </template>
+            <template slot-scope="{row}">{{ row.source_date | moment('D MMMM YYYY') }}</template>
           </el-table-column>
 
           <el-table-column align="center" label="Actions" width="150px">
             <template slot-scope="scope">
               <router-link :to="'/news/detail/'+scope.row.id">
-                <el-button type="white" size="medium">
-                  View
-                </el-button>
+                <el-button type="white" size="medium">View</el-button>
               </router-link>
               <router-link :to="'/news/edit/'+scope.row.id">
-                <el-button type="white" size="medium">
-                  Edit
-                </el-button>
+                <el-button type="white" size="medium">Edit</el-button>
               </router-link>
-              <el-button type="danger" size="medium" @click="deleteNews(scope.row.id)">
-                Delete
-              </el-button>
-              <el-button v-if="scope.row.status === 10" type="white" size="mini">
-                Deactivate
-              </el-button>
-              <el-button v-if="scope.row.status === 0" type="success" size="mini">
-                Activate
-              </el-button>
+              <el-button type="danger" size="medium" @click="deleteNews(scope.row.id)">Delete</el-button>
+              <el-button v-if="scope.row.status === 10" type="white" size="mini">Deactivate</el-button>
+              <el-button v-if="scope.row.status === 0" type="success" size="mini">Activate</el-button>
             </template>
           </el-table-column>
         </el-table>
-        <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
+        <pagination
+          v-show="total>0"
+          :total="total"
+          :page.sync="listQuery.page"
+          :limit.sync="listQuery.limit"
+          @pagination="getList"
+        />
       </el-col>
     </el-row>
   </div>
@@ -109,8 +118,6 @@ export default {
       listQuery: {
         title: null,
         search: null,
-        source: null,
-        source_date: null,
         page: 1,
         limit: 10
       },
@@ -127,11 +134,11 @@ export default {
     getList() {
       this.listLoading = true
 
-       const data = {}
+      const data = {}
 
-        Object.assign(data, this.listQuery)
+      Object.assign(data, this.listQuery)
 
-        data.source_date = moment(data.source_date).format('YYYY-MM-DD')
+      data.source_date = moment(data.source_date).format('YYYY-MM-DD')
 
       fetchList(data).then(response => {
         this.list = response.data.items
@@ -147,7 +154,7 @@ export default {
     },
 
     getTableRowNumbering(index) {
-      return ((this.listQuery.page - 1) * this.listQuery.limit) + (index + 1)
+      return (this.listQuery.page - 1) * this.listQuery.limit + (index + 1)
     },
 
     changeSort(e) {
@@ -160,7 +167,10 @@ export default {
       this.listLoading = true
       fetchStatistic().then(response => {
         this.tableDataStatistik = response.data.items
-        const totalChannels = this.tableDataStatistik.reduce((a, b) => a + b.count, 0)
+        const totalChannels = this.tableDataStatistik.reduce(
+          (a, b) => a + b.count,
+          0
+        )
         this.tableDataStatistikTotal[0].count = totalChannels
         this.listLoading = false
       })
@@ -196,7 +206,7 @@ export default {
 @media only screen and (max-width: 1200px) {
   .col-right {
     margin-top: 20px;
-    margin-right: 20px !important
+    margin-right: 20px !important;
   }
 }
 
