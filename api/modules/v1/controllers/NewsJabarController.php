@@ -104,13 +104,28 @@ class NewsJabarController extends Controller
 
         $response = Yii::$app->getResponse();
         $response->format = \yii\web\Response::FORMAT_JSON;
-        $response->data = [$this->parseNewsResponse($curlResponse)];
+        $response->data = $this->parseNewsResponse($curlResponse);
         $response->setStatusCode(200);
 
         return $response;
     }
 
-    protected function parseNewsResponse()
+    protected function parseNewsResponse($rawResponse)
     {
+        $func = function($value) {
+            return [
+                'id'            => $value['ID'],
+                'title'         => $value['post_title'],
+                'thumbnail'     => $value['thumbnail'],
+                'url'           => $value['slug'],
+                'created_at'    => strtotime($value['tgl_publish']),
+                'updated_at'    => strtotime($value['tgl_publish']),
+            ];
+        };
+
+        $arrayResponse = json_decode($rawResponse, JSON_OBJECT_AS_ARRAY);
+
+        $result = array_map($func, $arrayResponse);
+        return $result;
     }
 }
