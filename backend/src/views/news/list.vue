@@ -74,8 +74,12 @@
                 <el-button type="white" size="medium">Edit</el-button>
               </router-link>
               <el-button type="danger" size="medium" @click="deleteNews(scope.row.id)">Delete</el-button>
-              <el-button v-if="scope.row.status === 10" type="white" size="mini">Deactivate</el-button>
-              <el-button v-if="scope.row.status === 0" type="success" size="mini">Activate</el-button>
+              <el-button v-if="scope.row.status === 10" type="white" size="mini" @click="deactivateRecord(scope.row.id)">
+                Deactivate
+              </el-button>
+              <el-button v-if="scope.row.status === 0" type="success" size="mini" @click="activateRecord(scope.row.id)">
+                Activate
+              </el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -92,7 +96,7 @@
 </template>
 
 <script>
-import { fetchList, fetchStatistic, deleteData } from '@/api/news'
+import { fetchList, fetchStatistic, deleteData, deactivate, activate } from '@/api/news'
 import moment from 'moment'
 import Pagination from '@/components/Pagination'
 import ListFilter from './_listfilter'
@@ -188,6 +192,51 @@ export default {
         this.$message({
           type: 'success',
           message: this.$t('crud.delete-success')
+        })
+
+        this.getList()
+      } catch (e) {
+        console.log(e)
+      }
+    },
+    async deactivateRecord(id) {
+      try {
+        await this.$confirm(this.$t('crud.deactivate-confirm'), 'Warning', {
+          confirmButtonText: this.$t('common.confirm'),
+          cancelButtonText: this.$t('common.cancel'),
+          type: 'warning'
+        })
+
+        this.listLoading = true
+
+        await deactivate(id)
+
+        this.$message({
+          type: 'success',
+          message: this.$t('crud.deactivate-success')
+        })
+
+        this.getList()
+      } catch (e) {
+        console.log(e)
+      }
+    },
+
+    async activateRecord(id) {
+      try {
+        await this.$confirm(this.$t('crud.activate-confirm'), 'Warning', {
+          confirmButtonText: this.$t('common.confirm'),
+          cancelButtonText: this.$t('common.cancel'),
+          type: 'warning'
+        })
+
+        this.listLoading = true
+
+        await activate(id)
+
+        this.$message({
+          type: 'success',
+          message: this.$t('crud.activate-success')
         })
 
         this.getList()
