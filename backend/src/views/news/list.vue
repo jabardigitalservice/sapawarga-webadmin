@@ -70,10 +70,10 @@
               <router-link :to="'/news/detail/'+scope.row.id">
                 <el-button type="white" size="medium">View</el-button>
               </router-link>
-              <router-link :to="'/news/edit/'+scope.row.id">
-                <el-button type="white" size="medium">Edit</el-button>
+              <router-link :to="(scope.row.status !== 10 ? '/news/edit/'+scope.row.id : '')">
+                <el-button type="white" size="medium" :disabled="scope.row.status === 10">Edit</el-button>
               </router-link>
-              <el-button type="danger" size="medium" @click="deleteNews(scope.row.id)">Delete</el-button>
+              <el-button :disabled="scope.row.status === 10" type="danger" size="medium" @click="deleteNews(scope.row.id)">Delete</el-button>
               <el-button v-if="scope.row.status === 10" type="white" size="mini" @click="deactivateRecord(scope.row.id)">
                 Deactivate
               </el-button>
