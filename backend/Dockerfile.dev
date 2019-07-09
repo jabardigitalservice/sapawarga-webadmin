@@ -1,0 +1,26 @@
+#################################
+# Development
+#################################
+FROM node:10.1-alpine as build
+
+# Create app folder
+RUN mkdir /app
+WORKDIR /app
+
+RUN apk update && apk upgrade && \
+	apk add --no-cache git
+RUN yarn global add @vue/cli
+
+# Copy package*.json to app folder
+COPY package.json yarn.lock /app/
+
+# Install app dependencies
+RUN yarn install
+
+# Copy all files to app folder
+COPY . /app
+
+# Install nano, bash
+RUN apk --update add bash nano
+
+EXPOSE 9527
