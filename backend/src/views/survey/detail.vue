@@ -1,12 +1,12 @@
 <template>
   <div class="app-container">
-    <p class="warn-content"><a href="#">Detail Survey</a></p>
+    <p class="warn-content"><a href="#">Detail Survei</a></p>
 
     <el-row>
       <el-col :sm="24">
         <el-card>
           <div slot="header" class="clearfix">
-            <span>Data Survey</span>
+            <span>Data Survei</span>
           </div>
           <el-table stripe :data="tableDataRecord" :show-header="false" style="width: 100%">
             <el-table-column prop="title" width="180" />
@@ -70,7 +70,7 @@ export default {
 
         this.tableDataRecord = [
           {
-            title: 'Nama Survey',
+            title: 'Nama Survei',
             content: title
           },
           {
@@ -86,7 +86,7 @@ export default {
             content: moment(end_date).format('D MMMM YYYY')
           },
           {
-            title: 'URL Survey',
+            title: 'URL Survei',
             content: <a href={external_url} target='_blank'>{external_url}</a>
           },
           {

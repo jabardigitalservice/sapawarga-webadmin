@@ -9,7 +9,7 @@
           <el-col :span="12">
             <router-link :to="{ path: '/notification/create' }">
               <el-button type="primary" size="small" icon="el-icon-plus">
-                Tambah Pesan Baru
+                Tambah Notifikasi Baru
               </el-button>
             </router-link>
           </el-col>

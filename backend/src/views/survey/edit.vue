@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <p class="warn-content"><a href="#">Edit Survey</a></p>
+    <p class="warn-content"><a href="#">Edit Survei</a></p>
     <Form :is-edit="true" />
   </div>
 </template>

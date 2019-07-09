@@ -11,23 +11,23 @@ export default {
     'user-list-kelurahan': 'Kelurahan',
     'user-list-rw': 'User Tingkat RW',
 
-    'nomor-penting-manage': 'Kelola Nomor Penting',
+    'nomor-penting-manage': 'Nomor Penting',
     'nomor-penting-list': 'Daftar Nomor Penting',
     'nomor-penting-create': 'Tambah Nomor Penting',
     'nomor-penting-edit': 'Edit Nomor Penting',
     'nomor-penting-detail': 'Detail Nomor Penting',
 
-    'broadcast-manage': 'Broadcast',
+    'broadcast-manage': 'Pesan',
     'broadcast-create': 'Tambah Pesan',
-    'broadcast-list': 'Daftar Broadcast',
-    'broadcast-edit': 'Edit Broadcast',
-    'broadcast-show': 'Detail Broadcast',
+    'broadcast-list': 'Daftar Pesan',
+    'broadcast-edit': 'Edit Pesan',
+    'broadcast-show': 'Detail Pesan',
 
-    'notification-manage': 'Notification',
-    'notification-create': 'Tambah Pesan',
-    'notification-list': 'Daftar Notification',
-    'notification-edit': 'Edit Notification',
-    'notification-show': 'Detail Notification',
+    'notification-manage': 'Notifikasi',
+    'notification-create': 'Tambah Notifikasi',
+    'notification-list': 'Daftar Notifikasi',
+    'notification-edit': 'Edit Notifikasi',
+    'notification-show': 'Detail Notifikasi',
 
     'aspiration-manage': 'Aspirasi Masyarakat',
     'aspiration-list': 'Aspirasi Masyarakat',
@@ -39,11 +39,11 @@ export default {
     'polling-detail': 'Detail Polling',
     'polling-edit': 'Edit Polling',
 
-    'survey-manage': 'Survey',
-    'survey-list': 'Daftar Survey',
-    'survey-create': 'Tambah Survey',
-    'survey-detail': 'Detail Survey',
-    'survey-edit': 'Edit Survey',
+    'survey-manage': 'Survei',
+    'survey-list': 'Daftar Survei',
+    'survey-create': 'Tambah Survei',
+    'survey-detail': 'Detail Survei',
+    'survey-edit': 'Edit Survei',
 
     'news-manage': 'Berita',
     'news-list': 'Daftar Berita',
@@ -73,8 +73,8 @@ export default {
     'send-polling': 'Publikasikan Polling',
     'publish-polling': 'Polling berhasil dipublikasikan',
 
-    'survey-send': 'Publikasikan Survey',
-    'survey-published': 'Survey berhasil dipublikasikan.',
+    'survey-send': 'Publikasikan Survei',
+    'survey-published': 'Survei berhasil dipublikasikan.',
 
     'insert-row': 'Tambah Baris Baru',
     'delete-row': 'Hapus',
@@ -117,8 +117,8 @@ export default {
 
     'polling-compare-date': 'Tanggal berakhir polling harus lebih besar dari tanggal mulai polling.',
     'polling-start-date': 'Tanggal mulai polling tidak boleh lebih kecil dari tanggal hari ini.',
-    'survey-start-date': 'Tanggal mulai survey tidak boleh lebih kecil dari tanggal hari ini.',
-    'survey-compare-date': 'Tanggal berakhir survey harus lebih besar dari tanggal mulai survey.',
+    'survey-start-date': 'Tanggal mulai survei tidak boleh lebih kecil dari tanggal hari ini.',
+    'survey-compare-date': 'Tanggal berakhir survei harus lebih besar dari tanggal mulai survei.',
 
     'news-image-null': 'Gambar tidak boleh kosong.'
 
