@@ -282,7 +282,11 @@ export default {
 
         if (this.isEdit) {
           const id = this.$route.params && this.$route.params.id
-
+          if(data.seq !== 999) {
+            data.featured = true
+          } else {
+            data.featured = false
+          }
           await update(id, data)
 
           this.$message.success(this.$t('crud.update-success'))
