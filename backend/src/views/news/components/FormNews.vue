@@ -130,7 +130,8 @@ export default {
         cover_path: null,
         cover_path_url: null,
         status: null,
-        featured: null
+        featured: null,
+        seq: null
       },
       options: [
         {
