@@ -84,7 +84,7 @@
 <script>
 import AttachmentPhotoUpload from '@/components/AttachmentPhotoUpload'
 import { containsWhitespace, validUrl } from '@/utils/validate'
-import { create, update } from '@/api/news'
+import { create, update, newsChannelList } from '@/api/news'
 import newsApi from '@/api/news'
 import Tinymce from '@/components/Tinymce'
 import moment from 'moment'
@@ -244,6 +244,7 @@ export default {
     if (this.isEdit) {
       const id = this.$route.params && this.$route.params.id
       this.fetchData(id)
+      this.getNewsChannel()
     }
   },
   methods: {
@@ -310,6 +311,11 @@ export default {
       } finally {
         this.loading = false
       }
+    },
+    getNewsChannel() {
+      newsChannelList().then(response => {
+        console.log(response.data.items)
+      })
     }
   }
 }
