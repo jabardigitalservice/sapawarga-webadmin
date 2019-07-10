@@ -45,7 +45,7 @@
           </el-form-item>
 
           <el-form-item v-if="isEdit" label="Set Prioritas" prop="featured">
-            <el-select v-model="news.featured" placeholder="Pilih prioritas">
+            <el-select v-model="news.seq" placeholder="Pilih prioritas">
               <el-option
                 v-for="item in featuredOptions"
                 :key="item.value"
