@@ -157,8 +157,12 @@ export default {
         }
       ],
       featuredOptions: [
-        { value: 1, label: 'Berita Utama' },
-        { value: 0, label: 'List' }
+        { value: 1, label: 'Berita Utama 1' },
+        { value: 2, label: 'Berita Utama 2' },
+        { value: 3, label: 'Berita Utama 3' },
+        { value: 4, label: 'Berita Utama 4' },
+        { value: 5, label: 'Berita Utama 5' },
+        { value: 999, label: 'List' }
       ],
       rules: {
         title: [
