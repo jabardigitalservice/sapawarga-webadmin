@@ -295,6 +295,7 @@ export default {
         } else {
           data.status = 0
           data.featured = false
+          data.seq = 999
           await create(data)
 
           this.$message.success(this.$t('crud.create-success'))
