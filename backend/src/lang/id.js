@@ -8,7 +8,7 @@ export default {
     'user-list-provinsi': 'Provinsi',
     'user-list-kabkota': 'Kabupaten / Kota',
     'user-list-kecamatan': 'Kecamatan',
-    'user-list-kelurahan': 'Kelurahan',
+    'user-list-kelurahan': 'Desa / Kelurahan',
     'user-list-rw': 'User Tingkat RW',
 
     'nomor-penting-manage': 'Nomor Penting',
