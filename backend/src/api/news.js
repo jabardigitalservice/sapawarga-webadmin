@@ -9,6 +9,14 @@ export function fetchList(query) {
   })
 }
 
+export function newsChannelList(query) {
+  return request({
+    url: '/news-channels',
+    method: 'get',
+    params: query
+  })
+}
+
 function fetchRecord(id) {
   return request({
     url: `/news/${id}`,
