@@ -51,7 +51,7 @@
                 v-model="broadcast.description"
                 type="textarea"
                 :rows="8"
-                placeholder="Tulis pesan broadcast (maksimum 1000 karakter)"
+                placeholder="Tulis pesan (maksimum 1000 karakter)"
               />
             </el-form-item>
             <el-form-item>
@@ -83,7 +83,7 @@ export default {
   data() {
     const whitespaceTitle = (rule, value, callback) => {
       if (containsWhitespace(value) === true) {
-        callback(new Error('Judul broadcast yang diisi tidak valid'))
+        callback(new Error('Judul pesan yang diisi tidak valid'))
       }
       callback()
     }
