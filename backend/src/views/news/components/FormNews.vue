@@ -15,9 +15,9 @@
             <el-select v-model="news.channel_id" placeholder="Pilih Sumber">
               <el-option
                 v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
               />
             </el-select>
           </el-form-item>
