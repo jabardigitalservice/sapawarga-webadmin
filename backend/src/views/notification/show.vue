@@ -65,7 +65,7 @@ export default {
 
         this.tableDataTarget = [
           {
-            title: 'Kota',
+            title: 'Kabupaten/Kota',
             content: ' : ' + ((kabkota !== null) ? kabkota.name : 'Semua Kab/Kota')
           },
           {
@@ -73,7 +73,7 @@ export default {
             content: ' : ' + ((kecamatan !== null) ? kecamatan.name : 'Semua Kecamatan')
           },
           {
-            title: 'Kelurahan/Desa',
+            title: 'Desa/Kelurahan',
             content: ' : ' + ((kelurahan !== null) ? kelurahan.name : 'Semua Kelurahan')
           },
           {
