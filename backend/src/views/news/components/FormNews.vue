@@ -48,9 +48,9 @@
             <el-select v-model="news.seq" placeholder="Pilih prioritas">
               <el-option
                 v-for="item in featuredOptions"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
               />
             </el-select>
           </el-form-item>
