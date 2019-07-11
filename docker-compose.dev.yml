@@ -3,14 +3,15 @@ services:
   app:
     build:
       context: ./backend
-      dockerfile: Dockerfile.dev
     networks:
       - internal
     ports: 
-      - 8080:9527
+      - 8080:8080
     volumes:
       - ./backend:/app
-    command: /bin/bash -c "yarn && yarn run dev"
+    environment:
+      - VUE_ENV_DEV=1
+      - NODE_ENV=development
 
 networks:
   internal:
