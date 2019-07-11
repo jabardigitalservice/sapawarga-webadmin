@@ -1,24 +1,24 @@
 <template>
   <div class="app-container">
     <el-row :gutter="10">
-      <el-col class="col-left" :xs="24" :sm="24" :md="24" :lg="10" :xl="10">
+      <el-col class="col-left" :xs="24" :sm="24" :md="24" :lg="7" :xl="7">
         <el-card>
           <div slot="header" class="clearfix">
             <span>Kanal Media</span>
           </div>
           <el-table stripe :data="tableDataStatistik" :show-header="false" style="width: 100%">
-            <el-table-column prop="title" />
-            <el-table-column prop="count" />
+            <el-table-column prop="title" align="left" />
+            <el-table-column prop="count" align="right" />
           </el-table>
         </el-card>
         <el-card class="top-space">
           <el-table stripe :data="tableDataStatistikTotal" :show-header="false" style="width: 100%">
             <el-table-column prop="title" />
-            <el-table-column prop="count" />
+            <el-table-column prop="count" align="right" />
           </el-table>
         </el-card>
       </el-col>
-      <el-col class="col-right" :xs="24" :sm="24" :md="24" :lg="14" :xl="14">
+      <el-col class="col-right" :xs="24" :sm="24" :md="24" :lg="17" :xl="17">
         <el-row style="margin: 10px 0px">
           <el-col :span="12">
             <router-link :to="{ path: '/news/create' }">
