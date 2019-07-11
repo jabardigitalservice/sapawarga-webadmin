@@ -49,14 +49,15 @@
 
           <el-table-column prop="title" sortable="custom" label="Judul Berita" min-width="200" />
 
-          <el-table-column prop="channel.name" label="Sumber" min-width="100" />
+          <el-table-column prop="channel.name" sortable="custom" label="Sumber" align="center" min-width="100" />
 
           <el-table-column
             prop="status"
             sortable="custom"
             class-name="status-col"
             label="Status"
-            width="200px"
+            align="center"
+            min-width="100"
           >
             <template slot-scope="{row}">
               <el-tag :type="row.status | statusFilter">
