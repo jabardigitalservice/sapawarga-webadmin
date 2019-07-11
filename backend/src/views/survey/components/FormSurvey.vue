@@ -48,7 +48,7 @@
 
           <el-form-item>
             <el-button v-if="form.status === null || form.status === 0" :loading="loading" @click="submitDraft">{{ $t('crud.draft') }}</el-button>
-            <el-button v-if="form.status === null || form.status === 0" type="primary" :loading="loading" @click="submitProcess">{{ $t('crud.save-publish') }}</el-button>
+            <el-button v-if="form.status === null || form.status === 0" :disabled="btnDisableDate" type="primary" :loading="loading" @click="submitProcess">{{ $t('crud.save-publish') }}</el-button>
 
             <router-link :to="'/survey/index'">
               <el-button type="info">{{ $t('crud.cancel') }}</el-button>
@@ -108,6 +108,7 @@ export default {
     return {
       form: Object.assign({}, defaultForm),
       loading: false,
+      btnDisableDate: false,
       rules: {
         title: [
           { required: true, message: 'Judul Survei harus diisi.', trigger: 'blur' },
@@ -128,6 +129,20 @@ export default {
   },
   computed: {
     //
+  },
+  watch: {
+    'form.start_date'(e) {
+      const currentDate = moment()
+      const dateStart = moment(this.form.start_date).startOf('day')
+
+      const checkStartDate = currentDate - dateStart
+
+      if (checkStartDate < 0) {
+        this.btnDisableDate = true
+      } else {
+        this.btnDisableDate = false
+      }
+    }
   },
   created() {
     if (this.isEdit) {

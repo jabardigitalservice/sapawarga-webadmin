@@ -83,6 +83,7 @@ describe('News detail', () => {
 
     expect(wrapper.vm.news).toEqual(newsDetailFixture.data)
     expect(wrapper.vm.tableDataNews).toEqual(expDataNews)
+    expect(wrapper.vm.validUrl(newsDetailFixture.data.source_url)).toBe(true)
   })
 
   it('show empty news detail', async () => {

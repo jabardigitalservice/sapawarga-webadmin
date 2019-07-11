@@ -60,11 +60,17 @@ export default {
         }
 
         const dateStart = moment(start_date).startOf('day')
+        const dateSecond = moment(end_date).endOf('day')
         const currentDate = moment()
 
         const checkStartDate = currentDate - dateStart
+        const distance = dateSecond - currentDate
 
         if (checkStartDate < 0) {
+          this.btnDisableDate = true
+        }
+
+        if (distance < 0) {
           this.btnDisableDate = true
         }
 
