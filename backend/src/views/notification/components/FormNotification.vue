@@ -166,12 +166,12 @@ export default {
         description: [
           {
             required: true,
-            message: 'Isi pesan harus diisi',
+            message: 'Isi pesan notifikasi harus diisi',
             trigger: 'blur'
           },
           {
             max: 1000,
-            message: 'Isi pesan maksimal 1000 karakter',
+            message: 'Isi pesan notifikasi maksimal 1000 karakter',
             trigger: 'blur'
           },
           {

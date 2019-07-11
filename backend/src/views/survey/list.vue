@@ -7,7 +7,7 @@
           <el-col :span="12">
             <router-link :to="{ path: '/survey/create' }">
               <el-button type="primary" size="small" icon="el-icon-plus">
-                Tambah Survey Baru
+                Tambah Survei Baru
               </el-button>
             </router-link>
           </el-col>
@@ -16,7 +16,7 @@
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%" @sort-change="changeSort">
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
 
-          <el-table-column prop="title" sortable="custom" label="Nama Survey" />
+          <el-table-column prop="title" sortable="custom" label="Nama Survei" />
 
           <el-table-column prop="start_date" sortable="custom" label="Mulai" width="150" align="center">
             <template slot-scope="{row}">

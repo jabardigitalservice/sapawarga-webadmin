@@ -1,101 +1,103 @@
 <template>
-  <el-row :gutter="40" class="panel-group">
-    <el-card class="box-card">
-      <div slot="header" class="clearfix">
-        <span>Total user per:</span>
-      </div>
-      <div style="margin-bottom:50px;">
-        <el-col v-if="(roleId == null && totalAllUser != null)" :xs="12" :sm="12" :lg="6" class="card-panel-col total-all">
-          <div class="card-panel">
-            <div class="card-panel-icon-wrapper icon-people-all">
-              <svg-icon icon-class="peoples" class-name="card-panel-icon" />
-            </div>
-            <div class="card-panel-description">
-              <div class="card-panel-text">
-                Semua
+  <div class="app-container">
+    <el-row :gutter="40" class="panel-group">
+      <el-card class="box-card">
+        <div slot="header" class="clearfix">
+          <span>Total user per:</span>
+        </div>
+        <div style="margin-bottom:50px;">
+          <el-col v-if="(roleId == null && totalAllUser != null)" :xs="12" :sm="12" :lg="6" class="card-panel-col total-all">
+            <div class="card-panel">
+              <div class="card-panel-icon-wrapper icon-people-all">
+                <svg-icon icon-class="peoples" class-name="card-panel-icon" />
               </div>
-              <count-to :start-val="0" :end-val="totalAllUser" :duration="duration" class="card-panel-num" />
-            </div>
-          </div>
-        </el-col>
-        <el-col v-if="(roleId == null && totalUserProvince != null) || (roleId == 'staffProv') && (totalUserProvince != null)" :xs="12" :sm="12" :lg="6" class="card-panel-col total-province">
-          <div class="card-panel">
-            <div class="card-panel-icon-wrapper icon-people-province">
-              <svg-icon icon-class="peoples" class-name="card-panel-icon" />
-            </div>
-            <div class="card-panel-description">
-              <div class="card-panel-text">
-                Provinsi
+              <div class="card-panel-description">
+                <div class="card-panel-text">
+                  Semua
+                </div>
+                <count-to :start-val="0" :end-val="totalAllUser" :duration="duration" class="card-panel-num" />
               </div>
-              <count-to :start-val="0" :end-val="totalUserProvince" :duration="duration" class="card-panel-num" />
             </div>
-          </div>
-        </el-col>
-        <el-col v-if="(roleId == null && totalUserKabKota != null) || (roleId == 'staffProv') || (roleId == 'staffKabkota')" :xs="12" :sm="12" :lg="6" class="card-panel-col total-kota">
-          <div class="card-panel">
-            <div class="card-panel-icon-wrapper icon-people-kota">
-              <svg-icon icon-class="peoples" class-name="card-panel-icon" />
-            </div>
-            <div class="card-panel-description">
-              <div class="card-panel-text">
-                Kota/Kab
+          </el-col>
+          <el-col v-if="(roleId == null && totalUserProvince != null) || (roleId == 'staffProv') && (totalUserProvince != null)" :xs="12" :sm="12" :lg="6" class="card-panel-col total-province">
+            <div class="card-panel">
+              <div class="card-panel-icon-wrapper icon-people-province">
+                <svg-icon icon-class="peoples" class-name="card-panel-icon" />
               </div>
-              <count-to :start-val="0" :end-val="totalUserKabKota" :duration="duration" class="card-panel-num" />
-            </div>
-          </div>
-        </el-col>
-        <el-col v-if="(roleId == null && totalUserKec != null) || (roleId == 'staffProv') || (roleId == 'staffKabkota') || (roleId == 'staffKec')" :xs="12" :sm="12" :lg="6" class="card-panel-col total-kec">
-          <div class="card-panel">
-            <div class="card-panel-icon-wrapper icon-people-kec">
-              <svg-icon icon-class="peoples" class-name="card-panel-icon" />
-            </div>
-            <div class="card-panel-description">
-              <div class="card-panel-text">
-                Kecamatan
+              <div class="card-panel-description">
+                <div class="card-panel-text">
+                  Provinsi
+                </div>
+                <count-to :start-val="0" :end-val="totalUserProvince" :duration="duration" class="card-panel-num" />
               </div>
-              <count-to :start-val="0" :end-val="totalUserKec" :duration="duration" class="card-panel-num" />
             </div>
-          </div>
-        </el-col>
-        <el-col v-if="(roleId == null && totalUserKel != null) || (roleId == 'staffProv') || (roleId == 'staffKabkota') || (roleId == 'staffKec') || (roleId == 'staffKel')" :xs="12" :sm="12" :lg="6" class="card-panel-col total-kel">
-          <div class="card-panel">
-            <div class="card-panel-icon-wrapper icon-people-kel">
-              <svg-icon icon-class="peoples" class-name="card-panel-icon" />
-            </div>
-            <div class="card-panel-description">
-              <div class="card-panel-text">
-                Kelurahan
+          </el-col>
+          <el-col v-if="(roleId == null && totalUserKabKota != null) || (roleId == 'staffProv') || (roleId == 'staffKabkota')" :xs="12" :sm="12" :lg="6" class="card-panel-col total-kota">
+            <div class="card-panel">
+              <div class="card-panel-icon-wrapper icon-people-kota">
+                <svg-icon icon-class="peoples" class-name="card-panel-icon" />
               </div>
-              <count-to :start-val="0" :end-val="totalUserKel" :duration="duration" class="card-panel-num" />
-            </div>
-          </div>
-        </el-col>
-        <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col total-rw">
-          <div class="card-panel">
-            <div class="card-panel-icon-wrapper icon-people-rw">
-              <svg-icon icon-class="peoples" class-name="card-panel-icon" />
-            </div>
-            <div class="card-panel-description">
-              <div class="card-panel-text">
-                RW
+              <div class="card-panel-description">
+                <div class="card-panel-text">
+                  Kota/Kab
+                </div>
+                <count-to :start-val="0" :end-val="totalUserKabKota" :duration="duration" class="card-panel-num" />
               </div>
-              <count-to :start-val="0" :end-val="totalUserRw" :duration="duration" class="card-panel-num" />
             </div>
-          </div>
-        </el-col>
-        <!-- <el-col :xs="12" :sm="12" :lg="6">
-          <el-card class="box-card">
-            <div slot="header" class="clearfix">
-              <span>Total Pengguna</span>
+          </el-col>
+          <el-col v-if="(roleId == null && totalUserKec != null) || (roleId == 'staffProv') || (roleId == 'staffKabkota') || (roleId == 'staffKec')" :xs="12" :sm="12" :lg="6" class="card-panel-col total-kec">
+            <div class="card-panel">
+              <div class="card-panel-icon-wrapper icon-people-kec">
+                <svg-icon icon-class="peoples" class-name="card-panel-icon" />
+              </div>
+              <div class="card-panel-description">
+                <div class="card-panel-text">
+                  Kecamatan
+                </div>
+                <count-to :start-val="0" :end-val="totalUserKec" :duration="duration" class="card-panel-num" />
+              </div>
             </div>
-            <div class="component-item">
-              <count-to :start-val="0" :end-val="totalAllUser" :duration="duration" class="" />
+          </el-col>
+          <el-col v-if="(roleId == null && totalUserKel != null) || (roleId == 'staffProv') || (roleId == 'staffKabkota') || (roleId == 'staffKec') || (roleId == 'staffKel')" :xs="12" :sm="12" :lg="6" class="card-panel-col total-kel">
+            <div class="card-panel">
+              <div class="card-panel-icon-wrapper icon-people-kel">
+                <svg-icon icon-class="peoples" class-name="card-panel-icon" />
+              </div>
+              <div class="card-panel-description">
+                <div class="card-panel-text">
+                  Desa/Kelurahan
+                </div>
+                <count-to :start-val="0" :end-val="totalUserKel" :duration="duration" class="card-panel-num" />
+              </div>
             </div>
-          </el-card>
-        </el-col> -->
-      </div>
-    </el-card>
-  </el-row>
+          </el-col>
+          <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col total-rw">
+            <div class="card-panel">
+              <div class="card-panel-icon-wrapper icon-people-rw">
+                <svg-icon icon-class="peoples" class-name="card-panel-icon" />
+              </div>
+              <div class="card-panel-description">
+                <div class="card-panel-text">
+                  RW
+                </div>
+                <count-to :start-val="0" :end-val="totalUserRw" :duration="duration" class="card-panel-num" />
+              </div>
+            </div>
+          </el-col>
+          <!-- <el-col :xs="12" :sm="12" :lg="6">
+            <el-card class="box-card">
+              <div slot="header" class="clearfix">
+                <span>Total Pengguna</span>
+              </div>
+              <div class="component-item">
+                <count-to :start-val="0" :end-val="totalAllUser" :duration="duration" class="" />
+              </div>
+            </el-card>
+          </el-col> -->
+        </div>
+      </el-card>
+    </el-row>
+  </div>
 </template>
 
 <script>

@@ -28,14 +28,36 @@
             </router-link>
           </el-col>
         </el-row>
-        <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width; 100%" @sort-change="changeSort">
+
+        <ListFilter
+          :list-query.sync="listQuery"
+          @submit-search="getList"
+          @reset-search="resetFilter"
+        />
+
+        <el-table
+          v-loading="listLoading"
+          :data="list"
+          border
+          stripe
+          fit
+          highlight-current-row
+          style="width; 100%"
+          @sort-change="changeSort"
+        >
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
 
           <el-table-column prop="title" sortable="custom" label="Judul Berita" min-width="200" />
 
           <el-table-column prop="channel.name" label="Sumber" min-width="100" />
 
-          <el-table-column prop="status" sortable="custom" class-name="status-col" label="Status" width="200px">
+          <el-table-column
+            prop="status"
+            sortable="custom"
+            class-name="status-col"
+            label="Status"
+            width="200px"
+          >
             <template slot-scope="{row}">
               <el-tag :type="row.status | statusFilter">
                 {{ row.status_label }}
@@ -56,35 +78,43 @@
                   View
                 </el-button>
               </router-link>
-              <router-link :to="'/news/edit/'+scope.row.id">
-                <el-button type="white" size="medium">
+              <router-link :to="(scope.row.status !== 10 ? '/news/edit/' +scope.row.id : '')">
+                <el-button type="white" size="medium" :disabled="scope.row.status === 10">
                   Edit
                 </el-button>
               </router-link>
-              <el-button type="danger" size="medium" @click="deleteNews(scope.row.id)">
+              <el-button type="danger" size="medium" :disabled="scope.row.status === 10" @click="deleteNews(scope.row.id)">
                 Delete
               </el-button>
-              <el-button v-if="scope.row.status === 10" type="white" size="mini">
+              <el-button v-if="scope.row.status === 10" type="white" size="mini" @click="deactivateRecord(scope.row.id)">
                 Deactivate
               </el-button>
-              <el-button v-if="scope.row.status === 0" type="success" size="mini">
+              <el-button v-if="scope.row.status === 0" type="success" size="mini" @click="activateRecord(scope.row.id)">
                 Activate
               </el-button>
             </template>
           </el-table-column>
         </el-table>
-        <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
+        <pagination
+          v-show="total>0"
+          :total="total"
+          :page.sync="listQuery.page"
+          :limit.sync="listQuery.limit"
+          @pagination="getList"
+        />
       </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
-import { fetchList, fetchStatistic, deleteData } from '@/api/news'
+import { fetchList, fetchStatistic, deleteData, deactivate, activate } from '@/api/news'
+import moment from 'moment'
 import Pagination from '@/components/Pagination'
+import ListFilter from './_listfilter'
 
 export default {
-  components: { Pagination },
+  components: { Pagination, ListFilter },
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -103,6 +133,7 @@ export default {
       listLoading: true,
       listQuery: {
         title: null,
+        search: null,
         page: 1,
         limit: 10
       },
@@ -118,7 +149,14 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
-      fetchList(this.listQuery).then(response => {
+
+      const data = {}
+
+      Object.assign(data, this.listQuery)
+
+      data.source_date = moment(data.source_date).format('YYYY-MM-DD')
+
+      fetchList(data).then(response => {
         this.list = response.data.items
         this.total = response.data._meta.totalCount
         this.listLoading = false
@@ -145,7 +183,7 @@ export default {
       this.listLoading = true
       fetchStatistic().then(response => {
         this.tableDataStatistik = response.data.items
-        const totalChannels = this.tableDataStatistik.reduce((a, b) => a + b.count, 0)
+        const totalChannels = this.tableDataStatistik.reduce((a, b) => a + parseInt(b.count), 0)
         this.tableDataStatistikTotal[0].count = totalChannels
         this.listLoading = false
       })
@@ -172,6 +210,51 @@ export default {
       } catch (e) {
         console.log(e)
       }
+    },
+    async deactivateRecord(id) {
+      try {
+        await this.$confirm(this.$t('crud.deactivate-confirm'), 'Warning', {
+          confirmButtonText: this.$t('common.confirm'),
+          cancelButtonText: this.$t('common.cancel'),
+          type: 'warning'
+        })
+
+        this.listLoading = true
+
+        await deactivate(id)
+
+        this.$message({
+          type: 'success',
+          message: this.$t('crud.deactivate-success')
+        })
+
+        this.getList()
+      } catch (e) {
+        console.log(e)
+      }
+    },
+
+    async activateRecord(id) {
+      try {
+        await this.$confirm(this.$t('crud.activate-confirm'), 'Warning', {
+          confirmButtonText: this.$t('common.confirm'),
+          cancelButtonText: this.$t('common.cancel'),
+          type: 'warning'
+        })
+
+        this.listLoading = true
+
+        await activate(id)
+
+        this.$message({
+          type: 'success',
+          message: this.$t('crud.activate-success')
+        })
+
+        this.getList()
+      } catch (e) {
+        console.log(e)
+      }
     }
   }
 }
@@ -181,7 +264,7 @@ export default {
 @media only screen and (max-width: 1200px) {
   .col-right {
     margin-top: 20px;
-    margin-right: 20px !important
+    margin-right: 20px !important;
   }
 }
 

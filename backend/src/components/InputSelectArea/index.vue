@@ -49,7 +49,7 @@
           :disabled="(enableRolePolicy && ! enableKelurahan) || kecamatan_selected === null"
           filterable
           clearable
-          placeholder="Semua Kelurahan"
+          placeholder="Semua Desa/Kelurahan"
           style="width: 100%"
           @change="changeSelection($event, 'changeKelurahan')"
         >

@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <p class="warn-content"><a href="#">Tambah Survey</a></p>
+    <p class="warn-content"><a href="#">Tambah Survei</a></p>
     <Form />
   </div>
 </template>

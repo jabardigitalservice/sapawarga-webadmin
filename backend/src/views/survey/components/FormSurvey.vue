@@ -12,8 +12,8 @@
 
         <el-form ref="form" :model="form" :rules="rules" :status-icon="true" label-width="160px">
 
-          <el-form-item label="Judul Survey" prop="title">
-            <el-input v-model="form.title" type="text" placeholder="Judul Survey" />
+          <el-form-item label="Judul Survei" prop="title">
+            <el-input v-model="form.title" type="text" placeholder="Judul Survei" />
           </el-form-item>
 
           <el-form-item label="Kategori" prop="category_id">
@@ -42,13 +42,13 @@
             />
           </el-form-item>
 
-          <el-form-item label="URL Survey" prop="external_url">
+          <el-form-item label="URL Survei" prop="external_url">
             <el-input v-model="form.external_url" type="text" placeholder="http://form.google.com" />
           </el-form-item>
 
           <el-form-item>
             <el-button v-if="form.status === null || form.status === 0" :loading="loading" @click="submitDraft">{{ $t('crud.draft') }}</el-button>
-            <el-button v-if="form.status === null || form.status === 0" type="primary" :loading="loading" @click="submitProcess">{{ $t('crud.save-publish') }}</el-button>
+            <el-button v-if="form.status === null || form.status === 0" :disabled="btnDisableDate" type="primary" :loading="loading" @click="submitProcess">{{ $t('crud.save-publish') }}</el-button>
 
             <router-link :to="'/survey/index'">
               <el-button type="info">{{ $t('crud.cancel') }}</el-button>
@@ -91,7 +91,7 @@ export default {
   data() {
     const validatorTitleWhitespace = (rule, value, callback) => {
       if (containsWhitespace(value) === true) {
-        callback(new Error('Judul Survey yang diisi tidak valid.'))
+        callback(new Error('Judul Survei yang diisi tidak valid.'))
       }
 
       callback()
@@ -108,18 +108,19 @@ export default {
     return {
       form: Object.assign({}, defaultForm),
       loading: false,
+      btnDisableDate: false,
       rules: {
         title: [
-          { required: true, message: 'Judul Survey harus diisi.', trigger: 'blur' },
-          { min: 10, message: 'Judul Survey minimal 10 karakter', trigger: 'blur' },
-          { max: 100, message: 'Judul Survey maksimal 100 karakter', trigger: 'blur' },
+          { required: true, message: 'Judul Survei harus diisi.', trigger: 'blur' },
+          { min: 10, message: 'Judul Survei minimal 10 karakter', trigger: 'blur' },
+          { max: 100, message: 'Judul Survei maksimal 100 karakter', trigger: 'blur' },
           { validator: validatorTitleWhitespace, trigger: 'blur' }
         ],
         category_id: [
           { required: true, message: 'Kategori harus diisi.', trigger: 'change' }
         ],
         external_url: [
-          { required: true, message: 'URL Survey harus diisi.', trigger: 'blur' },
+          { required: true, message: 'URL Survei harus diisi.', trigger: 'blur' },
           { validator: validatorUrl, trigger: 'blur' }
         ]
       },
@@ -128,6 +129,20 @@ export default {
   },
   computed: {
     //
+  },
+  watch: {
+    'form.start_date'(e) {
+      const currentDate = moment()
+      const dateStart = moment(this.form.start_date).startOf('day')
+
+      const checkStartDate = currentDate - dateStart
+
+      if (checkStartDate < 0) {
+        this.btnDisableDate = true
+      } else {
+        this.btnDisableDate = false
+      }
+    }
   },
   created() {
     if (this.isEdit) {

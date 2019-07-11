@@ -15,7 +15,7 @@
       <el-col class="col-right" :xs="24" :sm="24" :md="24" :lg="14" :xl="14">
         <el-card>
           <div slot="header" class="clearfix">
-            <span>Isi Pesan</span>
+            <span>Isi Pesan Notifikasi</span>
           </div>
           <el-table stripe :data="tableDataPesan" :show-header="false" style="width: 100%">
             <el-table-column prop="title" width="180" />
@@ -65,7 +65,7 @@ export default {
 
         this.tableDataTarget = [
           {
-            title: 'Kota',
+            title: 'Kabupaten/Kota',
             content: ' : ' + ((kabkota !== null) ? kabkota.name : 'Semua Kab/Kota')
           },
           {
@@ -73,7 +73,7 @@ export default {
             content: ' : ' + ((kecamatan !== null) ? kecamatan.name : 'Semua Kecamatan')
           },
           {
-            title: 'Kelurahan/Desa',
+            title: 'Desa/Kelurahan',
             content: ' : ' + ((kelurahan !== null) ? kelurahan.name : 'Semua Kelurahan')
           },
           {
@@ -84,7 +84,7 @@ export default {
 
         this.tableDataPesan = [
           {
-            title: 'Judul Pesan',
+            title: 'Judul Notifikasi',
             content: ': ' + (title !== null ? title : '-')
           },
           {
@@ -92,7 +92,7 @@ export default {
             content: ': ' + (category !== null ? category.name : '-')
           },
           {
-            title: 'Isi Pesan',
+            title: 'Isi Pesan Notifikasi',
             content: ': ' + (description !== null ? description : '-')
           }
         ]

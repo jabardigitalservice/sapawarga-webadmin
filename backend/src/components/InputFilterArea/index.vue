@@ -41,7 +41,7 @@
           v-model="kelurahan_selected"
           :disabled="enableKecamatan === true && (kecamatan_selected === '' || kecamatan_selected === null)"
           filterable
-          placeholder="Pilih Kelurahan"
+          placeholder="Pilih Desa/Kelurahan"
           style="width: 100%"
           @change="changeSelection($event, 'changeKelurahan')"
         >
