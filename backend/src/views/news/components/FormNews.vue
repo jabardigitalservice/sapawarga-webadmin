@@ -314,7 +314,7 @@ export default {
     },
     getNewsChannel() {
       newsChannelList().then(response => {
-        console.log(response.data.items)
+        this.options = response.data.items
       })
     }
   }
