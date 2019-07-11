@@ -77,24 +77,24 @@
           <el-table-column align="center" label="Actions" min-width="250px">
             <template slot-scope="scope">
               <router-link :to="'/news/detail/'+scope.row.id">
-                <el-button type="white" size="medium">
-                  View
-                </el-button>
+                <el-tooltip content="Detail Berita" placement="top">
+                  <el-button type="primary" icon="el-icon-view" size="small" />
+                </el-tooltip>
               </router-link>
               <router-link :to="(scope.row.status !== 10 ? '/news/edit/' +scope.row.id : '')">
-                <el-button type="white" size="medium" :disabled="scope.row.status === 10">
-                  Edit
-                </el-button>
+                <el-tooltip content="Edit Berita" placement="top">
+                  <el-button type="warning" icon="el-icon-edit" size="small" :disabled="scope.row.status === 10" />
+                </el-tooltip>
               </router-link>
-              <el-button type="danger" size="medium" :disabled="scope.row.status === 10" @click="deleteNews(scope.row.id)">
-                Delete
-              </el-button>
-              <el-button v-if="scope.row.status === 10" type="white" size="mini" @click="deactivateRecord(scope.row.id)">
-                Deactivate
-              </el-button>
-              <el-button v-if="scope.row.status === 0" type="success" size="mini" @click="activateRecord(scope.row.id)">
-                Activate
-              </el-button>
+              <el-tooltip content="Hapus Berita" placement="top">
+                <el-button type="danger" icon="el-icon-delete" size="small" :disabled="scope.row.status === 10" @click="deleteNews(scope.row.id)" />
+              </el-tooltip>
+              <el-tooltip content="Nonaktifkan Berita" placement="top">
+                <el-button v-if="scope.row.status === 10" type="danger" icon="el-icon-circle-close" size="small" @click="deactivateRecord(scope.row.id)" />
+              </el-tooltip>
+              <el-tooltip content="Aktifkan Berita" placement="top">
+                <el-button v-if="scope.row.status === 0" type="success" icon="el-icon-circle-check" size="small" @click="activateRecord(scope.row.id)" />
+              </el-tooltip>
             </template>
           </el-table-column>
         </el-table>
