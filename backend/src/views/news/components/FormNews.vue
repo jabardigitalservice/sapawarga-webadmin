@@ -133,29 +133,10 @@ export default {
         featured: null,
         seq: null
       },
-      options: [
-        {
-          value: 1,
-          label: 'Detik'
-        },
-        {
-          value: 2,
-          label: 'Kompas'
-        },
-        {
-          value: 3,
-          label: 'Tribun Jabar'
-        }
-      ],
+      options: null,
       statusOptions: [
-        {
-          value: 10,
-          label: 'Aktif'
-        },
-        {
-          value: 0,
-          label: 'Tidak aktif'
-        }
+        { value: 10, label: 'Aktif' },
+        { value: 0, label: 'Tidak aktif' }
       ],
       featuredOptions: [
         { value: 1, label: 'Berita Utama 1' },
@@ -283,7 +264,7 @@ export default {
 
         if (this.isEdit) {
           const id = this.$route.params && this.$route.params.id
-          if(data.seq !== 999) {
+          if (data.seq !== 999) {
             data.featured = true
           } else {
             data.featured = false
