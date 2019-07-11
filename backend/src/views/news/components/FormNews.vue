@@ -15,9 +15,9 @@
             <el-select v-model="news.channel_id" placeholder="Pilih Sumber">
               <el-option
                 v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
               />
             </el-select>
           </el-form-item>
@@ -45,12 +45,12 @@
           </el-form-item>
 
           <el-form-item v-if="isEdit" label="Set Prioritas" prop="featured">
-            <el-select v-model="news.featured" placeholder="Pilih prioritas">
+            <el-select v-model="news.seq" placeholder="Pilih prioritas">
               <el-option
                 v-for="item in featuredOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
               />
             </el-select>
           </el-form-item>
@@ -84,7 +84,7 @@
 <script>
 import AttachmentPhotoUpload from '@/components/AttachmentPhotoUpload'
 import { containsWhitespace, validUrl } from '@/utils/validate'
-import { create, update } from '@/api/news'
+import { create, update, newsChannelList } from '@/api/news'
 import newsApi from '@/api/news'
 import Tinymce from '@/components/Tinymce'
 import moment from 'moment'
@@ -130,35 +130,21 @@ export default {
         cover_path: null,
         cover_path_url: null,
         status: null,
-        featured: null
+        featured: null,
+        seq: null
       },
-      options: [
-        {
-          value: 1,
-          label: 'Detik'
-        },
-        {
-          value: 2,
-          label: 'Kompas'
-        },
-        {
-          value: 3,
-          label: 'Tribun Jabar'
-        }
-      ],
+      options: null,
       statusOptions: [
-        {
-          value: 10,
-          label: 'Aktif'
-        },
-        {
-          value: 0,
-          label: 'Tidak aktif'
-        }
+        { value: 10, label: 'Aktif' },
+        { value: 0, label: 'Tidak aktif' }
       ],
       featuredOptions: [
-        { value: 1, label: 'Berita Utama' },
-        { value: 0, label: 'List' }
+        { value: 1, label: 'Berita Utama 1' },
+        { value: 2, label: 'Berita Utama 2' },
+        { value: 3, label: 'Berita Utama 3' },
+        { value: 4, label: 'Berita Utama 4' },
+        { value: 5, label: 'Berita Utama 5' },
+        { value: 999, label: 'List' }
       ],
       rules: {
         title: [
@@ -239,6 +225,7 @@ export default {
     if (this.isEdit) {
       const id = this.$route.params && this.$route.params.id
       this.fetchData(id)
+      this.getNewsChannel()
     }
   },
   methods: {
@@ -277,7 +264,11 @@ export default {
 
         if (this.isEdit) {
           const id = this.$route.params && this.$route.params.id
-
+          if (data.seq !== 999) {
+            data.featured = true
+          } else {
+            data.featured = false
+          }
           await update(id, data)
 
           this.$message.success(this.$t('crud.update-success'))
@@ -286,6 +277,7 @@ export default {
         } else {
           data.status = 0
           data.featured = false
+          data.seq = 999
           await create(data)
 
           this.$message.success(this.$t('crud.create-success'))
@@ -300,6 +292,11 @@ export default {
       } finally {
         this.loading = false
       }
+    },
+    getNewsChannel() {
+      newsChannelList().then(response => {
+        this.options = response.data.items
+      })
     }
   }
 }
