@@ -66,13 +66,15 @@
             </template>
           </el-table-column>
 
-          <el-table-column prop="source_date" sortable="custom" label="Tanggal" width="150">
+          <el-table-column prop="meta.read_count" label="Jumlah Pengunjung" align="center" min-width="115" />
+
+          <el-table-column prop="source_date" sortable="custom" label="Tanggal" align="center" min-width="115">
             <template slot-scope="{row}">
               {{ row.source_date | moment('D MMMM YYYY') }}
             </template>
           </el-table-column>
 
-          <el-table-column align="center" label="Actions" width="150px">
+          <el-table-column align="center" label="Actions" min-width="250px">
             <template slot-scope="scope">
               <router-link :to="'/news/detail/'+scope.row.id">
                 <el-button type="white" size="medium">
