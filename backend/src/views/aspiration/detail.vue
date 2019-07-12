@@ -79,14 +79,21 @@ export default {
         mobile: this.device === 'mobile'
       }
     }
+
   },
   created() {
     this.id = this.$route.params && this.$route.params.id
     this.getDetail()
+    this.checkPermissionFunction()
   },
   methods: {
     imageGallery(index) {
       this.defaultImage = this.images[index].url
+    },
+    checkPermissionFunction() {
+      if (!checkPermission(['admin'])) {
+        this.disableButton = true
+      }
     },
     getDetail() {
       fetchRecord(this.id).then(response => {
