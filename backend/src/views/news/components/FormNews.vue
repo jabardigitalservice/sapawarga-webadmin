@@ -225,8 +225,8 @@ export default {
     if (this.isEdit) {
       const id = this.$route.params && this.$route.params.id
       this.fetchData(id)
-      this.getNewsChannel()
     }
+    this.getNewsChannel()
   },
   methods: {
     fetchData(id) {
