@@ -62,8 +62,31 @@ export function deleteData(id) {
   })
 }
 
+export function deactivate(id) {
+  return request({
+    url: `/news/${id}`,
+    method: 'put',
+    data: {
+      status: 0
+    }
+  })
+}
+
+export function activate(id) {
+  return request({
+    url: `/news/${id}`,
+    method: 'put',
+    data: {
+      status: 10
+    }
+  })
+}
+
 const exportFunctions = {
-  fetchRecord
+  fetchList,
+  fetchRecord,
+  deactivate,
+  activate
 }
 
 export default exportFunctions
