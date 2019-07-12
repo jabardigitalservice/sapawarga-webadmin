@@ -9,11 +9,10 @@ services:
       - 8080:8080
     volumes:
       - ./backend:/app
+      - .env.production:/app/.env.development
       - /app/node_modules
       - /app/build
-      - /app/dist
     environment:
-      - VUE_ENV_DEV=1
       - NODE_ENV=development
 
 networks:
