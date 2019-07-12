@@ -1,24 +1,24 @@
 <template>
   <div class="app-container">
     <el-row :gutter="10">
-      <el-col class="col-left" :xs="24" :sm="24" :md="24" :lg="10" :xl="10">
+      <el-col class="col-left" :xs="24" :sm="24" :md="24" :lg="7" :xl="7">
         <el-card>
           <div slot="header" class="clearfix">
             <span>Kanal Media</span>
           </div>
           <el-table stripe :data="tableDataStatistik" :show-header="false" style="width: 100%">
-            <el-table-column prop="title" />
-            <el-table-column prop="count" />
+            <el-table-column prop="title" align="left" />
+            <el-table-column prop="count" align="right" />
           </el-table>
         </el-card>
         <el-card class="top-space">
           <el-table stripe :data="tableDataStatistikTotal" :show-header="false" style="width: 100%">
             <el-table-column prop="title" />
-            <el-table-column prop="count" />
+            <el-table-column prop="count" align="right" />
           </el-table>
         </el-card>
       </el-col>
-      <el-col class="col-right" :xs="24" :sm="24" :md="24" :lg="14" :xl="14">
+      <el-col class="col-right" :xs="24" :sm="24" :md="24" :lg="17" :xl="17">
         <el-row style="margin: 10px 0px">
           <el-col :span="12">
             <router-link :to="{ path: '/news/create' }">
@@ -49,14 +49,15 @@
 
           <el-table-column prop="title" sortable="custom" label="Judul Berita" min-width="200" />
 
-          <el-table-column prop="channel.name" label="Sumber" min-width="100" />
+          <el-table-column prop="channel.name" sortable="custom" label="Sumber" align="center" min-width="100" />
 
           <el-table-column
             prop="status"
             sortable="custom"
             class-name="status-col"
             label="Status"
-            width="200px"
+            align="center"
+            min-width="100"
           >
             <template slot-scope="{row}">
               <el-tag :type="row.status | statusFilter">
@@ -65,33 +66,35 @@
             </template>
           </el-table-column>
 
-          <el-table-column prop="source_date" sortable="custom" label="Tanggal" width="150">
+          <el-table-column prop="total_viewers" sortable="custom" label="Jumlah Pengunjung" align="center" min-width="130" />
+
+          <el-table-column prop="source_date" sortable="custom" label="Tanggal" align="center" min-width="115">
             <template slot-scope="{row}">
               {{ row.source_date | moment('D MMMM YYYY') }}
             </template>
           </el-table-column>
 
-          <el-table-column align="center" label="Actions" width="150px">
+          <el-table-column align="center" label="Actions" min-width="250px">
             <template slot-scope="scope">
               <router-link :to="'/news/detail/'+scope.row.id">
-                <el-button type="white" size="medium">
-                  View
-                </el-button>
+                <el-tooltip content="Detail Berita" placement="top">
+                  <el-button type="primary" icon="el-icon-view" size="small" />
+                </el-tooltip>
               </router-link>
               <router-link :to="(scope.row.status !== 10 ? '/news/edit/' +scope.row.id : '')">
-                <el-button type="white" size="medium" :disabled="scope.row.status === 10">
-                  Edit
-                </el-button>
+                <el-tooltip content="Edit Berita" placement="top">
+                  <el-button type="warning" icon="el-icon-edit" size="small" :disabled="scope.row.status === 10" />
+                </el-tooltip>
               </router-link>
-              <el-button type="danger" size="medium" :disabled="scope.row.status === 10" @click="deleteNews(scope.row.id)">
-                Delete
-              </el-button>
-              <el-button v-if="scope.row.status === 10" type="white" size="mini" @click="deactivateRecord(scope.row.id)">
-                Deactivate
-              </el-button>
-              <el-button v-if="scope.row.status === 0" type="success" size="mini" @click="activateRecord(scope.row.id)">
-                Activate
-              </el-button>
+              <el-tooltip content="Hapus Berita" placement="top">
+                <el-button type="danger" icon="el-icon-delete" size="small" :disabled="scope.row.status === 10" @click="deleteNews(scope.row.id)" />
+              </el-tooltip>
+              <el-tooltip content="Nonaktifkan Berita" placement="top">
+                <el-button v-if="scope.row.status === 10" type="danger" icon="el-icon-circle-close" size="small" @click="deactivateRecord(scope.row.id)" />
+              </el-tooltip>
+              <el-tooltip content="Aktifkan Berita" placement="top">
+                <el-button v-if="scope.row.status === 0" type="success" icon="el-icon-circle-check" size="small" @click="activateRecord(scope.row.id)" />
+              </el-tooltip>
             </template>
           </el-table-column>
         </el-table>
