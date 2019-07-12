@@ -48,9 +48,9 @@
             <el-select v-model="news.seq" placeholder="Pilih prioritas">
               <el-option
                 v-for="item in featuredOptions"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
               />
             </el-select>
           </el-form-item>
@@ -225,8 +225,8 @@ export default {
     if (this.isEdit) {
       const id = this.$route.params && this.$route.params.id
       this.fetchData(id)
-      this.getNewsChannel()
     }
+    this.getNewsChannel()
   },
   methods: {
     fetchData(id) {
