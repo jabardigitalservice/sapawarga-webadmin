@@ -9,7 +9,7 @@ services:
       - 8080:8080
     volumes:
       - ./backend:/app
-      - .env.production:/app/.env.development
+      - ./.env-vuejs:/app/.env.development
       - /app/node_modules
       - /app/build
     environment:
