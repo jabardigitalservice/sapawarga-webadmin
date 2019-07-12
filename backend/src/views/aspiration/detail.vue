@@ -64,7 +64,8 @@ export default {
       defaultImage: null,
       images: [],
       index: null,
-      note: null
+      note: null,
+      disableButton: false
     }
   },
   computed: {
