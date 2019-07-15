@@ -15,6 +15,8 @@
           </el-col>
         </el-row>
 
+        <ListFilter :list-query.sync="listQuery" @submit-search="getList" @reset-search="resetFilter" />
+
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%" @sort-change="changeSort">
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
 
@@ -65,10 +67,10 @@
 <script>
 import { fetchList } from '@/api/broadcast'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
-
+import ListFilter from './_listfilter'
 export default {
 
-  components: { Pagination },
+  components: { Pagination, ListFilter },
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -95,7 +97,11 @@ export default {
         sort_by: 'updated_at',
         sort_order: 'descending',
         page: 1,
-        limit: 10
+        limit: 10,
+        status: null,
+         kabkota_id: null,
+        kec_id: null,
+        kel_id: null,
       }
     }
   },
