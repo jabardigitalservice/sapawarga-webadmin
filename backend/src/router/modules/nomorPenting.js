@@ -9,7 +9,7 @@ const nomorPentingRouter = {
   name: 'NomorPenting',
   meta: {
     title: 'nomor-penting-manage',
-    roles: ['admin'],
+    roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel'],
     icon: 'list'
   },
   children: [
@@ -22,7 +22,7 @@ const nomorPentingRouter = {
       },
       meta: {
         title: 'Daftar Nomor Penting',
-        roles: ['admin']
+        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']
       }
     },
     {
@@ -31,7 +31,7 @@ const nomorPentingRouter = {
       name: 'nomor-penting-create',
       meta: {
         title: 'nomor-penting-create',
-        roles: ['admin']
+        roles: ['admin', 'staffProv', 'staffKabkota']
       }
     },
     {
@@ -42,7 +42,7 @@ const nomorPentingRouter = {
       meta: {
         title: 'nomor-penting-edit',
         noCache: true,
-        roles: ['admin']
+        roles: ['admin', 'staffProv', 'staffKabkota']
       }
     },
     {
@@ -52,7 +52,7 @@ const nomorPentingRouter = {
       hidden: true,
       meta: {
         title: 'nomor-penting-detail',
-        roles: ['admin']
+        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']
       }
     }
   ]
