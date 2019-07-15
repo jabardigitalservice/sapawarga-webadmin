@@ -86,6 +86,7 @@ export default {
   created() {
     this.id = this.$route.params && this.$route.params.id
     this.getDetail()
+
     if (!checkPermission(['admin', 'staffProv'])) {
       this.disableButton = true
     }
@@ -94,11 +95,6 @@ export default {
     imageGallery(index) {
       this.defaultImage = this.images[index].url
     },
-    // checkPermissionFunction() {
-    //   if (!checkPermission(['admin', 'staffProv'])) {
-    //     this.disableButton = true
-    //   }
-    // },
     getDetail() {
       fetchRecord(this.id).then(response => {
         const { title, created_at, author, category, description, status, status_label, attachments, approval_note } = response.data
