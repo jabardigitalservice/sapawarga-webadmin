@@ -3,7 +3,7 @@
     <div class="gmap_canvas">
       <iframe
         :id="id"
-        :src="`https://maps.google.com/maps?q=${latitude},${longitude}&t=&z=16&ie=UTF8&iwloc=&output=embed`"
+        :src="urlMap"
         frameborder="0"
         scrolling="no"
         marginheight="0"
@@ -30,6 +30,11 @@ export default {
     id: {
       type: String,
       default: 'gmap_canvas'
+    }
+  },
+  data() {
+    return {
+      urlMap: `https://maps.google.com/maps?q=${this.latitude},${this.longitude}&t=&z=16&ie=UTF8&iwloc=&output=embed`
     }
   }
 }
