@@ -99,9 +99,9 @@ export default {
         page: 1,
         limit: 10,
         status: null,
-         kabkota_id: null,
+        kabkota_id: null,
         kec_id: null,
-        kel_id: null,
+        kel_id: null
       }
     }
   },
