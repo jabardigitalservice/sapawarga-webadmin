@@ -1,3 +1,5 @@
 .idea/
 .vscode/
 /.env
+.env-vuejs
+backend/.env.development
