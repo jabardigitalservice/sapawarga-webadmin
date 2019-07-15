@@ -4,12 +4,12 @@
       <el-row :gutter="10" type="flex">
         <el-col :span="4">
           <el-form-item style="margin-bottom: 0">
-            <el-input v-model="listQuery.name" placeholder="Nama Pengguna" />
+            <el-input v-model="listQuery.title" placeholder="Judul Aspirasi" />
           </el-form-item>
         </el-col>
         <el-col :span="4">
           <el-form-item style="margin-bottom: 0">
-            <el-input v-model="listQuery.phone" placeholder="Nomor Telepon" />
+            <InputCategory v-model="listQuery.category" category-type="aspirasi" />
           </el-form-item>
         </el-col>
         <el-col :span="4">
