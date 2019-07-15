@@ -52,7 +52,7 @@ export default {
           },
           {
             title: 'Tanggal Berita',
-            content: (source_date ? moment(source_date).format('DD-MM-YYYY') : 'Error')
+            content: (source_date ? moment(source_date).format('D MMMM YYYY') : 'Error')
           },
           {
             title: 'Status',
