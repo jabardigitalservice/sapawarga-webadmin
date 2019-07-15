@@ -54,11 +54,11 @@
 
 <script>
 import InputFilterArea from '@/components/InputFilterArea'
-
+import InputCategory from '@/components/InputCategory'
 import checkPermission from '@/utils/permission'
 
 export default {
-  components: { InputFilterArea },
+  components: { InputFilterArea, InputCategory },
 
   props: {
     listQuery: {
