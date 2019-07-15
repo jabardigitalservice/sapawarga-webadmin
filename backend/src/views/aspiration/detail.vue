@@ -93,7 +93,7 @@ export default {
       this.defaultImage = this.images[index].url
     },
     checkPermissionFunction() {
-      if (!checkPermission(['admin'])) {
+      if (!checkPermission(['admin', 'staffProv'])) {
         this.disableButton = true
       }
     },
