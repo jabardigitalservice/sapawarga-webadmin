@@ -3,12 +3,19 @@ services:
   app:
     # build:
     #   context: ./backend
-    #   dockerfile: Dockerfile
     image: registry.gitlab.com/jdsteam/sapa-warga/sapawarga-webadmin:latest
     networks:
       - internal
     ports: 
       - 8080:80
+    volumes:
+      # - ./backend:/app
+      # - /app/node_modules
+      # - /app/build
+      - ./.env-vuejs:/app/.env.production
+    environment:
+      - NODE_ENV=production
+      
 networks:
   internal:
     driver: bridge
