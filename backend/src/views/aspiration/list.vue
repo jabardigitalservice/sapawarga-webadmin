@@ -2,6 +2,9 @@
   <div class="app-container">
     <el-row :gutter="20">
       <el-col :lg="24">
+
+        <ListFilter :list-query.sync="listQuery" @submit-search="getList" @reset-search="resetFilter" />
+
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width; 100%" @sort-change="changeSort">
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
 
@@ -43,8 +46,10 @@
 import { fetchList } from '@/api/aspiration'
 import Pagination from '@/components/Pagination'
 
+import ListFilter from './_listfilter'
+
 export default {
-  components: { Pagination },
+  components: { Pagination, ListFilter },
   filters: {
     statusFilter(status) {
       const statusMap = {
