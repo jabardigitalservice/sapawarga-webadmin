@@ -2,7 +2,7 @@
   <el-card class="box-card" style="margin-bottom: 10px">
     <el-form>
       <el-row :gutter="10" type="flex">
-        <el-col :span="4">
+        <el-col :span="8">
           <el-form-item style="margin-bottom: 0">
             <el-input v-model="listQuery.title" placeholder="Judul" />
           </el-form-item>
@@ -21,7 +21,7 @@
             </el-select>
           </el-form-item>
         </el-col>
-        <el-col :span="8">
+        <el-col :span="12">
           <input-filter-area
             :parent-id="filterAreaParentId"
             :kabkota-id="listQuery.kabkota_id"
