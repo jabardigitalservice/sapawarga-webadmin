@@ -21,7 +21,7 @@
             </el-select>
           </el-form-item>
         </el-col>
-        <el-col :span="12">
+        <el-col :span="8">
           <input-filter-area
             :parent-id="filterAreaParentId"
             :kabkota-id="listQuery.kabkota_id"
