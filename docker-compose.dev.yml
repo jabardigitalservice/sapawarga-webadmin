@@ -3,16 +3,16 @@ services:
   app:
     build:
       context: ./backend
-    image: registry.gitlab.com/jdsteam/sapa-warga/sapawarga-webadmin:{$IMAGETAG}
+    image: registry.gitlab.com/jdsteam/sapa-warga/sapawarga-webadmin:${IMAGETAG}
     networks:
       - internal
     ports: 
       - 8080:8080
     volumes:
       - ./backend:/app
-      - ./.env-vuejs-template:/app/.env.development
       - /app/node_modules
       - /app/build
+      - ./.env-vuejs-template:/app/.env.development
     environment:
       - NODE_ENV=development
 
