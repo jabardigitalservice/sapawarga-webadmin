@@ -55,7 +55,7 @@ describe('News detail', () => {
       },
       {
         title: 'Tanggal Berita',
-        content: '10-07-2019'
+        content: '10 July 2019'
       },
       {
         title: 'Status',
@@ -72,6 +72,10 @@ describe('News detail', () => {
       {
         title: 'Konten Berita',
         content: 'Ini berita terbaru bulan juni'
+      },
+      {
+        title: 'Jumlah Pengunjung',
+        content: newsDetailFixture.data.total_viewers + ' Pengunjung'
       }
     ]
 
@@ -95,6 +99,7 @@ describe('News detail', () => {
     newsDetailFixture.data.featured = null
     newsDetailFixture.data.source_url = null
     newsDetailFixture.data.content = null
+    newsDetailFixture.data.total_viewers = null
     newsApi.fetchRecord = jest.fn(() => Promise.resolve(newsDetailFixture))
     const expDataNews =  [
       {
@@ -124,6 +129,10 @@ describe('News detail', () => {
       {
         title: 'Konten Berita',
         content: 'Error'
+      },
+      {
+        title: 'Jumlah Pengunjung',
+        content: '-'
       }
     ]
 
