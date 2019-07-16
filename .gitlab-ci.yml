@@ -46,7 +46,7 @@ build_dev:
     - docker images
     - docker-compose -f docker-compose.dev.yml push
     - docker-compose -f docker-compose.dev.yml exec -T app npm run build
-  artigacts:
+  artifacts:
     paths:
     - dist
 
