@@ -65,6 +65,7 @@
 import { fetchList } from '@/api/notification'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 import ListFilter from './_listfilter'
+import checkPermission from '@/utils/permission'
 
 export default {
 
@@ -88,6 +89,7 @@ export default {
   data() {
     return {
       list: null,
+      roles: checkPermission(['admin', 'staffProv', 'staffKabkota']),
       total: 0,
       listLoading: true,
       listQuery: {
