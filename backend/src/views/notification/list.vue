@@ -5,7 +5,7 @@
         <el-row style="margin: 10px 0px">
           <el-col :span="12">
             <router-link :to="{ path: '/notification/create' }">
-              <el-button v-if="roles" type="primary" size="small" icon="el-icon-plus">
+              <el-button type="primary" size="small" icon="el-icon-plus">
                 Tambah Notifikasi Baru
               </el-button>
             </router-link>
@@ -47,7 +47,7 @@
                 </el-button>
               </router-link>
               <router-link :to="(scope.row.status !== 10 ? '/notification/edit/' +scope.row.id : '')">
-                <el-button v-if="roles" type="white" size="mini" :disabled="scope.row.status === 10">
+                <el-button type="white" size="mini" :disabled="scope.row.status === 10">
                   Edit
                 </el-button>
               </router-link>
@@ -65,10 +65,8 @@
 import { fetchList } from '@/api/notification'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 import ListFilter from './_listfilter'
-import checkPermission from '@/utils/permission'
 
 export default {
-
   components: { Pagination, ListFilter },
   filters: {
     statusFilter(status) {
@@ -89,7 +87,6 @@ export default {
   data() {
     return {
       list: null,
-      roles: checkPermission(['admin', 'staffProv', 'staffKabkota']),
       total: 0,
       listLoading: true,
       listQuery: {
