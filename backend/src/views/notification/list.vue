@@ -5,7 +5,7 @@
         <el-row style="margin: 10px 0px">
           <el-col :span="12">
             <router-link :to="{ path: '/notification/create' }">
-              <el-button type="primary" size="small" icon="el-icon-plus">
+              <el-button v-if="roles" type="primary" size="small" icon="el-icon-plus">
                 Tambah Notifikasi Baru
               </el-button>
             </router-link>
@@ -47,7 +47,7 @@
                 </el-button>
               </router-link>
               <router-link :to="(scope.row.status !== 10 ? '/notification/edit/' +scope.row.id : '')">
-                <el-button type="white" size="mini" :disabled="scope.row.status === 10">
+                <el-button v-if="roles" type="white" size="mini" :disabled="scope.row.status === 10">
                   Edit
                 </el-button>
               </router-link>
