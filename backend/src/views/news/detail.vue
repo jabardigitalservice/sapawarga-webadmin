@@ -72,7 +72,7 @@ export default {
           },
           {
             title: 'Jumlah Pengunjung',
-            content: total_viewers + ' Pengunjung' || '-'
+            content: (total_viewers) ? total_viewers + ' Pengunjung' : '-'
           }
         ]
       })
