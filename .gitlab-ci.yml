@@ -45,6 +45,10 @@ build_dev:
     - docker-compose -f docker-compose.dev.yml build
     - docker images
     - docker-compose -f docker-compose.dev.yml push
+    - docker-compose -f docker-compose.dev.yml exec -T app npm run build
+  artigacts:
+    paths:
+    - dist
 
 test_webadmin:
   stage: test
