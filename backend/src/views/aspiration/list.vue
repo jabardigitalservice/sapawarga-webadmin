@@ -2,14 +2,17 @@
   <div class="app-container">
     <el-row :gutter="20">
       <el-col :lg="24">
+
+        <ListFilter :list-query.sync="listQuery" @submit-search="getList" @reset-search="resetFilter" />
+
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width; 100%" @sort-change="changeSort">
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
 
-          <el-table-column prop="title" sortable="custom" label="Judul Aspirasi" min-width="200" />
+          <el-table-column prop="title" sortable="custom" label="Judul Aspirasi" min-width="225" />
 
-          <el-table-column prop="category.name" sortable="custom" label="Kategori" min-width="100" />
+          <el-table-column prop="category.name" sortable="custom" label="Kategori" align="center" min-width="150" />
 
-          <el-table-column prop="status" sortable="custom" class-name="status-col" label="Status" width="200px">
+          <el-table-column prop="status" sortable="custom" class-name="status-col" label="Status" min-width="160">
             <template slot-scope="{row}">
               <el-tag :type="row.status | statusFilter">
                 {{ row.status_label }}
@@ -17,9 +20,9 @@
             </template>
           </el-table-column>
 
-          <el-table-column prop="created_at" sortable="custom" label="Dibuat" width="150">
+          <el-table-column prop="created_at" sortable="custom" label="Dibuat" align="center" min-width="125">
             <template slot-scope="{row}">
-              {{ row.created_at | moment('D MMMM YYYY HH:mm') }}
+              {{ row.created_at | moment('D MMMM YYYY') }}
             </template>
           </el-table-column>
 
@@ -43,8 +46,10 @@
 import { fetchList } from '@/api/aspiration'
 import Pagination from '@/components/Pagination'
 
+import ListFilter from './_listfilter'
+
 export default {
-  components: { Pagination },
+  components: { Pagination, ListFilter },
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -69,6 +74,11 @@ export default {
       listLoading: true,
       listQuery: {
         title: null,
+        category: null,
+        status: null,
+        kabkota_id: null,
+        kec_id: null,
+        kel_id: null,
         page: 1,
         limit: 10
       }

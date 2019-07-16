@@ -39,8 +39,8 @@
             <el-table-column prop="content" />
           </el-table>
         </el-card>
-        <el-button v-if="status" class="button-send" type="primary" @click="actionApprove">{{ $t('crud.accept') }}</el-button>
-        <el-button v-if="status" class="button-send" type="info" @click="actionReject">{{ $t('crud.reject') }}</el-button>
+        <el-button v-if="status" :disabled="disableButton" class="button-send" type="primary" @click="actionApprove">{{ $t('crud.accept') }}</el-button>
+        <el-button v-if="status" :disabled="disableButton" class="button-send" type="info" @click="actionReject">{{ $t('crud.reject') }}</el-button>
       </el-col>
     </el-row>
   </div>
@@ -48,6 +48,7 @@
 
 <script>
 import { fetchRecord, approval } from '@/api/aspiration'
+import checkPermission from '@/utils/permission'
 import { mapState } from 'vuex'
 
 export default {
@@ -64,7 +65,8 @@ export default {
       defaultImage: null,
       images: [],
       index: null,
-      note: null
+      note: null,
+      disableButton: false
     }
   },
   computed: {
@@ -79,10 +81,12 @@ export default {
         mobile: this.device === 'mobile'
       }
     }
+
   },
   created() {
     this.id = this.$route.params && this.$route.params.id
     this.getDetail()
+    this.disableButton = !checkPermission(['admin', 'staffProv'])
   },
   methods: {
     imageGallery(index) {
