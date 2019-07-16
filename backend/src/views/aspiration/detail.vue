@@ -86,10 +86,7 @@ export default {
   created() {
     this.id = this.$route.params && this.$route.params.id
     this.getDetail()
-
-    if (!checkPermission(['admin', 'staffProv'])) {
-      this.disableButton = true
-    }
+    this.disableButton = !checkPermission(['admin', 'staffProv'])
   },
   methods: {
     imageGallery(index) {
