@@ -26,7 +26,7 @@ const notificationRouter = {
       component: () => import('@/views/notification/create'),
       meta: {
         title: 'notification-create',
-        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']
+        roles: ['admin', 'staffProv', 'staffKabkota']
       }
     },
     {
@@ -37,7 +37,7 @@ const notificationRouter = {
       meta: {
         title: 'notification-edit',
         noCache: true,
-        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']
+        roles: ['admin', 'staffProv', 'staffKabkota']
       }
     },
     {
