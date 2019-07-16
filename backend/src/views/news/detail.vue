@@ -38,7 +38,7 @@ export default {
   methods: {
     getDetail() {
       newsApi.fetchRecord(this.id).then(response => {
-        const { status_label, title, channel, source_date, featured, source_url, content } = response.data
+        const { status_label, title, channel, source_date, featured, source_url, content, total_viewers } = response.data
         this.news = response.data
 
         this.tableDataNews = [
@@ -52,7 +52,7 @@ export default {
           },
           {
             title: 'Tanggal Berita',
-            content: (source_date ? moment(source_date).format('DD-MM-YYYY') : 'Error')
+            content: (source_date ? moment(source_date).format('D MMMM YYYY') : 'Error')
           },
           {
             title: 'Status',
@@ -69,6 +69,10 @@ export default {
           {
             title: 'Konten Berita',
             content: this.strip(content) || 'Error'
+          },
+          {
+            title: 'Jumlah Pengunjung',
+            content: (total_viewers) ? total_viewers + ' Pengunjung' : '-'
           }
         ]
       })
