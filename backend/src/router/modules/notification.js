@@ -7,7 +7,7 @@ const notificationRouter = {
   redirect: '/notification/index',
   meta: {
     title: 'notification-manage',
-    roles: ['admin'],
+    roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffkel'],
     icon: 'email'
   },
   children: [
@@ -17,7 +17,7 @@ const notificationRouter = {
       component: () => import('@/views/notification/list'),
       meta: {
         title: 'notification-list',
-        roles: ['admin']
+        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffkel']
       }
     },
     {
@@ -26,7 +26,7 @@ const notificationRouter = {
       component: () => import('@/views/notification/create'),
       meta: {
         title: 'notification-create',
-        roles: ['admin']
+        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffkel']
       }
     },
     {
@@ -37,7 +37,7 @@ const notificationRouter = {
       meta: {
         title: 'notification-edit',
         noCache: true,
-        roles: ['admin']
+        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffkel']
       }
     },
     {
@@ -47,7 +47,7 @@ const notificationRouter = {
       hidden: true,
       meta: {
         title: 'notification-show',
-        roles: ['admin']
+        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffkel']
       }
     }
   ]
