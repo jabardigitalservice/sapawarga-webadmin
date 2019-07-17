@@ -39,8 +39,8 @@
             <el-table-column prop="content" />
           </el-table>
         </el-card>
-        <el-button v-if="status" :disabled="disableButton" class="button-send" type="primary" @click="actionApprove">{{ $t('crud.accept') }}</el-button>
-        <el-button v-if="status" :disabled="disableButton" class="button-send" type="info" @click="actionReject">{{ $t('crud.reject') }}</el-button>
+        <el-button v-if="status && roles" class="button-send" type="primary" @click="actionApprove">{{ $t('crud.accept') }}</el-button>
+        <el-button v-if="status && roles" class="button-send" type="info" @click="actionReject">{{ $t('crud.reject') }}</el-button>
       </el-col>
     </el-row>
   </div>
