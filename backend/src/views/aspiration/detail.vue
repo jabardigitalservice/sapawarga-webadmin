@@ -66,7 +66,7 @@ export default {
       images: [],
       index: null,
       note: null,
-      disableButton: false
+      roles: checkPermission(['admin', 'staffProv'])
     }
   },
   computed: {
