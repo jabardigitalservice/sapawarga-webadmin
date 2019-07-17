@@ -1,9 +1,6 @@
 <template>
   <div class="app-container">
     <el-row :gutter="20">
-      <!--      <el-col :lg="6">-->
-      <!--        Kiri-->
-      <!--      </el-col>-->
       <el-col :lg="24">
         <el-row style="margin: 10px 0px">
           <el-col :span="12">
@@ -14,6 +11,8 @@
             </router-link>
           </el-col>
         </el-row>
+
+        <ListFilter :list-query.sync="listQuery" @submit-search="getList" @reset-search="resetFilter" />
 
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%" @sort-change="changeSort">
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
@@ -65,10 +64,10 @@
 <script>
 import { fetchList } from '@/api/notification'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
+import ListFilter from './_listfilter'
 
 export default {
-
-  components: { Pagination },
+  components: { Pagination, ListFilter },
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -92,6 +91,10 @@ export default {
       listLoading: true,
       listQuery: {
         title: null,
+        status: null,
+        kabkota_id: null,
+        kec_id: null,
+        kel_id: null,
         sort_by: 'updated_at',
         sort_order: 'descending',
         page: 1,
