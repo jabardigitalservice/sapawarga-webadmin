@@ -68,7 +68,7 @@
 
           <el-table-column prop="total_viewers" sortable="custom" label="Jumlah Pengunjung" align="center" min-width="130" />
 
-          <el-table-column prop="source_date" sortable="custom" label="Tanggal" align="center" min-width="115">
+          <el-table-column prop="source_date" sortable="custom" label="Tanggal" align="center" min-width="150">
             <template slot-scope="{row}">
               {{ row.source_date | moment('D MMMM YYYY') }}
             </template>

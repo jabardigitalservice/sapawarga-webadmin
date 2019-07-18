@@ -1,9 +1,6 @@
 <template>
   <div class="app-container">
     <el-row :gutter="20">
-      <!--      <el-col :lg="6">-->
-      <!--        Kiri-->
-      <!--      </el-col>-->
       <el-col :lg="24">
         <el-row style="margin: 10px 0px">
           <el-col :span="12">
@@ -15,12 +12,14 @@
           </el-col>
         </el-row>
 
+        <ListFilter :list-query.sync="listQuery" @submit-search="getList" @reset-search="resetFilter" />
+
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%" @sort-change="changeSort">
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
 
           <el-table-column prop="title" sortable="custom" label="Judul" min-width="350" />
 
-          <el-table-column prop="status" sortable="custom" class-name="status-col" label="Status" width="150px">
+          <el-table-column prop="status" sortable="custom" class-name="status-col" label="Status" min-width="150px">
             <template slot-scope="{row}">
               <el-tag :type="row.status | statusFilter">
                 {{ row.status_label }}
@@ -28,19 +27,19 @@
             </template>
           </el-table-column>
 
-          <el-table-column prop="created_at" sortable="custom" label="Dibuat" width="150">
+          <el-table-column prop="created_at" sortable="custom" label="Dibuat" min-width="150">
             <template slot-scope="{row}">
               {{ row.created_at | moment('D MMMM YYYY HH:mm') }}
             </template>
           </el-table-column>
 
-          <el-table-column prop="updated_at" sortable="custom" label="Dikirim" width="150">>
+          <el-table-column prop="updated_at" sortable="custom" label="Dikirim" min-width="150">>
             <template slot-scope="{row}">
               {{ getSentDateTime(row) | moment('D MMMM YYYY HH:mm') }}
             </template>
           </el-table-column>
 
-          <el-table-column align="center" label="Actions" width="250px">
+          <el-table-column align="center" label="Actions" min-width="250px">
             <template slot-scope="scope">
               <router-link :to="'/notification/show/'+scope.row.id">
                 <el-button type="white" size="mini">
@@ -65,10 +64,10 @@
 <script>
 import { fetchList } from '@/api/notification'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
+import ListFilter from './_listfilter'
 
 export default {
-
-  components: { Pagination },
+  components: { Pagination, ListFilter },
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -92,6 +91,10 @@ export default {
       listLoading: true,
       listQuery: {
         title: null,
+        status: null,
+        kabkota_id: null,
+        kec_id: null,
+        kel_id: null,
         sort_by: 'updated_at',
         sort_order: 'descending',
         page: 1,

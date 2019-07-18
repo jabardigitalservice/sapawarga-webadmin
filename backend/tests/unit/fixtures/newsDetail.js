@@ -22,6 +22,7 @@ export default {
     status: 0,
     status_label: "Tidak Aktif",
     seq: 2,
+    total_viewers: 51,
     created_at: 1562041555,
     updated_at: 1562069681
   }

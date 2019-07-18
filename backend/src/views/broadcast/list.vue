@@ -8,12 +8,14 @@
         <el-row style="margin: 10px 0px">
           <el-col :span="12">
             <router-link :to="{ path: '/broadcast/create' }">
-              <el-button type="primary" size="small" icon="el-icon-plus">
+              <el-button v-if="roles" type="primary" size="small" icon="el-icon-plus">
                 Tambah Pesan Baru
               </el-button>
             </router-link>
           </el-col>
         </el-row>
+
+        <ListFilter :list-query.sync="listQuery" @submit-search="getList" @reset-search="resetFilter" />
 
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%" @sort-change="changeSort">
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
@@ -48,7 +50,7 @@
                 </el-button>
               </router-link>
               <router-link :to="(scope.row.status !== 10 ? '/broadcast/edit/' +scope.row.id : '')">
-                <el-button type="white" size="mini" :disabled="scope.row.status === 10">
+                <el-button v-if="roles" type="white" size="mini" :disabled="scope.row.status === 10">
                   Edit
                 </el-button>
               </router-link>
@@ -65,10 +67,11 @@
 <script>
 import { fetchList } from '@/api/broadcast'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
-
+import ListFilter from './_listfilter'
+import checkPermission from '@/utils/permission'
 export default {
 
-  components: { Pagination },
+  components: { Pagination, ListFilter },
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -89,13 +92,18 @@ export default {
     return {
       list: null,
       total: 0,
+      roles: checkPermission(['admin', 'staffProv', 'staffKabkota']),
       listLoading: true,
       listQuery: {
         title: null,
         sort_by: 'updated_at',
         sort_order: 'descending',
         page: 1,
-        limit: 10
+        limit: 10,
+        status: null,
+        kabkota_id: null,
+        kec_id: null,
+        kel_id: null
       }
     }
   },

@@ -1,14 +1,11 @@
 <template>
   <div class="app-container">
-
-    <!-- panel-group :role-id="roleId" :total-all-user="totalAllUser" :total-user-province="totalUserProvince" :total-user-kab-kota="totalUserKabKota" :total-user-kec="totalUserKec" :total-user-kel="totalUserKel" :total-user-rw="totalUserRw" /-->
-
     <el-row :gutter="20">
       <el-col :span="24">
         <el-row style="margin: 10px 0px">
           <el-col :span="12">
-            <router-link :to="{ path: '/nomor-penting/create' }">
-              <el-button type="primary" size="small" icon="el-icon-plus">
+            <router-link :to="(!isDisabledButton) ? { path: '/nomor-penting/create' } : ''">
+              <el-button :disabled="isDisabledButton" type="primary" size="small" icon="el-icon-plus">
                 Tambah Nomor Baru
               </el-button>
             </router-link>
@@ -56,16 +53,17 @@
                   View
                 </el-button>
               </router-link>
-              <router-link :to="'/nomor-penting/edit/'+scope.row.id">
-                <el-button type="white" size="mini">
+              <router-link :to="(!isDisabledButton) ? '/nomor-penting/edit/'+scope.row.id : ''">
+                {{ /* untuk disabled bisa menggunakan function, seperti :disabled="checkDisabledButton()" */ }}
+                <el-button :disabled="isDisabledButton" type="white" size="mini">
                   Edit
                 </el-button>
               </router-link>
 
-              <el-button v-if="scope.row.status === 10" type="danger" size="mini" @click="deactivateRecord(scope.row.id)">
+              <el-button v-if="scope.row.status === 10" :disabled="isDisabledButton" type="danger" size="mini" @click="deactivateRecord(scope.row.id)">
                 Deactivate
               </el-button>
-              <el-button v-if="scope.row.status === 0" type="success" size="mini" @click="activateRecord(scope.row.id)">
+              <el-button v-if="scope.row.status === 0" :disabled="isDisabledButton" type="success" size="mini" @click="activateRecord(scope.row.id)">
                 Activate
               </el-button>
 
@@ -82,8 +80,7 @@
 <script>
 import { fetchList, activate, deactivate } from '@/api/phonebooks'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
-// import PanelGroup from './components/PanelGroup'
-
+import checkPermission from '@/utils/permission'
 import ListFilter from './_listfilter'
 
 export default {
@@ -138,18 +135,13 @@ export default {
         page: 1,
         limit: 10
       },
-      totalAllUser: 0,
-      totalUserProvince: 0,
-      totalUserKabKota: 0,
-      totalUserKec: 0,
-      totalUserKel: 0,
-      totalUserRw: 0
+      isDisabledButton: false
     }
   },
 
-  created() {
+  mounted() {
     this.getList()
-    this.getTotalUser()
+    this.isDisabledButton = !checkPermission(['admin', 'staffProv', 'staffKabkota'])
   },
 
   methods: {
@@ -164,17 +156,6 @@ export default {
 
     showPhoneNumbers(array) {
       return _.map(array, 'phone_number').join('<br />')
-    },
-
-    getTotalUser() {
-      // totalUser().then(response => {
-      //   this.totalAllUser = (_.find(response.data.items, ['level', 'all'])) ? _.find(response.data.items, ['level', 'all']).value : null
-      //   this.totalUserProvince = (_.find(response.data.items, ['level', 'prov'])) ? _.find(response.data.items, ['level', 'prov']).value : null
-      //   this.totalUserKabKota = (_.find(response.data.items, ['level', 'kabkota'])) ? _.find(response.data.items, ['level', 'kabkota']).value : null
-      //   this.totalUserKec = (_.find(response.data.items, ['level', 'kec'])) ? _.find(response.data.items, ['level', 'kec']).value : null
-      //   this.totalUserKel = (_.find(response.data.items, ['level', 'kel'])) ? _.find(response.data.items, ['level', 'kel']).value : null
-      //   this.totalUserRw = (_.find(response.data.items, ['level', 'rw'])) ? _.find(response.data.items, ['level', 'rw']).value : null
-      // })
     },
 
     resetFilter() {

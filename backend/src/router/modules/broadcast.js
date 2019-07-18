@@ -7,7 +7,7 @@ const broadcastRouter = {
   redirect: '/broadcast/index',
   meta: {
     title: 'broadcast-manage',
-    roles: ['admin'],
+    roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel'],
     icon: 'message'
   },
   children: [
@@ -17,7 +17,7 @@ const broadcastRouter = {
       component: () => import('@/views/broadcast/list'),
       meta: {
         title: 'broadcast-list',
-        roles: ['admin']
+        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']
       }
     },
     {
@@ -26,7 +26,7 @@ const broadcastRouter = {
       component: () => import('@/views/broadcast/create'),
       meta: {
         title: 'broadcast-create',
-        roles: ['admin']
+        roles: ['admin', 'staffProv', 'staffKabkota']
       }
     },
     {
@@ -37,7 +37,7 @@ const broadcastRouter = {
       meta: {
         title: 'broadcast-edit',
         noCache: true,
-        roles: ['admin']
+        roles: ['admin', 'staffProv', 'staffKabkota']
       }
     },
     {
@@ -47,7 +47,7 @@ const broadcastRouter = {
       hidden: true,
       meta: {
         title: 'broadcast-show',
-        roles: ['admin']
+        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']
       }
     }
   ]
