@@ -9,9 +9,8 @@ services:
     ports: 
       - 8081:8080
     volumes:
-      - ./backend:/app
-      - /app/node_modules
-      - /app/build
+      - ./backend/src:/app/src
+      - ./backend/tests:/app/tests
     env_file:
       - .env-dev
 
