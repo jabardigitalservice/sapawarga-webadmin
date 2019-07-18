@@ -19,7 +19,7 @@
 
           <el-table-column prop="title" sortable="custom" label="Judul" min-width="350" />
 
-          <el-table-column prop="status" sortable="custom" class-name="status-col" label="Status" width="150px">
+          <el-table-column prop="status" sortable="custom" class-name="status-col" label="Status" min-width="150px">
             <template slot-scope="{row}">
               <el-tag :type="row.status | statusFilter">
                 {{ row.status_label }}
@@ -27,19 +27,19 @@
             </template>
           </el-table-column>
 
-          <el-table-column prop="created_at" sortable="custom" label="Dibuat" width="150">
+          <el-table-column prop="created_at" sortable="custom" label="Dibuat" min-width="150">
             <template slot-scope="{row}">
               {{ row.created_at | moment('D MMMM YYYY HH:mm') }}
             </template>
           </el-table-column>
 
-          <el-table-column prop="updated_at" sortable="custom" label="Dikirim" width="150">>
+          <el-table-column prop="updated_at" sortable="custom" label="Dikirim" min-width="150">>
             <template slot-scope="{row}">
               {{ getSentDateTime(row) | moment('D MMMM YYYY HH:mm') }}
             </template>
           </el-table-column>
 
-          <el-table-column align="center" label="Actions" width="250px">
+          <el-table-column align="center" label="Actions" min-width="250px">
             <template slot-scope="scope">
               <router-link :to="'/notification/show/'+scope.row.id">
                 <el-button type="white" size="mini">
