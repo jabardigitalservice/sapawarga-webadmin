@@ -74,7 +74,7 @@ export default {
       listLoading: true,
       listQuery: {
         title: null,
-        category: null,
+        category_id: null,
         status: null,
         kabkota_id: null,
         kec_id: null,

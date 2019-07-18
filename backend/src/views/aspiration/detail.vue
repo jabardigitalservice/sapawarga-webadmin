@@ -39,8 +39,8 @@
             <el-table-column prop="content" />
           </el-table>
         </el-card>
-        <el-button v-if="status" :disabled="disableButton" class="button-send" type="primary" @click="actionApprove">{{ $t('crud.accept') }}</el-button>
-        <el-button v-if="status" :disabled="disableButton" class="button-send" type="info" @click="actionReject">{{ $t('crud.reject') }}</el-button>
+        <el-button v-if="status && roles" class="button-send" type="primary" @click="actionApprove">{{ $t('crud.accept') }}</el-button>
+        <el-button v-if="status && roles" class="button-send" type="info" @click="actionReject">{{ $t('crud.reject') }}</el-button>
       </el-col>
     </el-row>
   </div>
@@ -66,7 +66,7 @@ export default {
       images: [],
       index: null,
       note: null,
-      disableButton: false
+      roles: checkPermission(['admin', 'staffProv'])
     }
   },
   computed: {
@@ -86,7 +86,6 @@ export default {
   created() {
     this.id = this.$route.params && this.$route.params.id
     this.getDetail()
-    this.disableButton = !checkPermission(['admin', 'staffProv'])
   },
   methods: {
     imageGallery(index) {

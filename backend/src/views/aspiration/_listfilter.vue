@@ -9,7 +9,7 @@
         </el-col>
         <el-col :span="4">
           <el-form-item style="margin-bottom: 0">
-            <InputCategory v-model="listQuery.category" category-type="aspirasi" />
+            <InputCategory v-model="listQuery.category_id" category-type="aspirasi" />
           </el-form-item>
         </el-col>
         <el-col :span="4">
