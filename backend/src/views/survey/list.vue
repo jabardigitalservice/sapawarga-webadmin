@@ -6,7 +6,7 @@
         <el-row style="margin: 10px 0px">
           <el-col :span="12">
             <router-link :to="{ path: '/survey/create' }">
-              <el-button type="primary" size="small" icon="el-icon-plus">
+              <el-button v-if="roles" type="primary" size="small" icon="el-icon-plus">
                 Tambah Survei Baru
               </el-button>
             </router-link>
@@ -49,7 +49,7 @@
                 </el-button>
               </router-link>
               <router-link :to="scope.row.status === 0 ? `/survey/edit/${scope.row.id}` : ``">
-                <el-button type="white" size="mini" :disabled="scope.row.status === 10">
+                <el-button v-if="roles" type="white" size="mini" :disabled="scope.row.status === 10">
                   Edit
                 </el-button>
               </router-link>
@@ -64,7 +64,7 @@
 <script>
 import { fetchList } from '@/api/survey'
 import Pagination from '@/components/Pagination'
-
+import checkPermission from '@/utils/permission'
 import { getStatusColor, getStatusLabel } from './status'
 
 export default {
@@ -74,6 +74,7 @@ export default {
       list: null,
       total: 0,
       listLoading: true,
+      roles: checkPermission(['admin', 'staffProv']),
       listQuery: {
         title: null,
         sort_by: 'updated_at',
