@@ -71,7 +71,7 @@ import ListFilter from './_listfilter'
 import { getStatusColor, getStatusLabel } from './status'
 
 export default {
-  components: { Pagination, ListFilter},
+  components: { Pagination, ListFilter },
   data() {
     return {
       list: null,

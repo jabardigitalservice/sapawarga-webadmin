@@ -64,7 +64,7 @@ export default {
       default: null
     }
   },
-  
+
   computed: {
     filterAreaParentId() {
       const authUser = this.$store.state.user
