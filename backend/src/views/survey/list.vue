@@ -77,7 +77,6 @@ export default {
       list: null,
       total: 0,
       listLoading: true,
-      status: null,
       listQuery: {
         title: null,
         status: null,
