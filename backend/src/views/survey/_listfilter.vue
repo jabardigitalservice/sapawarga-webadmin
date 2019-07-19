@@ -18,7 +18,7 @@
             >
               <el-option value="0" label="Draft" />
               <el-option value="10" label="Berakhir" />
-              <el-option :value="valueStart" :label="labelStart" />
+              <el-option value="15" label="Sedang Berlangsung" />
             </el-select>
           </el-form-item>
         </el-col>
