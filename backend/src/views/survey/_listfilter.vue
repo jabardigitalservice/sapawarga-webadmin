@@ -64,20 +64,7 @@ export default {
       default: null
     }
   },
-
-  data() {
-    return {
-      labelEnd: 'Berakhir',
-      labelStart: 'Sedang Berlangsung',
-      valueEnd: 10,
-      valueStart: 5
-    }
-  },
-
-  watch: {
-    
-  },
-
+  
   computed: {
     filterAreaParentId() {
       const authUser = this.$store.state.user
@@ -98,12 +85,7 @@ export default {
     checkPermission,
 
     submitSearch() {
-      if (this.listQuery.status == 5) {
-        this.listQuery.status = 10
-        this.$emit('submit-search')
-      } else {
-        this.$emit('submit-search')
-      }
+      this.$emit('submit-search')
     },
 
     resetFilter() {
