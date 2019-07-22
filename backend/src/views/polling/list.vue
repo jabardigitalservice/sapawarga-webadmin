@@ -11,6 +11,9 @@
             </router-link>
           </el-col>
         </el-row>
+
+        <ListFilter :list-query.sync="listQuery" @submit-search="getList" @reset-search="resetFilter" />
+
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%" @sort-change="changeSort">
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
           <el-table-column prop="name" sortable="custom" label="Nama Polling" min-width="250" />
@@ -54,9 +57,10 @@
 <script>
 import { fetchList } from '@/api/polling'
 import Pagination from '@/components/Pagination'
+import ListFilter from './_listfilter'
 import moment from 'moment'
 export default {
-  components: { Pagination },
+  components: { Pagination, ListFilter },
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -81,6 +85,10 @@ export default {
       listLoading: true,
       listQuery: {
         title: null,
+        status: null,
+        kabkota_id: null,
+        kec_id: null,
+        kel_id: null,
         sort_by: 'updated_at',
         sort_order: 'descending',
         page: 1,
@@ -148,6 +156,10 @@ export default {
     changeSort(e) {
       this.listQuery.sort_by = e.prop
       this.listQuery.sort_order = e.order
+      this.getList()
+    },
+    resetFilter() {
+      Object.assign(this.$data.listQuery, this.$options.data().listQuery)
       this.getList()
     }
   }
