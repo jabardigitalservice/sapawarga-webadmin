@@ -53,17 +53,17 @@
                   View
                 </el-button>
               </router-link>
-              <router-link :to="(!isDisabledButton) ? '/nomor-penting/edit/'+scope.row.id : ''">
+              <router-link v-if="!isDisabledButton" :to="(!isDisabledButton) ? '/nomor-penting/edit/'+scope.row.id : ''">
                 {{ /* untuk disabled bisa menggunakan function, seperti :disabled="checkDisabledButton()" */ }}
                 <el-button :disabled="isDisabledButton" type="white" size="mini">
                   Edit
                 </el-button>
               </router-link>
 
-              <el-button v-if="scope.row.status === 10" :disabled="isDisabledButton" type="danger" size="mini" @click="deactivateRecord(scope.row.id)">
+              <el-button v-if="scope.row.status === 10 && !isDisabledButton" :disabled="isDisabledButton" type="danger" size="mini" @click="deactivateRecord(scope.row.id)">
                 Deactivate
               </el-button>
-              <el-button v-if="scope.row.status === 0" :disabled="isDisabledButton" type="success" size="mini" @click="activateRecord(scope.row.id)">
+              <el-button v-if="scope.row.status === 0 && !isDisabledButton" :disabled="isDisabledButton" type="success" size="mini" @click="activateRecord(scope.row.id)">
                 Activate
               </el-button>
 
