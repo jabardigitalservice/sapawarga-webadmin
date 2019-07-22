@@ -7,7 +7,7 @@ const pollingRouter = {
   redirect: '/polling/index',
   meta: {
     title: 'polling-manage',
-    roles: ['admin'],
+    roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel'],
     icon: 'peoples'
   },
   children: [
@@ -17,7 +17,7 @@ const pollingRouter = {
       component: () => import('@/views/polling/list'),
       meta: {
         title: 'polling-list',
-        roles: ['admin']
+        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']
       }
     },
     {
@@ -26,7 +26,7 @@ const pollingRouter = {
       component: () => import('@/views/polling/create'),
       meta: {
         title: 'polling-create',
-        roles: ['admin']
+        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']
       }
     },
     {
@@ -36,7 +36,7 @@ const pollingRouter = {
       hidden: true,
       meta: {
         title: 'polling-edit',
-        roles: ['admin']
+        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']
       }
     },
     {
@@ -46,7 +46,7 @@ const pollingRouter = {
       hidden: true,
       meta: {
         title: 'polling-detail',
-        roles: ['admin']
+        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']
       }
     }
   ]
