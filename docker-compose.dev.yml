@@ -7,14 +7,12 @@ services:
     networks:
       - internal
     ports: 
-      - 8080:8080
+      - 8081:8080
     volumes:
-      - ./backend:/app
-      - /app/node_modules
-      - /app/build
-      - ./.env-vuejs-template:/app/.env.development
-    environment:
-      - NODE_ENV=development
+      - ./backend/src:/app/src
+      - ./backend/tests:/app/tests
+    env_file:
+      - .env-dev
 
 networks:
   internal:
