@@ -13,7 +13,7 @@
     "preview": "node build/index.js --preview",
     "lint": "eslint --ext .js,.vue src",
     "lint:fix": "eslint --fix --ext .js,.vue src",
-    "test:unit": "jest --clearCache && vue-cli-service test:unit",
+    "test:unit": "VUE_APP_BASE_API='' && jest --clearCache && vue-cli-service test:unit",
     "test:unit:watch": "vue-cli-service test:unit --watchAll",
     "test:ci": "npm run lint && npm run test:unit",
     "svgo": "svgo -f src/icons/svg --config=src/icons/svgo.yml",
