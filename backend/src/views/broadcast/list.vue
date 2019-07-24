@@ -1,9 +1,6 @@
 <template>
   <div class="app-container">
     <el-row :gutter="20">
-      <!--      <el-col :lg="6">-->
-      <!--        Kiri-->
-      <!--      </el-col>-->
       <el-col :lg="24">
         <el-row style="margin: 10px 0px">
           <el-col :span="12">
