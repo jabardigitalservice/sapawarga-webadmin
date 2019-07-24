@@ -152,6 +152,8 @@ export default {
     kelId: {
       handler: function(value) {
         this.kelurahan_selected = value
+
+        this.changeSelection(value, 'changeKelurahan')
       },
       immediate: true
     }
@@ -256,6 +258,8 @@ export default {
 
       if (checkPermission(['staffKel'])) {
         this.kelurahan_selected = authUser.kel_id
+
+        this.changeSelection(this.kelurahan_selected, 'changeKelurahan')
       }
     }
   }
