@@ -92,7 +92,7 @@ export default {
     return {
       list: null,
       total: 0,
-      roles: checkPermission(['admin', 'staffProv', 'staffKabkota']),
+      roles: checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']),
       listLoading: true,
       listQuery: {
         title: null,
