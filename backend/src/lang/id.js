@@ -49,7 +49,13 @@ export default {
     'news-list': 'Daftar Berita',
     'news-create': 'Tambah Berita',
     'news-edit': 'Edit Berita',
-    'news-detail': 'Detail Berita'
+    'news-detail': 'Detail Berita',
+
+    'video-manage': 'Video',
+    'video-list': 'Daftar Video',
+    'video-create': 'Tambah Video',
+    'video-edit': 'Edit Video',
+    'video-detail': 'Detail Video'
 
   },
   crud: {
