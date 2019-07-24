@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-row :gutter="20">
       <el-col :span="24">
-        <el-row style="margin: 10px 0px">
+        <el-row v-if="!isDisabledButton" style="margin: 10px 0px">
           <el-col :span="12">
             <router-link :to="(!isDisabledButton) ? { path: '/nomor-penting/create' } : ''">
               <el-button :disabled="isDisabledButton" type="primary" size="small" icon="el-icon-plus">
