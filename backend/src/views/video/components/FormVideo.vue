@@ -88,7 +88,8 @@ export default {
         title: null,
         category_id: null,
         channel_id: null,
-        source_url: null
+        source_url: null,
+        priority: null,
       },
       options: {},
       rules: {
