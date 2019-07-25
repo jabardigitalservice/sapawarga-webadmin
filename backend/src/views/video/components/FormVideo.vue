@@ -21,7 +21,7 @@
               />
             </el-select>
           </el-form-item>
-          
+
           <el-form-item label="Set Prioritas" prop="priority">
             <el-select v-model="video.seq" name="priority" placeholder="Pilih Prioritas">
               <el-option
@@ -31,11 +31,10 @@
                 :label="item.label"
               />
             </el-select>
-          </el-form-item> 
+          </el-form-item>
 
           <el-form-item label="Sumber" prop="source">
-            <el-select v-model="video.source" name="source" placeholder="Pilih Sumber" disabled>
-            </el-select>
+            <el-select v-model="video.source" name="source" placeholder="Pilih Sumber" disabled />
           </el-form-item>
 
           <el-form-item label="URL Berita" prop="video_url">
@@ -63,7 +62,7 @@ import { containsWhitespace, validYoutubeUrl } from '@/utils/validate'
 import { requestArea } from '@/api/staff'
 
 export default {
-  components: {InputCategory},
+  components: { InputCategory },
   props: {
     isEdit: {
       type: Boolean,
@@ -112,7 +111,7 @@ export default {
           { min: 10, message: 'Judul Video minimal 10 karakter', trigger: 'blur' },
           { max: 100, message: 'Judul Video maksimal 100 karakter', trigger: 'blur' },
           { validator: validatorTitleWhitespace, trigger: 'blur' }
-        ], 
+        ],
         category_id: [
           { required: true, message: 'Kategori harus diisi', trigger: 'change' }
         ],
@@ -139,9 +138,9 @@ export default {
     getArea() {
       requestArea().then(response => {
         this.area = response.data.items
-        this.area.unshift({id:1, name:'JAWA BARAT'})
+        this.area.unshift({ id: 1, name: 'JAWA BARAT' })
       })
-    },
+    }
   }
 }
 </script>
