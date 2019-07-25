@@ -106,10 +106,6 @@ export default {
         { label: 4, value: 4 },
         { label: 5, value: 5 }
       ],
-      statusOptions: [
-        { label: 'Aktif', value: 10 },
-        { label: 'Tidak aktif', value: 0 },
-      ],
       rules: {
         title: [
           { required: true, message: 'Judul Video harus diisi', trigger: 'blur' },
