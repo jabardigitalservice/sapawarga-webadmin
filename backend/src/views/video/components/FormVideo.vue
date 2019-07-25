@@ -119,15 +119,12 @@ export default {
         priority: [
           { required: true, message: 'Prioritas harus diisi', trigger: 'change' }
         ],
-        channel_id: [
+        source: [
           { required: true, message: 'Sumber harus diisi', trigger: 'change' }
         ],
-        source_url: [
+        video_url: [
           { required: true, message: 'URL Video harus diisi', trigger: 'blur' },
           { validator: validatorUrl, trigger: 'blur' }
-        ],
-        status: [
-          { required: true, message: 'Status harus diisi', trigger: 'change' }
         ],
         target: [
           { required: true, message: 'Target harus diisi', trigger: 'change' }
