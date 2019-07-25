@@ -45,9 +45,9 @@
 
           <el-form-item>
             <el-button v-if="isEdit" type="primary" :loading="loading">{{ $t('crud.save-update') }}</el-button>
-            <el-button v-else type="primary" :loading="loading">{{ $t('crud.save-news') }}</el-button>
+            <el-button v-else type="primary" :loading="loading">{{ $t('crud.save-video') }}</el-button>
 
-            <router-link :to="'/news/index'">
+            <router-link :to="'/video/index'">
               <el-button type="info">{{ $t('crud.cancel') }}</el-button>
             </router-link>
           </el-form-item>
