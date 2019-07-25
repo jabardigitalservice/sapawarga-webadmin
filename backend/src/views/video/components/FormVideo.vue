@@ -131,6 +131,17 @@ export default {
         ]
       }
     }
+  },
+  created() {
+    this.getArea()
+  },
+  methods: {
+    getArea() {
+      requestArea().then(response => {
+        this.area = response.data.items
+        this.area.unshift({id:1, name:'JAWA BARAT'})
+      })
+    },
   }
 }
 </script>
