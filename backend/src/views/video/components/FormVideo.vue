@@ -90,10 +90,14 @@ export default {
       video: {
         title: null,
         category_id: null,
-        channel_id: null,
-        source_url: null,
-        priority: null,
+        source: 'YOUTUBE',
+        video_url: null,
+        seq: null,
+        status: null,
+        kabkota_id: null,
+        kabkota: null
       },
+      area: null,
       options: {},
       priorityOptions: [
         { label: 1, value: 1 },
