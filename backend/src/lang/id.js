@@ -74,6 +74,7 @@ export default {
     'save-update': 'Simpan Perubahan',
     'save-publish': 'Simpan dan Aktifkan',
     'save-news': 'Tambah Berita',
+    'save-video': 'Tambah Video',
 
     'back-to-list': 'Kembali ke Daftar',
     'send-polling': 'Publikasikan Polling',
