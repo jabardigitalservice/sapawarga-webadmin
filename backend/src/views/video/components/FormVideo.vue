@@ -71,6 +71,7 @@
 
 <script>
 import InputCategory from '@/components/InputCategory'
+import { containsWhitespace, validYoutubeUrl } from '@/utils/validate'
 
 export default {
   components: {InputCategory},
