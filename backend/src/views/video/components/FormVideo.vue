@@ -12,8 +12,13 @@
           </el-form-item>
 
           <el-form-item label="Target" prop="target">
-            <el-select v-model="video.target" placeholder="Pilih Target">
-              
+            <el-select v-model="video.kabkota_id" name="target" placeholder="Pilih Target">
+              <el-option
+                v-for="item in area"
+                :key="item.id"
+                :value="item.id"
+                :label="item.name"
+              />
             </el-select>
           </el-form-item>
 
