@@ -33,30 +33,13 @@
             </el-select>
           </el-form-item> 
 
-          <el-form-item label="Sumber" prop="channel_id">
-            <el-select v-model="video.channel_id" placeholder="Pilih Sumber">
-              <el-option
-                v-for="item in options"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id"
-              />
+          <el-form-item label="Sumber" prop="source">
+            <el-select v-model="video.source" name="source" placeholder="Pilih Sumber" disabled>
             </el-select>
           </el-form-item>
 
-          <el-form-item label="URL Berita" prop="source_url">
-            <el-input v-model="video.source_url" type="text" placeholder="https://www.youtube.com/watch?v=ejThfEGcN3I" />
-          </el-form-item>
-
-          <el-form-item label="Status" prop="status">
-            <el-select v-model="video.status" placeholder="Pilih Status" style="width: 100%">
-              <el-option
-                v-for="item in statusOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              />
-            </el-select>
+          <el-form-item label="URL Berita" prop="video_url">
+            <el-input v-model="video.video_url" type="text" name="video_url" placeholder="https://www.youtube.com/watch?v=ejThfEGcN3I" />
           </el-form-item>
 
           <el-form-item>
