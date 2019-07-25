@@ -11,6 +11,23 @@
             <InputCategory v-model="video.category_id" category-type="survey" prop="category" style="width: 100%" />
           </el-form-item>
 
+          <el-form-item label="Target" prop="target">
+            <el-select v-model="video.target" placeholder="Pilih Target">
+              
+            </el-select>
+          </el-form-item>
+
+          <el-form-item label="Set Prioritas" prop="priority">
+            <el-select v-model="video.priority" placeholder="Pilih Prioritas">
+              <el-option
+                v-for="item in priorityOptions"
+                :key="item.id"
+                :value="item.value"
+                :label="item.label"
+              />
+            </el-select>
+          </el-form-item> 
+
           <el-form-item label="Sumber" prop="channel_id">
             <el-select v-model="video.channel_id" placeholder="Pilih Sumber">
               <el-option
