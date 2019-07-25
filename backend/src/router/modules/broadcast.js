@@ -26,7 +26,7 @@ const broadcastRouter = {
       component: () => import('@/views/broadcast/create'),
       meta: {
         title: 'broadcast-create',
-        roles: ['admin', 'staffProv', 'staffKabkota']
+        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']
       }
     },
     {
@@ -37,7 +37,7 @@ const broadcastRouter = {
       meta: {
         title: 'broadcast-edit',
         noCache: true,
-        roles: ['admin', 'staffProv', 'staffKabkota']
+        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']
       }
     },
     {

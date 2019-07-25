@@ -4,7 +4,7 @@
       <el-row :gutter="10" type="flex">
         <el-col :span="8">
           <el-form-item style="margin-bottom: 0">
-            <el-input v-model="listQuery.title" placeholder="Judul" />
+            <el-input v-model="listQuery.title" placeholder="Judul Pesan" />
           </el-form-item>
         </el-col>
         <el-col :span="4">
