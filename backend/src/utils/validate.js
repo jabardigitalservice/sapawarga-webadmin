@@ -79,6 +79,12 @@ export function validUrl(str) {
   return reg.test(str)
 }
 
+export function validYoutubeUrl(str) {
+  const reg = /^(http:\/\/|https:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+$/
+
+  return reg.test(str)
+}
+
 export function containsWhitespace(str) {
   const reg = /^\s+|\s\s+|\s+$/g
 
