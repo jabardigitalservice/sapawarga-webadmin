@@ -21,9 +21,9 @@
               />
             </el-select>
           </el-form-item>
-
+          
           <el-form-item label="Set Prioritas" prop="priority">
-            <el-select v-model="video.priority" placeholder="Pilih Prioritas">
+            <el-select v-model="video.seq" name="priority" placeholder="Pilih Prioritas">
               <el-option
                 v-for="item in priorityOptions"
                 :key="item.id"
