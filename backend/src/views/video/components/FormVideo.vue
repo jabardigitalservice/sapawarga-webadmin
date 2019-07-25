@@ -82,6 +82,20 @@ export default {
     }
   },
   data() {
+    const validatorTitleWhitespace = (rule, value, callback) => {
+      if (containsWhitespace(value) === true) {
+        callback(new Error('Judul Video yang diisi tidak valid'))
+      }
+      callback()
+    }
+
+    const validatorUrl = (rule, value, callback) => {
+      if (validYoutubeUrl(value) === false) {
+        callback(new Error('URL Video tidak valid'))
+      }
+      callback()
+    }
+
     return {
       loading: false,
       video: {
