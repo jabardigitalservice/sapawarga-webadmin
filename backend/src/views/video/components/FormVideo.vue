@@ -4,11 +4,11 @@
       <el-col :xs="24" :sm="16">
         <el-form ref="form" :model="video" :rules="rules" :statu-icon="true" label-width="160px">
           <el-form-item label="Judul Video" prop="title">
-            <el-input v-model="video.title" type="text" placeholder="Judul Video, minimal 10 karakter" />
+            <el-input v-model="video.title" type="text" name="title" placeholder="Judul Video, minimal 10 karakter" />
           </el-form-item>
 
           <el-form-item label="Kategori" prop="category_id">
-            <InputCategory v-model="video.category_id" category-type="survey" prop="category" style="width: 100%" />
+            <InputCategory v-model="video.category_id" name="category_id" category-type="survey" prop="category" style="width: 100%" />
           </el-form-item>
 
           <el-form-item label="Target" prop="target">
