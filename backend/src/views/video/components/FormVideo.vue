@@ -118,7 +118,31 @@ export default {
         { label: 'Tidak aktif', value: 0 },
       ],
       rules: {
-
+        title: [
+          { required: true, message: 'Judul Video harus diisi', trigger: 'blur' },
+          { min: 10, message: 'Judul Video minimal 10 karakter', trigger: 'blur' },
+          { max: 100, message: 'Judul Video maksimal 100 karakter', trigger: 'blur' },
+          { validator: validatorTitleWhitespace, trigger: 'blur' }
+        ], 
+        category_id: [
+          { required: true, message: 'Kategori harus diisi', trigger: 'change' }
+        ],
+        priority: [
+          { required: true, message: 'Prioritas harus diisi', trigger: 'change' }
+        ],
+        channel_id: [
+          { required: true, message: 'Sumber harus diisi', trigger: 'change' }
+        ],
+        source_url: [
+          { required: true, message: 'URL Video harus diisi', trigger: 'blur' },
+          { validator: validatorUrl, trigger: 'blur' }
+        ],
+        status: [
+          { required: true, message: 'Status harus diisi', trigger: 'change' }
+        ],
+        target: [
+          { required: true, message: 'Target harus diisi', trigger: 'change' }
+        ]
       }
     }
   }
