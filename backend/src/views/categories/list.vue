@@ -1,0 +1,118 @@
+<template>
+  <div class="app-container">
+    <el-row :gutter="20">
+      <el-col :lg="24">
+        <el-row style="margin: 10px 0px">
+          <el-col :span="12">
+            <router-link :to="{ path: '/categories/create' }">
+              <el-button type="primary" size="small" icon="el-icon-plus">
+                Tambah Kategori Baru
+              </el-button>
+            </router-link>
+          </el-col>
+        </el-row>
+
+        <!-- TODO: Search & Filter
+        <ListFilter :list-query.sync="listQuery" @submit-search="getList" @reset-search="resetFilter" />
+        -->
+
+        <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%" @sort-change="changeSort">
+          <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
+
+          <el-table-column prop="name" sortable="custom" label="Kategori" min-width="150" />
+
+          <el-table-column prop="type" sortable="custom" label="Fitur" min-width="150">
+            <template slot-scope="{row}">
+              {{ _.startCase(row.type) }}
+            </template>
+          </el-table-column>
+
+          <el-table-column align="center" label="Actions" min-width="150px">
+            <template slot-scope="scope">
+              <router-link :to="'/categories/edit/' +scope.row.id">
+                <el-button type="white" size="mini">
+                  Edit
+                </el-button>
+              </router-link>
+              <el-button type="danger" size="mini" @click="delete(scope.row.id)">
+                Hapus
+              </el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+
+        <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
+      </el-col>
+    </el-row>
+  </div>
+</template>
+
+<script>
+import { fetchList } from '@/api/categories'
+import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
+// TODO: Search & Filter
+// import ListFilter from './_listfilter'
+
+export default {
+  components: {
+    Pagination
+    // TODO: Search & Filter
+    // ListFilter
+  },
+
+  props: {
+    roleId: {
+      type: String,
+      default: null
+    }
+  },
+
+  data() {
+    return {
+      list: null,
+      total: 0,
+      listLoading: true,
+      listQuery: {
+        type: null,
+        name: null,
+        sort_by: 'name',
+        sort_order: 'ascending',
+        page: 1,
+        limit: 10
+      }
+    }
+  },
+
+  mounted() {
+    this.getList()
+  },
+
+  methods: {
+    getList() {
+      this.listLoading = true
+      fetchList(this.listQuery).then(response => {
+        this.list = response.data.items
+        this.total = response.data._meta.totalCount
+        this.listLoading = false
+      })
+    },
+
+    // TODO: Search & Filter
+    /* resetFilter() {
+      Object.assign(this.$data.listQuery, this.$options.data().listQuery)
+
+      this.getList()
+    }, */
+
+    getTableRowNumbering(index) {
+      return ((this.listQuery.page - 1) * this.listQuery.limit) + (index + 1)
+    },
+
+    changeSort(e) {
+      this.listQuery.sort_by = e.prop
+      this.listQuery.sort_order = e.order
+      this.getList()
+    }
+  }
+}
+</script>

@@ -7,3 +7,9 @@ export function fetchList(query) {
     params: query
   })
 }
+
+const exportFunctions = {
+  fetchList
+}
+
+export default exportFunctions

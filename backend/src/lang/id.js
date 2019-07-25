@@ -49,7 +49,13 @@ export default {
     'news-list': 'Daftar Berita',
     'news-create': 'Tambah Berita',
     'news-edit': 'Edit Berita',
-    'news-detail': 'Detail Berita'
+    'news-detail': 'Detail Berita',
+
+    'categories-manage': 'Kategori',
+    'categories-list': 'Daftar Kategori',
+    'categories-create': 'Tambah Kategori',
+    'categories-edit': 'Edit Kategori',
+    'categories-detail': 'Detail Kategori'
 
   },
   crud: {
