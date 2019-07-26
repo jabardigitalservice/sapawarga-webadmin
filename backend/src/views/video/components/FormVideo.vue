@@ -114,8 +114,8 @@ export default {
         category_id: [
           { required: true, message: 'Kategori harus diisi', trigger: 'change' }
         ],
-        priority: [
-          { required: true, message: 'Prioritas harus diisi', trigger: 'change' }
+        seq: [
+          { required: true, message: 'Prioritas Berita harus diisi', trigger: 'change' }
         ],
         source: [
           { required: true, message: 'Sumber harus diisi', trigger: 'change' }
@@ -124,7 +124,7 @@ export default {
           { required: true, message: 'URL Video harus diisi', trigger: 'blur' },
           { validator: validatorUrl, trigger: 'blur' }
         ],
-        target: [
+        kabkota_id: [
           { required: true, message: 'Target harus diisi', trigger: 'change' }
         ]
       }
