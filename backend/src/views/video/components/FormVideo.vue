@@ -2,7 +2,7 @@
   <div>
     <el-row :gutter="20">
       <el-col :xs="24" :sm="16">
-        <el-form ref="form" :model="video" :rules="rules" :statu-icon="true" label-width="160px">
+        <el-form ref="video" :model="video" :rules="rules" :status-icon="true" label-width="160px">
           <el-form-item label="Judul Video" prop="title">
             <el-input v-model="video.title" type="text" name="title" placeholder="Judul Video, minimal 10 karakter" />
           </el-form-item>
