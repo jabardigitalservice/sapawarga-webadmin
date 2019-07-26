@@ -91,13 +91,12 @@ export default {
         category_id: null,
         source: 'YOUTUBE',
         video_url: null,
+        kabkota_id: null,
         seq: null,
         status: null,
-        kabkota_id: null,
         kabkota: null
       },
       area: null,
-      options: {},
       priorityOptions: [
         { label: 1, value: 1 },
         { label: 2, value: 2 },
