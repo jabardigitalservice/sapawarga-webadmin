@@ -11,19 +11,19 @@
             <InputCategory v-model="video.category_id" name="category_id" category-type="survey" prop="category" style="width: 100%" />
           </el-form-item>
 
-          <el-form-item label="Target" prop="target">
-            <el-select v-model="video.kabkota_id" name="target" placeholder="Pilih Target">
-              <el-option
+          <el-form-item label="Target" prop="kabkota_id">
+            <el-select v-model="video.kabkota_id" placeholder="Pilih Target">
+              <el-option 
                 v-for="item in area"
                 :key="item.id"
-                :value="item.id"
                 :label="item.name"
+                :value="item.id"
               />
             </el-select>
           </el-form-item>
 
-          <el-form-item label="Set Prioritas" prop="priority">
-            <el-select v-model="video.seq" name="priority" placeholder="Pilih Prioritas">
+          <el-form-item label="Set Prioritas" prop="seq">
+            <el-select v-model="video.seq" filterable placeholder="Pilih Prioritas">
               <el-option
                 v-for="item in priorityOptions"
                 :key="item.id"
