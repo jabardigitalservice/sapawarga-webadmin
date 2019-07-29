@@ -179,6 +179,10 @@ export default {
         const data = {}
 
         Object.assign(data, this.video)
+        
+        if (data.kabkota_id === 1) {
+          data.kabkota_id = null
+        }
 
         if (this.isEdit) {
 
@@ -190,7 +194,6 @@ export default {
           
           data.status = 0
           await create(data)
-          console.log(data)
           this.$message.success(this.$t('crud.create-success'))
           this.$router.push('/video/index')
 
