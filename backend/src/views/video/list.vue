@@ -4,7 +4,7 @@
       <el-col class="col-left" :xs="24" :sm="24" :md="24" :lg="7" :xl="7">
         <el-card>
           <div slot="header" class="clearfix">
-            <span>Kanal Media</span>
+            <span>Kategori</span>
           </div>
           <el-table stripe :data="tableDataStatistik" :show-header="false" style="width: 100%">
             <el-table-column prop="title" align="left" />
@@ -18,37 +18,25 @@
           </el-table>
         </el-card>
       </el-col>
+
       <el-col class="col-right" :xs="24" :sm="24" :md="24" :lg="17" :xl="17">
+
         <el-row style="margin: 10px 0px">
           <el-col :span="12">
-            <router-link :to="{ path: '/news/create' }">
+            <router-link :to="{ path: '/video/create' }">
               <el-button type="primary" size="small" icon="el-icon-plus">
-                Tambah Berita Baru
+                Tambah Video Baru
               </el-button>
             </router-link>
           </el-col>
         </el-row>
 
-        <ListFilter
-          :list-query.sync="listQuery"
-          @submit-search="getList"
-          @reset-search="resetFilter"
-        />
+        <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%">
+          <el-table-column type="index" width="50" :index="getTableRowNumbering" />
 
-        <el-table
-          v-loading="listLoading"
-          :data="list"
-          border
-          stripe
-          fit
-          highlight-current-row
-          @sort-change="changeSort"
-        >
-          <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
+          <el-table-column prop="title" sortable="custome" label="Judul Video" min-width="200" />
 
-          <el-table-column prop="title" sortable="custom" label="Judul Berita" min-width="200" />
-
-          <el-table-column prop="channel.name" sortable="custom" label="Sumber" align="center" min-width="100" />
+          <el-table-column prop="category" sortable="custome" label="Kategori" align="center" width="120" />
 
           <el-table-column
             prop="status"
@@ -65,9 +53,7 @@
             </template>
           </el-table-column>
 
-          <el-table-column prop="total_viewers" sortable="custom" label="Jumlah Pengunjung" align="center" min-width="130" />
-
-          <el-table-column prop="source_date" sortable="custom" label="Tanggal" align="center" min-width="150">
+          <el-table-column prop="source_date" sortable="custom" label="Dibuat" align="center" min-width="150">
             <template slot-scope="{row}">
               {{ row.source_date | moment('D MMMM YYYY') }}
             </template>
@@ -96,7 +82,9 @@
               </el-tooltip>
             </template>
           </el-table-column>
+
         </el-table>
+
         <pagination
           v-show="total>0"
           :total="total"
@@ -104,19 +92,18 @@
           :limit.sync="listQuery.limit"
           @pagination="getList"
         />
+
       </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
-import { fetchList, fetchStatistic, deleteData, deactivate, activate } from '@/api/news'
-import moment from 'moment'
 import Pagination from '@/components/Pagination'
-import ListFilter from './_listfilter'
+import { fetchList, fetchStatistic, deleteData, deactivate, activate } from '@/api/video'
 
 export default {
-  components: { Pagination, ListFilter },
+  components: { Pagination },
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -143,9 +130,9 @@ export default {
       tableDataStatistikTotal: [{ title: 'Semua Kategori', count: 0 }]
     }
   },
+
   created() {
-    this.getList()
-    this.getStatistic()
+
   },
 
   methods: {
@@ -165,12 +152,6 @@ export default {
       })
     },
 
-    resetFilter() {
-      Object.assign(this.$data.listQuery, this.$options.data().listQuery)
-
-      this.getList()
-    },
-
     getTableRowNumbering(index) {
       return ((this.listQuery.page - 1) * this.listQuery.limit) + (index + 1)
     },
@@ -178,6 +159,12 @@ export default {
     changeSort(e) {
       this.listQuery.sort_by = e.prop
       this.listQuery.sort_order = e.order
+      this.getList()
+    },
+
+    resetFilter() {
+      Object.assign(this.$data.listQuery, this.$options.data().listQuery)
+
       this.getList()
     },
 
@@ -213,6 +200,7 @@ export default {
         console.log(e)
       }
     },
+
     async deactivateRecord(id) {
       try {
         await this.$confirm(this.$t('crud.deactivate-confirm'), 'Warning', {
