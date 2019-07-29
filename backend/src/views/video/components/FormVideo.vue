@@ -139,8 +139,7 @@ export default {
   methods: {
     init() {
       const authUser = this.$store.state.user
-      console.log(authUser)
-
+      
       this.getArea()
 
       if (checkPermission(['staffKabkota'])) {
