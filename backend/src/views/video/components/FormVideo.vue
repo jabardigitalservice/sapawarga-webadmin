@@ -134,9 +134,21 @@ export default {
     }
   },
   created() {
-    this.getArea()
+    this.init()
   },
   methods: {
+    init() {
+      const authUser = this.$store.state.user
+      console.log(authUser)
+
+      this.getArea()
+
+      if (checkPermission(['staffKabkota'])) {
+        this.video.kabkota_id = authUser.kabkota_id
+        this.checkStaff = true
+      }
+
+    },
     getArea() {
       requestArea().then(response => {
         this.area = response.data.items
