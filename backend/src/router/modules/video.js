@@ -26,7 +26,7 @@ const videoRouter = {
       component: () => import('@/views/video/create'),
       meta: {
         title: 'video-create',
-        roles: ['admin', 'staffProv']
+        roles: ['admin', 'staffProv', 'staffKabkota']
       }
     },
     {
@@ -36,7 +36,7 @@ const videoRouter = {
       hidden: true,
       meta: {
         title: 'video-edit',
-        roles: ['admin', 'staffProv']
+        roles: ['admin', 'staffProv', 'staffKabkota']
       }
     },
     {
