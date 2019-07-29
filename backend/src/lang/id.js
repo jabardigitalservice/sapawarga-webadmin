@@ -113,7 +113,9 @@ export default {
 
     'polling-error-edit-published': 'Sudah dipublish, tidak dapat diedit.',
     'broadcast-error-edit-published': 'Sudah dipublish, tidak dapat di edit.',
-    'notification-error-edit-published': 'Sudah dipublish, tidak dapat di edit.'
+    'notification-error-edit-published': 'Sudah dipublish, tidak dapat di edit.',
+    'video-error-edit-published': 'Sudah dipublish, tidak dapat di edit.',
+
   },
   common: {
     confirm: 'Ya',
