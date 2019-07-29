@@ -154,7 +154,20 @@ export default {
         this.area = response.data.items
         this.area.unshift({ id: 1, name: 'JAWA BARAT' })
       })
-    }
+    },
+    fetchData(id) {
+      fetchRecord(id).then(response => {
+        this.video = response.data
+        if (this.video.status === 10) {
+          this.$message.error(
+            this.$t('crud.video-error-edit-published')
+          )
+          this.$router.push('/video/index')
+        }
+      }).catch(err => {
+        console.log(err)
+      })
+    },
   }
 }
 </script>
