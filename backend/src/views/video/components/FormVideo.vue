@@ -12,7 +12,7 @@
           </el-form-item>
 
           <el-form-item label="Target" prop="kabkota_id">
-            <el-select v-model="video.kabkota_id" placeholder="Pilih Target">
+            <el-select v-model="video.kabkota_id" :disabled="checkStaff" placeholder="Pilih Target">
               <el-option 
                 v-for="item in area"
                 :key="item.id"
@@ -96,6 +96,7 @@ export default {
         status: null,
         kabkota: null
       },
+      checkStaff: false,
       area: null,
       priorityOptions: [
         { label: 1, value: 1 },
