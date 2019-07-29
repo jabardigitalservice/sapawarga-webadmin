@@ -168,6 +168,44 @@ export default {
         console.log(err)
       })
     },
+    async submitForm() {
+      const valid = await this.$refs.video.validate()
+
+      if (!valid) {
+        return
+      }
+
+      try {
+        this.loading = true
+
+        const data = {}
+
+        Object.assign(data, this.video)
+
+        if (this.isEdit) {
+
+          await update(id, data)
+          this.$message.success(this.$t('crud.update-success'))
+          this.$router.push('/video/index')
+
+        } else {
+          
+          data.status = 0
+          await create(data)
+          console.log(data)
+          this.$message.success(this.$t('crud.create-success'))
+          this.$router.push('/video/index')
+
+        }
+
+      } catch (e) {
+        console.log(e)
+
+      } finally {
+        this.loading = false
+      }
+    } 
+
   }
 }
 </script>
