@@ -42,8 +42,8 @@
           </el-form-item>
 
           <el-form-item>
-            <el-button v-if="isEdit" type="primary" :loading="loading">{{ $t('crud.save-update') }}</el-button>
-            <el-button v-else type="primary" :loading="loading">{{ $t('crud.save-video') }}</el-button>
+            <el-button v-if="isEdit" type="primary" :loading="loading" @click="submitForm">{{ $t('crud.save-update') }}</el-button>
+            <el-button v-else type="primary" :loading="loading" @click="submitForm">{{ $t('crud.save-video') }}</el-button>
 
             <router-link :to="'/video/index'">
               <el-button type="info">{{ $t('crud.cancel') }}</el-button>
