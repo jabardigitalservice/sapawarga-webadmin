@@ -22,6 +22,10 @@
             </el-select>
           </el-form-item>
 
+          <el-form-item label="Sumber" prop="source">
+            <el-select v-model="video.source" name="source" placeholder="Pilih Sumber" disabled />
+          </el-form-item>
+
           <el-form-item label="Set Prioritas" prop="seq">
             <el-select v-model="video.seq" filterable placeholder="Pilih Prioritas">
               <el-option
@@ -31,10 +35,6 @@
                 :label="item.label"
               />
             </el-select>
-          </el-form-item>
-
-          <el-form-item label="Sumber" prop="source">
-            <el-select v-model="video.source" name="source" placeholder="Pilih Sumber" disabled />
           </el-form-item>
 
           <el-form-item label="URL Berita" prop="video_url">
