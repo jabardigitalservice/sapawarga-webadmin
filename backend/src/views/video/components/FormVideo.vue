@@ -95,8 +95,7 @@ export default {
         video_url: null,
         kabkota_id: null,
         seq: null,
-        status: null,
-        kabkota: null
+        status: null
       },
       checkStaff: false,
       area: null,
