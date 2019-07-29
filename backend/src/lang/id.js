@@ -55,7 +55,7 @@ export default {
     'categories-list': 'Daftar Kategori',
     'categories-create': 'Tambah Kategori',
     'categories-edit': 'Edit Kategori',
-    'categories-detail': 'Detail Kategori'
+    'categories-detail': 'Detail Kategori',
 
     'video-manage': 'Video',
     'video-list': 'Daftar Video',
