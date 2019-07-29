@@ -60,6 +60,8 @@
 import InputCategory from '@/components/InputCategory'
 import { containsWhitespace, validYoutubeUrl } from '@/utils/validate'
 import { requestArea } from '@/api/staff'
+import { create, update, fetchRecord } from '@/api/video'
+import checkPermission from '@/utils/permission'
 
 export default {
   components: { InputCategory },
