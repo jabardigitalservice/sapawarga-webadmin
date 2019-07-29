@@ -57,6 +57,12 @@ export default {
     'categories-edit': 'Edit Kategori',
     'categories-detail': 'Detail Kategori'
 
+    'video-manage': 'Video',
+    'video-list': 'Daftar Video',
+    'video-create': 'Tambah Video',
+    'video-edit': 'Edit Video',
+    'video-detail': 'Detail Video'
+
   },
   crud: {
     'list-empty': 'Belum ada data.',
@@ -74,6 +80,7 @@ export default {
     'save-update': 'Simpan Perubahan',
     'save-publish': 'Simpan dan Aktifkan',
     'save-news': 'Tambah Berita',
+    'save-video': 'Tambah Video',
 
     'back-to-list': 'Kembali ke Daftar',
     'send-polling': 'Publikasikan Polling',
@@ -112,7 +119,9 @@ export default {
 
     'polling-error-edit-published': 'Sudah dipublish, tidak dapat diedit.',
     'broadcast-error-edit-published': 'Sudah dipublish, tidak dapat di edit.',
-    'notification-error-edit-published': 'Sudah dipublish, tidak dapat di edit.'
+    'notification-error-edit-published': 'Sudah dipublish, tidak dapat di edit.',
+    'video-error-edit-published': 'Sudah dipublish, tidak dapat di edit.',
+
   },
   common: {
     confirm: 'Ya',
