@@ -100,6 +100,15 @@ const userRouter = {
       meta: {
         title: 'user-create'
       }
+    },
+    {
+      name: 'user-detail',
+      path: 'detail/:id',
+      component: () => import('@/views/user/detail'),
+      hidden: true,
+      meta: {
+        title: 'user-create'
+      }
     }
   ]
 }

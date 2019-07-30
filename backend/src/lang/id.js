@@ -10,6 +10,7 @@ export default {
     'user-list-kecamatan': 'Kecamatan',
     'user-list-kelurahan': 'Desa / Kelurahan',
     'user-list-rw': 'User Tingkat RW',
+    'user-detail': 'Detail User',
 
     'nomor-penting-manage': 'Nomor Penting',
     'nomor-penting-list': 'Daftar Nomor Penting',
