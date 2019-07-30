@@ -56,7 +56,7 @@ export default {
             content: source
           },
           {
-            title: 'URL Survei',
+            title: 'URL Video',
             content: <a href={video_url} target='_blank'>{video_url}</a>
           },
         ]
