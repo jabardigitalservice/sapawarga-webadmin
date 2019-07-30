@@ -52,12 +52,12 @@ export default {
             content: category.name
           },
           {
-            title: 'Tanggal Mulai',
-            content: moment(start_date).format('D MMMM YYYY')
+            title: 'Sumber',
+            content: source
           },
           {
             title: 'URL Survei',
-            content: <a href={external_url} target='_blank'>{external_url}</a>
+            content: <a href={video_url} target='_blank'>{video_url}</a>
           },
         ]
       })
