@@ -34,7 +34,7 @@
                   Edit
                 </el-button>
               </router-link>
-              <el-button type="danger" size="mini" @click="delete(scope.row.id)">
+              <el-button type="danger" size="mini" @click="deleteCategory(scope.row.id)">
                 Hapus
               </el-button>
             </template>
@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import { fetchList } from '@/api/categories'
+import { fetchList, deleteData } from '@/api/categories'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 // TODO: Search & Filter
 // import ListFilter from './_listfilter'
@@ -112,6 +112,29 @@ export default {
       this.listQuery.sort_by = e.prop
       this.listQuery.sort_order = e.order
       this.getList()
+    },
+
+    async deleteCategory(id) {
+      try {
+        await this.$confirm(this.$t('crud.delete-confirm'), 'warning', {
+          confirmButtonText: this.$t('common.confirm'),
+          cancelButtonText: this.$t('common.cancel'),
+          type: 'warning'
+        })
+
+        this.listLoading = true
+
+        await deleteData(id)
+
+        this.$message({
+          type: 'success',
+          message: this.$t('crud.delete-success')
+        })
+
+        this.getList()
+      } catch (e) {
+        console.log(e)
+      }
     }
   }
 }
