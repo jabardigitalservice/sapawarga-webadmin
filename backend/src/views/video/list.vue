@@ -101,6 +101,7 @@
 <script>
 import Pagination from '@/components/Pagination'
 import { fetchList, fetchStatistic, deleteData, deactivate, activate } from '@/api/video'
+import moment from 'moment'
 
 export default {
   components: { Pagination },

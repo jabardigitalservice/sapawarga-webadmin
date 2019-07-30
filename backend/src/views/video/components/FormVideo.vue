@@ -13,7 +13,7 @@
 
           <el-form-item label="Target" prop="kabkota_id">
             <el-select v-model="video.kabkota_id" :disabled="checkStaff" placeholder="Pilih Target">
-              <el-option 
+              <el-option
                 v-for="item in area"
                 :key="item.id"
                 :label="item.name"
@@ -133,19 +133,22 @@ export default {
     }
   },
   created() {
+    if (this.isEdit) {
+      const id = this.$route.params && this.$route.params.id
+      this.fetchData(id)
+    }
     this.init()
   },
   methods: {
     init() {
       const authUser = this.$store.state.user
-      
+
       this.getArea()
 
       if (checkPermission(['staffKabkota'])) {
         this.video.kabkota_id = authUser.kabkota_id
         this.checkStaff = true
       }
-
     },
     getArea() {
       requestArea().then(response => {
@@ -179,33 +182,28 @@ export default {
         const data = {}
 
         Object.assign(data, this.video)
-        
+
         if (data.kabkota_id === 1) {
           data.kabkota_id = null
         }
 
         if (this.isEdit) {
-
+          const id = this.$route.params && this.$route.params.id
           await update(id, data)
           this.$message.success(this.$t('crud.update-success'))
           this.$router.push('/video/index')
-
         } else {
-          
           data.status = 0
           await create(data)
           this.$message.success(this.$t('crud.create-success'))
           this.$router.push('/video/index')
-
         }
-
       } catch (e) {
         console.log(e)
-
       } finally {
         this.loading = false
       }
-    } 
+    }
 
   }
 }
