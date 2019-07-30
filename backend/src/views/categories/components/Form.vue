@@ -19,17 +19,6 @@
             </el-select>
           </el-form-item>
 
-          <el-form-item label="Status" prop="status">
-            <el-select v-model="form.status" placeholder="Pilih Status">
-              <el-option
-                v-for="item in optionStatus"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id"
-              />
-            </el-select>
-          </el-form-item>
-
           <el-form-item>
             <el-button type="primary" :loading="loading" @click="submitProcess">{{ $t('crud.save-publish') }}</el-button>
 
@@ -51,7 +40,7 @@ import { containsWhitespace } from '@/utils/validate'
 const defaultForm = {
   name: null,
   type: null,
-  status: null
+  status: 10
 }
 
 export default {
@@ -82,23 +71,10 @@ export default {
         ],
         type: [
           { required: true, message: 'Fitur harus diisi.', trigger: 'change' }
-        ],
-        status: [
-          { required: true, message: 'Status harus diisi.', trigger: 'change' }
         ]
       },
       tempRoute: {},
-      optionType: [],
-      optionStatus: [
-        {
-          id: 10,
-          name: 'Enable'
-        },
-        {
-          id: 0,
-          name: 'Disable'
-        }
-      ]
+      optionType: []
     }
   },
   mounted() {
