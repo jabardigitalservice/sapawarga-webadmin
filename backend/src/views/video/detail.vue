@@ -21,14 +21,14 @@
 
 <script>
 import moment from 'moment'
-import { fetchRecord, update } from '@/api/survey'
+import { fetchRecord } from '@/api/survey'
+
 
 export default {
   data() {
     return {
       tableDataRecord: [],
       record: null,
-      btnDisableDate: false
     }
   },
   created() {
@@ -38,16 +38,9 @@ export default {
   methods: {
     getDetail(id) {
       fetchRecord(id).then(response => {
-        const { title, category, start_date, end_date, external_url, status, status_label } = response.data
+        const { title, category, video_url, source } = response.data
 
         this.record = response.data
-
-        const row = {
-          start_date: start_date,
-          end_date: end_date,
-          status: status,
-          status_label: status_label
-        }
 
         this.tableDataRecord = [
           {
@@ -66,10 +59,6 @@ export default {
             title: 'URL Survei',
             content: <a href={external_url} target='_blank'>{external_url}</a>
           },
-          {
-            title: 'Status',
-            content: <el-tag type={getStatusColor(row)}>{getStatusLabel(row)}</el-tag>
-          }
         ]
       })
     }
