@@ -38,7 +38,7 @@ export default {
   methods: {
     getDetail(id) {
       fetchRecord(id).then(response => {
-        const { title, category, video_url, source } = response.data
+        const { title, category, video_url, source, seq, kabkota } = response.data
 
         this.record = response.data
 
@@ -50,6 +50,14 @@ export default {
           {
             title: 'Kategori',
             content: category.name
+          },
+          {
+            title: 'Target Area',
+            content: kabkota.name
+          },
+          {
+            title: 'Prioritas',
+            content: seq
           },
           {
             title: 'Sumber',
