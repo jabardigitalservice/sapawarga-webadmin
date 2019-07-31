@@ -295,7 +295,7 @@ export default {
           value: 'staffKec'
         },
         {
-          label: 'Admin Kelurahan',
+          label: 'Admin Desa/Kelurahan',
           value: 'staffKel'
         },
         {
