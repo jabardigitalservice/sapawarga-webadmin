@@ -31,12 +31,14 @@
           </el-col>
         </el-row>
 
+        <ListFilter :list-query.sync="listQuery" @submit-search="getList" @reset-search="resetFilter" />
+
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%">
           <el-table-column type="index" width="50" :index="getTableRowNumbering" />
 
           <el-table-column prop="title" sortable="custome" label="Judul Video" min-width="200" />
 
-          <el-table-column prop="category" sortable="custome" label="Kategori" align="center" width="120" />
+          <el-table-column prop="category.name" sortable="custome" label="Kategori" align="center" width="120" />
 
           <el-table-column
             prop="status"
@@ -53,9 +55,9 @@
             </template>
           </el-table-column>
 
-          <el-table-column prop="source_date" sortable="custom" label="Dibuat" align="center" min-width="150">
+          <el-table-column prop="created_at" sortable="custom" label="Dibuat" align="center" min-width="150">
             <template slot-scope="{row}">
-              {{ row.source_date | moment('D MMMM YYYY') }}
+              {{ row.created_at | moment('D MMMM YYYY') }}
             </template>
           </el-table-column>
 
@@ -101,9 +103,11 @@
 <script>
 import Pagination from '@/components/Pagination'
 import { fetchList, fetchStatistic, deleteData, deactivate, activate } from '@/api/video'
+import ListFilter from './_listfilter'
+import moment from 'moment'
 
 export default {
-  components: { Pagination },
+  components: { Pagination, ListFilter },
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -132,7 +136,7 @@ export default {
   },
 
   created() {
-
+    this.getList()
   },
 
   methods: {
@@ -143,9 +147,8 @@ export default {
 
       Object.assign(data, this.listQuery)
 
-      data.source_date = moment(data.source_date).format('YYYY-MM-DD')
-
       fetchList(data).then(response => {
+        console.log(response)
         this.list = response.data.items
         this.total = response.data._meta.totalCount
         this.listLoading = false
