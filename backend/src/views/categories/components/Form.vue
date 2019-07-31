@@ -96,9 +96,6 @@ export default {
     fetchDataTypes() {
       fetchTypes().then(response => {
         const { data } = response
-
-        // hapus duplikat dari API
-        data.items = _.uniqBy(data.items, 'id')
         this.optionType = data.items.map(item => {
           return {
             id: item.id,
