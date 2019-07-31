@@ -301,8 +301,7 @@ export default {
         {
           label: 'RW',
           value: 'staffRW'
-        },
-        { label: 'Pengguna', value: 'user' }
+        }
       ],
       id_kabkota: '',
       id_kec: '',
