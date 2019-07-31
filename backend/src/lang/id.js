@@ -30,9 +30,9 @@ export default {
     'notification-edit': 'Edit Notifikasi',
     'notification-show': 'Detail Notifikasi',
 
-    'aspiration-manage': 'Aspirasi Masyarakat',
-    'aspiration-list': 'Aspirasi Masyarakat',
-    'aspiration-detail': 'Detail Aspirasi',
+    'aspiration-manage': 'Usulan Masyarakat',
+    'aspiration-list': 'Usulan Masyarakat',
+    'aspiration-detail': 'Detail Usulan',
 
     'polling-manage': 'Polling',
     'polling-list': 'Daftar Polling',
