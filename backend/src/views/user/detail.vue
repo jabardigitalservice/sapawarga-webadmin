@@ -54,7 +54,7 @@ import MapThumb from '@/components/MapThumb'
 import { getUserInfo } from '@/api/user'
 
 export default {
-  components: { PhotoBox, MapThumb},
+  components: { PhotoBox, MapThumb },
   data() {
     return {
       id: 0,
