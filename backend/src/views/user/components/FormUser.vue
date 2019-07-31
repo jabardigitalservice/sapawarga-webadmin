@@ -295,14 +295,13 @@ export default {
           value: 'staffKec'
         },
         {
-          label: 'Admin Kelurahan',
+          label: 'Admin Desa/Kelurahan',
           value: 'staffKel'
         },
         {
           label: 'RW',
           value: 'staffRW'
-        },
-        { label: 'Pengguna', value: 'user' }
+        }
       ],
       id_kabkota: '',
       id_kec: '',
