@@ -43,7 +43,7 @@
 
           <el-table-column align="center" label="Actions" width="250px">
             <template slot-scope="scope">
-              <router-link :to="'/user/show/'+scope.row.id">
+              <router-link :to="'/user/detail/'+scope.row.id">
                 <el-button type="white" size="mini">
                   View
                 </el-button>
