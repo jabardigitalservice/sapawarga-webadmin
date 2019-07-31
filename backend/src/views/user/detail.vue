@@ -8,18 +8,7 @@
         </div>
         <div v-if="latitude">
           <p class="warn-content map-title">Lokasi Anda</p>
-          <div class="mapouter">
-            <div class="gmap_canvas">
-              <iframe
-                id="gmap_canvas"
-                :src="`https://maps.google.com/maps?q=${latitude},${longitude}&t=&z=16&ie=UTF8&iwloc=&output=embed`"
-                frameborder="0"
-                scrolling="no"
-                marginheight="0"
-                marginwidth="0"
-              />
-            </div>
-          </div>
+          <MapThumb v-if="latitude && longitude" :latitude="latitude" :longitude="longitude" />
         </div>
       </el-col>
       <el-col class="col-right" :xs="24" :sm="24" :md="24" :lg="17" :xl="17">
@@ -61,10 +50,11 @@
 
 <script>
 import PhotoBox from '@/components/PhotoBox'
+import MapThumb from '@/components/MapThumb'
 import { getUserInfo } from '@/api/user'
 
 export default {
-  components: { PhotoBox },
+  components: { PhotoBox, MapThumb},
   data() {
     return {
       id: 0,
@@ -192,29 +182,6 @@ export default {
   height: 50px;
   width: 270px;
 }
-
-.mapouter {
-    position: relative;
-    text-align: right;
-    height: 350px;
-    width: 400px;
-  }
-  .gmap_canvas {
-    background: none !important;
-    width: 400px;
-    height: 350px;
-    margin-left: 20px;
-    border-radius: 5px;
-    margin-top: 20px;
-    -webkit-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.75);
-    box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.75);
-
-    iframe {
-      width: 400px;
-      height: 350px;
-    }
-  }
 
 .map-title {
   width: 400px;
