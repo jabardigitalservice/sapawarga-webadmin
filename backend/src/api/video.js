@@ -2,22 +2,23 @@ import request from '@/utils/request'
 
 export function fetchList(query) {
   return request({
-    url: '/video',
+    url: '/videos',
     method: 'get',
-    params: query
+    params: query,
+    baseURL: 'http://35.247.135.93.xip.io:3000/api/v1/'
   })
 }
 
 export function fetchRecord(id) {
   return request({
-    url: `/video/${id}`,
+    url: `/videos/${id}`,
     method: 'get'
   })
 }
 
 export function create(data) {
   return request({
-    url: '/video',
+    url: '/videos',
     method: 'post',
     data
   })
@@ -25,7 +26,7 @@ export function create(data) {
 
 export function update(id, data) {
   return request({
-    url: `/video/${id}`,
+    url: `/videos/${id}`,
     method: 'put',
     data
   })
@@ -33,14 +34,14 @@ export function update(id, data) {
 
 export function deleteData(id) {
   return request({
-    url: `/video/${id}`,
+    url: `/videos/${id}`,
     method: 'delete'
   })
 }
 
 export function deactivate(id) {
   return request({
-    url: `/video/${id}`,
+    url: `/videos/${id}`,
     method: 'put',
     data: {
       status: 0
@@ -50,7 +51,7 @@ export function deactivate(id) {
 
 export function activate(id) {
   return request({
-    url: `/video/${id}`,
+    url: `/videos/${id}`,
     method: 'put',
     data: {
       status: 10
