@@ -95,7 +95,7 @@ export default {
 
     fetchDataTypes() {
       fetchTypes().then(response => {
-        let { data } = response
+        const { data } = response
 
         // hapus duplikat dari API
         data.items = _.uniqBy(data.items, 'id')
