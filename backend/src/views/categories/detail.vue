@@ -1,1 +1,0 @@
-// TODO: Detail Categories
