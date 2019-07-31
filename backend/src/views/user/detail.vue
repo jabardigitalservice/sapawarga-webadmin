@@ -177,12 +177,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.map {
-  margin-top: 50px;
-  height: 50px;
-  width: 270px;
-}
-
 .map-title {
   width: 400px;
   margin-left: 20px;
