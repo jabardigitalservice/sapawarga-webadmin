@@ -8,7 +8,7 @@
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width; 100%" @sort-change="changeSort">
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
 
-          <el-table-column prop="title" sortable="custom" label="Judul Aspirasi" min-width="225" />
+          <el-table-column prop="title" sortable="custom" label="Judul Usulan" min-width="225" />
 
           <el-table-column prop="category.name" sortable="custom" label="Kategori" align="center" min-width="150" />
 

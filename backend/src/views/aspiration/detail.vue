@@ -130,7 +130,7 @@ export default {
             content: category.name
           },
           {
-            title: 'Aspirasi',
+            title: 'Usulan',
             content: description
           },
           {
