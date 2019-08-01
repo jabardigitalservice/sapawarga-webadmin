@@ -7,7 +7,7 @@
             <span>Kategori</span>
           </div>
           <el-table stripe :data="tableDataStatistik" :show-header="false" style="width: 100%">
-            <el-table-column prop="title" align="left" />
+            <el-table-column prop="name" align="left" />
             <el-table-column prop="count" align="right" />
           </el-table>
         </el-card>
@@ -142,6 +142,7 @@ export default {
 
   created() {
     this.getList()
+    this.getStatistic()
   },
 
   methods: {
