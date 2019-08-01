@@ -7,7 +7,7 @@
             <span>Kategori</span>
           </div>
           <el-table stripe :data="tableDataStatistik" :show-header="false" style="width: 100%">
-            <el-table-column prop="title" align="left" />
+            <el-table-column prop="name" align="left" />
             <el-table-column prop="count" align="right" />
           </el-table>
         </el-card>
@@ -31,12 +31,18 @@
           </el-col>
         </el-row>
 
+        <ListFilter :list-query.sync="listQuery" @submit-search="getList" @reset-search="resetFilter" />
+
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%">
-          <el-table-column type="index" width="50" :index="getTableRowNumbering" />
+          <el-table-column type="index" align="center" width="50" :index="getTableRowNumbering" />
 
-          <el-table-column prop="title" sortable="custome" label="Judul Video" min-width="200" />
+          <el-table-column label="Judul Video" sortable="custome" prop="title" min-width="200">
+            <template slot-scope="{row}">
+              {{ text_truncate(row.title) }}
+            </template>
+          </el-table-column>
 
-          <el-table-column prop="category" sortable="custome" label="Kategori" align="center" width="120" />
+          <el-table-column prop="category.name" sortable="custome" label="Kategori" align="center" width="120" />
 
           <el-table-column
             prop="status"
@@ -53,20 +59,20 @@
             </template>
           </el-table-column>
 
-          <el-table-column prop="source_date" sortable="custom" label="Dibuat" align="center" min-width="150">
+          <el-table-column prop="created_at" sortable="custom" label="Dibuat" align="center" min-width="180">
             <template slot-scope="{row}">
-              {{ row.source_date | moment('D MMMM YYYY') }}
+              {{ row.created_at | moment('DD MMMM YYYY HH:MM') }}
             </template>
           </el-table-column>
 
           <el-table-column align="center" label="Actions" min-width="250px">
             <template slot-scope="scope">
-              <router-link :to="'/news/detail/'+scope.row.id">
+              <router-link :to="'/video/detail/'+scope.row.id">
                 <el-tooltip content="Detail Berita" placement="top">
                   <el-button type="primary" icon="el-icon-view" size="small" />
                 </el-tooltip>
               </router-link>
-              <router-link :to="(scope.row.status !== 10 ? '/news/edit/' +scope.row.id : '')">
+              <router-link :to="(scope.row.status !== 10 ? '/video/edit/' +scope.row.id : '')">
                 <el-tooltip content="Edit Berita" placement="top">
                   <el-button type="warning" icon="el-icon-edit" size="small" :disabled="scope.row.status === 10" />
                 </el-tooltip>
@@ -101,10 +107,10 @@
 <script>
 import Pagination from '@/components/Pagination'
 import { fetchList, fetchStatistic, deleteData, deactivate, activate } from '@/api/video'
-import moment from 'moment'
+import ListFilter from './_listfilter'
 
 export default {
-  components: { Pagination },
+  components: { Pagination, ListFilter },
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -124,6 +130,7 @@ export default {
       listQuery: {
         title: null,
         search: null,
+        category_id: null,
         page: 1,
         limit: 10
       },
@@ -133,7 +140,8 @@ export default {
   },
 
   created() {
-
+    this.getList()
+    this.getStatistic()
   },
 
   methods: {
@@ -143,8 +151,6 @@ export default {
       const data = {}
 
       Object.assign(data, this.listQuery)
-
-      data.source_date = moment(data.source_date).format('YYYY-MM-DD')
 
       fetchList(data).then(response => {
         this.list = response.data.items
@@ -245,6 +251,15 @@ export default {
         this.getList()
       } catch (e) {
         console.log(e)
+      }
+    },
+
+    text_truncate(str) {
+      const maxStr = 150
+      if (str.length > maxStr) {
+        return str.substring(0, maxStr) + '...'
+      } else {
+        return str
       }
     }
   }
