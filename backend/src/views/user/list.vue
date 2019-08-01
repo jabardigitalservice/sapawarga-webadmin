@@ -171,11 +171,11 @@ export default {
       const kabkota = _.get(user, 'kabkota.name')
 
       if (userRole === 'staffRW') {
-        return `RW ${rw}, Kelurahan ${kelurahan}, Kecamatan ${kecamatan}, ${kabkota}`
+        return `RW ${rw}, Desa/Kelurahan ${kelurahan}, Kecamatan ${kecamatan}, ${kabkota}`
       }
 
       if (userRole === 'staffKel') {
-        return `Kelurahan ${kelurahan}, Kecamatan ${kecamatan}, ${kabkota}`
+        return `Desa/Kelurahan ${kelurahan}, Kecamatan ${kecamatan}, ${kabkota}`
       }
 
       if (userRole === 'staffKec') {
