@@ -8,6 +8,13 @@ export function fetchList(query) {
   })
 }
 
+export function fetchStatistic() {
+  return request({
+    url: '/videos/statistics',
+    method: 'get'
+  })
+}
+
 export function fetchRecord(id) {
   return request({
     url: `/videos/${id}`,
