@@ -71,3 +71,10 @@ export default {
   }
 }
 </script>
+
+<style>
+.link {
+  color: blue;
+  text-decoration: underline;
+}
+</style>
