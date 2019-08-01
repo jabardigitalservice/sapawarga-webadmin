@@ -2,35 +2,14 @@
   <el-card class="box-card" style="margin-bottom: 10px">
     <el-form>
       <el-row :gutter="10" type="flex">
-        <el-col :span="8">
+        <el-col :span="12">
           <el-form-item style="margin-bottom: 0">
             <el-input v-model="listQuery.title" placeholder="Judul Video" />
           </el-form-item>
         </el-col>
-        <el-col :span="5">
+        <el-col :span="7">
           <el-form-item style="margin-bottom: 0">
-            <el-select
-              v-model="listQuery.status"
-              clearable
-              filterable
-              placeholder="Pilih Status"
-              style="width: 100%"
-            >
-              <el-option value="0" label="Tidak Aktif" />
-              <el-option value="10" label="Aktif" />
-            </el-select>
-          </el-form-item>
-        </el-col>
-        <el-col :span="6">
-          <el-form-item style="margin-bottom: 0">
-            <el-select v-model="listQuery.kabkota_id" :disabled="checkStaff" placeholder="Pilih Target">
-              <el-option 
-                v-for="item in area"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id"
-              />
-            </el-select>
+            <InputCategory v-model="listQuery.category_id" name="category_id" category-type="video" prop="category" style="width: 100%" />
           </el-form-item>
         </el-col>
         <el-col :span="5">
@@ -68,29 +47,8 @@ export default {
 
   data() {
     return {
-      area: null,
       checkStaff: false
     }
-  },
-
-//   computed: {
-//     filterAreaParentId() {
-//       const authUser = this.$store.state.user
-
-//       if (checkPermission(['staffKabkota'])) {
-//         return parseInt(authUser.kabkota_id)
-//       }
-
-//       if (checkPermission(['staffKec'])) {
-//         return parseInt(authUser.kec_id)
-//       }
-
-//       return null
-//     }
-//   },
-
-  created() {
-    this.init()
   },
 
   methods: {
@@ -101,26 +59,7 @@ export default {
 
     resetFilter() {
       this.$emit('reset-search')
-    },
-
-    getArea() {
-      requestArea().then(response => {
-        this.area = response.data.items
-        this.area.unshift({ id: 1, name: 'JAWA BARAT' })
-      })
-    },
-
-    init() {
-      const authUser = this.$store.state.user
-      
-      this.getArea()
-
-      if (checkPermission(['staffKabkota'])) {
-        this.listQuery.kabkota_id = authUser.kabkota_id
-        this.checkStaff = true
-      }
-
-    },
+    }
 
   }
 }
