@@ -131,6 +131,7 @@ export default {
       listQuery: {
         title: null,
         search: null,
+        category_id: null,
         page: 1,
         limit: 10
       },
