@@ -4,16 +4,14 @@ export function fetchList(query) {
   return request({
     url: '/videos',
     method: 'get',
-    params: query,
-    baseURL: 'http://35.247.135.93.xip.io:3000/api/v1/'
+    params: query
   })
 }
 
 export function fetchRecord(id) {
   return request({
     url: `/videos/${id}`,
-    method: 'get',
-    baseURL: 'http://35.247.135.93.xip.io:3000/api/v1/'
+    method: 'get'
   })
 }
 
