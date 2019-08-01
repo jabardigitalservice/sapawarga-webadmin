@@ -20,15 +20,13 @@
 </template>
 
 <script>
-import moment from 'moment'
 import { fetchRecord } from '@/api/survey'
-
 
 export default {
   data() {
     return {
       tableDataRecord: [],
-      record: null,
+      record: null
     }
   },
   created() {
@@ -66,7 +64,7 @@ export default {
           {
             title: 'URL Video',
             content: <a href={video_url} target='_blank'>{video_url}</a>
-          },
+          }
         ]
       })
     }

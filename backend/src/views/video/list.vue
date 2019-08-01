@@ -36,7 +36,7 @@
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%">
           <el-table-column type="index" align="center" width="50" :index="getTableRowNumbering" />
 
-          <el-table-column label="Judul Video" sortable="custome" prop="title" min-width="200"> 
+          <el-table-column label="Judul Video" sortable="custome" prop="title" min-width="200">
             <template slot-scope="{row}">
               {{ text_truncate(row.title) }}
             </template>
@@ -108,7 +108,6 @@
 import Pagination from '@/components/Pagination'
 import { fetchList, fetchStatistic, deleteData, deactivate, activate } from '@/api/video'
 import ListFilter from './_listfilter'
-import moment from 'moment'
 
 export default {
   components: { Pagination, ListFilter },
