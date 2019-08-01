@@ -42,7 +42,6 @@
           stripe
           fit
           highlight-current-row
-          style="width; 100%"
           @sort-change="changeSort"
         >
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />

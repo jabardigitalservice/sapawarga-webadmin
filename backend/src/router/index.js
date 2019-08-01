@@ -15,6 +15,7 @@ import aspirationRouter from './modules/aspiration'
 import pollingRouter from './modules/polling'
 import surveyRouter from './modules/survey'
 import newsRouter from './modules/news'
+import categoriesRouter from './modules/categories'
 import videoRouter from './modules/video'
 
 /** note: sub-menu only appear when children.length>=1
@@ -147,6 +148,7 @@ export const asyncRoutes = [
   pollingRouter,
   surveyRouter,
   newsRouter,
+  categoriesRouter,
   videoRouter,
 
   { path: '*', redirect: '/404', hidden: true }

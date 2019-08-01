@@ -51,6 +51,12 @@ export default {
     'news-edit': 'Edit Berita',
     'news-detail': 'Detail Berita',
 
+    'categories-manage': 'Kategori',
+    'categories-list': 'Daftar Kategori',
+    'categories-create': 'Tambah Kategori',
+    'categories-edit': 'Edit Kategori',
+    'categories-detail': 'Detail Kategori',
+
     'video-manage': 'Video',
     'video-list': 'Daftar Video',
     'video-create': 'Tambah Video',
@@ -114,7 +120,7 @@ export default {
     'polling-error-edit-published': 'Sudah dipublish, tidak dapat diedit.',
     'broadcast-error-edit-published': 'Sudah dipublish, tidak dapat di edit.',
     'notification-error-edit-published': 'Sudah dipublish, tidak dapat di edit.',
-    'video-error-edit-published': 'Sudah dipublish, tidak dapat di edit.',
+    'video-error-edit-published': 'Sudah dipublish, tidak dapat di edit.'
 
   },
   common: {
