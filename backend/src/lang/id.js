@@ -56,7 +56,12 @@ export default {
     'categories-list': 'Daftar Kategori',
     'categories-create': 'Tambah Kategori',
     'categories-edit': 'Edit Kategori',
-    'categories-detail': 'Detail Kategori'
+    'categories-detail': 'Detail Kategori',
+
+    'news-channels-manage': 'Sumber Berita',
+    'news-channels-list': 'Daftar Sumber Berita',
+    'news-channels-create': 'Tambah Sumber Berita',
+    'news-channels-edit': 'Edit Sumber Berita'
 
   },
   crud: {
