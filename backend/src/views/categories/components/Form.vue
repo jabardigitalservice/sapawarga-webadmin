@@ -95,7 +95,13 @@ export default {
 
     fetchDataTypes() {
       fetchTypes().then(response => {
-        this.optionType = response.data
+        const { data } = response
+        this.optionType = data.items.map(item => {
+          return {
+            id: item.id,
+            name: item.name
+          }
+        })
       }).catch(err => console.error(err))
     },
 
