@@ -49,8 +49,12 @@
 <script>
 import checkPermission from '@/utils/permission'
 import { requestArea } from '@/api/staff'
+import InputCategory from '@/components/InputCategory'
 
 export default {
+  components: {
+    InputCategory
+  },
   props: {
     listQuery: {
       type: Object,
