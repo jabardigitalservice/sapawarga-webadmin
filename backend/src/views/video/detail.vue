@@ -8,7 +8,7 @@
           <div slot="header" class="clearfix">
             <span>Data Video</span>
           </div>
-          <el-table stripe :data="tableDataRecord" :show-header="false" style="width: 100%">
+          <el-table stripe :data="dataVideo" :show-header="false" style="width: 100%">
             <el-table-column prop="title" width="180" />
             <el-table-column prop="content" />
           </el-table>
@@ -20,12 +20,12 @@
 </template>
 
 <script>
-import { fetchRecord } from '@/api/survey'
+import { fetchRecord } from '@/api/video'
 
 export default {
   data() {
     return {
-      tableDataRecord: [],
+      dataVideo: [],
       record: null
     }
   },
@@ -40,7 +40,7 @@ export default {
 
         this.record = response.data
 
-        this.tableDataRecord = [
+        this.dataVideo = [
           {
             title: 'Judul Video',
             content: title
@@ -50,11 +50,11 @@ export default {
             content: category.name
           },
           {
-            title: 'Target Area',
-            content: kabkota.name
+            title: 'Target Area Video',
+            content: kabkota ? kabkota.name : 'Jawa Barat'
           },
           {
-            title: 'Prioritas',
+            title: 'Set Prioritas',
             content: seq
           },
           {
@@ -62,8 +62,8 @@ export default {
             content: source
           },
           {
-            title: 'URL Video',
-            content: <a href={video_url} target='_blank'>{video_url}</a>
+            title: 'URL',
+            content: <a href={video_url} style='color:blue' target='_blank'>{video_url}</a>
           }
         ]
       })
