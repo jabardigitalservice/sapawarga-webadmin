@@ -34,9 +34,13 @@
         <ListFilter :list-query.sync="listQuery" @submit-search="getList" @reset-search="resetFilter" />
 
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%">
-          <el-table-column type="index" width="50" :index="getTableRowNumbering" />
+          <el-table-column type="index" align="center" width="50" :index="getTableRowNumbering" />
 
-          <el-table-column prop="title" sortable="custome" label="Judul Video" min-width="200" />
+          <el-table-column label="Judul Video" sortable="custome" prop="title" min-width="200"> 
+            <template slot-scope="{row}">
+              {{ text_truncate(row.title) }}
+            </template>
+          </el-table-column>
 
           <el-table-column prop="category.name" sortable="custome" label="Kategori" align="center" width="120" />
 
@@ -55,9 +59,9 @@
             </template>
           </el-table-column>
 
-          <el-table-column prop="created_at" sortable="custom" label="Dibuat" align="center" min-width="150">
+          <el-table-column prop="created_at" sortable="custom" label="Dibuat" align="center" min-width="180">
             <template slot-scope="{row}">
-              {{ row.created_at | moment('D MMMM YYYY') }}
+              {{ row.created_at | moment('DD MMMM YYYY HH:MM') }}
             </template>
           </el-table-column>
 
@@ -148,7 +152,6 @@ export default {
       Object.assign(data, this.listQuery)
 
       fetchList(data).then(response => {
-        console.log(response)
         this.list = response.data.items
         this.total = response.data._meta.totalCount
         this.listLoading = false
@@ -247,6 +250,15 @@ export default {
         this.getList()
       } catch (e) {
         console.log(e)
+      }
+    },
+
+    text_truncate(str) {
+      const maxStr = 150
+      if (str.length > maxStr) {
+        return str.substring(0, maxStr) + '...'
+      } else {
+        return str
       }
     }
   }
