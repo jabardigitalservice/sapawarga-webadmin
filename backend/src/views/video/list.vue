@@ -63,12 +63,12 @@
 
           <el-table-column align="center" label="Actions" min-width="250px">
             <template slot-scope="scope">
-              <router-link :to="'/news/detail/'+scope.row.id">
+              <router-link :to="'/video/detail/'+scope.row.id">
                 <el-tooltip content="Detail Berita" placement="top">
                   <el-button type="primary" icon="el-icon-view" size="small" />
                 </el-tooltip>
               </router-link>
-              <router-link :to="(scope.row.status !== 10 ? '/news/edit/' +scope.row.id : '')">
+              <router-link :to="(scope.row.status !== 10 ? '/video/edit/' +scope.row.id : '')">
                 <el-tooltip content="Edit Berita" placement="top">
                   <el-button type="warning" icon="el-icon-edit" size="small" :disabled="scope.row.status === 10" />
                 </el-tooltip>
