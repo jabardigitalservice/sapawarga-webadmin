@@ -21,7 +21,7 @@
               placeholder="Pilih Status"
               style="width: 100%"
             >
-              <el-option value="5" label="Menunggu Persetujuan" />
+              <el-option value="5" label="Terkirim" />
               <el-option value="10" label="Dipublikasikan" />
               <el-option value="3" label="Ditolak" />
 
