@@ -72,7 +72,7 @@ exports[`PanelGroup User renders the component 1`] = `
                 </svg></div>
               <div class="card-panel-description">
                 <div class="card-panel-text">
-                  Desa/Kelurahan
+                  Desa/Kel
                 </div> <span class="card-panel-num">
   0
 </span>
