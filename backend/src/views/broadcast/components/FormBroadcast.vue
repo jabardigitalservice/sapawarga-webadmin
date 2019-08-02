@@ -239,6 +239,12 @@ export default {
         this.broadcast.rw = null
       }
 
+      const valid = await this.$refs.broadcast.validate()
+
+      if (!valid) {
+        return
+      }
+
       try {
         this.loading = true
         const data = {}
