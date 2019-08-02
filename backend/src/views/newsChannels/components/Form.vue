@@ -71,7 +71,7 @@ export default {
       rules: {
         name: [
           { required: true, message: 'Judul sumber berita harus diisi.', trigger: 'blur' },
-          { min: 5, message: 'Judul sumber berita minimal 10 karakter', trigger: 'blur' },
+          { min: 5, message: 'Judul sumber berita minimal 5 karakter', trigger: 'blur' },
           { max: 100, message: 'Judul sumber berita maksimal 100 karakter', trigger: 'blur' },
           { validator: validatorTextWhitespace, trigger: 'blur' }
         ],
