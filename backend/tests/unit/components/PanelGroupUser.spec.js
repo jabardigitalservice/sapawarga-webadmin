@@ -171,7 +171,7 @@ describe("PanelGroup User", () => {
     expect(cardNumberUserKec().text()).toMatch("0");
     expect(cardTextUserKec().text()).toMatch("Kecamatan");
     expect(cardNumberUserKel().text()).toMatch("0");
-    expect(cardTextUserKel().text()).toMatch("Kelurahan");
+    expect(cardTextUserKel().text()).toMatch("Desa/Kel");
     expect(cardNumberUserRw().text()).toMatch("0");
     expect(cardTextUserRw().text()).toMatch("RW");
 
