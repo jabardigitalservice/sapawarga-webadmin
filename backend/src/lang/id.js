@@ -62,7 +62,7 @@ export default {
     'video-list': 'Daftar Video',
     'video-create': 'Tambah Video',
     'video-edit': 'Edit Video',
-    'video-detail': 'Detail Video'
+    'video-detail': 'Detail Video',
 
     'news-channels-manage': 'Sumber Berita',
     'news-channels-list': 'Daftar Sumber Berita',
