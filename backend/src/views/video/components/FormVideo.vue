@@ -136,9 +136,6 @@ export default {
     if (this.isEdit) {
       const id = this.$route.params && this.$route.params.id
       this.fetchData(id)
-      if (this.video.kabkota_id === null) {
-        this.video.kabkota_id = 1
-      }
     }
     this.init()
   },
@@ -162,6 +159,9 @@ export default {
     fetchData(id) {
       fetchRecord(id).then(response => {
         this.video = response.data
+        if (this.video.kabkota_id === null) {
+          this.video.kabkota_id = 1
+        }
         if (this.video.status === 10) {
           this.$message.error(
             this.$t('crud.video-error-edit-published')
