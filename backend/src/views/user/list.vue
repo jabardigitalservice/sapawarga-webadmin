@@ -18,22 +18,22 @@
         <ListFilter :list-query.sync="listQuery" @submit-search="getList" @reset-search="resetFilter" />
 
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%" @sort-change="changeSort">
-          <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
+          <el-table-column type="index" min-width="50" align="center" :index="getTableRowNumbering" />
 
-          <el-table-column prop="name" sortable="custom" label="Nama Lengkap" />
+          <el-table-column prop="name" sortable="custom" label="Nama Lengkap" min-width="120" />
 
-          <el-table-column prop="username" sortable="custom" label="Username" />
+          <el-table-column prop="username" sortable="custom" label="Username" min-width="100" />
 
-          <el-table-column label="Kedudukan">
+          <el-table-column label="Kedudukan" min-width="150">
             <template slot-scope="{row}">
               {{ getKedudukan(row) }}
             </template>
           </el-table-column>
 
-          <el-table-column prop="phone" width="150" sortable="custom" label="Telp" />
-          <el-table-column prop="role_label" width="150" label="Role" />
+          <el-table-column prop="phone" min-width="120" sortable="custom" label="Telp" />
+          <el-table-column prop="role_label" min-width="150" label="Role" />
 
-          <el-table-column prop="status" sortable="custom" class-name="status-col" label="Status" width="150px">
+          <el-table-column prop="status" sortable="custom" class-name="status-col" label="Status" min-width="120px">
             <template slot-scope="{row}">
               <el-tag :type="row.status | statusFilter">
                 {{ row.status_label }}
@@ -41,9 +41,9 @@
             </template>
           </el-table-column>
 
-          <el-table-column align="center" label="Actions" width="250px">
+          <el-table-column align="center" label="Actions" min-width="250px">
             <template slot-scope="scope">
-              <router-link :to="'/user/show/'+scope.row.id">
+              <router-link :to="'/user/detail/'+scope.row.id">
                 <el-button type="white" size="mini">
                   View
                 </el-button>
@@ -171,11 +171,11 @@ export default {
       const kabkota = _.get(user, 'kabkota.name')
 
       if (userRole === 'staffRW') {
-        return `RW ${rw}, Kelurahan ${kelurahan}, Kecamatan ${kecamatan}, ${kabkota}`
+        return `RW ${rw}, Desa/Kelurahan ${kelurahan}, Kecamatan ${kecamatan}, ${kabkota}`
       }
 
       if (userRole === 'staffKel') {
-        return `Kelurahan ${kelurahan}, Kecamatan ${kecamatan}, ${kabkota}`
+        return `Desa/Kelurahan ${kelurahan}, Kecamatan ${kecamatan}, ${kabkota}`
       }
 
       if (userRole === 'staffKec') {

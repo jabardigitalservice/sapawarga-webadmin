@@ -38,16 +38,6 @@ const newsRouter = {
         title: 'categories-edit',
         roles: ['admin', 'staffProv']
       }
-    },
-    {
-      name: 'categories-detail',
-      path: 'detail/:id',
-      component: () => import('@/views/categories/detail'),
-      hidden: true,
-      meta: {
-        title: 'categories-detail',
-        roles: ['admin', 'staffProv']
-      }
     }
   ]
 }

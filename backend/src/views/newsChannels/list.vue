@@ -4,39 +4,26 @@
       <el-col :lg="24">
         <el-row style="margin: 10px 0px">
           <el-col :span="12">
-            <router-link :to="{ path: '/categories/create' }">
+            <router-link :to="{ path: '/news-channels/create' }">
               <el-button type="primary" size="small" icon="el-icon-plus">
-                Tambah Kategori Baru
+                Tambah
               </el-button>
             </router-link>
           </el-col>
         </el-row>
 
-        <ListFilter
-          :list-query.sync="listQuery"
-          @submit-search="getList"
-          @reset-search="resetFilter"
-        />
-
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%" @sort-change="changeSort">
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
 
-          <el-table-column prop="name" sortable="custom" label="Kategori" min-width="150" />
-
-          <el-table-column prop="type" sortable="custom" label="Fitur" min-width="150">
+          <el-table-column prop="name" sortable="custom" label="Sumber Berita" min-width="150">
             <template slot-scope="{row}">
-              {{ _.startCase(row.type) }}
+              {{ _.startCase(row.name) }}
             </template>
           </el-table-column>
 
           <el-table-column align="center" label="Actions" min-width="150px">
             <template slot-scope="scope">
-              <router-link :to="'/categories/edit/' +scope.row.id">
-                <el-button type="white" size="mini">
-                  Edit
-                </el-button>
-              </router-link>
-              <el-button type="danger" size="mini" @click="deleteCategory(scope.row.id)">
+              <el-button type="danger" size="mini" @click="deleteNewsChannels(scope.row.id)">
                 Hapus
               </el-button>
             </template>
@@ -50,15 +37,11 @@
 </template>
 
 <script>
-import { fetchList, deleteData } from '@/api/categories'
+import { fetchList, deleteData } from '@/api/newsChannels'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
-import ListFilter from './_listfilter'
 
 export default {
-  components: {
-    Pagination,
-    ListFilter
-  },
+  components: { Pagination },
 
   props: {
     roleId: {
@@ -113,7 +96,7 @@ export default {
       this.getList()
     },
 
-    async deleteCategory(id) {
+    async deleteNewsChannels(id) {
       try {
         await this.$confirm(this.$t('crud.delete-confirm'), 'warning', {
           confirmButtonText: this.$t('common.confirm'),

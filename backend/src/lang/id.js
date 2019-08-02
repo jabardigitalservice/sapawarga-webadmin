@@ -10,6 +10,7 @@ export default {
     'user-list-kecamatan': 'Kecamatan',
     'user-list-kelurahan': 'Desa / Kelurahan',
     'user-list-rw': 'User Tingkat RW',
+    'user-detail': 'Detail Pengguna',
 
     'nomor-penting-manage': 'Nomor Penting',
     'nomor-penting-list': 'Daftar Nomor Penting',
@@ -29,9 +30,9 @@ export default {
     'notification-edit': 'Edit Notifikasi',
     'notification-show': 'Detail Notifikasi',
 
-    'aspiration-manage': 'Aspirasi Masyarakat',
-    'aspiration-list': 'Aspirasi Masyarakat',
-    'aspiration-detail': 'Detail Aspirasi',
+    'aspiration-manage': 'Usulan Masyarakat',
+    'aspiration-list': 'Usulan Masyarakat',
+    'aspiration-detail': 'Detail Usulan',
 
     'polling-manage': 'Polling',
     'polling-list': 'Daftar Polling',
@@ -62,6 +63,11 @@ export default {
     'video-create': 'Tambah Video',
     'video-edit': 'Edit Video',
     'video-detail': 'Detail Video'
+
+    'news-channels-manage': 'Sumber Berita',
+    'news-channels-list': 'Daftar Sumber Berita',
+    'news-channels-create': 'Tambah Sumber Berita',
+    'news-channels-edit': 'Edit Sumber Berita'
 
   },
   crud: {

@@ -16,14 +16,14 @@ exports[`UserList renders the component 1`] = `
       </el-row-stub>
       <listfilter-stub listquery="[object Object]"></listfilter-stub>
       <el-table-stub fit="true" stripe="true" border="true" showheader="true" highlightcurrentrow="true" selectonindeterminate="true" indent="16" style="width: 100%;">
-        <el-table-column-stub type="index" width="50" resizable="true" align="center" filtermultiple="true" index="function () { [native code] }" sortorders="ascending,descending,"></el-table-column-stub>
-        <el-table-column-stub type="default" label="Nama Lengkap" prop="name" sortable="custom" resizable="true" filtermultiple="true" sortorders="ascending,descending,"></el-table-column-stub>
-        <el-table-column-stub type="default" label="Username" prop="username" sortable="custom" resizable="true" filtermultiple="true" sortorders="ascending,descending,"></el-table-column-stub>
-        <el-table-column-stub type="default" label="Kedudukan" resizable="true" filtermultiple="true" sortorders="ascending,descending,"></el-table-column-stub>
-        <el-table-column-stub type="default" label="Telp" prop="phone" width="150" sortable="custom" resizable="true" filtermultiple="true" sortorders="ascending,descending,"></el-table-column-stub>
-        <el-table-column-stub type="default" label="Role" prop="role_label" width="150" resizable="true" filtermultiple="true" sortorders="ascending,descending,"></el-table-column-stub>
-        <el-table-column-stub type="default" label="Status" classname="status-col" prop="status" width="150px" sortable="custom" resizable="true" filtermultiple="true" sortorders="ascending,descending,"></el-table-column-stub>
-        <el-table-column-stub type="default" label="Actions" width="250px" resizable="true" align="center" filtermultiple="true" sortorders="ascending,descending,"></el-table-column-stub>
+        <el-table-column-stub type="index" minwidth="50" resizable="true" align="center" filtermultiple="true" index="function () { [native code] }" sortorders="ascending,descending,"></el-table-column-stub>
+        <el-table-column-stub type="default" label="Nama Lengkap" prop="name" minwidth="120" sortable="custom" resizable="true" filtermultiple="true" sortorders="ascending,descending,"></el-table-column-stub>
+        <el-table-column-stub type="default" label="Username" prop="username" minwidth="100" sortable="custom" resizable="true" filtermultiple="true" sortorders="ascending,descending,"></el-table-column-stub>
+        <el-table-column-stub type="default" label="Kedudukan" minwidth="150" resizable="true" filtermultiple="true" sortorders="ascending,descending,"></el-table-column-stub>
+        <el-table-column-stub type="default" label="Telp" prop="phone" minwidth="120" sortable="custom" resizable="true" filtermultiple="true" sortorders="ascending,descending,"></el-table-column-stub>
+        <el-table-column-stub type="default" label="Role" prop="role_label" minwidth="150" resizable="true" filtermultiple="true" sortorders="ascending,descending,"></el-table-column-stub>
+        <el-table-column-stub type="default" label="Status" classname="status-col" prop="status" minwidth="120px" sortable="custom" resizable="true" filtermultiple="true" sortorders="ascending,descending,"></el-table-column-stub>
+        <el-table-column-stub type="default" label="Actions" minwidth="250px" resizable="true" align="center" filtermultiple="true" sortorders="ascending,descending,"></el-table-column-stub>
       </el-table-stub>
       <pagination-stub total="0" page="1" limit="10" pagesizes="10,20,30,50" layout="total, sizes, prev, pager, next, jumper" background="true" autoscroll="true" style="display: none;"></pagination-stub>
     </el-col-stub>
