@@ -78,7 +78,7 @@
                 </el-tooltip>
               </router-link>
               <el-tooltip content="Hapus Video" placement="top">
-                <el-button type="danger" icon="el-icon-delete" size="small" :disabled="scope.row.status === 10" @click="deleteNews(scope.row.id)" />
+                <el-button type="danger" icon="el-icon-delete" size="small" :disabled="scope.row.status === 10" @click="deleteVideo(scope.row.id)" />
               </el-tooltip>
               <el-tooltip content="Nonaktifkan Video" placement="top">
                 <el-button v-if="scope.row.status === 10" type="danger" icon="el-icon-circle-close" size="small" @click="deactivateRecord(scope.row.id)" />
@@ -185,7 +185,7 @@ export default {
       })
     },
 
-    async deleteNews(id) {
+    async deleteVideo(id) {
       try {
         await this.$confirm(this.$t('crud.delete-confirm'), 'warning', {
           confirmButtonText: this.$t('common.confirm'),
