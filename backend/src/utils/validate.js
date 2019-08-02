@@ -80,7 +80,7 @@ export function validUrl(str) {
 }
 
 export function validYoutubeUrl(str) {
-  const reg = /^(http:\/\/|https:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+$/
+  const reg = /^(http:\/\/|https:\/\/)?(www\.youtube\.com)\/.+$/
 
   return reg.test(str)
 }
