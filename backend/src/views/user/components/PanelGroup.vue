@@ -65,7 +65,7 @@
               </div>
               <div class="card-panel-description">
                 <div class="card-panel-text">
-                  Desa/Kelurahan
+                  Desa/Kel
                 </div>
                 <count-to :start-val="0" :end-val="totalUserKel" :duration="duration" class="card-panel-num" />
               </div>
