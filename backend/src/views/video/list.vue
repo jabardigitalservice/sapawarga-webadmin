@@ -68,22 +68,22 @@
           <el-table-column align="center" label="Actions" min-width="250px">
             <template slot-scope="scope">
               <router-link :to="'/video/detail/'+scope.row.id">
-                <el-tooltip content="Detail Berita" placement="top">
+                <el-tooltip content="Detail Video" placement="top">
                   <el-button type="primary" icon="el-icon-view" size="small" />
                 </el-tooltip>
               </router-link>
               <router-link :to="(scope.row.status !== 10 ? '/video/edit/' +scope.row.id : '')">
-                <el-tooltip content="Edit Berita" placement="top">
+                <el-tooltip content="Edit Video" placement="top">
                   <el-button type="warning" icon="el-icon-edit" size="small" :disabled="scope.row.status === 10" />
                 </el-tooltip>
               </router-link>
-              <el-tooltip content="Hapus Berita" placement="top">
+              <el-tooltip content="Hapus Video" placement="top">
                 <el-button type="danger" icon="el-icon-delete" size="small" :disabled="scope.row.status === 10" @click="deleteNews(scope.row.id)" />
               </el-tooltip>
-              <el-tooltip content="Nonaktifkan Berita" placement="top">
+              <el-tooltip content="Nonaktifkan Video" placement="top">
                 <el-button v-if="scope.row.status === 10" type="danger" icon="el-icon-circle-close" size="small" @click="deactivateRecord(scope.row.id)" />
               </el-tooltip>
-              <el-tooltip content="Aktifkan Berita" placement="top">
+              <el-tooltip content="Aktifkan Video" placement="top">
                 <el-button v-if="scope.row.status === 0" type="success" icon="el-icon-circle-check" size="small" @click="activateRecord(scope.row.id)" />
               </el-tooltip>
             </template>

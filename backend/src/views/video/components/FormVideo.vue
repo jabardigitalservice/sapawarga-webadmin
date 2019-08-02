@@ -37,7 +37,7 @@
             </el-select>
           </el-form-item>
 
-          <el-form-item label="URL Berita" prop="video_url">
+          <el-form-item label="URL Video" prop="video_url">
             <el-input v-model="video.video_url" type="text" name="video_url" placeholder="https://www.youtube.com/watch?v=ejThfEGcN3I" />
           </el-form-item>
 
@@ -117,7 +117,7 @@ export default {
           { required: true, message: 'Kategori harus diisi', trigger: 'change' }
         ],
         seq: [
-          { required: true, message: 'Prioritas Berita harus diisi', trigger: 'change' }
+          { required: true, message: 'Prioritas video harus diisi', trigger: 'change' }
         ],
         source: [
           { required: true, message: 'Sumber harus diisi', trigger: 'change' }
