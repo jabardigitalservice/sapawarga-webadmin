@@ -8,7 +8,7 @@
           </el-form-item>
 
           <el-form-item label="Kategori" prop="category_id">
-            <InputCategory v-model="video.category_id" name="category_id" category-type="survey" prop="category" style="width: 100%" />
+            <InputCategory v-model="video.category_id" name="category_id" category-type="video" prop="category" style="width: 100%" />
           </el-form-item>
 
           <el-form-item label="Target" prop="kabkota_id">
@@ -91,7 +91,7 @@ export default {
       video: {
         title: null,
         category_id: null,
-        source: 'YOUTUBE',
+        source: 'youtube',
         video_url: null,
         kabkota_id: null,
         seq: null,
@@ -136,6 +136,9 @@ export default {
     if (this.isEdit) {
       const id = this.$route.params && this.$route.params.id
       this.fetchData(id)
+      if (this.video.kabkota_id === null) {
+        this.video.kabkota_id = 1
+      }
     }
     this.init()
   },
