@@ -495,7 +495,7 @@ export default {
         kabkota: [
           {
             required: true,
-            message: 'Kota harus diisi',
+            message: 'Kab/Kota harus diisi',
             trigger: 'blur'
           }
         ],
@@ -509,7 +509,7 @@ export default {
         kelurahan: [
           {
             required: true,
-            message: 'Kelurahan harus diisi',
+            message: 'Desa/Kelurahan harus diisi',
             trigger: 'blur'
           }
         ],
