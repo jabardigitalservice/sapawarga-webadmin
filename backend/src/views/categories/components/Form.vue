@@ -65,8 +65,8 @@ export default {
       rules: {
         name: [
           { required: true, message: 'Judul kategori harus diisi.', trigger: 'blur' },
-          { min: 10, message: 'Judul kategori minimal 10 karakter', trigger: 'blur' },
-          { max: 100, message: 'Judul kategori maksimal 100 karakter', trigger: 'blur' },
+          { min: 4, message: 'Judul kategori minimal 4 karakter', trigger: 'blur' },
+          { max: 25, message: 'Judul kategori maksimal 25 karakter', trigger: 'blur' },
           { validator: validatorTitleWhitespace, trigger: 'blur' }
         ],
         type: [
