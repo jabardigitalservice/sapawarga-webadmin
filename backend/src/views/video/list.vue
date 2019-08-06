@@ -30,10 +30,10 @@
             </router-link>
           </el-col>
         </el-row>
-        
+
         <ListFilter :list-query.sync="listQuery" @submit-search="getList" @reset-search="resetFilter" />
 
-        <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row @sort-change="changeSort" style="width: 100%">
+        <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%" @sort-change="changeSort">
           <el-table-column type="index" align="center" width="50" :index="getTableRowNumbering" />
 
           <el-table-column label="Judul Video" sortable="custom" prop="title" min-width="200">
