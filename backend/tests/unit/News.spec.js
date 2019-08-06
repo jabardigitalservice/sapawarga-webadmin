@@ -54,6 +54,10 @@ describe('News detail', () => {
         content: newsDetailFixture.data.channel.name
       },
       {
+        title: 'Target Area Video',
+        content: newsDetailFixture.data.kabkota.name
+      },
+      {
         title: 'Tanggal Berita',
         content: '10 July 2019'
       },
@@ -94,6 +98,7 @@ describe('News detail', () => {
     const router = new VueRouter()
     newsDetailFixture.data.title = null
     newsDetailFixture.data.channel = null
+    newsDetailFixture.data.kabkota = null
     newsDetailFixture.data.source_date = null
     newsDetailFixture.data.status_label = null
     newsDetailFixture.data.featured = null
@@ -108,6 +113,10 @@ describe('News detail', () => {
       },
       {
         title: 'Sumber',
+        content: 'Error'
+      },
+      {
+        title: 'Target Area Video',
         content: 'Error'
       },
       {
