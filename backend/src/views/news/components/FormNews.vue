@@ -268,9 +268,9 @@ export default {
     fetchData(id) {
       newsApi.fetchRecord(id).then(response => {
         this.news = response.data
-        if (this.news.kabkota_id === null) {
-          this.news.kabkota_id = 1
-        }
+        
+        this.news.kabkota_id = this.news.kabkota_id !== null ? this.news.kabkota_id : 1
+
         if (response.data.status === 10) {
           this.$message.error(this.$t('crud.polling-error-edit-published'))
           this.$router.push('/news/index')
@@ -298,9 +298,7 @@ export default {
 
         Object.assign(data, this.news)
 
-        if (data.kabkota_id === 1) {
-          data.kabkota_id = null
-        }
+        data.kabkota_id = data.kabkota_id !== 1 ? data.kabkota_id : null
 
         data.source_date = moment(data.source_date).format('YYYY-MM-DD')
 
