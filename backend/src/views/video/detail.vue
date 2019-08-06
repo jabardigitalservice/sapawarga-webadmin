@@ -51,7 +51,7 @@ export default {
           },
           {
             title: 'Target Area Video',
-            content: kabkota ? kabkota.name : 'Jawa Barat'
+            content: kabkota ? kabkota.name : 'JAWA BARAT'
           },
           {
             title: 'Set Prioritas',
