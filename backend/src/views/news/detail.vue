@@ -52,7 +52,7 @@ export default {
           },
           {
             title: 'Target Area Berita',
-            content: kabkota ? kabkota.name : 'Jawa Barat'
+            content: kabkota ? kabkota.name : 'JAWA BARAT'
           },
           {
             title: 'Tanggal Berita',
