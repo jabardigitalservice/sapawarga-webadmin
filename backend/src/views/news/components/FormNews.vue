@@ -268,7 +268,7 @@ export default {
     fetchData(id) {
       newsApi.fetchRecord(id).then(response => {
         this.news = response.data
-        
+
         this.news.kabkota_id = this.news.kabkota_id !== null ? this.news.kabkota_id : 1
 
         if (response.data.status === 10) {
