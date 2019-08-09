@@ -1,7 +1,8 @@
 export default {
   route: {
     dashboard: 'Dashboard',
-    'profile': 'Profile',
+    'profile': 'Profil',
+    'profile-edit': 'Edit Profil',
 
     'user-manage': 'Kelola Pengguna',
     'user-create': 'Tambah Pengguna Baru',
@@ -145,6 +146,7 @@ export default {
 
   },
   navbar: {
-    profile: 'Lihat Profil'
+    profile: 'Lihat Profil',
+    'profile-edit': 'Edit Profil'
   }
 }
