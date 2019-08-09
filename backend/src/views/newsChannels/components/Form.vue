@@ -130,8 +130,15 @@ export default {
 
           this.$router.push('/news-channels/index')
         }
-      } catch (err) {
-        console.log(err)
+      } catch (error) {
+        const errorLength = error.response.data.data.length
+        const name = error.response.data.data[0].field
+        const message = error.response.data.data[0].message
+        if (errorLength === 2) {
+          this.$message.error(this.$t('Sumber Berita dan Tautan sudah digunakan'))
+        } else {
+          this.$message.error(this.$t(message))
+        }
       } finally {
         this.loading = false
       }
