@@ -132,6 +132,22 @@ export const constantRoutes = [
         }
       }
     ]
+  },
+  {
+    path: '/edit-profile',
+    component: Layout,
+    children: [
+      {
+        name: 'profile-edit',
+        path: '',
+        component: () => import('@/views/profile/edit'),
+        hidden: true,
+        meta: {
+          title: 'profile',
+          roles: ['admin']
+        }
+      }
+    ]
   }
 ]
 
