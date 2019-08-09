@@ -193,6 +193,10 @@ export default {
     isEdit: {
       type: Boolean,
       default: false
+    },
+    isProfile: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
