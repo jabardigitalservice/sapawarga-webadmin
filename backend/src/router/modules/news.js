@@ -7,7 +7,7 @@ const newsRouter = {
   redirect: '/news/index',
   meta: {
     title: 'news-manage',
-    roles: ['admin'],
+    roles: ['admin', 'staffProv', 'staffKabkota'],
     icon: 'documentation'
   },
   children: [
@@ -17,7 +17,7 @@ const newsRouter = {
       component: () => import('@/views/news/list'),
       meta: {
         title: 'news-list',
-        roles: ['admin']
+        roles: ['admin', 'staffProv', 'staffKabkota']
       }
     },
     {
@@ -26,7 +26,7 @@ const newsRouter = {
       component: () => import('@/views/news/create'),
       meta: {
         title: 'news-create',
-        roles: ['admin']
+        roles: ['admin', 'staffProv', 'staffKabkota']
       }
     },
     {
@@ -36,7 +36,7 @@ const newsRouter = {
       hidden: true,
       meta: {
         title: 'news-edit',
-        roles: ['admin']
+        roles: ['admin', 'staffProv', 'staffKabkota']
       }
     },
     {
@@ -46,7 +46,7 @@ const newsRouter = {
       hidden: true,
       meta: {
         title: 'news-detail',
-        roles: ['admin']
+        roles: ['admin', 'staffProv', 'staffKabkota']
       }
     }
   ]

@@ -1,12 +1,12 @@
-import { shallowMount, createLocalVue, mount } from '@vue/test-utils'
+import { shallowMount, createLocalVue } from '@vue/test-utils'
 import ElementUI from 'element-ui'
 import NewsList from '@/views/news/list'
 import NewsDetail from '@/views/news/detail'
-import newsDetailFixture from "./fixtures/newsDetail"
+import newsDetailFixture from './fixtures/newsDetail'
 import VueRouter from 'vue-router'
 import newsApi from '@/api/news'
-import flushPromises from "flush-promises"
-import moment from 'moment'
+import flushPromises from 'flush-promises'
+// import moment from 'moment'
 
 const localVue = createLocalVue()
 localVue.use(ElementUI)
@@ -14,9 +14,9 @@ localVue.use(VueRouter)
 
 beforeEach(() => {
   // Clear all instances and calls to constructor and all methods:
-  jest.resetModules();
-  jest.clearAllMocks();
-});
+  jest.resetModules()
+  jest.clearAllMocks()
+})
 
 describe('News List', () => {
   it('renders channel statistic', () => {
@@ -37,14 +37,13 @@ describe('News List', () => {
     expect(wrapper.html()).toContain('<span>Kanal Media</span>')
     expect(wrapper.vm.tableDataStatistik).toBe(channel)
   })
-
 })
 
 describe('News detail', () => {
-  it('show news detail', async () => {
+  it('show news detail', async() => {
     const router = new VueRouter()
     newsApi.fetchRecord = jest.fn(() => Promise.resolve(newsDetailFixture))
-    const expDataNews =  [
+    const expDataNews = [
       {
         title: 'Judul Berita',
         content: newsDetailFixture.data.title
@@ -54,8 +53,12 @@ describe('News detail', () => {
         content: newsDetailFixture.data.channel.name
       },
       {
+        title: 'Target Area Berita',
+        content: newsDetailFixture.data.kabkota.name
+      },
+      {
         title: 'Tanggal Berita',
-        content: '10 July 2019'
+        content: '18 July 2019'
       },
       {
         title: 'Status',
@@ -71,7 +74,7 @@ describe('News detail', () => {
       },
       {
         title: 'Konten Berita',
-        content: 'Ini berita terbaru bulan juni'
+        content: newsDetailFixture.data.content
       },
       {
         title: 'Jumlah Pengunjung',
@@ -83,17 +86,21 @@ describe('News detail', () => {
       localVue,
       router
     })
-    await flushPromises();
+    await flushPromises()
+
+    // strip the content
+    expDataNews[7].content = wrapper.vm.strip(newsDetailFixture.data.content)
 
     expect(wrapper.vm.news).toEqual(newsDetailFixture.data)
     expect(wrapper.vm.tableDataNews).toEqual(expDataNews)
     expect(wrapper.vm.validUrl(newsDetailFixture.data.source_url)).toBe(true)
   })
 
-  it('show empty news detail', async () => {
+  it('show empty news detail', async() => {
     const router = new VueRouter()
     newsDetailFixture.data.title = null
     newsDetailFixture.data.channel = null
+    newsDetailFixture.data.kabkota = null
     newsDetailFixture.data.source_date = null
     newsDetailFixture.data.status_label = null
     newsDetailFixture.data.featured = null
@@ -101,7 +108,7 @@ describe('News detail', () => {
     newsDetailFixture.data.content = null
     newsDetailFixture.data.total_viewers = null
     newsApi.fetchRecord = jest.fn(() => Promise.resolve(newsDetailFixture))
-    const expDataNews =  [
+    const expDataNews = [
       {
         title: 'Judul Berita',
         content: 'Error'
@@ -109,6 +116,10 @@ describe('News detail', () => {
       {
         title: 'Sumber',
         content: 'Error'
+      },
+      {
+        title: 'Target Area Berita',
+        content: 'JAWA BARAT'
       },
       {
         title: 'Tanggal Berita',
@@ -140,7 +151,7 @@ describe('News detail', () => {
       localVue,
       router
     })
-    await flushPromises();
+    await flushPromises()
 
     expect(wrapper.vm.news).toEqual(newsDetailFixture.data)
     expect(wrapper.vm.tableDataNews).toEqual(expDataNews)

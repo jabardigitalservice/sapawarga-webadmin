@@ -38,7 +38,7 @@ export default {
   methods: {
     getDetail() {
       newsApi.fetchRecord(this.id).then(response => {
-        const { status_label, title, channel, source_date, featured, source_url, content, total_viewers } = response.data
+        const { status_label, title, channel, source_date, featured, source_url, content, total_viewers, kabkota } = response.data
         this.news = response.data
 
         this.tableDataNews = [
@@ -49,6 +49,10 @@ export default {
           {
             title: 'Sumber',
             content: (channel ? channel.name : 'Error')
+          },
+          {
+            title: 'Target Area Berita',
+            content: kabkota ? kabkota.name : 'JAWA BARAT'
           },
           {
             title: 'Tanggal Berita',

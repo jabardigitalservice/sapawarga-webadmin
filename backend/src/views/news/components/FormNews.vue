@@ -22,6 +22,17 @@
             </el-select>
           </el-form-item>
 
+          <el-form-item label="Target" prop="kabkota_id">
+            <el-select v-model="news.kabkota_id" :disabled="checkStaff" placeholder="Pilih Target">
+              <el-option
+                v-for="item in area"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
+              />
+            </el-select>
+          </el-form-item>
+
           <el-form-item label="Tanggal Berita" prop="source_date">
             <el-date-picker
               v-model="news.source_date"
@@ -85,6 +96,8 @@
 import AttachmentPhotoUpload from '@/components/AttachmentPhotoUpload'
 import { containsWhitespace, validUrl } from '@/utils/validate'
 import { create, update, newsChannelList } from '@/api/news'
+import { requestArea } from '@/api/staff'
+import checkPermission from '@/utils/permission'
 import newsApi from '@/api/news'
 import Tinymce from '@/components/Tinymce'
 import moment from 'moment'
@@ -131,8 +144,11 @@ export default {
         cover_path_url: null,
         status: null,
         featured: null,
-        seq: null
+        seq: null,
+        kabkota_id: null
       },
+      checkStaff: false,
+      area: null,
       options: null,
       statusOptions: [
         { value: 10, label: 'Aktif' },
@@ -217,6 +233,9 @@ export default {
             message: 'Prioritas Berita harus diisi',
             trigger: 'blur'
           }
+        ],
+        kabkota_id: [
+          { required: true, message: 'Target harus diisi', trigger: 'change' }
         ]
       }
     }
@@ -227,11 +246,30 @@ export default {
       this.fetchData(id)
     }
     this.getNewsChannel()
+    this.init()
   },
   methods: {
+    init() {
+      const authUser = this.$store.state.user
+
+      this.getArea()
+
+      if (checkPermission(['staffKabkota'])) {
+        this.news.kabkota_id = authUser.kabkota_id
+        this.checkStaff = true
+      }
+    },
+    getArea() {
+      requestArea().then(response => {
+        this.area = response.data.items
+        this.area.unshift({ id: 1, name: 'JAWA BARAT' })
+      })
+    },
     fetchData(id) {
       newsApi.fetchRecord(id).then(response => {
         this.news = response.data
+
+        this.news.kabkota_id = this.news.kabkota_id !== null ? this.news.kabkota_id : 1
 
         if (response.data.status === 10) {
           this.$message.error(this.$t('crud.polling-error-edit-published'))
@@ -259,6 +297,8 @@ export default {
         const data = {}
 
         Object.assign(data, this.news)
+
+        data.kabkota_id = data.kabkota_id !== 1 ? data.kabkota_id : null
 
         data.source_date = moment(data.source_date).format('YYYY-MM-DD')
 
