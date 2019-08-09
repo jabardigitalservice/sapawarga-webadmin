@@ -1,6 +1,8 @@
 <template>
   <div class="app-container">
-    <p class="warn-content">Profile Pengguna</p>
+    <p class="warn-content" v-if="!isEdit">Tambah Pengguna</p>
+    <p class="warn-content" v-if="isEdit && !isProfile">Edit Pengguna</p>
+    <p class="warn-content" v-if="isProfile">Edit Profil</p>
     <el-row :gutter="10">
       <!-- Left colomn -->
       <el-col :sm="24" :md="24" :lg="6" :xl="6" class="grid-content">
