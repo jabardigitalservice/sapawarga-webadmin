@@ -5,7 +5,7 @@ import Layout from '@/layout'
 const userRouter = {
   path: '/user',
   component: Layout,
-  redirect: 'noredirect',
+  redirect: '/user',
   name: 'User',
   meta: {
     title: 'user-manage',
