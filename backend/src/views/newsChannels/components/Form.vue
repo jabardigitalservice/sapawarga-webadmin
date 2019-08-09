@@ -132,7 +132,6 @@ export default {
         }
       } catch (error) {
         const errorLength = error.response.data.data.length
-        const name = error.response.data.data[0].field
         const message = error.response.data.data[0].message
         if (errorLength === 2) {
           this.$message.error(this.$t('Sumber Berita dan Tautan sudah digunakan'))
