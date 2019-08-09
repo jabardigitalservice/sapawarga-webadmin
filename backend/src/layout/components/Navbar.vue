@@ -32,6 +32,11 @@
             <el-dropdown-item>{{ $t('navbar.profile') }}</el-dropdown-item>
           </router-link>
           <el-dropdown-item divided>
+            <router-link to="/edit-profile">
+              <span style="display:block;">{{ $t('navbar.profile-edit') }}</span>
+            </router-link>
+          </el-dropdown-item>
+          <el-dropdown-item divided>
             <span style="display:block;" @click="logout">{{ $t('navbar.logOut') }}</span>
           </el-dropdown-item>
         </el-dropdown-menu>
