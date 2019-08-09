@@ -53,7 +53,7 @@ export default {
   data() {
     const validatorTitleWhitespace = (rule, value, callback) => {
       if (containsWhitespace(value) === true) {
-        callback(new Error('Judul kategori yang diisi tidak valid.'))
+        callback(new Error('Nama kategori yang diisi tidak valid.'))
       }
 
       callback()
@@ -64,9 +64,9 @@ export default {
       loading: false,
       rules: {
         name: [
-          { required: true, message: 'Judul kategori harus diisi.', trigger: 'blur' },
-          { min: 4, message: 'Judul kategori minimal 4 karakter', trigger: 'blur' },
-          { max: 25, message: 'Judul kategori maksimal 25 karakter', trigger: 'blur' },
+          { required: true, message: 'Nama kategori harus diisi.', trigger: 'blur' },
+          { min: 4, message: 'Nama kategori minimal 4 karakter', trigger: 'blur' },
+          { max: 25, message: 'Nama kategori maksimal 25 karakter', trigger: 'blur' },
           { validator: validatorTitleWhitespace, trigger: 'blur' }
         ],
         type: [
