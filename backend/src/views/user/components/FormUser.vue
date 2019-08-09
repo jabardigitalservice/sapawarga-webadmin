@@ -173,7 +173,8 @@
           </el-form-item>
           <el-form-item>
             <el-button v-if="(!isEdit)" type="primary" @click="submitForm('user')">Tambah Pengguna</el-button>
-            <el-button v-if="(isEdit)" type="primary" @click="updateForm('user')">Update Pengguna</el-button>
+            <el-button v-if="(isEdit && !isProfile)" type="primary" @click="updateForm('user')">Update Pengguna</el-button>
+            <el-button v-if="(isProfile)" type="primary">Update Profil</el-button>
             <el-button @click="resetForm('user')">Batal</el-button>
           </el-form-item>
         </el-form>
