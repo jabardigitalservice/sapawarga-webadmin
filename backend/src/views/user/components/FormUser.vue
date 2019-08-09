@@ -661,7 +661,8 @@ export default {
     }
   },
   created() {
-    if (this.isEdit) {
+    console.log(this.isProfile)
+    if (this.isEdit && !this.isProfile) {
       const id = this.$route.params && this.$route.params.id
       this.fetchData(id)
     }
