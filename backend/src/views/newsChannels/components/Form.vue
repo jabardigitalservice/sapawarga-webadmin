@@ -148,7 +148,19 @@ export default {
           messageJoin = messageList.join(' Dan ')
         })
         this.$message.error(this.$t(messageJoin))
-        
+
+        if (messageApi[0].field === 'name' && messageApi[1].field === 'website') {
+          this.form.name = null
+          this.form.website = null
+          this.validateName = 'errorName'
+          this.validateWebsite = 'errorWebsite'
+        } else if (messageApi[0].field === 'website') {
+          this.form.website = null
+          this.validateWebsite = 'errorWebsite'
+        } else if (messageApi[0].field === 'name') {
+          this.form.name = null
+          this.validateName = 'errorName'
+        }
       } finally {
         this.loading = false
       }
