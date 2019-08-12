@@ -131,13 +131,17 @@ export default {
           this.$router.push('/news-channels/index')
         }
       } catch (error) {
-        const errorLength = error.response.data.data.length
-        const message = error.response.data.data[0].message
-        if (errorLength === 2) {
-          this.$message.error(this.$t('Sumber Berita dan Tautan sudah digunakan'))
-        } else {
-          this.$message.error(this.$t(message))
-        }
+                
+        const messageApi = error.response.data.data
+        let messageList = []
+        let messageJoin = null
+
+        messageApi.forEach(element => {
+          messageList.push(element.message)
+          messageJoin = messageList.join(' Dan ')
+        })
+        this.$message.error(this.$t(messageJoin))
+        
       } finally {
         this.loading = false
       }
