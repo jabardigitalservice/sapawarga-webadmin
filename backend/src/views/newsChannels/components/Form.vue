@@ -152,7 +152,22 @@ export default {
       } finally {
         this.loading = false
       }
+    },
+    changePropName() {
+      if (this.validateName === 'errorName') {
+        this.validateName = 'name'
+      } else {
+        this.validateName = 'name'
+      }
+    },
+    changePropWebsite() {
+      if (this.validateWebsite === 'errorWebsite') {
+        this.validateWebsite = 'website'
+      } else {
+        this.validateWebsite = 'website'
+      }
     }
+
   }
 }
 </script>
