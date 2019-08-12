@@ -174,7 +174,7 @@
           <el-form-item>
             <el-button v-if="(!isEdit)" type="primary" @click="submitForm('user')">Tambah Pengguna</el-button>
             <el-button v-if="(isEdit && !isProfile)" type="primary" @click="updateForm('user')">Update Pengguna</el-button>
-            <el-button v-if="(isProfile)" type="primary">Update Profil</el-button>
+            <el-button v-if="(isProfile)" type="primary" @click="updateProfile">Update Profil</el-button>
             <el-button @click="resetForm('user')">Batal</el-button>
           </el-form-item>
         </el-form>
@@ -664,7 +664,6 @@ export default {
     }
   },
   created() {
-    console.log(this.isProfile)
     if (this.isEdit && !this.isProfile) {
       const id = this.$route.params && this.$route.params.id
       this.fetchData(id)
@@ -862,6 +861,23 @@ export default {
           return false
         }
       })
+    },
+    async updateProfile() {
+      const valid = await this.$refs.user.validate()
+
+      if (!valid) {
+        return
+      }
+
+      try {
+
+      }
+      catch {
+
+      }
+      finally {
+
+      }
     },
     changePropEmail() {
       if (this.emailValidation === 'errorEmail') {
