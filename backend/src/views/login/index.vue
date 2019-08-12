@@ -37,7 +37,7 @@
           ref="password"
           v-model="loginForm.password"
           :type="passwordType"
-          placeholder="Password"
+          placeholder="Kata sandi"
           name="password"
           auto-complete="on"
           @keyup.enter.native="handleLogin"
@@ -64,7 +64,7 @@ export default {
   data() {
     const validateUsername = (rule, value, callback) => {
       if (value.length < 1) {
-        callback(new Error('Nama Pengguna harus diisi'))
+        callback(new Error('Username harus diisi'))
       } else {
         callback()
       }
