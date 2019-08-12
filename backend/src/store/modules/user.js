@@ -65,9 +65,17 @@ const actions = {
           resolve()
         })
         .catch(error => {
+          const errData = error.response.data.data
+
+          // PS: seharusnya ketika salah username & password. di error.response.data.data.status memiliki status khusus. By Ganjar Setia
           if (error.response.status === 422) {
+            let errMessage = errData.password[0]
+
+            // jika user inactive atau mengandung status apapun
+            if (errData.status) errMessage = errData.status[0]
+
             Message({
-              message: 'Username atau Password salah',
+              message: errMessage,
               type: 'error',
               duration: 5 * 1000
             })
