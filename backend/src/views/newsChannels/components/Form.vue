@@ -68,6 +68,8 @@ export default {
     return {
       form: Object.assign({}, defaultForm),
       loading: false,
+      validateWebsite: 'website',
+      validateName: 'name',
       rules: {
         name: [
           { required: true, message: 'Judul sumber berita harus diisi.', trigger: 'blur' },
@@ -75,9 +77,15 @@ export default {
           { max: 100, message: 'Judul sumber berita maksimal 100 karakter', trigger: 'blur' },
           { validator: validatorTextWhitespace, trigger: 'blur' }
         ],
+        errorName: [
+          { required: true, message: 'Judul sumber berita sudah digunakan', trigger: 'change' }
+        ],
         website: [
           { required: true, message: 'URL harus diisi.', trigger: 'blur' },
           { validator: validatorUrl, trigger: 'blur' }
+        ],
+        errorWebsite: [
+          { required: true, message: 'Website sumber berita sudah digunakan', trigger: 'change' }
         ],
         icon_url: [
           { required: true, message: 'URL harus diisi.', trigger: 'blur' },
