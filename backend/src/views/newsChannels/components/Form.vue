@@ -139,9 +139,8 @@ export default {
           this.$router.push('/news-channels/index')
         }
       } catch (error) {
-                
         const messageApi = error.response.data.data
-        let messageList = []
+        const messageList = []
         let messageJoin = null
 
         messageApi.forEach(element => {
