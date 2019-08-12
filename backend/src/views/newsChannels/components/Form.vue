@@ -4,16 +4,16 @@
       <el-col :xs="24" :sm="16">
         <el-form ref="form" :model="form" :rules="rules" :status-icon="true" label-width="210px">
 
-          <el-form-item label="Sumber Berita" prop="name">
-            <el-input v-model="form.name" type="text" placeholder="Sumber Berita" />
+          <el-form-item label="Sumber Berita" :prop="validateName">
+            <el-input v-model="form.name" type="text" placeholder="Sumber Berita" @focus="changePropName" />
           </el-form-item>
 
           <el-form-item label="Tautan Logo Sumber Berita" prop="icon_url">
             <el-input v-model="form.icon_url" type="text" placeholder="http://www" />
           </el-form-item>
 
-          <el-form-item label="Tautan" prop="website">
-            <el-input v-model="form.website" type="text" placeholder="http://www" />
+          <el-form-item label="Tautan" :prop="validateWebsite">
+            <el-input v-model="form.website" type="text" placeholder="http://www" @focus="changePropWebsite" />
           </el-form-item>
 
           <el-form-item>
