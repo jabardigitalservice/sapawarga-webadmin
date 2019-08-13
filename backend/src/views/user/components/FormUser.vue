@@ -185,7 +185,7 @@
 <script>
 import uploadPhoto from './uploadPhoto'
 import checkPermission from '@/utils/permission'
-import { requestArea, requestKecamatan, requestKelurahan, createUser, fetchUser, editUser, fetchProfile } from '@/api/staff'
+import { requestArea, requestKecamatan, requestKelurahan, createUser, fetchUser, editUser, fetchProfile, updateProfileApi } from '@/api/staff'
 import { Message } from 'element-ui'
 import InputMap from '@/components/InputMap'
 import { validCoordinate } from '@/utils/validate'
