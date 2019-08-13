@@ -1,7 +1,7 @@
 import { login, getInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
-import { Message } from 'element-ui'
+import { Message, MessageBox } from 'element-ui'
 
 const state = {
   token: getToken(),
@@ -69,16 +69,14 @@ const actions = {
 
           // PS: seharusnya ketika salah username & password. di error.response.data.data.status memiliki status khusus. By Ganjar Setia
           if (error.response.status === 422) {
-            let errMessage = errData.password[0]
+            const errMessage = (errData.password) ? errData.password[0] : errData.status[0]
 
             // jika user inactive atau mengandung status apapun
-            if (errData.status) errMessage = errData.status[0]
-
-            Message({
-              message: errMessage,
-              type: 'error',
-              duration: 5 * 1000
-            })
+            if (errData.status) {
+              MessageBox.alert(errMessage, 'Gagal Login', { confirmButtonText: 'OK' })
+            } else {
+              Message({ message: errMessage, type: 'error', duration: 5 * 1000 })
+            }
           }
           reject()
         })
