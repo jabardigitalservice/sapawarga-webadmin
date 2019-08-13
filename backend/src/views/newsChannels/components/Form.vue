@@ -72,13 +72,13 @@ export default {
       validateName: 'name',
       rules: {
         name: [
-          { required: true, message: 'Judul sumber berita harus diisi.', trigger: 'blur' },
-          { min: 5, message: 'Judul sumber berita minimal 5 karakter', trigger: 'blur' },
-          { max: 100, message: 'Judul sumber berita maksimal 100 karakter', trigger: 'blur' },
+          { required: true, message: 'Sumber berita harus diisi.', trigger: 'blur' },
+          { min: 5, message: 'Sumber berita minimal 5 karakter', trigger: 'blur' },
+          { max: 25, message: 'Sumber berita maksimal 25 karakter', trigger: 'blur' },
           { validator: validatorTextWhitespace, trigger: 'blur' }
         ],
         errorName: [
-          { required: true, message: 'Judul sumber berita sudah digunakan', trigger: 'change' }
+          { required: true, message: 'Sumber berita sudah digunakan', trigger: 'change' }
         ],
         website: [
           { required: true, message: 'URL harus diisi.', trigger: 'blur' },
