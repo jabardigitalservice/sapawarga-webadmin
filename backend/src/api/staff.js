@@ -102,3 +102,9 @@ export function fetchUser(id) {
   })
 }
 
+export function fetchProfile() {
+  return request({
+    url: 'staff/me',
+    method: 'get'
+  })
+}
