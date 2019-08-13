@@ -871,23 +871,6 @@ export default {
         }
       })
     },
-    async updateProfile() {
-      const valid = await this.$refs.user.validate()
-
-      if (!valid) {
-        return
-      }
-
-      try {
-
-      }
-      catch {
-
-      }
-      finally {
-
-      }
-    },
     changePropEmail() {
       if (this.emailValidation === 'errorEmail') {
         this.emailValidation = 'email'
