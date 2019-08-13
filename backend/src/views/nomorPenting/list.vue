@@ -141,7 +141,7 @@ export default {
 
   mounted() {
     this.getList()
-    this.isDisabledButton = !checkPermission(['admin', 'staffProv', 'staffKabkota'])
+    this.isDisabledButton = !checkPermission(['admin', 'staffProv'])
   },
 
   methods: {
