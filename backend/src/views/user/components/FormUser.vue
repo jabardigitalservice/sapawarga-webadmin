@@ -688,9 +688,95 @@ export default {
   methods: {
     getProfile(){
       fetchProfile().then(response => {
-        console.log(response)
-        Object.assign(this.user, response.data)
+        const dataProfile = response.data
+        Object.assign(this.user, dataProfile)
+        console.log(dataProfile)
+        this.user.role = dataProfile.role_id
+
+        const dataUserPhotoUrl = dataProfile.photo_url
+        let urlPhoto = null
+        if (dataProfile.photo_url !== null) {
+          urlPhoto = dataUserPhotoUrl.substring(dataUserPhotoUrl.lastIndexOf('/', dataUserPhotoUrl.lastIndexOf('/') - 1) + 1)
+        } else {
+          urlPhoto = dataProfile.photo_url
+        }
+
+        // // assign to data
+        if (dataProfile.role_id === 'staffRW') {
+          this.user.kabkota = dataProfile.kabkota.name
+          this.user.kecamatan = dataProfile.kecamatan.name
+          this.user.kelurahan = dataProfile.kelurahan.name
+        } else if (dataProfile.role_id === 'staffKel') {
+          this.user.kabkota = dataProfile.kabkota.name
+          this.user.kecamatan = dataProfile.kecamatan.name
+          this.user.kelurahan = dataProfile.kelurahan.name
+        } else if (dataProfile.role_id === 'staffKec') {
+          this.user.kabkota = dataProfile.kabkota.name
+          this.user.kecamatan = dataProfile.kecamatan.name
+        } else if (dataProfile.role_id === 'staffKabkota') {
+          this.user.kabkota = dataProfile.kabkota.name
+        }
       })
+    },
+    async updateProfile() {
+      const valid = await this.$refs.user.validate()
+
+      if (!valid) {
+        return
+      } 
+
+      try {
+        if (this.isEdit && this.isProfile) {
+
+          // const data = {
+          //   name: this.user.name,
+          //   email: this.user.email,
+          //   phone: this.user.phone,
+          //   address: this.user.address,
+          //   rt: this.user.rt,
+          //   facebook: this.user.facebook,
+          //   twitter: this.user.twitter,
+          //   instagram: this.user.instagram,
+          //   photo_url: this.user.photo,
+          //   lat: this.user.coordinates[0],
+          //   lon: this.user.coordinates[1]
+          // }
+          // if (this.user.confirmation !== '') {
+          //   data['password'] = this.user.confirmation
+          // }
+
+          await updateProfileApi({
+            username: this.user.username,
+            name: this.user.name,
+            email: this.user.email,
+            password: this.user.confirmation,
+            phone: this.user.phone,
+            address: this.user.address,
+            role_id: this.user.role,
+            // kabkota_id: this.user.kabkota.id || this.id_kabkota,
+            // kec_id: this.user.kecamatan.id || this.id_kec,
+            // kel_id: this.user.kelurahan.id || this.id_kel,
+            rw: this.user.rw,
+            rt: this.user.rt,
+            facebook: this.user.facebook,
+            twitter: this.user.twitter,
+            instagram: this.user.instagram,
+            photo_url: this.user.photo,
+            lat: this.user.coordinates[0],
+            lon: this.user.coordinates[1]
+          })
+
+          this.$message.success(this.$t('crud.update-success'))
+
+          this.$router.push('/profile')
+        }
+      }
+      catch (err) {
+        console.log(err)
+      }
+      finally {
+
+      }
     },
     getUrlPhoto(url) {
       this.user.photo = url
