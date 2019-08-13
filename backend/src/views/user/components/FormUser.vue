@@ -668,6 +668,9 @@ export default {
       const id = this.$route.params && this.$route.params.id
       this.fetchData(id)
     }
+    if (this.isEdit && this.isProfile) {
+      this.getProfile()
+    }
     this.getArea()
     this.parentId
     this.parentArea
@@ -683,6 +686,12 @@ export default {
   },
 
   methods: {
+    getProfile(){
+      fetchProfile().then(response => {
+        console.log(response)
+        Object.assign(this.user, response.data)
+      })
+    },
     getUrlPhoto(url) {
       this.user.photo = url
     },
