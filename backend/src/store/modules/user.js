@@ -73,7 +73,7 @@ const actions = {
 
             // jika user inactive atau mengandung status apapun
             if (errData.status) {
-              MessageBox.alert(errMessage, 'Gagal Login', { confirmButtonText: 'OK' })
+              MessageBox.alert(errMessage, '', { confirmButtonText: 'OK' })
             } else {
               Message({ message: errMessage, type: 'error', duration: 5 * 1000 })
             }
