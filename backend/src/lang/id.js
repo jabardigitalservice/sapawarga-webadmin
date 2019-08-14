@@ -88,6 +88,7 @@ export default {
     'save-publish': 'Simpan dan Aktifkan',
     'save-news': 'Tambah Berita',
     'save-video': 'Tambah Video',
+    'save-user': 'Tambah Pengguna',
 
     'back-to-list': 'Kembali ke Daftar',
     'send-polling': 'Publikasikan Polling',
