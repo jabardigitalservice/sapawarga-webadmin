@@ -735,59 +735,48 @@ export default {
 
       if (!valid) {
         return
-      } 
+      }
 
       try {
+        this.loading = true
+
         if (this.isEdit && this.isProfile) {
-
-          // const data = {
-          //   name: this.user.name,
-          //   email: this.user.email,
-          //   phone: this.user.phone,
-          //   address: this.user.address,
-          //   rt: this.user.rt,
-          //   facebook: this.user.facebook,
-          //   twitter: this.user.twitter,
-          //   instagram: this.user.instagram,
-          //   photo_url: this.user.photo,
-          //   lat: this.user.coordinates[0],
-          //   lon: this.user.coordinates[1]
-          // }
-          // if (this.user.confirmation !== '') {
-          //   data['password'] = this.user.confirmation
-          // }
-
-          await updateProfileApi({
+          const data = {
             username: this.user.username,
             name: this.user.name,
             email: this.user.email,
-            password: this.user.confirmation,
             phone: this.user.phone,
             address: this.user.address,
-            role_id: this.user.role,
-            // kabkota_id: this.user.kabkota.id || this.id_kabkota,
-            // kec_id: this.user.kecamatan.id || this.id_kec,
-            // kel_id: this.user.kelurahan.id || this.id_kel,
-            rw: this.user.rw,
             rt: this.user.rt,
             facebook: this.user.facebook,
             twitter: this.user.twitter,
             instagram: this.user.instagram,
             photo_url: this.user.photo,
             lat: this.user.coordinates[0],
-            lon: this.user.coordinates[1]
-          })
+            lon: this.user.coordinates[1],
+            kabkota_id: this.id_kabkota,
+            kec_id: this.id_kec,
+            kel_id: this.id_kel,
+            role_id: this.user.role
+          }
+          if (this.user.confirmation !== '') {
+            data.password = this.user.confirmation
+          }
+
+          const dataFinal = {
+            UserEditForm: data
+          }
+
+          await updateProfileApi(dataFinal)
 
           this.$message.success(this.$t('crud.update-success'))
 
           this.$router.push('/profile')
         }
-      }
-      catch (err) {
+      } catch (err) {
         console.log(err)
-      }
-      finally {
-
+      } finally {
+        this.loading = false
       }
     },
     getUrlPhoto(url) {
