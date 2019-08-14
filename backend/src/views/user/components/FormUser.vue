@@ -827,6 +827,7 @@ export default {
       }).catch()
     },
     submitForm(formName) {
+      this.loading = true
       this.$refs[formName].validate(valid => {
         if (valid) {
           createUser({
@@ -859,6 +860,7 @@ export default {
             }, 1000)
             this.$refs[formName].resetFields()
             this.imageData = 0
+            this.loading = false
           })
             .catch(error => {
               const usernameError = error.response.data.data.username
@@ -897,6 +899,7 @@ export default {
       })
     },
     updateForm(formName) {
+      this.loading = true
       const id = this.$route.params && this.$route.params.id
       this.$refs[formName].validate(valid => {
         if (valid) {
@@ -927,6 +930,7 @@ export default {
             }, 1000)
             this.$refs[formName].resetFields()
             this.imageData = 0
+            this.loading = false
           }).catch(error => {
             const usernameError = error.response.data.data.username
             const emailError = error.response.data.data.email
