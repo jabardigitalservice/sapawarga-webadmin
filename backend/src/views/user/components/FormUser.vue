@@ -652,16 +652,20 @@ export default {
     },
     filterRole() {
       const ruleOptions = this.opsiPeran
-      if (checkPermission(['admin'])) {
-        return ruleOptions.slice(1, ruleOptions.length)
-      } if (checkPermission(['staffProv'])) {
-        return ruleOptions.slice(2, ruleOptions.length)
-      } if (checkPermission(['staffKabkota'])) {
-        return ruleOptions.slice(3, ruleOptions.length)
-      } if (checkPermission(['staffKec'])) {
-        return ruleOptions.slice(4, ruleOptions.length)
-      } if (checkPermission(['staffKel'])) {
-        return ruleOptions.slice(5, ruleOptions.length)
+      if ((!this.isEdit && !this.isProfile) || (this.isEdit && !this.isProfile)) {
+        if (checkPermission(['admin'])) {
+          return ruleOptions.slice(1, ruleOptions.length)
+        } if (checkPermission(['staffProv'])) {
+          return ruleOptions.slice(2, ruleOptions.length)
+        } if (checkPermission(['staffKabkota'])) {
+          return ruleOptions.slice(3, ruleOptions.length)
+        } if (checkPermission(['staffKec'])) {
+          return ruleOptions.slice(4, ruleOptions.length)
+        } if (checkPermission(['staffKel'])) {
+          return ruleOptions.slice(5, ruleOptions.length)
+        }
+      } else if (this.isEdit && this.isProfile) {
+        return ruleOptions
       }
       return ruleOptions
     }
