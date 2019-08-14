@@ -267,6 +267,7 @@ export default {
     }
 
     return {
+      loading: false,
       user: {
         username: '',
         name: '',
