@@ -694,12 +694,13 @@ export default {
   },
 
   methods: {
-    getProfile(){
+    getProfile() {
       fetchProfile().then(response => {
         const dataProfile = response.data
-        Object.assign(this.user, dataProfile)
-        console.log(dataProfile)
         this.user.role = dataProfile.role_id
+        Object.assign(this.user, dataProfile)
+
+        this.user.coordinates = [dataProfile.lat, dataProfile.lon]
 
         const dataUserPhotoUrl = dataProfile.photo_url
         let urlPhoto = null
@@ -709,6 +710,9 @@ export default {
           urlPhoto = dataProfile.photo_url
         }
 
+        this.user.photo = urlPhoto
+        this.imageData = dataProfile.photo_url || this.imageData
+        this.setLinkEditPhoto = dataProfile.photo_url
         // // assign to data
         if (dataProfile.role_id === 'staffRW') {
           this.user.kabkota = dataProfile.kabkota.name
