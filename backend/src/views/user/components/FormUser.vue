@@ -172,10 +172,13 @@
             />
           </el-form-item>
           <el-form-item>
-            <el-button v-if="(!isEdit)" type="primary" @click="submitForm('user')">Tambah Pengguna</el-button>
-            <el-button v-if="(isEdit && !isProfile)" type="primary" @click="updateForm('user')">Update Pengguna</el-button>
-            <el-button v-if="(isProfile)" type="primary" @click="updateProfile">Update Profil</el-button>
-            <el-button @click="resetForm('user')">Batal</el-button>
+            <el-button v-if="(!isEdit)" type="primary" :loading="loading" @click="submitForm('user')">{{ $t('crud.save-user') }}</el-button>
+            <el-button v-if="(isEdit && !isProfile)" type="primary" :loading="loading" @click="updateForm('user')">{{ $t('crud.save-update') }}</el-button>
+            <el-button v-if="(isProfile)" type="primary" :loading="loading" @click="updateProfile">{{ $t('crud.save-update') }}</el-button>
+            <el-button v-if="(isEdit && !isProfile) || (!isEdit && !isProfile) " @click="resetForm('user')">{{ $t('crud.cancel') }}</el-button>
+            <router-link v-if="isProfile && isEdit" :to="'/profile'">
+              <el-button>{{ $t('crud.cancel') }}</el-button>
+            </router-link>
           </el-form-item>
         </el-form>
       </el-col>
