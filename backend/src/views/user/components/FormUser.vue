@@ -714,7 +714,7 @@ export default {
         this.user.photo = urlPhoto
         this.imageData = dataProfile.photo_url || this.imageData
         this.setLinkEditPhoto = dataProfile.photo_url
-        // // assign to data
+        // assign to data
         if (dataProfile.role_id === 'staffRW') {
           this.user.kabkota = dataProfile.kabkota.name
           this.user.kecamatan = dataProfile.kecamatan.name
