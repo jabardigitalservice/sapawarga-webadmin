@@ -73,15 +73,11 @@ const lineChartData = {
 export default {
   name: 'DashboardAdmin',
   components: {
-    GithubCorner,
-    PanelGroup,
     LineChart,
-    RaddarChart,
-    PieChart,
-    BarChart,
     TransactionTable,
-    TodoList,
-    BoxCard
+    Category,
+    Usulan,
+    Approval
   },
   data() {
     return {
