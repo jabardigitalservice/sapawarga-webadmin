@@ -188,7 +188,8 @@
 <script>
 import uploadPhoto from './uploadPhoto'
 import checkPermission from '@/utils/permission'
-import { requestArea, requestKecamatan, requestKelurahan, createUser, fetchUser, editUser, fetchProfile, updateProfileApi } from '@/api/staff'
+import { requestArea, requestKecamatan, requestKelurahan, createUser, fetchUser, editUser } from '@/api/staff'
+import { fetchProfile, update } from '@/api/user'
 import { Message } from 'element-ui'
 import InputMap from '@/components/InputMap'
 import { validCoordinate } from '@/utils/validate'
@@ -765,7 +766,7 @@ export default {
             UserEditForm: data
           }
 
-          await updateProfileApi(dataFinal)
+          await update(dataFinal)
 
           this.$message.success(this.$t('crud.update-success'))
 

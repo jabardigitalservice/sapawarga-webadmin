@@ -101,18 +101,3 @@ export function fetchUser(id) {
     method: 'get'
   })
 }
-
-export function fetchProfile() {
-  return request({
-    url: 'staff/me',
-    method: 'get'
-  })
-}
-
-export function updateProfileApi(data) {
-  return request({
-    url: 'staff/me',
-    method: 'post',
-    data
-  })
-}
