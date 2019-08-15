@@ -733,9 +733,7 @@ export default {
     async updateProfile() {
       const valid = await this.$refs.user.validate()
 
-      if (!valid) {
-        return
-      }
+      if (!valid) return
 
       try {
         this.loading = true
