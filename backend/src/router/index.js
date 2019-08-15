@@ -128,7 +128,7 @@ export const constantRoutes = [
         hidden: true,
         meta: {
           title: 'profile',
-          roles: ['admin']
+          roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']
         }
       }
     ]
@@ -144,7 +144,7 @@ export const constantRoutes = [
         hidden: true,
         meta: {
           title: 'profile',
-          roles: ['admin']
+          roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']
         }
       }
     ]
