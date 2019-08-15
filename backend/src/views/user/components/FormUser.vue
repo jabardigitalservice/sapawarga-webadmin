@@ -1,6 +1,8 @@
 <template>
   <div class="app-container">
-    <p class="warn-content">Profile Pengguna</p>
+    <p v-if="!isEdit" class="warn-content">Tambah Pengguna</p>
+    <p v-if="isEdit && !isProfile" class="warn-content">Edit Pengguna</p>
+    <p v-if="isProfile" class="warn-content">Edit Profil</p>
     <el-row :gutter="10">
       <!-- Left colomn -->
       <el-col :sm="24" :md="24" :lg="6" :xl="6" class="grid-content">
@@ -170,9 +172,13 @@
             />
           </el-form-item>
           <el-form-item>
-            <el-button v-if="(!isEdit)" type="primary" @click="submitForm('user')">Tambah Pengguna</el-button>
-            <el-button v-if="(isEdit)" type="primary" @click="updateForm('user')">Update Pengguna</el-button>
-            <el-button @click="resetForm('user')">Batal</el-button>
+            <el-button v-if="(!isEdit)" type="primary" :loading="loading" @click="submitForm('user')">{{ $t('crud.save-user') }}</el-button>
+            <el-button v-if="(isEdit && !isProfile)" type="primary" :loading="loading" @click="updateForm('user')">{{ $t('crud.save-update') }}</el-button>
+            <el-button v-if="(isProfile)" type="primary" :loading="loading" @click="updateProfile">{{ $t('crud.save-update') }}</el-button>
+            <el-button v-if="(isEdit && !isProfile) || (!isEdit && !isProfile) " @click="resetForm('user')">{{ $t('crud.cancel') }}</el-button>
+            <router-link v-if="isProfile && isEdit" :to="'/profile'">
+              <el-button>{{ $t('crud.cancel') }}</el-button>
+            </router-link>
           </el-form-item>
         </el-form>
       </el-col>
@@ -183,6 +189,7 @@
 import uploadPhoto from './uploadPhoto'
 import checkPermission from '@/utils/permission'
 import { requestArea, requestKecamatan, requestKelurahan, createUser, fetchUser, editUser } from '@/api/staff'
+import { fetchProfile, update } from '@/api/user'
 import { Message } from 'element-ui'
 import InputMap from '@/components/InputMap'
 import { validCoordinate } from '@/utils/validate'
@@ -191,6 +198,10 @@ export default {
   components: { uploadPhoto, InputMap },
   props: {
     isEdit: {
+      type: Boolean,
+      default: false
+    },
+    isProfile: {
       type: Boolean,
       default: false
     }
@@ -257,6 +268,7 @@ export default {
     }
 
     return {
+      loading: false,
       user: {
         username: '',
         name: '',
@@ -642,24 +654,31 @@ export default {
     },
     filterRole() {
       const ruleOptions = this.opsiPeran
-      if (checkPermission(['admin'])) {
-        return ruleOptions.slice(1, ruleOptions.length)
-      } if (checkPermission(['staffProv'])) {
-        return ruleOptions.slice(2, ruleOptions.length)
-      } if (checkPermission(['staffKabkota'])) {
-        return ruleOptions.slice(3, ruleOptions.length)
-      } if (checkPermission(['staffKec'])) {
-        return ruleOptions.slice(4, ruleOptions.length)
-      } if (checkPermission(['staffKel'])) {
-        return ruleOptions.slice(5, ruleOptions.length)
+      if ((!this.isEdit && !this.isProfile) || (this.isEdit && !this.isProfile)) {
+        if (checkPermission(['admin'])) {
+          return ruleOptions.slice(1, ruleOptions.length)
+        } if (checkPermission(['staffProv'])) {
+          return ruleOptions.slice(2, ruleOptions.length)
+        } if (checkPermission(['staffKabkota'])) {
+          return ruleOptions.slice(3, ruleOptions.length)
+        } if (checkPermission(['staffKec'])) {
+          return ruleOptions.slice(4, ruleOptions.length)
+        } if (checkPermission(['staffKel'])) {
+          return ruleOptions.slice(5, ruleOptions.length)
+        }
+      } else if (this.isEdit && this.isProfile) {
+        return ruleOptions
       }
       return ruleOptions
     }
   },
   created() {
-    if (this.isEdit) {
+    if (this.isEdit && !this.isProfile) {
       const id = this.$route.params && this.$route.params.id
       this.fetchData(id)
+    }
+    if (this.isEdit && this.isProfile) {
+      this.getProfile()
     }
     this.getArea()
     this.parentId
@@ -676,6 +695,89 @@ export default {
   },
 
   methods: {
+    getProfile() {
+      fetchProfile().then(response => {
+        const dataProfile = response.data
+        this.user.role = dataProfile.role_id
+        Object.assign(this.user, dataProfile)
+
+        this.user.coordinates = [dataProfile.lat, dataProfile.lon]
+
+        const dataUserPhotoUrl = dataProfile.photo_url
+        let urlPhoto = null
+        if (dataProfile.photo_url !== null) {
+          urlPhoto = dataUserPhotoUrl.substring(dataUserPhotoUrl.lastIndexOf('/', dataUserPhotoUrl.lastIndexOf('/') - 1) + 1)
+        } else {
+          urlPhoto = dataProfile.photo_url
+        }
+
+        this.user.photo = urlPhoto
+        this.imageData = dataProfile.photo_url || this.imageData
+        this.setLinkEditPhoto = dataProfile.photo_url
+        // assign to data
+        if (dataProfile.role_id === 'staffRW') {
+          this.user.kabkota = dataProfile.kabkota.name
+          this.user.kecamatan = dataProfile.kecamatan.name
+          this.user.kelurahan = dataProfile.kelurahan.name
+        } else if (dataProfile.role_id === 'staffKel') {
+          this.user.kabkota = dataProfile.kabkota.name
+          this.user.kecamatan = dataProfile.kecamatan.name
+          this.user.kelurahan = dataProfile.kelurahan.name
+        } else if (dataProfile.role_id === 'staffKec') {
+          this.user.kabkota = dataProfile.kabkota.name
+          this.user.kecamatan = dataProfile.kecamatan.name
+        } else if (dataProfile.role_id === 'staffKabkota') {
+          this.user.kabkota = dataProfile.kabkota.name
+        }
+      })
+    },
+    async updateProfile() {
+      const valid = await this.$refs.user.validate()
+
+      if (!valid) return
+
+      try {
+        this.loading = true
+
+        if (this.isEdit && this.isProfile) {
+          const data = {
+            username: this.user.username,
+            name: this.user.name,
+            email: this.user.email,
+            phone: this.user.phone,
+            address: this.user.address,
+            rt: this.user.rt,
+            facebook: this.user.facebook,
+            twitter: this.user.twitter,
+            instagram: this.user.instagram,
+            photo_url: this.user.photo,
+            lat: this.user.coordinates[0],
+            lon: this.user.coordinates[1],
+            kabkota_id: this.id_kabkota,
+            kec_id: this.id_kec,
+            kel_id: this.id_kel,
+            role_id: this.user.role
+          }
+          if (this.user.confirmation !== '') {
+            data.password = this.user.confirmation
+          }
+
+          const dataFinal = {
+            UserEditForm: data
+          }
+
+          await update(dataFinal)
+
+          this.$message.success(this.$t('crud.update-success'))
+
+          this.$router.push('/profile')
+        }
+      } catch (err) {
+        console.log(err)
+      } finally {
+        this.loading = false
+      }
+    },
     getUrlPhoto(url) {
       this.user.photo = url
     },
@@ -725,6 +827,7 @@ export default {
       }).catch()
     },
     submitForm(formName) {
+      this.loading = true
       this.$refs[formName].validate(valid => {
         if (valid) {
           createUser({
@@ -757,6 +860,7 @@ export default {
             }, 1000)
             this.$refs[formName].resetFields()
             this.imageData = 0
+            this.loading = false
           })
             .catch(error => {
               const usernameError = error.response.data.data.username
@@ -795,6 +899,7 @@ export default {
       })
     },
     updateForm(formName) {
+      this.loading = true
       const id = this.$route.params && this.$route.params.id
       this.$refs[formName].validate(valid => {
         if (valid) {
@@ -825,6 +930,7 @@ export default {
             }, 1000)
             this.$refs[formName].resetFields()
             this.imageData = 0
+            this.loading = false
           }).catch(error => {
             const usernameError = error.response.data.data.username
             const emailError = error.response.data.data.email

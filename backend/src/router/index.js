@@ -128,7 +128,23 @@ export const constantRoutes = [
         hidden: true,
         meta: {
           title: 'profile',
-          roles: ['admin']
+          roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']
+        }
+      }
+    ]
+  },
+  {
+    path: '/edit-profile',
+    component: Layout,
+    children: [
+      {
+        name: 'profile-edit',
+        path: '',
+        component: () => import('@/views/profile/edit'),
+        hidden: true,
+        meta: {
+          title: 'profile',
+          roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']
         }
       }
     ]

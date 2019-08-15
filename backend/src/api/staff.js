@@ -101,4 +101,3 @@ export function fetchUser(id) {
     method: 'get'
   })
 }
-

@@ -10,23 +10,23 @@ export function login(data) {
 
 export function getInfo(token) {
   return request({
-    url: '/user/me',
+    url: '/staff/me',
     method: 'get'
     // params: { token }
   })
 }
 
-export function getUserInfo(id) {
+export function fetchProfile() {
   return request({
-    url: `/staff/${id}`,
+    url: 'staff/me',
     method: 'get'
-    // params: { token }
   })
 }
 
-// export function logout() {
-//   return request({
-//     url: '/user/logout',
-//     method: 'post'
-//   });
-// }
+export function update(data) {
+  return request({
+    url: 'staff/me',
+    method: 'post',
+    data
+  })
+}

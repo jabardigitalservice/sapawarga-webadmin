@@ -51,7 +51,7 @@
 <script>
 import PhotoBox from '@/components/PhotoBox'
 import MapThumb from '@/components/MapThumb'
-import { getUserInfo } from '@/api/user'
+import { fetchUser } from '@/api/staff'
 
 export default {
   components: { PhotoBox, MapThumb },
@@ -83,7 +83,7 @@ export default {
 
   methods: {
     getDetail(id) {
-      getUserInfo(id).then(response => {
+      fetchUser(id).then(response => {
         const {
           name,
           address,

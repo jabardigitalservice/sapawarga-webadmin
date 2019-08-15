@@ -1,7 +1,8 @@
 export default {
   route: {
     dashboard: 'Dashboard',
-    'profile': 'Profile',
+    'profile': 'Profil',
+    'profile-edit': 'Edit Profil',
 
     'user-manage': 'Kelola Pengguna',
     'user-create': 'Tambah Pengguna Baru',
@@ -87,6 +88,7 @@ export default {
     'save-publish': 'Simpan dan Aktifkan',
     'save-news': 'Tambah Berita',
     'save-video': 'Tambah Video',
+    'save-user': 'Tambah Pengguna',
 
     'back-to-list': 'Kembali ke Daftar',
     'send-polling': 'Publikasikan Polling',
@@ -145,6 +147,7 @@ export default {
 
   },
   navbar: {
-    profile: 'Lihat Profil'
+    profile: 'Lihat Profil',
+    'profile-edit': 'Edit Profil'
   }
 }
