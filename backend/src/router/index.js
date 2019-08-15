@@ -79,7 +79,7 @@ export const constantRoutes = [
   },
 
   // rute dashboard ini di matikan sementara, karena dashboard belum siap.
-  /* {
+  {
     path: '',
     component: Layout,
     redirect: 'dashboard',
@@ -92,31 +92,32 @@ export const constantRoutes = [
           title: 'dashboard',
           icon: 'dashboard',
           noCache: true,
-          affix: true
+          affix: true,
+          roles: ['admin']
         }
       }
     ]
-  }, */
+  }, 
 
   // dashboard sementara diganti jadi profile.
-  {
-    path: '',
-    component: Layout,
-    redirect: 'profile',
-    children: [
-      {
-        path: 'dashboard',
-        component: () => import('@/views/profile/index'),
-        name: 'Dashboard',
-        meta: {
-          title: 'profile',
-          icon: 'dashboard',
-          noCache: true,
-          affix: true
-        }
-      }
-    ]
-  },
+  // {
+  //   path: '',
+  //   component: Layout,
+  //   redirect: 'profile',
+  //   children: [
+  //     {
+  //       path: 'dashboard',
+  //       component: () => import('@/views/profile/index'),
+  //       name: 'Dashboard',
+  //       meta: {
+  //         title: 'profile',
+  //         icon: 'dashboard',
+  //         noCache: true,
+  //         affix: true
+  //       }
+  //     }
+  //   ]
+  // },
   {
     path: '/profile',
     component: Layout,
