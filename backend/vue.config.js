@@ -6,7 +6,7 @@ function resolve(dir) {
   return path.join(__dirname, dir);
 }
 
-const name = pkg.name || 'vue-element-admin'; // page title
+const name = pkg.name || 'sapawarga-administrator'; // page title
 const port = 8080; // dev port
 
 // All configuration item explanations can be find in https://cli.vuejs.org/config/
