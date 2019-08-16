@@ -772,8 +772,9 @@ export default {
 
           this.$router.push('/profile')
         }
-      } catch (err) {
-        console.log(err)
+      } catch (error) {
+        const emailFail = error.response.data.data.email[0]
+        this.$message.error(this.$t(emailFail))
       } finally {
         this.loading = false
       }
@@ -827,9 +828,9 @@ export default {
       }).catch()
     },
     submitForm(formName) {
-      this.loading = true
       this.$refs[formName].validate(valid => {
         if (valid) {
+          this.loading = true
           createUser({
             username: this.user.username,
             name: this.user.name,
@@ -891,6 +892,7 @@ export default {
                 this.user.email = null
                 this.emailValidation = 'errorEmail'
                 this.usernameValidation = 'errorUsername'
+                this.loading = false
               }
             })
         } else {
@@ -899,10 +901,10 @@ export default {
       })
     },
     updateForm(formName) {
-      this.loading = true
       const id = this.$route.params && this.$route.params.id
       this.$refs[formName].validate(valid => {
         if (valid) {
+          this.loading = true
           const userEdit = {
             name: this.user.name,
             email: this.user.email,
@@ -955,6 +957,7 @@ export default {
             }
             this.user.email = null
             this.emailValidation = 'errorEmail'
+            this.loading = false
           })
         } else {
           return false
