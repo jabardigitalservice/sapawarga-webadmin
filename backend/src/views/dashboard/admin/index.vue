@@ -11,7 +11,6 @@
 
     <el-row :gutter="8">
       <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 16}" :xl="{span: 16}" style="padding-right:8px;margin-bottom:30px;">
-        <!-- <transaction-table /> -->
         <Usulan />
       </el-col>
       <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 8}" :xl="{span: 8}" style="margin-bottom:10px;">
@@ -31,7 +30,6 @@
 
 <script>
 import LineChart from './components/LineChart'
-import TransactionTable from './components/TransactionTable'
 import Usulan from './components/Usulan'
 import Approval from './components/Approval'
 import Category from './components/Category'
@@ -60,7 +58,6 @@ export default {
   name: 'DashboardAdmin',
   components: {
     LineChart,
-    TransactionTable,
     Category,
     Usulan,
     Approval,
