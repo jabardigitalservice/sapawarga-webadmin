@@ -14,7 +14,7 @@
         <!-- <transaction-table /> -->
         <Usulan />
       </el-col>
-      <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 8}" :xl="{span: 8}" style="margin-bottom:30px;">
+      <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 8}" :xl="{span: 8}" style="margin-bottom:10px;">
         <Approval />
         <Category style="margin-top:10px" />
       </el-col>
@@ -22,6 +22,7 @@
 
     <el-row>
       <el-col>
+        <Map-data />
         
       </el-col>
     </el-row>
@@ -29,13 +30,12 @@
 </template>
 
 <script>
-
-
 import LineChart from './components/LineChart'
 import TransactionTable from './components/TransactionTable'
 import Usulan from './components/Usulan'
 import Approval from './components/Approval'
 import Category from './components/Category'
+import MapData from './components/MapData'
 
 const lineChartData = {
   newVisitis: {
@@ -63,7 +63,8 @@ export default {
     TransactionTable,
     Category,
     Usulan,
-    Approval
+    Approval,
+    MapData
   },
   data() {
     return {
