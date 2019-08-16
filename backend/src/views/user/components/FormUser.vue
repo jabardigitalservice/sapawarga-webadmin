@@ -772,8 +772,9 @@ export default {
 
           this.$router.push('/profile')
         }
-      } catch (err) {
-        console.log(err)
+      } catch (error) {
+        const emailFail = error.response.data.data.email[0]
+        this.$message.error(this.$t(emailFail))
       } finally {
         this.loading = false
       }
