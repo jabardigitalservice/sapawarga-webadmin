@@ -9,32 +9,30 @@
           <el-table
             :data="tableData"
             stripe
-            style="width: 100%; margin-left:10px">
+            style="width: 100%; margin-left:10px"
+          >
             <el-table-column
               prop="usulan"
               label="Kota/Kabupaten"
               align="center"
               min-width="200"
-            >
-            </el-table-column>
+            />
             <el-table-column
               prop="category"
               label="Usulan"
               align="center"
               min-width="100"
-              >
-            </el-table-column>
+            />
           </el-table>
         </el-col>
       </el-row>
     </div>
-</el-card>
+  </el-card>
 </template>
 
 <script>
 
 </script>
-
 
 <style lang="scss" scoped>
   .text {

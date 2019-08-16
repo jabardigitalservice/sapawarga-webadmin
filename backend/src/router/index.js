@@ -97,7 +97,7 @@ export const constantRoutes = [
         }
       }
     ]
-  }, 
+  },
 
   // dashboard sementara diganti jadi profile.
   // {

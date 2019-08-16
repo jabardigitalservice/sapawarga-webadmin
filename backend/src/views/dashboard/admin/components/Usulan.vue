@@ -2,24 +2,22 @@
   <el-table
     :data="tableData"
     stripe
-    style="width: 100%">
+    style="width: 100%"
+  >
     <el-table-column
       prop="usulan"
       label="Usulan"
       align="center"
-      >
-    </el-table-column>
+    />
     <el-table-column
       prop="category"
       label="Kategori"
       align="center"
-      >
-    </el-table-column>
+    />
     <el-table-column
       prop="like"
       label="Likes"
       align="center"
-      >
-    </el-table-column>
+    />
   </el-table>
 </template>

@@ -2,7 +2,7 @@
   <div class="dashboard-editor-container">
 
     <h3 style="color:#73737">Trafik User</h3>
-    
+
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
       <line-chart :chart-data="lineChartData" />
     </el-row>
@@ -22,7 +22,7 @@
     <el-row>
       <el-col>
         <Map-data />
-        
+
       </el-col>
     </el-row>
   </div>
