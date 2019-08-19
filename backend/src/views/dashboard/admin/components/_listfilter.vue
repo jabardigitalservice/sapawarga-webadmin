@@ -79,7 +79,6 @@ export default {
     getArea() {
       requestArea().then(response => {
         this.area = response.data.items
-        console.log(this.area)
       })
     }
 
