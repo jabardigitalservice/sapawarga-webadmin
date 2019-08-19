@@ -46,17 +46,18 @@ export default {
         console.log(this.list)
         this.listLoading = false
       })
-    }
+    },
+    resetFilter() {
+      Object.assign(this.$data.listQuery, this.$options.data().listQuery)
+      this.getList()
+    },
   }
 }
 </script>
 
 <style lang="scss" scoped>
-  // el-table-column:first-child {
-  //   margin-left: 50px;
-  // }
-  .title {
-    padding: 0 0px;
+  
+  .box-card {
+    width: 100%;
   }
-
 </style>
