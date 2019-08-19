@@ -894,8 +894,8 @@ export default {
                 this.user.email = null
                 this.emailValidation = 'errorEmail'
                 this.usernameValidation = 'errorUsername'
-                this.loading = false
               }
+              this.loading = false
             })
         } else {
           return false
