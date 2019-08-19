@@ -17,7 +17,7 @@
       />
       <el-table-column
         prop="total_likes"
-        label="Likes"
+        label="Like"
         align="center"
       />
     </el-table>
@@ -52,6 +52,7 @@ export default {
         this.listLoading = false
       })
     },
+
     resetFilter() {
       Object.assign(this.$data.listQuery, this.$options.data().listQuery)
       this.getList()
