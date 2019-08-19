@@ -35,7 +35,7 @@
 <script>
 import InputCategory from '@/components/InputCategory'
 
-import { getKabkotaList } from '@/api/areas'
+import { requestArea } from '@/api/staff'
 
 export default {
   components: {
@@ -77,7 +77,7 @@ export default {
     },
 
     getArea() {
-      getKabkotaList().then(response => {
+      requestArea().then(response => {
         this.area = response.data.items
         console.log(this.area)
       })
