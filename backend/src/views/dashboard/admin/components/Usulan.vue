@@ -1,4 +1,7 @@
 <template>
+  <el-card class="box-card">
+    <ListFilter :list-query.sync="listQuery" @submit-search="getList" @reset-search="resetFilter" />
+
   <el-table class="title" v-loading="listLoading" :data="list" stripe border highlight-current-row style="width: 100%">
     <el-table-column
       prop="title"
@@ -22,9 +25,10 @@
 
 <script>
 import { fetchList } from '@/api/dashboard'
+import ListFilter from './_listfilter'
 
 export default {
-  components: {},
+  components: { ListFilter },
   data() {
     return {
       list: null,
