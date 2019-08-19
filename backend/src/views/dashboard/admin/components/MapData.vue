@@ -7,7 +7,7 @@
         </el-col>
         <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 8}" :xl="{span: 8}" style="margin-bottom:30px;">
           <el-table
-            :data="tableData"
+            
             stripe
             style="width: 100%; margin-left:10px"
           >
@@ -29,10 +29,6 @@
     </div>
   </el-card>
 </template>
-
-<script>
-
-</script>
 
 <style lang="scss" scoped>
   .text {
