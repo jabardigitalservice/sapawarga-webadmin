@@ -775,6 +775,8 @@ export default {
       } catch (error) {
         const emailFail = error.response.data.data.email[0]
         this.$message.error(this.$t(emailFail))
+        this.user.email = null
+        this.emailValidation = 'errorEmail'
       } finally {
         this.loading = false
       }
@@ -892,8 +894,8 @@ export default {
                 this.user.email = null
                 this.emailValidation = 'errorEmail'
                 this.usernameValidation = 'errorUsername'
-                this.loading = false
               }
+              this.loading = false
             })
         } else {
           return false
