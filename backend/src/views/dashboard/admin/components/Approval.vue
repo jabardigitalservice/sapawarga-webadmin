@@ -4,9 +4,9 @@
       v-loading="listLoading"
       :data="list"
       stripe
-      
+
       style="width: 100%"
-      >
+    >
       <el-table-column
         prop="accept"
         label="Diterima"
@@ -19,7 +19,7 @@
       />
     </el-table>
   </el-card>
-  
+
 </template>
 
 <script>
@@ -32,7 +32,7 @@ export default {
       list: null,
       listLoading: true
     }
-  }, 
+  },
   created() {
     this.getApproval()
   },
@@ -43,9 +43,9 @@ export default {
         const responseAccept = response.data.items[0].total_count
         const responsePublish = response.data.items[1].total_count
         this.list = [{
-            accept: responseAccept,
-            publish: responsePublish
-          }]
+          accept: responseAccept,
+          publish: responsePublish
+        }]
         this.listLoading = false
       })
     }
