@@ -8,3 +8,12 @@ export function fetchList(query) {
   })
 }
 
+export function fetchApproval(query) {
+  return request({
+    url: 'dashboards/aspirasi-counts',
+    method: 'get',
+    params: query
+  })
+}
+
+
