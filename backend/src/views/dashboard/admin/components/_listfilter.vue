@@ -14,8 +14,8 @@
                 v-for="item in area"
                 :key="item.id"
                 :label="item.name"
-                :value="item.id">
-              </el-option>
+                :value="item.id"
+              />
             </el-select>
           </el-form-item>
         </el-col>
@@ -81,7 +81,7 @@ export default {
         this.area = response.data.items
         console.log(this.area)
       })
-    },
+    }
 
   }
 }

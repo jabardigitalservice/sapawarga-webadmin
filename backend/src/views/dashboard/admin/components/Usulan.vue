@@ -2,7 +2,7 @@
   <el-card class="box-card">
     <ListFilter :list-query.sync="listQuery" @submit-search="getList" @reset-search="resetFilter" />
 
-    <el-table class="title" v-loading="listLoading" :data="list" stripe border highlight-current-row style="width: 100%">
+    <el-table v-loading="listLoading" class="title" :data="list" stripe border highlight-current-row style="width: 100%">
       <el-table-column
         prop="title"
         label="Usulan"
@@ -56,13 +56,13 @@ export default {
     resetFilter() {
       Object.assign(this.$data.listQuery, this.$options.data().listQuery)
       this.getList()
-    },
+    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-  
+
   .box-card {
     width: 100%;
   }

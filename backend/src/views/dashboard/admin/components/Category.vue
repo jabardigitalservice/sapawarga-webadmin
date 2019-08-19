@@ -1,6 +1,6 @@
 <template>
   <el-table
-    
+
     stripe
     style="width: 100%"
   >
