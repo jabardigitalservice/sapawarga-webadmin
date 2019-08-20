@@ -1,0 +1,30 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: sapawarga-webadmin
+  namespace: sapawarga
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: sapawarga-webadmin
+    spec:
+      containers:
+        - name: webadmin
+          image: registry.gitlab.com/jdsteam/sapa-warga/sapawarga-webadmin:latest
+          ports:
+            - containerPort: 80
+          env:
+            - name: NODE_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: sapawarga-webadmin-config-env
+                  key: NODE_ENV
+            - name: VUE_APP_BASE_API
+              valueFrom:
+                configMapKeyRef:
+                  name: sapawarga-webadmin-config-env
+                  key: VUE_APP_BASE_API
+      imagePullSecrets:
+        - name: regcred

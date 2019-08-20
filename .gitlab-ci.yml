@@ -1,15 +1,8 @@
-image: docker:latest
-
 services:
   - docker:dind
 
 variables:
   IMAGETAG: $CI_COMMIT_REF_SLUG
-
-before_script:
-  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-  - apk add --no-cache py-pip python-dev libffi-dev openssl-dev gcc libc-dev make
-  - pip install docker-compose
 
 stages:
   - code_quality
@@ -40,15 +33,23 @@ code_quality:
     expire_in: 1 week
 
 build_dev:
+  image: docker:stable
   stage: build
   script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - apk add --no-cache py-pip python-dev libffi-dev openssl-dev gcc libc-dev make
+    - pip install docker-compose
     - docker-compose -f docker-compose.dev.yml build
     - docker images
     - docker-compose -f docker-compose.dev.yml push
 
 test_webadmin:
+  image: docker:stable
   stage: test
   script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - apk add --no-cache py-pip python-dev libffi-dev openssl-dev gcc libc-dev make
+    - pip install docker-compose
     - docker-compose -f docker-compose.dev.yml pull
     - docker images
     - COMPOSE_HTTP_TIMEOUT=500 docker-compose -f docker-compose.dev.yml up -d
@@ -58,16 +59,21 @@ test_webadmin:
     - docker-compose -f docker-compose.dev.yml exec -T app npm run test:unit
 
 release_all:
+  image: docker:stable
   stage: release
   only:
     - master
   script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - apk add --no-cache py-pip python-dev libffi-dev openssl-dev gcc libc-dev make
+    - pip install docker-compose
     - docker-compose -f docker-compose.dev.yml pull
     - docker images
     - docker tag registry.gitlab.com/jdsteam/sapa-warga/sapawarga-webadmin:${IMAGETAG} registry.gitlab.com/jdsteam/sapa-warga/sapawarga-webadmin:latest
     - docker push registry.gitlab.com/jdsteam/sapa-warga/sapawarga-webadmin:latest
 
 deploy_staging:
+  image: docker:stable
   stage: deploy
   only:
     - master
@@ -80,3 +86,25 @@ deploy_staging:
   script:
     - ssh -o StrictHostKeyChecking=no ${SSH_STAGING_USERNAME}@${STAGING_HOST} "cd /home/development/projects/sapawarga-webadmin && sudo git pull && sudo docker-compose pull && sudo docker-compose down && sudo docker-compose up -d"
     - ssh -o StrictHostKeyChecking=no ${SSH_STAGING_USERNAME}@${STAGING_HOST} "sudo docker ps"
+
+deploy_production:
+  stage: deploy
+  image: dtzar/helm-kubectl
+  only:
+    - master
+  script:
+    - kubectl config set-cluster k8s --server="${KUBERNETES_SERVER}"
+    - kubectl config set clusters.k8s.certificate-authority-data ${KUBERNETES_CERTIFICATE_AUTHORITY_DATA}
+    - kubectl config set-credentials gitlab --token="${KUBERNETES_USER_TOKEN}"
+    - kubectl config set-context default --cluster=k8s --user=gitlab
+    - kubectl config use-context default
+    - kubectl config use-context default
+    - kubectl cluster-info
+    - cp kubernetes/webadmin-variables-sample.yaml kubernetes/webadmin-variables.yaml
+    - cat kubernetes/webadmin-variables.yaml
+    - sed -i "s/%VUE_APP_BASE_API%/${VUE_APP_BASE_API}/g" kubernetes/webadmin-variables.yaml
+    - sed -i "s/%dockerconfigjson%/${dockerconfigjson}/g" kubernetes/webadmin-variables.yaml
+    - cat kubernetes/webadmin-variables.yaml
+    - kubectl apply -f kubernetes/webadmin-variables.yaml
+        -f kubernetes/webadmin-deployment.yaml
+        -f kubernetes/webadmin-service.yaml
