@@ -1,0 +1,17 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: sapawarga-webadmin-config-env
+  namespace: sapawarga
+data:
+  NODE_ENV: production
+  VUE_APP_BASE_API: %VUE_APP_BASE_API%
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: regcred
+  namespace: sapawarga
+data:
+  .dockerconfigjson: %dockerconfigjson% # Base64 decoded={"auths": {"your.registry.host": {"auth": "username:password"}}}
+type: kubernetes.io/dockerconfigjson
