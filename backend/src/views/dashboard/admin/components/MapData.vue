@@ -30,6 +30,30 @@
   </el-card>
 </template>
 
+<script>
+import { fetchAspirasiMap } from '@/api/dashboard'
+export default {
+  data() {
+    return {
+      list: null,
+      latitude: -6.914744,
+      longitude: 107.609810
+    }
+  },
+  created() {
+    this.getMap()
+  },
+  methods: {
+    getMap() {
+      fetchAspirasiMap().then(response => {
+        console.log(response)
+        this.list = response.data.items
+      })
+    }
+  }
+}
+</script>
+
 <style lang="scss" scoped>
   .text {
     font-size: 14px;
