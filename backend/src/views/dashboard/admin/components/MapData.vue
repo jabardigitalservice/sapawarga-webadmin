@@ -62,7 +62,7 @@ export default {
 
   .box-card {
     width: 100%;
-    height: 440px;    
+    height: 440px;
   }
 
   .mapouter {
@@ -104,7 +104,7 @@ export default {
       margin-left: 0px;
       border-radius: 5px;
       margin-top: 0px;
-      
+
       iframe {
         width: 640px;
         height: 400px;
