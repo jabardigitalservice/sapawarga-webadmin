@@ -1,29 +1,15 @@
 <template>
   <el-card class="box-card">
-    <el-table
-      v-loading="listLoading"
-      :data="list"
-      stripe
-
-      style="width: 100%"
-    >
-      <el-table-column
-        prop="accept"
-        label="Diterima"
-        align="center"
-      />
-      <el-table-column
-        prop="publish"
-        label="Dipublikasikan"
-        align="center"
-      />
+    <el-table v-loading="listLoading" :data="list" stripe style="width: 100%">
+      <el-table-column prop="accept" label="Diterima" align="center" />
+      <el-table-column prop="publish" label="Dipublikasikan" align="center" />
     </el-table>
   </el-card>
 
 </template>
 
 <script>
-import { fetchApproval } from '@/api/dashboard'
+import { fetchAspirasiCounts } from '@/api/dashboard'
 
 export default {
   components: {},
