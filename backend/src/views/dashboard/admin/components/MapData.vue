@@ -36,10 +36,67 @@
   }
 
   .item {
-    padding: 18px 0;
+    padding: 0px 0;
   }
 
   .box-card {
     width: 100%;
+    height: 440px;    
   }
+
+  .mapouter {
+      position: relative;
+      text-align: right;
+      height: 400px;
+      width: 640px;
+    }
+    .gmap_canvas {
+      background: none !important;
+      width: 640px;
+      height: 400px;
+      margin-left: 0px;
+      border-radius: 5px;
+      margin-top: 0px;
+      // -webkit-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.75);
+      // -moz-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.75);
+      // box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.75);
+
+      iframe {
+        width: 640px;
+        height: 400px;
+      }
+    }
+
+  .map-title {
+    width: 400px;
+    margin-left: 20px;
+    margin-bottom: 10px;
+    margin-top: 50px;
+    padding: 10px;
+  }
+
+  @media only screen and (min-width: 1200px) and (max-width: 1570px) {
+    .gmap_canvas {
+      background: none !important;
+      width: 640px;
+      height: 400px;
+      margin-left: 0px;
+      border-radius: 5px;
+      margin-top: 0px;
+      
+      iframe {
+        width: 640px;
+        height: 400px;
+      }
+    }
+
+    .map-title {
+      width: 250px;
+      margin-left: 20px;
+      margin-bottom: 10px;
+      margin-top: 50px;
+      padding: 10px;
+    }
+  }
+
 </style>
