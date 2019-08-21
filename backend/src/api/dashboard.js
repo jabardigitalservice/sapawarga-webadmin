@@ -16,3 +16,11 @@ export function fetchAspirasiCounts(query) {
   })
 }
 
+export function fetchAspirasiMap(query) {
+  return request({
+    url: 'dashboards/aspirasi-geo',
+    method: 'get',
+    params: query
+  })
+}
+
