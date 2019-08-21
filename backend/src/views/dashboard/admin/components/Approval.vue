@@ -25,7 +25,7 @@ export default {
   methods: {
     getApproval() {
       this.listLoading = true
-      fetchApproval().then(response => {
+      fetchAspirasiCounts().then(response => {
         const responseAccept = response.data.items[0].total_count
         const responsePublish = response.data.items[1].total_count
         this.list = [{
