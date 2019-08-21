@@ -63,11 +63,6 @@ export default {
   },
 
   methods: {
-
-    changeKabkota(id) {
-      this.listQuery.kabkota_id = id
-    },
-
     submitSearch() {
       this.$emit('submit-search')
     },
