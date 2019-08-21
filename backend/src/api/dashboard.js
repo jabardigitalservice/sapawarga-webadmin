@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-export function fetchList(query) {
+export function fetchAspirasiMostLikes(query) {
   return request({
     url: '/dashboards/aspirasi-most-likes',
     method: 'get',
@@ -8,7 +8,7 @@ export function fetchList(query) {
   })
 }
 
-export function fetchApproval(query) {
+export function fetchAspirasiCounts(query) {
   return request({
     url: 'dashboards/aspirasi-counts',
     method: 'get',
