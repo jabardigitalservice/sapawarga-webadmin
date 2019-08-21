@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { fetchList } from '@/api/dashboard'
+import { fetchAspirasiMostLikes } from '@/api/dashboard'
 import ListFilter from './_listfilter'
 
 export default {
@@ -46,7 +46,7 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
-      fetchList(this.listQuery).then(response => {
+      fetchAspirasiMostLikes(this.listQuery).then(response => {
         this.list = response.data.items
         this.listLoading = false
       })
