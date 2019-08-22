@@ -1,6 +1,6 @@
 <template>
   <el-table
-    :data="tableData"
+
     stripe
     style="width: 100%"
   >
