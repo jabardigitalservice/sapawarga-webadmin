@@ -26,11 +26,10 @@ export default {
     getApproval() {
       this.listLoading = true
       fetchAspirasiCounts().then(response => {
-        const responseAccept = response.data.items[0].total_count
-        const responsePublish = response.data.items[1].total_count
+        const responseData = response.data
         this.list = [{
-          accept: responseAccept,
-          publish: responsePublish
+          accept: responseData.STATUS_APPROVAL_PENDING,
+          publish: responseData.STATUS_PUBLISHED
         }]
         this.listLoading = false
       })

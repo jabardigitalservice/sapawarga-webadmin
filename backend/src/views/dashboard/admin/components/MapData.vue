@@ -43,7 +43,6 @@ export default {
   methods: {
     getMap() {
       fetchAspirasiMap().then(response => {
-        console.log(response)
         this.list = response.data.items
       })
     }
