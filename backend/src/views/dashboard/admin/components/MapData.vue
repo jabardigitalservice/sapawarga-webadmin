@@ -4,15 +4,18 @@
       <el-row :gutter="8">
         <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 16}" :xl="{span: 16}" style="padding-right:8px;margin-bottom:30px;">
           <div class="mapouter">
-            <div class="gmap_canvas">
-              <iframe
+            <div class="gmap_canvas" id="gmaps">
+              <!-- <iframe
                 id="gmap_canvas"
                 :src="`https://maps.google.com/maps?q=${latitude},${longitude}&t=&z=16&ie=UTF8&iwloc=&output=embed`"
                 frameborder="0"
                 scrolling="no"
                 marginheight="0"
                 marginwidth="0"
-              />
+              /> -->
+              <!-- <googleMap name="googleMap">
+                
+              </googleMap> -->
             </div>
           </div>
         </el-col>
@@ -29,12 +32,47 @@
 
 <script>
 import { fetchAspirasiMap } from '@/api/dashboard'
+import gmapsInit from "@/utils/gmaps"
+// import googleMap from './gmaps' 
 export default {
+  // components: {
+  //   googleMap
+  // },
+    async mounted() {
+    try {
+      const google = await gmapsInit()
+      const element = document.getElementById('gmaps')
+      // const geocoder = new google.maps.Geocoder()
+      const options = {
+      zoom: 8,
+      center: new google.maps.LatLng(-6.943097,107.633545)
+    }
+      this.map = new google.maps.Map(element, options)
+      
+    } catch (error) {
+      console.error(error);
+    }
+  },
   data() {
     return {
       list: null,
+      map: null,
       latitude: -6.914744,
-      longitude: 107.609810
+      longitude: 107.609810,
+      markerCoordinates: [
+      {
+        latitude: 51.501527,
+        longitude: -0.1921837
+      }, 
+      {
+        latitude: 51.505874,
+        longitude: -0.1838486
+      }, 
+      {
+      latitude: 51.4998973,
+      longitude: -0.202432
+      }
+    ]
     }
   },
   created() {
@@ -43,8 +81,20 @@ export default {
   methods: {
     getMap() {
       fetchAspirasiMap().then(response => {
-        console.log(response)
         this.list = response.data.items
+        console.log(this.list)
+        this.createMarker()
+      })
+    },
+    createMarker() {
+      console.log(this.list)
+      this.list.forEach((coord) => {
+        const position = new google.maps.LatLng(coord.longitude, coord.latitude)
+        console.log(position)
+          const marker = new google.maps.Marker({ 
+            position: position,
+            map: this.map
+        })
       })
     }
   }
@@ -69,11 +119,11 @@ export default {
       position: relative;
       text-align: right;
       height: 400px;
-      width: 640px;
+      width: 700px;
     }
     .gmap_canvas {
       background: none !important;
-      width: 640px;
+      width: 700px;
       height: 400px;
       margin-left: 0px;
       border-radius: 5px;
@@ -86,6 +136,10 @@ export default {
         width: 640px;
         height: 400px;
       }
+    }
+
+    #gmaps {
+      width: 700px;
     }
 
   .map-title {
