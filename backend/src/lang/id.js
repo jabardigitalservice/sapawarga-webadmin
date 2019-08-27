@@ -143,7 +143,9 @@ export default {
     'survey-start-date': 'Tanggal mulai survei tidak boleh lebih kecil dari tanggal hari ini.',
     'survey-compare-date': 'Tanggal berakhir survei harus lebih besar dari tanggal mulai survei.',
 
-    'news-image-null': 'Gambar tidak boleh kosong.'
+    'news-image-null': 'Gambar tidak boleh kosong.',
+
+    'dashboard-map-error': 'Gagal memuat map'
 
   },
   navbar: {

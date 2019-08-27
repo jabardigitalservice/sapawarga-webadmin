@@ -3,20 +3,7 @@
     <div class="text item">
       <el-row :gutter="8">
         <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 16}" :xl="{span: 16}" style="padding-right:8px;margin-bottom:30px;">
-          <div class="mapouter">
             <div class="gmap_canvas" id="gmaps">
-              <!-- <iframe
-                id="gmap_canvas"
-                :src="`https://maps.google.com/maps?q=${latitude},${longitude}&t=&z=16&ie=UTF8&iwloc=&output=embed`"
-                frameborder="0"
-                scrolling="no"
-                marginheight="0"
-                marginwidth="0"
-              /> -->
-              <!-- <googleMap name="googleMap">
-                
-              </googleMap> -->
-            </div>
           </div>
         </el-col>
         <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 8}" :xl="{span: 8}" style="margin-bottom:30px;">
@@ -32,17 +19,12 @@
 
 <script>
 import { fetchAspirasiMap } from '@/api/dashboard'
-import gmapsInit from "@/utils/gmaps"
-// import googleMap from './gmaps' 
+import gmapsInit from '@/utils/gmaps'
 export default {
-  // components: {
-  //   googleMap
-  // },
     async mounted() {
     try {
       const google = await gmapsInit()
       const element = document.getElementById('gmaps')
-      // const geocoder = new google.maps.Geocoder()
       const options = {
       zoom: 8,
       center: new google.maps.LatLng(-6.943097,107.633545)
@@ -51,28 +33,14 @@ export default {
       
     } catch (error) {
       console.error(error);
+      this.$message.error(this.$t('dashboard-map-error'))
     }
   },
   data() {
     return {
       list: null,
       map: null,
-      latitude: -6.914744,
-      longitude: 107.609810,
-      markerCoordinates: [
-      {
-        latitude: 51.501527,
-        longitude: -0.1921837
-      }, 
-      {
-        latitude: 51.505874,
-        longitude: -0.1838486
-      }, 
-      {
-      latitude: 51.4998973,
-      longitude: -0.202432
-      }
-    ]
+      activeInfoWindow: null
     }
   },
   created() {
@@ -82,18 +50,29 @@ export default {
     getMap() {
       fetchAspirasiMap().then(response => {
         this.list = response.data.items
-        console.log(this.list)
         this.createMarker()
       })
     },
     createMarker() {
-      console.log(this.list)
       this.list.forEach((coord) => {
         const position = new google.maps.LatLng(coord.longitude, coord.latitude)
-        console.log(position)
           const marker = new google.maps.Marker({ 
             position: position,
             map: this.map
+        })
+
+        const infoWindow = new google.maps.InfoWindow({
+          content: `<div>${coord.name}</div><br>
+                    <div style="text-align: center">${coord.counts} Usulan</div>`
+        })
+
+        marker.addListener('click', () => {
+          if (this.activeInfoWindow) {
+            this.activeInfoWindow.close()
+          }          
+          infoWindow.open(this.map, marker)
+          this.activeInfoWindow = infoWindow
+
         })
       })
     }
@@ -115,32 +94,23 @@ export default {
     height: 440px;
   }
 
-  .mapouter {
-      position: relative;
-      text-align: right;
-      height: 400px;
-      width: 700px;
-    }
-    .gmap_canvas {
-      background: none !important;
-      width: 700px;
-      height: 400px;
-      margin-left: 0px;
-      border-radius: 5px;
-      margin-top: 0px;
-      // -webkit-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.75);
-      // -moz-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.75);
-      // box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.75);
+  .gmap_canvas {
+    background: none !important;
+    width: 700px;
+    height: 400px;
+    margin-left: 0px;
+    border-radius: 5px;
+    margin-top: 0px;
 
-      iframe {
-        width: 640px;
-        height: 400px;
-      }
+    iframe {
+      width: 640px;
+      height: 400px;
     }
+  }
 
-    #gmaps {
-      width: 700px;
-    }
+  #gmaps {
+    width: 700px;
+  }
 
   .map-title {
     width: 400px;
@@ -173,5 +143,11 @@ export default {
       padding: 10px;
     }
   }
+
+   @media only screen and (max-width: 610px)  {
+    #gmaps {
+      width: 450px;
+    }
+   }
 
 </style>
