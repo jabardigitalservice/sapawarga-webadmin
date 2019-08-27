@@ -39,7 +39,7 @@
           </el-form-item>
 
           <el-form-item label="Telepon" prop="phone">
-            <el-input v-model="user.phone" type="text" placeholder="contoh: 081254332233" />
+            <el-input v-model="user.phone" type="text" placeholder="Contoh: 081254332233" />
           </el-form-item>
 
           <el-row>
