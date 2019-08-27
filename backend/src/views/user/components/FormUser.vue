@@ -672,6 +672,31 @@ export default {
       return ruleOptions
     }
   },
+
+  watch: {
+    'user.kabkota'(oldVal, newVal) {
+      if (newVal !== null) {
+        this.user.kecamatan = ''
+        this.user.kelurahan = ''
+        this.user.rt = ''
+        this.user.rw = ''
+      }
+    },
+    'user.kecamatan'(oldVal, newVal) {
+      if (newVal !== null) {
+        this.user.kelurahan = ''
+        this.user.rt = ''
+        this.user.rw = ''
+      }
+    },
+    'user.kelurahan'(oldVal, newVal) {
+      if (newVal !== null) {
+        this.user.rt = ''
+        this.user.rw = ''
+      }
+    }
+  },
+
   created() {
     if (this.isEdit && !this.isProfile) {
       const id = this.$route.params && this.$route.params.id
