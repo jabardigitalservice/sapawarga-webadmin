@@ -13,7 +13,7 @@
         <el-form
           ref="user"
           :model="user"
-          status-icon
+          :status-icon="true"
           label-width="150px"
           label-position="left"
           class="demo-ruleForm"
