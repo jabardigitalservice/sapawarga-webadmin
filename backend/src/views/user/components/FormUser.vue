@@ -65,7 +65,7 @@
                   v-if="area !== null"
                   v-model="user.kabkota"
                   placeholder="Pilih Kab/Kota"
-                  :disabled="isEdit"
+                  :disabled="isEdit || user.role === ''"
                   @change="getKecamatan"
                 >
                   <el-option
