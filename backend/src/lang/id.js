@@ -97,6 +97,8 @@ export default {
     'survey-send': 'Publikasikan Survei',
     'survey-published': 'Survei berhasil dipublikasikan.',
 
+    'dashboard-aspiration': 'Lihat Semua Usulan',
+
     'insert-row': 'Tambah Baris Baru',
     'delete-row': 'Hapus',
     'delete-row-confirm': 'Anda yakin ingin menghapus data ini?',

@@ -21,6 +21,11 @@
         align="center"
       />
     </el-table>
+    <el-row>
+      <router-link :to="{ path: '/aspirasi/index' }">
+        <el-button class="see-more" type="primary" plain>Lihat Semua Usulan</el-button>
+      </router-link>
+    </el-row>
   </el-card>
 </template>
 
@@ -35,6 +40,7 @@ export default {
       list: null,
       listLoading: true,
       listQuery: {
+        limit: 10,
         category_id: null,
         kabkota_id: null
       }
@@ -61,8 +67,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
   .box-card {
     width: 100%;
+  }
+  .see-more {
+    position: relative;
+    float: right;
+    margin-top: 15px;
   }
 </style>
