@@ -13,7 +13,7 @@
         <el-form
           ref="user"
           :model="user"
-          status-icon
+          :status-icon="true"
           label-width="150px"
           label-position="left"
           class="demo-ruleForm"
@@ -39,7 +39,7 @@
           </el-form-item>
 
           <el-form-item label="Telepon" prop="phone">
-            <el-input v-model="user.phone" type="text" placeholder="contoh: 081254332233" />
+            <el-input v-model="user.phone" type="text" placeholder="Contoh: 081254332233" />
           </el-form-item>
 
           <el-row>
@@ -65,7 +65,7 @@
                   v-if="area !== null"
                   v-model="user.kabkota"
                   placeholder="Pilih Kab/Kota"
-                  :disabled="isEdit"
+                  :disabled="isEdit || user.role === ''"
                   @change="getKecamatan"
                 >
                   <el-option
@@ -672,6 +672,31 @@ export default {
       return ruleOptions
     }
   },
+
+  watch: {
+    'user.kabkota'(oldVal, newVal) {
+      if (newVal !== null) {
+        this.user.kecamatan = ''
+        this.user.kelurahan = ''
+        this.user.rt = ''
+        this.user.rw = ''
+      }
+    },
+    'user.kecamatan'(oldVal, newVal) {
+      if (newVal !== null) {
+        this.user.kelurahan = ''
+        this.user.rt = ''
+        this.user.rw = ''
+      }
+    },
+    'user.kelurahan'(oldVal, newVal) {
+      if (newVal !== null) {
+        this.user.rt = ''
+        this.user.rw = ''
+      }
+    }
+  },
+
   created() {
     if (this.isEdit && !this.isProfile) {
       const id = this.$route.params && this.$route.params.id
