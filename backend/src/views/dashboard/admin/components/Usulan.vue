@@ -66,8 +66,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
   .box-card {
     width: 100%;
+  }
+  .see-more {
+    position: relative;
+    float: right;
+    margin-top: 15px; 
   }
 </style>
