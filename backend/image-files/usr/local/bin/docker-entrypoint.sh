@@ -10,3 +10,7 @@ else
     printf "Starting nginx...\n\n"
     nginx -g "daemon off;"
 fi
+
+sed -i -e "s/%GOOGLE_MAPS_WEB_API_KEY%/$GOOGLE_MAPS_WEB_API_KEY/g" .env-dev
+
+sed -i -e "s/%GOOGLE_MAPS_WEB_API_KEY%/$GOOGLE_MAPS_WEB_API_KEY/g" .env
