@@ -3,18 +3,7 @@
     <div class="text item">
       <el-row :gutter="8">
         <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 16}" :xl="{span: 16}" style="padding-right:8px;margin-bottom:30px;">
-          <div class="mapouter">
-            <div class="gmap_canvas">
-              <iframe
-                id="gmap_canvas"
-                :src="`https://maps.google.com/maps?q=${latitude},${longitude}&t=&z=16&ie=UTF8&iwloc=&output=embed`"
-                frameborder="0"
-                scrolling="no"
-                marginheight="0"
-                marginwidth="0"
-              />
-            </div>
-          </div>
+          <div id="gmaps" class="gmap_canvas" />
         </el-col>
         <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 8}" :xl="{span: 8}" style="margin-bottom:30px;">
           <el-table :data="list" stripe style="width: 100%; margin-left:10px">
@@ -29,12 +18,17 @@
 
 <script>
 import { fetchAspirasiMap } from '@/api/dashboard'
+import gmapsInit from '@/utils/gmaps'
 export default {
   data() {
     return {
       list: null,
-      latitude: -6.914744,
-      longitude: 107.609810
+      map: null,
+      activeInfoWindow: null,
+      jawaBarat: {
+        lat: -6.943097,
+        lon: 107.633545
+      }
     }
   },
   created() {
@@ -44,7 +38,43 @@ export default {
     getMap() {
       fetchAspirasiMap().then(response => {
         this.list = response.data.items
+        this.createMap(this.list)
       })
+    },
+    async createMap(dataMap) {
+      try {
+        const google = await gmapsInit()
+        const element = document.getElementById('gmaps')
+        const options = {
+          zoom: 8,
+          center: new google.maps.LatLng(this.jawaBarat.lat, this.jawaBarat.lon)
+        }
+        this.map = new google.maps.Map(element, options)
+
+        dataMap.forEach((coord) => {
+          const position = new google.maps.LatLng(coord.longitude, coord.latitude)
+          const marker = new google.maps.Marker({
+            position: position,
+            map: this.map
+          })
+
+          const infoWindow = new google.maps.InfoWindow({
+            content: `<div>${coord.name}</div><br>
+                    <div style="text-align: center">${coord.counts} Usulan</div>`
+          })
+
+          marker.addListener('click', () => {
+            if (this.activeInfoWindow) {
+              this.activeInfoWindow.close()
+            }
+            infoWindow.open(this.map, marker)
+            this.activeInfoWindow = infoWindow
+          })
+        })
+      } catch (error) {
+        console.error(error)
+        this.$message.error(this.$t('dashboard-map-error'))
+      }
     }
   }
 }
@@ -64,28 +94,23 @@ export default {
     height: 440px;
   }
 
-  .mapouter {
-      position: relative;
-      text-align: right;
-      height: 400px;
-      width: 640px;
-    }
-    .gmap_canvas {
-      background: none !important;
-      width: 640px;
-      height: 400px;
-      margin-left: 0px;
-      border-radius: 5px;
-      margin-top: 0px;
-      // -webkit-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.75);
-      // -moz-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.75);
-      // box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.75);
+  .gmap_canvas {
+    background: none !important;
+    width: 700px;
+    height: 400px;
+    margin-left: 0px;
+    border-radius: 5px;
+    margin-top: 0px;
 
-      iframe {
-        width: 640px;
-        height: 400px;
-      }
+    iframe {
+      width: 640px;
+      height: 400px;
     }
+  }
+
+  #gmaps {
+    width: 700px;
+  }
 
   .map-title {
     width: 400px;
@@ -118,5 +143,11 @@ export default {
       padding: 10px;
     }
   }
+
+   @media only screen and (max-width: 610px)  {
+    #gmaps {
+      width: 450px;
+    }
+   }
 
 </style>
