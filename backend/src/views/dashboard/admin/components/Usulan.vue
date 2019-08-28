@@ -40,8 +40,9 @@ export default {
       list: null,
       listLoading: true,
       listQuery: {
+        limit: 10,
         category_id: null,
-        kabkota_id: null
+        kabkota_id: null,
       }
     }
   },
