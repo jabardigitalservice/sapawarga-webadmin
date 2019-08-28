@@ -21,6 +21,11 @@
         align="center"
       />
     </el-table>
+    <el-row>
+      <router-link :to="{ path: '/aspirasi/index' }">
+        <el-button class="see-more" type="primary" plain>{{($t('crud.dashboard-aspiration'))}}</el-button>
+      </router-link>
+    </el-row>
   </el-card>
 </template>
 
