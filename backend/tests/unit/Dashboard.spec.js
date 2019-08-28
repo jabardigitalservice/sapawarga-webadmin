@@ -4,6 +4,8 @@ import DashboardMap from '@/views/dashboard/admin/components/MapData'
 import DashboardApproval from '@/views/dashboard/admin/components/Approval'
 import ListFilter from '@/views/dashboard/admin/components/_listfilter'
 import ElementUI from 'element-ui'
+import usulanGeoFixture from './fixtures/usulanGeo'
+import { fetchAspirasiMap } from '@/api/dashboard'
 
 const localVue = createLocalVue()
 localVue.use(ElementUI)
@@ -54,17 +56,26 @@ describe('List dashboard usulan', () => {
 
     expect(wrapper.is(DashboardApproval)).toBe(true)
   })
-})
 
-describe('render map usulan', () => {
-  it('render list usulan', () => {
+  it('get list usulan geo', () => {
+    const dataList = [
+      {
+        name: 'KOTA BANDUNG',
+        counts: '16',
+        kabkota_id: '22',
+        latitude: '107.590417459601',
+        longitude: '-6.95981961897412'
+      }
+    ]
     const wrapper = shallowMount(DashboardMap, {
-      localVue
+      localVue,
+      stubs: {
+        fetchAspirasiMap: true
+      }
     })
 
-    wrapper.vm.getMap()
-    wrapper.vm.createMap()
+    wrapper.setData({ list: dataList })
 
-    expect(wrapper.contains(ListFilter)).toBe(true)
+    expect(wrapper.vm.list).toBe(dataList)
   })
 })
