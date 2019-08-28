@@ -23,7 +23,7 @@
     </el-table>
     <el-row>
       <router-link :to="{ path: '/aspirasi/index' }">
-        <el-button class="see-more" type="primary" plain>{{ ($t('crud.dashboard-aspiration')) }}</el-button>
+        <el-button class="see-more" type="primary" plain>Lihat Semua Usulan</el-button>
       </router-link>
     </el-row>
   </el-card>
