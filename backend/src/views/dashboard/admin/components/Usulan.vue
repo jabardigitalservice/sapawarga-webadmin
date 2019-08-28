@@ -23,7 +23,7 @@
     </el-table>
     <el-row>
       <router-link :to="{ path: '/aspirasi/index' }">
-        <el-button class="see-more" type="primary" plain>{{($t('crud.dashboard-aspiration'))}}</el-button>
+        <el-button class="see-more" type="primary" plain>{{ ($t('crud.dashboard-aspiration')) }}</el-button>
       </router-link>
     </el-row>
   </el-card>
@@ -42,7 +42,7 @@ export default {
       listQuery: {
         limit: 10,
         category_id: null,
-        kabkota_id: null,
+        kabkota_id: null
       }
     }
   },
@@ -73,6 +73,6 @@ export default {
   .see-more {
     position: relative;
     float: right;
-    margin-top: 15px; 
+    margin-top: 15px;
   }
 </style>
