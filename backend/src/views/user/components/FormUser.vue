@@ -675,7 +675,7 @@ export default {
 
   watch: {
     'user.kabkota'(oldVal, newVal) {
-      if (newVal !== null) {
+      if (newVal !== '') {
         this.user.kecamatan = ''
         this.user.kelurahan = ''
         this.user.rt = ''
@@ -683,14 +683,14 @@ export default {
       }
     },
     'user.kecamatan'(oldVal, newVal) {
-      if (newVal !== null) {
+      if (newVal !== '') {
         this.user.kelurahan = ''
         this.user.rt = ''
         this.user.rw = ''
       }
     },
     'user.kelurahan'(oldVal, newVal) {
-      if (newVal !== null) {
+      if (newVal !== '') {
         this.user.rt = ''
         this.user.rw = ''
       }
