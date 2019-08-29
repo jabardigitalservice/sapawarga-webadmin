@@ -64,6 +64,8 @@ export default {
           })
 
           marker.addListener('click', () => {
+            this.map.setZoom(12)
+            this.map.setCenter(marker.getPosition())
             if (this.activeInfoWindow) {
               this.activeInfoWindow.close()
             }
