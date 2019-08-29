@@ -578,7 +578,8 @@ export default {
         ],
         twitter: [
           {
-            required: false
+            required: false,
+            trigger: 'blur'
           },
           {
             pattern: /^[a-z0-9._]+$/,
@@ -588,7 +589,8 @@ export default {
         ],
         facebook: [
           {
-            required: false
+            required: false,
+            trigger: 'blur'
           },
           {
             type: 'url',
@@ -598,7 +600,8 @@ export default {
         ],
         instagram: [
           {
-            required: false
+            required: false,
+            trigger: 'blur'
           },
           {
             pattern: /^[a-z0-9._]+$/,
