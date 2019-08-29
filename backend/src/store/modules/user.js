@@ -99,7 +99,7 @@ const actions = {
             reject('Verification failed, please Login again.')
           }
 
-          const { name, role_label, role_id, photo_url } = data
+          const { id, name, role_label, role_id, photo_url } = data
 
           const roles = [role_id] // @TODO sebaiknya bisa multiple dan switch roles
 
@@ -107,6 +107,8 @@ const actions = {
           if (!roles || roles.length <= 0) {
             reject('getInfo: roles must be a non-null array!')
           }
+
+          commit('SET_ID', id)
 
           commit('SET_ROLES', roles)
 
