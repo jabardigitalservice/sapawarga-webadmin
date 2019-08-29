@@ -24,6 +24,9 @@ const state = {
 }
 
 const mutations = {
+  SET_ID: (state, id) => {
+    state.id = id
+  },
   SET_TOKEN: (state, token) => {
     state.token = token
   },
