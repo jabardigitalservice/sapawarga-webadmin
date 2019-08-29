@@ -133,7 +133,7 @@
                 label="RT"
                 prop="rt"
               >
-                <el-input v-model="user.rt" type="text" placeholder="Contoh: 002" :disabled="user.rw == '' && checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec'])" />
+                <el-input v-model="user.rt" type="text" placeholder="Contoh: 002" :disabled="user.rw == '' && checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec']) || isEdit" />
               </el-form-item>
             </el-col>
           </el-row>
@@ -578,7 +578,8 @@ export default {
         ],
         twitter: [
           {
-            required: false
+            required: false,
+            trigger: 'blur'
           },
           {
             pattern: /^[a-z0-9._]+$/,
@@ -588,7 +589,8 @@ export default {
         ],
         facebook: [
           {
-            required: false
+            required: false,
+            trigger: 'blur'
           },
           {
             type: 'url',
@@ -598,7 +600,8 @@ export default {
         ],
         instagram: [
           {
-            required: false
+            required: false,
+            trigger: 'blur'
           },
           {
             pattern: /^[a-z0-9._]+$/,
@@ -675,7 +678,7 @@ export default {
 
   watch: {
     'user.kabkota'(oldVal, newVal) {
-      if (newVal !== null) {
+      if (newVal !== '') {
         this.user.kecamatan = ''
         this.user.kelurahan = ''
         this.user.rt = ''
@@ -683,14 +686,14 @@ export default {
       }
     },
     'user.kecamatan'(oldVal, newVal) {
-      if (newVal !== null) {
+      if (newVal !== '') {
         this.user.kelurahan = ''
         this.user.rt = ''
         this.user.rw = ''
       }
     },
     'user.kelurahan'(oldVal, newVal) {
-      if (newVal !== null) {
+      if (newVal !== '') {
         this.user.rt = ''
         this.user.rw = ''
       }
