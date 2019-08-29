@@ -4,6 +4,7 @@ import router, { resetRouter } from '@/router'
 import { Message, MessageBox } from 'element-ui'
 
 const state = {
+  id: null,
   token: getToken(),
   name: '',
   avatar: '',
