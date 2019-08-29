@@ -3,6 +3,7 @@
     <el-row :gutter="10">
       <el-col class="col-left" :xs="24" :sm="24" :md="24" :lg="7" :xl="7">
         <el-card>
+          {{ user_id }}
           <div slot="header" class="clearfix">
             <span>Kategori</span>
           </div>
@@ -108,6 +109,7 @@
 import Pagination from '@/components/Pagination'
 import { fetchList, fetchStatistic, deleteData, deactivate, activate } from '@/api/video'
 import ListFilter from './_listfilter'
+import { mapGetters } from 'vuex'
 
 export default {
   components: { Pagination, ListFilter },
@@ -142,6 +144,12 @@ export default {
   created() {
     this.getList()
     this.getStatistic()
+  },
+
+  computed: {
+    ...mapGetters([
+      'user_id'
+    ])
   },
 
   methods: {
