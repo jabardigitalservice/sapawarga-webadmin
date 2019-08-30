@@ -171,10 +171,11 @@ export default {
         if (this.video.kabkota_id === null) {
           this.video.kabkota_id = 1
         }
-        if (this.video.status === 10) {
-          this.$message.error(
-            this.$t('crud.video-error-edit-published')
-          )
+        if (this.video.created_by !== this.user_id) {
+          this.$message.error(this.$t('crud.video-error-edit-role'))
+          this.$router.push('/video/index')
+        } else if (this.video.status === 10) {
+          this.$message.error(this.$t('crud.video-error-edit-published'))
           this.$router.push('/video/index')
         }
       }).catch(err => {
