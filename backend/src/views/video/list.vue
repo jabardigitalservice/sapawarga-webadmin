@@ -3,7 +3,6 @@
     <el-row :gutter="10">
       <el-col class="col-left" :xs="24" :sm="24" :md="24" :lg="7" :xl="7">
         <el-card>
-          {{ user_id }}
           <div slot="header" class="clearfix">
             <span>Kategori</span>
           </div>
@@ -73,19 +72,19 @@
                   <el-button type="primary" icon="el-icon-view" size="small" />
                 </el-tooltip>
               </router-link>
-              <router-link :to="(scope.row.status !== 10 ? '/video/edit/' +scope.row.id : '')">
+              <router-link :to="(scope.row.status !== 10 && scope.row.created_by === user_id ? '/video/edit/' + scope.row.id : '')">
                 <el-tooltip content="Edit Video" placement="top">
-                  <el-button type="warning" icon="el-icon-edit" size="small" :disabled="scope.row.status === 10" />
+                  <el-button type="warning" icon="el-icon-edit" size="small" :disabled="scope.row.status === 10 || scope.row.created_by != user_id" />
                 </el-tooltip>
               </router-link>
               <el-tooltip content="Hapus Video" placement="top">
-                <el-button type="danger" icon="el-icon-delete" size="small" :disabled="scope.row.status === 10" @click="deleteVideo(scope.row.id)" />
+                <el-button type="danger" icon="el-icon-delete" size="small" :disabled="scope.row.status === 10 || scope.row.created_by != user_id" @click="deleteVideo(scope.row.id)" />
               </el-tooltip>
               <el-tooltip content="Nonaktifkan Video" placement="top">
-                <el-button v-if="scope.row.status === 10" type="danger" icon="el-icon-circle-close" size="small" @click="deactivateRecord(scope.row.id)" />
+                <el-button v-if="scope.row.status === 10" type="danger" icon="el-icon-circle-close" size="small" :disabled="scope.row.created_by != user_id" @click="deactivateRecord(scope.row.id)" />
               </el-tooltip>
               <el-tooltip content="Aktifkan Video" placement="top">
-                <el-button v-if="scope.row.status === 0" type="success" icon="el-icon-circle-check" size="small" @click="activateRecord(scope.row.id)" />
+                <el-button v-if="scope.row.status === 0" type="success" icon="el-icon-circle-check" size="small" :disabled="scope.row.created_by != user_id" @click="activateRecord(scope.row.id)" />
               </el-tooltip>
             </template>
           </el-table-column>
@@ -141,15 +140,15 @@ export default {
     }
   },
 
-  created() {
-    this.getList()
-    this.getStatistic()
-  },
-
   computed: {
     ...mapGetters([
       'user_id'
     ])
+  },
+
+  created() {
+    this.getList()
+    this.getStatistic()
   },
 
   methods: {
