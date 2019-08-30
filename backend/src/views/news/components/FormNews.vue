@@ -278,7 +278,10 @@ export default {
 
         this.news.kabkota_id = this.news.kabkota_id !== null ? this.news.kabkota_id : 1
 
-        if (response.data.status === 10) {
+        if (this.news.created_by !== this.user_id) {
+          this.$message.error(this.$t('crud.error-edit-role'))
+          this.$router.push('/news/index')
+        } else if (this.news.status === 10) {
           this.$message.error(this.$t('crud.polling-error-edit-published'))
           this.$router.push('/news/index')
         }
