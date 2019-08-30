@@ -101,6 +101,8 @@ import checkPermission from '@/utils/permission'
 import newsApi from '@/api/news'
 import Tinymce from '@/components/Tinymce'
 import moment from 'moment'
+import { mapGetters } from 'vuex'
+
 export default {
   components: { Tinymce, AttachmentPhotoUpload },
   props: {
@@ -239,6 +241,11 @@ export default {
         ]
       }
     }
+  },
+  computed: {
+    ...mapGetters([
+      'user_id'
+    ])
   },
   created() {
     if (this.isEdit) {
