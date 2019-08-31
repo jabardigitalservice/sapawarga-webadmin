@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
         - name: webadmin
-          image: registry.gitlab.com/jdsteam/sapa-warga/sapawarga-webadmin:latest
+          image: registry.gitlab.com/jdsteam/sapa-warga/sapawarga-webadmin:%VERSION%
           ports:
             - containerPort: 80
           env:
@@ -26,5 +26,10 @@ spec:
                 configMapKeyRef:
                   name: sapawarga-webadmin-config-env
                   key: VUE_APP_BASE_API
+            - name: VUE_APP_VERSION
+              valueFrom:
+                configMapKeyRef:
+                  name: sapawarga-webadmin-config-env
+                  key: VUE_APP_VERSION
       imagePullSecrets:
         - name: regcred

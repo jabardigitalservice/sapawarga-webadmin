@@ -3,7 +3,7 @@ services:
   app:
     build:
       context: ./backend
-    image: registry.gitlab.com/jdsteam/sapa-warga/sapawarga-webadmin:${IMAGETAG}
+    image: registry.gitlab.com/jdsteam/sapa-warga/sapawarga-webadmin:${VERSION}
     networks:
       - internal
     ports: 
