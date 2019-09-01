@@ -138,13 +138,13 @@ deploy_production:
     - versioning
   before_script:
     - export VERSION=$(cat ./version)
-  script:
     - kubectl config set-cluster k8s --server="${KUBERNETES_SERVER}"
     - kubectl config set clusters.k8s.certificate-authority-data ${KUBERNETES_CERTIFICATE_AUTHORITY_DATA}
     - kubectl config set-credentials gitlab --token="${KUBERNETES_USER_TOKEN}"
     - kubectl config set-context default --cluster=k8s --user=gitlab
     - kubectl config use-context default
     - kubectl cluster-info
+  script:
     - cp kubernetes/webadmin-variables-sample.yaml kubernetes/webadmin-variables.yaml
     - cat kubernetes/webadmin-variables.yaml
     - sed -i "s/%VUE_APP_VERSION%/${VERSION}/g" kubernetes/webadmin-variables.yaml
