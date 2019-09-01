@@ -146,12 +146,10 @@ deploy_prod_gke:
     - kubectl cluster-info
   script:
     - cp kubernetes/webadmin-variables-sample.yaml kubernetes/webadmin-variables.yaml
-    - cat kubernetes/webadmin-variables.yaml
     - sed -i "s/%VUE_APP_VERSION%/${VERSION}/g" kubernetes/webadmin-variables.yaml
     - sed -i "s/%VUE_APP_BASE_API%/${VUE_APP_BASE_API}/g" kubernetes/webadmin-variables.yaml
     - sed -i "s/%dockerconfigjson%/${dockerconfigjson}/g" kubernetes/webadmin-variables.yaml
     - sed -i "s/%VERSION%/${VERSION}/g" kubernetes/webadmin-deployment.yaml
-    - cat kubernetes/webadmin-variables.yaml
     - kubectl apply -f kubernetes/webadmin-variables.yaml
         -f kubernetes/webadmin-deployment.yaml
         -f kubernetes/webadmin-service.yaml
@@ -173,13 +171,10 @@ deploy_prod_eks:
     - kubectl cluster-info
   script:
     - cp kubernetes/webadmin-variables-sample.yaml kubernetes/webadmin-variables.yaml
-    - cat kubernetes/webadmin-variables.yaml
     - sed -i "s/%VUE_APP_VERSION%/${VERSION}/g" kubernetes/webadmin-variables.yaml
     - sed -i "s/%VUE_APP_BASE_API%/${VUE_APP_BASE_API}/g" kubernetes/webadmin-variables.yaml
     - sed -i "s/%dockerconfigjson%/${dockerconfigjson}/g" kubernetes/webadmin-variables.yaml
     - sed -i "s/%VERSION%/${VERSION}/g" kubernetes/webadmin-deployment.yaml
-    - cat kubernetes/webadmin-variables.yaml
-    - cat kubernetes/webadmin-api-deployment.yaml
     - kubectl apply -f kubernetes/webadmin-variables.yaml
         -f kubernetes/webadmin-deployment.yaml
         -f kubernetes/webadmin-service.yaml
