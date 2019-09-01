@@ -6,6 +6,7 @@ metadata:
 data:
   NODE_ENV: production
   VUE_APP_BASE_API: %VUE_APP_BASE_API%
+  VUE_APP_VERSION: %VUE_APP_VERSION%
 ---
 apiVersion: v1
 kind: Secret
