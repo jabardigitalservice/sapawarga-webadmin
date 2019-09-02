@@ -97,6 +97,8 @@ export default {
     'survey-send': 'Publikasikan Survei',
     'survey-published': 'Survei berhasil dipublikasikan.',
 
+    'dashboard-aspiration': 'Lihat Semua Usulan',
+
     'insert-row': 'Tambah Baris Baru',
     'delete-row': 'Hapus',
     'delete-row-confirm': 'Anda yakin ingin menghapus data ini?',
@@ -128,8 +130,8 @@ export default {
     'polling-error-edit-published': 'Sudah dipublish, tidak dapat diedit.',
     'broadcast-error-edit-published': 'Sudah dipublish, tidak dapat di edit.',
     'notification-error-edit-published': 'Sudah dipublish, tidak dapat di edit.',
-    'video-error-edit-published': 'Sudah dipublish, tidak dapat di edit.'
-
+    'video-error-edit-published': 'Sudah dipublish, tidak dapat di edit.',
+    'error-edit-role': 'Anda tidak memiliki hak akses halaman ini.'
   },
   common: {
     confirm: 'Ya',

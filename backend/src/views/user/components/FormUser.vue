@@ -13,7 +13,7 @@
         <el-form
           ref="user"
           :model="user"
-          status-icon
+          :status-icon="true"
           label-width="150px"
           label-position="left"
           class="demo-ruleForm"
@@ -39,7 +39,7 @@
           </el-form-item>
 
           <el-form-item label="Telepon" prop="phone">
-            <el-input v-model="user.phone" type="text" placeholder="contoh: 081254332233" />
+            <el-input v-model="user.phone" type="text" placeholder="Contoh: 081254332233" />
           </el-form-item>
 
           <el-row>
@@ -65,7 +65,7 @@
                   v-if="area !== null"
                   v-model="user.kabkota"
                   placeholder="Pilih Kab/Kota"
-                  :disabled="isEdit"
+                  :disabled="isEdit || user.role === ''"
                   @change="getKecamatan"
                 >
                   <el-option
@@ -88,7 +88,7 @@
                 <el-select
                   v-model="user.kecamatan"
                   placeholder="Pilih Kecamatan"
-                  :disabled="(user.kabkota == '' && checkPermission(['admin', 'staffProv']) || isEdit)"
+                  :disabled="(user.kabkota == '' && checkPermission(['admin', 'staffProv']) || isEdit || user.role === '')"
                   @change="getKelurahan"
                 >
                   <el-option
@@ -106,7 +106,7 @@
                 label="Desa/Kelurahan"
                 prop="kelurahan"
               >
-                <el-select v-model="user.kelurahan" placeholder="Pilih Desa/Kelurahan" :disabled="(user.kecamatan == '' && checkPermission(['admin', 'staffProv', 'staffKabkota']) || isEdit)">
+                <el-select v-model="user.kelurahan" placeholder="Pilih Desa/Kelurahan" :disabled="(user.kecamatan == '' && checkPermission(['admin', 'staffProv', 'staffKabkota']) || isEdit || user.role === '')">
                   <el-option
                     v-for="item in kelurahan"
                     :key="item.id"
@@ -124,7 +124,7 @@
                 label="RW"
                 prop="rw"
               >
-                <el-input v-model="user.rw" type="text" placeholder="Contoh: 001" :disabled="(user.kelurahan == '' && checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec']) || isEdit)" />
+                <el-input v-model="user.rw" type="text" placeholder="Contoh: 001" :disabled="(user.kelurahan == '' && checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec']) || isEdit || user.role === '')" />
               </el-form-item>
             </el-col>
             <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" :style="{paddingLeft: formRightSide}">
@@ -133,7 +133,7 @@
                 label="RT"
                 prop="rt"
               >
-                <el-input v-model="user.rt" type="text" placeholder="Contoh: 002" :disabled="user.rw == '' && checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec'])" />
+                <el-input v-model="user.rt" type="text" placeholder="Contoh: 002" :disabled="user.rw == '' && checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']) || isEdit" />
               </el-form-item>
             </el-col>
           </el-row>
@@ -578,7 +578,8 @@ export default {
         ],
         twitter: [
           {
-            required: false
+            required: false,
+            trigger: 'blur'
           },
           {
             pattern: /^[a-z0-9._]+$/,
@@ -588,7 +589,8 @@ export default {
         ],
         facebook: [
           {
-            required: false
+            required: false,
+            trigger: 'blur'
           },
           {
             type: 'url',
@@ -598,7 +600,8 @@ export default {
         ],
         instagram: [
           {
-            required: false
+            required: false,
+            trigger: 'blur'
           },
           {
             pattern: /^[a-z0-9._]+$/,
@@ -672,6 +675,31 @@ export default {
       return ruleOptions
     }
   },
+
+  watch: {
+    'user.kabkota'(oldVal, newVal) {
+      if (newVal !== '' && this.isEdit === false && this.isProfile === false) {
+        this.user.kecamatan = ''
+        this.user.kelurahan = ''
+        this.user.rt = ''
+        this.user.rw = ''
+      }
+    },
+    'user.kecamatan'(oldVal, newVal) {
+      if (newVal !== '' && this.isEdit === false && this.isProfile === false) {
+        this.user.kelurahan = ''
+        this.user.rt = ''
+        this.user.rw = ''
+      }
+    },
+    'user.kelurahan'(oldVal, newVal) {
+      if (newVal !== '' && this.isEdit === false && this.isProfile === false) {
+        this.user.rt = ''
+        this.user.rw = ''
+      }
+    }
+  },
+
   created() {
     if (this.isEdit && !this.isProfile) {
       const id = this.$route.params && this.$route.params.id
