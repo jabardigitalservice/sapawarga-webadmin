@@ -62,6 +62,7 @@ import { containsWhitespace, validYoutubeUrl } from '@/utils/validate'
 import { requestArea } from '@/api/staff'
 import { create, update, fetchRecord } from '@/api/video'
 import checkPermission from '@/utils/permission'
+import { mapGetters } from 'vuex'
 
 export default {
   components: { InputCategory },
@@ -132,6 +133,13 @@ export default {
       }
     }
   },
+
+  computed: {
+    ...mapGetters([
+      'user_id'
+    ])
+  },
+
   created() {
     if (this.isEdit) {
       const id = this.$route.params && this.$route.params.id
@@ -139,6 +147,7 @@ export default {
     }
     this.init()
   },
+
   methods: {
     init() {
       const authUser = this.$store.state.user
@@ -162,10 +171,11 @@ export default {
         if (this.video.kabkota_id === null) {
           this.video.kabkota_id = 1
         }
-        if (this.video.status === 10) {
-          this.$message.error(
-            this.$t('crud.video-error-edit-published')
-          )
+        if (this.video.created_by !== this.user_id) {
+          this.$message.error(this.$t('crud.error-edit-role'))
+          this.$router.push('/video/index')
+        } else if (this.video.status === 10) {
+          this.$message.error(this.$t('crud.video-error-edit-published'))
           this.$router.push('/video/index')
         }
       }).catch(err => {
