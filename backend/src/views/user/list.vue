@@ -41,7 +41,7 @@
             </template>
           </el-table-column>
 
-          <el-table-column align="center" label="Actions" min-width="150px">
+          <el-table-column align="center" label="Actions" min-width="170px">
             <template slot-scope="scope">
               <router-link :to="'/user/detail/'+scope.row.id">
                 <el-tooltip content="Lihat Pengguna" placement="top">
