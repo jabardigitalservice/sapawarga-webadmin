@@ -28,6 +28,18 @@ export default {
       jawaBarat: {
         lat: -6.943097,
         lon: 107.633545
+      },
+      zoom: 8,
+      markerCenter: null,
+      isChecked: {
+        kabkota: true,
+        kec: false,
+        kel: false
+      },
+      listQuery: {
+        kabkota_id: null,
+        kec_id: null,
+        kel_id: null
       }
     }
   },
@@ -36,19 +48,18 @@ export default {
   },
   methods: {
     getMap() {
-      fetchAspirasiMap().then(response => {
-        this.list = response.data.items
+      fetchAspirasiMap(this.listQuery).then(response => {
+        this.list = response.data
         this.createMap(this.list)
       })
     },
     async createMap(dataMap) {
       try {
-        // const google = await gmapsInit()
         const google = await gmapsInit()
         const element = document.getElementById('gmaps')
         const options = {
-          zoom: 8,
-          center: new google.maps.LatLng(this.jawaBarat.lat, this.jawaBarat.lon)
+          zoom: this.zoom,
+          center: this.markerCenter ? this.markerCenter : new google.maps.LatLng(this.jawaBarat.lat, this.jawaBarat.lon)
         }
         this.map = new google.maps.Map(element, options)
 
@@ -65,8 +76,20 @@ export default {
           })
 
           marker.addListener('click', () => {
-            this.map.setZoom(12)
-            this.map.setCenter(marker.getPosition())
+            if (this.isChecked.kel) {
+              console.log(this.isChecked.kel)
+              return
+            }
+
+            this.checkLevel(coord.id)
+
+            this.getMap()
+
+            console.log(position)
+            this.map.setZoom(this.zoom)
+
+            this.markerCenter = marker.getPosition()
+            // this.map.setCenter(marker.getPosition())
             if (this.activeInfoWindow) {
               this.activeInfoWindow.close()
             }
@@ -77,6 +100,26 @@ export default {
       } catch (error) {
         console.error(error)
         this.$message.error(this.$t('dashboard-map-error'))
+      }
+    },
+    checkLevel(id) {
+      if (this.isChecked.kabkota) {
+        this.listQuery.kabkota_id = id
+
+        this.zoom = 10
+
+        // isCheck
+        this.isChecked = { kabkota: false, kec: true }
+      } else if (this.isChecked.kec) {
+        this.listQuery.kec_id = id
+
+        this.zoom = 12
+
+        // isCheck
+        this.isChecked = { kec: false, kel: true }
+      } else if (this.isChecked.kel) {
+        this.listQuery.kel_id = id
+        this.zoom = 13
       }
     }
   }
