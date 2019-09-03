@@ -673,7 +673,7 @@ export default {
           return ruleOptions.slice(5, ruleOptions.length)
         } if (checkPermission(['staffKel'])) {
           return ruleOptions.slice(6, ruleOptions.length)
-        } 
+        }
       } else if (this.isEdit && !this.isProfile) {
         if (this.user.role === 'admin') {
           return ruleOptions
@@ -687,8 +687,9 @@ export default {
           return ruleOptions.slice(5, ruleOptions.length)
         } else if (this.user.role === 'staffRW') {
           return ruleOptions.slice(6, ruleOptions.length)
-        } 
+        }
       }
+      return false
     }
   },
 

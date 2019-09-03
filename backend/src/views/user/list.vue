@@ -59,7 +59,7 @@
               <el-tooltip content="Aktifkan Pengguna" placement="top">
                 <el-button v-if="scope.row.status === 0" type="success" icon="el-icon-circle-check" size="small" @click="activateUser(scope.row.id)" />
               </el-tooltip>
-                
+
             </template>
           </el-table-column>
         </el-table>
