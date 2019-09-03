@@ -295,6 +295,10 @@ export default {
           value: 'admin'
         },
         {
+          label: 'Admin Saber Hoax',
+          value: 'saberHoax'
+        },
+        {
           label: 'Admin Provinsi',
           value: 'staffProv'
         },
