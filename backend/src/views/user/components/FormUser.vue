@@ -57,7 +57,7 @@
             </el-col>
             <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" :style="{paddingLeft: formRightSide}">
               <el-form-item
-                v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && checkPermission(['admin', 'staffProv']))"
+                v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'saberHoax') && checkPermission(['admin', 'staffProv']))"
                 label="Kab/Kota"
                 prop="kabkota"
               >
@@ -81,7 +81,7 @@
           <el-row>
             <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
               <el-form-item
-                v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && checkPermission(['admin', 'staffProv', 'staffKabkota']))"
+                v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'saberHoax') && checkPermission(['admin', 'staffProv', 'staffKabkota']))"
                 label="Kecamatan"
                 prop="kecamatan"
               >
@@ -102,7 +102,7 @@
             </el-col>
             <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" :style="{paddingLeft: formRightSide}">
               <el-form-item
-                v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffKec') && ! checkPermission(['staffKel']))"
+                v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffKec') && !(user.role == 'saberHoax') && ! checkPermission(['staffKel']))"
                 label="Desa/Kelurahan"
                 prop="kelurahan"
               >
@@ -120,7 +120,7 @@
           <el-row>
             <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
               <el-form-item
-                v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffKec') && !(user.role == 'staffKel'))"
+                v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffKec') && !(user.role == 'staffKel') && !(user.role == 'saberHoax'))"
                 label="RW"
                 prop="rw"
               >
@@ -129,7 +129,7 @@
             </el-col>
             <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" :style="{paddingLeft: formRightSide}">
               <el-form-item
-                v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffKec') && !(user.role == 'staffKel'))"
+                v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffKec') && !(user.role == 'staffKel') && !(user.role == 'saberHoax'))"
                 label="RT"
                 prop="rt"
               >
@@ -662,7 +662,6 @@ export default {
     filterRole() {
       const ruleOptions = this.opsiPeran
       if ((!this.isEdit && !this.isProfile)) {
-        console.log('ini editnya false')
         if (checkPermission(['admin'])) {
           return ruleOptions.slice(1, ruleOptions.length)
         } if (checkPermission(['staffProv'])) {
