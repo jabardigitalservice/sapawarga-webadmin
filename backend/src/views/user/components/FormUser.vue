@@ -20,7 +20,7 @@
           :rules="rules"
         >
           <el-form-item label="Username" :prop="usernameValidation">
-            <el-input v-model="user.username" type="text" :disabled="isEdit" @focus="changePropUsername" />
+            <el-input v-model="user.username" type="text" @focus="changePropUsername" />
           </el-form-item>
           <el-form-item label="Nama Lengkap" prop="name">
             <el-input v-model="user.name" type="text" />
@@ -45,7 +45,7 @@
           <el-row>
             <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
               <el-form-item label="Peran" prop="role">
-                <el-select v-model="user.role" placeholder="Pilih Peran" :disabled="isEdit">
+                <el-select v-model="user.role" placeholder="Pilih Peran">
                   <el-option
                     v-for="item in filterRole"
                     :key="item.value"
@@ -65,7 +65,7 @@
                   v-if="area !== null"
                   v-model="user.kabkota"
                   placeholder="Pilih Kab/Kota"
-                  :disabled="isEdit || user.role === ''"
+                  :disabled="user.role === ''"
                   @change="getKecamatan"
                 >
                   <el-option
@@ -88,7 +88,7 @@
                 <el-select
                   v-model="user.kecamatan"
                   placeholder="Pilih Kecamatan"
-                  :disabled="(user.kabkota == '' && checkPermission(['admin', 'staffProv']) || isEdit || user.role === '')"
+                  :disabled="(user.kabkota == '' && checkPermission(['admin', 'staffProv']) || user.role === '')"
                   @change="getKelurahan"
                 >
                   <el-option
@@ -106,7 +106,7 @@
                 label="Desa/Kelurahan"
                 prop="kelurahan"
               >
-                <el-select v-model="user.kelurahan" placeholder="Pilih Desa/Kelurahan" :disabled="(user.kecamatan == '' && checkPermission(['admin', 'staffProv', 'staffKabkota']) || isEdit || user.role === '')">
+                <el-select v-model="user.kelurahan" placeholder="Pilih Desa/Kelurahan" :disabled="(user.kecamatan == '' && checkPermission(['admin', 'staffProv', 'staffKabkota']) || user.role === '')">
                   <el-option
                     v-for="item in kelurahan"
                     :key="item.id"
@@ -124,7 +124,7 @@
                 label="RW"
                 prop="rw"
               >
-                <el-input v-model="user.rw" type="text" placeholder="Contoh: 001" :disabled="(user.kelurahan == '' && checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec']) || isEdit || user.role === '')" />
+                <el-input v-model="user.rw" type="text" placeholder="Contoh: 001" :disabled="(user.kelurahan == '' && checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec']) || user.role === '')" />
               </el-form-item>
             </el-col>
             <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" :style="{paddingLeft: formRightSide}">
@@ -133,7 +133,7 @@
                 label="RT"
                 prop="rt"
               >
-                <el-input v-model="user.rt" type="text" placeholder="Contoh: 002" :disabled="user.rw == '' && checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']) || isEdit" />
+                <el-input v-model="user.rt" type="text" placeholder="Contoh: 002" :disabled="user.rw == '' && checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel'])" />
               </el-form-item>
             </el-col>
           </el-row>
@@ -657,7 +657,8 @@ export default {
     },
     filterRole() {
       const ruleOptions = this.opsiPeran
-      if ((!this.isEdit && !this.isProfile) || (this.isEdit && !this.isProfile)) {
+      if ((!this.isEdit && !this.isProfile)) {
+        console.log('ini editnya false')
         if (checkPermission(['admin'])) {
           return ruleOptions.slice(1, ruleOptions.length)
         } if (checkPermission(['staffProv'])) {
