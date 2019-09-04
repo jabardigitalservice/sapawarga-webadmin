@@ -206,16 +206,11 @@ export default {
 
   .gmap_canvas {
     background: none !important;
-    width: 700px;
+    width: 750px !important;
     height: 400px;
     margin-left: 0px;
     border-radius: 5px;
     margin-top: 0px;
-
-    iframe {
-      width: 640px;
-      height: 400px;
-    }
   }
 
   #table-geo {
@@ -226,48 +221,26 @@ export default {
     width: 700px;
   }
 
-  .map-title {
-    width: 400px;
-    margin-left: 20px;
-    margin-bottom: 10px;
-    margin-top: 50px;
-    padding: 10px;
-  }
-
   .btn-reset {
     right: 0;
     position: absolute;
     margin-top: 15px;
   }
 
-  @media only screen and (min-width: 1200px) and (max-width: 1570px) {
+  .openSidebar {
+    width: 650px !important;
+  }
+
+  @media only screen and (min-width: 992px) and (max-width: 1200px) {
     .gmap_canvas {
-      background: none !important;
-      width: 640px;
-      height: 400px;
-      margin-left: 0px;
-      border-radius: 5px;
-      margin-top: 0px;
-
-      iframe {
-        width: 640px;
-        height: 400px;
-      }
-    }
-
-    .map-title {
-      width: 250px;
-      margin-left: 20px;
-      margin-bottom: 10px;
-      margin-top: 50px;
-      padding: 10px;
+      width: 885px !important;
     }
   }
 
-   @media only screen and (max-width: 610px)  {
-    #gmaps {
-      width: 450px;
+  @media only screen and (min-width: 768px) and (max-width: 992px) {
+    .gmap_canvas {
+      width: 660px !important;
     }
-   }
+  }
 
 </style>
