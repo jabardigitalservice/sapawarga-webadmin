@@ -688,7 +688,7 @@ export default {
           return ruleOptions.slice(6, ruleOptions.length)
         }
       }
-      return false
+      return ruleOptions
     }
   },
 
