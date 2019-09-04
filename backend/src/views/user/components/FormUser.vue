@@ -45,7 +45,7 @@
           <el-row>
             <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
               <el-form-item label="Peran" prop="role">
-                <el-select v-model="user.role" placeholder="Pilih Peran">
+                <el-select v-model="user.role" placeholder="Pilih Peran" :disabled="isProfile">
                   <el-option
                     v-for="item in filterRole"
                     :key="item.value"
