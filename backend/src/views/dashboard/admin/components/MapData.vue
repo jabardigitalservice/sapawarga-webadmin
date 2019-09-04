@@ -28,6 +28,8 @@
 <script>
 import { fetchAspirasiMap } from '@/api/dashboard'
 import gmapsInit from '@/utils/gmaps'
+import { mapGetters } from 'vuex'
+
 export default {
   data() {
     return {
@@ -53,6 +55,18 @@ export default {
       }
     }
   },
+
+  computed: {
+    ...mapGetters([
+      'sidebar'
+    ]),
+    classObj() {
+      return {
+        openSidebar: this.sidebar.opened
+      }
+    }
+  },
+
   created() {
     this.getMap()
   },
