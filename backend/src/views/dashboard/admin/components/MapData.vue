@@ -3,7 +3,7 @@
     <div class="text item">
       <el-row :gutter="8">
         <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 16}" :xl="{span: 16}" style="padding-right:8px;margin-bottom:30px;">
-          <div id="gmaps" class="gmap_canvas" />
+          <div id="gmaps" :class="['gmap_canvas', classObj]" />
         </el-col>
         <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 8}" :xl="{span: 8}" style="margin-bottom:30px;">
           <el-table id="table-geo" :data="list" height="350" stripe style="width: 100%; margin-left:10px;">
