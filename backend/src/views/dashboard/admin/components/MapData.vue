@@ -6,10 +6,19 @@
           <div id="gmaps" class="gmap_canvas" />
         </el-col>
         <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 8}" :xl="{span: 8}" style="margin-bottom:30px;">
-          <el-table :data="list" stripe style="width: 100%; margin-left:10px">
-            <el-table-column prop="name" label="Kota/Kabupaten" align="left" min-width="200" />
-            <el-table-column prop="counts" label="Usulan" align="center" min-width="100" />
+          <el-table id="table-geo" :data="list" height="350" stripe style="width: 100%; margin-left:10px;">
+            <el-table-column prop="name" fixed :label="labelTitle" align="left" min-width="200" style="cursor:pointer">
+              <template slot-scope="scope">
+                <div @click="viewMarker(scope.row.id)">{{ scope.row.name }}</div>
+              </template>
+            </el-table-column>
+            <el-table-column prop="counts" label="Usulan" align="center" min-width="100">
+              <template slot-scope="scope">
+                <div @click="viewMarker(scope.row.id)">{{ scope.row.counts }}</div>
+              </template>
+            </el-table-column>
           </el-table>
+          <el-button class="btn-reset" type="danger" @click="resetLevel">Reset</el-button>
         </el-col>
       </el-row>
     </div>
@@ -25,9 +34,22 @@ export default {
       list: null,
       map: null,
       activeInfoWindow: null,
+      labelTitle: 'Kota/Kabupaten',
       jawaBarat: {
         lat: -6.943097,
         lon: 107.633545
+      },
+      zoom: 8,
+      markerCenter: null,
+      isChecked: {
+        kabkota: true,
+        kec: false,
+        kel: false
+      },
+      listQuery: {
+        kabkota_id: null,
+        kec_id: null,
+        kel_id: null
       }
     }
   },
@@ -36,8 +58,8 @@ export default {
   },
   methods: {
     getMap() {
-      fetchAspirasiMap().then(response => {
-        this.list = response.data.items
+      fetchAspirasiMap(this.listQuery).then(response => {
+        this.list = response.data
         this.createMap(this.list)
       })
     },
@@ -51,36 +73,110 @@ export default {
         }
         this.map = new google.maps.Map(element, options)
 
+        // Create LatLngBounds object.
+        const latlngbounds = new google.maps.LatLngBounds()
+
         dataMap.forEach((coord) => {
-          const position = new google.maps.LatLng(coord.longitude, coord.latitude)
-          const marker = new google.maps.Marker({
-            position: position,
-            map: this.map
-          })
+          if (coord.latitude && coord.longitude) {
+            const position = new google.maps.LatLng(coord.latitude, coord.longitude)
+            const marker = new google.maps.Marker({
+              position: position,
+              map: this.map
+            })
 
-          const infoWindow = new google.maps.InfoWindow({
-            content: `<div>${coord.name}</div><br>
-                    <div style="text-align: center">${coord.counts} Usulan</div>`
-          })
+            const infoWindow = new google.maps.InfoWindow({
+              content: `<div>${coord.name}</div><br>
+                      <div style="text-align: center">${coord.counts} Usulan</div>`
+            })
 
-          marker.addListener('click', () => {
-            if (this.activeInfoWindow) {
-              this.activeInfoWindow.close()
-            }
-            infoWindow.open(this.map, marker)
-            this.activeInfoWindow = infoWindow
-          })
+            marker.addListener('mouseover', () => {
+              if (this.activeInfoWindow) {
+                this.activeInfoWindow.close()
+              }
+              infoWindow.open(this.map, marker)
+              this.activeInfoWindow = infoWindow
+            })
+
+            marker.addListener('click', () => {
+              if (this.isChecked.kel) {
+                return
+              }
+
+              this.checkLevel(coord.id)
+
+              this.getMap()
+
+              if (this.activeInfoWindow) {
+                this.activeInfoWindow.close()
+              }
+              infoWindow.open(this.map, marker)
+              this.activeInfoWindow = infoWindow
+            })
+
+            latlngbounds.extend(position)
+          }
         })
+        this.map.fitBounds(latlngbounds)
+        this.map.panToBounds(latlngbounds)
       } catch (error) {
         console.error(error)
         this.$message.error(this.$t('dashboard-map-error'))
       }
+    },
+    checkLevel(id) {
+      if (this.isChecked.kabkota) {
+        this.listQuery.kabkota_id = id
+
+        // change label
+        this.labelTitle = 'Kecamatan'
+
+        // isCheck
+        this.isChecked = { kabkota: false, kec: true }
+      } else if (this.isChecked.kec) {
+        this.listQuery.kec_id = id
+
+        // change label
+        this.labelTitle = 'Kelurahan'
+
+        // isCheck
+        this.isChecked = { kec: false, kel: true }
+      } else if (this.isChecked.kel) {
+        this.listQuery.kel_id = id
+      }
+    },
+    viewMarker(id) {
+      if (this.isChecked.kel) {
+        return
+      }
+      this.checkLevel(id)
+      this.getMap()
+    },
+    resetLevel() {
+      if (this.isChecked.kabkota) {
+        return
+      }
+
+      this.labelTitle = 'Kota/Kabupaten'
+      this.isChecked = {
+        kabkota: true,
+        kec: false,
+        kel: false
+      }
+
+      this.listQuery = {
+        kabkota_id: null,
+        kec_id: null,
+        kel_id: null
+      }
+
+      this.getMap()
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+
   .text {
     font-size: 14px;
   }
@@ -108,6 +204,10 @@ export default {
     }
   }
 
+  #table-geo {
+    cursor: pointer !important;
+  }
+
   #gmaps {
     width: 700px;
   }
@@ -118,6 +218,12 @@ export default {
     margin-bottom: 10px;
     margin-top: 50px;
     padding: 10px;
+  }
+
+  .btn-reset {
+    right: 0;
+    position: absolute;
+    margin-top: 15px;
   }
 
   @media only screen and (min-width: 1200px) and (max-width: 1570px) {
