@@ -10,8 +10,8 @@
 
           <el-form-item label="Force Update" prop="force_update" name="force_update">
             <el-radio-group v-model="form.force_update">
-              <el-radio :label="true">True</el-radio>
-              <el-radio :label="false">False</el-radio>
+              <el-radio :label="true">Ya</el-radio>
+              <el-radio :label="false">Tidak</el-radio>
             </el-radio-group>
           </el-form-item>
 
