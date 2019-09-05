@@ -1,14 +1,15 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import DashboardUsulan from '@/views/dashboard/admin/components/Usulan'
-import DashboardMap from '@/views/dashboard/admin/components/MapData'
 import DashboardApproval from '@/views/dashboard/admin/components/Approval'
 import ListFilter from '@/views/dashboard/admin/components/_listfilter'
 import ElementUI from 'element-ui'
+import Vuex from 'vuex'
 import usulanGeoFixture from './fixtures/usulanGeo'
 import { fetchAspirasiMap } from '@/api/dashboard'
 
 const localVue = createLocalVue()
 localVue.use(ElementUI)
+localVue.use(Vuex)
 
 beforeEach(() => {
   jest.resetModules()
@@ -57,25 +58,52 @@ describe('List dashboard usulan', () => {
     expect(wrapper.is(DashboardApproval)).toBe(true)
   })
 
-  it('get list usulan geo', () => {
-    const dataList = [
-      {
-        name: 'KOTA BANDUNG',
-        counts: '16',
-        kabkota_id: '22',
-        latitude: '107.590417459601',
-        longitude: '-6.95981961897412'
-      }
-    ]
-    const wrapper = shallowMount(DashboardMap, {
-      localVue,
-      stubs: {
-        fetchAspirasiMap: true
-      }
-    })
+  // it('get list usulan geo', () => {
+  //   const dataList = [
+  //     {
+  //       name: 'KOTA BANDUNG',
+  //       counts: '16',
+  //       kabkota_id: '22',
+  //       latitude: '107.590417459601',
+  //       longitude: '-6.95981961897412'
+  //     }
+  //   ]
+  //   const wrapper = shallowMount(DashboardMap, {
+  //     localVue,
+  //     stubs: {
+  //       fetchAspirasiMap: true
+  //     }
+  //   })
 
-    wrapper.setData({ list: dataList })
+  //   // const wrapper = shallowMount(getters, {
+  //   //   localVue
+  //   // })
 
-    expect(wrapper.vm.list).toBe(dataList)
-  })
+  //   wrapper.setData({ list: dataList })
+  //   // expect(wrapper.find('.map-getters').text().trim()).toBe('value_1')
+  //   expect(wrapper.vm.list).toBe(dataList)
+  // })
+
+  // it('render siderbar fro getters', () => {
+  //   const wrapper = shallowMount(DashboardMap, {
+  //     mocks: {
+  //       $store: {
+  //         getters: {
+  //           sidebar: {opened: true}
+  //         }
+  //       }
+  //     }
+  //   })
+
+  //   expect(wrapper.is('opened')).toBe(true)
+  // // })
+  // it('renders getters', () => {
+  //   const wrapper = shallow(getters, {
+  //     localVue,
+  //     computed: {
+  //       sidebar: () => 'value'
+  //     }
+  //   })
+  //   expect(wrapper.find('.map-getters').text()).toEqual('value')
+  // })
 })
