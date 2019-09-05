@@ -4,6 +4,7 @@ import moment from 'moment'
 moment.locale('id')
 
 import VueMoment from 'vue-moment'
+import VueTheMask from 'vue-the-mask'
 
 import Cookies from 'js-cookie'
 
@@ -44,6 +45,7 @@ Vue.use(VueMoment, {
   moment
 })
 
+Vue.use(VueTheMask)
 // register global utility filters.
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])
