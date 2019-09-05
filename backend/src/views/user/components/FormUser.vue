@@ -661,7 +661,7 @@ export default {
     },
     filterRole() {
       const ruleOptions = this.opsiPeran
-      if (this.isEdit && !this.isProfile) {
+      if ((this.isEdit && !this.isProfile) || (!this.isEdit && !this.isProfile)) {
         if (checkPermission(['admin'])) {
           return ruleOptions.slice(1, ruleOptions.length)
         } if (checkPermission(['staffProv'])) {
@@ -673,7 +673,7 @@ export default {
         } if (checkPermission(['staffKel'])) {
           return ruleOptions.slice(6, ruleOptions.length)
         }
-      } 
+      }
       // else if (this.isEdit && !this.isProfile) {
       //   if (this.user.role === 'admin') {
       //     return ruleOptions
