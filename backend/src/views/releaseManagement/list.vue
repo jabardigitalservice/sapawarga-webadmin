@@ -127,9 +127,9 @@ export default {
     cellValueRenderer(row, column, cellValue, index) {
       let value = cellValue
       if (typeof row[column.property] === 'boolean') {
-        if(cellValue===true){
+        if (cellValue === true) {
           value = 'Ya'
-        }else{
+        } else {
           value = 'Tidak'
         }
         // const str = String(cellValue)

@@ -5,7 +5,7 @@
         <el-form ref="form" :model="form" :rules="rules" :status-icon="true" label-width="210px">
 
           <el-form-item label="Version" :prop="validateVersion">
-            <el-input v-model="form.version"  v-mask="'#.#.#'" type="text"  name="version" placeholder="Version (0.0.0)" @focus="changePropVersion" />
+            <el-input v-model="form.version" v-mask="'#.#.#'" type="text" name="version" placeholder="Version (0.0.0)" @focus="changePropVersion" />
           </el-form-item>
 
           <el-form-item label="Force Update" prop="force_update" name="force_update">
