@@ -127,8 +127,13 @@ export default {
     cellValueRenderer(row, column, cellValue, index) {
       let value = cellValue
       if (typeof row[column.property] === 'boolean') {
-        const str = String(cellValue)
-        value = str.charAt(0).toUpperCase() + str.slice(1)
+        if(cellValue===true){
+          value = 'Ya'
+        }else{
+          value = 'Tidak'
+        }
+        // const str = String(cellValue)
+        // value = str.charAt(0).toUpperCase() + str.slice(1)
       }
       return value
     }
