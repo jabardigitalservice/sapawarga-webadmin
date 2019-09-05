@@ -13,6 +13,7 @@ import Element from 'element-ui'
 import './styles/element-variables.scss'
 
 import '@/styles/index.scss' // global css
+import '@/styles/main.scss' // costume css
 
 import _ from 'lodash'
 Object.defineProperty(Vue.prototype, '_', { value: _ })
