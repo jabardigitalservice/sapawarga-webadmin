@@ -661,7 +661,7 @@ export default {
     },
     filterRole() {
       const ruleOptions = this.opsiPeran
-      if ((!this.isEdit && !this.isProfile)) {
+      if ((this.isEdit && !this.isProfile) || (!this.isEdit && !this.isProfile)) {
         if (checkPermission(['admin'])) {
           return ruleOptions.slice(1, ruleOptions.length)
         } if (checkPermission(['staffProv'])) {
@@ -671,20 +671,6 @@ export default {
         } if (checkPermission(['staffKec'])) {
           return ruleOptions.slice(5, ruleOptions.length)
         } if (checkPermission(['staffKel'])) {
-          return ruleOptions.slice(6, ruleOptions.length)
-        }
-      } else if (this.isEdit && !this.isProfile) {
-        if (this.user.role === 'admin') {
-          return ruleOptions
-        } else if (this.user.role === 'staffProv') {
-          return ruleOptions.slice(2, ruleOptions.length)
-        } else if (this.user.role === 'staffKabkota') {
-          return ruleOptions.slice(3, ruleOptions.length)
-        } else if (this.user.role === 'staffKec') {
-          return ruleOptions.slice(4, ruleOptions.length)
-        } else if (this.user.role === 'staffKel') {
-          return ruleOptions.slice(5, ruleOptions.length)
-        } else if (this.user.role === 'staffRW') {
           return ruleOptions.slice(6, ruleOptions.length)
         }
       }
