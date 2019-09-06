@@ -680,7 +680,7 @@ export default {
 
   watch: {
     'user.kabkota'(oldVal, newVal) {
-      if (newVal !== '' && this.isEdit === false && this.isProfile === false) {
+      if ((newVal !== '' && this.isEdit === false && this.isProfile === false) || (newVal !== '' && this.isEdit === true && this.isProfile === false) ) {
         this.user.kecamatan = ''
         this.user.kelurahan = ''
         this.user.rt = ''
@@ -688,14 +688,14 @@ export default {
       }
     },
     'user.kecamatan'(oldVal, newVal) {
-      if (newVal !== '' && this.isEdit === false && this.isProfile === false) {
+      if ((newVal !== '' && this.isEdit === false && this.isProfile === false) || (newVal !== '' && this.isEdit === true && this.isProfile === false) ) {
         this.user.kelurahan = ''
         this.user.rt = ''
         this.user.rw = ''
       }
     },
     'user.kelurahan'(oldVal, newVal) {
-      if (newVal !== '' && this.isEdit === false && this.isProfile === false) {
+      if ((newVal !== '' && this.isEdit === false && this.isProfile === false) || (newVal !== '' && this.isEdit === true && this.isProfile === false) ) {
         this.user.rt = ''
         this.user.rw = ''
       }
