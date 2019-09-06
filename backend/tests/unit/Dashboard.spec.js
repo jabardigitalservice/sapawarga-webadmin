@@ -5,9 +5,14 @@ import ListFilter from '@/views/dashboard/admin/components/_listfilter'
 import * as apiDashboard from '@/api/dashboard'
 import aspirasiMostLikesFixture from './fixtures/aspirasiMostLikes'
 import ElementUI from 'element-ui'
+import flushPromises from 'flush-promises'
 import Vuex from 'vuex'
 import usulanGeoFixture from './fixtures/usulanGeo'
 import { fetchAspirasiMap } from '@/api/dashboard'
+
+// code ini ga kepake. Perlu konfirmasi oleh Aldi Rohman
+// import usulanGeoFixture from './fixtures/usulanGeo'
+// import { fetchAspirasiMap } from '@/api/dashboard'
 
 const localVue = createLocalVue()
 localVue.use(ElementUI)
