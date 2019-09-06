@@ -2,6 +2,8 @@ import { shallowMount, createLocalVue } from '@vue/test-utils'
 import DashboardUsulan from '@/views/dashboard/admin/components/Usulan'
 import DashboardApproval from '@/views/dashboard/admin/components/Approval'
 import ListFilter from '@/views/dashboard/admin/components/_listfilter'
+import * as apiDashboard from '@/api/dashboard'
+import aspirasiMostLikesFixture from './fixtures/aspirasiMostLikes'
 import ElementUI from 'element-ui'
 import Vuex from 'vuex'
 import usulanGeoFixture from './fixtures/usulanGeo'
@@ -16,16 +18,26 @@ beforeEach(() => {
   jest.clearAllMocks()
 })
 
+jest.mock('@/api/dashboard')
+apiDashboard.fetchAspirasiMostLikes = () => Promise.resolve(aspirasiMostLikesFixture)
+
 describe('List dashboard usulan', () => {
-  it('render list usulan', () => {
+  const expectedList = aspirasiMostLikesFixture.data.items
+  it('render list usulan', async() => {
     const wrapper = shallowMount(DashboardUsulan, {
       localVue
     })
 
-    wrapper.vm.getList()
-    wrapper.vm.resetFilter()
+    await flushPromises()
 
+    // ini ga perlu. Dikarenakan ketika mount sudah dipanggil di "create"
+    // wrapper.vm.getList()
+
+    expect(wrapper.vm.list).toBe(expectedList)
     expect(wrapper.contains(ListFilter)).toBe(true)
+
+    wrapper.vm.resetFilter()
+    expect(wrapper.vm.list).toBe(expectedList)
   })
 
   it('render _listfilter', () => {
