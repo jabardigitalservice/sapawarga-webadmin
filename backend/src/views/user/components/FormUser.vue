@@ -348,7 +348,7 @@ export default {
           },
           {
             max: 255,
-            message: 'Username maksimal 14 karakter',
+            message: 'Username maksimal 255 karakter',
             trigger: 'blur'
           },
           {
