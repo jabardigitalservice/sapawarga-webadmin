@@ -13,7 +13,7 @@
         </el-row>
 
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%" @sort-change="changeSort">
-          <!-- <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" /> -->
+          <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
 
           <el-table-column prop="version" sortable="custom" label="Version" min-width="150" />
 
@@ -33,7 +33,7 @@
           </el-table-column>
         </el-table>
 
-        <!-- <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" /> -->
+        <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
       </el-col>
     </el-row>
   </div>
@@ -41,12 +41,12 @@
 
 <script>
 import { fetchList } from '@/api/releaseManagement'
-// import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
+import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 import { deleteData } from '@/api/releaseManagement'
 
 export default {
   components: {
-    // Pagination,
+    Pagination
   },
 
   props: {
@@ -64,8 +64,8 @@ export default {
       listQuery: {
         type: null,
         version: null,
-        sort_by: 'name',
-        sort_order: 'ascending',
+        sort_by: 'created_at',
+        sort_order: 'descending',
         page: 1,
         limit: 10
       }
@@ -79,7 +79,7 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
-      fetchList().then(response => {
+      fetchList(this.listQuery).then(response => {
         this.list = response.data.items
         this.total = response.data._meta.totalCount
         this.listLoading = false
@@ -88,13 +88,12 @@ export default {
 
     resetFilter() {
       Object.assign(this.$data.listQuery, this.$options.data().listQuery)
-
       this.getList()
     },
 
-    // getTableRowNumbering(index) {
-    //   return ((this.listQuery.page - 1) * this.listQuery.limit) + (index + 1)
-    // },
+    getTableRowNumbering(index) {
+      return ((this.listQuery.page - 1) * this.listQuery.limit) + (index + 1)
+    },
 
     changeSort(e) {
       this.listQuery.sort_by = e.prop
@@ -132,8 +131,6 @@ export default {
         } else {
           value = 'Tidak'
         }
-        // const str = String(cellValue)
-        // value = str.charAt(0).toUpperCase() + str.slice(1)
       }
       return value
     }
