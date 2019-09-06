@@ -92,35 +92,8 @@ describe('List dashboard usulan', () => {
   //     }
   //   })
 
-  //   // const wrapper = shallowMount(getters, {
-  //   //   localVue
-  //   // })
-
   //   wrapper.setData({ list: dataList })
-  //   // expect(wrapper.find('.map-getters').text().trim()).toBe('value_1')
   //   expect(wrapper.vm.list).toBe(dataList)
   // })
 
-  // it('render siderbar fro getters', () => {
-  //   const wrapper = shallowMount(DashboardMap, {
-  //     mocks: {
-  //       $store: {
-  //         getters: {
-  //           sidebar: {opened: true}
-  //         }
-  //       }
-  //     }
-  //   })
-
-  //   expect(wrapper.is('opened')).toBe(true)
-  // // })
-  // it('renders getters', () => {
-  //   const wrapper = shallow(getters, {
-  //     localVue,
-  //     computed: {
-  //       sidebar: () => 'value'
-  //     }
-  //   })
-  //   expect(wrapper.find('.map-getters').text()).toEqual('value')
-  // })
 })
