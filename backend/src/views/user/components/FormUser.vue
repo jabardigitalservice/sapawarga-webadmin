@@ -857,6 +857,7 @@ export default {
         this.user.phone = dataUser.phone
         this.user.address = dataUser.address
         this.user.role = dataUser.role_id
+        console.log(this.user)
       }).catch()
     },
     submitForm(formName) {
@@ -941,8 +942,13 @@ export default {
             name: this.user.name,
             email: this.user.email,
             phone: this.user.phone,
-            address: this.user.address,
+            role_id: this.user.role,
+            kabkota_id: this.user.kabkota.id || this.id_kabkota,
+            kec_id: this.user.kecamatan.id || this.id_kec,
+            kel_id: this.user.kelurahan.id || this.id_kel,
+            rw: this.user.rw,
             rt: this.user.rt,
+            address: this.user.address,
             facebook: this.user.facebook,
             twitter: this.user.twitter,
             instagram: this.user.instagram,
@@ -954,6 +960,7 @@ export default {
             userEdit['password'] = this.user.confirmation
           }
           editUser(userEdit, id).then(response => {
+            console.log(userEdit)
             Message({
               message: 'Data user berhasil diupdate',
               type: 'success',
