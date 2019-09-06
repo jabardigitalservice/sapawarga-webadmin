@@ -20,7 +20,7 @@
           <el-table-column prop="force_update" :formatter="cellValueRenderer" sortable="custom" label="Force Update" min-width="150" />
 
           <el-table-column align="center" label="Actions" min-width="150px">
-            <template slot-scope="scope">
+            <template v-if="scope.$index === 0" slot-scope="scope">
               <router-link :to="'/release-management/edit/' +scope.row.id">
                 <el-button type="white" size="mini">
                   Edit

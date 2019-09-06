@@ -7,7 +7,7 @@ const releaseManagementRouter = {
   redirect: '/release-management/index',
   meta: {
     title: 'Relese Management',
-    roles: ['admin', 'staffProv', 'staffKabkota'],
+    roles: ['admin'],
     icon: 'zip'
   },
   children: [
@@ -17,7 +17,7 @@ const releaseManagementRouter = {
       component: () => import('@/views/releaseManagement/list'),
       meta: {
         title: 'release-management-list',
-        roles: ['admin', 'staffProv', 'staffKabkota']
+        roles: ['admin']
       }
     },
     {
@@ -26,7 +26,7 @@ const releaseManagementRouter = {
       component: () => import('@/views/releaseManagement/create'),
       meta: {
         title: 'release-management-create',
-        roles: ['admin', 'staffProv', 'staffKabkota']
+        roles: ['admin']
       }
     },
     {
@@ -36,7 +36,7 @@ const releaseManagementRouter = {
       hidden: true,
       meta: {
         title: 'release-management-edit',
-        roles: ['admin', 'staffProv', 'staffKabkota']
+        roles: ['admin']
       }
     }
   ]
