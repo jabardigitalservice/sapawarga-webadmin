@@ -4,9 +4,9 @@
       <el-col :lg="24">
         <el-row style="margin: 10px 0px">
           <el-col :span="12">
-          <el-button type="primary" @click="dialogTableVisible = true">
-            Tambah Berita Priority
-          </el-button>
+            <el-button type="primary" @click="dialogTableVisible = true">
+              Tambah Berita Priority
+            </el-button>
           </el-col>
         </el-row>
         <div class="editor-container">
@@ -20,17 +20,17 @@
         @submit-search="getList"
         @reset-search="resetFilter"
       />
-      <el-table :data="gridData">
-        <el-table-column property="name" label="Name" width="200" />
-        <el-table-column property="address" label="Address" />
-        <el-table-column property="date" label="Date" width="150" />
-          <el-table-column align="center" label="Actions" min-width="150px">
-            <template slot-scope="scope">
-                <el-button type="white" size="mini">
-                  Tambah
-                </el-button>
-            </template>
-          </el-table-column>
+      <el-table :data="list">
+        <el-table-column property="title" label="Judul Berita" />
+        <el-table-column property="channel.name" label="Sumber" />
+        <!-- <el-table-column property="date" label="Date" width="150" /> -->
+        <el-table-column align="center" label="Actions">
+          <!-- <template slot-scope="scope"> -->
+          <el-button type="white" size="mini">
+            Tambah
+          </el-button>
+          <!-- </template> -->
+        </el-table-column>
       </el-table>
     </el-dialog>
   </div>
@@ -39,7 +39,7 @@
 <script>
 import elDragDialog from '@/directive/el-dragDialog' // base on element-ui
 import DndList from '@/components/DndList'
-import { fetchList } from '@/api/article'
+import { fetchList } from '@/api/news'
 import ListFilter from './_listfilter'
 
 export default {
@@ -57,6 +57,7 @@ export default {
 
   data() {
     return {
+      list: null,
       list1: [],
       total: 0,
       listLoading: true,
@@ -99,10 +100,9 @@ export default {
     getList() {
       this.listLoading = true
       this.list1 = this.gridData
-      // fetchList().then(response => {
-      //   console.log(response)
-       
-      // })
+      fetchList().then(response => {
+        this.list = response.data.items
+      })
     },
 
     handleDrag() {
@@ -124,28 +124,6 @@ export default {
       this.getList()
     },
 
-    async deleteRelease(id) {
-      try {
-        await this.$confirm(this.$t('crud.delete-confirm'), 'warning', {
-          confirmButtonText: this.$t('common.confirm'),
-          cancelButtonText: this.$t('common.cancel'),
-          type: 'warning'
-        })
-
-        this.listLoading = true
-
-        await deleteData(id)
-
-        this.$message({
-          type: 'success',
-          message: this.$t('crud.delete-success')
-        })
-
-        this.getList()
-      } catch (e) {
-        console.log(e)
-      }
-    },
     cellValueRenderer(row, column, cellValue, index) {
       let value = cellValue
       if (typeof row[column.property] === 'boolean') {
