@@ -68,7 +68,8 @@ export default {
     'news-channels-manage': 'Sumber Berita',
     'news-channels-list': 'Daftar Sumber Berita',
     'news-channels-create': 'Tambah Sumber Berita',
-    'news-channels-edit': 'Edit Sumber Berita'
+    'news-channels-edit': 'Edit Sumber Berita',
+    'news-priority': 'Priority Berita'
 
   },
   crud: {

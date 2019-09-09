@@ -26,6 +26,11 @@
                 Tambah Berita Baru
               </el-button>
             </router-link>
+            <router-link :to="{ path: '/news/priority' }">
+              <el-button type="primary" size="small" icon="el-icon-plus">
+                Berita Priority
+              </el-button>
+            </router-link>
           </el-col>
         </el-row>
 
