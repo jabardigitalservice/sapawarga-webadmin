@@ -61,7 +61,7 @@ import MapThumb from '@/components/MapThumb'
 import { fetchUser } from '@/api/staff'
 import permission from '@/directive/permission/index.js'
 import checkPermission from '@/utils/permission'
-import moment from 'moment'
+import parsingDatetime from '@/utils/datetimeToString'
 
 export default {
   components: { PhotoBox, MapThumb },
@@ -189,15 +189,15 @@ export default {
         this.tableDataTambahan = [
           {
             title: 'Tanggal Dibuat',
-            content: created_at ? moment(created_at * 1000).format('DD MMMM YYYY HH:mm') : '-'
+            content: created_at ? parsingDatetime(created_at) : '-'
           },
           {
             title: 'Tanggal Diperbarui',
-            content: updated_at ? moment(updated_at * 1000).format('DD MMMM YYYY HH:mm') : '-'
+            content: updated_at ? parsingDatetime(updated_at) : '-'
           },
           {
             title: 'Terakhir Login',
-            content: last_login_at ? moment(last_login_at * 1000).format('DD MMMM YYYY HH:mm') : 'Belum Pernah'
+            content: last_login_at ? parsingDatetime(last_login_at) : 'Belum Pernah'
           }
         ]
       })
