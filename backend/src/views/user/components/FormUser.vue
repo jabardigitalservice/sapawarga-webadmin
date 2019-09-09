@@ -45,7 +45,7 @@
           <el-row>
             <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
               <el-form-item label="Peran" prop="role">
-                <el-select v-model="user.role" placeholder="Pilih Peran" :disabled="isProfile">
+                <el-select v-model="user.role" placeholder="Pilih Peran" :disabled="isProfile || isEdit">
                   <el-option
                     v-for="item in filterRole"
                     :key="item.value"
@@ -65,7 +65,7 @@
                   v-if="area !== null"
                   v-model="user.kabkota"
                   placeholder="Pilih Kab/Kota"
-                  :disabled="user.role === ''"
+                  :disabled="user.role === '' || isEdit"
                   @change="getKecamatan"
                 >
                   <el-option
@@ -88,7 +88,7 @@
                 <el-select
                   v-model="user.kecamatan"
                   placeholder="Pilih Kecamatan"
-                  :disabled="(user.kabkota == '' && checkPermission(['admin', 'staffProv']) || user.role === '')"
+                  :disabled="(user.kabkota == '' && checkPermission(['admin', 'staffProv']) || user.role === '' || isEdit)"
                   @change="getKelurahan"
                 >
                   <el-option
@@ -106,7 +106,11 @@
                 label="Desa/Kelurahan"
                 prop="kelurahan"
               >
-                <el-select v-model="user.kelurahan" placeholder="Pilih Desa/Kelurahan" :disabled="(user.kecamatan == '' && checkPermission(['admin', 'staffProv', 'staffKabkota']) || user.role === '')">
+                <el-select
+                  v-model="user.kelurahan"
+                  placeholder="Pilih Desa/Kelurahan"
+                  :disabled="(user.kecamatan == '' && checkPermission(['admin', 'staffProv', 'staffKabkota']) || user.role === '' || isEdit)"
+                >
                   <el-option
                     v-for="item in kelurahan"
                     :key="item.id"
@@ -124,7 +128,7 @@
                 label="RW"
                 prop="rw"
               >
-                <el-input v-model="user.rw" type="text" placeholder="Contoh: 001" :disabled="(user.kelurahan == '' && checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec']) || user.role === '')" />
+                <el-input v-model="user.rw" type="text" placeholder="Contoh: 001" :disabled="(user.kelurahan == '' && checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec']) || user.role === '' || isEdit)" />
               </el-form-item>
             </el-col>
             <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" :style="{paddingLeft: formRightSide}">
@@ -133,7 +137,7 @@
                 label="RT"
                 prop="rt"
               >
-                <el-input v-model="user.rt" type="text" placeholder="Contoh: 002" :disabled="user.rw == '' && checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel'])" />
+                <el-input v-model="user.rt" type="text" placeholder="Contoh: 002" :disabled="user.rw == '' && checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']) || isEdit" />
               </el-form-item>
             </el-col>
           </el-row>
@@ -680,7 +684,7 @@ export default {
 
   watch: {
     'user.kabkota'(oldVal, newVal) {
-      if ((newVal !== '' && this.isEdit === false && this.isProfile === false) || (newVal !== '' && this.isEdit === true && this.isProfile === false) ) {
+      if ((newVal !== '' && this.isEdit === false && this.isProfile === false) || (newVal !== '' && this.isEdit === true && this.isProfile === false)) {
         this.user.kecamatan = ''
         this.user.kelurahan = ''
         this.user.rt = ''
@@ -688,14 +692,14 @@ export default {
       }
     },
     'user.kecamatan'(oldVal, newVal) {
-      if ((newVal !== '' && this.isEdit === false && this.isProfile === false) || (newVal !== '' && this.isEdit === true && this.isProfile === false) ) {
+      if ((newVal !== '' && this.isEdit === false && this.isProfile === false) || (newVal !== '' && this.isEdit === true && this.isProfile === false)) {
         this.user.kelurahan = ''
         this.user.rt = ''
         this.user.rw = ''
       }
     },
     'user.kelurahan'(oldVal, newVal) {
-      if ((newVal !== '' && this.isEdit === false && this.isProfile === false) || (newVal !== '' && this.isEdit === true && this.isProfile === false) ) {
+      if ((newVal !== '' && this.isEdit === false && this.isProfile === false) || (newVal !== '' && this.isEdit === true && this.isProfile === false)) {
         this.user.rt = ''
         this.user.rw = ''
       }
