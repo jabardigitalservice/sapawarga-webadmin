@@ -7,12 +7,7 @@ import aspirasiMostLikesFixture from './fixtures/aspirasiMostLikes'
 import ElementUI from 'element-ui'
 import flushPromises from 'flush-promises'
 import Vuex from 'vuex'
-import usulanGeoFixture from './fixtures/usulanGeo'
-import { fetchAspirasiMap } from '@/api/dashboard'
-
-// code ini ga kepake. Perlu konfirmasi oleh Aldi Rohman
-// import usulanGeoFixture from './fixtures/usulanGeo'
-// import { fetchAspirasiMap } from '@/api/dashboard'
+import DashboardMap from '@/views/dashboard/admin/components/MapData'
 
 const localVue = createLocalVue()
 localVue.use(ElementUI)
@@ -75,25 +70,34 @@ describe('List dashboard usulan', () => {
     expect(wrapper.is(DashboardApproval)).toBe(true)
   })
 
-  // it('get list usulan geo', () => {
-  //   const dataList = [
-  //     {
-  //       name: 'KOTA BANDUNG',
-  //       counts: '16',
-  //       kabkota_id: '22',
-  //       latitude: '107.590417459601',
-  //       longitude: '-6.95981961897412'
-  //     }
-  //   ]
-  //   const wrapper = shallowMount(DashboardMap, {
-  //     localVue,
-  //     stubs: {
-  //       fetchAspirasiMap: true
-  //     }
-  //   })
+  it('get list usulan geo', () => {
+    const dataList = [
+      {
+        name: 'KOTA BANDUNG',
+        counts: '16',
+        kabkota_id: '22',
+        latitude: '107.590417459601',
+        longitude: '-6.95981961897412'
+      }
+    ]
 
-  //   wrapper.setData({ list: dataList })
-  //   expect(wrapper.vm.list).toBe(dataList)
-  // })
+    const stateSidebar =
+      {
+        opened: true
+      }
 
+    const wrapper = shallowMount(DashboardMap, {
+      localVue,
+      computed: {
+        sidebar: () => true
+      },
+      stubs: {
+        fetchAspirasiMap: true
+      }
+    })
+
+    wrapper.setData({ list: dataList })
+    expect(wrapper.vm.list).toBe(dataList)
+    expect(wrapper.vm.sidebar).toBe(stateSidebar.opened)
+  })
 })
