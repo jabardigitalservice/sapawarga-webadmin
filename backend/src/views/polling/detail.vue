@@ -53,6 +53,7 @@ export default {
   methods: {
     getDetail() {
       fetchRecord(this.id).then(response => {
+        console.log(response)
         const { kabkota, kecamatan, kelurahan, rw, name, category, description, excerpt, start_date, end_date, question, status, status_label, answers } = response.data
         this.polling = response.data
 
