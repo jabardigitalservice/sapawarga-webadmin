@@ -41,25 +41,24 @@
             </template>
           </el-table-column>
 
-          <el-table-column align="center" label="Actions" min-width="250px">
+          <el-table-column align="center" label="Actions" min-width="170px">
             <template slot-scope="scope">
               <router-link :to="'/user/detail/'+scope.row.id">
-                <el-button type="white" size="mini">
-                  View
-                </el-button>
+                <el-tooltip content="Lihat Pengguna" placement="top">
+                  <el-button type="primary" icon="el-icon-view" size="small" />
+                </el-tooltip>
               </router-link>
               <router-link :to="'/user/edit/'+scope.row.id">
-                <el-button type="white" size="mini">
-                  Edit
-                </el-button>
+                <el-tooltip content="Edit Pengguna" placement="top">
+                  <el-button type="warning" size="small" icon="el-icon-edit" />
+                </el-tooltip>
               </router-link>
-
-              <el-button v-if="scope.row.status === 10" type="danger" size="mini" @click="deactivateUser(scope.row.id)">
-                Deactivate
-              </el-button>
-              <el-button v-if="scope.row.status === 0" type="success" size="mini" @click="activateUser(scope.row.id)">
-                Activate
-              </el-button>
+              <el-tooltip content="Nonaktifkan Pengguna" placement="top">
+                <el-button v-if="scope.row.status === 10" type="danger" icon="el-icon-circle-close" size="small" @click="deactivateUser(scope.row.id)" />
+              </el-tooltip>
+              <el-tooltip content="Aktifkan Pengguna" placement="top">
+                <el-button v-if="scope.row.status === 0" type="success" icon="el-icon-circle-check" size="small" @click="activateUser(scope.row.id)" />
+              </el-tooltip>
 
             </template>
           </el-table-column>

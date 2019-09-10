@@ -1,30 +1,43 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import DashboardUsulan from '@/views/dashboard/admin/components/Usulan'
-import DashboardMap from '@/views/dashboard/admin/components/MapData'
 import DashboardApproval from '@/views/dashboard/admin/components/Approval'
 import ListFilter from '@/views/dashboard/admin/components/_listfilter'
+import * as apiDashboard from '@/api/dashboard'
+import aspirasiMostLikesFixture from './fixtures/aspirasiMostLikes'
 import ElementUI from 'element-ui'
-import usulanGeoFixture from './fixtures/usulanGeo'
-import { fetchAspirasiMap } from '@/api/dashboard'
+import flushPromises from 'flush-promises'
+import Vuex from 'vuex'
+import DashboardMap from '@/views/dashboard/admin/components/MapData'
 
 const localVue = createLocalVue()
 localVue.use(ElementUI)
+localVue.use(Vuex)
 
 beforeEach(() => {
   jest.resetModules()
   jest.clearAllMocks()
 })
 
+jest.mock('@/api/dashboard')
+apiDashboard.fetchAspirasiMostLikes = () => Promise.resolve(aspirasiMostLikesFixture)
+
 describe('List dashboard usulan', () => {
-  it('render list usulan', () => {
+  const expectedList = aspirasiMostLikesFixture.data.items
+  it('render list usulan', async() => {
     const wrapper = shallowMount(DashboardUsulan, {
       localVue
     })
 
-    wrapper.vm.getList()
-    wrapper.vm.resetFilter()
+    await flushPromises()
 
+    // ini ga perlu. Dikarenakan ketika mount sudah dipanggil di "create"
+    // wrapper.vm.getList()
+
+    expect(wrapper.vm.list).toBe(expectedList)
     expect(wrapper.contains(ListFilter)).toBe(true)
+
+    wrapper.vm.resetFilter()
+    expect(wrapper.vm.list).toBe(expectedList)
   })
 
   it('render _listfilter', () => {
@@ -67,15 +80,24 @@ describe('List dashboard usulan', () => {
         longitude: '-6.95981961897412'
       }
     ]
+
+    const stateSidebar =
+      {
+        opened: true
+      }
+
     const wrapper = shallowMount(DashboardMap, {
       localVue,
+      computed: {
+        sidebar: () => true
+      },
       stubs: {
         fetchAspirasiMap: true
       }
     })
 
     wrapper.setData({ list: dataList })
-
     expect(wrapper.vm.list).toBe(dataList)
+    expect(wrapper.vm.sidebar).toBe(stateSidebar.opened)
   })
 })

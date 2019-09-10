@@ -20,7 +20,7 @@
           :rules="rules"
         >
           <el-form-item label="Username" :prop="usernameValidation">
-            <el-input v-model="user.username" type="text" :disabled="isEdit" @focus="changePropUsername" />
+            <el-input v-model="user.username" type="text" @focus="changePropUsername" />
           </el-form-item>
           <el-form-item label="Nama Lengkap" prop="name">
             <el-input v-model="user.name" type="text" />
@@ -45,7 +45,7 @@
           <el-row>
             <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
               <el-form-item label="Peran" prop="role">
-                <el-select v-model="user.role" placeholder="Pilih Peran" :disabled="isEdit">
+                <el-select v-model="user.role" placeholder="Pilih Peran" :disabled="isProfile || isEdit">
                   <el-option
                     v-for="item in filterRole"
                     :key="item.value"
@@ -57,7 +57,7 @@
             </el-col>
             <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" :style="{paddingLeft: formRightSide}">
               <el-form-item
-                v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && checkPermission(['admin', 'staffProv']))"
+                v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffSaberhoax') && checkPermission(['admin', 'staffProv']))"
                 label="Kab/Kota"
                 prop="kabkota"
               >
@@ -65,7 +65,7 @@
                   v-if="area !== null"
                   v-model="user.kabkota"
                   placeholder="Pilih Kab/Kota"
-                  :disabled="isEdit || user.role === ''"
+                  :disabled="user.role === '' || isEdit"
                   @change="getKecamatan"
                 >
                   <el-option
@@ -81,14 +81,14 @@
           <el-row>
             <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
               <el-form-item
-                v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && checkPermission(['admin', 'staffProv', 'staffKabkota']))"
+                v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffSaberhoax') && checkPermission(['admin', 'staffProv', 'staffKabkota']))"
                 label="Kecamatan"
                 prop="kecamatan"
               >
                 <el-select
                   v-model="user.kecamatan"
                   placeholder="Pilih Kecamatan"
-                  :disabled="(user.kabkota == '' && checkPermission(['admin', 'staffProv']) || isEdit || user.role === '')"
+                  :disabled="(user.kabkota == '' && checkPermission(['admin', 'staffProv']) || user.role === '' || isEdit)"
                   @change="getKelurahan"
                 >
                   <el-option
@@ -102,11 +102,15 @@
             </el-col>
             <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" :style="{paddingLeft: formRightSide}">
               <el-form-item
-                v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffKec') && ! checkPermission(['staffKel']))"
+                v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffKec') && !(user.role == 'staffSaberhoax') && ! checkPermission(['staffKel']))"
                 label="Desa/Kelurahan"
                 prop="kelurahan"
               >
-                <el-select v-model="user.kelurahan" placeholder="Pilih Desa/Kelurahan" :disabled="(user.kecamatan == '' && checkPermission(['admin', 'staffProv', 'staffKabkota']) || isEdit || user.role === '')">
+                <el-select
+                  v-model="user.kelurahan"
+                  placeholder="Pilih Desa/Kelurahan"
+                  :disabled="(user.kecamatan == '' && checkPermission(['admin', 'staffProv', 'staffKabkota']) || user.role === '' || isEdit)"
+                >
                   <el-option
                     v-for="item in kelurahan"
                     :key="item.id"
@@ -120,20 +124,20 @@
           <el-row>
             <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
               <el-form-item
-                v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffKec') && !(user.role == 'staffKel'))"
+                v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffKec') && !(user.role == 'staffKel') && !(user.role == 'staffSaberhoax'))"
                 label="RW"
                 prop="rw"
               >
-                <el-input v-model="user.rw" type="text" placeholder="Contoh: 001" :disabled="(user.kelurahan == '' && checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec']) || isEdit || user.role === '')" />
+                <el-input v-model="user.rw" type="text" placeholder="Contoh: 001" :disabled="(user.kelurahan == '' && checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec']) || user.role === '')" />
               </el-form-item>
             </el-col>
             <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" :style="{paddingLeft: formRightSide}">
               <el-form-item
-                v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffKec') && !(user.role == 'staffKel'))"
+                v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffKec') && !(user.role == 'staffKel') && !(user.role == 'staffSaberhoax'))"
                 label="RT"
                 prop="rt"
               >
-                <el-input v-model="user.rt" type="text" placeholder="Contoh: 002" :disabled="user.rw == '' && checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']) || isEdit" />
+                <el-input v-model="user.rt" type="text" placeholder="Contoh: 002" :disabled="user.rw == '' && checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel'])" />
               </el-form-item>
             </el-col>
           </el-row>
@@ -295,6 +299,10 @@ export default {
           value: 'admin'
         },
         {
+          label: 'Admin Saber Hoax',
+          value: 'staffSaberhoax'
+        },
+        {
           label: 'Admin Provinsi',
           value: 'staffProv'
         },
@@ -344,7 +352,7 @@ export default {
           },
           {
             max: 255,
-            message: 'Username maksimal 14 karakter',
+            message: 'Username maksimal 255 karakter',
             trigger: 'blur'
           },
           {
@@ -657,20 +665,18 @@ export default {
     },
     filterRole() {
       const ruleOptions = this.opsiPeran
-      if ((!this.isEdit && !this.isProfile) || (this.isEdit && !this.isProfile)) {
+      if ((this.isEdit && !this.isProfile) || (!this.isEdit && !this.isProfile)) {
         if (checkPermission(['admin'])) {
           return ruleOptions.slice(1, ruleOptions.length)
         } if (checkPermission(['staffProv'])) {
-          return ruleOptions.slice(2, ruleOptions.length)
-        } if (checkPermission(['staffKabkota'])) {
           return ruleOptions.slice(3, ruleOptions.length)
-        } if (checkPermission(['staffKec'])) {
+        } if (checkPermission(['staffKabkota'])) {
           return ruleOptions.slice(4, ruleOptions.length)
-        } if (checkPermission(['staffKel'])) {
+        } if (checkPermission(['staffKec'])) {
           return ruleOptions.slice(5, ruleOptions.length)
+        } if (checkPermission(['staffKel'])) {
+          return ruleOptions.slice(6, ruleOptions.length)
         }
-      } else if (this.isEdit && this.isProfile) {
-        return ruleOptions
       }
       return ruleOptions
     }
@@ -936,11 +942,13 @@ export default {
         if (valid) {
           this.loading = true
           const userEdit = {
+            username: this.user.username,
             name: this.user.name,
             email: this.user.email,
             phone: this.user.phone,
-            address: this.user.address,
+            rw: this.user.rw,
             rt: this.user.rt,
+            address: this.user.address,
             facebook: this.user.facebook,
             twitter: this.user.twitter,
             instagram: this.user.instagram,
