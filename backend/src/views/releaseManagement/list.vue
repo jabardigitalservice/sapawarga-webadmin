@@ -15,9 +15,9 @@
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%" @sort-change="changeSort">
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
 
-          <el-table-column prop="version" sortable="custom" label="Version" min-width="150" />
+          <el-table-column prop="version" label="Version" min-width="150" />
 
-          <el-table-column prop="force_update" :formatter="cellValueRenderer" sortable="custom" label="Force Update" min-width="150" />
+          <el-table-column prop="force_update" :formatter="cellValueRenderer" label="Force Update" min-width="150" />
 
           <el-table-column align="center" label="Actions" min-width="150px">
             <template v-if="scope.$index === 0" slot-scope="scope">

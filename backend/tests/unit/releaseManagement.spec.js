@@ -14,6 +14,14 @@ beforeEach(() => {
 })
 
 describe('Categories', () => {
+  const build = () => {
+    // arrange
+    const wrapper = shallowMount(releaseManagementList, { localVue })
+    return {
+      wrapper
+    }
+  }
+
   it('call create form', () => {
     const wrapper = shallowMount(releaseManagementCreate, {
       localVue
@@ -21,11 +29,10 @@ describe('Categories', () => {
 
     expect(wrapper.find(Form).exists()).toBe(true)
   })
-  it('call list release management', () => {
-    const wrapper = shallowMount(releaseManagementList, {
-      localVue
-    })
 
-    expect(wrapper.find(releaseManagementList).exists()).toBe(true)
+  it('renders the component', () => {
+    const { wrapper } = build()
+    // assert
+    expect(wrapper.html()).toMatchSnapshot()
   })
 })
