@@ -196,7 +196,7 @@ import { requestArea, requestKecamatan, requestKelurahan, createUser, fetchUser,
 import { fetchProfile, update } from '@/api/user'
 import { Message } from 'element-ui'
 import InputMap from '@/components/InputMap'
-import { validCoordinate } from '@/utils/validate'
+import { validCoordinate, containsWhitespace } from '@/utils/validate'
 
 export default {
   components: { uploadPhoto, InputMap },
@@ -268,6 +268,13 @@ export default {
         callback(new Error('Koordinat Lokasi tidak sesuai'))
       }
 
+      callback()
+    }
+
+    const whitespaceText = (rule, value, callback) => {
+      if (containsWhitespace(value) === true) {
+        callback(new Error('Text yang diisi tidak valid'))
+      }
       callback()
     }
 
@@ -360,6 +367,10 @@ export default {
             message:
               'Username hanya boleh menggunakan huruf kecil, angka, underscore dan titik',
             trigger: 'blur'
+          },
+          {
+            validator: whitespaceText,
+            trigger: 'blur'
           }
         ],
         errorUsername: [
@@ -370,6 +381,10 @@ export default {
           }
         ],
         name: [
+          {
+            validator: whitespaceText,
+            trigger: 'blur'
+          },
           {
             required: true,
             message: 'Nama Lengkap harus diisi',
@@ -387,6 +402,10 @@ export default {
           }
         ],
         email: [
+          {
+            validator: whitespaceText,
+            trigger: 'blur'
+          },
           {
             required: true,
             message: 'Email harus diisi',
@@ -497,6 +516,10 @@ export default {
         ],
         address: [
           {
+            validator: whitespaceText,
+            trigger: 'blur'
+          },
+          {
             required: true,
             message: 'Alamat harus diisi',
             trigger: 'blur'
@@ -586,6 +609,10 @@ export default {
         ],
         twitter: [
           {
+            validator: whitespaceText,
+            trigger: 'blur'
+          },
+          {
             required: false,
             trigger: 'blur'
           },
@@ -597,6 +624,10 @@ export default {
         ],
         facebook: [
           {
+            validator: whitespaceText,
+            trigger: 'blur'
+          },
+          {
             required: false,
             trigger: 'blur'
           },
@@ -607,6 +638,10 @@ export default {
           }
         ],
         instagram: [
+          {
+            validator: whitespaceText,
+            trigger: 'blur'
+          },
           {
             required: false,
             trigger: 'blur'
