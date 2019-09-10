@@ -10,8 +10,8 @@ export function fetchList(query) {
 
 export function fetchRecord(id) {
   return request({
-    // url: `/polling/${id}`,
-    url: `/polling/${id}/result`,
+    url: `/polling/${id}`,
+    // url: `/polling/${id}/result`,
     method: 'get'
   })
 }
