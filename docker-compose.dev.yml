@@ -3,6 +3,10 @@ services:
   app:
     build:
       context: ./backend
+      args:
+        - NODE_ENV=$NODE_ENV
+        - VUE_APP_BASE_API=$VUE_APP_BASE_API
+        - VUE_APP_GOOGLE_API_KEY=$VUE_APP_GOOGLE_API_KEY
     image: registry.gitlab.com/jdsteam/sapa-warga/sapawarga-webadmin:${VERSION}
     networks:
       - internal
