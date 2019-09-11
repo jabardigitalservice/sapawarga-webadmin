@@ -66,9 +66,9 @@ build_dev:
     - apk add --no-cache py-pip python-dev libffi-dev openssl-dev gcc libc-dev make
     - pip install docker-compose
   script:
-    - docker-compose -f docker-compose.dev.yml build
+    - docker-compose build
     - docker images
-    - docker-compose -f docker-compose.dev.yml push
+    - docker-compose push
 
 test_webadmin:
   image: docker:stable
@@ -85,13 +85,13 @@ test_webadmin:
     - apk add --no-cache py-pip python-dev libffi-dev openssl-dev gcc libc-dev make
     - pip install docker-compose
   script:
-    - docker-compose -f docker-compose.dev.yml pull
+    - docker-compose pull
     - docker images
-    - COMPOSE_HTTP_TIMEOUT=500 docker-compose -f docker-compose.dev.yml up -d
+    - COMPOSE_HTTP_TIMEOUT=500 docker-compose up -d
     - sleep 60
     - docker ps
-    - docker-compose -f docker-compose.dev.yml exec -T app npm run lint
-    - docker-compose -f docker-compose.dev.yml exec -T app npm run test:unit
+    - docker-compose exec -T app npm run lint
+    - docker-compose exec -T app npm run test:unit
 
 release_all:
   image: docker:stable
@@ -108,7 +108,7 @@ release_all:
     - apk add --no-cache py-pip python-dev libffi-dev openssl-dev gcc libc-dev make
     - pip install docker-compose
   script:
-    - docker-compose -f docker-compose.dev.yml pull
+    - docker-compose pull
     - docker images
     - docker push registry.gitlab.com/jdsteam/sapa-warga/sapawarga-webadmin:${VERSION}
 
