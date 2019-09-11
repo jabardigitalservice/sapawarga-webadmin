@@ -11,7 +11,13 @@ export function fetchList(query) {
 export function fetchRecord(id) {
   return request({
     url: `/polling/${id}`,
-    // url: `/polling/${id}/result`,
+    method: 'get'
+  })
+}
+
+export function fetchResult(id) {
+  return request({
+    url: `/polling/${id}/result`,
     method: 'get'
   })
 }
