@@ -6,6 +6,7 @@
 import echarts from 'echarts'
 require('echarts/theme/macarons') // echarts theme
 import { debounce } from '@/utils'
+import { fetchResult } from '@/api/polling'
 
 export default {
   props: {
@@ -24,10 +25,14 @@ export default {
   },
   data() {
     return {
-      chart: null
+      chart: null,
+      id: null,
+      result: null
     }
   },
   mounted() {
+    this.id = this.$route.params && this.$route.params.id
+    this.getResult()
     this.initChart()
     this.__resizeHandler = debounce(() => {
       if (this.chart) {
@@ -45,6 +50,15 @@ export default {
     this.chart = null
   },
   methods: {
+    getResult() {
+      fetchResult(this.id).then(response => {
+        this.result = response.data
+        console.log(this.result)
+        this.result.forEach(function(element) {
+          console.log(element)
+        })
+      })
+    },
     initChart() {
       this.chart = echarts.init(this.$el, 'macarons')
 
@@ -66,16 +80,17 @@ export default {
             roseType: 'radius',
             radius: [15, 95],
             center: ['50%', '38%'],
-            data: [
-              { value: 320, name: 'Industries' },
-              { value: 240, name: 'Technology' },
-              { value: 149, name: 'Forex' },
-              { value: 100, name: 'Gold' },
-              { value: 59, name: 'Forecasts' },
-              { value: 100, name: 'silver' },
-              { value: 59, name: 'Sangat memuaskan' },
-              { value: 100, name: 'Terlalu memuaskan' },
-            ],
+            data: this.result,
+            // data: [
+            //   { value: 320, name: 'Industries' },
+            //   { value: 240, name: 'Technology' },
+            //   { value: 149, name: 'Forex' },
+            //   { value: 100, name: 'Gold' },
+            //   { value: 59, name: 'Forecasts' },
+            //   { value: 100, name: 'silver' },
+            //   { value: 59, name: 'Sangat memuaskan' },
+            //   { value: 100, name: 'Terlalu memuaskan' },
+            // ],
             animationEasing: 'cubicInOut',
             animationDuration: 2600
           }
