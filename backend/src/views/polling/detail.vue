@@ -38,7 +38,7 @@
 
 <script>
 import PollingChart from '@/components/PollingChart'
-import { fetchRecord, update } from '@/api/polling'
+import { fetchRecord, fetchResult, update } from '@/api/polling'
 import moment from 'moment'
 export default {
 components: {
@@ -61,11 +61,11 @@ components: {
   created() {
     this.id = this.$route.params && this.$route.params.id
     this.getDetail()
+    this.getResult()
   },
   methods: {
     getDetail() {
       fetchRecord(this.id).then(response => {
-        console.log(response)
         const { kabkota, kecamatan, kelurahan, rw, name, category, description, excerpt, start_date, end_date, question, status, status_label, answers } = response.data
         this.polling = response.data
 
@@ -157,6 +157,12 @@ components: {
             content: answers.map(logArrayAnswers)
           }
         ]
+      })
+    },
+    getResult() {
+      fetchResult(this.id).then(response => {
+        const one = response.data
+        console.log(one)
       })
     },
     async submitForm(status) {
