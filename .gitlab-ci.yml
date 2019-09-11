@@ -49,7 +49,7 @@ code_quality:
       codequality: gl-code-quality-report.json
     expire_in: 1 week
 
-build_dev:
+build_prod:
   image: docker:stable
   stage: build
   only:
@@ -90,6 +90,11 @@ test_webadmin:
     - apk add --no-cache py-pip python-dev libffi-dev openssl-dev gcc libc-dev make
     - pip install docker-compose
   script:
+    - cp .env-template .env
+    - sed -i "s/%NODE_ENV%/production/g" .env
+    - sed -i "s/%VUE_APP_BASE_API%/${VUE_APP_BASE_API}/g" .env
+    - sed -i "s/%GOOGLE_MAPS_WEB_API_KEY%/${GOOGLE_MAPS_WEB_API_KEY}/g" .env
+    - cat .env
     - docker-compose pull
     - docker images
     - COMPOSE_HTTP_TIMEOUT=500 docker-compose up -d
