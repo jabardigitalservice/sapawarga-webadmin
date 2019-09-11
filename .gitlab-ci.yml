@@ -118,6 +118,11 @@ release_all:
     - apk add --no-cache py-pip python-dev libffi-dev openssl-dev gcc libc-dev make
     - pip install docker-compose
   script:
+    - cp .env-template .env
+    - sed -i "s/%NODE_ENV%/development/g" .env
+    - sed -i "s/%VUE_APP_BASE_API%/${VUE_APP_BASE_API}/g" .env
+    - sed -i "s/%GOOGLE_MAPS_WEB_API_KEY%/${GOOGLE_MAPS_WEB_API_KEY}/g" .env
+    - cat .env
     - docker-compose pull
     - docker images
     - docker push registry.gitlab.com/jdsteam/sapa-warga/sapawarga-webadmin:${VERSION}
