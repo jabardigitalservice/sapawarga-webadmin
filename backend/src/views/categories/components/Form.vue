@@ -20,8 +20,10 @@
           </el-form-item>
 
           <el-form-item>
-            <el-button type="primary" :loading="loading" @click="submitProcess">{{ $t('crud.save-publish') }}</el-button>
-
+            <el-button type="primary" :loading="loading" @click="submitProcess">
+              <span v-if="isEdit === true">{{ $t('crud.save-update') }}</span>
+              <span v-else>{{ $t('crud.save-publish') }}</span>
+            </el-button>
             <router-link :to="'/categories/index'">
               <el-button type="info">{{ $t('crud.cancel') }}</el-button>
             </router-link>
