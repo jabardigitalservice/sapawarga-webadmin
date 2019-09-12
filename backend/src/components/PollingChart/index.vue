@@ -33,7 +33,6 @@ export default {
   mounted() {
     this.id = this.$route.params && this.$route.params.id
     this.getResult()
-    this.initChart()
     this.__resizeHandler = debounce(() => {
       if (this.chart) {
         this.chart.resize()
@@ -50,26 +49,15 @@ export default {
     this.chart = null
   },
   methods: {
-    getResult() {
-      const arrayBaru = [
-        { value: 320, name: 'Industries' },
-        { value: 240, name: 'Technology' },
-        { value: 240, name: 'Technology' },
-        { value: 240, name: 'Technology' },
-        { value: 240, name: 'Technology' },
-      ]
-      const arrayLama = []
-      fetchResult(this.id).then(response => { 
+    async getResult() {
+      const arrayTemporary = []
+      await fetchResult(this.id).then(response => { 
         response.data.forEach(function(value, key) {
-          arrayLama.push({'value': value.votes, 'name': value.answer_body})
+          arrayTemporary.push({'value': value.votes, 'name': value.answer_body})
         })
       })
-
-      console.log(arrayBaru)
-      console.log(arrayLama[0])
-            
-      Object.assign(this.result, arrayLama)
-      // console.log(this.result)
+      Object.assign(this.result, arrayTemporary)
+      this.initChart()
     },
     initChart() {
       this.chart = echarts.init(this.$el, 'macarons')

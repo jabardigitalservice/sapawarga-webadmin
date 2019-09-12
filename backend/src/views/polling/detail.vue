@@ -162,7 +162,7 @@ components: {
     getResult() {
       fetchResult(this.id).then(response => {
         const one = response.data
-        console.log(one)
+        
       })
     },
     async submitForm(status) {
