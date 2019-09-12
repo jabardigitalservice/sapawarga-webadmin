@@ -27,7 +27,7 @@ export default {
     return {
       chart: null,
       id: null,
-      result: null
+      result: [],
     }
   },
   mounted() {
@@ -51,13 +51,25 @@ export default {
   },
   methods: {
     getResult() {
-      fetchResult(this.id).then(response => {
-        this.result = response.data
-        console.log(this.result)
-        this.result.forEach(function(element) {
-          console.log(element)
+      const arrayBaru = [
+        { value: 320, name: 'Industries' },
+        { value: 240, name: 'Technology' },
+        { value: 240, name: 'Technology' },
+        { value: 240, name: 'Technology' },
+        { value: 240, name: 'Technology' },
+      ]
+      const arrayLama = []
+      fetchResult(this.id).then(response => { 
+        response.data.forEach(function(value, key) {
+          arrayLama.push({'value': value.votes, 'name': value.answer_body})
         })
       })
+
+      console.log(arrayBaru)
+      console.log(arrayLama[0])
+            
+      Object.assign(this.result, arrayLama)
+      // console.log(this.result)
     },
     initChart() {
       this.chart = echarts.init(this.$el, 'macarons')
