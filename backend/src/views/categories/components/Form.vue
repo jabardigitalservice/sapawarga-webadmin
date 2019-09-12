@@ -4,8 +4,8 @@
       <el-col :xs="24" :sm="16">
         <el-form ref="form" :model="form" :rules="rules" :status-icon="true" label-width="160px">
 
-          <el-form-item label="Nama Kategori" prop="name">
-            <el-input v-model="form.name" type="text" placeholder="Nama Kategori" />
+          <el-form-item label="Nama Kategori" :prop="validateName">
+            <el-input v-model="form.name" type="text" placeholder="Nama Kategori" @focus="changePropName" />
           </el-form-item>
 
           <el-form-item label="Fitur" prop="type">
@@ -64,6 +64,7 @@ export default {
     return {
       form: Object.assign({}, defaultForm),
       loading: false,
+      validateName: 'name',
       rules: {
         name: [
           { required: true, message: 'Nama kategori harus diisi.', trigger: 'blur' },
@@ -73,6 +74,9 @@ export default {
         ],
         type: [
           { required: true, message: 'Fitur harus diisi.', trigger: 'change' }
+        ],
+        errorName: [
+          { required: true, message: 'Nama kategori sudah digunakan', trigger: 'change' }
         ]
       },
       tempRoute: {},
@@ -135,10 +139,29 @@ export default {
 
           this.$router.push('/categories/index')
         }
-      } catch (err) {
-        console.log(err)
+      } catch (error) {
+        const messageApi = error.response.data.data
+        const messageList = []
+        let messageJoin = null
+
+        messageApi.forEach(element => {
+          messageList.push(element.message)
+          messageJoin = messageList.join(' Dan ')
+        })
+        this.$message.error(this.$t(messageJoin))
+        if (messageApi[0].field === 'name') {
+          this.form.name = null
+          this.validateName = 'errorName'
+        }
       } finally {
         this.loading = false
+      }
+    },
+    changePropName() {
+      if (this.validateName === 'errorName') {
+        this.validateName = 'name'
+      } else {
+        this.validateName = 'name'
       }
     }
   }
