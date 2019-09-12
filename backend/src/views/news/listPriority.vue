@@ -84,6 +84,7 @@ export default {
   },
 
   mounted() {
+    this.getListPriority()
     this.getListBerita()
   },
 
@@ -113,6 +114,11 @@ export default {
         this.listPriority.push(data)
       }
       this.resetFilter()
+    },
+
+    onSaveChange() {
+      // console.log(this.list1)
+      // console.log(ele)
     }
   }
 }

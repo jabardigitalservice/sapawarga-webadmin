@@ -58,10 +58,6 @@ export default {
         this.list1.push(ele)
       }
     },
-    onChange(ele) {
-      // console.log(this.list1)
-      // console.log(ele)
-    },
     checkMove: function(e) {
       // console.log(e.draggedContext.element.id)
       // console.log(e.draggedContext.element.title)

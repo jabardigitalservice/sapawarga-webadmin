@@ -11,7 +11,7 @@ export function fetchList(query) {
 
 export function fetchListPriority(query) {
   return request({
-    url: '/news/priority',
+    url: '/news/featured',
     method: 'get',
     params: query
   })
