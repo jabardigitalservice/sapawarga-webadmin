@@ -33,6 +33,15 @@ import * as filters from './filters' // global filters
 
 import { mockXHR } from '../mock' // simulation data
 
+import * as Sentry from '@sentry/browser'
+import * as Integrations from '@sentry/integrations'
+
+if (process.env.NODE_ENV === 'production') {
+  Sentry.init({
+    dsn: 'https://a28d13fa18d04acd98a3426d83ff094a@sentry.io/1725236',
+    integrations: [new Integrations.Vue({ Vue, attachProps: true })]
+  })
+}
 // mock api in github pages site build
 if (process.env.NODE_ENV === 'production') { mockXHR() }
 
