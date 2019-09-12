@@ -86,7 +86,7 @@ export function validYoutubeUrl(str) {
 }
 
 export function containsWhitespace(str) {
-  const reg = /^\s+|\s\s+|\s+$/g
+  const reg = /^\s+|\s+$/g
 
   return reg.test(str)
 }

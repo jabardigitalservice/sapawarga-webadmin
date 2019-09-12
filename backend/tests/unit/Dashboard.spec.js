@@ -1,19 +1,17 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import DashboardUsulan from '@/views/dashboard/admin/components/Usulan'
-import DashboardMap from '@/views/dashboard/admin/components/MapData'
 import DashboardApproval from '@/views/dashboard/admin/components/Approval'
 import ListFilter from '@/views/dashboard/admin/components/_listfilter'
 import * as apiDashboard from '@/api/dashboard'
 import aspirasiMostLikesFixture from './fixtures/aspirasiMostLikes'
 import ElementUI from 'element-ui'
 import flushPromises from 'flush-promises'
-
-// code ini ga kepake. Perlu konfirmasi oleh Aldi Rohman
-// import usulanGeoFixture from './fixtures/usulanGeo'
-// import { fetchAspirasiMap } from '@/api/dashboard'
+import Vuex from 'vuex'
+import DashboardMap from '@/views/dashboard/admin/components/MapData'
 
 const localVue = createLocalVue()
 localVue.use(ElementUI)
+localVue.use(Vuex)
 
 beforeEach(() => {
   jest.resetModules()
@@ -82,15 +80,24 @@ describe('List dashboard usulan', () => {
         longitude: '-6.95981961897412'
       }
     ]
+
+    const stateSidebar =
+      {
+        opened: true
+      }
+
     const wrapper = shallowMount(DashboardMap, {
       localVue,
+      computed: {
+        sidebar: () => true
+      },
       stubs: {
         fetchAspirasiMap: true
       }
     })
 
     wrapper.setData({ list: dataList })
-
     expect(wrapper.vm.list).toBe(dataList)
+    expect(wrapper.vm.sidebar).toBe(stateSidebar.opened)
   })
 })

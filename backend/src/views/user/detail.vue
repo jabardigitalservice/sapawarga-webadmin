@@ -43,6 +43,13 @@
             <el-table-column prop="content" />
           </el-table>
         </div>
+        <div v-permission="['admin','staffProv']" class="informasi-tambahan">
+          <p class="warn-content">Informasi Tambahan</p>
+          <el-table stripe :data="tableDataTambahan" :show-header="false" border style="width: 100%">
+            <el-table-column prop="title" width="180" />
+            <el-table-column prop="content" />
+          </el-table>
+        </div>
       </el-col>
     </el-row>
   </div>
@@ -52,15 +59,20 @@
 import PhotoBox from '@/components/PhotoBox'
 import MapThumb from '@/components/MapThumb'
 import { fetchUser } from '@/api/staff'
+import permission from '@/directive/permission/index.js'
+import checkPermission from '@/utils/permission'
+import parsingDatetime from '@/utils/datetimeToString'
 
 export default {
   components: { PhotoBox, MapThumb },
+  directives: { permission },
   data() {
     return {
       id: 0,
       imageUrl: null,
       height: '220px',
       tableData: [],
+      tableDataTambahan: [],
       instagramIcon: [],
       twitterIcon: [],
       facebookIcon: [],
@@ -82,6 +94,7 @@ export default {
   },
 
   methods: {
+    checkPermission,
     getDetail(id) {
       fetchUser(id).then(response => {
         const {
@@ -101,6 +114,9 @@ export default {
           rw,
           twitter,
           username,
+          created_at,
+          updated_at,
+          last_login_at,
           role_label
         } = response.data
         this.twitterAccount = twitter || '-'
@@ -168,6 +184,20 @@ export default {
           {
             title: 'Peran',
             content: role_label || '-'
+          }
+        ]
+        this.tableDataTambahan = [
+          {
+            title: 'Tanggal Dibuat',
+            content: created_at ? parsingDatetime(created_at) : '-'
+          },
+          {
+            title: 'Tanggal Diperbarui',
+            content: updated_at ? parsingDatetime(updated_at) : '-'
+          },
+          {
+            title: 'Terakhir Login',
+            content: last_login_at ? parsingDatetime(last_login_at) : 'Belum Pernah'
           }
         ]
       })

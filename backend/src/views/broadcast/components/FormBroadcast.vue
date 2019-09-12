@@ -132,7 +132,6 @@ export default {
             validator: whitespaceTitle,
             trigger: 'blur'
           }
-
         ],
         category_id: [
           { required: true, message: 'Kategori harus diisi.', trigger: 'change' }

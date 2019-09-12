@@ -69,8 +69,13 @@ export default {
     'news-channels-list': 'Daftar Sumber Berita',
     'news-channels-create': 'Tambah Sumber Berita',
     'news-channels-edit': 'Edit Sumber Berita',
-    'news-priority': 'Priority Berita'
+    'news-priority': 'Priority Berita',
 
+    'release-management': 'Release',
+    'release-management-list': 'Daftar Release',
+    'release-management-create': 'Tambah Release',
+    'release-management-edit': 'Edit Release',
+    'release-management-detail': 'Detail Release'
   },
   crud: {
     'list-empty': 'Belum ada data.',

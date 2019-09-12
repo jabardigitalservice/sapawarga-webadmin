@@ -3,7 +3,7 @@
     <div class="text item">
       <el-row :gutter="8">
         <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 16}" :xl="{span: 16}" style="padding-right:8px;margin-bottom:30px;">
-          <div id="gmaps" class="gmap_canvas" />
+          <div id="gmaps" :class="['gmap_canvas', classObj]" />
         </el-col>
         <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 8}" :xl="{span: 8}" style="margin-bottom:30px;">
           <el-table id="table-geo" :data="list" height="350" stripe style="width: 100%; margin-left:10px;">
@@ -28,6 +28,8 @@
 <script>
 import { fetchAspirasiMap } from '@/api/dashboard'
 import gmapsInit from '@/utils/gmaps'
+import { mapGetters } from 'vuex'
+
 export default {
   data() {
     return {
@@ -53,6 +55,18 @@ export default {
       }
     }
   },
+
+  computed: {
+    ...mapGetters([
+      'sidebar'
+    ]),
+    classObj() {
+      return {
+        openSidebar: this.sidebar.opened
+      }
+    }
+  },
+
   created() {
     this.getMap()
   },
@@ -192,16 +206,11 @@ export default {
 
   .gmap_canvas {
     background: none !important;
-    width: 700px;
+    width: 750px !important;
     height: 400px;
     margin-left: 0px;
     border-radius: 5px;
     margin-top: 0px;
-
-    iframe {
-      width: 640px;
-      height: 400px;
-    }
   }
 
   #table-geo {
@@ -212,48 +221,26 @@ export default {
     width: 700px;
   }
 
-  .map-title {
-    width: 400px;
-    margin-left: 20px;
-    margin-bottom: 10px;
-    margin-top: 50px;
-    padding: 10px;
-  }
-
   .btn-reset {
     right: 0;
     position: absolute;
     margin-top: 15px;
   }
 
-  @media only screen and (min-width: 1200px) and (max-width: 1570px) {
+  .openSidebar {
+    width: 650px !important;
+  }
+
+  @media only screen and (min-width: 992px) and (max-width: 1200px) {
     .gmap_canvas {
-      background: none !important;
-      width: 640px;
-      height: 400px;
-      margin-left: 0px;
-      border-radius: 5px;
-      margin-top: 0px;
-
-      iframe {
-        width: 640px;
-        height: 400px;
-      }
-    }
-
-    .map-title {
-      width: 250px;
-      margin-left: 20px;
-      margin-bottom: 10px;
-      margin-top: 50px;
-      padding: 10px;
+      width: 885px !important;
     }
   }
 
-   @media only screen and (max-width: 610px)  {
-    #gmaps {
-      width: 450px;
+  @media only screen and (min-width: 768px) and (max-width: 992px) {
+    .gmap_canvas {
+      width: 660px !important;
     }
-   }
+  }
 
 </style>

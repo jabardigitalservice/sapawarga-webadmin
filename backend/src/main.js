@@ -4,6 +4,7 @@ import moment from 'moment'
 moment.locale('id')
 
 import VueMoment from 'vue-moment'
+import VueTheMask from 'vue-the-mask'
 
 import Cookies from 'js-cookie'
 
@@ -13,6 +14,7 @@ import Element from 'element-ui'
 import './styles/element-variables.scss'
 
 import '@/styles/index.scss' // global css
+import '@/styles/main.scss' // costume css
 
 import _ from 'lodash'
 Object.defineProperty(Vue.prototype, '_', { value: _ })
@@ -43,6 +45,7 @@ Vue.use(VueMoment, {
   moment
 })
 
+Vue.use(VueTheMask)
 // register global utility filters.
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])

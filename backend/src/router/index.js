@@ -18,6 +18,7 @@ import newsRouter from './modules/news'
 import categoriesRouter from './modules/categories'
 import videoRouter from './modules/video'
 import newsChannelsRouter from './modules/newsChannels'
+import releaseManagementRouter from './modules/releaseManagement'
 
 /** note: sub-menu only appear when children.length>=1
  *  detail see  https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -169,6 +170,7 @@ export const asyncRoutes = [
   categoriesRouter,
   videoRouter,
   newsChannelsRouter,
+  releaseManagementRouter,
 
   { path: '*', redirect: '/404', hidden: true }
 ]

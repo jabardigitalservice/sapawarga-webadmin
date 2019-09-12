@@ -45,7 +45,7 @@
           <el-row>
             <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
               <el-form-item label="Peran" prop="role">
-                <el-select v-model="user.role" placeholder="Pilih Peran" :disabled="isProfile">
+                <el-select v-model="user.role" placeholder="Pilih Peran" :disabled="isProfile || isEdit">
                   <el-option
                     v-for="item in filterRole"
                     :key="item.value"
@@ -65,7 +65,7 @@
                   v-if="area !== null"
                   v-model="user.kabkota"
                   placeholder="Pilih Kab/Kota"
-                  :disabled="user.role === ''"
+                  :disabled="user.role === '' || isEdit"
                   @change="getKecamatan"
                 >
                   <el-option
@@ -88,7 +88,7 @@
                 <el-select
                   v-model="user.kecamatan"
                   placeholder="Pilih Kecamatan"
-                  :disabled="(user.kabkota == '' && checkPermission(['admin', 'staffProv']) || user.role === '')"
+                  :disabled="(user.kabkota == '' && checkPermission(['admin', 'staffProv']) || user.role === '' || isEdit)"
                   @change="getKelurahan"
                 >
                   <el-option
@@ -106,7 +106,11 @@
                 label="Desa/Kelurahan"
                 prop="kelurahan"
               >
-                <el-select v-model="user.kelurahan" placeholder="Pilih Desa/Kelurahan" :disabled="(user.kecamatan == '' && checkPermission(['admin', 'staffProv', 'staffKabkota']) || user.role === '')">
+                <el-select
+                  v-model="user.kelurahan"
+                  placeholder="Pilih Desa/Kelurahan"
+                  :disabled="(user.kecamatan == '' && checkPermission(['admin', 'staffProv', 'staffKabkota']) || user.role === '' || isEdit)"
+                >
                   <el-option
                     v-for="item in kelurahan"
                     :key="item.id"
@@ -192,7 +196,7 @@ import { requestArea, requestKecamatan, requestKelurahan, createUser, fetchUser,
 import { fetchProfile, update } from '@/api/user'
 import { Message } from 'element-ui'
 import InputMap from '@/components/InputMap'
-import { validCoordinate } from '@/utils/validate'
+import { validCoordinate, containsWhitespace } from '@/utils/validate'
 
 export default {
   components: { uploadPhoto, InputMap },
@@ -264,6 +268,13 @@ export default {
         callback(new Error('Koordinat Lokasi tidak sesuai'))
       }
 
+      callback()
+    }
+
+    const whitespaceText = (rule, value, callback) => {
+      if (containsWhitespace(value) === true) {
+        callback(new Error('Text yang diisi tidak valid'))
+      }
       callback()
     }
 
@@ -348,13 +359,17 @@ export default {
           },
           {
             max: 255,
-            message: 'Username maksimal 14 karakter',
+            message: 'Username maksimal 255 karakter',
             trigger: 'blur'
           },
           {
             pattern: /^[a-z0-9_.]+$/,
             message:
               'Username hanya boleh menggunakan huruf kecil, angka, underscore dan titik',
+            trigger: 'blur'
+          },
+          {
+            validator: whitespaceText,
             trigger: 'blur'
           }
         ],
@@ -366,6 +381,10 @@ export default {
           }
         ],
         name: [
+          {
+            validator: whitespaceText,
+            trigger: 'blur'
+          },
           {
             required: true,
             message: 'Nama Lengkap harus diisi',
@@ -383,6 +402,10 @@ export default {
           }
         ],
         email: [
+          {
+            validator: whitespaceText,
+            trigger: 'blur'
+          },
           {
             required: true,
             message: 'Email harus diisi',
@@ -493,6 +516,10 @@ export default {
         ],
         address: [
           {
+            validator: whitespaceText,
+            trigger: 'blur'
+          },
+          {
             required: true,
             message: 'Alamat harus diisi',
             trigger: 'blur'
@@ -582,6 +609,10 @@ export default {
         ],
         twitter: [
           {
+            validator: whitespaceText,
+            trigger: 'blur'
+          },
+          {
             required: false,
             trigger: 'blur'
           },
@@ -593,6 +624,10 @@ export default {
         ],
         facebook: [
           {
+            validator: whitespaceText,
+            trigger: 'blur'
+          },
+          {
             required: false,
             trigger: 'blur'
           },
@@ -603,6 +638,10 @@ export default {
           }
         ],
         instagram: [
+          {
+            validator: whitespaceText,
+            trigger: 'blur'
+          },
           {
             required: false,
             trigger: 'blur'
@@ -938,11 +977,13 @@ export default {
         if (valid) {
           this.loading = true
           const userEdit = {
+            username: this.user.username,
             name: this.user.name,
             email: this.user.email,
             phone: this.user.phone,
-            address: this.user.address,
+            rw: this.user.rw,
             rt: this.user.rt,
+            address: this.user.address,
             facebook: this.user.facebook,
             twitter: this.user.twitter,
             instagram: this.user.instagram,
