@@ -3,33 +3,39 @@
     <el-row :gutter="20">
       <el-col :lg="24">
         <el-row style="margin: 10px 0px">
-          <el-col :span="12">
-            <el-button type="primary" @click="dialogTableVisible = true">
+          <el-col :span="2">
+            <router-link :to="{ path: '/news' }">
+              <el-button type="primary">
+                Kembali
+              </el-button>
+            </router-link>
+          </el-col>
+          <el-col :span="4" style="margin-left: 10px">
+            <el-button type="primary" :disabled="isDisabled" @click="dialogTableVisible = true">
               Tambah Berita Priority
             </el-button>
           </el-col>
         </el-row>
         <div class="editor-container">
-          <dnd-list :list1="list1" list1-title="List Berita Priority" />
+          <dnd-list :list1="listPriority" list1-title="List Berita Priority" />
         </div>
       </el-col>
     </el-row>
-    <el-dialog v-el-drag-dialog :visible.sync="dialogTableVisible" title="List Berita" @dragDialog="handleDrag">
+    <el-dialog v-el-drag-dialog :visible.sync="dialogTableVisible" title="List Berita">
       <ListFilter
         :list-query.sync="listQuery"
-        @submit-search="getList"
+        @submit-search="getListBerita"
         @reset-search="resetFilter"
       />
-      <el-table :data="list">
+      <el-table :data="listBerita">
         <el-table-column property="title" label="Judul Berita" />
         <el-table-column property="channel.name" label="Sumber" />
-        <!-- <el-table-column property="date" label="Date" width="150" /> -->
         <el-table-column align="center" label="Actions">
-          <!-- <template slot-scope="scope"> -->
-          <el-button type="white" size="mini">
-            Tambah
-          </el-button>
-          <!-- </template> -->
+          <template slot-scope="scope">
+            <el-button type="white" size="mini" @click="addBeritaPriority(scope.row), dialogTableVisible = false">
+              Tambah
+            </el-button>
+          </template>
         </el-table-column>
       </el-table>
     </el-dialog>
@@ -39,7 +45,7 @@
 <script>
 import elDragDialog from '@/directive/el-dragDialog' // base on element-ui
 import DndList from '@/components/DndList'
-import { fetchList } from '@/api/news'
+import { fetchList, fetchListPriority } from '@/api/news'
 import ListFilter from './_listfilter'
 
 export default {
@@ -48,92 +54,65 @@ export default {
     ListFilter,
     DndList
   },
-  props: {
-    roleId: {
-      type: String,
-      default: null
-    }
-  },
 
   data() {
     return {
-      list: null,
-      list1: [],
+      listBerita: null,
+      listPriority: [],
       total: 0,
       listLoading: true,
       listQuery: {
-        type: null,
+        title: null,
+        search: null,
         page: 1,
         limit: 10
       },
-      dialogTableVisible: false,
-      value: '',
-      gridData: [{
-        date: '2016-05-02',
-        name: 'John 1',
-        address: 'No.1518,  Jinshajiang Road, Putuo District'
-      }, {
-        date: '2016-05-04',
-        name: 'John 2',
-        address: 'No.1518,  Jinshajiang Road, Putuo District'
-      }, {
-        date: '2016-05-01',
-        name: 'John 3',
-        address: 'No.1518,  Jinshajiang Road, Putuo District'
-      }, {
-        date: '2016-05-03',
-        name: 'John 4',
-        address: 'No.1518,  Jinshajiang Road, Putuo District'
-      }, {
-        date: '2016-05-03',
-        name: 'John 5',
-        address: 'No.1518,  Jinshajiang Road, Putuo District'
-      }]
+      terms: false,
+      dialogTableVisible: false
+    }
+  },
+
+  computed: {
+    isDisabled: function() {
+      const count_list = this.listPriority.length
+      if (count_list === 5) {
+        return !this.terms
+      } else {
+        return this.terms
+      }
     }
   },
 
   mounted() {
-    this.getList()
+    this.getListBerita()
   },
 
   methods: {
-    getList() {
+    getListPriority() {
       this.listLoading = true
-      this.list1 = this.gridData
-      fetchList().then(response => {
-        this.list = response.data.items
+      fetchListPriority().then(response => {
+        this.listPriority = response.data.items
       })
     },
 
-    handleDrag() {
-      // this.$refs.select.blur()
+    getListBerita() {
+      this.listLoading = true
+      fetchList(this.listQuery).then(response => {
+        this.listBerita = response.data.items
+      })
     },
 
     resetFilter() {
       Object.assign(this.$data.listQuery, this.$options.data().listQuery)
-      this.getList()
+      this.getListBerita()
     },
 
-    getTableRowNumbering(index) {
-      return ((this.listQuery.page - 1) * this.listQuery.limit) + (index + 1)
-    },
-
-    changeSort(e) {
-      this.listQuery.sort_by = e.prop
-      this.listQuery.sort_order = e.order
-      this.getList()
-    },
-
-    cellValueRenderer(row, column, cellValue, index) {
-      let value = cellValue
-      if (typeof row[column.property] === 'boolean') {
-        if (cellValue === true) {
-          value = 'Ya'
-        } else {
-          value = 'Tidak'
-        }
+    addBeritaPriority(data) {
+      const pos = this.listPriority.map(function(e) { return e.id }).indexOf(data.id)
+      if (pos === -1) {
+        this.listPriority.push(data)
       }
-      return value
+      this.resetFilter()
     }
   }
 }

@@ -2,17 +2,14 @@
   <div class="dndList">
     <div :style="{width:width1}" class="dndList-list">
       <h3>{{ list1Title }}</h3>
-      <draggable :list="list1" group="article" class="dragArea">
+      <draggable :list="list1" group="article" :move="checkMove" class="dragArea">
         <div v-for="element in list1" :key="element.id" class="list-complete-item">
           <div class="list-complete-item-handle">
-            {{ element.name }} {{ element.address }}
+            #{{ element.seq }} {{ element.title }}
           </div>
           <div style="position:absolute;right:0px;">
             <span style="float: right ;margin-top: -20px;margin-right:5px;" @click="deleteEle(element)">
               <i style="color:#ff4949" class="el-icon-delete" />
-            </span>
-            <span style="float: right ;margin-top: -20px;margin-right:5px;" @click="deleteEle(element)">
-              <i style="color:#ff4949" class="el-icon-pencil" />
             </span>
           </div>
         </div>
@@ -34,35 +31,18 @@ export default {
         return []
       }
     },
-    list2: {
-      type: Array,
-      default() {
-        return []
-      }
-    },
     list1Title: {
       type: String,
       default: 'list1'
     },
-    list2Title: {
-      type: String,
-      default: 'list2'
-    },
     width1: {
       type: String,
       default: '100%'
-    },
-    width2: {
-      type: String,
-      default: '48%'
     }
   },
   methods: {
     isNotInList1(v) {
       return this.list1.every(k => v.id !== k.id)
-    },
-    isNotInList2(v) {
-      return this.list2.every(k => v.id !== k.id)
     },
     deleteEle(ele) {
       for (const item of this.list1) {
@@ -72,21 +52,20 @@ export default {
           break
         }
       }
-      if (this.isNotInList2(ele)) {
-        this.list2.unshift(ele)
-      }
     },
     pushEle(ele) {
-      for (const item of this.list2) {
-        if (item.id === ele.id) {
-          const index = this.list2.indexOf(item)
-          this.list2.splice(index, 1)
-          break
-        }
-      }
       if (this.isNotInList1(ele)) {
         this.list1.push(ele)
       }
+    },
+    onChange(ele) {
+      // console.log(this.list1)
+      // console.log(ele)
+    },
+    checkMove: function(e) {
+      // console.log(e.draggedContext.element.id)
+      // console.log(e.draggedContext.element.title)
+      // console.log("Future index: " + (e.draggedContext.futureIndex + 1))
     }
   }
 }
@@ -130,13 +109,7 @@ export default {
   text-overflow: ellipsis;
   white-space: nowrap;
   margin-right: 50px;
-}
-
-.list-complete-item-handle2 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  margin-right: 20px;
+  height: 30px;
 }
 
 .list-complete-item.sortable-chosen {

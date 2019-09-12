@@ -9,6 +9,14 @@ export function fetchList(query) {
   })
 }
 
+export function fetchListPriority(query) {
+  return request({
+    url: '/news/priority',
+    method: 'get',
+    params: query
+  })
+}
+
 export function newsChannelList(query) {
   return request({
     url: '/news-channels',
