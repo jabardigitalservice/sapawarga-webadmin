@@ -21,9 +21,9 @@
         </div>
         <el-row>
           <el-col :span="2">
-              <el-button type="primary" @click="onSaveChange">
-                {{ $t('crud.save-update') }}
-              </el-button>
+            <el-button type="primary" @click="onSaveChange">
+              {{ $t('crud.save-update') }}
+            </el-button>
           </el-col>
         </el-row>
       </el-col>
