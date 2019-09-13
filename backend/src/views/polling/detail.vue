@@ -26,9 +26,10 @@
         <div style="margin-top:0px">
           <el-card>
             <div slot="header" class="clearfix">
-              <span>Hasil Polling</span>
+              <span>Total Audience:</span>
+              <span class="total_audience">{{ totalPolling }}</span>
             </div>
-              <PollingChart />
+            <PollingChart @childToParent="onChildClick" />
           </el-card>
         </div>
       </el-col>
@@ -194,6 +195,12 @@ components: {
 .button-send {
   margin-top: 10px;
   float: right;
+}
+.total_audience {
+  float:right;
+  color:#14A75B;
+  font-size: 20px;
+  font-weight: bold;
 }
 </style>
 
