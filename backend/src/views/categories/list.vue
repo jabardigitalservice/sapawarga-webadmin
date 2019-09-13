@@ -133,7 +133,7 @@ export default {
     },
 
     translateType(row) {
-      const kategori = 'kategori_list.' + row.type
+      const kategori = 'categoriTypes.' + row.type
       const lang = this.$t(kategori)
       return lang
     }

@@ -159,7 +159,7 @@ export default {
     profile: 'Lihat Profil',
     'profile-edit': 'Edit Profil'
   },
-  kategori_list: {
+  categoriTypes: {
     'phonebook': 'Nomor Penting',
     'notification': 'Notifikasi',
     'broadcast': 'Pesan',
