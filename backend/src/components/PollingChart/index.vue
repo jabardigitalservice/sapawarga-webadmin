@@ -77,28 +77,17 @@ export default {
         },
         legend: {
           left: 'center',
-          bottom: '10',
-        //   data: ['Industries', 'Technology', 'Forex', 'Gold', 'Forecasts', 'Silver']
+          bottom: '10'
         },
         calculable: true,
         series: [
           {
-            name: 'WEEKLY WRITE ARTICLES',
+            name: 'Hasil Polling',
             type: 'pie',
             roseType: 'radius',
             radius: [15, 95],
-            center: ['50%', '38%'],
+            center: ['50%', '45%'],
             data: this.result,
-            // data: [
-            //   { value: 320, name: 'Industries' },
-            //   { value: 240, name: 'Technology' },
-            //   { value: 149, name: 'Forex' },
-            //   { value: 100, name: 'Gold' },
-            //   { value: 59, name: 'Forecasts' },
-            //   { value: 100, name: 'silver' },
-            //   { value: 59, name: 'Sangat memuaskan' },
-            //   { value: 100, name: 'Terlalu memuaskan' },
-            // ],
             animationEasing: 'cubicInOut',
             animationDuration: 2600
           }
