@@ -60,11 +60,6 @@ export default {
       if (this.isNotInList1(ele)) {
         this.list1.push(ele)
       }
-    },
-    checkMove: function(e) {
-      // console.log(e.draggedContext.element.id)
-      // console.log(e.draggedContext.element.title)
-      // console.log("Future index: " + (e.draggedContext.futureIndex + 1))
     }
   }
 }
