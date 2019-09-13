@@ -70,15 +70,11 @@ export default {
   methods: {
     getDetail() {
       fetchRecord(this.id).then(response => {
-        const { kabkota, kecamatan, kelurahan, rw, name, category, description, excerpt, start_date, end_date, question, status, status_label, answers } = response.data
         this.polling = response.data
+        const { kabkota, kecamatan, kelurahan, rw, name, category, description, excerpt, start_date, end_date, status, status_label } = response.data
 
         this.polling.start_date = moment(start_date).format('D MMMM YYYY')
         this.polling.end_date = moment(end_date).format('D MMMM YYYY')
-
-        function logArrayAnswers(value, index, array) {
-          return <el-radio label=''>{ value.body }</el-radio>
-        }
 
         if (status === 10) {
           this.btnKirimDisable = true
@@ -192,13 +188,13 @@ export default {
 }
 .question {
   margin-top: 0px;
-  color:#075999; 
-  text-align:center; 
+  color: #077499;
+  text-align:center;
 }
 .date {
-  font-size: 15px; 
-  text-align:center; 
-  color:#075999;
+  font-size: 15px;
+  text-align:center;
+  color: #077499;
 }
 </style>
 
