@@ -164,7 +164,7 @@ export default {
     'notification': 'Notifikasi',
     'broadcast': 'Pesan',
     'polling': 'Polling',
-    'survey': 'Survey',
+    'survey': 'Survei',
     'aspirasi': 'Usulan Masyarakat',
     'video': 'Video'
   }
