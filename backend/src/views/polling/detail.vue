@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-row :gutter="10">
-      <el-col class="col-left" :xs="24" :sm="24" :md="24" :lg="10" :xl="10">
+      <el-col class="col-left" :xs="24" :sm="24" :md="24" :lg="13" :xl="13">
         <el-card>
           <div slot="header" class="clearfix">
             <span>Target</span>
@@ -11,32 +11,46 @@
             <el-table-column prop="content" />
           </el-table>
         </el-card>
-      </el-col>
-      <el-col class="col-right" :xs="24" :sm="24" :md="24" :lg="14" :xl="14">
-        <el-card>
+        <el-card style="margin-top:10px">
           <div slot="header" class="clearfix">
             <span>Data Polling</span>
           </div>
           <el-table stripe :data="tableDataPolling" :show-header="false" style="width: 100%">
-            <el-table-column prop="title" width="180" />
+            <el-table-column prop="title" />
             <el-table-column prop="content" />
           </el-table>
         </el-card>
         <el-button v-if="!btnKirimDisable" :disabled="btnDisableDate" class="button-send" type="primary" @click="actionApprove(status.active)">{{ $t('crud.send-polling') }}</el-button>
+      </el-col>
+      <el-col class="col-right" :xs="24" :sm="24" :md="24" :lg="11" :xl="11">
+        <div style="margin-top:0px">
+          <el-card>
+            <div slot="header" class="clearfix">
+              <span>Total Audience:</span>
+              <span class="total_audience">{{ totalPolling }}</span>
+            </div>
+            <PollingChart @childToParent="getFromChild" />
+          </el-card>
+        </div>
       </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
+import PollingChart from '@/components/PollingChart'
 import { fetchRecord, update } from '@/api/polling'
 import moment from 'moment'
 export default {
+  components: {
+    PollingChart
+  },
   data() {
     return {
       id: 0,
       tableDataTarget: [],
       tableDataPolling: [],
+      totalPolling: null,
       btnKirimDisable: false,
       btnDisableDate: false,
       polling: null,
@@ -49,6 +63,7 @@ export default {
   created() {
     this.id = this.$route.params && this.$route.params.id
     this.getDetail()
+    this.getFromChild()
   },
   methods: {
     getDetail() {
@@ -167,6 +182,9 @@ export default {
       } catch (e) {
         console.log(e)
       }
+    },
+    getFromChild(value) {
+      this.totalPolling = value
     }
   }
 }
@@ -175,6 +193,12 @@ export default {
 .button-send {
   margin-top: 10px;
   float: right;
+}
+.total_audience {
+  float:right;
+  color:#14A75B;
+  font-size: 20px;
+  font-weight: bold;
 }
 </style>
 
