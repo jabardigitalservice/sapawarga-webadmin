@@ -49,6 +49,9 @@ export default {
         if (item.id === ele.id) {
           const index = this.list1.indexOf(item)
           this.list1.splice(index, 1)
+          this.list1.forEach((item, index) => {
+            item['seq'] = index + 1
+          })
           break
         }
       }

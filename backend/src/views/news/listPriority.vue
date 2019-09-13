@@ -19,6 +19,13 @@
         <div class="editor-container">
           <dnd-list :list1="listPriority" list1-title="List Berita Priority" />
         </div>
+        <el-row>
+          <el-col :span="2">
+              <el-button type="primary" @click="onSaveChange">
+                {{ $t('crud.save-update') }}
+              </el-button>
+          </el-col>
+        </el-row>
       </el-col>
     </el-row>
     <el-dialog v-el-drag-dialog :visible.sync="dialogTableVisible" title="List Berita">
@@ -45,7 +52,7 @@
 <script>
 import elDragDialog from '@/directive/el-dragDialog' // base on element-ui
 import DndList from '@/components/DndList'
-import { fetchList, fetchListPriority } from '@/api/news'
+import { fetchList, fetchListPriority, priorityBeritaUpdate } from '@/api/news'
 import ListFilter from './_listfilter'
 
 export default {
@@ -92,6 +99,9 @@ export default {
     getListPriority() {
       this.listLoading = true
       fetchListPriority().then(response => {
+        response.data.items.forEach((item, index) => {
+          item['seq'] = index + 1
+        })
         this.listPriority = response.data.items
       })
     },
@@ -111,14 +121,17 @@ export default {
     addBeritaPriority(data) {
       const pos = this.listPriority.map(function(e) { return e.id }).indexOf(data.id)
       if (pos === -1) {
+        const seq = this.listPriority.length + 1
+        data['seq'] = seq
         this.listPriority.push(data)
       }
       this.resetFilter()
     },
 
-    onSaveChange() {
-      // console.log(this.list1)
-      // console.log(ele)
+    async onSaveChange() {
+      const data = this.listPriority
+      // await priorityBeritaUpdate(data)
+      this.$message.success(this.$t('crud.update-success'))
     }
   }
 }

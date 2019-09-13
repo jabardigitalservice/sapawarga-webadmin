@@ -17,6 +17,14 @@ export function fetchListPriority(query) {
   })
 }
 
+export function priorityBeritaUpdate(data) {
+  return request({
+    url: '/news/featured',
+    method: 'post',
+    data
+  })
+}
+
 export function newsChannelList(query) {
   return request({
     url: '/news-channels',
@@ -93,6 +101,8 @@ export function activate(id) {
 const exportFunctions = {
   fetchList,
   fetchRecord,
+  fetchListPriority,
+  priorityBeritaUpdate,
   deactivate,
   activate
 }
