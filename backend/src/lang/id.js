@@ -158,5 +158,14 @@ export default {
   navbar: {
     profile: 'Lihat Profil',
     'profile-edit': 'Edit Profil'
+  },
+  categoriTypes: {
+    'phonebook': 'Nomor Penting',
+    'notification': 'Notifikasi',
+    'broadcast': 'Pesan',
+    'polling': 'Polling',
+    'survey': 'Survei',
+    'aspirasi': 'Usulan Masyarakat',
+    'video': 'Video'
   }
 }
