@@ -146,34 +146,10 @@ deploy_staging:
     - ssh -o StrictHostKeyChecking=no ${SSH_STAGING_USERNAME}@${STAGING_HOST} "sudo docker ps"
     - ssh -o StrictHostKeyChecking=no ${SSH_STAGING_USERNAME}@${STAGING_HOST} "sudo docker image prune -a -f"
 
-deploy_prod_gke:
-  stage: deploy_prod
-  image: dtzar/helm-kubectl
-  only:
-    - master
-  dependencies: 
-    - versioning
-  before_script:
-    - export VERSION=$(cat ./version)
-    - kubectl config set-cluster k8s --server="${KUBERNETES_SERVER}"
-    - kubectl config set clusters.k8s.certificate-authority-data ${KUBERNETES_CERTIFICATE_AUTHORITY_DATA}
-    - kubectl config set-credentials gitlab --token="${KUBERNETES_USER_TOKEN}"
-    - kubectl config set-context default --cluster=k8s --user=gitlab
-    - kubectl config use-context default
-    - kubectl cluster-info
-  script:
-    - cp kubernetes/webadmin-variables-sample.yaml kubernetes/webadmin-variables.yaml
-    - sed -i "s/%VUE_APP_VERSION%/${VERSION}/g" kubernetes/webadmin-variables.yaml
-    - sed -i "s/%VUE_APP_BASE_API%/${VUE_APP_BASE_API}/g" kubernetes/webadmin-variables.yaml
-    - sed -i "s/%dockerconfigjson%/${dockerconfigjson}/g" kubernetes/webadmin-variables.yaml
-    - sed -i "s/%VERSION%/${VERSION}/g" kubernetes/webadmin-deployment.yaml
-    - kubectl apply -f kubernetes/webadmin-variables.yaml
-        -f kubernetes/webadmin-deployment.yaml
-        -f kubernetes/webadmin-service.yaml
-
 deploy_prod_eks:
   stage: deploy_prod
   image: dtzar/helm-kubectl
+  when: manual
   only:
     - master
   dependencies: 
