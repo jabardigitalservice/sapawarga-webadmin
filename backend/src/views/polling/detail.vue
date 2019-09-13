@@ -188,13 +188,13 @@ export default {
 }
 .question {
   margin-top: 0px;
-  color: #077499;
+  color: rgba(0, 0, 0, 0.7);
   text-align:center;
 }
 .date {
   font-size: 15px;
   text-align:center;
-  color: #077499;
+  color: rgba(0, 0, 0, 0.7);
 }
 </style>
 
