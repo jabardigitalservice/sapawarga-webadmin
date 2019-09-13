@@ -23,11 +23,7 @@
 
           <el-table-column prop="name" sortable="custom" label="Kategori" min-width="150" />
 
-          <el-table-column prop="type" sortable="custom" label="Fitur" min-width="150">
-            <template slot-scope="{row}">
-              {{ _.startCase(row.type) }}
-            </template>
-          </el-table-column>
+          <el-table-column prop="type" sortable="custom" label="Fitur" :formatter="translateType" min-width="150" />
 
           <el-table-column align="center" label="Actions" min-width="150px">
             <template slot-scope="scope">
@@ -134,6 +130,12 @@ export default {
       } catch (e) {
         console.log(e)
       }
+    },
+
+    translateType(row) {
+      const kategori = 'kategori_list.'+row.type
+      const lang = this.$t(kategori)
+      return lang
     }
   }
 }
