@@ -3,13 +3,6 @@
     <el-row :gutter="20">
       <el-col :lg="24">
         <el-row style="margin: 10px 0px">
-          <el-col :span="2">
-            <router-link :to="{ path: '/news' }">
-              <el-button type="primary">
-                Kembali
-              </el-button>
-            </router-link>
-          </el-col>
           <el-col :span="4" style="margin-left: 10px">
             <el-button type="primary" :disabled="isDisabled" @click="dialogTableVisible = true">
               Tambah Berita Priority
@@ -24,6 +17,13 @@
             <el-button type="primary" @click="onSaveChange">
               {{ $t('crud.save-update') }}
             </el-button>
+          </el-col>
+          <el-col :span="2" style="margin-left: 85px">
+            <router-link :to="{ path: '/news' }">
+              <el-button type="primary">
+                Kembali
+              </el-button>
+            </router-link>
           </el-col>
         </el-row>
       </el-col>
@@ -96,13 +96,17 @@ export default {
   },
 
   methods: {
-    getListPriority() {
+    async getListPriority() {
       this.listLoading = true
-      fetchListPriority().then(response => {
-        response.data.items.forEach((item, index) => {
-          item['seq'] = index + 1
+      const dataPriority = []
+      await fetchListPriority().then(async(response) => {
+        await response.data.forEach((item, index) => {
+          if (item !== null) {
+            item['seq'] = index + 1
+            dataPriority.push(item)
+          }
         })
-        this.listPriority = response.data.items
+        this.listPriority = dataPriority
       })
     },
 
@@ -125,13 +129,22 @@ export default {
         data['seq'] = seq
         this.listPriority.push(data)
       }
+
       this.resetFilter()
     },
 
     async onSaveChange() {
-      const data = this.listPriority
+      const data = []
+
+      if (this.listPriority !== undefined) {
+        await this.listPriority.forEach((item, index) => {
+          data.push({ 'news_id': item.id, 'seq': index + 1 })
+        })
+      }
+
       await priorityBeritaUpdate(data)
-      this.$message.success(this.$t('crud.update-success'))
+      await this.$message.success(this.$t('crud.update-success'))
+      await this.getListPriority()
     }
   }
 }

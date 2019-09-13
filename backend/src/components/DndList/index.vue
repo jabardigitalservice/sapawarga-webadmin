@@ -5,7 +5,7 @@
       <draggable :list="list1" group="article" :move="checkMove" class="dragArea">
         <div v-for="element in list1" :key="element.id" class="list-complete-item">
           <div class="list-complete-item-handle">
-            #{{ element.seq }} {{ element.title }}
+            #{{ element.seq }} <span style="margin-left: 20px;">{{ element.title }}</span>
           </div>
           <div style="position:absolute;right:0px;">
             <span style="float: right ;margin-top: -20px;margin-right:5px;" @click="deleteEle(element)">
@@ -73,7 +73,6 @@ export default {
 <style lang="scss" scoped>
 .dndList {
   background: #fff;
-  padding-bottom: 40px;
   &:after {
     content: "";
     display: table;
@@ -81,7 +80,6 @@ export default {
   }
   .dndList-list {
     float: left;
-    padding-bottom: 30px;
     &:first-of-type {
       margin-right: 2%;
     }
