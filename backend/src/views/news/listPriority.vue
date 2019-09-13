@@ -5,7 +5,7 @@
         <el-row style="margin: 10px 0px">
           <el-col :span="4" style="margin-left: 10px">
             <el-button type="primary" :disabled="isDisabled" @click="dialogTableVisible = true">
-              Tambah Berita Priority
+              Tambah Berita Prioritas
             </el-button>
           </el-col>
         </el-row>
@@ -81,8 +81,7 @@ export default {
 
   computed: {
     isDisabled: function() {
-      const count_list = this.listPriority.length
-      if (count_list === 5) {
+      if (this.listPriority.length >= 5) {
         return !this.terms
       } else {
         return this.terms
@@ -123,7 +122,7 @@ export default {
     },
 
     addBeritaPriority(data) {
-      const pos = this.listPriority.map(function(e) { return e.id }).indexOf(data.id)
+      const pos = this.listPriority.findIndex(record => record.id === data.id)
       if (pos === -1) {
         const seq = this.listPriority.length + 1
         data['seq'] = seq
@@ -137,7 +136,7 @@ export default {
       const data = []
 
       if (this.listPriority !== undefined) {
-        await this.listPriority.forEach((item, index) => {
+        this.listPriority.forEach((item, index) => {
           data.push({ 'news_id': item.id, 'seq': index + 1 })
         })
       }
