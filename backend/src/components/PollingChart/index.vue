@@ -28,6 +28,7 @@ export default {
       chart: null,
       id: null,
       result: [],
+      count: null
     }
   },
   mounted() {
@@ -51,12 +52,19 @@ export default {
   methods: {
     async getResult() {
       const arrayTemporary = []
-      await fetchResult(this.id).then(response => { 
+      await fetchResult(this.id).then(response => {
         response.data.forEach(function(value, key) {
-          arrayTemporary.push({'value': value.votes, 'name': value.answer_body})
+          arrayTemporary.push({ 'value': value.votes, 'name': value.answer_body })
         })
       })
+
       Object.assign(this.result, arrayTemporary)
+
+      this.count = this.result.reduce(function(prev, cur) {
+        return parseInt(prev) + parseInt(cur.value)
+      }, 0)
+
+      this.$emit('childToParent', this.count)
       this.initChart()
     },
     initChart() {
