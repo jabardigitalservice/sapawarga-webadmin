@@ -29,6 +29,8 @@
               <span>Total Audience:</span>
               <span class="total_audience">{{ totalPolling }}</span>
             </div>
+            <p class="question">{{ polling.question }}</p>
+            <p class="date">{{ polling.start_date }} - {{ polling.end_date }}</p>
             <PollingChart @childToParent="getFromChild" />
           </el-card>
         </div>
@@ -53,7 +55,7 @@ export default {
       totalPolling: null,
       btnKirimDisable: false,
       btnDisableDate: false,
-      polling: null,
+      polling: {},
       status: {
         draft: 0,
         active: 10
@@ -68,12 +70,11 @@ export default {
   methods: {
     getDetail() {
       fetchRecord(this.id).then(response => {
-        const { kabkota, kecamatan, kelurahan, rw, name, category, description, excerpt, start_date, end_date, question, status, status_label, answers } = response.data
         this.polling = response.data
+        const { kabkota, kecamatan, kelurahan, rw, name, category, description, excerpt, start_date, end_date, status, status_label } = response.data
 
-        function logArrayAnswers(value, index, array) {
-          return <el-radio label=''>{ value.body }</el-radio>
-        }
+        this.polling.start_date = moment(start_date).format('D MMMM YYYY')
+        this.polling.end_date = moment(end_date).format('D MMMM YYYY')
 
         if (status === 10) {
           this.btnKirimDisable = true
@@ -140,23 +141,8 @@ export default {
             content: excerpt || '-'
           },
           {
-            title: 'Dimulai dari',
-            content: moment(start_date).format('D MMMM YYYY') || '-'
-          },
-          {
-            title: 'Sampai',
-            content: moment(end_date).format('D MMMM YYYY') || '-'
-          },
-          {
             title: 'Status',
             content: (status === 1 ? <el-tag type='danger'>Tidak Aktif</el-tag> : status === 10 && expired === true && beforeStart === false ? <el-tag type='warning'>Berakhir</el-tag> : status === 10 && expired === false && beforeStart === false ? <el-tag type='success'>Sedang Berlangsung</el-tag> : status === 10 && beforeStart === true && expired === false ? <el-tag type='primary'>Dipublikasikan</el-tag> : <el-tag type='info'>{status_label}</el-tag>)
-          },
-          {
-            title: 'Pertanyaan',
-            content: question || '-'
-          },
-          {
-            content: answers.map(logArrayAnswers)
           }
         ]
       })
@@ -199,6 +185,16 @@ export default {
   color:#14A75B;
   font-size: 20px;
   font-weight: bold;
+}
+.question {
+  margin-top: 0px;
+  color: rgba(0, 0, 0, 0.7);
+  text-align:center;
+}
+.date {
+  font-size: 15px;
+  text-align:center;
+  color: rgba(0, 0, 0, 0.7);
 }
 </style>
 
