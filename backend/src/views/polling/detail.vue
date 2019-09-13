@@ -29,7 +29,7 @@
               <span>Total Audience:</span>
               <span class="total_audience">{{ totalPolling }}</span>
             </div>
-            <PollingChart @childToParent="onChildClick" />
+            <PollingChart @childToParent="getFromChild" />
           </el-card>
         </div>
       </el-col>
@@ -39,10 +39,10 @@
 
 <script>
 import PollingChart from '@/components/PollingChart'
-import { fetchRecord, fetchResult, update } from '@/api/polling'
+import { fetchRecord, update } from '@/api/polling'
 import moment from 'moment'
 export default {
-components: {
+  components: {
     PollingChart
   },
   data() {
@@ -50,6 +50,7 @@ components: {
       id: 0,
       tableDataTarget: [],
       tableDataPolling: [],
+      totalPolling: null,
       btnKirimDisable: false,
       btnDisableDate: false,
       polling: null,
@@ -62,7 +63,7 @@ components: {
   created() {
     this.id = this.$route.params && this.$route.params.id
     this.getDetail()
-    this.getResult()
+    this.getFromChild()
   },
   methods: {
     getDetail() {
@@ -160,12 +161,6 @@ components: {
         ]
       })
     },
-    getResult() {
-      fetchResult(this.id).then(response => {
-        const one = response.data
-        
-      })
-    },
     async submitForm(status) {
       const id = this.$route.params && this.$route.params.id
       const data = {}
@@ -187,6 +182,9 @@ components: {
       } catch (e) {
         console.log(e)
       }
+    },
+    getFromChild(value) {
+      this.totalPolling = value
     }
   }
 }
