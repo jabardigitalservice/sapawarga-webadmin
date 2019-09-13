@@ -130,7 +130,7 @@ export default {
 
     async onSaveChange() {
       const data = this.listPriority
-      // await priorityBeritaUpdate(data)
+      await priorityBeritaUpdate(data)
       this.$message.success(this.$t('crud.update-success'))
     }
   }
