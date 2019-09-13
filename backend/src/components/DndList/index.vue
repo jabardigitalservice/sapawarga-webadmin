@@ -2,7 +2,7 @@
   <div class="dndList">
     <div :style="{width:width1}" class="dndList-list">
       <h3>{{ list1Title }}</h3>
-      <draggable :list="list1" group="article" :move="checkMove" class="dragArea">
+      <draggable :list="list1" group="article" class="dragArea">
         <div v-for="element in list1" :key="element.id" class="list-complete-item">
           <div class="list-complete-item-handle">
             #{{ element.seq }} <span style="margin-left: 20px;">{{ element.title }}</span>
