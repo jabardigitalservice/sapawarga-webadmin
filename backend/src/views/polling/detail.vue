@@ -78,7 +78,6 @@ export default {
         this.chartStart_date = moment(start_date).format('D MMMM YYYY')
         this.chartEnd_date = moment(end_date).format('D MMMM YYYY')
 
-
         if (status === 10) {
           this.btnKirimDisable = true
         } else if (status === 0) {
