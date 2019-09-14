@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-row :gutter="10">
-      <el-col class="col-left" :xs="24" :sm="24" :md="24" :lg="13" :xl="13">
+      <el-col class="col-left" :xs="24" :sm="24" :md="24" :lg="colSize" :xl="colSize">
         <el-card>
           <div slot="header" class="clearfix">
             <span>Target</span>
@@ -22,7 +22,7 @@
         </el-card>
         <el-button v-if="!btnKirimDisable" :disabled="btnDisableDate" class="button-send" type="primary" @click="actionApprove(status.active)">{{ $t('crud.send-polling') }}</el-button>
       </el-col>
-      <el-col class="col-right" :xs="24" :sm="24" :md="24" :lg="11" :xl="11">
+      <el-col v-if="polling.status !== status.draft" class="col-right" :xs="24" :sm="24" :md="24" :lg="11" :xl="11">
         <div style="margin-top:0px">
           <el-card>
             <div slot="header" class="clearfix">
@@ -31,7 +31,7 @@
             </div>
             <p class="question">{{ polling.question }}</p>
             <p class="date">{{ chartStart_date }} - {{ chartStart_date }}</p>
-            <PollingChart v-if="polling.status !== status.draft" @childToParent="getFromChild" />
+            <PollingChart @childToParent="getFromChild" />
           </el-card>
         </div>
       </el-col>
@@ -58,6 +58,7 @@ export default {
       chartStart_date: null,
       chartEnd_date: null,
       polling: {},
+      colSize: 13,
       status: {
         draft: 0,
         active: 10
@@ -73,7 +74,7 @@ export default {
     getDetail() {
       fetchRecord(this.id).then(response => {
         this.polling = response.data
-        const { kabkota, kecamatan, kelurahan, rw, name, category, description, excerpt, start_date, end_date, status, status_label } = response.data
+        const { kabkota, kecamatan, kelurahan, rw, name, category, description, excerpt, start_date, end_date, status, status_label, question, answers } = response.data
 
         this.chartStart_date = moment(start_date).format('D MMMM YYYY')
         this.chartEnd_date = moment(end_date).format('D MMMM YYYY')
@@ -147,6 +148,32 @@ export default {
             content: (status === 1 ? <el-tag type='danger'>Tidak Aktif</el-tag> : status === 10 && expired === true && beforeStart === false ? <el-tag type='warning'>Berakhir</el-tag> : status === 10 && expired === false && beforeStart === false ? <el-tag type='success'>Sedang Berlangsung</el-tag> : status === 10 && beforeStart === true && expired === false ? <el-tag type='primary'>Dipublikasikan</el-tag> : <el-tag type='info'>{status_label}</el-tag>)
           }
         ]
+
+        // show this data when status 'draft'
+
+        function logArrayAnswers(value, index, array) {
+          return <el-radio label=''>{ value.body }</el-radio>
+        }
+
+        if (this.polling.status === this.status.draft) {
+          this.colSize = 18
+          this.tableDataPolling.push(
+            {
+              title: 'Dimulai dari',
+              content: moment(start_date).format('D MMMM YYYY') || '-'
+            },
+            {
+              title: 'Sampai',
+              content: moment(end_date).format('D MMMM YYYY') || '-'
+            },
+            {
+              title: 'Pertanyaan',
+              content: question || '-'
+            },
+            {
+              content: answers.map(logArrayAnswers)
+            })
+        }
       })
     },
     async submitForm(status) {
