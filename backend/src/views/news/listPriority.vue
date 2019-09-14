@@ -72,7 +72,8 @@ export default {
         title: null,
         search: null,
         page: 1,
-        limit: 10
+        limit: 10,
+        status: 10
       },
       terms: false,
       dialogTableVisible: false
