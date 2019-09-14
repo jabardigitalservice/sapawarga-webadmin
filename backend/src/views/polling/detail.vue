@@ -30,8 +30,8 @@
               <span class="total_audience">{{ totalPolling }}</span>
             </div>
             <p class="question">{{ polling.question }}</p>
-            <p class="date">{{ polling.start_date }} - {{ polling.end_date }}</p>
-            <PollingChart @childToParent="getFromChild" />
+            <p class="date">{{ chartStart_date }} - {{ chartStart_date }}</p>
+            <PollingChart v-if="polling.status !== status.draft" @childToParent="getFromChild" />
           </el-card>
         </div>
       </el-col>
@@ -55,6 +55,8 @@ export default {
       totalPolling: null,
       btnKirimDisable: false,
       btnDisableDate: false,
+      chartStart_date: null,
+      chartEnd_date: null,
       polling: {},
       status: {
         draft: 0,
@@ -73,8 +75,9 @@ export default {
         this.polling = response.data
         const { kabkota, kecamatan, kelurahan, rw, name, category, description, excerpt, start_date, end_date, status, status_label } = response.data
 
-        this.polling.start_date = moment(start_date).format('D MMMM YYYY')
-        this.polling.end_date = moment(end_date).format('D MMMM YYYY')
+        this.chartStart_date = moment(start_date).format('D MMMM YYYY')
+        this.chartEnd_date = moment(end_date).format('D MMMM YYYY')
+
 
         if (status === 10) {
           this.btnKirimDisable = true
