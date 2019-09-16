@@ -20,12 +20,21 @@
       </el-col>
       <el-col class="col-right" :xs="24" :sm="24" :md="24" :lg="17" :xl="17">
         <el-row style="margin: 10px 0px">
-          <el-col :span="12">
+          <el-col :span="6">
             <router-link :to="{ path: '/news/create' }">
               <el-button type="primary" size="small" icon="el-icon-plus">
                 Tambah Berita Baru
               </el-button>
             </router-link>
+          </el-col>
+          <el-col :span="6">
+            <div v-permission="['admin','staffProv', 'staffKabkota']">
+              <router-link :to="{ path: '/news/priority' }">
+                <el-button type="primary" size="small" icon="el-icon-plus">
+                  Prioritas Berita
+                </el-button>
+              </router-link>
+            </div>
           </el-col>
         </el-row>
 
@@ -113,11 +122,13 @@
 import { fetchList, fetchStatistic, deleteData, deactivate, activate } from '@/api/news'
 import moment from 'moment'
 import Pagination from '@/components/Pagination'
+import permission from '@/directive/permission/index.js'
 import ListFilter from './_listfilter'
 import { mapGetters } from 'vuex'
 
 export default {
   components: { Pagination, ListFilter },
+  directives: { permission },
   filters: {
     statusFilter(status) {
       const statusMap = {

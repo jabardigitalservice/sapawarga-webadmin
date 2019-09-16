@@ -69,6 +69,7 @@ export default {
     'news-channels-list': 'Daftar Sumber Berita',
     'news-channels-create': 'Tambah Sumber Berita',
     'news-channels-edit': 'Edit Sumber Berita',
+    'news-priority': 'Prioritas Berita',
 
     'release-management': 'Release',
     'release-management-list': 'Daftar Release',
@@ -158,5 +159,14 @@ export default {
   navbar: {
     profile: 'Lihat Profil',
     'profile-edit': 'Edit Profil'
+  },
+  categoriTypes: {
+    'phonebook': 'Nomor Penting',
+    'notification': 'Notifikasi',
+    'broadcast': 'Pesan',
+    'polling': 'Polling',
+    'survey': 'Survei',
+    'aspirasi': 'Usulan Masyarakat',
+    'video': 'Video'
   }
 }
