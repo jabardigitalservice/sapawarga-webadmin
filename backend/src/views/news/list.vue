@@ -31,7 +31,7 @@
             <div v-permission="['admin','staffProv', 'staffKabkota']">
               <router-link :to="{ path: '/news/priority' }">
                 <el-button type="primary" size="small" icon="el-icon-plus">
-                  Berita Priority
+                  Prioritas Berita
                 </el-button>
               </router-link>
             </div>
