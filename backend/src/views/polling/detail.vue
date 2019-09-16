@@ -118,7 +118,7 @@ export default {
           },
           {
             title: 'Desa/Kelurahan',
-            content: ((kelurahan !== null) ? kelurahan.name : 'Semua Kelurahan')
+            content: ((kelurahan !== null) ? kelurahan.name : 'Semua Desa/Kelurahan')
           },
           {
             title: 'RW',
