@@ -69,6 +69,7 @@ export default {
     'news-channels-list': 'Daftar Sumber Berita',
     'news-channels-create': 'Tambah Sumber Berita',
     'news-channels-edit': 'Edit Sumber Berita',
+    'news-priority': 'Prioritas Berita',
 
     'release-management': 'Release',
     'release-management-list': 'Daftar Release',
