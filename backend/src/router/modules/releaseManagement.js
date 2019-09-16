@@ -6,7 +6,7 @@ const releaseManagementRouter = {
   component: Layout,
   redirect: '/release-management/index',
   meta: {
-    title: 'Relese Management',
+    title: 'Release Management',
     roles: ['admin'],
     icon: 'zip'
   },

@@ -19,8 +19,8 @@
             <InputCategory v-model="form.category_id" category-type="phonebook" />
           </el-form-item>
 
-          <el-form-item label="Deskripsi">
-            <el-input v-model="form.description" type="textarea" rows="5" prop="description" />
+          <el-form-item label="Deskripsi" prop="description">
+            <el-input v-model="form.description" type="textarea" rows="5" />
           </el-form-item>
 
           <el-form-item label="Call Center" prop="seq">
@@ -61,7 +61,7 @@
 
 <script>
 import { fetchRecord, create, update } from '@/api/phonebooks'
-import { validContainsSpecialCharacters, validCoordinate } from '@/utils/validate'
+import { validContainsSpecialCharacters, validCoordinate, containsWhitespace } from '@/utils/validate'
 
 import InputSelectArea from '@/components/InputSelectArea'
 import InputMap from '@/components/InputMap'
@@ -141,13 +141,20 @@ export default {
       callback()
     }
 
+    const whitespaceText = (rule, value, callback) => {
+      if (containsWhitespace(value) === true) {
+        callback(new Error('Text yang diisi tidak valid.'))
+      }
+      callback()
+    }
+
     const validatorCoordinateFinite = (rule, value, callback) => {
       if (_.isEmpty(this.coordinates[0]) === false && isFinite(this.coordinates[0]) === false) {
-        callback(new Error('Koordinat Lokasi tidak sesuai'))
+        callback(new Error('Koordinat Lokasi tidak sesuai.'))
       }
 
       if (_.isEmpty(this.coordinates[1]) === false && isFinite(this.coordinates[1]) === false) {
-        callback(new Error('Koordinat Lokasi tidak sesuai'))
+        callback(new Error('Koordinat Lokasi tidak sesuai.'))
       }
 
       callback()
@@ -161,16 +168,17 @@ export default {
       rules: {
         name: [
           { required: true, message: 'Nama Instansi harus diisi.', trigger: 'blur' },
-          { validator: validatorNameNoSpecialCharacters, trigger: 'blur' }
+          { validator: validatorNameNoSpecialCharacters, trigger: 'blur' },
+          { validator: whitespaceText, trigger: 'blur' }
         ],
         address: [
-          //
+          { validator: whitespaceText, trigger: 'blur' }
         ],
         category_id: [
           { required: true, message: 'Kategori Instansi harus diisi.', trigger: 'change' }
         ],
         description: [
-          //
+          { validator: whitespaceText, trigger: 'blur' }
         ],
         seq: [
           { required: true, message: 'Call Center harus diisi.', trigger: 'blur' }
