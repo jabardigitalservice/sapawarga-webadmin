@@ -36,6 +36,10 @@ import { mockXHR } from '../mock' // simulation data
 import * as Sentry from '@sentry/browser'
 import * as Integrations from '@sentry/integrations'
 
+Vue.config.errorHandler = (msg, vm , info) => {
+  console.log('[Global Error Handler]: Error in '+ process.env.VUE_APP_VERSION + ' ' + info + ': ' + err);
+}
+
 if (process.env.NODE_ENV === 'production') {
   Sentry.init({
     dsn: 'https://a28d13fa18d04acd98a3426d83ff094a@sentry.io/1725236',
