@@ -36,9 +36,10 @@ import { mockXHR } from '../mock' // simulation data
 import * as Sentry from '@sentry/browser'
 import * as Integrations from '@sentry/integrations'
 
-if ((process.env.NODE_ENV === 'production') || (process.env.NODE_ENV === 'staging')) {
+if (process.env.NODE_ENV === 'production') {
   Sentry.init({
-    dsn: process.env.SENTRY_DSN,
+    environment: 'staging',
+    dsn: process.env.VUE_APP_SENTRY_DSN,
     release: process.env.VUE_APP_VERSION,
     integrations: [new Integrations.Vue({ Vue, attachProps: true })]
   })
