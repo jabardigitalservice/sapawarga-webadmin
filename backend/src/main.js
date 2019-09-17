@@ -38,7 +38,7 @@ import * as Integrations from '@sentry/integrations'
 
 if ((process.env.NODE_ENV === 'production') || (process.env.NODE_ENV === 'staging')) {
     Sentry.init({
-        dsn: 'https://a28d13fa18d04acd98a3426d83ff094a@sentry.io/1725236',
+        dsn: process.env.SENTRY_DSN,
         release: process.env.VERSION,
         integrations: [new Integrations.Vue({ Vue, attachProps: true })]
     })
