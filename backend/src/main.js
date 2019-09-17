@@ -37,11 +37,11 @@ import * as Sentry from '@sentry/browser'
 import * as Integrations from '@sentry/integrations'
 
 if ((process.env.NODE_ENV === 'production') || (process.env.NODE_ENV === 'staging')) {
-    Sentry.init({
-        dsn: process.env.SENTRY_DSN,
-        release: process.env.VUE_APP_VERSION,
-        integrations: [new Integrations.Vue({ Vue, attachProps: true })]
-    })
+  Sentry.init({
+    dsn: process.env.SENTRY_DSN,
+    release: process.env.VUE_APP_VERSION,
+    integrations: [new Integrations.Vue({ Vue, attachProps: true })]
+  })
 }
 // mock api in github pages site build
 if (process.env.NODE_ENV === 'production') { mockXHR() }
