@@ -70,8 +70,8 @@ build_prod:
     - sed -i "s/%NODE_ENV%/production/g" .env
     - sed -i "s/%VUE_APP_BASE_API%/${VUE_APP_BASE_API}/g" .env
     - sed -i "s/%GOOGLE_MAPS_WEB_API_KEY%/${GOOGLE_MAPS_WEB_API_KEY}/g" .env
-    - sed -i "s/%VUE_APP_SENTRY_DSN%/${VUE_APP_SENTRY_DSN}/g" .env
     - sed -i "s/%VUE_APP_VERSION%/${VERSION}/g" .env
+    - sed -i "s/%SENTRY_DSN%/${SENTRY_DSN}/g" .env
     - cat .env
     - docker-compose build
     - docker images
@@ -96,7 +96,7 @@ test_webadmin:
     - sed -i "s/%NODE_ENV%/development/g" .env
     - sed -i "s/%VUE_APP_BASE_API%/${VUE_APP_BASE_API}/g" .env
     - sed -i "s/%GOOGLE_MAPS_WEB_API_KEY%/${GOOGLE_MAPS_WEB_API_KEY}/g" .env
-    - sed -i "s/%VUE_APP_SENTRY_DSN%/${VUE_APP_SENTRY_DSN}/g" .env
+    - sed -i "s/%SENTRY_DSN%/${SENTRY_DSN}/g" .env
     - cat .env
     - docker-compose pull
     - docker images
@@ -125,8 +125,8 @@ release_all:
     - sed -i "s/%NODE_ENV%/development/g" .env
     - sed -i "s/%VUE_APP_BASE_API%/${VUE_APP_BASE_API}/g" .env
     - sed -i "s/%GOOGLE_MAPS_WEB_API_KEY%/${GOOGLE_MAPS_WEB_API_KEY}/g" .env
-    - sed -i "s/%VUE_APP_SENTRY_DSN%/${VUE_APP_SENTRY_DSN}/g" .env
     - sed -i "s/%VUE_APP_VERSION%/${VERSION}/g" .env
+    - sed -i "s/%SENTRY_DSN%/${SENTRY_DSN}/g" .env
     - cat .env
     - docker-compose pull
     - docker images
