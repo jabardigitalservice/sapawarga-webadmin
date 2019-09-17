@@ -36,14 +36,21 @@ import { mockXHR } from '../mock' // simulation data
 import * as Sentry from '@sentry/browser'
 import * as Integrations from '@sentry/integrations'
 
-Vue.config.errorHandler = (msg, vm , info) => {
-  console.log('[Global Error Handler]: Error in '+ process.env.VUE_APP_VERSION + ' ' + info + ': ' + err);
+class MyAwesomeTransport extends Sentry.Transports.BaseTransport {
+  captureEvent(event) {
+    return fetch(this.url, {
+      body: JSON.stringify(event),
+      method: 'POST'
+    }).then(response => ({
+      status: response.status === '413' ? 'rate_limit' : 'success'
+    })).catch(err => ({ status: 'failed' }));
+  }
 }
 
 if (process.env.NODE_ENV === 'production') {
   Sentry.init({
     dsn: 'https://a28d13fa18d04acd98a3426d83ff094a@sentry.io/1725236',
-    integrations: [new Integrations.Vue({ Vue, attachProps: true })]
+    integrations: [new Integrations.Vue({ Vue, attachProps: true }), new MyAwesomeTransport()]
   })
 }
 // mock api in github pages site build
