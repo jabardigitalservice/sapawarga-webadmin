@@ -70,8 +70,13 @@ export default {
   },
   methods: {
     async getResult() {
+      if (this.isEdit) {
+        this.idDashboard
+      } else {
+        this.idDashboard = this.id
+      }
       const arrayTemporary = []
-      await fetchResult(this.id).then(response => {
+      await fetchResult(this.idDashboard).then(response => {
         response.data.forEach(function(value, key) {
           arrayTemporary.push({ 'value': value.votes, 'name': value.answer_body })
         })
