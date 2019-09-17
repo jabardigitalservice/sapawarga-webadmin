@@ -17,7 +17,7 @@
       <el-card class="box-card">
         <div slot="header" class="clearfix">
           <span>Total Audience:</span>
-          <span class="total_audience">{{ number }}</span>
+          <span class="total_audience">{{ count }}</span>
         </div>
         <p class="question">{{ question }}</p>
         <p class="date">{{ chartStart_date }} - {{ chartEnd_date }}</p>
@@ -43,7 +43,7 @@ export default {
       question: null,
       chartStart_date: null,
       chartEnd_date: null,
-      number: null,
+      count: null,
       listQuery: {
         limit: null
       }
@@ -75,7 +75,7 @@ export default {
       this.chartEnd_date = moment(data.end_date).format('D MMMM YYYY')
     },
     getFromChild(value) {
-      this.number = value
+      this.count = value
     }
   }
 }
