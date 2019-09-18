@@ -208,7 +208,7 @@ export default {
         excerpt: null,
         answers: [{
           id: 1,
-          body: ''
+          body: null
         }]
       },
       rules: {
@@ -398,6 +398,13 @@ export default {
         this.polling.rw = null
       }
 
+      console.log(this.polling.answers)
+      if (this.polling.answers.length < 2) {
+        // this.$message.error(this.$t('errors.polling-start-date'))
+        this.$message.error('Jawaban harus lebih dari 2')
+        return
+      }
+
       const now = moment().startOf('day')
       const distance = (moment(this.start_date)).isBefore(now)
 
@@ -490,6 +497,16 @@ export default {
       const valid = await this.$refs.polling.validate()
 
       if (!valid) {
+        return
+      }
+
+      for (let i = 0; i < this.polling.answers.length; i++) {
+        console.log(this.polling.answers[i].body)
+      }
+
+      if (this.polling.answers.length < 2) {
+        // this.$message.error(this.$t('errors.polling-start-date'))
+        this.$message.error('Jawaban polling harus lebih dari 2')
         return
       }
 
