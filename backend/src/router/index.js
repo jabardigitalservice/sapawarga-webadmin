@@ -94,7 +94,7 @@ export const constantRoutes = [
           icon: 'dashboard',
           noCache: true,
           affix: true,
-          roles: ['admin']
+          roles: ['admin', 'staffProv']
         }
       }
     ]

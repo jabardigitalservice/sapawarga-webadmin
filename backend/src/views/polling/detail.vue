@@ -30,7 +30,7 @@
               <span class="total_audience">{{ totalPolling }}</span>
             </div>
             <p class="question">{{ polling.question }}</p>
-            <p class="date">{{ chartStart_date }} - {{ chartStart_date }}</p>
+            <p class="date">{{ chartStart_date }} - {{ chartEnd_date }}</p>
             <PollingChart @childToParent="getFromChild" />
           </el-card>
         </div>
@@ -118,7 +118,7 @@ export default {
           },
           {
             title: 'Desa/Kelurahan',
-            content: ((kelurahan !== null) ? kelurahan.name : 'Semua Kelurahan')
+            content: ((kelurahan !== null) ? kelurahan.name : 'Semua Desa/Kelurahan')
           },
           {
             title: 'RW',

@@ -21,19 +21,38 @@ export default {
     height: {
       type: String,
       default: '300px'
+    },
+    isEdit: {
+      type: Boolean,
+      default: false
+    },
+    propIdPolling: {
+      type: Number,
+      default: null
     }
   },
   data() {
     return {
       chart: null,
       id: null,
+      idDashboard: null,
       result: [],
       count: null
     }
   },
+  watch: {
+    propIdPolling(newId, oldId) {
+      this.idDashboard = newId
+      this.result = []
+      this.getResult()
+    }
+  },
   mounted() {
+    this.idDashboard = this.propIdPolling
     this.id = this.$route.params && this.$route.params.id
-    this.getResult()
+    if (!this.isEdit) {
+      this.getResult()
+    }
     this.__resizeHandler = debounce(() => {
       if (this.chart) {
         this.chart.resize()
@@ -51,8 +70,13 @@ export default {
   },
   methods: {
     async getResult() {
+      if (this.isEdit) {
+        this.idDashboard
+      } else {
+        this.idDashboard = this.id
+      }
       const arrayTemporary = []
-      await fetchResult(this.id).then(response => {
+      await fetchResult(this.idDashboard).then(response => {
         response.data.forEach(function(value, key) {
           arrayTemporary.push({ 'value': value.votes, 'name': value.answer_body })
         })
