@@ -110,7 +110,7 @@
                     <el-input v-model="answer.body" type="text" placeholder="Jawaban" />
                   </el-col>
                   <el-col :sm="4" :md="4" :lg="4" :xl="4">
-                    <el-button type="danger" class="answer" size="mini" icon="el-icon-delete" @click.prevent="removeAnswer(answer)" style="margin-top:3px"></el-button>
+                    <el-button type="danger" class="answer" size="mini" icon="el-icon-delete" style="margin-top:3px" @click.prevent="removeAnswer(answer)" />
                   </el-col>
                 </el-row>
               </el-form-item>
@@ -398,11 +398,16 @@ export default {
         this.polling.rw = null
       }
 
-      console.log(this.polling.answers)
       if (this.polling.answers.length < 2) {
-        // this.$message.error(this.$t('errors.polling-start-date'))
-        this.$message.error('Jawaban harus lebih dari 2')
+        this.$message.error(this.$t('errors.polling-answer-less-then-2'))
         return
+      } else {
+        for (let i = 0; i < this.polling.answers.length; i++) {
+          if (this.polling.answers[i].body === '') {
+            this.$message.error(this.$t('errors.polling-answer-null'))
+            return
+          }
+        }
       }
 
       const now = moment().startOf('day')
@@ -500,14 +505,16 @@ export default {
         return
       }
 
-      for (let i = 0; i < this.polling.answers.length; i++) {
-        console.log(this.polling.answers[i].body)
-      }
-
       if (this.polling.answers.length < 2) {
-        // this.$message.error(this.$t('errors.polling-start-date'))
-        this.$message.error('Jawaban polling harus lebih dari 2')
+        this.$message.error(this.$t('errors.polling-answer-less-then-2'))
         return
+      } else {
+        for (let i = 0; i < this.polling.answers.length; i++) {
+          if (this.polling.answers[i].body === '') {
+            this.$message.error(this.$t('errors.polling-answer-null'))
+            return
+          }
+        }
       }
 
       await this.$confirm(`Apakah anda yakin akan mengirimkan polling : ${this.polling.name} ?`, 'Konfirmasi', {
