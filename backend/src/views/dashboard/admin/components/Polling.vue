@@ -88,13 +88,13 @@ export default {
     font-weight: bold;
   }
   .question {
-  margin-top: 0px;
-  color: rgba(0, 0, 0, 0.7);
-  text-align:center;
-}
-.date {
-  font-size: 15px;
-  text-align:center;
-  color: rgba(0, 0, 0, 0.7);
-}
+    margin-top: 0px;
+    color: rgba(0, 0, 0, 0.7);
+    text-align:center;
+  }
+  .date {
+    font-size: 15px;
+    text-align:center;
+    color: rgba(0, 0, 0, 0.7);
+  }
 </style>
