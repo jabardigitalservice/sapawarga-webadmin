@@ -75,7 +75,10 @@ export default {
     'release-management-list': 'Daftar Release',
     'release-management-create': 'Tambah Release',
     'release-management-edit': 'Edit Release',
-    'release-management-detail': 'Detail Release'
+    'release-management-detail': 'Detail Release',
+
+    'news-hoax': 'Berita Hoax',
+    'news-hoax-list': 'Daftar Berita Hoax' 
   },
   crud: {
     'list-empty': 'Belum ada data.',

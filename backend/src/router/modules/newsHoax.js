@@ -1,7 +1,7 @@
 import Layout from '@/layout'
 
-const releaseManagementRouter = {
-  name: 'News Hoax',
+const newsHoaxRouter = {
+  name: 'news-hoax',
   path: '/news-hoax',
   component: Layout,
   redirect: '/news-hoax/index',
@@ -23,4 +23,4 @@ const releaseManagementRouter = {
   ]
 }
 
-export default releaseManagementRouter
+export default newsHoaxRouter
