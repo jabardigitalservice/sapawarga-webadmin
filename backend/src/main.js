@@ -38,7 +38,7 @@ import * as Integrations from '@sentry/integrations'
 
 if (process.env.NODE_ENV === 'production') {
   Sentry.init({
-    environment: 'staging',
+    environment: process.env.VUE_APP_ERROR_ENVIRONMENT,
     dsn: process.env.VUE_APP_SENTRY_DSN,
     release: process.env.VUE_APP_VERSION,
     integrations: [new Integrations.Vue({ Vue, attachProps: true })]
