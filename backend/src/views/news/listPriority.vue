@@ -29,22 +29,32 @@
       </el-col>
     </el-row>
     <el-dialog v-el-drag-dialog :visible.sync="dialogTableVisible" title="List Berita">
-      <ListFilter
-        :list-query.sync="listQuery"
-        @submit-search="getListBerita"
-        @reset-search="resetFilter"
-      />
-      <el-table :data="listBerita">
-        <el-table-column property="title" label="Judul Berita" />
-        <el-table-column property="channel.name" label="Sumber" />
-        <el-table-column align="center" label="Actions">
-          <template slot-scope="scope">
-            <el-button type="white" size="mini" @click="addBeritaPriority(scope.row), dialogTableVisible = false">
-              Tambah
-            </el-button>
-          </template>
-        </el-table-column>
-      </el-table>
+      <el-row>
+        <ListFilter
+          :list-query.sync="listQuery"
+          :is-priority="true"
+          @submit-search="getListBerita"
+          @reset-search="resetFilter"
+        />
+        <el-table :data="listBerita">
+          <el-table-column property="title" label="Judul Berita" />
+          <el-table-column property="channel.name" label="Sumber" />
+          <el-table-column align="center" label="Actions">
+            <template slot-scope="scope">
+              <el-button type="white" size="mini" @click="addBeritaPriority(scope.row), dialogTableVisible = false">
+                Tambah
+              </el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+        <pagination
+          v-show="total>0"
+          :total="total"
+          :page.sync="listQuery.page"
+          :limit.sync="listQuery.limit"
+          @pagination="getListBerita"
+        />
+      </el-row>
     </el-dialog>
   </div>
 </template>
@@ -52,12 +62,14 @@
 <script>
 import elDragDialog from '@/directive/el-dragDialog' // base on element-ui
 import DndList from '@/components/DndList'
+import Pagination from '@/components/Pagination'
 import { fetchList, fetchListPriority, priorityBeritaUpdate } from '@/api/news'
 import ListFilter from './_listfilter'
 
 export default {
   directives: { elDragDialog },
   components: {
+    Pagination,
     ListFilter,
     DndList
   },
@@ -71,9 +83,10 @@ export default {
       listQuery: {
         title: null,
         search: null,
+        channel_id: null,
+        status: 10,
         page: 1,
-        limit: 10,
-        status: 10
+        limit: 10
       },
       terms: false,
       dialogTableVisible: false
@@ -107,6 +120,7 @@ export default {
           }
         })
         this.listPriority = dataPriority
+        this.listLoading = false
       })
     },
 
@@ -114,6 +128,7 @@ export default {
       this.listLoading = true
       fetchList(this.listQuery).then(response => {
         this.listBerita = response.data.items
+        this.total = response.data._meta.totalCount
       })
     },
 
@@ -128,6 +143,8 @@ export default {
         const seq = this.listPriority.length + 1
         data['seq'] = seq
         this.listPriority.push(data)
+      } else {
+        this.$message.success(this.$t('crud.news-selected'))
       }
 
       this.resetFilter()

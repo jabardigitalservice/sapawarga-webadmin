@@ -27,7 +27,7 @@
               </el-button>
             </router-link>
           </el-col>
-          <el-col :span="6">
+          <el-col :span="2">
             <div v-permission="['admin','staffProv', 'staffKabkota']">
               <router-link :to="{ path: '/news/priority' }">
                 <el-button type="primary" size="small" icon="el-icon-plus">
