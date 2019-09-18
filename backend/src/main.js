@@ -43,6 +43,12 @@ if (process.env.NODE_ENV === 'production') {
     release: process.env.VUE_APP_VERSION,
     integrations: [new Integrations.Vue({ Vue, attachProps: true })]
   })
+  Sentry.configureScope((scope) => {
+    scope.setTag('User', '')
+    scope.setUser({
+      id: parseInt(store.getters.user_id)
+    })
+  })
 }
 // mock api in github pages site build
 if (process.env.NODE_ENV === 'production') { mockXHR() }
