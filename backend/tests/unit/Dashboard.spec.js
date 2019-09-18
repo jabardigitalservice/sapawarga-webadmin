@@ -4,10 +4,14 @@ import DashboardApproval from '@/views/dashboard/admin/components/Approval'
 import ListFilter from '@/views/dashboard/admin/components/_listfilter'
 import * as apiDashboard from '@/api/dashboard'
 import aspirasiMostLikesFixture from './fixtures/aspirasiMostLikes'
+import pollingLatestFixture from './fixtures/pollingLatest'
+import aspirationCountFixture from './fixtures/aspirationCount'
+import aspirationMapFixture from './fixtures/aspirationMap'
 import ElementUI from 'element-ui'
 import flushPromises from 'flush-promises'
 import Vuex from 'vuex'
 import DashboardMap from '@/views/dashboard/admin/components/MapData'
+import Polling from '@/views/dashboard/admin/components/Polling'
 
 const localVue = createLocalVue()
 localVue.use(ElementUI)
@@ -20,9 +24,16 @@ beforeEach(() => {
 
 jest.mock('@/api/dashboard')
 apiDashboard.fetchAspirasiMostLikes = () => Promise.resolve(aspirasiMostLikesFixture)
+apiDashboard.fetchLatestPolling = () => Promise.resolve(pollingLatestFixture)
+apiDashboard.fetchAspirasiCounts = () => Promise.resolve(aspirationCountFixture)
+apiDashboard.fetchAspirasiMap = () => Promise.resolve(aspirationMapFixture)
 
 describe('List dashboard usulan', () => {
   const expectedList = aspirasiMostLikesFixture.data.items
+  const expectedPollingLatest = pollingLatestFixture.data
+  const expectedAspirationCount = aspirationCountFixture.data
+  const expectedAspirationMap = aspirationMapFixture.data
+
   it('render list usulan', async() => {
     const wrapper = shallowMount(DashboardUsulan, {
       localVue
@@ -62,11 +73,17 @@ describe('List dashboard usulan', () => {
     expect(wrapper.emitted()['reset-search']).toBeTruthy()
   })
 
-  it('render dashboard approval', () => {
+  it('render dashboard approval', async() => {
+
     const wrapper = shallowMount(DashboardApproval, {
       localVue
     })
 
+    await flushPromises()
+
+    const result = [{accept: expectedAspirationCount.STATUS_APPROVAL_PENDING, publish: expectedAspirationCount.STATUS_PUBLISHED}]
+    wrapper.setData({ list: result })
+    expect(wrapper.vm.list).toBe(result)
     expect(wrapper.is(DashboardApproval)).toBe(true)
   })
 
@@ -99,5 +116,35 @@ describe('List dashboard usulan', () => {
     wrapper.setData({ list: dataList })
     expect(wrapper.vm.list).toBe(dataList)
     expect(wrapper.vm.sidebar).toBe(stateSidebar.opened)
+  })
+
+  it('render dashboard polling', () => {
+    const wrapper = shallowMount(Polling, {
+      localVue
+    })
+
+    expect(wrapper.is(Polling)).toBe(true)
+  })
+
+  it('function list polling latest', async() => {
+    const wrapper = shallowMount(Polling, {
+      localVue
+    })
+
+    await flushPromises()
+    expect(wrapper.vm.list).toBe(expectedPollingLatest)
+  })
+
+  it('function displayChart dashboard polling', () => {
+    const wrapper = shallowMount(Polling, {
+      localVue
+    })
+    
+    const id = 123
+    const data = {
+      id: 1
+    }    
+    wrapper.vm.displayChart(data)
+    expect(wrapper.vm.id).toBe(data.id)
   })
 })
