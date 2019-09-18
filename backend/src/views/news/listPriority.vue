@@ -32,6 +32,7 @@
       <el-row>
         <ListFilter
           :list-query.sync="listQuery"
+          :is-priority="true"
           @submit-search="getListBerita"
           @reset-search="resetFilter"
         />
@@ -82,6 +83,7 @@ export default {
       listQuery: {
         title: null,
         search: null,
+        sumber_berita: null,
         status: 10,
         page: 1,
         limit: 10
@@ -141,6 +143,8 @@ export default {
         const seq = this.listPriority.length + 1
         data['seq'] = seq
         this.listPriority.push(data)
+      } else {
+        this.$message.success(this.$t('crud.news-selected'))
       }
 
       this.resetFilter()
