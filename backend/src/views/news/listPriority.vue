@@ -83,7 +83,7 @@ export default {
       listQuery: {
         title: null,
         search: null,
-        sumber_berita: null,
+        channel_id: null,
         status: 10,
         page: 1,
         limit: 10

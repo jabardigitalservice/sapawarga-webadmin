@@ -10,7 +10,7 @@
         <el-col v-if="isPriority" :span="6">
           <el-form-item style="margin-bottom: 0">
             <el-select
-              v-model="listQuery.sumber_berita"
+              v-model="listQuery.channel_id"
               clearable
               filterable
               placeholder="Pilih Sumber Berita"
