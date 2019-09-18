@@ -110,11 +110,11 @@
                     <el-input v-model="answer.body" type="text" placeholder="Jawaban" />
                   </el-col>
                   <el-col :sm="4" :md="4" :lg="4" :xl="4">
-                    <el-button type="danger" class="answer" @click.prevent="removeAnswer(answer)">Hapus</el-button>
+                    <el-button type="danger" class="answer" size="mini" icon="el-icon-delete" @click.prevent="removeAnswer(answer)" style="margin-top:3px"></el-button>
                   </el-col>
                 </el-row>
               </el-form-item>
-              <el-button type="success" class="add-answer" @click="addAnswer">Jawaban Lain</el-button>
+              <el-button type="success" class="add-answer" size="mini" icon="el-icon-circle-plus" @click="addAnswer">Jawaban Lain</el-button>
             </div>
 
             <el-form-item class="polling-button">
