@@ -33,13 +33,13 @@
 
 <script>
 import checkPermission from '@/utils/permission'
-import { newsChannelList } from '@/api/news'
+// import { newsChannelList } from '@/api/news'
 export default {
   props: {
     listQuery: {
       type: Object,
       default: null
-    },
+    }
   },
   data() {
     return {
@@ -58,7 +58,7 @@ export default {
 
     resetFilter() {
       this.$emit('reset-search')
-    },
+    }
 
     // getNewsChannel() {
     //   newsChannelList().then(response => {
