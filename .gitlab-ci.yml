@@ -7,137 +7,135 @@ stages:
   - deploy_staging
   - deploy_prod
 
-# versioning:
-#   image: alpine:latest
-#   stage: versioning
-#   only:
-#     - branches
-#   before_script:
-#     - apk add git
-#   script:
-#     - export VERSION=$(git describe)
-#     - echo $VERSION
-#     - echo $VERSION > version
-#   artifacts:
-#     paths:
-#       - version
+versioning:
+  image: alpine:latest
+  stage: versioning
+  only:
+    - branches
+  before_script:
+    - apk add git
+  script:
+    - export VERSION=$(git describe)
+    - echo $VERSION
+    - echo $VERSION > version
+  artifacts:
+    paths:
+      - version
 
-# code_quality:
-#   image: docker:stable
-#   stage: code_quality
-#   only:
-#     - branches
-#   services:
-#     - docker:stable-dind
-#   variables:
-#     DOCKER_DRIVER: overlay2
-#   dependencies: 
-#     - versioning
-#   before_script:
-#     - export VERSION=$(cat ./version)
-#   script:
-#     - docker run
-#         --env SOURCE_CODE=$PWD
-#         --env CONTAINER_TIMEOUT_SECONDS=3600
-#         --env CODECLIMATE_DEBUG=1
-#         --volume $PWD:/code
-#         --volume /var/run/docker.sock:/var/run/docker.sock
-#         "registry.gitlab.com/gitlab-org/security-products/codequality:11-8-stable" /code
-#   artifacts:
-#     paths: [gl-code-quality-report.json]
-#     reports:
-#       codequality: gl-code-quality-report.json
-#     expire_in: 1 week
+code_quality:
+  image: docker:stable
+  stage: code_quality
+  only:
+    - branches
+  services:
+    - docker:stable-dind
+  variables:
+    DOCKER_DRIVER: overlay2
+  dependencies: 
+    - versioning
+  before_script:
+    - export VERSION=$(cat ./version)
+  script:
+    - docker run
+        --env SOURCE_CODE=$PWD
+        --env CONTAINER_TIMEOUT_SECONDS=3600
+        --env CODECLIMATE_DEBUG=1
+        --volume $PWD:/code
+        --volume /var/run/docker.sock:/var/run/docker.sock
+        "registry.gitlab.com/gitlab-org/security-products/codequality:11-8-stable" /code
+  artifacts:
+    paths: [gl-code-quality-report.json]
+    reports:
+      codequality: gl-code-quality-report.json
+    expire_in: 1 week
 
-# build_prod:
-#   image: docker:stable
-#   stage: build
-#   only:
-#     - branches
-#   services:
-#     - docker:dind
-#   variables:
-#     DOCKER_DRIVER: overlay2
-#   dependencies: 
-#     - versioning
-#   before_script:
-#     - export VERSION=$(cat ./version)
-#     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-#     - apk add --no-cache py-pip python-dev libffi-dev openssl-dev gcc libc-dev make
-#     - pip install docker-compose
-#   script:
-#     - cp .env-template .env
-#     - sed -i "s/%NODE_ENV%/production/g" .env
-#     - sed -i "s/%VUE_APP_BASE_API%/${VUE_APP_BASE_API}/g" .env
-#     - sed -i "s/%GOOGLE_MAPS_WEB_API_KEY%/${GOOGLE_MAPS_WEB_API_KEY}/g" .env
-#     - cat .env
-#     - docker-compose build
-#     - docker images
-#     - docker-compose push
+build_prod:
+  image: docker:stable
+  stage: build
+  only:
+    - branches
+  services:
+    - docker:dind
+  variables:
+    DOCKER_DRIVER: overlay2
+  dependencies: 
+    - versioning
+  before_script:
+    - export VERSION=$(cat ./version)
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - apk add --no-cache py-pip python-dev libffi-dev openssl-dev gcc libc-dev make
+    - pip install docker-compose
+  script:
+    - cp .env-template .env
+    - sed -i "s/%NODE_ENV%/production/g" .env
+    - sed -i "s/%VUE_APP_BASE_API%/${VUE_APP_BASE_API}/g" .env
+    - sed -i "s/%GOOGLE_MAPS_WEB_API_KEY%/${GOOGLE_MAPS_WEB_API_KEY}/g" .env
+    - cat .env
+    - docker-compose build
+    - docker images
+    - docker-compose push
 
-# test_webadmin:
-#   image: docker:stable
-#   stage: test
-#   only:
-#     - branches
-#   services:
-#     - docker:dind
-#   dependencies: 
-#     - versioning
-#   before_script:
-#     - export VERSION=$(cat ./version)
-#     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-#     - apk add --no-cache py-pip python-dev libffi-dev openssl-dev gcc libc-dev make
-#     - pip install docker-compose
-#   script:
-#     - cp .env-template .env
-#     - sed -i "s/%NODE_ENV%/development/g" .env
-#     - sed -i "s/%VUE_APP_BASE_API%/${VUE_APP_BASE_API}/g" .env
-#     - sed -i "s/%GOOGLE_MAPS_WEB_API_KEY%/${GOOGLE_MAPS_WEB_API_KEY}/g" .env
-#     - cat .env
-#     - docker-compose pull
-#     - docker images
-#     - COMPOSE_HTTP_TIMEOUT=500 docker-compose up -d
-#     - sleep 60
-#     - docker ps
-#     - docker-compose exec -T app npm run lint
-#     - docker-compose exec -T app npm run test:unit
+test_webadmin:
+  image: docker:stable
+  stage: test
+  only:
+    - branches
+  services:
+    - docker:dind
+  dependencies: 
+    - versioning
+  before_script:
+    - export VERSION=$(cat ./version)
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - apk add --no-cache py-pip python-dev libffi-dev openssl-dev gcc libc-dev make
+    - pip install docker-compose
+  script:
+    - cp .env-template .env
+    - sed -i "s/%NODE_ENV%/development/g" .env
+    - sed -i "s/%VUE_APP_BASE_API%/${VUE_APP_BASE_API}/g" .env
+    - sed -i "s/%GOOGLE_MAPS_WEB_API_KEY%/${GOOGLE_MAPS_WEB_API_KEY}/g" .env
+    - cat .env
+    - docker-compose pull
+    - docker images
+    - COMPOSE_HTTP_TIMEOUT=500 docker-compose up -d
+    - sleep 60
+    - docker ps
+    - docker-compose exec -T app npm run lint
+    - docker-compose exec -T app npm run test:unit
 
-# release_all:
-#   image: docker:stable
-#   stage: release
-#   services:
-#     - docker:dind
-#   only:
-#     - master
-#   dependencies: 
-#     - versioning
-#   before_script:
-#     - export VERSION=$(cat ./version)
-#     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-#     - apk add --no-cache py-pip python-dev libffi-dev openssl-dev gcc libc-dev make
-#     - pip install docker-compose
-#   script:
-#     - cp .env-template .env
-#     - sed -i "s/%NODE_ENV%/development/g" .env
-#     - sed -i "s/%VUE_APP_BASE_API%/${VUE_APP_BASE_API}/g" .env
-#     - sed -i "s/%GOOGLE_MAPS_WEB_API_KEY%/${GOOGLE_MAPS_WEB_API_KEY}/g" .env
-#     - cat .env
-#     - docker-compose pull
-#     - docker images
-#     - docker push registry.gitlab.com/jdsteam/sapa-warga/sapawarga-webadmin:${VERSION}
+release_all:
+  image: docker:stable
+  stage: release
+  services:
+    - docker:dind
+  only:
+    - master
+  dependencies: 
+    - versioning
+  before_script:
+    - export VERSION=$(cat ./version)
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - apk add --no-cache py-pip python-dev libffi-dev openssl-dev gcc libc-dev make
+    - pip install docker-compose
+  script:
+    - cp .env-template .env
+    - sed -i "s/%NODE_ENV%/development/g" .env
+    - sed -i "s/%VUE_APP_BASE_API%/${VUE_APP_BASE_API}/g" .env
+    - sed -i "s/%GOOGLE_MAPS_WEB_API_KEY%/${GOOGLE_MAPS_WEB_API_KEY}/g" .env
+    - cat .env
+    - docker-compose pull
+    - docker images
+    - docker push registry.gitlab.com/jdsteam/sapa-warga/sapawarga-webadmin:${VERSION}
 
 deploy_staging:
   image: docker:stable
   stage: deploy_staging
-  # only:
-  #   - master
-  # dependencies: 
-  #   - versioning
-  variables:
-    VERSION: v0.1-189-gb6bde71
+  only:
+    - master
+  dependencies: 
+    - versioning
   before_script:
-    # - export VERSION=$(cat ./version)
+    - export VERSION=$(cat ./version)
     - 'which ssh-agent || ( apk update && apk add openssh-client )'
     - mkdir -p ~/.ssh
     - eval $(ssh-agent -s)
@@ -149,28 +147,28 @@ deploy_staging:
     - ssh -o StrictHostKeyChecking=no ${SSH_STAGING_USERNAME_AWS}@${STAGING_HOST_AWS} "sudo docker ps"
     - ssh -o StrictHostKeyChecking=no ${SSH_STAGING_USERNAME_AWS}@${STAGING_HOST_AWS} "sudo docker image prune -a -f"
 
-# deploy_prod_eks:
-#   stage: deploy_prod
-#   image: dtzar/helm-kubectl
-#   when: manual
-#   only:
-#     - master
-#   dependencies: 
-#     - versioning
-#   before_script:
-#     - export VERSION=$(cat ./version)
-#     - kubectl config set-cluster k8s --server="${EKS_SERVER}"
-#     - kubectl config set clusters.k8s.certificate-authority-data ${EKS_CA}
-#     - kubectl config set-credentials gitlab --token="${EKS_TOKEN}"
-#     - kubectl config set-context default --cluster=k8s --user=gitlab
-#     - kubectl config use-context default
-#     - kubectl cluster-info
-#   script:
-#     - cp kubernetes/webadmin-variables-sample.yaml kubernetes/webadmin-variables.yaml
-#     - sed -i "s/%VUE_APP_VERSION%/${VERSION}/g" kubernetes/webadmin-variables.yaml
-#     - sed -i "s/%VUE_APP_BASE_API%/${EKS_VUE_APP_BASE_API}/g" kubernetes/webadmin-variables.yaml
-#     - sed -i "s/%dockerconfigjson%/${dockerconfigjson}/g" kubernetes/webadmin-variables.yaml
-#     - sed -i "s/%VERSION%/${VERSION}/g" kubernetes/webadmin-deployment.yaml
-#     - kubectl apply -f kubernetes/webadmin-variables.yaml
-#         -f kubernetes/webadmin-deployment.yaml
-#         -f kubernetes/webadmin-service.yaml
+deploy_prod_eks:
+  stage: deploy_prod
+  image: dtzar/helm-kubectl
+  when: manual
+  only:
+    - master
+  dependencies: 
+    - versioning
+  before_script:
+    - export VERSION=$(cat ./version)
+    - kubectl config set-cluster k8s --server="${EKS_SERVER}"
+    - kubectl config set clusters.k8s.certificate-authority-data ${EKS_CA}
+    - kubectl config set-credentials gitlab --token="${EKS_TOKEN}"
+    - kubectl config set-context default --cluster=k8s --user=gitlab
+    - kubectl config use-context default
+    - kubectl cluster-info
+  script:
+    - cp kubernetes/webadmin-variables-sample.yaml kubernetes/webadmin-variables.yaml
+    - sed -i "s/%VUE_APP_VERSION%/${VERSION}/g" kubernetes/webadmin-variables.yaml
+    - sed -i "s/%VUE_APP_BASE_API%/${EKS_VUE_APP_BASE_API}/g" kubernetes/webadmin-variables.yaml
+    - sed -i "s/%dockerconfigjson%/${dockerconfigjson}/g" kubernetes/webadmin-variables.yaml
+    - sed -i "s/%VERSION%/${VERSION}/g" kubernetes/webadmin-deployment.yaml
+    - kubectl apply -f kubernetes/webadmin-variables.yaml
+        -f kubernetes/webadmin-deployment.yaml
+        -f kubernetes/webadmin-service.yaml
