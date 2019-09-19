@@ -41,7 +41,7 @@ export default {
     'polling-create': 'Tambah Polling',
     'polling-detail': 'Detail Polling',
     'polling-edit': 'Edit Polling',
-    
+
     'survey-manage': 'Survei',
     'survey-list': 'Daftar Survei',
     'survey-create': 'Tambah Survei',
