@@ -41,7 +41,7 @@ export default {
     'polling-create': 'Tambah Polling',
     'polling-detail': 'Detail Polling',
     'polling-edit': 'Edit Polling',
-
+    
     'survey-manage': 'Survei',
     'survey-list': 'Daftar Survei',
     'survey-create': 'Tambah Survei',
@@ -105,6 +105,7 @@ export default {
     'survey-published': 'Survei berhasil dipublikasikan.',
 
     'dashboard-aspiration': 'Lihat Semua Usulan',
+    'polling-all': 'Lihat Semua Polling',
 
     'insert-row': 'Tambah Baris Baru',
     'delete-row': 'Hapus',

@@ -11,6 +11,11 @@
             </template>
           </el-table-column>
         </el-table>
+        <el-row>
+          <router-link :to="{ path: '/polling/index' }">
+            <el-button class="see-more" type="primary" plain>{{ $t('crud.polling-all') }}</el-button>
+          </router-link>
+        </el-row>
       </el-card>
     </el-col>
     <el-col :md="24" :lg="10" :xl="10">
@@ -96,5 +101,10 @@ export default {
     font-size: 15px;
     text-align:center;
     color: rgba(0, 0, 0, 0.7);
+  }
+  .see-more {
+    position: relative;
+    float: right;
+    margin-top: 15px;
   }
 </style>
