@@ -168,11 +168,11 @@ export const asyncRoutes = [
   pollingRouter,
   surveyRouter,
   newsRouter,
+  newsHoaxRouter,
   categoriesRouter,
   videoRouter,
   newsChannelsRouter,
   releaseManagementRouter,
-  newsHoaxRouter,
   { path: '*', redirect: '/404', hidden: true }
 ]
 

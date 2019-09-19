@@ -6,9 +6,9 @@ const newsHoaxRouter = {
   component: Layout,
   redirect: '/news-hoax/index',
   meta: {
-    title: 'News Hoax',
-    roles: ['admin'],
-    icon: 'zip'
+    title: 'news-hoax',
+    roles: ['staffSaberhoax'],
+    icon: 'nested'
   },
   children: [
     {
@@ -17,7 +17,36 @@ const newsHoaxRouter = {
       component: () => import('@/views/newsHoax/list'),
       meta: {
         title: 'news-hoax-list',
-        roles: ['admin']
+        roles: ['staffSaberhoax']
+      }
+    },
+    {
+      name: 'news-hoax-create',
+      path: 'create',
+      component: () => import('@/views/newsHoax/create'),
+      meta: {
+        title: 'news-hoax-create',
+        roles: ['staffSaberhoax']
+      }
+    },
+    {
+      name: 'news-hoax-edit',
+      path: 'edit/:id',
+      component: () => import('@/views/newsHoax/edit'),
+      hidden: true,
+      meta: {
+        title: 'news-hoax-edit',
+        roles: ['staffSaberhoax']
+      }
+    },
+    {
+      name: 'news-hoax-detail',
+      path: 'detail/:id',
+      component: () => import('@/views/newsHoax/detail'),
+      hidden: true,
+      meta: {
+        title: 'news-detail',
+        roles: ['staffSaberhoax']
       }
     }
   ]

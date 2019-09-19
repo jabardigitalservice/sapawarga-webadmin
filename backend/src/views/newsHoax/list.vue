@@ -1,10 +1,10 @@
 <template>
-  <div class="app-container" name="release-management-list">
+  <div class="app-container" name="berita-counter-hoax">
     <el-row :gutter="10">
       <el-col :lg="24">
         <el-row style="margin: 10px 0px">
           <el-col :span="12">
-            <router-link :to="{ path: '/release-management/create' }">
+            <router-link :to="{ path: '/news-hoax/create' }">
               <el-button type="primary" size="small" icon="el-icon-plus">
                 Tambah Berita Counter Hoax
               </el-button>
@@ -34,17 +34,13 @@
 
           <el-table-column align="center" label="Actions" min-width="130">
             <template slot-scope="scope">
-              <el-button type="primary" size="mini">
-                Detail
-              </el-button>
-              <router-link :to="'/release-management/edit/' +scope.row.id">
-                <el-button type="white" size="mini">
-                  Edit
-                </el-button>
+              <router-link :to="'/news-hoax/detail/' +scope.row.id">
+                <el-button type="info" icon="el-icon-view" circle />
               </router-link>
-              <el-button type="danger" size="mini">
-                Hapus
-              </el-button>
+              <el-button type="danger" icon="el-icon-delete" circle @click="deleteNews(scope.row.id)" />
+              <router-link :to="'/news-hoax/edit/' +scope.row.id">
+                <el-button type="info" icon="el-icon-edit" circle />
+              </router-link>
             </template>
           </el-table-column>
         </el-table>
@@ -58,6 +54,7 @@
 <script>
 import { fetchList } from '@/api/newsHoax'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
+import { deleteData } from '@/api/newsHoax'
 
 export default {
   components: {
@@ -124,6 +121,29 @@ export default {
       this.listQuery.sort_by = e.prop
       this.listQuery.sort_order = e.order
       this.getList()
+    },
+
+    async deleteNews(id) {
+      try {
+        await this.$confirm(this.$t('crud.delete-confirm'), 'warning', {
+          confirmButtonText: this.$t('common.confirm'),
+          cancelButtonText: this.$t('common.cancel'),
+          type: 'warning'
+        })
+
+        this.listLoading = true
+
+        await deleteData(id)
+
+        this.$message({
+          type: 'success',
+          message: this.$t('crud.delete-success')
+        })
+
+        this.getList()
+      } catch (e) {
+        console.log(e)
+      }
     }
 
   }
