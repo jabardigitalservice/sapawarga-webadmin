@@ -146,7 +146,7 @@ export const constantRoutes = [
         hidden: true,
         meta: {
           title: 'profile',
-          roles: ['admin', 'staffProv', 'staffSaberhoax', 'staffKabkota', 'staffKec', 'staffKel', ]
+          roles: ['admin', 'staffProv', 'staffSaberhoax', 'staffKabkota', 'staffKec', 'staffKel']
         }
       }
     ]
