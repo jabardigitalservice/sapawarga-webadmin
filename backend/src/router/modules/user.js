@@ -9,7 +9,8 @@ const userRouter = {
   name: 'User',
   meta: {
     title: 'user-manage',
-    icon: 'user'
+    icon: 'user',
+    roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']
   },
   children: [
     {
