@@ -6,6 +6,7 @@ export default {
 
     'user-manage': 'Kelola Pengguna',
     'user-create': 'Tambah Pengguna Baru',
+    'user-list-saberhoax': 'Jabar Saber Hoax',
     'user-list-provinsi': 'Provinsi',
     'user-list-kabkota': 'Kabupaten / Kota',
     'user-list-kecamatan': 'Kecamatan',
