@@ -12,6 +12,12 @@
           </el-col>
         </el-row>
 
+        <ListFilter
+          :list-query.sync="listQuery"
+          @submit-search="getList"
+          @reset-search="resetFilter"
+        />
+
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%" @sort-change="changeSort">
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
           <el-table-column prop="title" min-width="200" align="center" label="Judul" />
@@ -55,10 +61,12 @@
 import { fetchList } from '@/api/newsHoax'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 import { deleteData } from '@/api/newsHoax'
+import ListFilter from './components/_listfilter'
 
 export default {
   components: {
-    Pagination
+    Pagination,
+    ListFilter
   },
   filters: {
     statusFilter(status) {
@@ -85,9 +93,8 @@ export default {
       listLoading: true,
       listQuery: {
         type: null,
-        name: null,
-        sort_by: 'created_at',
-        sort_order: 'descending',
+        search: null,
+        category_id: null,
         page: 1,
         limit: 10
       }
@@ -101,9 +108,9 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
-      fetchList().then(response => {
+      fetchList(this.listQuery).then(response => {
         this.list = response.data.items
-        this.total = 10
+        this.total = response.data._meta.totalCount
         this.listLoading = false
       })
     },
