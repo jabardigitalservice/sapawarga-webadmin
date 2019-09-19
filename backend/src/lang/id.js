@@ -78,7 +78,7 @@ export default {
     'release-management-detail': 'Detail Release',
 
     'news-hoax': 'Berita Hoax',
-    'news-hoax-list': 'Daftar Berita Hoax' 
+    'news-hoax-list': 'Daftar Berita Hoax'
   },
   crud: {
     'list-empty': 'Belum ada data.',

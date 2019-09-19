@@ -14,7 +14,7 @@
 
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%" @sort-change="changeSort">
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
-          <el-table-column prop="title" min-width="200" align="center" label="Judul"/>
+          <el-table-column prop="title" min-width="200" align="center" label="Judul" />
           <el-table-column
             prop="status"
             sortable="custom"
@@ -29,9 +29,8 @@
               </el-tag>
             </template>
           </el-table-column>
-          <el-table-column prop="category.name" align="center" label="Kategori"/>
-          <el-table-column prop="source_date" align="center" label="Tanggal"/>
-
+          <el-table-column prop="category.name" align="center" label="Kategori" />
+          <el-table-column prop="source_date" align="center" label="Tanggal" />
 
           <el-table-column align="center" label="Actions" min-width="130">
             <template slot-scope="scope">
@@ -59,19 +58,10 @@
 <script>
 import { fetchList } from '@/api/newsHoax'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
-import { deleteData } from '@/api/releaseManagement'
-import parsingDatetime from '@/utils/datetimeToString'
 
 export default {
   components: {
     Pagination
-  },
-
-  props: {
-    roleId: {
-      type: String,
-      default: null
-    }
   },
   filters: {
     statusFilter(status) {
@@ -82,6 +72,13 @@ export default {
         '3': 'danger'
       }
       return statusMap[status]
+    }
+  },
+
+  props: {
+    roleId: {
+      type: String,
+      default: null
     }
   },
   data() {

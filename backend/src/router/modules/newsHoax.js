@@ -19,7 +19,7 @@ const newsHoaxRouter = {
         title: 'news-hoax-list',
         roles: ['admin']
       }
-    },
+    }
   ]
 }
 
