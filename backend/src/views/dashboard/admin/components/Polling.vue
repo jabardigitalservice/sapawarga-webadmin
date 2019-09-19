@@ -13,7 +13,7 @@
         </el-table>
         <el-row>
           <router-link :to="{ path: '/polling/index' }">
-            <el-button class="see-more" type="primary" plain>{{ $t('crud.polling-all') }}</el-button>
+            <el-button class="see-more" type="primary" plain>Lihat Semua Polling</el-button>
           </router-link>
         </el-row>
       </el-card>
