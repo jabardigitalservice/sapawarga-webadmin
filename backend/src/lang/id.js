@@ -105,6 +105,7 @@ export default {
     'survey-published': 'Survei berhasil dipublikasikan.',
 
     'dashboard-aspiration': 'Lihat Semua Usulan',
+    'polling-all': 'Lihat Semua Polling',
 
     'insert-row': 'Tambah Baris Baru',
     'delete-row': 'Hapus',
