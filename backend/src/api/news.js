@@ -17,9 +17,14 @@ export function fetchListPriority(query) {
   })
 }
 
-export function priorityBeritaUpdate(data) {
+export function priorityBeritaUpdate(kabkota_id, data) {
+  const query = (kabkota_id) ? '?kabkota_id=' + kabkota_id : ''
+  let url_ = '/news/featured'
+  if (query !== null) {
+    url_ += query
+  }
   return request({
-    url: '/news/featured',
+    url: url_,
     method: 'post',
     data
   })
