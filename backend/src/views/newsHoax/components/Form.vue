@@ -12,10 +12,13 @@
           </el-form-item>
 
           <el-form-item label="Kategori" prop="category_id">
-            <el-select v-model="news.category" name="category" placeholder="Pilih Kategori">
-              <el-option value="1" label="Disinformasi" />
-              <el-option value="2" label="Fakta" />
-              <el-option value="3" label="Klarifikasi" />
+            <el-select v-model="news.category_id" name="category" placeholder="Pilih Kategori">
+              <el-option
+                v-for="item in options"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
+              />
             </el-select>
           </el-form-item>
 
@@ -29,7 +32,7 @@
             <el-button v-if="isEdit" type="primary" :loading="loading" @click="submitForm">{{ $t('crud.save-update') }}</el-button>
             <el-button v-else type="primary" :loading="loading" @click="submitForm">{{ $t('crud.save-news') }}</el-button>
 
-            <router-link :to="'/news/index'">
+            <router-link :to="'/news-hoax/index'">
               <el-button type="info">{{ $t('crud.cancel') }}</el-button>
             </router-link>
           </el-form-item>
@@ -45,6 +48,7 @@
 import AttachmentPhotoUpload from '@/components/AttachmentPhotoUpload'
 import { containsWhitespace } from '@/utils/validate'
 import { fetchRecord, create, update } from '@/api/newsHoax'
+import { fetchList } from '@/api/categories'
 import Tinymce from '@/components/Tinymce'
 import moment from 'moment'
 import { mapGetters } from 'vuex'
@@ -74,6 +78,7 @@ export default {
 
     return {
       loading: false,
+      options: [],
       news: {
         title: null,
         category_id: null,
@@ -109,7 +114,7 @@ export default {
         category_id: [
           {
             required: true,
-            message: 'Sumber Berita harus diisi',
+            message: 'Kategori Berita harus diisi',
             trigger: 'change'
           }
         ],
@@ -124,6 +129,9 @@ export default {
             trigger: 'blur'
           }
         ]
+      },
+      query: {
+        type: 'newsHoax'
       }
     }
   },
@@ -137,6 +145,7 @@ export default {
       const id = this.$route.params && this.$route.params.id
       this.fetchData(id)
     }
+    this.getNewsChannel()
   },
   methods: {
     fetchData(id) {
@@ -189,6 +198,12 @@ export default {
       } finally {
         this.loading = false
       }
+    },
+
+    getNewsChannel() {
+      fetchList(this.query).then(response => {
+        this.options = response.data.items
+      })
     }
   }
 }

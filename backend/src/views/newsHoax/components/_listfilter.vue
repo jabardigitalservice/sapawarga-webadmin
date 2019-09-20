@@ -16,9 +16,12 @@
               placeholder="Pilih Ketegory Berita"
               style="width: 100%"
             >
-              <el-option value="1" label="Disinformasi" />
-              <el-option value="2" label="Fakta" />
-              <el-option value="3" label="Klarifikasi" />
+              <el-option
+                v-for="item in options"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
+              />
             </el-select>
           </el-form-item>
         </el-col>
@@ -33,6 +36,7 @@
 
 <script>
 import checkPermission from '@/utils/permission'
+import { fetchList } from '@/api/categories'
 export default {
   props: {
     listQuery: {
@@ -42,8 +46,14 @@ export default {
   },
   data() {
     return {
-      options: []
+      options: [],
+      query: {
+        type: 'newsHoax'
+      }
     }
+  },
+  created() {
+    this.getNewsChannel()
   },
   methods: {
     checkPermission,
@@ -54,6 +64,12 @@ export default {
 
     resetFilter() {
       this.$emit('reset-search')
+    },
+
+    getNewsChannel() {
+      fetchList(this.query).then(response => {
+        this.options = response.data.items
+      })
     }
   }
 }
