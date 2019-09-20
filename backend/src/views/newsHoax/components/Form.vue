@@ -137,20 +137,11 @@ export default {
       const id = this.$route.params && this.$route.params.id
       this.fetchData(id)
     }
-    // this.getNewsChannel()
   },
   methods: {
     fetchData(id) {
       fetchRecord(id).then(response => {
         this.news = response.data
-
-        // if (this.news.created_by !== this.user_id) {
-        //   this.$message.error(this.$t('crud.error-edit-role'))
-        //   this.$router.push('/news-hoax/index')
-        // } else if (this.news.status === 10) {
-        //   this.$message.error(this.$t('crud.polling-error-edit-published'))
-        //   this.$router.push('/news-hoax/index')
-        // }
       }).catch(err => {
         console.log(err)
       })
@@ -199,11 +190,6 @@ export default {
         this.loading = false
       }
     }
-    // getNewsChannel() {
-    //   newsChannelList().then(response => {
-    //     this.options = response.data.items
-    //   })
-    // }
   }
 }
 </script>
