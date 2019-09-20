@@ -194,7 +194,7 @@ deploy_prod_eks_v2:
     - export VERSION=$(cat ./version)
     - kubectl config set-cluster k8s --server="${EKS_SERVER_V2}"
     - kubectl config set clusters.k8s.certificate-authority-data ${EKS_CA_V2}
-    - kubectl config set-credentials gitlab --token="${EKS_TOKEN_V2}"
+    - kubectl config set-credentials gitlab-eks-admin --token="${EKS_TOKEN_V2}"
     - kubectl config set-context default --cluster=k8s --user=gitlab-eks-admin
     - kubectl config use-context default
     - kubectl cluster-info
