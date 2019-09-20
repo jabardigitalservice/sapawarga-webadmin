@@ -39,6 +39,7 @@
         <el-table :data="listBerita">
           <el-table-column property="title" label="Judul Berita" />
           <el-table-column property="channel.name" label="Sumber" />
+          <el-table-column property="kabkota.name" label="Target Berita" />
           <el-table-column align="center" label="Actions">
             <template slot-scope="scope">
               <el-button type="white" size="mini" @click="addBeritaPriority(scope.row), dialogTableVisible = false">
