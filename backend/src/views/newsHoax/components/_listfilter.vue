@@ -33,7 +33,6 @@
 
 <script>
 import checkPermission from '@/utils/permission'
-// import { newsChannelList } from '@/api/news'
 export default {
   props: {
     listQuery: {
@@ -46,9 +45,6 @@ export default {
       options: []
     }
   },
-  created() {
-    // this.getNewsChannel()
-  },
   methods: {
     checkPermission,
 
@@ -59,12 +55,6 @@ export default {
     resetFilter() {
       this.$emit('reset-search')
     }
-
-    // getNewsChannel() {
-    //   newsChannelList().then(response => {
-    //     this.options = response.data.items
-    //   })
-    // }
   }
 }
 </script>
