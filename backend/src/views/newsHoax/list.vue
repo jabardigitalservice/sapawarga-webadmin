@@ -66,7 +66,7 @@
 <script>
 import { fetchList } from '@/api/newsHoax'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
-import { deleteData, deactivate, activate} from '@/api/newsHoax'
+import { deleteData, deactivate, activate } from '@/api/newsHoax'
 import ListFilter from './components/_listfilter'
 
 export default {
