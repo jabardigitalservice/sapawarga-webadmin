@@ -172,6 +172,9 @@ deploy_prod_eks:
     - sed -i "s/%VUE_APP_BASE_API%/${EKS_VUE_APP_BASE_API}/g" kubernetes/webadmin-variables.yaml
     - sed -i "s/%dockerconfigjson%/${dockerconfigjson}/g" kubernetes/webadmin-variables.yaml
     - sed -i "s/%VERSION%/${VERSION}/g" kubernetes/webadmin-deployment.yaml
+    - kubectl create --dry-run --validate -f kubernetes/webadmin-variables.yaml
+        -f kubernetes/webadmin-deployment.yaml
+        -f kubernetes/webadmin-service.yaml
     - kubectl apply -f kubernetes/webadmin-variables.yaml
         -f kubernetes/webadmin-deployment.yaml
         -f kubernetes/webadmin-service.yaml
