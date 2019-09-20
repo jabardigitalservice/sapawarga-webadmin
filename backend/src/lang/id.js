@@ -76,7 +76,13 @@ export default {
     'release-management-list': 'Daftar Release',
     'release-management-create': 'Tambah Release',
     'release-management-edit': 'Edit Release',
-    'release-management-detail': 'Detail Release'
+    'release-management-detail': 'Detail Release',
+
+    'news-hoax': 'Berita Hoax',
+    'news-hoax-list': 'Daftar Berita Hoax',
+    'news-hoax-create': 'Tambah Berita Hoax',
+    'news-hoax-edit': 'Edit Berita Hoax',
+    'news-hoax-detail': 'Detail Berita Hoax'
   },
   crud: {
     'list-empty': 'Belum ada data.',
@@ -172,6 +178,7 @@ export default {
     'polling': 'Polling',
     'survey': 'Survei',
     'aspirasi': 'Usulan Masyarakat',
-    'video': 'Video'
+    'video': 'Video',
+    'newsHoax': 'Berita Hoax'
   }
 }
