@@ -184,6 +184,8 @@ deploy_prod_eks_v2:
   stage: deploy_prod
   image: dtzar/helm-kubectl
   when: manual
+  environment:
+    name: production
   only:
     - master
   dependencies: 
