@@ -173,6 +173,7 @@ export default {
     'polling': 'Polling',
     'survey': 'Survei',
     'aspirasi': 'Usulan Masyarakat',
-    'video': 'Video'
+    'video': 'Video',
+    'newsHoax': 'Berita Hoax'
   }
 }

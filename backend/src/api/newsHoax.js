@@ -36,12 +36,34 @@ export function deleteData(id) {
   })
 }
 
+export function deactivate(id) {
+  return request({
+    url: `/news-hoax/${id}`,
+    method: 'put',
+    data: {
+      status: 0
+    }
+  })
+}
+
+export function activate(id) {
+  return request({
+    url: `/news-hoax/${id}`,
+    method: 'put',
+    data: {
+      status: 10
+    }
+  })
+}
+
 const exportFunctions = {
   fetchList,
   fetchRecord,
   create,
   update,
-  deleteData
+  deleteData,
+  deactivate,
+  activate
 }
 
 export default exportFunctions

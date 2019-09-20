@@ -41,12 +41,18 @@
           <el-table-column align="center" label="Actions" min-width="130">
             <template slot-scope="scope">
               <router-link :to="'/news-hoax/detail/' +scope.row.id">
-                <el-button type="info" icon="el-icon-view" circle />
+                <el-button type="info" icon="el-icon-view" size="small" />
               </router-link>
-              <el-button type="danger" icon="el-icon-delete" circle @click="deleteNews(scope.row.id)" />
+              <el-button type="danger" icon="el-icon-delete" size="small" @click="deleteNews(scope.row.id)" />
               <router-link :to="'/news-hoax/edit/' +scope.row.id">
-                <el-button type="info" icon="el-icon-edit" circle />
+                <el-button type="info" icon="el-icon-edit" size="small" />
               </router-link>
+              <el-tooltip content="Nonaktifkan Berita Counter Hoax" placement="top">
+                <el-button v-if="scope.row.status === 10" type="danger" icon="el-icon-circle-close" size="small" @click="deactivateRecord(scope.row.id)" />
+              </el-tooltip>
+              <el-tooltip content="Aktifkan Berita Counter Hoax" placement="top">
+                <el-button v-if="scope.row.status === 0" type="success" icon="el-icon-circle-check" size="small" @click="activateRecord(scope.row.id)" />
+              </el-tooltip>
             </template>
           </el-table-column>
         </el-table>
@@ -60,7 +66,7 @@
 <script>
 import { fetchList } from '@/api/newsHoax'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
-import { deleteData } from '@/api/newsHoax'
+import { deleteData, deactivate, activate} from '@/api/newsHoax'
 import ListFilter from './components/_listfilter'
 
 export default {
@@ -145,6 +151,52 @@ export default {
         this.$message({
           type: 'success',
           message: this.$t('crud.delete-success')
+        })
+
+        this.getList()
+      } catch (e) {
+        console.log(e)
+      }
+    },
+
+    async deactivateRecord(id) {
+      try {
+        await this.$confirm(this.$t('crud.deactivate-confirm'), 'Warning', {
+          confirmButtonText: this.$t('common.confirm'),
+          cancelButtonText: this.$t('common.cancel'),
+          type: 'warning'
+        })
+
+        this.listLoading = true
+
+        await deactivate(id)
+
+        this.$message({
+          type: 'success',
+          message: this.$t('crud.deactivate-success')
+        })
+
+        this.getList()
+      } catch (e) {
+        console.log(e)
+      }
+    },
+
+    async activateRecord(id) {
+      try {
+        await this.$confirm(this.$t('crud.activate-confirm'), 'Warning', {
+          confirmButtonText: this.$t('common.confirm'),
+          cancelButtonText: this.$t('common.cancel'),
+          type: 'warning'
+        })
+
+        this.listLoading = true
+
+        await activate(id)
+
+        this.$message({
+          type: 'success',
+          message: this.$t('crud.activate-success')
         })
 
         this.getList()
