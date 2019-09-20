@@ -93,6 +93,20 @@ exports[`PanelGroup User renders the component 1`] = `
               </div>
             </div>
           </div>
+          <div class="card-panel-col total-rw el-col el-col-24 el-col-xs-12 el-col-sm-12 el-col-lg-6" style="padding-left: 20px; padding-right: 20px;">
+            <div class="card-panel">
+              <div class="card-panel-icon-wrapper icon-people-rt"><svg aria-hidden="true" class="svg-icon card-panel-icon">
+                  <use xlink:href="#icon-peoples"></use>
+                </svg></div>
+              <div class="card-panel-description">
+                <div class="card-panel-text-jsh">
+                  Saber Hoax
+                </div> <span class="card-panel-num">
+  0
+</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
