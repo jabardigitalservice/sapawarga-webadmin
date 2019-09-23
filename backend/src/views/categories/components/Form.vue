@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import { fetchRecord, create, update, fetchList } from '@/api/categories'
+import { fetchRecord, create, update, fetchTypes } from '@/api/categories'
 import { containsWhitespace } from '@/utils/validate'
 import checkPermission from '@/utils/permission'
 
@@ -107,7 +107,7 @@ export default {
       if (checkPermission(['staffSaberhoax'])) {
         this.listQuery['type'] = 'newsHoax'
       }
-      fetchList(this.listQuery).then(response => {
+      fetchTypes(this.listQuery).then(response => {
         const { data } = response
         this.optionType = data.items.map(item => {
           return {
