@@ -1,11 +1,11 @@
 <template>
   <div class="dashboard-editor-container">
 
-    <h3 style="color:#73737">Trafik User</h3>
+    <!-- <h3 style="color:#73737">Trafik User</h3>
 
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
       <line-chart :chart-data="lineChartData" />
-    </el-row>
+    </el-row> -->
 
     <h3 style="color:#73737">Usulan</h3>
 
@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import LineChart from './components/LineChart'
+// import LineChart from './components/LineChart'
 import Usulan from './components/Usulan'
 import Approval from './components/Approval'
 import Category from './components/Category'
@@ -66,7 +66,7 @@ const lineChartData = {
 export default {
   name: 'DashboardAdmin',
   components: {
-    LineChart,
+    // LineChart,
     Category,
     Usulan,
     Approval,

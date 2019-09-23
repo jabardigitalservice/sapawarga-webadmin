@@ -71,7 +71,7 @@
               </div>
             </div>
           </el-col>
-          <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col total-rw">
+          <el-col v-if="(roleId == null && totalUserKel != null) || (roleId == 'staffProv') || (roleId == 'staffKabkota') || (roleId == 'staffKec') || (roleId == 'staffKel') || (roleId == 'staffRW')" :xs="12" :sm="12" :lg="6" class="card-panel-col total-rw">
             <div class="card-panel">
               <div class="card-panel-icon-wrapper icon-people-rw">
                 <svg-icon icon-class="peoples" class-name="card-panel-icon" />
@@ -84,16 +84,19 @@
               </div>
             </div>
           </el-col>
-          <!-- <el-col :xs="12" :sm="12" :lg="6">
-            <el-card class="box-card">
-              <div slot="header" class="clearfix">
-                <span>Total Pengguna</span>
+          <el-col v-if="(roleId == null && totalUserProvince != null) || (roleId == 'staffSaberhoax') && (totalUserProvince != null)" :xs="12" :sm="12" :lg="6" class="card-panel-col total-rw">
+            <div class="card-panel">
+              <div class="card-panel-icon-wrapper icon-people-rt">
+                <svg-icon icon-class="peoples" class-name="card-panel-icon" />
               </div>
-              <div class="component-item">
-                <count-to :start-val="0" :end-val="totalAllUser" :duration="duration" class="" />
+              <div class="card-panel-description">
+                <div class="card-panel-text-jsh">
+                  Saber Hoax
+                </div>
+                <count-to :start-val="0" :end-val="totalUserSaberhoax" :duration="duration" class="card-panel-num" />
               </div>
-            </el-card>
-          </el-col> -->
+            </div>
+          </el-col>
         </div>
       </el-card>
     </el-row>
@@ -134,6 +137,10 @@ export default {
       default: 0
     },
     totalUserRw: {
+      type: Number,
+      default: 0
+    },
+    totalUserSaberhoax: {
       type: Number,
       default: 0
     },
@@ -240,9 +247,15 @@ export default {
     .card-panel-description {
       float: right;
       font-weight: bold;
-      margin: 26px;
+      margin: 20px;
       margin-left: 0px;
       .card-panel-text {
+        line-height: 18px;
+        color: rgba(0, 0, 0, 0.45);
+        font-size: 16px;
+        margin-bottom: 12px;
+      }
+      .card-panel-text-jsh {
         line-height: 18px;
         color: rgba(0, 0, 0, 0.45);
         font-size: 16px;

@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
 
-    <panel-group :role-id="roleId" :total-all-user="totalAllUser" :total-user-province="totalUserProvince" :total-user-kab-kota="totalUserKabKota" :total-user-kec="totalUserKec" :total-user-kel="totalUserKel" :total-user-rw="totalUserRw" />
+    <panel-group :role-id="roleId" :total-all-user="totalAllUser" :total-user-province="totalUserProvince" :total-user-kab-kota="totalUserKabKota" :total-user-kec="totalUserKec" :total-user-kel="totalUserKel" :total-user-rw="totalUserRw" :total-user-saberhoax="totalUserSaberhoax" />
 
     <el-row :gutter="20">
       <el-col :span="24">
@@ -121,7 +121,8 @@ export default {
       totalUserKabKota: 0,
       totalUserKec: 0,
       totalUserKel: 0,
-      totalUserRw: 0
+      totalUserRw: 0,
+      totalUserSaberhoax: 0
     }
   },
 
@@ -148,6 +149,7 @@ export default {
         this.totalUserKec = (_.find(response.data.items, ['level', 'kec'])) ? _.find(response.data.items, ['level', 'kec']).value : null
         this.totalUserKel = (_.find(response.data.items, ['level', 'kel'])) ? _.find(response.data.items, ['level', 'kel']).value : null
         this.totalUserRw = (_.find(response.data.items, ['level', 'rw'])) ? _.find(response.data.items, ['level', 'rw']).value : null
+        this.totalUserSaberhoax = (_.find(response.data.items, ['level', 'saberhoax'])) ? _.find(response.data.items, ['level', 'saberhoax']).value : null
       })
     },
 
