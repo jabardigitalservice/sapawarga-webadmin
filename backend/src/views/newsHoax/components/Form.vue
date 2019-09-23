@@ -183,7 +183,7 @@ export default {
 
           this.$router.push('/news-hoax/index')
         } else {
-          data.status = 10
+          data.status = 0
           await create(data)
 
           this.$message.success(this.$t('crud.create-success'))
