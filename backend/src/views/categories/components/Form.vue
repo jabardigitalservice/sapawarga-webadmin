@@ -81,7 +81,7 @@ export default {
         ]
       },
       listQuery: {
-        type: 'newsHoax'
+        type: null
       },
       tempRoute: {},
       optionType: []
