@@ -36,8 +36,9 @@
 </template>
 
 <script>
-import { fetchRecord, create, update, fetchTypes } from '@/api/categories'
+import { fetchRecord, create, update, fetchList } from '@/api/categories'
 import { containsWhitespace } from '@/utils/validate'
+import checkPermission from '@/utils/permission'
 
 const defaultForm = {
   name: null,
@@ -79,6 +80,9 @@ export default {
           { required: true, message: 'Nama kategori sudah digunakan', trigger: 'change' }
         ]
       },
+      listQuery: {
+        type: 'newsHoax'
+      },
       tempRoute: {},
       optionType: []
     }
@@ -100,9 +104,13 @@ export default {
     },
 
     fetchDataTypes() {
-      fetchTypes().then(response => {
+      const authUser = this.$store.state.user
+
+      if (checkPermission(['staffSaberhoax'])) {
+        this.listQuery['type'] = 'newsHoax'
+      }
+      fetchList(this.listQuery).then(response => {
         const { data } = response
-        data.items.shift()
         this.optionType = data.items.map(item => {
           return {
             id: item.id,
