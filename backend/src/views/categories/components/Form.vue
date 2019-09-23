@@ -102,6 +102,7 @@ export default {
     fetchDataTypes() {
       fetchTypes().then(response => {
         const { data } = response
+        data.items.shift()
         this.optionType = data.items.map(item => {
           return {
             id: item.id,
