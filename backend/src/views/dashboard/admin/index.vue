@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import LineChart from './components/LineChart'
+// import LineChart from './components/LineChart'
 import Usulan from './components/Usulan'
 import Approval from './components/Approval'
 import Category from './components/Category'
@@ -66,7 +66,7 @@ const lineChartData = {
 export default {
   name: 'DashboardAdmin',
   components: {
-    LineChart,
+    // LineChart,
     Category,
     Usulan,
     Approval,
