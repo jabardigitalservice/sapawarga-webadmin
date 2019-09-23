@@ -110,11 +110,11 @@
                     <el-input v-model="answer.body" type="text" placeholder="Jawaban" />
                   </el-col>
                   <el-col :sm="4" :md="4" :lg="4" :xl="4">
-                    <el-button type="danger" class="answer" @click.prevent="removeAnswer(answer)">Hapus</el-button>
+                    <el-button type="danger" class="answer" size="mini" icon="el-icon-delete" style="margin-top:3px" @click.prevent="removeAnswer(answer)" />
                   </el-col>
                 </el-row>
               </el-form-item>
-              <el-button type="success" class="add-answer" @click="addAnswer">Jawaban Lain</el-button>
+              <el-button type="success" class="add-answer" size="mini" icon="el-icon-circle-plus" @click="addAnswer">Jawaban Lain</el-button>
             </div>
 
             <el-form-item class="polling-button">
@@ -208,7 +208,7 @@ export default {
         excerpt: null,
         answers: [{
           id: 1,
-          body: ''
+          body: null
         }]
       },
       rules: {
@@ -398,6 +398,18 @@ export default {
         this.polling.rw = null
       }
 
+      if (this.polling.answers.length < 2) {
+        this.$message.error(this.$t('errors.polling-answer-less-then-2'))
+        return
+      } else {
+        for (let i = 0; i < this.polling.answers.length; i++) {
+          if (this.polling.answers[i].body === '') {
+            this.$message.error(this.$t('errors.polling-answer-null'))
+            return
+          }
+        }
+      }
+
       const now = moment().startOf('day')
       const distance = (moment(this.start_date)).isBefore(now)
 
@@ -491,6 +503,18 @@ export default {
 
       if (!valid) {
         return
+      }
+
+      if (this.polling.answers.length < 2) {
+        this.$message.error(this.$t('errors.polling-answer-less-then-2'))
+        return
+      } else {
+        for (let i = 0; i < this.polling.answers.length; i++) {
+          if (this.polling.answers[i].body === '') {
+            this.$message.error(this.$t('errors.polling-answer-null'))
+            return
+          }
+        }
       }
 
       await this.$confirm(`Apakah anda yakin akan mengirimkan polling : ${this.polling.name} ?`, 'Konfirmasi', {

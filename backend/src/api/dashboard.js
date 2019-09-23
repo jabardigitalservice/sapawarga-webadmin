@@ -24,3 +24,11 @@ export function fetchAspirasiMap(query) {
   })
 }
 
+export function fetchLatestPolling(query) {
+  return request({
+    url: 'dashboards/polling-latest',
+    method: 'get',
+    params: query
+  })
+}
+

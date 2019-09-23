@@ -69,6 +69,7 @@ build_prod:
     - cp .env-template .env
     - sed -i "s/%NODE_ENV%/production/g" .env
     - sed -i "s/%VUE_APP_BASE_API%/${VUE_APP_BASE_API}/g" .env
+    - sed -i "s/%SENTRY_DSN_API%/${SENTRY_DSN_API}/g" .env
     - sed -i "s/%GOOGLE_MAPS_WEB_API_KEY%/${GOOGLE_MAPS_WEB_API_KEY}/g" .env
     - cat .env
     - docker-compose build
@@ -93,6 +94,7 @@ test_webadmin:
     - cp .env-template .env
     - sed -i "s/%NODE_ENV%/development/g" .env
     - sed -i "s/%VUE_APP_BASE_API%/${VUE_APP_BASE_API}/g" .env
+    - sed -i "s/%SENTRY_DSN_API%/${SENTRY_DSN_API}/g" .env
     - sed -i "s/%GOOGLE_MAPS_WEB_API_KEY%/${GOOGLE_MAPS_WEB_API_KEY}/g" .env
     - cat .env
     - docker-compose pull
@@ -121,6 +123,7 @@ release_all:
     - cp .env-template .env
     - sed -i "s/%NODE_ENV%/development/g" .env
     - sed -i "s/%VUE_APP_BASE_API%/${VUE_APP_BASE_API}/g" .env
+    - sed -i "s/%SENTRY_DSN_API%/${SENTRY_DSN_API}/g" .env
     - sed -i "s/%GOOGLE_MAPS_WEB_API_KEY%/${GOOGLE_MAPS_WEB_API_KEY}/g" .env
     - cat .env
     - docker-compose pull
@@ -139,12 +142,13 @@ deploy_staging:
     - 'which ssh-agent || ( apk update && apk add openssh-client )'
     - mkdir -p ~/.ssh
     - eval $(ssh-agent -s)
-    - chmod 400 $SSH_STAGING_KEY_PRIVATE
-    - ssh-add $SSH_STAGING_KEY_PRIVATE
+    - chmod 400 $SSH_STAGING_KEY_PRIVATE_AWS
+    - ssh-add $SSH_STAGING_KEY_PRIVATE_AWS
   script:
-    - ssh -o StrictHostKeyChecking=no ${SSH_STAGING_USERNAME}@${STAGING_HOST} "export VERSION=${VERSION} && cd /home/development/projects/sapawarga-webadmin && sudo git pull && sudo docker image prune -f && sudo -E docker-compose pull && sudo -E docker-compose down && sudo -E docker-compose up -d"
-    - ssh -o StrictHostKeyChecking=no ${SSH_STAGING_USERNAME}@${STAGING_HOST} "sudo docker ps"
-    - ssh -o StrictHostKeyChecking=no ${SSH_STAGING_USERNAME}@${STAGING_HOST} "sudo docker image prune -a -f"
+    - ssh -o StrictHostKeyChecking=no ${SSH_STAGING_USERNAME_AWS}@${STAGING_HOST_AWS} "docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY"
+    - ssh -o StrictHostKeyChecking=no ${SSH_STAGING_USERNAME_AWS}@${STAGING_HOST_AWS} "export VERSION=${VERSION} && cd /home/ubuntu/projects/sapawarga-webadmin && sudo git pull && sudo -E docker-compose pull && sudo -E docker-compose down && sudo -E docker-compose up -d"
+    - ssh -o StrictHostKeyChecking=no ${SSH_STAGING_USERNAME_AWS}@${STAGING_HOST_AWS} "sudo docker ps"
+    - ssh -o StrictHostKeyChecking=no ${SSH_STAGING_USERNAME_AWS}@${STAGING_HOST_AWS} "sudo docker image prune -a -f"
 
 deploy_prod_eks:
   stage: deploy_prod

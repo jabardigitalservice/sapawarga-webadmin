@@ -95,7 +95,7 @@ export const constantRoutes = [
           icon: 'dashboard',
           noCache: true,
           affix: true,
-          roles: ['admin']
+          roles: ['admin', 'staffProv']
         }
       }
     ]
@@ -131,7 +131,7 @@ export const constantRoutes = [
         hidden: true,
         meta: {
           title: 'profile',
-          roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']
+          roles: ['admin', 'staffProv', 'staffSaberhoax', 'staffKabkota', 'staffKec', 'staffKel']
         }
       }
     ]
@@ -147,7 +147,7 @@ export const constantRoutes = [
         hidden: true,
         meta: {
           title: 'profile',
-          roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']
+          roles: ['admin', 'staffProv', 'staffSaberhoax', 'staffKabkota', 'staffKec', 'staffKel']
         }
       }
     ]

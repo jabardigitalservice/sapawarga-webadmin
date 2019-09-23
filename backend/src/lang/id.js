@@ -143,7 +143,9 @@ export default {
     'broadcast-error-edit-published': 'Sudah dipublish, tidak dapat di edit.',
     'notification-error-edit-published': 'Sudah dipublish, tidak dapat di edit.',
     'video-error-edit-published': 'Sudah dipublish, tidak dapat di edit.',
-    'error-edit-role': 'Anda tidak memiliki hak akses halaman ini.'
+    'error-edit-role': 'Anda tidak memiliki hak akses halaman ini.',
+
+    'news-selected': 'Berita sudah dipilih'
   },
   common: {
     confirm: 'Ya',
@@ -154,13 +156,14 @@ export default {
 
     'polling-compare-date': 'Tanggal berakhir polling harus lebih besar dari tanggal mulai polling.',
     'polling-start-date': 'Tanggal mulai polling tidak boleh lebih kecil dari tanggal hari ini.',
+    'polling-answer-less-then-2': 'Tipe pertanyaan custom minimal dua pilihan',
+    'polling-answer-null': 'Tipe pertanyaan custom harus diisi',
     'survey-start-date': 'Tanggal mulai survei tidak boleh lebih kecil dari tanggal hari ini.',
     'survey-compare-date': 'Tanggal berakhir survei harus lebih besar dari tanggal mulai survei.',
 
     'news-image-null': 'Gambar tidak boleh kosong.',
 
     'dashboard-map-error': 'Gagal memuat map'
-
   },
   navbar: {
     profile: 'Lihat Profil',
