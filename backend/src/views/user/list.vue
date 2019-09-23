@@ -149,7 +149,7 @@ export default {
         this.totalUserKec = (_.find(response.data.items, ['level', 'kec'])) ? _.find(response.data.items, ['level', 'kec']).value : null
         this.totalUserKel = (_.find(response.data.items, ['level', 'kel'])) ? _.find(response.data.items, ['level', 'kel']).value : null
         this.totalUserRw = (_.find(response.data.items, ['level', 'rw'])) ? _.find(response.data.items, ['level', 'rw']).value : null
-        this.totalUserSaberhoax = (_.find(response.data.items, ['level', 'staffsaberhoax'])) ? _.find(response.data.items, ['level', 'staffsaberhoax']).value : null
+        this.totalUserSaberhoax = (_.find(response.data.items, ['level', 'saberhoax'])) ? _.find(response.data.items, ['level', 'saberhoax']).value : null
       })
     },
 
