@@ -49,9 +49,7 @@ const mutations = {
 const actions = {
   generateRoutes({ commit }, roles) {
     return new Promise(resolve => {
-      let accessedRoutes
-
-      accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
+      const accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
 
       commit('SET_ROUTES', accessedRoutes)
       resolve(accessedRoutes)
