@@ -87,11 +87,10 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
-      const authUser = this.$store.state.user
-
       if (checkPermission(['staffSaberhoax'])) {
         this.listQuery['type'] = 'newsHoax'
       }
+
       fetchList(this.listQuery).then(response => {
         this.list = response.data.items
         this.total = response.data._meta.totalCount

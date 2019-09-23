@@ -104,8 +104,6 @@ export default {
     },
 
     fetchDataTypes() {
-      const authUser = this.$store.state.user
-
       if (checkPermission(['staffSaberhoax'])) {
         this.listQuery['type'] = 'newsHoax'
       }
