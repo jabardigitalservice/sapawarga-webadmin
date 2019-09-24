@@ -7,6 +7,7 @@ data:
   NODE_ENV: production
   VUE_APP_BASE_API: %VUE_APP_BASE_API%
   VUE_APP_VERSION: %VUE_APP_VERSION%
+  SENTRY_DSN_API: %SENTRY_DSN_API%
 ---
 apiVersion: v1
 kind: Secret
