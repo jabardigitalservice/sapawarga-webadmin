@@ -43,7 +43,7 @@
               <router-link :to="'/news-hoax/detail/' +scope.row.id">
                 <el-button type="info" icon="el-icon-view" size="small" />
               </router-link>
-              <el-button type="danger" icon="el-icon-delete" size="small" @click="deleteNews(scope.row.id)" :disabled="scope.row.status === 10"/>
+              <el-button type="danger" icon="el-icon-delete" size="small" :disabled="scope.row.status === 10" @click="deleteNews(scope.row.id)" />
               <router-link :to="'/news-hoax/edit/' +scope.row.id">
                 <el-button type="info" icon="el-icon-edit" size="small" :disabled="scope.row.status === 10" />
               </router-link>

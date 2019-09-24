@@ -9,20 +9,20 @@
           </el-form-item>
 
           <div v-if="isSaberHoax">
-           <el-form-item label="Fitur">
+            <el-form-item label="Fitur">
               <el-input type="text" placeholder="Berita Saber Hoaks" disabled />
             </el-form-item>
           </div>
           <div v-else>
             <el-form-item label="Fitur" prop="type">
-                <el-select v-model="form.type" placeholder="Pilih Fitur">
-                  <el-option
-                    v-for="item in optionType"
-                    :key="item.id"
-                    :label="item.name"
-                    :value="item.id"
-                  />
-                </el-select>
+              <el-select v-model="form.type" placeholder="Pilih Fitur">
+                <el-option
+                  v-for="item in optionType"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.id"
+                />
+              </el-select>
             </el-form-item>
           </div>
 
@@ -155,7 +155,7 @@ export default {
           this.$router.push('/categories/index')
         } else {
           if (checkPermission(['staffSaberhoax'])) {
-            data.type = "newsHoax"
+            data.type = 'newsHoax'
           }
           await create(data)
           this.$message.success(this.$t('crud.create-success'))
