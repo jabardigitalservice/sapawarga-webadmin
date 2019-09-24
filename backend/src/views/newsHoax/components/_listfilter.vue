@@ -13,7 +13,7 @@
               v-model="listQuery.category_id"
               clearable
               filterable
-              placeholder="Pilih Ketegory Berita"
+              placeholder="Pilih Kategori Berita Hoax"
               style="width: 100%"
             >
               <el-option
