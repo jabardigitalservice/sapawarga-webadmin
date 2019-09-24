@@ -107,7 +107,7 @@ export default {
     if (checkPermission(['staffSaberhoax'])) {
       this.isSaberHoax = true
     }
-    this.fetchDataTypes()
+    if (!checkPermission(['staffSaberhoax'])) this.fetchDataTypes()
   },
   methods: {
     fetchData(id) {
