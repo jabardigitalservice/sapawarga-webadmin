@@ -71,7 +71,7 @@
               </div>
             </div>
           </el-col>
-          <el-col v-if="(roleId == null && totalUserKel != null) || (roleId == 'staffProv') || (roleId == 'staffKabkota') || (roleId == 'staffKec') || (roleId == 'staffKel') || (roleId == 'staffRW')" :xs="12" :sm="12" :lg="6" class="card-panel-col total-rw">
+          <el-col v-if="(roleId == null && totalUserRw != null) || (roleId == 'staffProv') || (roleId == 'staffKabkota') || (roleId == 'staffKec') || (roleId == 'staffKel') || (roleId == 'staffRW')" :xs="12" :sm="12" :lg="6" class="card-panel-col total-rw">
             <div class="card-panel">
               <div class="card-panel-icon-wrapper icon-people-rw">
                 <svg-icon icon-class="peoples" class-name="card-panel-icon" />
