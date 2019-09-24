@@ -34,11 +34,11 @@ spec:
                   name: sapawarga-webadmin-config-env
                   key: VUE_APP_VERSION
 
-            - name: SENTRY_DSN_API
+            - name: VUE_SENTRY_DSN_API
               valueFrom:
                 configMapKeyRef:
                   name: sapawarga-webadmin-config-env
-                  key: SENTRY_DSN_API
+                  key: VUE_SENTRY_DSN_API
 
       imagePullSecrets:
         - name: regcred
