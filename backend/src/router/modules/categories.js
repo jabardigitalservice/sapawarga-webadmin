@@ -7,7 +7,7 @@ const newsRouter = {
   redirect: '/categories/index',
   meta: {
     title: 'categories-manage',
-    roles: ['admin', 'staffProv', 'staffSaberhoax'],
+    roles: ['admin', 'staffProv'],
     icon: 'documentation'
   },
   children: [
@@ -17,7 +17,7 @@ const newsRouter = {
       component: () => import('@/views/categories/list'),
       meta: {
         title: 'categories-list',
-        roles: ['admin', 'staffProv', 'staffSaberhoax']
+        roles: ['admin', 'staffProv']
       }
     },
     {
@@ -26,7 +26,7 @@ const newsRouter = {
       component: () => import('@/views/categories/create'),
       meta: {
         title: 'categories-create',
-        roles: ['admin', 'staffProv', 'staffSaberhoax']
+        roles: ['admin', 'staffProv']
       }
     },
     {
@@ -36,7 +36,7 @@ const newsRouter = {
       hidden: true,
       meta: {
         title: 'categories-edit',
-        roles: ['admin', 'staffProv', 'staffSaberhoax']
+        roles: ['admin', 'staffProv']
       }
     }
   ]
