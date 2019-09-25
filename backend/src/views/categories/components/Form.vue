@@ -8,16 +8,23 @@
             <el-input v-model="form.name" type="text" placeholder="Nama Kategori" @focus="changePropName" />
           </el-form-item>
 
-          <el-form-item label="Fitur" prop="type">
-            <el-select v-model="form.type" placeholder="Pilih Fitur">
-              <el-option
-                v-for="item in optionType"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id"
-              />
-            </el-select>
-          </el-form-item>
+          <div v-if="isSaberHoax">
+            <el-form-item label="Fitur">
+              <el-input type="text" placeholder="Berita Saber Hoaks" disabled />
+            </el-form-item>
+          </div>
+          <div v-else>
+            <el-form-item label="Fitur" prop="type">
+              <el-select v-model="form.type" placeholder="Pilih Fitur">
+                <el-option
+                  v-for="item in optionType"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.id"
+                />
+              </el-select>
+            </el-form-item>
+          </div>
 
           <el-form-item>
             <el-button type="primary" :loading="loading" @click="submitProcess">
@@ -39,6 +46,7 @@
 import { fetchRecord, create, update, fetchTypes } from '@/api/categories'
 import { containsWhitespace } from '@/utils/validate'
 import checkPermission from '@/utils/permission'
+import permission from '@/directive/permission/index.js'
 
 const defaultForm = {
   name: null,
@@ -47,6 +55,7 @@ const defaultForm = {
 }
 
 export default {
+  directives: { permission },
   props: {
     isEdit: {
       type: Boolean,
@@ -65,6 +74,7 @@ export default {
     return {
       form: Object.assign({}, defaultForm),
       loading: false,
+      isSaberHoax: false,
       validateName: 'name',
       rules: {
         name: [
@@ -94,7 +104,10 @@ export default {
     } else {
       this.form = Object.assign({}, defaultForm)
     }
-    this.fetchDataTypes()
+    if (checkPermission(['staffSaberhoax'])) {
+      this.isSaberHoax = true
+    }
+    if (!checkPermission(['staffSaberhoax'])) this.fetchDataTypes()
   },
   methods: {
     fetchData(id) {
@@ -141,6 +154,9 @@ export default {
 
           this.$router.push('/categories/index')
         } else {
+          if (checkPermission(['staffSaberhoax'])) {
+            data.type = 'newsHoax'
+          }
           await create(data)
           this.$message.success(this.$t('crud.create-success'))
 
