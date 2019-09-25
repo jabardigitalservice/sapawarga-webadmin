@@ -40,5 +40,11 @@ spec:
                   name: sapawarga-webadmin-config-env
                   key: VUE_SENTRY_DSN_API
 
+            - name: VUE_APP_ERROR_ENVIRONMENT
+              valueFrom:
+                configMapKeyRef:
+                  name: sapawarga-webadmin-config-env
+                  key: VUE_APP_ERROR_ENVIRONMENT
+
       imagePullSecrets:
         - name: regcred

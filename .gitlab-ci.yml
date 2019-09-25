@@ -3,6 +3,7 @@ stages:
   - code_quality
   - build
   - test
+  - test_coverage
   - release
   - deploy_staging
   - deploy_prod
@@ -104,6 +105,12 @@ test_webadmin:
     - docker ps
     - docker-compose exec -T app npm run lint
     - docker-compose exec -T app npm run test:unit
+  artifacts:
+    untracked: false
+    expire_in: 7 days
+    paths:
+      - coverage/
+
 
 release_all:
   image: docker:stable
@@ -207,6 +214,7 @@ deploy_prod_eks_v2:
     - sed -i "s/%VUE_APP_BASE_API%/${EKS_VUE_APP_BASE_API}/g" kubernetes/webadmin-variables.yaml
     - sed -i "s/%dockerconfigjson%/${dockerconfigjson}/g" kubernetes/webadmin-variables.yaml
     - sed -i "s/%SENTRY_DSN_API%/${SENTRY_DSN_API}/g" kubernetes/webadmin-variables.yaml
+    - sed -i "s/%APP_ERROR_ENVIRONMENT%/${APP_ERROR_ENVIRONMENT}/g" kubernetes/webadmin-variables.yaml
     - sed -i "s/%VERSION%/${VERSION}/g" kubernetes/webadmin-deployment.yaml
     - kubectl create --dry-run --validate -f kubernetes/webadmin-variables.yaml
         -f kubernetes/webadmin-deployment.yaml
