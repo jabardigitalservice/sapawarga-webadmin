@@ -20,7 +20,7 @@
 
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%" @sort-change="changeSort">
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
-          <el-table-column prop="title" min-width="200" align="center" label="Judul" />
+          <el-table-column prop="title" sortable="custom" min-width="200" align="center" label="Judul" />
           <el-table-column
             prop="status"
             sortable="custom"
@@ -35,8 +35,8 @@
               </el-tag>
             </template>
           </el-table-column>
-          <el-table-column prop="category.name" align="center" label="Kategori" />
-          <el-table-column prop="source_date" align="center" label="Tanggal" />
+          <el-table-column prop="category.name" align="center" label="Kategori" sortable="custom" />
+          <el-table-column prop="source_date" align="center" label="Tanggal" sortable="custom" />
 
           <el-table-column align="center" label="Actions" min-width="130">
             <template slot-scope="scope">
@@ -44,7 +44,7 @@
                 <el-button type="info" icon="el-icon-view" size="small" />
               </router-link>
               <el-button type="danger" icon="el-icon-delete" size="small" :disabled="scope.row.status === 10" @click="deleteNews(scope.row.id)" />
-              <router-link :to="'/news-hoax/edit/' +scope.row.id">
+              <router-link :to="(scope.row.status !== 10 ? '/news-hoax/edit/' +scope.row.id : '')">
                 <el-button type="info" icon="el-icon-edit" size="small" :disabled="scope.row.status === 10" />
               </router-link>
               <el-tooltip content="Nonaktifkan Berita Counter Hoax" placement="top">
