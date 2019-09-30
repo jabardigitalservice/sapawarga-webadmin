@@ -67,8 +67,8 @@
             start-placeholder="Tanggal mulai"
             end-placeholder="Tanggal akhir"
             :picker-options="pickerOptions"
-            @change="dateChange">
-          </el-date-picker>
+            @change="dateChange"
+          />
         </el-col>
         <el-col :span="4">
           <el-button type="primary" size="small" @click="submitSearch">
@@ -105,30 +105,30 @@ export default {
         shortcuts: [{
           text: 'Last week',
           onClick(picker) {
-            const end = new Date();
-            const start = new Date();
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
-            picker.$emit('pick', [start, end]);
+            const end = new Date()
+            const start = new Date()
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
+            picker.$emit('pick', [start, end])
           }
         }, {
           text: 'Last month',
           onClick(picker) {
-            const end = new Date();
-            const start = new Date();
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-            picker.$emit('pick', [start, end]);
+            const end = new Date()
+            const start = new Date()
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
+            picker.$emit('pick', [start, end])
           }
         }, {
           text: 'Last 3 months',
           onClick(picker) {
-            const end = new Date();
-            const start = new Date();
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
-            picker.$emit('pick', [start, end]);
+            const end = new Date()
+            const start = new Date()
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
+            picker.$emit('pick', [start, end])
           }
         }]
-      },
-    };
+      }
+    }
   },
 
   computed: {
@@ -150,7 +150,7 @@ export default {
   methods: {
     checkPermission,
 
-    dateChange(){
+    dateChange() {
       this.listQuery.start_date = this.date_range[0]
       this.listQuery.end_date = this.date_range[1]
     },
