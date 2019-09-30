@@ -16,11 +16,11 @@ spec:
           ports:
             - containerPort: 80
           env:
-            - name: NODE_ENV
+            - name: VUE_APP_NODE_ENV
               valueFrom:
                 configMapKeyRef:
                   name: sapawarga-webadmin-config-env
-                  key: NODE_ENV
+                  key: VUE_APP_NODE_ENV
 
             - name: VUE_APP_BASE_API
               valueFrom:
