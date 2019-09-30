@@ -59,7 +59,7 @@
 import PhotoBox from '@/components/PhotoBox'
 import MapThumb from '@/components/MapThumb'
 import { fetchUser } from '@/api/staff'
-import permission from '@/directive/permission/index.js'
+
 import checkPermission from '@/utils/permission'
 import parsingDatetime from '@/utils/datetimeToString'
 

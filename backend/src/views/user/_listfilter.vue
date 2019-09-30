@@ -2,17 +2,17 @@
   <el-card class="box-card" style="margin-bottom: 10px">
     <el-form>
       <el-row :gutter="10" type="flex">
-        <el-col :span="4">
+        <el-col :span="(!checkPermission(['admin','staffProv']))? 12:6">
           <el-form-item style="margin-bottom: 0">
             <el-input v-model="listQuery.name" placeholder="Nama Lengkap" />
           </el-form-item>
         </el-col>
-        <el-col :span="4">
+        <el-col :span="6">
           <el-form-item style="margin-bottom: 0">
             <el-input v-model="listQuery.phone" placeholder="Nomor Telepon" />
           </el-form-item>
         </el-col>
-        <el-col :span="4">
+        <el-col :span="6">
           <el-form-item style="margin-bottom: 0">
             <el-select
               v-model="listQuery.status"
@@ -26,7 +26,23 @@
             </el-select>
           </el-form-item>
         </el-col>
-        <el-col :span="8">
+        <el-col :span="6" v-permission="['admin','staffProv']" >
+          <el-form-item style="margin-bottom: 0">
+            <el-select
+              v-model="listQuery.kelengkapan_profile"
+              clearable
+              filterable
+              placeholder="Pilih Kelengkapan Profile"
+              style="width: 100%"
+            >
+              <el-option value="true" label="Lengkap" />
+              <el-option value="false" label="Tidak Lengkap" />
+            </el-select>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row :gutter="10" type="flex" style="margin-top: 10px">
+        <el-col :span="20">
           <input-filter-area
             :parent-id="filterAreaParentId"
             :kabkota-id="listQuery.kabkota_id"
@@ -52,12 +68,12 @@
 
 <script>
 import InputFilterArea from '@/components/InputFilterArea'
-
+import permission from '@/directive/permission/index.js'
 import checkPermission from '@/utils/permission'
 
 export default {
   components: { InputFilterArea },
-
+  directives: { permission },
   props: {
     listQuery: {
       type: Object,

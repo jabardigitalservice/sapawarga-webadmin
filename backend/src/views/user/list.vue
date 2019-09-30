@@ -74,12 +74,12 @@
 import { fetchList, activate, deactivate, totalUser } from '@/api/staff'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 import PanelGroup from './components/PanelGroup'
-
+import permission from '@/directive/permission/index.js'
 import ListFilter from './_listfilter'
 
 export default {
-
   components: { Pagination, ListFilter, PanelGroup },
+  directives: { permission },
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -111,6 +111,7 @@ export default {
         kec_id: null,
         kel_id: null,
         role_id: this.roleId,
+        kelengkapan_profile: null,
         sort_by: 'name',
         sort_order: 'ascending',
         page: 1,
