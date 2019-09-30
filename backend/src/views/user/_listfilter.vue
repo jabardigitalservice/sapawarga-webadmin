@@ -26,7 +26,7 @@
             </el-select>
           </el-form-item>
         </el-col>
-        <el-col :span="6" v-permission="['admin','staffProv']" >
+        <el-col v-permission="['admin','staffProv']" :span="6">
           <el-form-item style="margin-bottom: 0">
             <el-select
               v-model="listQuery.kelengkapan_profile"
