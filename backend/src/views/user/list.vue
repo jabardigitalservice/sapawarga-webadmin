@@ -112,6 +112,8 @@ export default {
         kel_id: null,
         role_id: this.roleId,
         profile_completed: null,
+        start_date: null,
+        end_date: null,
         sort_by: 'name',
         sort_order: 'ascending',
         page: 1,

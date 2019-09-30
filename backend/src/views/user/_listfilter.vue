@@ -42,7 +42,7 @@
         </el-col>
       </el-row>
       <el-row :gutter="10" type="flex" style="margin-top: 10px">
-        <el-col :span="20">
+        <el-col :span="24">
           <input-filter-area
             :parent-id="filterAreaParentId"
             :kabkota-id="listQuery.kabkota_id"
@@ -52,6 +52,23 @@
             @changeKecamatan="changeKecamatan"
             @changeKelurahan="changeKelurahan"
           />
+        </el-col>
+      </el-row>
+      <el-row :gutter="10" type="flex" style="margin-top: 10px">
+        <el-col :span="20">
+          <el-date-picker
+            v-model="date_range"
+            type="daterange"
+            style="width: -webkit-fill-available;"
+            align="right"
+            unlink-panels
+            range-separator="To"
+            value-format="yyyy-MM-dd"
+            start-placeholder="Tanggal mulai"
+            end-placeholder="Tanggal akhir"
+            :picker-options="pickerOptions"
+            @change="dateChange">
+          </el-date-picker>
         </el-col>
         <el-col :span="4">
           <el-button type="primary" size="small" @click="submitSearch">
@@ -81,6 +98,39 @@ export default {
     }
   },
 
+  data() {
+    return {
+      date_range: '',
+      pickerOptions: {
+        shortcuts: [{
+          text: 'Last week',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+            picker.$emit('pick', [start, end]);
+          }
+        }, {
+          text: 'Last month',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+            picker.$emit('pick', [start, end]);
+          }
+        }, {
+          text: 'Last 3 months',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+            picker.$emit('pick', [start, end]);
+          }
+        }]
+      },
+    };
+  },
+
   computed: {
     filterAreaParentId() {
       const authUser = this.$store.state.user
@@ -99,6 +149,11 @@ export default {
 
   methods: {
     checkPermission,
+
+    dateChange(){
+      this.listQuery.start_date = this.date_range[0]
+      this.listQuery.end_date = this.date_range[1]
+    },
 
     submitSearch() {
       this.$emit('submit-search')
