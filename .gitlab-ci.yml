@@ -16,7 +16,7 @@ versioning:
   before_script:
     - apk add git
   script:
-    - export VERSION=$(git describe)
+    - export VERSION=$(git describe --always --tags --dirty)
     - echo $VERSION
     - echo $VERSION > version
   artifacts:
