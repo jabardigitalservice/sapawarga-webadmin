@@ -29,7 +29,7 @@
         <el-col v-permission="['admin','staffProv']" :span="6">
           <el-form-item style="margin-bottom: 0">
             <el-select
-              v-model="listQuery.kelengkapan_profile"
+              v-model="listQuery.profile_completed"
               clearable
               filterable
               placeholder="Pilih Kelengkapan Profile"

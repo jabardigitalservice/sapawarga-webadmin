@@ -111,7 +111,7 @@ export default {
         kec_id: null,
         kel_id: null,
         role_id: this.roleId,
-        kelengkapan_profile: null,
+        profile_completed: null,
         sort_by: 'name',
         sort_order: 'ascending',
         page: 1,
