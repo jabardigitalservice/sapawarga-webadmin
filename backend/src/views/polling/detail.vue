@@ -128,7 +128,7 @@ export default {
 
         this.tableDataPolling = [
           {
-            title: 'Nama Survey',
+            title: 'Nama Polling',
             content: name || '-'
           },
           {

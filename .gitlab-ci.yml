@@ -3,6 +3,7 @@ stages:
   - code_quality
   - build
   - test
+  - test_coverage
   - release
   - deploy_staging
   - deploy_prod
@@ -104,6 +105,12 @@ test_webadmin:
     - docker ps
     - docker-compose exec -T app npm run lint
     - docker-compose exec -T app npm run test:unit
+  artifacts:
+    untracked: false
+    expire_in: 7 days
+    paths:
+      - coverage/
+
 
 release_all:
   image: docker:stable
@@ -154,6 +161,8 @@ deploy_prod_eks:
   stage: deploy_prod
   image: dtzar/helm-kubectl
   when: manual
+  environment:
+    name: production
   only:
     - master
   dependencies: 
@@ -171,7 +180,45 @@ deploy_prod_eks:
     - sed -i "s/%VUE_APP_VERSION%/${VERSION}/g" kubernetes/webadmin-variables.yaml
     - sed -i "s/%VUE_APP_BASE_API%/${EKS_VUE_APP_BASE_API}/g" kubernetes/webadmin-variables.yaml
     - sed -i "s/%dockerconfigjson%/${dockerconfigjson}/g" kubernetes/webadmin-variables.yaml
+    - sed -i "s/%SENTRY_DSN_API%/${SENTRY_DSN_API}/g" kubernetes/webadmin-variables.yaml
     - sed -i "s/%VERSION%/${VERSION}/g" kubernetes/webadmin-deployment.yaml
+    - kubectl create --dry-run --validate -f kubernetes/webadmin-variables.yaml
+        -f kubernetes/webadmin-deployment.yaml
+        -f kubernetes/webadmin-service.yaml
+    - kubectl apply -f kubernetes/webadmin-variables.yaml
+        -f kubernetes/webadmin-deployment.yaml
+        -f kubernetes/webadmin-service.yaml
+
+
+deploy_prod_eks_v2:
+  stage: deploy_prod
+  image: dtzar/helm-kubectl
+  when: manual
+  environment:
+    name: production
+  only:
+    - master
+  dependencies: 
+    - versioning
+  before_script:
+    - export VERSION=$(cat ./version)
+    - kubectl config set-cluster k8s --server="${EKS_SERVER_V2}"
+    - kubectl config set clusters.k8s.certificate-authority-data ${EKS_CA_V2}
+    - kubectl config set-credentials gitlab-eks-admin --token="${EKS_TOKEN_V2}"
+    - kubectl config set-context default --cluster=k8s --user=gitlab-eks-admin
+    - kubectl config use-context default
+    - kubectl cluster-info
+  script:
+    - cp kubernetes/webadmin-variables-sample.yaml kubernetes/webadmin-variables.yaml
+    - sed -i "s/%VUE_APP_VERSION%/${VERSION}/g" kubernetes/webadmin-variables.yaml
+    - sed -i "s/%VUE_APP_BASE_API%/${EKS_VUE_APP_BASE_API}/g" kubernetes/webadmin-variables.yaml
+    - sed -i "s/%dockerconfigjson%/${dockerconfigjson}/g" kubernetes/webadmin-variables.yaml
+    - sed -i "s/%SENTRY_DSN_API%/${SENTRY_DSN_API}/g" kubernetes/webadmin-variables.yaml
+    - sed -i "s/%APP_ERROR_ENVIRONMENT%/${APP_ERROR_ENVIRONMENT}/g" kubernetes/webadmin-variables.yaml
+    - sed -i "s/%VERSION%/${VERSION}/g" kubernetes/webadmin-deployment.yaml
+    - kubectl create --dry-run --validate -f kubernetes/webadmin-variables.yaml
+        -f kubernetes/webadmin-deployment.yaml
+        -f kubernetes/webadmin-service.yaml
     - kubectl apply -f kubernetes/webadmin-variables.yaml
         -f kubernetes/webadmin-deployment.yaml
         -f kubernetes/webadmin-service.yaml

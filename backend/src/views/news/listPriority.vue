@@ -37,8 +37,10 @@
           @reset-search="resetFilter"
         />
         <el-table :data="listBerita">
+          <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
           <el-table-column property="title" label="Judul Berita" />
           <el-table-column property="channel.name" label="Sumber" />
+          <el-table-column property="kabkota.name" label="Target Berita" />
           <el-table-column align="center" label="Actions">
             <template slot-scope="scope">
               <el-button type="white" size="mini" @click="addBeritaPriority(scope.row), dialogTableVisible = false">
@@ -65,6 +67,7 @@ import DndList from '@/components/DndList'
 import Pagination from '@/components/Pagination'
 import { fetchList, fetchListPriority, priorityBeritaUpdate } from '@/api/news'
 import ListFilter from './_listfilter'
+import { mapGetters } from 'vuex'
 
 export default {
   directives: { elDragDialog },
@@ -100,7 +103,10 @@ export default {
       } else {
         return this.terms
       }
-    }
+    },
+    ...mapGetters([
+      'user'
+    ])
   },
 
   mounted() {
@@ -112,7 +118,10 @@ export default {
     async getListPriority() {
       this.listLoading = true
       const dataPriority = []
-      await fetchListPriority().then(async(response) => {
+      const listPriorityQuery = {
+        kabkota_id: this.user.kabkota_id ? this.user.kabkota_id : null
+      }
+      await fetchListPriority(listPriorityQuery).then(async(response) => {
         await response.data.forEach((item, index) => {
           if (item !== null) {
             item['seq'] = index + 1
@@ -130,6 +139,10 @@ export default {
         this.listBerita = response.data.items
         this.total = response.data._meta.totalCount
       })
+    },
+
+    getTableRowNumbering(index) {
+      return ((this.listQuery.page - 1) * this.listQuery.limit) + (index + 1)
     },
 
     resetFilter() {
@@ -152,14 +165,14 @@ export default {
 
     async onSaveChange() {
       const data = []
-
+      const kabkota_id = this.user.kabkota_id ? this.user.kabkota_id : null
       if (this.listPriority !== undefined) {
         this.listPriority.forEach((item, index) => {
           data.push({ 'news_id': item.id, 'seq': index + 1 })
         })
       }
 
-      await priorityBeritaUpdate(data)
+      await priorityBeritaUpdate(kabkota_id, data)
       await this.$message.success(this.$t('crud.update-success'))
       await this.getListPriority()
     }

@@ -25,6 +25,18 @@ const userRouter = {
       }
     },
     {
+      name: 'user-list-saberhoax',
+      path: 'user-saberhoax',
+      component: () => import('@/views/user/list'),
+      props: {
+        roleId: 'staffSaberhoax'
+      },
+      meta: {
+        title: 'user-list-saberhoax',
+        roles: ['admin']
+      }
+    },
+    {
       name: 'user-list-provinsi',
       path: 'user-provinsi',
       component: () => import('@/views/user/list'),
