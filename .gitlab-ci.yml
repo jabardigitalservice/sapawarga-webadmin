@@ -13,6 +13,7 @@ versioning:
   stage: versioning
   only:
     - branches
+    - tags
   before_script:
     - apk add git
   script:
