@@ -82,7 +82,13 @@ export default {
     'news-hoax-list': 'Daftar Berita Hoax',
     'news-hoax-create': 'Tambah Berita Hoax',
     'news-hoax-edit': 'Edit Berita Hoax',
-    'news-hoax-detail': 'Detail Berita Hoax'
+    'news-hoax-detail': 'Detail Berita Hoax',
+
+    'banner-manage': 'Banner',
+    'banner-list': 'Daftar Banner',
+    'banner-create': 'Tambah Banner',
+    'banner-edit': 'Edit Banner',
+    'banner-detail': 'Detail Banner'
   },
   crud: {
     'list-empty': 'Belum ada data.',
@@ -102,6 +108,7 @@ export default {
     'save-news': 'Tambah Berita',
     'save-video': 'Tambah Video',
     'save-user': 'Tambah Pengguna',
+    'save-banner': 'Tambah Banner',
 
     'back-to-list': 'Kembali ke Daftar',
     'send-polling': 'Publikasikan Polling',
