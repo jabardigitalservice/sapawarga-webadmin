@@ -11,14 +11,12 @@ stages:
 versioning:
   image: alpine:latest
   stage: versioning
-  only:
-    - branches
   before_script:
     - apk add git
   script:
-    - export VERSION=$(git describe)
-    - echo $VERSION
+    - export VERSION=$(git describe --tags)
     - echo $VERSION > version
+    - cat version
   artifacts:
     paths:
       - version
@@ -181,6 +179,7 @@ deploy_prod_eks:
     - sed -i "s/%VUE_APP_BASE_API%/${EKS_VUE_APP_BASE_API}/g" kubernetes/webadmin-variables.yaml
     - sed -i "s/%dockerconfigjson%/${dockerconfigjson}/g" kubernetes/webadmin-variables.yaml
     - sed -i "s/%SENTRY_DSN_API%/${SENTRY_DSN_API}/g" kubernetes/webadmin-variables.yaml
+    - sed -i "s/%APP_ERROR_ENVIRONMENT%/${APP_ERROR_ENVIRONMENT}/g" kubernetes/webadmin-variables.yaml
     - sed -i "s/%VERSION%/${VERSION}/g" kubernetes/webadmin-deployment.yaml
     - kubectl create --dry-run --validate -f kubernetes/webadmin-variables.yaml
         -f kubernetes/webadmin-deployment.yaml
