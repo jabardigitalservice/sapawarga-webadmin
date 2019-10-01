@@ -11,14 +11,10 @@ stages:
 versioning:
   image: alpine:latest
   stage: versioning
-  only:
-    - branches
-    - tags
   before_script:
     - apk add git
   script:
     - export VERSION=$(git describe --tags)
-    - echo $VERSION
     - echo $VERSION > version
     - cat version
   artifacts:
