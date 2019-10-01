@@ -17,7 +17,7 @@
             </el-button>
           </el-col>
         </el-row>
-        <el-collapse-item title="" id="user-filter">
+        <el-collapse-item id="user-filter" title="">
           <template slot="title">
             <el-button class="more-btn" type="primary" size="small">
               Advance Filter
