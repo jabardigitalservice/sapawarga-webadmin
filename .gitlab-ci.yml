@@ -12,8 +12,8 @@ versioning:
   image: alpine:latest
   stage: versioning
   only:
-    - branches
-    - tags
+    refs:
+      - v0.1
   before_script:
     - apk add git
   script:
