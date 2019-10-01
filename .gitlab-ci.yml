@@ -19,6 +19,7 @@ versioning:
     - export VERSION=$(git describe)
     - echo $VERSION
     - echo $VERSION > version
+    - cat version
   artifacts:
     paths:
       - version
