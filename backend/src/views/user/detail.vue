@@ -64,7 +64,7 @@ import parsingDatetime from '@/utils/datetimeToString'
 
 export default {
   components: { PhotoBox, MapThumb },
-
+  directives: { permission },
   data() {
     return {
       id: 0,
