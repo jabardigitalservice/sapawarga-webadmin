@@ -7,16 +7,17 @@
             <el-input v-model="listQuery.name" placeholder="Nama Lengkap" />
           </el-form-item>
         </el-col>
-        <el-col :span="12">
-          <el-button type="primary" size="small" @click="advanceFilter">
-            <span v-if="isActive">Sembunyikan Filter</span>
-            <span v-else>Tambah Filter</span>
+        <el-col :span="10">
+          <el-button type="primary" size="small" style="float: right; margin: 2px;" @click="resetFilter">
+            Reset
           </el-button>
-          <el-button type="primary" size="small" @click="submitSearch">
+          <el-button type="primary" size="small" style="float: right; margin: 2px;" @click="submitSearch">
             Cari
           </el-button>
-          <el-button type="primary" size="small" @click="resetFilter">
-            Reset
+          <el-button type="primary" size="small" style="float: right; margin: 2px;" @click="advanceFilter">
+            <img src="@/assets/filter.svg" width="12" style="vertical-align: middle;">
+            <span v-if="isActive">Sembunyikan Filter</span>
+            <span v-else>Tambah Filter</span>
           </el-button>
         </el-col>
       </el-row>
