@@ -83,7 +83,6 @@ import checkPermission from '@/utils/permission'
 import ListFilter from './_listfilter'
 
 export default {
-
   components: { Pagination, ListFilter, PanelGroup },
   directives: { permission },
   filters: {
@@ -117,6 +116,7 @@ export default {
         kec_id: null,
         kel_id: null,
         role_id: this.roleId,
+        profile_completed: null,
         sort_by: 'name',
         sort_order: 'ascending',
         page: 1,

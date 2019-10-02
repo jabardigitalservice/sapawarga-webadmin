@@ -36,7 +36,7 @@ import { mockXHR } from '../mock' // simulation data
 import * as Sentry from '@sentry/browser'
 import * as Integrations from '@sentry/integrations'
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.VUE_APP_BASE_API === 'production') {
   Sentry.init({
     environment: process.env.VUE_APP_ERROR_ENVIRONMENT,
     dsn: process.env.VUE_APP_SENTRY_DSN,
@@ -51,7 +51,7 @@ if (process.env.NODE_ENV === 'production') {
   })
 }
 // mock api in github pages site build
-if (process.env.NODE_ENV === 'production') { mockXHR() }
+if (process.env.VUE_APP_BASE_API === 'production') { mockXHR() }
 
 Vue.use(Element, {
   size: Cookies.get('size') || 'medium', // set element-ui default size
