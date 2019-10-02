@@ -163,16 +163,15 @@ export default {
           this.$router.push('/categories/index')
         }
       } catch (error) {
-        const messageApi = error.response.data.data
+        const messageApi = await error.response.data.data
         const messageList = []
         let messageJoin = null
-
-        messageApi.forEach(element => {
-          messageList.push(element.message)
+        await Object.keys(messageApi).forEach(element => {
+          messageList.push(messageApi[element])
           messageJoin = messageList.join(' Dan ')
         })
         this.$message.error(this.$t(messageJoin))
-        if (messageApi[0].field === 'name') {
+        if (Object.keys(messageApi)[0] === 'name') {
           this.form.name = null
           this.validateName = 'errorName'
         }
