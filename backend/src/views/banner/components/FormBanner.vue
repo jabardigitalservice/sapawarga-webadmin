@@ -155,7 +155,7 @@ export default {
       this.banner.cover_path = path
     },
     getData(value) {
-      this.banner.category_name = value.title
+      this.banner.category_name = value.name !== undefined ? value.name : value.title
       this.banner.category_id = value.id
     },
     dialogClose(value) {
