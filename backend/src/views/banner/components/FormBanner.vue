@@ -24,15 +24,18 @@
                 <el-option label="Polling" value="polling"></el-option>
                 <el-option label="Berita" value="berita"></el-option>
              </el-select>
-            <!-- <span v-if="banner.internal_entity_id !== null">
-              <el-button>Pilihan</el-button>
-            </span> -->
+            <span v-if="banner.internal_entity_id !== null">
+              <el-button type="success" @click="dialog(banner.internal_entity_id)">Pilihan</el-button>
+            </span>
           </el-form-item>
-          <el-form-item v-if="banner.internal_entity_id !== null">
-            <el-button @click="dialogTableVisible = true">Pilihan</el-button>
+          <!-- <el-form-item v-if="banner.internal_entity_id !== null">
+            <el-button @click="dialog(banner.internal_entity_id)">Pilihan</el-button>
+          </el-form-item> -->
+          <el-form-item>
+            <el-input v-if="banner.category_name !== null" disabled v-model="banner.category_name" type="text" name="title" placeholder="Judul Banner" />
           </el-form-item>
           <el-form-item label="Status" prop="status">
-            <el-tooltip :content="banner.status == 0 ? 'nonaktif' : 'aktif'" placement="top">
+            <el-tooltip :content="banner.status == 0 ? 'nonaktif' : 'aktif'" placement="right">
               <el-switch
                 v-model="banner.status"
                 active-color="#13ce66"
@@ -41,7 +44,7 @@
                 inactive-value="0">
               </el-switch>
             </el-tooltip>
-          </el-form-item> {{banner.status}}
+          </el-form-item>
           <el-form-item>
             <el-button v-if="isEdit" type="primary" :loading="loading" @click="submitForm">{{ $t('crud.save-update') }}</el-button>
             <el-button v-else type="primary" :loading="loading" @click="submitForm">{{ $t('crud.save-banner') }}</el-button>
@@ -53,36 +56,13 @@
         </el-form>
       </el-col>
     </el-row>
-    <el-dialog v-el-drag-dialog :visible.sync="dialogTableVisible" title="List Berita">
-      <el-row>
-        <ListFilter
-          :list-query.sync="listQuery"
-          :is-priority="true"
-          @submit-search="getListBerita"
-          @reset-search="resetFilter"
-        />
-        <!-- <el-table :data="listBerita">
-          <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
-          <el-table-column property="title" label="Judul Berita" />
-          <el-table-column property="channel.name" label="Sumber" />
-          <el-table-column property="kabkota.name" label="Target Berita" />
-          <el-table-column align="center" label="Actions">
-            <template slot-scope="scope">
-              <el-button type="white" size="mini" @click="addBeritaPriority(scope.row), dialogTableVisible = false">
-                Tambah
-              </el-button>
-            </template>
-          </el-table-column>
-        </el-table>
-        <pagination
-          v-show="total>0"
-          :total="total"
-          :page.sync="listQuery.page"
-          :limit.sync="listQuery.limit"
-          @pagination="getListBerita"
-        /> -->
-      </el-row>
+    <el-dialog :visible.sync="dialogNews" width="80%" title="Daftar Berita">
+      <News v-on:childData="getData" v-on:closeDialog="dialogClose" />
     </el-dialog>
+    <el-dialog :visible.sync="dialogPolling" width="80%" title="Daftar Polling">
+      <Polling v-on:childData="getData" v-on:closeDialog="dialogClose" />
+    </el-dialog>
+    
   </div>
 </template>
 
@@ -90,11 +70,16 @@
 import AttachmentPhotoUpload from '@/components/AttachmentPhotoUpload'
 import Pagination from '@/components/Pagination'
 import ListFilter from './_listfilter'
+import News from './dialog/news'
+import Polling from './dialog/polling'
+
 export default {
   components: { 
     AttachmentPhotoUpload,
     Pagination,
-    ListFilter, 
+    ListFilter,
+    News,
+    Polling 
   },
   props: {
     isEdit: {
@@ -111,10 +96,13 @@ export default {
         internal_entity_id: null,
         cover_path: null,
         cover_path_url: null,
+        category_id: null,
+        category_name: null,
         status: 0,
         type: "eksternal"
       },
-      dialogTableVisible: false,
+      dialogNews: false,
+      dialogPolling: false,
       rules: {
         title: [
           {
@@ -148,8 +136,23 @@ export default {
     }
   },
   methods: {
+    dialog(id) {
+      if (id === 'berita') {
+        this.dialogNews = true
+      } else if (id === 'polling') {
+        this.dialogPolling = true
+      }
+    },
     photoUploaded(path, url) {
       this.banner.cover_path = path
+    },
+    getData(value) {
+      this.banner.category_name = value.title
+      this.banner.category_id = value.id
+    },
+    dialogClose(value) {
+      this.dialogNews = value
+      this.dialogPolling = value
     },
     async submitForm() {
 
