@@ -60,7 +60,6 @@ import PhotoBox from '@/components/PhotoBox'
 import MapThumb from '@/components/MapThumb'
 import { fetchUser } from '@/api/staff'
 import permission from '@/directive/permission/index.js'
-import checkPermission from '@/utils/permission'
 import parsingDatetime from '@/utils/datetimeToString'
 
 export default {
@@ -94,7 +93,6 @@ export default {
   },
 
   methods: {
-    checkPermission,
     getDetail(id) {
       fetchUser(id).then(response => {
         const {
