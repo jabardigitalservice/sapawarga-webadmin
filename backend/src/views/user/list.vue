@@ -77,9 +77,8 @@ import { fetchList, activate, deactivate, totalUser } from '@/api/staff'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 import PanelGroup from './components/PanelGroup'
 import permission from '@/directive/permission/index.js'
-import parsingDatetime from '@/utils/datetimeToString'
 import checkPermission from '@/utils/permission'
-
+import moment from 'moment'
 import ListFilter from './_listfilter'
 
 export default {
@@ -253,7 +252,7 @@ export default {
     },
 
     formatterCell(row, column, cellValue, index) {
-      const value = cellValue ? parsingDatetime(cellValue) : '-'
+      const value = moment(cellValue).format('D MMM YYYY MM:SS') 
       return value
     }
   }
