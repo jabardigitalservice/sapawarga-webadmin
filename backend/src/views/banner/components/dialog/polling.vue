@@ -9,7 +9,7 @@
     <el-table :data="list" stripe fit highlight-current-row>
       <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
       <el-table-column property="name" label="Judul Berita" min-width="180" />
-      <el-table-column property="category.name" label="Sumber" min-width="50" />
+      <el-table-column property="category.name" label="Kategori" min-width="50" />
       <el-table-column align="center" label="Actions">
         <template slot-scope="scope">
           <el-tooltip content="Tambah" placement="right">
