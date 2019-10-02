@@ -1,16 +1,16 @@
 <template>
   <div class="dashboard-editor-container">
 
-    <h3 style="color:#73737">Trafik User</h3>
+    <!-- <h3 style="color:#73737">Trafik User</h3>
 
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
       <line-chart :chart-data="lineChartData" />
-    </el-row>
+    </el-row> -->
 
     <h3 style="color:#73737">Usulan</h3>
 
     <el-row :gutter="8">
-      <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 16}" :xl="{span: 16}" style="padding-right:8px;margin-bottom:30px;">
+      <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 16}" :xl="{span: 16}" style="padding-right:8px;margin-bottom:10px;">
         <Usulan />
       </el-col>
       <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 8}" :xl="{span: 8}" style="margin-bottom:10px;">
@@ -18,22 +18,31 @@
         <Category style="margin-top:10px" />
       </el-col>
     </el-row>
-
+    <!-- Map Usulan -->
     <el-row>
       <el-col>
         <Map-data />
 
       </el-col>
     </el-row>
+
+    <!-- Polling -->
+    <h3 style="color:#73737">Polling</h3>
+    <el-row>
+      <el-col>
+        <polling />
+      </el-col>
+    </el-row>
   </div>
 </template>
 
 <script>
-import LineChart from './components/LineChart'
+// import LineChart from './components/LineChart'
 import Usulan from './components/Usulan'
 import Approval from './components/Approval'
 import Category from './components/Category'
 import MapData from './components/MapData'
+import Polling from './components/Polling'
 
 const lineChartData = {
   newVisitis: {
@@ -57,11 +66,12 @@ const lineChartData = {
 export default {
   name: 'DashboardAdmin',
   components: {
-    LineChart,
+    // LineChart,
     Category,
     Usulan,
     Approval,
-    MapData
+    MapData,
+    Polling
   },
   data() {
     return {

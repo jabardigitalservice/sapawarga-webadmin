@@ -9,6 +9,27 @@ export function fetchList(query) {
   })
 }
 
+export function fetchListPriority(query) {
+  return request({
+    url: '/news/featured',
+    method: 'get',
+    params: query
+  })
+}
+
+export function priorityBeritaUpdate(kabkota_id, data) {
+  const query = (kabkota_id) ? '?kabkota_id=' + kabkota_id : ''
+  let url_ = '/news/featured'
+  if (query !== null) {
+    url_ += query
+  }
+  return request({
+    url: url_,
+    method: 'post',
+    data
+  })
+}
+
 export function newsChannelList(query) {
   return request({
     url: '/news-channels',
@@ -85,6 +106,8 @@ export function activate(id) {
 const exportFunctions = {
   fetchList,
   fetchRecord,
+  fetchListPriority,
+  priorityBeritaUpdate,
   deactivate,
   activate
 }

@@ -19,14 +19,19 @@
         </el-card>
       </el-col>
       <el-col class="col-right" :xs="24" :sm="24" :md="24" :lg="17" :xl="17">
-        <el-row style="margin: 10px 0px">
-          <el-col :span="12">
-            <router-link :to="{ path: '/news/create' }">
+        <el-row style="margin: 10px 0px" type="flex">
+          <router-link :to="{ path: '/news/create' }">
+            <el-button type="primary" size="small" icon="el-icon-plus" style="margin: 0 10px 0 0">
+              Tambah Berita Baru
+            </el-button>
+          </router-link>
+          <div v-permission="['admin','staffProv', 'staffKabkota']">
+            <router-link :to="{ path: '/news/priority' }">
               <el-button type="primary" size="small" icon="el-icon-plus">
-                Tambah Berita Baru
+                Prioritas Berita
               </el-button>
             </router-link>
-          </el-col>
+          </div>
         </el-row>
 
         <ListFilter
@@ -113,11 +118,13 @@
 import { fetchList, fetchStatistic, deleteData, deactivate, activate } from '@/api/news'
 import moment from 'moment'
 import Pagination from '@/components/Pagination'
+import permission from '@/directive/permission/index.js'
 import ListFilter from './_listfilter'
 import { mapGetters } from 'vuex'
 
 export default {
   components: { Pagination, ListFilter },
+  directives: { permission },
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -221,6 +228,7 @@ export default {
         console.log(e)
       }
     },
+
     async deactivateRecord(id) {
       try {
         await this.$confirm(this.$t('crud.deactivate-confirm'), 'Warning', {

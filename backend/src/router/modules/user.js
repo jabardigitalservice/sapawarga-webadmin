@@ -9,7 +9,8 @@ const userRouter = {
   name: 'User',
   meta: {
     title: 'user-manage',
-    icon: 'user'
+    icon: 'user',
+    roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']
   },
   children: [
     {
@@ -21,6 +22,18 @@ const userRouter = {
       },
       meta: {
         title: 'Semua Pengguna'
+      }
+    },
+    {
+      name: 'user-list-saberhoax',
+      path: 'user-saberhoax',
+      component: () => import('@/views/user/list'),
+      props: {
+        roleId: 'staffSaberhoax'
+      },
+      meta: {
+        title: 'user-list-saberhoax',
+        roles: ['admin']
       }
     },
     {

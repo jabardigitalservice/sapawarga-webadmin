@@ -48,6 +48,16 @@ const newsRouter = {
         title: 'news-detail',
         roles: ['admin', 'staffProv', 'staffKabkota']
       }
+    },
+    {
+      name: 'news-priority',
+      path: 'priority',
+      component: () => import('@/views/news/listPriority'),
+      hidden: true,
+      meta: {
+        title: 'news-priority',
+        roles: ['admin', 'staffProv', 'staffKabkota']
+      }
     }
   ]
 }

@@ -6,6 +6,7 @@
 import echarts from 'echarts'
 require('echarts/theme/macarons') // echarts theme
 import { debounce } from '@/utils'
+import { fetchResult } from '@/api/polling'
 
 export default {
   props: {
@@ -20,15 +21,38 @@ export default {
     height: {
       type: String,
       default: '300px'
+    },
+    isEdit: {
+      type: Boolean,
+      default: false
+    },
+    propIdPolling: {
+      type: Number,
+      default: null
     }
   },
   data() {
     return {
-      chart: null
+      chart: null,
+      id: null,
+      idDashboard: null,
+      result: [],
+      count: null
+    }
+  },
+  watch: {
+    propIdPolling(newId, oldId) {
+      this.idDashboard = newId
+      this.result = []
+      this.getResult()
     }
   },
   mounted() {
-    this.initChart()
+    this.idDashboard = this.propIdPolling
+    this.id = this.$route.params && this.$route.params.id
+    if (!this.isEdit) {
+      this.getResult()
+    }
     this.__resizeHandler = debounce(() => {
       if (this.chart) {
         this.chart.resize()
@@ -45,6 +69,28 @@ export default {
     this.chart = null
   },
   methods: {
+    async getResult() {
+      if (this.isEdit) {
+        this.idDashboard
+      } else {
+        this.idDashboard = this.id
+      }
+      const arrayTemporary = []
+      await fetchResult(this.idDashboard).then(response => {
+        response.data.forEach(function(value, key) {
+          arrayTemporary.push({ 'value': value.votes, 'name': value.answer_body })
+        })
+      })
+
+      Object.assign(this.result, arrayTemporary)
+
+      this.count = this.result.reduce(function(prev, cur) {
+        return parseInt(prev) + parseInt(cur.value)
+      }, 0)
+
+      this.$emit('childToParent', this.count)
+      this.initChart()
+    },
     initChart() {
       this.chart = echarts.init(this.$el, 'macarons')
 
@@ -55,24 +101,17 @@ export default {
         },
         legend: {
           left: 'center',
-          bottom: '10',
-          data: ['Industries', 'Technology', 'Forex', 'Gold', 'Forecasts']
+          bottom: '10'
         },
         calculable: true,
         series: [
           {
-            name: 'WEEKLY WRITE ARTICLES',
+            name: 'Hasil Polling',
             type: 'pie',
             roseType: 'radius',
             radius: [15, 95],
-            center: ['50%', '38%'],
-            data: [
-              { value: 320, name: 'Industries' },
-              { value: 240, name: 'Technology' },
-              { value: 149, name: 'Forex' },
-              { value: 100, name: 'Gold' },
-              { value: 59, name: 'Forecasts' }
-            ],
+            center: ['50%', '45%'],
+            data: this.result,
             animationEasing: 'cubicInOut',
             animationDuration: 2600
           }

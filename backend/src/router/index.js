@@ -19,6 +19,7 @@ import categoriesRouter from './modules/categories'
 import videoRouter from './modules/video'
 import newsChannelsRouter from './modules/newsChannels'
 import releaseManagementRouter from './modules/releaseManagement'
+import newsHoaxRouter from './modules/newsHoax'
 
 /** note: sub-menu only appear when children.length>=1
  *  detail see  https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -94,7 +95,7 @@ export const constantRoutes = [
           icon: 'dashboard',
           noCache: true,
           affix: true,
-          roles: ['admin']
+          roles: ['admin', 'staffProv']
         }
       }
     ]
@@ -130,7 +131,7 @@ export const constantRoutes = [
         hidden: true,
         meta: {
           title: 'profile',
-          roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']
+          roles: ['admin', 'staffProv', 'staffSaberhoax', 'staffKabkota', 'staffKec', 'staffKel']
         }
       }
     ]
@@ -146,7 +147,7 @@ export const constantRoutes = [
         hidden: true,
         meta: {
           title: 'profile',
-          roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']
+          roles: ['admin', 'staffProv', 'staffSaberhoax', 'staffKabkota', 'staffKec', 'staffKel']
         }
       }
     ]
@@ -167,11 +168,11 @@ export const asyncRoutes = [
   pollingRouter,
   surveyRouter,
   newsRouter,
+  newsHoaxRouter,
   categoriesRouter,
   videoRouter,
   newsChannelsRouter,
   releaseManagementRouter,
-
   { path: '*', redirect: '/404', hidden: true }
 ]
 

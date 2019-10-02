@@ -15,6 +15,13 @@ export function fetchRecord(id) {
   })
 }
 
+export function fetchResult(id) {
+  return request({
+    url: `/polling/${id}/result`,
+    method: 'get'
+  })
+}
+
 export function create(data) {
   return request({
     url: '/polling',
@@ -30,3 +37,4 @@ export function update(id, data) {
     data
   })
 }
+

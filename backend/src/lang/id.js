@@ -6,6 +6,7 @@ export default {
 
     'user-manage': 'Kelola Pengguna',
     'user-create': 'Tambah Pengguna Baru',
+    'user-list-saberhoax': 'Jabar Saber Hoax',
     'user-list-provinsi': 'Provinsi',
     'user-list-kabkota': 'Kabupaten / Kota',
     'user-list-kecamatan': 'Kecamatan',
@@ -69,12 +70,19 @@ export default {
     'news-channels-list': 'Daftar Sumber Berita',
     'news-channels-create': 'Tambah Sumber Berita',
     'news-channels-edit': 'Edit Sumber Berita',
+    'news-priority': 'Prioritas Berita',
 
     'release-management': 'Release',
     'release-management-list': 'Daftar Release',
     'release-management-create': 'Tambah Release',
     'release-management-edit': 'Edit Release',
-    'release-management-detail': 'Detail Release'
+    'release-management-detail': 'Detail Release',
+
+    'news-hoax': 'Berita Hoax',
+    'news-hoax-list': 'Daftar Berita Hoax',
+    'news-hoax-create': 'Tambah Berita Hoax',
+    'news-hoax-edit': 'Edit Berita Hoax',
+    'news-hoax-detail': 'Detail Berita Hoax'
   },
   crud: {
     'list-empty': 'Belum ada data.',
@@ -103,6 +111,7 @@ export default {
     'survey-published': 'Survei berhasil dipublikasikan.',
 
     'dashboard-aspiration': 'Lihat Semua Usulan',
+    'polling-all': 'Lihat Semua Polling',
 
     'insert-row': 'Tambah Baris Baru',
     'delete-row': 'Hapus',
@@ -136,7 +145,9 @@ export default {
     'broadcast-error-edit-published': 'Sudah dipublish, tidak dapat di edit.',
     'notification-error-edit-published': 'Sudah dipublish, tidak dapat di edit.',
     'video-error-edit-published': 'Sudah dipublish, tidak dapat di edit.',
-    'error-edit-role': 'Anda tidak memiliki hak akses halaman ini.'
+    'error-edit-role': 'Anda tidak memiliki hak akses halaman ini.',
+
+    'news-selected': 'Berita sudah dipilih'
   },
   common: {
     confirm: 'Ya',
@@ -147,13 +158,14 @@ export default {
 
     'polling-compare-date': 'Tanggal berakhir polling harus lebih besar dari tanggal mulai polling.',
     'polling-start-date': 'Tanggal mulai polling tidak boleh lebih kecil dari tanggal hari ini.',
+    'polling-answer-less-then-2': 'Tipe pertanyaan custom minimal dua pilihan',
+    'polling-answer-null': 'Tipe pertanyaan custom harus diisi',
     'survey-start-date': 'Tanggal mulai survei tidak boleh lebih kecil dari tanggal hari ini.',
     'survey-compare-date': 'Tanggal berakhir survei harus lebih besar dari tanggal mulai survei.',
 
     'news-image-null': 'Gambar tidak boleh kosong.',
 
     'dashboard-map-error': 'Gagal memuat map'
-
   },
   navbar: {
     profile: 'Lihat Profil',
@@ -166,6 +178,7 @@ export default {
     'polling': 'Polling',
     'survey': 'Survei',
     'aspirasi': 'Usulan Masyarakat',
-    'video': 'Video'
+    'video': 'Video',
+    'newsHoax': 'Berita Hoax'
   }
 }

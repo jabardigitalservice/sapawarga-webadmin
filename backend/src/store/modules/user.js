@@ -1,10 +1,11 @@
+import Cookies from 'js-cookie'
 import { login, getInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 import { Message, MessageBox } from 'element-ui'
 
 const state = {
-  id: null,
+  id: Cookies.get('userID') || null,
   token: getToken(),
   name: '',
   avatar: '',
@@ -26,6 +27,7 @@ const state = {
 const mutations = {
   SET_ID: (state, id) => {
     state.id = id
+    Cookies.set('userID', state.id)
   },
   SET_TOKEN: (state, token) => {
     state.token = token
@@ -152,6 +154,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       commit('SET_TOKEN', '')
       commit('SET_ROLES', [])
+      Cookies.remove('userID')
       removeToken()
       resetRouter()
       resolve()
@@ -163,6 +166,7 @@ const actions = {
     return new Promise(resolve => {
       commit('SET_TOKEN', '')
       commit('SET_ROLES', [])
+      Cookies.remove('userID')
       removeToken()
       resolve()
     })

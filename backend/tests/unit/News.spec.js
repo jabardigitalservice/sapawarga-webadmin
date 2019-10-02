@@ -1,6 +1,7 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import ElementUI from 'element-ui'
 import NewsList from '@/views/news/list'
+import listPriority from '@/views/news/listPriority'
 import NewsDetail from '@/views/news/detail'
 import newsDetailFixture from './fixtures/newsDetail'
 import VueRouter from 'vue-router'
@@ -155,5 +156,26 @@ describe('News detail', () => {
 
     expect(wrapper.vm.news).toEqual(newsDetailFixture.data)
     expect(wrapper.vm.tableDataNews).toEqual(expDataNews)
+  })
+})
+
+describe('News List Priority', () => {
+  it.skip('renders list priority', () => {
+    const channel = [
+      { title: 'humas jabar', content: 50 },
+      { title: 'kompas', content: 20 },
+      { title: 'Tempo', content: 10 }
+    ]
+
+    const wrapper = shallowMount(listPriority, {
+      localVue,
+      stubs: {
+        fetchList: true
+      }
+    })
+    wrapper.setData({ tableDataStatistik: channel })
+
+    expect(wrapper.html()).toContain('<span>Kanal Media</span>')
+    expect(wrapper.vm.tableDataStatistik).toBe(channel)
   })
 })

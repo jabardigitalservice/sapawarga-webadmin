@@ -33,8 +33,25 @@ import * as filters from './filters' // global filters
 
 import { mockXHR } from '../mock' // simulation data
 
+import * as Sentry from '@sentry/browser'
+import * as Integrations from '@sentry/integrations'
+
+if (process.env.VUE_APP_BASE_API === 'production') {
+  Sentry.init({
+    environment: process.env.VUE_APP_ERROR_ENVIRONMENT,
+    dsn: process.env.VUE_APP_SENTRY_DSN,
+    release: process.env.VUE_APP_VERSION,
+    integrations: [new Integrations.Vue({ Vue, attachProps: true })]
+  })
+  Sentry.configureScope((scope) => {
+    scope.setTag('User', '')
+    scope.setUser({
+      id: parseInt(store.getters.user_id)
+    })
+  })
+}
 // mock api in github pages site build
-if (process.env.NODE_ENV === 'production') { mockXHR() }
+if (process.env.VUE_APP_BASE_API === 'production') { mockXHR() }
 
 Vue.use(Element, {
   size: Cookies.get('size') || 'medium', // set element-ui default size

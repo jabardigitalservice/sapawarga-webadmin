@@ -16,20 +16,35 @@ spec:
           ports:
             - containerPort: 80
           env:
-            - name: NODE_ENV
+            - name: VUE_APP_NODE_ENV
               valueFrom:
                 configMapKeyRef:
                   name: sapawarga-webadmin-config-env
-                  key: NODE_ENV
+                  key: VUE_APP_NODE_ENV
+
             - name: VUE_APP_BASE_API
               valueFrom:
                 configMapKeyRef:
                   name: sapawarga-webadmin-config-env
                   key: VUE_APP_BASE_API
+
             - name: VUE_APP_VERSION
               valueFrom:
                 configMapKeyRef:
                   name: sapawarga-webadmin-config-env
                   key: VUE_APP_VERSION
+
+            - name: VUE_SENTRY_DSN_API
+              valueFrom:
+                configMapKeyRef:
+                  name: sapawarga-webadmin-config-env
+                  key: VUE_SENTRY_DSN_API
+
+            - name: VUE_APP_ERROR_ENVIRONMENT
+              valueFrom:
+                configMapKeyRef:
+                  name: sapawarga-webadmin-config-env
+                  key: VUE_APP_ERROR_ENVIRONMENT
+
       imagePullSecrets:
         - name: regcred

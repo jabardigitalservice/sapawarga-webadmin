@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
 
-    <panel-group :role-id="roleId" :total-all-user="totalAllUser" :total-user-province="totalUserProvince" :total-user-kab-kota="totalUserKabKota" :total-user-kec="totalUserKec" :total-user-kel="totalUserKel" :total-user-rw="totalUserRw" />
+    <panel-group :role-id="roleId" :total-all-user="totalAllUser" :total-user-province="totalUserProvince" :total-user-kab-kota="totalUserKabKota" :total-user-kec="totalUserKec" :total-user-kel="totalUserKel" :total-user-rw="totalUserRw" :total-user-saberhoax="totalUserSaberhoax" />
 
     <el-row :gutter="20">
       <el-col :span="24">
@@ -74,12 +74,12 @@
 import { fetchList, activate, deactivate, totalUser } from '@/api/staff'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 import PanelGroup from './components/PanelGroup'
-
+import permission from '@/directive/permission/index.js'
 import ListFilter from './_listfilter'
 
 export default {
-
   components: { Pagination, ListFilter, PanelGroup },
+  directives: { permission },
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -111,6 +111,7 @@ export default {
         kec_id: null,
         kel_id: null,
         role_id: this.roleId,
+        profile_completed: null,
         sort_by: 'name',
         sort_order: 'ascending',
         page: 1,
@@ -121,7 +122,8 @@ export default {
       totalUserKabKota: 0,
       totalUserKec: 0,
       totalUserKel: 0,
-      totalUserRw: 0
+      totalUserRw: 0,
+      totalUserSaberhoax: 0
     }
   },
 
@@ -148,6 +150,7 @@ export default {
         this.totalUserKec = (_.find(response.data.items, ['level', 'kec'])) ? _.find(response.data.items, ['level', 'kec']).value : null
         this.totalUserKel = (_.find(response.data.items, ['level', 'kel'])) ? _.find(response.data.items, ['level', 'kel']).value : null
         this.totalUserRw = (_.find(response.data.items, ['level', 'rw'])) ? _.find(response.data.items, ['level', 'rw']).value : null
+        this.totalUserSaberhoax = (_.find(response.data.items, ['level', 'saberhoax'])) ? _.find(response.data.items, ['level', 'saberhoax']).value : null
       })
     },
 

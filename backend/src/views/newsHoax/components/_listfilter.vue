@@ -2,18 +2,18 @@
   <el-card class="box-card" style="margin-bottom: 10px">
     <el-form>
       <el-row :gutter="10" type="flex">
-        <el-col :span="(isPriority)? 12:18">
+        <el-col :span="12">
           <el-form-item style="margin-bottom: 0">
             <el-input v-model="listQuery.search" placeholder="Judul" />
           </el-form-item>
         </el-col>
-        <el-col v-if="isPriority" :span="6">
+        <el-col :span="6">
           <el-form-item style="margin-bottom: 0">
             <el-select
-              v-model="listQuery.channel_id"
+              v-model="listQuery.category_id"
               clearable
               filterable
-              placeholder="Pilih Sumber Berita"
+              placeholder="Pilih Kategori Berita Hoax"
               style="width: 100%"
             >
               <el-option
@@ -36,21 +36,20 @@
 
 <script>
 import checkPermission from '@/utils/permission'
-import { newsChannelList } from '@/api/news'
+import { fetchList } from '@/api/categories'
 export default {
   props: {
     listQuery: {
       type: Object,
       default: null
-    },
-    isPriority: {
-      type: Boolean,
-      default: false
     }
   },
   data() {
     return {
-      options: []
+      options: [],
+      query: {
+        type: 'newsHoax'
+      }
     }
   },
   created() {
@@ -68,7 +67,7 @@ export default {
     },
 
     getNewsChannel() {
-      newsChannelList().then(response => {
+      fetchList(this.query).then(response => {
         this.options = response.data.items
       })
     }

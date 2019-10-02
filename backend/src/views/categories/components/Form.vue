@@ -8,16 +8,23 @@
             <el-input v-model="form.name" type="text" placeholder="Nama Kategori" @focus="changePropName" />
           </el-form-item>
 
-          <el-form-item label="Fitur" prop="type">
-            <el-select v-model="form.type" placeholder="Pilih Fitur">
-              <el-option
-                v-for="item in optionType"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id"
-              />
-            </el-select>
-          </el-form-item>
+          <div v-if="isSaberHoax">
+            <el-form-item label="Fitur">
+              <el-input type="text" placeholder="Berita Saber Hoaks" disabled />
+            </el-form-item>
+          </div>
+          <div v-else>
+            <el-form-item label="Fitur" prop="type">
+              <el-select v-model="form.type" placeholder="Pilih Fitur">
+                <el-option
+                  v-for="item in optionType"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.id"
+                />
+              </el-select>
+            </el-form-item>
+          </div>
 
           <el-form-item>
             <el-button type="primary" :loading="loading" @click="submitProcess">
@@ -38,6 +45,8 @@
 <script>
 import { fetchRecord, create, update, fetchTypes } from '@/api/categories'
 import { containsWhitespace } from '@/utils/validate'
+import checkPermission from '@/utils/permission'
+import permission from '@/directive/permission/index.js'
 
 const defaultForm = {
   name: null,
@@ -46,6 +55,7 @@ const defaultForm = {
 }
 
 export default {
+  directives: { permission },
   props: {
     isEdit: {
       type: Boolean,
@@ -64,6 +74,7 @@ export default {
     return {
       form: Object.assign({}, defaultForm),
       loading: false,
+      isSaberHoax: false,
       validateName: 'name',
       rules: {
         name: [
@@ -79,6 +90,9 @@ export default {
           { required: true, message: 'Nama kategori sudah digunakan', trigger: 'change' }
         ]
       },
+      listQuery: {
+        type: null
+      },
       tempRoute: {},
       optionType: []
     }
@@ -90,7 +104,10 @@ export default {
     } else {
       this.form = Object.assign({}, defaultForm)
     }
-    this.fetchDataTypes()
+    if (checkPermission(['staffSaberhoax'])) {
+      this.isSaberHoax = true
+    }
+    if (!checkPermission(['staffSaberhoax'])) this.fetchDataTypes()
   },
   methods: {
     fetchData(id) {
@@ -100,7 +117,10 @@ export default {
     },
 
     fetchDataTypes() {
-      fetchTypes().then(response => {
+      if (checkPermission(['staffSaberhoax'])) {
+        this.listQuery['type'] = 'newsHoax'
+      }
+      fetchTypes(this.listQuery).then(response => {
         const { data } = response
         this.optionType = data.items.map(item => {
           return {
@@ -134,22 +154,24 @@ export default {
 
           this.$router.push('/categories/index')
         } else {
+          if (checkPermission(['staffSaberhoax'])) {
+            data.type = 'newsHoax'
+          }
           await create(data)
           this.$message.success(this.$t('crud.create-success'))
 
           this.$router.push('/categories/index')
         }
       } catch (error) {
-        const messageApi = error.response.data.data
+        const messageApi = await error.response.data.data
         const messageList = []
         let messageJoin = null
-
-        messageApi.forEach(element => {
-          messageList.push(element.message)
+        await Object.keys(messageApi).forEach(element => {
+          messageList.push(messageApi[element])
           messageJoin = messageList.join(' Dan ')
         })
         this.$message.error(this.$t(messageJoin))
-        if (messageApi[0].field === 'name') {
+        if (Object.keys(messageApi)[0] === 'name') {
           this.form.name = null
           this.validateName = 'errorName'
         }

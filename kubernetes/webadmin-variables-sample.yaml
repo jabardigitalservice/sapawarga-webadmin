@@ -4,9 +4,11 @@ metadata:
   name: sapawarga-webadmin-config-env
   namespace: sapawarga
 data:
-  NODE_ENV: production
+  VUE_APP_NODE_ENV: production
   VUE_APP_BASE_API: %VUE_APP_BASE_API%
   VUE_APP_VERSION: %VUE_APP_VERSION%
+  VUE_SENTRY_DSN_API: %SENTRY_DSN_API%
+  VUE_APP_ERROR_ENVIRONMENT: %APP_ERROR_ENVIRONMENT%
 ---
 apiVersion: v1
 kind: Secret
