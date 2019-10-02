@@ -7,12 +7,13 @@
             <el-input v-model="listQuery.name" placeholder="Nama Lengkap" />
           </el-form-item>
         </el-col>
-        <el-col :span="8">
+        <el-col :span="12">
+          <el-button type="primary" size="small" @click="advanceFilter">
+            <span v-if="isActive">Sembunyikan Filter</span>
+            <span v-else>Tambah Filter</span>
+          </el-button>
           <el-button type="primary" size="small" @click="submitSearch">
             Cari
-          </el-button>
-          <el-button type="primary" size="small" @click="advanceFilter">
-            Advance Filter
           </el-button>
           <el-button type="primary" size="small" @click="resetFilter">
             Reset
