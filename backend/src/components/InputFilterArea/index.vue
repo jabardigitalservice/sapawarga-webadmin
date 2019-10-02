@@ -4,6 +4,7 @@
       <el-col v-if="enableKabkota" :span="8">
         <el-select
           v-model="kabkota_selected"
+          clearable
           filterable
           placeholder="Pilih Kabupaten/Kota"
           style="width: 100%"
@@ -22,6 +23,7 @@
         <el-select
           v-model="kecamatan_selected"
           :disabled="enableKabkota === true && (kabkota_selected === '' || kabkota_selected === null)"
+          clearable
           filterable
           placeholder="Pilih Kecamatan"
           style="width: 100%"
@@ -40,6 +42,7 @@
         <el-select
           v-model="kelurahan_selected"
           :disabled="enableKecamatan === true && (kecamatan_selected === '' || kecamatan_selected === null)"
+          clearable
           filterable
           placeholder="Pilih Desa/Kelurahan"
           style="width: 100%"
