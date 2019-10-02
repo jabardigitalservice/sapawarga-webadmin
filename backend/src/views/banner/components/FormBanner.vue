@@ -62,6 +62,9 @@
     <el-dialog :visible.sync="dialogPolling" width="80%" title="Daftar Polling">
       <Polling v-on:childData="getData" v-on:closeDialog="dialogClose" />
     </el-dialog>
+    <el-dialog :visible.sync="dialogSurvey" width="80%" title="Daftar Survei">
+      <Survey v-on:childData="getData" v-on:closeDialog="dialogClose" />
+    </el-dialog>
     
   </div>
 </template>
@@ -72,6 +75,7 @@ import Pagination from '@/components/Pagination'
 import ListFilter from './_listfilter'
 import News from './dialog/news'
 import Polling from './dialog/polling'
+import Survey from './dialog/survey'
 
 export default {
   components: { 
@@ -79,7 +83,8 @@ export default {
     Pagination,
     ListFilter,
     News,
-    Polling 
+    Polling,
+    Survey 
   },
   props: {
     isEdit: {
@@ -103,6 +108,7 @@ export default {
       },
       dialogNews: false,
       dialogPolling: false,
+      dialogSurvey: false,
       rules: {
         title: [
           {
@@ -141,6 +147,8 @@ export default {
         this.dialogNews = true
       } else if (id === 'polling') {
         this.dialogPolling = true
+      } else if (id === 'survei') {
+        this.dialogSurvey = true
       }
     },
     photoUploaded(path, url) {
@@ -153,6 +161,7 @@ export default {
     dialogClose(value) {
       this.dialogNews = value
       this.dialogPolling = value
+      this.dialogSurvey = value
     },
     async submitForm() {
 
