@@ -41,6 +41,8 @@
             </template>
           </el-table-column>
 
+          <el-table-column v-if="checkPermission(['admin', 'staffProv'])" prop="last_login_at" :formatter="formatterCell" label="Waktu Terakhir Akses" min-width="120" />
+
           <el-table-column align="center" label="Actions" min-width="170px">
             <template slot-scope="scope">
               <router-link :to="'/user/detail/'+scope.row.id">
@@ -74,12 +76,16 @@
 import { fetchList, activate, deactivate, totalUser } from '@/api/staff'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 import PanelGroup from './components/PanelGroup'
+import permission from '@/directive/permission/index.js'
+import parsingDatetime from '@/utils/datetimeToString'
+import checkPermission from '@/utils/permission'
 
 import ListFilter from './_listfilter'
 
 export default {
 
   components: { Pagination, ListFilter, PanelGroup },
+  directives: { permission },
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -132,6 +138,8 @@ export default {
   },
 
   methods: {
+    checkPermission,
+
     getList() {
       this.listLoading = true
       fetchList(this.listQuery).then(response => {
@@ -242,6 +250,11 @@ export default {
       } catch (e) {
         console.log(e)
       }
+    },
+
+    formatterCell(row, column, cellValue, index) {
+      const value = cellValue ? parsingDatetime(cellValue) : '-'
+      return value
     }
   }
 }
