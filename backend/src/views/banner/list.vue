@@ -11,10 +11,10 @@
             </router-link>
           </el-col>
         </el-row>
-        
+
         <!-- ListFilter -->
 
-        <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row >
+        <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row>
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
           <el-table-column prop="name" sortable="custom" label="Judul Banner" min-width="250" />
           <el-table-column prop="name" sortable="custom" label="Kategori" min-width="200" />
@@ -56,10 +56,10 @@
 </template>
 
 <script>
-import Pagination from '@/components/Pagination'
+// import Pagination from '@/components/Pagination'
 import { fetchList } from '@/api/banner'
 export default {
-  components: { Pagination },
+  // components: { Pagination },
   data() {
     return {
       list: null,
@@ -74,7 +74,7 @@ export default {
   },
   created() {
     this.getList()
-  }, 
+  },
   methods: {
     getList() {
       this.listLoading = true

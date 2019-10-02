@@ -4,7 +4,7 @@
       <el-col :xs="24" :sm="8" :lg="5">
         <AttachmentPhotoUpload type="news_photo" :initial-url="banner.cover_path_url" style="margin-bottom: 25px" @onUpload="photoUploaded" />
       </el-col>
-      <el-col :xs="24" :sm="16" :lg="19"> 
+      <el-col :xs="24" :sm="16" :lg="19">
         <el-form ref="banner" :model="banner" :rules="rules" :status-icon="true" label-width="160px">
           <el-form-item label="Judul Banner" prop="title">
             <el-input v-model="banner.title" type="text" name="title" placeholder="Judul Banner" />
@@ -19,11 +19,11 @@
             <el-input v-model="banner.internal_category" type="text" name="title" placeholder="URL Banner" />
           </el-form-item>
           <el-form-item v-else label="Kategori" prop="category">
-             <el-select v-model="banner.internal_entity_id" placeholder="Pilih Kategori">
-               <el-option label="Survei" value="survei"></el-option>
-                <el-option label="Polling" value="polling"></el-option>
-                <el-option label="Berita" value="berita"></el-option>
-             </el-select>
+            <el-select v-model="banner.internal_entity_id" placeholder="Pilih Kategori">
+              <el-option label="Survei" value="survei" />
+              <el-option label="Polling" value="polling" />
+              <el-option label="Berita" value="berita" />
+            </el-select>
             <span v-if="banner.internal_entity_id !== null">
               <el-button type="success" @click="dialog(banner.internal_entity_id)">Pilihan</el-button>
             </span>
@@ -32,7 +32,7 @@
             <el-button @click="dialog(banner.internal_entity_id)">Pilihan</el-button>
           </el-form-item> -->
           <el-form-item>
-            <el-input v-if="banner.category_name !== null" disabled v-model="banner.category_name" type="text" name="title" placeholder="Judul Banner" />
+            <el-input v-if="banner.category_name !== null" v-model="banner.category_name" disabled type="text" name="title" placeholder="Judul Banner" />
           </el-form-item>
           <el-form-item label="Status" prop="status">
             <el-tooltip :content="banner.status == 0 ? 'nonaktif' : 'aktif'" placement="right">
@@ -41,8 +41,8 @@
                 active-color="#13ce66"
                 inactive-color="#ff4949"
                 active-value="10"
-                inactive-value="0">
-              </el-switch>
+                inactive-value="0"
+              />
             </el-tooltip>
           </el-form-item>
           <el-form-item>
@@ -57,34 +57,30 @@
       </el-col>
     </el-row>
     <el-dialog :visible.sync="dialogNews" width="80%" title="Daftar Berita">
-      <News v-on:childData="getData" v-on:closeDialog="dialogClose" />
+      <News @childData="getData" @closeDialog="dialogClose" />
     </el-dialog>
     <el-dialog :visible.sync="dialogPolling" width="80%" title="Daftar Polling">
-      <Polling v-on:childData="getData" v-on:closeDialog="dialogClose" />
+      <Polling @childData="getData" @closeDialog="dialogClose" />
     </el-dialog>
     <el-dialog :visible.sync="dialogSurvey" width="80%" title="Daftar Survei">
-      <Survey v-on:childData="getData" v-on:closeDialog="dialogClose" />
+      <Survey @childData="getData" @closeDialog="dialogClose" />
     </el-dialog>
-    
+
   </div>
 </template>
 
 <script>
 import AttachmentPhotoUpload from '@/components/AttachmentPhotoUpload'
-import Pagination from '@/components/Pagination'
-import ListFilter from './_listfilter'
 import News from './dialog/news'
 import Polling from './dialog/polling'
 import Survey from './dialog/survey'
 
 export default {
-  components: { 
+  components: {
     AttachmentPhotoUpload,
-    Pagination,
-    ListFilter,
     News,
     Polling,
-    Survey 
+    Survey
   },
   props: {
     isEdit: {
@@ -104,7 +100,7 @@ export default {
         category_id: null,
         category_name: null,
         status: 0,
-        type: "eksternal"
+        type: 'eksternal'
       },
       dialogNews: false,
       dialogPolling: false,
@@ -115,14 +111,14 @@ export default {
             required: true,
             message: 'Judul Banner harus diisi',
             trigger: 'blur'
-          },
+          }
         ],
         type: [
           {
             required: true,
             message: 'Tipe Banner harus diisi',
             trigger: 'blur'
-          },
+          }
         ],
         category: [
           {
@@ -136,7 +132,7 @@ export default {
             required: true,
             message: 'Status harus diisi',
             trigger: 'blur'
-          },
+          }
         ]
       }
     }

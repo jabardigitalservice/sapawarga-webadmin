@@ -13,7 +13,7 @@
       <el-table-column align="center" label="Actions">
         <template slot-scope="scope">
           <el-tooltip content="Tambah" placement="right">
-            <el-button type="success" circle icon="el-icon-plus" @click="addBeritaPriority(scope.row), dialogTableVisible(false)"></el-button>
+            <el-button type="success" circle icon="el-icon-plus" @click="addBeritaPriority(scope.row), dialogTableVisible(false)" />
           </el-tooltip>
         </template>
       </el-table-column>
@@ -42,7 +42,7 @@ export default {
         status: 10,
         page: 1,
         limit: 10
-      },
+      }
     }
   },
   mounted() {
