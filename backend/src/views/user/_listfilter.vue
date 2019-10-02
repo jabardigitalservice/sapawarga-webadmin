@@ -19,7 +19,7 @@
           </el-button>
         </el-col>
       </el-row>
-      <div v-bind:class="(isActive) ? 'advance-filter-active' : 'advance-filter'" style="margin-top: 10px;">
+      <div :class="(isActive) ? 'advance-filter-active' : 'advance-filter'" style="margin-top: 10px;">
         <el-row :gutter="10" type="flex">
           <el-col :span="8">
             <el-form-item style="margin-bottom: 0">
@@ -134,7 +134,7 @@ export default {
     },
 
     advanceFilter() {
-      if(this.isActive) {
+      if (this.isActive) {
         this.isActive = false
       } else {
         this.isActive = true
