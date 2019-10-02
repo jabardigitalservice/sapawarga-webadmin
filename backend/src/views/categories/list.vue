@@ -71,6 +71,7 @@ export default {
       listQuery: {
         type: null,
         name: null,
+        status: 10,
         sort_by: 'name',
         sort_order: 'ascending',
         page: 1,
