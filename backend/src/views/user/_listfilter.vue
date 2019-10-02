@@ -69,7 +69,10 @@
           </el-col>
         </el-row>
         <el-row :gutter="10" type="flex" style="margin-top: 10px">
-          <el-col v-permission="['admin','staffProv']" :span="24">
+          <el-col class="filter-aktifitas-terakhir" :span="4">
+            <span>Aktifitas Terakhir :</span>
+          </el-col>
+          <el-col v-permission="['admin','staffProv']">
             <el-date-picker
               v-model="date_range"
               type="daterange"
