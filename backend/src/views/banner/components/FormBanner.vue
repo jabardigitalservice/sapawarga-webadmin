@@ -2,34 +2,34 @@
   <div class="components-container">
     <el-row :gutter="20">
       <el-col :xs="24" :sm="8" :lg="5">
-        <AttachmentPhotoUpload type="news_photo" :initial-url="banner.cover_path_url" style="margin-bottom: 25px" @onUpload="photoUploaded" />
+        <AttachmentPhotoUpload type="news_photo" :initial-url="banner.image_cover" style="margin-bottom: 25px" @onUpload="photoUploaded" />
       </el-col>
       <el-col :xs="24" :sm="13" :lg="16">
         <el-form ref="banner" :model="banner" :rules="rules" :status-icon="true" label-width="160px">
           <el-form-item label="Judul Banner" prop="title">
             <el-input v-model="banner.title" type="text" name="title" placeholder="Judul Banner" />
           </el-form-item>
-          <el-form-item label="Kategori" prop="category">
+          <el-form-item label="Kategori" prop="type">
             <el-radio-group v-model="banner.type">
               <el-radio-button label="eksternal">Eksternal</el-radio-button>
               <el-radio-button label="internal">Internal</el-radio-button>
             </el-radio-group>
           </el-form-item>
-          <el-form-item v-if="banner.type === 'eksternal'" label="Tautan" prop="type">
-            <el-input v-model="banner.internal_category" type="text" name="title" placeholder="URL Banner" />
+          <el-form-item v-if="banner.type === 'eksternal'" label="Tautan" prop="link_url">
+            <el-input v-model="banner.link_url" type="text" name="title" placeholder="URL Banner" />
           </el-form-item>
-          <el-form-item v-else label="Fitur" prop="fitur">
-            <el-select v-model="banner.internal_entity_id" placeholder="Pilih Kategori">
+          <el-form-item v-else label="Fitur" prop="internal_category">
+            <el-select v-model="banner.internal_category" placeholder="Pilih Kategori">
               <el-option label="Survei" value="survei" />
               <el-option label="Polling" value="polling" />
               <el-option label="Berita" value="berita" />
             </el-select>
-            <span v-if="banner.internal_entity_id !== null">
-              <el-button type="success" @click="dialog(banner.internal_entity_id)">Pilihan</el-button>
+            <span v-if="banner.internal_category !== null">
+              <el-button type="success" @click="dialog(banner.internal_category)">Pilihan</el-button>
             </span>
           </el-form-item>
-          <el-form-item v-if="banner.category_name !== null" :label="titleFitur">
-            <el-input v-model="banner.category_name" disabled type="text" name="title" placeholder="Judul Banner" />
+          <el-form-item v-if="banner.internal_entity_name !== null" :label="titleFitur" prop="internal_entity_name">
+            <el-input v-model="banner.internal_entity_name" disabled type="text" name="title" placeholder="Judul Banner" />
           </el-form-item>
           <el-form-item label="Status" prop="status">
             <el-radio-group v-model="banner.status" :fill="statusColor">
@@ -56,6 +56,7 @@
 
 <script>
 import AttachmentPhotoUpload from '@/components/AttachmentPhotoUpload'
+import { validUrl } from '@/utils/validate'
 import Fitur from './dialog/fitur'
 
 export default {
@@ -70,18 +71,26 @@ export default {
     }
   },
   data() {
+    const validatorUrl = (rule, value, callback) => {
+      if (validUrl(value) === false) {
+        callback(new Error('URL tidak valid'))
+      }
+
+      callback()
+    }
+
     return {
       loading: false,
       banner: {
         title: null,
+        image_cover: null,
+        image_url: null,
+        type: 'eksternal',
+        link_url: null,
         internal_category: null,
         internal_entity_id: null,
-        cover_path: null,
-        cover_path_url: null,
-        category_id: null,
-        category_name: null,
-        status: 0,
-        type: 'eksternal'
+        internal_entity_name: null,
+        status: 0
       },
       dialogName: null,
       showDialog: false,
@@ -96,19 +105,33 @@ export default {
             required: true,
             message: 'Judul Banner harus diisi',
             trigger: 'blur'
+          },
+          {
+            min: 10,
+            message: 'Judul Banner minimal 10 Karakter',
+            trigger: 'blur'
+          },
+          {
+            max: 100,
+            message: 'Judul Banner maximal 100 Karakter',
+            trigger: 'blur'
           }
         ],
         type: [
           {
             required: true,
-            message: 'Tipe Banner harus diisi',
+            message: 'Kategori Banner harus diisi',
             trigger: 'blur'
           }
         ],
-        category: [
+        link_url: [
           {
             required: true,
-            message: 'Kategori Banner harus diisi',
+            message: 'Tautan harus diisi',
+            trigger: 'blur'
+          },
+          {
+            validator: validatorUrl,
             trigger: 'blur'
           }
         ],
@@ -116,6 +139,20 @@ export default {
           {
             required: true,
             message: 'Status harus diisi',
+            trigger: 'blur'
+          }
+        ],
+        internal_category: [
+          {
+            required: true,
+            message: 'Fitur Banner harus diisi',
+            trigger: 'blur'
+          }
+        ],
+        internal_entity_name: [
+          {
+            required: true,
+            message: 'Judul harus diisi',
             trigger: 'blur'
           }
         ]
@@ -126,11 +163,11 @@ export default {
     'banner.status'() {
       this.banner.status === 10 ? this.statusColor = '#67C23A' : this.statusColor = '#F56C6C'
     },
-    'banner.internal_entity_id'() {
-      if (this.banner.internal_entity_id === 'survei') {
+    'banner.internal_category'() {
+      if (this.banner.internal_category === 'survei') {
         this.titleFitur = 'Judul Survei'
         this.titlePopup = 'Daftar Survei'
-      } else if (this.banner.internal_entity_id === 'polling') {
+      } else if (this.banner.internal_category === 'polling') {
         this.titleFitur = 'Judul Polling'
         this.titlePopup = 'Daftar Polling'
       } else {
@@ -145,11 +182,11 @@ export default {
       this.showDialog = true
     },
     photoUploaded(path, url) {
-      this.banner.cover_path = path
+      this.banner.image_url = path
     },
     getData(value) {
-      this.banner.category_name = value.name !== undefined ? value.name : value.title
-      this.banner.category_id = value.id
+      this.banner.internal_entity_name = value.name !== undefined ? value.name : value.title
+      this.banner.internal_entity_id = value.id
     },
     dialogClose(value) {
       this.showDialog = value
@@ -157,7 +194,11 @@ export default {
       this.dialogSurvey = value
     },
     async submitForm() {
+      const valid = await this.$refs.banner.validate()
 
+      if (!valid) {
+        return
+      }
     }
   }
 }
