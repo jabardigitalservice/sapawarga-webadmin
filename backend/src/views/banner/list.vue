@@ -12,7 +12,7 @@
           </el-col>
         </el-row>
 
-        <!-- ListFilter -->
+        <ListFilter :list-query.sync="listQuery" @submit-search="getList" @reset-search="resetFilter" />
 
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row>
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
@@ -43,23 +43,24 @@
             </template>
           </el-table-column>
         </el-table>
-        <!-- <pagination
+        <pagination
           v-show="total>0"
           :total="total"
           :page.sync="listQuery.page"
           :limit.sync="listQuery.limit"
           @pagination="getList"
-        /> -->
+        />
       </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
-// import Pagination from '@/components/Pagination'
+import Pagination from '@/components/Pagination'
+import ListFilter from './_listfilter'
 import { fetchList } from '@/api/banner'
 export default {
-  // components: { Pagination },
+  components: { Pagination, ListFilter },
   data() {
     return {
       list: null,
@@ -89,6 +90,11 @@ export default {
       this.listQuery.sort_order = e.order
       this.getList()
     },
+
+    getTableRowNumbering(index) {
+      return ((this.listQuery.page - 1) * this.listQuery.limit) + (index + 1)
+    },
+
     resetFilter() {
       Object.assign(this.$data.listQuery, this.$options.data().listQuery)
       this.getList()
