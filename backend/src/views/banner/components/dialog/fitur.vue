@@ -12,11 +12,11 @@
       <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
 
       <el-table-column v-if="category === 'polling'" property="name" label="Judul Polling" min-width="180" />
-      
+
       <el-table-column v-if="category === 'berita'" property="title" label="Judul Berita" min-width="180" />
-      
+
       <el-table-column v-if="category === 'survei'" property="title" label="Judul Survei" min-width="180" />
-      
+
       <el-table-column align="center" label="Actions">
         <template slot-scope="scope">
           <el-tooltip content="Tambah" placement="right">
