@@ -181,6 +181,7 @@ deploy_prod_eks:
     - sed -i "s/%SENTRY_DSN_API%/${SENTRY_DSN_API}/g" kubernetes/webadmin-variables.yaml
     - sed -i "s/%APP_ERROR_ENVIRONMENT%/${APP_ERROR_ENVIRONMENT}/g" kubernetes/webadmin-variables.yaml
     - sed -i "s/%VERSION%/${VERSION}/g" kubernetes/webadmin-deployment.yaml
+    - cat kubernetes/webadmin-variables.yaml
     - kubectl create --dry-run --validate -f kubernetes/webadmin-variables.yaml
         -f kubernetes/webadmin-deployment.yaml
         -f kubernetes/webadmin-service.yaml
