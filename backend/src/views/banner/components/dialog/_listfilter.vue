@@ -2,9 +2,11 @@
   <el-card class="box-card" style="margin-bottom: 10px">
     <el-form>
       <el-row :gutter="10" type="flex">
-        <el-col>
+        <el-col :span="18">
           <el-form-item style="margin-bottom: 0">
-            <el-input v-model="listQuery.title" placeholder="Judul" />
+            <el-input v-if="fitur === 'survei'" v-model="listQuery.title" placeholder="Judul Survei" />
+            <el-input v-if="fitur === 'polling'" v-model="listQuery.title" placeholder="Judul Polling" />
+            <el-input v-if="fitur === 'berita'" v-model="listQuery.search" placeholder="Judul Berita" />
           </el-form-item>
         </el-col>
         <el-col :span="6">
@@ -18,16 +20,15 @@
 
 <script>
 import checkPermission from '@/utils/permission'
-import { newsChannelList } from '@/api/news'
 export default {
   props: {
     listQuery: {
       type: Object,
       default: null
     },
-    isPriority: {
-      type: Boolean,
-      default: false
+    fitur: {
+      type: String,
+      default: null
     }
   },
   data() {
@@ -36,7 +37,7 @@ export default {
     }
   },
   created() {
-    this.getNewsChannel()
+
   },
   methods: {
     checkPermission,
@@ -47,12 +48,6 @@ export default {
 
     resetFilter() {
       this.$emit('reset-search')
-    },
-
-    getNewsChannel() {
-      newsChannelList().then(response => {
-        this.options = response.data.items
-      })
     }
   }
 }
