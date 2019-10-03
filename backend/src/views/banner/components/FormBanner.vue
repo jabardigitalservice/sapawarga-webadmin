@@ -57,6 +57,7 @@
 <script>
 import AttachmentPhotoUpload from '@/components/AttachmentPhotoUpload'
 import { validUrl } from '@/utils/validate'
+import { create } from '@/api/broadcast'
 import Fitur from './dialog/fitur'
 
 export default {
@@ -199,7 +200,20 @@ export default {
       if (!valid) {
         return
       }
-    }
+
+      try {
+        this.loading = true
+        const data = {}
+        Object.assign(data, this.banner)
+        await create(data)
+        this.$message.success(this.$t('crud.send-success'))
+        this.$router.push('/banner/index')
+      } catch (err) {
+        console.log(err)
+      } finally {
+        this.loading = false
+      }
+    } 
   }
 }
 </script>
