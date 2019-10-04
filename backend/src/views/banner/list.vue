@@ -14,7 +14,7 @@
 
         <ListFilter :list-query.sync="listQuery" @submit-search="getList" @reset-search="resetFilter" />
 
-        <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row>
+        <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row @sort-change="changeSort">
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
           <el-table-column prop="title" sortable="custom" label="Judul Banner" min-width="250" />
           <el-table-column prop="type" sortable="custom" label="Kategori" align="center" min-width="130" />
