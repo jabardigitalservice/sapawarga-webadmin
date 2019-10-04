@@ -4,9 +4,9 @@
       <el-row :gutter="10" type="flex">
         <el-col :span="18">
           <el-form-item style="margin-bottom: 0">
-            <el-input v-if="fitur === 'survei'" v-model="listQuery.title" placeholder="Judul Survei" />
+            <el-input v-if="fitur === 'survey'" v-model="listQuery.title" placeholder="Judul Survei" />
             <el-input v-if="fitur === 'polling'" v-model="listQuery.title" placeholder="Judul Polling" />
-            <el-input v-if="fitur === 'berita'" v-model="listQuery.search" placeholder="Judul Berita" />
+            <el-input v-if="fitur === 'news'" v-model="listQuery.search" placeholder="Judul Berita" />
           </el-form-item>
         </el-col>
         <el-col :span="6">
