@@ -59,6 +59,7 @@ import AttachmentPhotoUpload from '@/components/AttachmentPhotoUpload'
 import { validUrl } from '@/utils/validate'
 import { create, fetchRecord, update } from '@/api/banner'
 import Fitur from './dialog/fitur'
+import { mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -160,6 +161,13 @@ export default {
       }
     }
   },
+
+  computed: {
+    ...mapGetters([
+      'user_id'
+    ])
+  },
+
   watch: {
     'banner.status'() {
       this.banner.status === 10 ? this.statusColor = '#67C23A' : this.statusColor = '#F56C6C'
@@ -177,6 +185,7 @@ export default {
       }
     }
   },
+
   created() {
     if (this.isEdit) {
       const id = this.$route.params && this.$route.params.id
@@ -203,7 +212,11 @@ export default {
     fetchData(id) {
       fetchRecord(id).then(response => {
         this.banner = response.data
-        if (this.banner.status === 10) {
+
+        if (this.banner.created_by !== this.user_id) {
+          this.$message.error(this.$t('crud.error-edit-role'))
+          this.$router.push('/banner/index')
+        } else if (this.banner.status === 10) {
           this.$message.error(this.$t('crud.banner-error-edit-published'))
           this.$router.push('/banner/index')
         }
