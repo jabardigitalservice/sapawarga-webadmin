@@ -3,25 +3,26 @@
     <el-form
       ref="confirmForm"
       :model="confirmForm"
-      class="login-form"
+      class="verifikasi-form"
       auto-complete="on"
       label-position="left"
     >
       <div class="title-container">
         <img :src="logo" alt="LOGO">
-        <h4><b>Aktifkan Akun Anda</b></h4>
+        <div v-if="!verifikasiStatus">
+          <h4><b>Verifikasi Akun Berhasil</b></h4>
+        </div>
+        <div else>
+          <h4><b>Verifikasi Akun Gagal</b></h4>
+        </div>
       </div>
-      <el-button
-        :loading="loading"
-        type="primary"
-        style="width:100%;margin-bottom:30px;"
-        @click.native.prevent="handleLogin"
-      >Aktifkan Akun</el-button>
     </el-form>
   </div>
 </template>
 
 <script>
+import { verifikasiAkun } from '@/api/verifikasiAkun'
+
 export default {
   name: 'VerifikasiUser',
   components: { },
@@ -33,6 +34,7 @@ export default {
         id: '',
         auth_key: ''
       },
+      verifikasiStatus: false
     }
   },
   watch: {
@@ -44,15 +46,21 @@ export default {
     }
   },
   created() {
-    const auth_key = this.$route.query && this.$route.query.auth_key
-    if (!auth_key) { this.$router.push({ path: this.redirect || '/login' }) }
-    this.confirmForm.id = this.$route.query.id
-    this.confirmForm.auth_key = this.$route.query.auth_key
+    const id = this.$route.query && this.$route.query.id
+    if (!id) { this.$router.push({ path: this.redirect || '/login' }) }
+    this.verifikasi(this.$route.query.id, this.$route.query.auth_key)
   },
   mounted() {
   },
   methods: {
-
+    verifikasi(id, auth_key) {
+      verifikasiAkun({
+        'id': id,
+        'auth_key': auth_key
+      }).catch(() => {
+        this.verifikasiStatus = true
+      })
+    }
   }
 }
 </script>
