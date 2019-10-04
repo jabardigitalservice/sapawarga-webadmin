@@ -16,9 +16,17 @@
 
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row>
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
-          <el-table-column prop="name" sortable="custom" label="Judul Banner" min-width="250" />
-          <el-table-column prop="name" sortable="custom" label="Kategori" min-width="200" />
-          <el-table-column prop="name" sortable="custom" label="Tautan" min-width="200" />
+          <el-table-column prop="title" sortable="custom" label="Judul Banner" min-width="250" />
+          <el-table-column prop="type" sortable="custom" label="Kategori" align="center" min-width="130" />
+
+          <el-table-column prop="status" sortable="custom" class-name="status-col" label="Status" align="center" min-width="130">
+            <template slot-scope="{row}">
+              <el-tag :type="row.status | statusFilter">
+                {{ row.status_label }}
+              </el-tag>
+            </template>
+          </el-table-column>
+
           <el-table-column align="center" label="Actions" width="250">
             <template slot-scope="scope">
               <router-link :to="'/banner/detail/'+scope.row.id">
@@ -59,8 +67,21 @@
 import Pagination from '@/components/Pagination'
 import ListFilter from './_listfilter'
 import { fetchList } from '@/api/banner'
+import { mapGetters } from 'vuex'
+
 export default {
   components: { Pagination, ListFilter },
+  filters: {
+    statusFilter(status) {
+      const statusMap = {
+        '10': 'success',
+        '0': 'info',
+        '5': 'warning',
+        '3': 'danger'
+      }
+      return statusMap[status]
+    }
+  },
   data() {
     return {
       list: null,
@@ -68,11 +89,20 @@ export default {
       listLoading: true,
       listQuery: {
         title: null,
-        category: null,
-        status: null
+        type: null,
+        status: null,
+        page: 1,
+        limit: 10
       }
     }
   },
+
+  computed: {
+    ...mapGetters([
+      'user_id'
+    ])
+  },
+
   created() {
     this.getList()
   },
