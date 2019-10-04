@@ -2,7 +2,7 @@
   <div class="components-container">
     <el-row :gutter="20">
       <el-col :xs="24" :sm="8" :lg="5">
-        <AttachmentPhotoUpload type="banner_photo" :initial-url="banner.image_cover" style="margin-bottom: 25px" @onUpload="photoUploaded" />
+        <AttachmentPhotoUpload type="banner_photo" :initial-url="banner.image_path_url" style="margin-bottom: 25px" @onUpload="photoUploaded" />
       </el-col>
       <el-col :xs="24" :sm="13" :lg="16">
         <el-form ref="banner" :model="banner" :rules="rules" :status-icon="true" label-width="160px">
@@ -84,7 +84,7 @@ export default {
       loading: false,
       banner: {
         title: null,
-        image_cover: null,
+        image_path_url: null,
         image_path: null,
         type: 'external',
         link_url: null,
