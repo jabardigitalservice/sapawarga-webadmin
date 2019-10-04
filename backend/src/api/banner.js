@@ -30,3 +30,30 @@ export function update(id, data) {
     data
   })
 }
+
+export function deleteData(id) {
+  return request({
+    url: `/banners/${id}`,
+    method: 'delete'
+  })
+}
+
+export function deactivate(id) {
+  return request({
+    url: `/banners/${id}`,
+    method: 'put',
+    data: {
+      status: 0
+    }
+  })
+}
+
+export function activate(id) {
+  return request({
+    url: `/banners/${id}`,
+    method: 'put',
+    data: {
+      status: 10
+    }
+  })
+}
