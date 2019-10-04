@@ -13,9 +13,9 @@
 
       <el-table-column v-if="category === 'polling'" property="name" label="Judul Polling" min-width="180" />
 
-      <el-table-column v-if="category === 'berita'" property="title" label="Judul Berita" min-width="180" />
+      <el-table-column v-if="category === 'news'" property="title" label="Judul Berita" min-width="180" />
 
-      <el-table-column v-if="category === 'survei'" property="title" label="Judul Survei" min-width="180" />
+      <el-table-column v-if="category === 'survey'" property="title" label="Judul Survei" min-width="180" />
 
       <el-table-column align="center" label="Actions">
         <template slot-scope="scope">
@@ -73,7 +73,7 @@ export default {
   methods: {
     async getList() {
       this.listLoading = true
-      if (this.category === 'berita') {
+      if (this.category === 'news') {
         await listNews(this.listQuery).then(response => {
           this.list = response.data.items
           this.total = response.data._meta.totalCount
@@ -85,7 +85,7 @@ export default {
           this.total = response.data._meta.totalCount
           this.listLoading = false
         })
-      } else if (this.category === 'survei') {
+      } else if (this.category === 'survey') {
         await listSurvey(this.listQuery).then(response => {
           this.list = response.data.items
           this.total = response.data._meta.totalCount
