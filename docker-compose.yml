@@ -4,7 +4,7 @@ services:
     build:
       context: ./backend
       args:
-        - VUE_APP_NODE_ENV=$NODE_ENV
+        - NODE_ENV=$NODE_ENV
         - VUE_APP_BASE_API=$VUE_APP_BASE_API
         - VUE_APP_VERSION=${VERSION}
         - VUE_APP_GOOGLE_API_KEY=$VUE_APP_GOOGLE_API_KEY

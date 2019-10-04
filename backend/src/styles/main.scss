@@ -40,6 +40,11 @@ $cursor: #283443;
   }
 }
 
+.filter-last-activity > span {
+  display: inline-block;
+  margin: 10px 4px 0 0;
+}
+
 $bg: #f4f4f4;
 $dark_gray: #889aa4;
 $light_gray: #eee;
@@ -125,6 +130,13 @@ $light_gray: #eee;
     .thirdparty-button {
       display: none;
     }
+  }
+}
+
+@media(max-width:980px) {
+  .filter-last-activity > span {
+    display: inline-block;
+    margin: 0px 4px 0 0;
   }
 }
 

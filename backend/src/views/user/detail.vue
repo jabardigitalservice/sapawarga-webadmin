@@ -60,8 +60,8 @@ import PhotoBox from '@/components/PhotoBox'
 import MapThumb from '@/components/MapThumb'
 import { fetchUser } from '@/api/staff'
 import permission from '@/directive/permission/index.js'
-import checkPermission from '@/utils/permission'
 import parsingDatetime from '@/utils/datetimeToString'
+import moment from 'moment'
 
 export default {
   components: { PhotoBox, MapThumb },
@@ -94,7 +94,6 @@ export default {
   },
 
   methods: {
-    checkPermission,
     getDetail(id) {
       fetchUser(id).then(response => {
         const {
@@ -117,6 +116,7 @@ export default {
           created_at,
           updated_at,
           last_login_at,
+          last_access_at,
           role_label
         } = response.data
         this.twitterAccount = twitter || '-'
@@ -198,6 +198,10 @@ export default {
           {
             title: 'Terakhir Login',
             content: last_login_at ? parsingDatetime(last_login_at) : 'Belum Pernah'
+          },
+          {
+            title: 'Terakhir Akses',
+            content: last_access_at ? moment(last_access_at).format('D MMMM YYYY MM:SS') : '-'
           }
         ]
       })

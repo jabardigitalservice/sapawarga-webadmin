@@ -70,6 +70,26 @@
             />
           </el-col>
         </el-row>
+        <el-row :gutter="10" type="flex" style="margin-top: 10px">
+          <el-col class="filter-last-activity" :span="4">
+            <span>Aktifitas Terakhir :</span>
+          </el-col>
+          <el-col v-permission="['admin','staffProv']">
+            <el-date-picker
+              v-model="date_range"
+              type="daterange"
+              style="width: -webkit-fill-available;"
+              align="right"
+              unlink-panels
+              range-separator="To"
+              value-format="yyyy-MM-dd"
+              start-placeholder="Tanggal mulai"
+              end-placeholder="Tanggal akhir"
+              :picker-options="pickerOptions"
+              @change="dateChange"
+            />
+          </el-col>
+        </el-row>
       </div>
     </el-form>
   </el-card>
@@ -92,6 +112,34 @@ export default {
 
   data() {
     return {
+      date_range: '',
+      pickerOptions: {
+        shortcuts: [{
+          text: 'Last week',
+          onClick(picker) {
+            const end = new Date()
+            const start = new Date()
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
+            picker.$emit('pick', [start, end])
+          }
+        }, {
+          text: 'Last month',
+          onClick(picker) {
+            const end = new Date()
+            const start = new Date()
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
+            picker.$emit('pick', [start, end])
+          }
+        }, {
+          text: 'Last 3 months',
+          onClick(picker) {
+            const end = new Date()
+            const start = new Date()
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
+            picker.$emit('pick', [start, end])
+          }
+        }]
+      },
       isActive: false
     }
   },
@@ -114,6 +162,11 @@ export default {
 
   methods: {
     checkPermission,
+
+    dateChange() {
+      this.listQuery.last_access_start = this.date_range[0]
+      this.listQuery.last_access_end = this.date_range[1]
+    },
 
     submitSearch() {
       this.$emit('submit-search')

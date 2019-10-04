@@ -30,6 +30,8 @@
             </template>
           </el-table-column>
 
+          <el-table-column v-if="checkPermission(['admin', 'staffProv'])" prop="last_access_at" :formatter="formatterCell" sortable="custom" label="Akses Terakhir" min-width="120" />
+
           <el-table-column prop="phone" min-width="120" sortable="custom" label="Telp" />
           <el-table-column prop="role_label" min-width="150" label="Role" />
 
@@ -75,6 +77,8 @@ import { fetchList, activate, deactivate, totalUser } from '@/api/staff'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 import PanelGroup from './components/PanelGroup'
 import permission from '@/directive/permission/index.js'
+import checkPermission from '@/utils/permission'
+import moment from 'moment'
 import ListFilter from './_listfilter'
 
 export default {
@@ -112,6 +116,8 @@ export default {
         kel_id: null,
         role_id: this.roleId,
         profile_completed: null,
+        last_access_start: null,
+        last_access_end: null,
         sort_by: 'name',
         sort_order: 'ascending',
         page: 1,
@@ -133,6 +139,8 @@ export default {
   },
 
   methods: {
+    checkPermission,
+
     getList() {
       this.listLoading = true
       fetchList(this.listQuery).then(response => {
@@ -243,6 +251,11 @@ export default {
       } catch (e) {
         console.log(e)
       }
+    },
+
+    formatterCell(row, column, cellValue, index) {
+      const value = cellValue ? moment(cellValue).format('D MMM YYYY MM:SS') : '-'
+      return value
     }
   }
 }
