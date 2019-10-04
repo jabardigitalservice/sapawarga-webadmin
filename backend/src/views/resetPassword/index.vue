@@ -1,9 +1,10 @@
 <template>
   <div class="login-container">
     <el-form
-      ref="loginForm"
-      :model="loginForm"
-      :rules="loginRules"
+      v-if="!tokenExpired"
+      ref="resetPasswordForm"
+      :model="resetPasswordForm"
+      :rules="resetPasswordRules"
       class="login-form"
       auto-complete="on"
       label-position="left"
@@ -19,7 +20,7 @@
         <el-input
           :key="passwordType"
           ref="password"
-          v-model="loginForm.password"
+          v-model="resetPasswordForm.password"
           :type="passwordType"
           placeholder="Kata sandi"
           name="password"
@@ -38,7 +39,7 @@
         <el-input
           :key="confirmPasswordType"
           ref="password_confirmation"
-          v-model="loginForm.password_confirmation"
+          v-model="resetPasswordForm.password_confirmation"
           :type="confirmPasswordType"
           placeholder="Ulangi Kata sandi"
           name="password_confirmation"
@@ -57,17 +58,28 @@
         @click.native.prevent="handleLogin"
       >Ubah Kata Sandi</el-button>
     </el-form>
+    <div v-else>
+      <div class="title-container">
+        <img :src="logo" alt="LOGO">
+        <h4><b>Token Sudah Kedaluarsa</b></h4>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import { checkToken, resetPassword } from '@/api/resetPassword'
+import { Message } from 'element-ui'
+
 export default {
-  name: 'Login',
+  name: 'ResetPassword',
   components: { },
   data() {
     const validatePassword = (rule, value, callback) => {
       if (value.length < 1) {
         callback(new Error('Kata sandi harus diisi'))
+      } else if (value.length < 5) {
+        callback(new Error('Kata sandi minimal 5'))
       } else {
         callback()
       }
@@ -83,20 +95,24 @@ export default {
     }
     return {
       logo: require('@/assets/logo.png'),
-      loginForm: {
+      resetPasswordForm: {
+        token: '',
         password: '',
         password_confirmation: ''
       },
-      loginRules: {
+      resetPasswordRules: {
         password: [
-          { required: true, trigger: 'blur', validator: validatePassword }
-        ],
-        password_confirmation: [
           {
             required: true,
             trigger: 'blur',
             validator: validatePassword
           },
+          {
+            validator: validatePassword,
+            trigger: 'change'
+          }
+        ],
+        password_confirmation: [
           {
             validator: passwordValid,
             trigger: 'change'
@@ -107,6 +123,7 @@ export default {
       confirmPasswordType: 'password',
       loading: false,
       showDialog: false,
+      tokenExpired: false,
       redirect: undefined
     }
   },
@@ -121,11 +138,13 @@ export default {
   created() {
     const token = this.$route.query && this.$route.query.token
     if (!token) { this.$router.push({ path: this.redirect || '/login' }) }
+    this.resetPasswordForm.token = token
+    this.checkSessionToken(token)
   },
   mounted() {
-    if (this.loginForm.password === '') {
+    if (this.resetPasswordForm.password === '') {
       this.$refs.password.focus()
-    } else if (this.loginForm.password_confirmation === '') {
+    } else if (this.resetPasswordForm.password_confirmation === '') {
       this.$refs.password_confirmation.focus()
     }
   },
@@ -152,20 +171,38 @@ export default {
       })
     },
 
-    handleLogin() {
-      this.$refs.loginForm.validate(valid => {
+    checkSessionToken(token) {
+      checkToken({ 'token': token }).catch((data) => {
+        this.tokenExpired = true
+      })
+    },
+
+    handleResetPassword() {
+      this.$refs.resetPasswordForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$store
-            .dispatch('user/login', this.loginForm)
-            .then(() => {
-              this.$router.push({ path: this.redirect || '/login' })
-              this.loading = false
+          resetPassword(
+            this.resetPasswordForm
+          ).then((data) => {
+            Message({
+              message: 'Password berhasil dirubah',
+              type: 'success',
+              duration: 1 * 1000
             })
-            .catch(() => {
-              this.loading = false
-              this.$refs['loginForm'].resetFields()
+            setTimeout(() => {
+              this.$router.go(-1)
+            }, 1000)
+            this.loading = false
+            window.close()
+            this.$router.push({ path: this.redirect || '/login' })
+          }).catch((data) => {
+            this.loading = false
+            Message({
+              message: 'Password gagal dirubah',
+              type: 'error',
+              duration: 1 * 1000
             })
+          })
         } else {
           return false
         }
