@@ -150,6 +150,7 @@ export default {
 
     'polling-error-edit-published': 'Sudah dipublish, tidak dapat diedit.',
     'broadcast-error-edit-published': 'Sudah dipublish, tidak dapat di edit.',
+    'banner-error-edit-published': 'Sudah dipublish, tidak dapat di edit.',
     'notification-error-edit-published': 'Sudah dipublish, tidak dapat di edit.',
     'video-error-edit-published': 'Sudah dipublish, tidak dapat di edit.',
     'error-edit-role': 'Anda tidak memiliki hak akses halaman ini.',
@@ -171,6 +172,7 @@ export default {
     'survey-compare-date': 'Tanggal berakhir survei harus lebih besar dari tanggal mulai survei.',
 
     'news-image-null': 'Gambar tidak boleh kosong.',
+    'banner-image-null': 'Gambar tidak boleh kosong.',
 
     'dashboard-map-error': 'Gagal memuat map'
   },
