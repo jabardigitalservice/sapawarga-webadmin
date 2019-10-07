@@ -20,7 +20,7 @@
       <el-table-column align="center" label="Actions">
         <template slot-scope="scope">
           <el-tooltip content="Tambah" placement="right">
-            <el-button type="success" circle icon="el-icon-plus" @click="addBeritaPriority(scope.row), dialogTableVisible(false)" />
+            <el-button type="success" circle icon="el-icon-plus" @click="addCategory(scope.row), dialogTableVisible(false)" />
           </el-tooltip>
         </template>
       </el-table-column>
@@ -71,28 +71,44 @@ export default {
     this.getList()
   },
   methods: {
-    async getList() {
+    getList() {
       this.listLoading = true
-      if (this.category === 'news') {
-        await listNews(this.listQuery).then(response => {
-          this.list = response.data.items
-          this.total = response.data._meta.totalCount
-          this.listLoading = false
-        })
-      } else if (this.category === 'polling') {
-        await listPolling(this.listQuery).then(response => {
-          this.list = response.data.items
-          this.total = response.data._meta.totalCount
-          this.listLoading = false
-        })
-      } else if (this.category === 'survey') {
-        await listSurvey(this.listQuery).then(response => {
-          this.list = response.data.items
-          this.total = response.data._meta.totalCount
-          this.listLoading = false
-        })
+      switch (this.category) {
+        case 'news':
+          this.listNews()
+          break
+        case 'polling':
+          this.listPolling()
+          break
+        default:
+          this.listSurvey()
       }
     },
+
+    async listNews() {
+      await listNews(this.listQuery).then(response => {
+        this.list = response.data.items
+        this.total = response.data._meta.totalCount
+        this.listLoading = false
+      })
+    },
+
+    async listPolling() {
+      await listPolling(this.listQuery).then(response => {
+        this.list = response.data.items
+        this.total = response.data._meta.totalCount
+        this.listLoading = false
+      })
+    },
+
+    async listSurvey() {
+      await listSurvey(this.listQuery).then(response => {
+        this.list = response.data.items
+        this.total = response.data._meta.totalCount
+        this.listLoading = false
+      })
+    },
+
     getTableRowNumbering(index) {
       return ((this.listQuery.page - 1) * this.listQuery.limit) + (index + 1)
     },
@@ -101,9 +117,11 @@ export default {
       Object.assign(this.$data.listQuery, this.$options.data().listQuery)
       this.getList()
     },
-    addBeritaPriority(data) {
+
+    addCategory(data) {
       this.$emit('childData', data)
     },
+
     dialogTableVisible(data) {
       this.$emit('closeDialog', data)
       this.resetFilter()
