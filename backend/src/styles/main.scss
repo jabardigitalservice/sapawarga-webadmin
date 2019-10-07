@@ -9,20 +9,23 @@ $cursor: #283443;
 }
 
 /* reset element-ui css */
-.filter-last-activity > span {
-  display: inline-block;
-  margin: 10px 4px 0 0;
-}
-
 $bg: #f4f4f4;
 $dark_gray: #889aa4;
 $light_gray: #eee;
 
-.login-container, .verification-container {
+.login-container, .reset-password-container, .reset-password-container {
   min-height: 100%;
   width: 100%;
   background-color: $bg;
   overflow: hidden;
+  .login-form {
+    position: relative;
+    width: 520px;
+    max-width: 100%;
+    padding: 160px 35px 0;
+    margin: 0 auto;
+    overflow: hidden;
+  }
 
   .el-input {
     display: inline-block;
@@ -51,15 +54,6 @@ $light_gray: #eee;
     background: rgba(0, 0, 0, 0);
     border-radius: 5px;
     color: #454545;
-  }
-
-  .login-form {
-    position: relative;
-    width: 520px;
-    max-width: 100%;
-    padding: 160px 35px 0;
-    margin: 0 auto;
-    overflow: hidden;
   }
 
   img {
@@ -122,6 +116,11 @@ $light_gray: #eee;
     position: absolute;
     right: 0;
     bottom: 6px;
+  }
+
+  .filter-last-activity > span {
+    display: inline-block;
+    margin: 10px 4px 0 0;
   }
 
   @media only screen and (max-width: 470px) {

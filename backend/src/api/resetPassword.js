@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function checkToken(data) {
   return request({
-    url: `/password-reset-token-verification`,
+    url: `/user/password-reset-token-verification`,
     method: 'post',
     data
   })
