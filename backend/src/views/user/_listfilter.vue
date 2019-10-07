@@ -7,55 +7,27 @@
             <el-input v-model="listQuery.name" placeholder="Nama Lengkap" />
           </el-form-item>
         </el-col>
-        <el-col :span="12">
-          <el-button type="primary" size="small" @click="advanceFilter">
-            <span v-if="isActive">Sembunyikan Filter</span>
-            <span v-else>Tambah Filter</span>
-          </el-button>
-          <el-button type="primary" size="small" @click="submitSearch">
-            Cari
-          </el-button>
-          <el-button type="primary" size="small" @click="resetFilter">
-            Reset
-          </el-button>
+        <el-col>
+          <el-form-item style="margin-bottom: 0">
+            <el-input v-model="listQuery.phone" placeholder="Nomor Telepon" />
+          </el-form-item>
+        </el-col>
+        <el-col>
+          <el-form-item style="margin-bottom: 0">
+            <el-select
+              v-model="listQuery.status"
+              clearable
+              filterable
+              placeholder="Pilih Status"
+              style="width: 100%"
+            >
+              <el-option value="10" label="Aktif" />
+              <el-option value="0" label="Tidak Aktif" />
+            </el-select>
+          </el-form-item>
         </el-col>
       </el-row>
       <div :class="(isActive) ? 'advance-filter-active' : 'advance-filter'" style="margin-top: 10px;">
-        <el-row :gutter="10" type="flex">
-          <el-col :span="8">
-            <el-form-item style="margin-bottom: 0">
-              <el-input v-model="listQuery.phone" placeholder="Nomor Telepon" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item style="margin-bottom: 0">
-              <el-select
-                v-model="listQuery.status"
-                clearable
-                filterable
-                placeholder="Pilih Status"
-                style="width: 100%"
-              >
-                <el-option value="10" label="Aktif" />
-                <el-option value="0" label="Tidak Aktif" />
-              </el-select>
-            </el-form-item>
-          </el-col>
-          <el-col v-permission="['admin','staffProv']" :span="8">
-            <el-form-item style="margin-bottom: 0">
-              <el-select
-                v-model="listQuery.profile_completed"
-                clearable
-                filterable
-                placeholder="Pilih Kelengkapan Profile"
-                style="width: 100%"
-              >
-                <el-option value="true" label="Lengkap" />
-                <el-option value="false" label="Tidak Lengkap" />
-              </el-select>
-            </el-form-item>
-          </el-col>
-        </el-row>
         <el-row :gutter="10" type="flex" style="margin-top: 10px">
           <el-col :span="24">
             <input-filter-area
@@ -69,27 +41,64 @@
             />
           </el-col>
         </el-row>
-        <el-row :gutter="10" type="flex" style="margin-top: 10px">
-          <el-col class="filter-last-activity" :span="4">
-            <span>Aktifitas Terakhir :</span>
+        <el-row v-permission="['admin','staffProv']" :gutter="10" type="flex" style="margin-top: 10px">
+          <el-col :span="10">
+            <el-form-item>
+              <span>Update Terakhir :</span>
+              <el-select
+                v-model="listQuery.profile_completed"
+                clearable
+                filterable
+                placeholder="Pilih Kelengkapan Profile"
+                style="width: 100%"
+              >
+                <el-option value="true" label="Lengkap" />
+                <el-option value="false" label="Tidak Lengkap" />
+              </el-select>
+            </el-form-item>
           </el-col>
-          <el-col v-permission="['admin','staffProv']">
-            <el-date-picker
-              v-model="date_range"
-              type="daterange"
-              style="width: -webkit-fill-available;"
-              align="right"
-              unlink-panels
-              range-separator="To"
-              value-format="yyyy-MM-dd"
-              start-placeholder="Tanggal mulai"
-              end-placeholder="Tanggal akhir"
-              :picker-options="pickerOptions"
-              @change="dateChange"
-            />
+          <el-col :span="14" class="filter-date">
+            <span>Aktifitas Terakhir :</span>
+            <el-row type="flex">
+              <el-col :span="10">
+                <el-form-item>
+                  <el-date-picker
+                    v-model="listQuery.last_access_start"
+                    type="date"
+                    placeholder="Tanggal Mulai"
+                    value-format="yyyy-MM-dd"
+                  />
+                </el-form-item>
+              </el-col>
+              <el-col :span="10">
+                <el-form-item>
+                  <el-date-picker
+                    v-model="listQuery.last_access_end"
+                    type="date"
+                    placeholder="Tanggal Akhir"
+                    value-format="yyyy-MM-dd"
+                  />
+                </el-form-item>
+              </el-col>
+            </el-row>
           </el-col>
         </el-row>
       </div>
+      <el-row style="margin-top: 10px">
+        <el-col>
+          <el-button type="primary" size="small" style="float: right; margin: 2px;" @click="resetFilter">
+            Reset
+          </el-button>
+          <el-button type="primary" size="small" style="float: right; margin: 2px;" @click="submitSearch">
+            Cari
+          </el-button>
+          <el-button type="primary" size="small" style="float: left; margin: 2px;" @click="advanceFilter">
+            <img src="@/assets/filter.svg" width="12" style="vertical-align: middle;">
+            <span v-if="isActive">Sembunyikan Filter</span>
+            <span v-else>Tambah Filter</span>
+          </el-button>
+        </el-col>
+      </el-row>
     </el-form>
   </el-card>
 </template>
@@ -111,34 +120,6 @@ export default {
 
   data() {
     return {
-      date_range: '',
-      pickerOptions: {
-        shortcuts: [{
-          text: 'Last week',
-          onClick(picker) {
-            const end = new Date()
-            const start = new Date()
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
-            picker.$emit('pick', [start, end])
-          }
-        }, {
-          text: 'Last month',
-          onClick(picker) {
-            const end = new Date()
-            const start = new Date()
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
-            picker.$emit('pick', [start, end])
-          }
-        }, {
-          text: 'Last 3 months',
-          onClick(picker) {
-            const end = new Date()
-            const start = new Date()
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
-            picker.$emit('pick', [start, end])
-          }
-        }]
-      },
       isActive: false
     }
   },
