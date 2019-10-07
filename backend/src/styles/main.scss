@@ -9,7 +9,21 @@ $cursor: #283443;
 }
 
 /* reset element-ui css */
-.login-container {
+.filter-last-activity > span {
+  display: inline-block;
+  margin: 10px 4px 0 0;
+}
+
+$bg: #f4f4f4;
+$dark_gray: #889aa4;
+$light_gray: #eee;
+
+.login-container, .verification-container {
+  min-height: 100%;
+  width: 100%;
+  background-color: $bg;
+  overflow: hidden;
+
   .el-input {
     display: inline-block;
     height: 47px;
@@ -38,22 +52,6 @@ $cursor: #283443;
     border-radius: 5px;
     color: #454545;
   }
-}
-
-.filter-last-activity > span {
-  display: inline-block;
-  margin: 10px 4px 0 0;
-}
-
-$bg: #f4f4f4;
-$dark_gray: #889aa4;
-$light_gray: #eee;
-
-.login-container {
-  min-height: 100%;
-  width: 100%;
-  background-color: $bg;
-  overflow: hidden;
 
   .login-form {
     position: relative;

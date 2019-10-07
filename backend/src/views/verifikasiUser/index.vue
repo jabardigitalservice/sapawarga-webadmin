@@ -1,15 +1,15 @@
 <template>
-  <div class="login-container">
+  <div class="verification-container">
     <el-form
       ref="confirmForm"
       :model="confirmForm"
-      class="verifikasi-form"
+      class="verification-form"
       auto-complete="on"
       label-position="left"
     >
       <div class="title-container">
         <img :src="logo" alt="LOGO">
-        <div v-if="!verifikasiStatus">
+        <div v-if="!verificationStatus">
           <h4><b>Verifikasi Akun Berhasil</b></h4>
         </div>
         <div else>
@@ -21,10 +21,10 @@
 </template>
 
 <script>
-import { verifikasiAkun } from '@/api/verifikasiAkun'
+import { verificationAkun } from '@/api/verificationAkun'
 
 export default {
-  name: 'VerifikasiUser',
+  name: 'VerificationUser',
   components: { },
   data() {
     return {
@@ -34,7 +34,7 @@ export default {
         id: '',
         auth_key: ''
       },
-      verifikasiStatus: false
+      verificationStatus: false
     }
   },
   watch: {
@@ -48,17 +48,17 @@ export default {
   created() {
     const id = this.$route.query && this.$route.query.id
     if (!id) { this.$router.push({ path: this.redirect || '/login' }) }
-    this.verifikasi(this.$route.query.id, this.$route.query.auth_key)
+    this.verification(this.$route.query.id, this.$route.query.auth_key)
   },
   mounted() {
   },
   methods: {
-    verifikasi(id, auth_key) {
-      verifikasiAkun({
+    verification(id, auth_key) {
+      verificationAkun({
         'id': id,
         'auth_key': auth_key
       }).catch(() => {
-        this.verifikasiStatus = true
+        this.verificationStatus = true
       })
     }
   }
