@@ -82,7 +82,13 @@ export default {
     'news-hoax-list': 'Daftar Berita Hoax',
     'news-hoax-create': 'Tambah Berita Hoax',
     'news-hoax-edit': 'Edit Berita Hoax',
-    'news-hoax-detail': 'Detail Berita Hoax'
+    'news-hoax-detail': 'Detail Berita Hoax',
+
+    'banner-manage': 'Banner',
+    'banner-list': 'Daftar Banner',
+    'banner-create': 'Tambah Banner',
+    'banner-edit': 'Edit Banner',
+    'banner-detail': 'Detail Banner'
   },
   crud: {
     'list-empty': 'Belum ada data.',
@@ -102,6 +108,7 @@ export default {
     'save-news': 'Tambah Berita',
     'save-video': 'Tambah Video',
     'save-user': 'Tambah Pengguna',
+    'save-banner': 'Tambah Banner',
 
     'back-to-list': 'Kembali ke Daftar',
     'send-polling': 'Publikasikan Polling',
@@ -143,6 +150,7 @@ export default {
 
     'polling-error-edit-published': 'Sudah dipublish, tidak dapat diedit.',
     'broadcast-error-edit-published': 'Sudah dipublish, tidak dapat di edit.',
+    'banner-error-edit-published': 'Sudah dipublish, tidak dapat di edit.',
     'notification-error-edit-published': 'Sudah dipublish, tidak dapat di edit.',
     'video-error-edit-published': 'Sudah dipublish, tidak dapat di edit.',
     'error-edit-role': 'Anda tidak memiliki hak akses halaman ini.',
@@ -164,6 +172,7 @@ export default {
     'survey-compare-date': 'Tanggal berakhir survei harus lebih besar dari tanggal mulai survei.',
 
     'news-image-null': 'Gambar tidak boleh kosong.',
+    'banner-image-null': 'Gambar tidak boleh kosong.',
 
     'dashboard-map-error': 'Gagal memuat map'
   },
