@@ -60,24 +60,11 @@
           <el-col :span="14" class="filter-date">
             <span>Aktifitas Terakhir :</span>
             <el-row type="flex">
-              <!--               <el-date-picker
-                v-model="date_range"
-                type="daterange"
-                style="width: -webkit-fill-available;"
-                align="right"
-                unlink-panels
-                range-separator="To"
-                value-format="yyyy-MM-dd"
-                start-placeholder="Tanggal mulai"
-                end-placeholder="Tanggal akhir"
-                :picker-options="pickerOptions"
-                @change="dateChange"
-              /> -->
               <el-col :span="10">
                 <el-form-item>
                   <el-date-picker
-                    v-model="start_start"
-                    type="dates"
+                    v-model="last_access_start"
+                    type="date"
                     placeholder="Tanggal Mulai"
                     value-format="yyyy-MM-dd"
                   />
@@ -86,8 +73,8 @@
               <el-col :span="10">
                 <el-form-item>
                   <el-date-picker
-                    v-model="start_end"
-                    type="dates"
+                    v-model="last_access_end"
+                    type="date"
                     placeholder="Tanggal Akhir"
                     value-format="yyyy-MM-dd"
                   />
@@ -133,36 +120,8 @@ export default {
 
   data() {
     return {
-      date_range: '',
-      start_start: '',
-      start_end: '',
-      pickerOptions: {
-        shortcuts: [{
-          text: 'Last week',
-          onClick(picker) {
-            const end = new Date()
-            const start = new Date()
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
-            picker.$emit('pick', [start, end])
-          }
-        }, {
-          text: 'Last month',
-          onClick(picker) {
-            const end = new Date()
-            const start = new Date()
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
-            picker.$emit('pick', [start, end])
-          }
-        }, {
-          text: 'Last 3 months',
-          onClick(picker) {
-            const end = new Date()
-            const start = new Date()
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
-            picker.$emit('pick', [start, end])
-          }
-        }]
-      },
+      last_access_start: '',
+      last_access_end: '',
       isActive: false
     }
   },
@@ -196,7 +155,8 @@ export default {
     },
 
     resetFilter() {
-      this.date_range = ''
+      this.last_access_start = ''
+      this.last_access_end = ''
       this.$emit('reset-search')
     },
 
@@ -210,7 +170,6 @@ export default {
 
     changeKelurahan(id) {
       this.listQuery.kel_id = id
-      // $('.el-picker-panel__body').prepend(`Tanggal Mulai`)
     },
 
     advanceFilter() {
