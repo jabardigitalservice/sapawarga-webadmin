@@ -81,7 +81,7 @@
               />
             </el-form-item>
           </el-col>
-<!--           <el-col :span="14" class="filter-date">
+          <!--           <el-col :span="14" class="filter-date">
             <span>Aktifitas Terakhir :</span>
             <el-row type="flex">
 

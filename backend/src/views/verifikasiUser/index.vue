@@ -10,10 +10,10 @@
       <div class="title-container">
         <img :src="logo" alt="LOGO">
         <div v-if="verificationStatus">
-          <h4><b>Verifikasi Akun Berhasil</b></h4>
+          <h4><b>Verifikasi Pengguna Berhasil.</b></h4>
         </div>
         <div v-else>
-          <h4><b>Verifikasi Akun Gagal</b></h4>
+          <h4><b>Permintaan Aktivasi tidak valid atau Pengguna sudah aktif.</b></h4>
         </div>
       </div>
     </el-form>
