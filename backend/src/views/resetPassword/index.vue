@@ -1,5 +1,5 @@
 <template>
-  <div class="login-container">
+  <div class="reset-password-container">
     <el-form
       v-if="!tokenExpired"
       ref="resetPasswordForm"
@@ -25,7 +25,7 @@
           placeholder="Kata sandi"
           name="password"
           auto-complete="on"
-          @keyup.enter.native="handleLogin"
+          @keyup.enter.native="handleResetPassword"
         />
         <span class="show-pwd" @click="showPwd">
           <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
@@ -44,7 +44,7 @@
           placeholder="Ulangi Kata sandi"
           name="password_confirmation"
           auto-complete="on"
-          @keyup.enter.native="handleLogin"
+          @keyup.enter.native="handleResetPassword"
         />
         <span class="show-pwd" @click="showPwdConfirm">
           <svg-icon :icon-class="confirmPasswordType === 'password' ? 'eye' : 'eye-open'" />
@@ -55,7 +55,7 @@
         :loading="loading"
         type="primary"
         style="width:100%;margin-bottom:30px;"
-        @click.native.prevent="handleLogin"
+        @click.native.prevent="handleResetPassword"
       >Ubah Kata Sandi</el-button>
     </el-form>
     <div v-else>
