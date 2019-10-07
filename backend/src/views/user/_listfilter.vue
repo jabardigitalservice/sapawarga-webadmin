@@ -42,7 +42,7 @@
           </el-col>
         </el-row>
         <el-row v-permission="['admin','staffProv']" :gutter="10" type="flex" style="margin-top: 10px">
-          <el-col :span="10">
+          <el-col :span="8">
             <el-form-item>
               <span>Update Terakhir :</span>
               <el-select
@@ -57,31 +57,36 @@
               </el-select>
             </el-form-item>
           </el-col>
-          <el-col :span="14" class="filter-date">
+          <el-col :span="8">
+            <el-form-item>
+              <span>Aktifitas Terakhir :</span>
+              <el-date-picker
+                v-model="listQuery.last_access_start"
+                type="date"
+                placeholder="Tanggal Mulai"
+                value-format="yyyy-MM-dd"
+                class="last-access-start"
+              />
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item>
+              <span>&nbsp;</span>
+              <el-date-picker
+                v-model="listQuery.last_access_end"
+                type="date"
+                placeholder="Tanggal Akhir"
+                value-format="yyyy-MM-dd"
+                class="last-access-end"
+              />
+            </el-form-item>
+          </el-col>
+<!--           <el-col :span="14" class="filter-date">
             <span>Aktifitas Terakhir :</span>
             <el-row type="flex">
-              <el-col :span="10">
-                <el-form-item>
-                  <el-date-picker
-                    v-model="listQuery.last_access_start"
-                    type="date"
-                    placeholder="Tanggal Mulai"
-                    value-format="yyyy-MM-dd"
-                  />
-                </el-form-item>
-              </el-col>
-              <el-col :span="10">
-                <el-form-item>
-                  <el-date-picker
-                    v-model="listQuery.last_access_end"
-                    type="date"
-                    placeholder="Tanggal Akhir"
-                    value-format="yyyy-MM-dd"
-                  />
-                </el-form-item>
-              </el-col>
+
             </el-row>
-          </el-col>
+          </el-col> -->
         </el-row>
       </div>
       <el-row style="margin-top: 10px">
@@ -185,5 +190,11 @@ export default {
   }
   .advance-filter {
     display: none;
+  }
+  .last-access-start {
+    width: 100% !important;
+  }
+  .last-access-end {
+    width: 100% !important;
   }
 </style>

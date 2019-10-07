@@ -9,10 +9,10 @@
     >
       <div class="title-container">
         <img :src="logo" alt="LOGO">
-        <div v-if="!verificationStatus">
+        <div v-if="verificationStatus">
           <h4><b>Verifikasi Akun Berhasil</b></h4>
         </div>
-        <div else>
+        <div v-else>
           <h4><b>Verifikasi Akun Gagal</b></h4>
         </div>
       </div>
@@ -34,7 +34,7 @@ export default {
         id: '',
         auth_key: ''
       },
-      verificationStatus: false
+      verificationStatus: true
     }
   },
   watch: {
@@ -58,7 +58,7 @@ export default {
         'id': id,
         'auth_key': auth_key
       }).catch(() => {
-        this.verificationStatus = true
+        this.verificationStatus = false
       })
     }
   }
