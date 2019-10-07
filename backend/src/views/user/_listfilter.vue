@@ -63,7 +63,7 @@
               <el-col :span="10">
                 <el-form-item>
                   <el-date-picker
-                    v-model="last_access_start"
+                    v-model="listQuery.last_access_start"
                     type="date"
                     placeholder="Tanggal Mulai"
                     value-format="yyyy-MM-dd"
@@ -73,7 +73,7 @@
               <el-col :span="10">
                 <el-form-item>
                   <el-date-picker
-                    v-model="last_access_end"
+                    v-model="listQuery.last_access_end"
                     type="date"
                     placeholder="Tanggal Akhir"
                     value-format="yyyy-MM-dd"
@@ -120,8 +120,6 @@ export default {
 
   data() {
     return {
-      last_access_start: '',
-      last_access_end: '',
       isActive: false
     }
   },
@@ -155,8 +153,6 @@ export default {
     },
 
     resetFilter() {
-      this.last_access_start = ''
-      this.last_access_end = ''
       this.$emit('reset-search')
     },
 
