@@ -156,7 +156,7 @@ deploy_staging:
     - ssh -o StrictHostKeyChecking=no ${SSH_STAGING_USERNAME_AWS}@${STAGING_HOST_AWS} "sudo docker image prune -a -f"
 
 deploy_staging_eks:
-  image: docker:stable
+  image: dtzar/helm-kubectl
   stage: deploy_staging
   only:
     - branches
