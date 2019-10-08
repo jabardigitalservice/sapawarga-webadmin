@@ -15,9 +15,32 @@
           </el-col>
           <el-col :span="19" align="right">
             <el-button type="primary" size="small">Eksport Data</el-button>
-            <el-button type="primary" size="small">Import Data</el-button>
+            <el-button type="primary" size="small" @click="centerDialogVisible = true">Import Data</el-button>
           </el-col>
         </el-row>
+
+        <el-dialog title="Import Data Pengguna Sapawarga" :visible.sync="centerDialogVisible" width="50%">
+          <div class="dialog-text">Anda dapat melakukan import data dengan mengunggah file dengan tipe CSV.</div>
+          <div class="dialog-text">Template file dapat diunduh pada <a href="http://">Tautan berikut</a></div>
+          <div>Pilih lokasi file pada komputer Anda (max. 5 MB)</div>
+          <div slot="footer" class="dialog-footer" align="left">
+            <el-upload
+              class="upload-demo"
+              ref="upload"
+              v-loading="listLoading"
+              action="https://jsonplaceholder.typicode.com/posts/"
+              :on-progress="handleProgress"
+              :on-success="handleSuccess"
+              :limit="1"
+              :on-exceed="handleExceed"
+              :before-remove="beforeRemove"
+              :auto-upload="false">
+              <el-button class="dialog-buttom" slot="trigger" size="small" type="primary">Pilih File</el-button>
+            </el-upload>
+            <el-button type="primary" @click="submitUpload, centerDialogVisible = false">Upload File</el-button>
+            <el-button type="info" @click="centerDialogVisible = false">Cancel</el-button>
+          </div>
+        </el-dialog>
 
         <ListFilter :list-query.sync="listQuery" @submit-search="getList" @reset-search="resetFilter" />
 
@@ -133,7 +156,8 @@ export default {
       totalUserKec: 0,
       totalUserKel: 0,
       totalUserRw: 0,
-      totalUserSaberhoax: 0
+      totalUserSaberhoax: 0,
+      centerDialogVisible: false
     }
   },
 
@@ -260,7 +284,41 @@ export default {
     formatterCell(row, column, cellValue, index) {
       const value = cellValue ? moment(cellValue).format('D MMM YYYY MM:SS') : '-'
       return value
+    },
+
+    handleExceed(files, fileList) {
+      this.$message.warning(`Hanya dapat mengunggah ${files.length} files. Silahkan hapus untuk mengganti file.`);
+    },
+
+    beforeRemove(file, fileList) {
+      return this.$confirm(`Anda yakin akan menghapus file ${ file.name } ?`);
+    },
+
+    submitUpload() {
+      this.$refs.upload.submit()
+    },
+
+    handleProgress() {
+      this.listLoading = true
+    },
+
+    handleSuccess() {
+      this.listLoading = false
     }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+  .dialog-text {
+    margin-bottom: 15px;
+  }
+
+  .dialog-buttom {
+    margin-bottom: 10px;
+  }
+
+  a {
+    color: #4a96e8;
+  }
+</style>
