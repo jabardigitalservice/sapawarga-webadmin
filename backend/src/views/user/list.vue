@@ -6,12 +6,16 @@
     <el-row :gutter="20">
       <el-col :span="24">
         <el-row style="margin: 10px 0px">
-          <el-col :span="12">
+          <el-col :span="5">
             <router-link :to="{ path: '/user/create', query: { role_id: roleId }}">
               <el-button type="primary" size="small" icon="el-icon-plus">
                 Tambah Pengguna Baru
               </el-button>
             </router-link>
+          </el-col>
+          <el-col :span="19" align="right">
+            <el-button type="primary" size="small">Eksport Data</el-button>
+            <el-button type="primary" size="small">Import Data</el-button>
           </el-col>
         </el-row>
 
