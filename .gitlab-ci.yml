@@ -159,7 +159,7 @@ deploy_staging_eks:
   image: docker:stable
   stage: deploy_staging
   only:
-    - master
+    - branches
   dependencies: 
     - versioning
   environment:
