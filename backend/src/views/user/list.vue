@@ -13,7 +13,7 @@
               </el-button>
             </router-link>
           </el-col>
-          <el-col :span="19" align="right">
+          <el-col v-if="checkPermission(['admin', 'staffProv'])" :span="19" align="right">
             <el-button type="primary" size="small" @click="openDialog(`export`)">Eksport Data</el-button>
             <el-button type="primary" size="small" @click="openDialog(`import`)">Import Data</el-button>
           </el-col>
