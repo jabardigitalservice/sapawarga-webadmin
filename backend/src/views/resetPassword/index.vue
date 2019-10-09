@@ -61,7 +61,7 @@
     <div v-else>
       <div class="title-container">
         <img :src="logo" alt="LOGO">
-        <h4><b>Token Sudah Kedaluarsa</b></h4>
+        <h4><b>Link sudah di gunakan.</b></h4>
       </div>
     </div>
   </div>
