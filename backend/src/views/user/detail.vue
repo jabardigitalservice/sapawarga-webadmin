@@ -201,7 +201,7 @@ export default {
           },
           {
             title: 'Terakhir Akses',
-            content: last_access_at ? moment(last_access_at).format('D MMMM YYYY MM:SS') : '-'
+            content: last_access_at ? moment(last_access_at).format('D MMMM YYYY HH:mm') : '-'
           }
         ]
       })

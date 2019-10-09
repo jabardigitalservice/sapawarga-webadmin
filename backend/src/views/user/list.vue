@@ -254,7 +254,7 @@ export default {
     },
 
     formatterCell(row, column, cellValue, index) {
-      const value = cellValue ? moment(cellValue).format('D MMM YYYY MM:SS') : '-'
+      const value = cellValue ? moment(cellValue).format('D MMM YYYY HH:mm') : '-'
       return value
     }
   }
