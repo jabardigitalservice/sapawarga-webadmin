@@ -94,6 +94,7 @@ export default {
     },
 
     async listPolling() {
+      this.listQuery.status = 15
       await listPolling(this.listQuery).then(response => {
         this.list = response.data.items
         this.total = response.data._meta.totalCount
@@ -102,6 +103,7 @@ export default {
     },
 
     async listSurvey() {
+      this.listQuery.status = 15
       await listSurvey(this.listQuery).then(response => {
         this.list = response.data.items
         this.total = response.data._meta.totalCount
