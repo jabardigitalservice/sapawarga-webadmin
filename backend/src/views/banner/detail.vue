@@ -67,6 +67,12 @@ export default {
             content: link_url || '-'
           }
         ]
+
+        if (type === 'internal') {
+          this.tableDataBanner.pop()
+        } else if (type === 'external') {
+          this.tableDataBanner.splice(2, 2)
+        }
       })
     },
 

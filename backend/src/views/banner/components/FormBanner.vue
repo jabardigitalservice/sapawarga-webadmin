@@ -235,6 +235,13 @@ export default {
         this.loading = true
         const data = {}
         Object.assign(data, this.banner)
+        if (data.type === 'internal') {
+          data.link_url = null
+        } else if (data.type === 'external') {
+          data.internal_category = null
+          data.internal_entity_id = null
+          data.internal_entity_name = null
+        }
         if (this.isEdit) {
           const id = this.$route.params && this.$route.params.id
           await update(id, data)
