@@ -14,31 +14,42 @@
             </router-link>
           </el-col>
           <el-col :span="19" align="right">
-            <el-button type="primary" size="small">Eksport Data</el-button>
-            <el-button type="primary" size="small" @click="centerDialogVisible = true">Import Data</el-button>
+            <el-button type="primary" size="small" @click="openDialog(`export`)">Eksport Data</el-button>
+            <el-button type="primary" size="small" @click="openDialog(`import`)">Import Data</el-button>
           </el-col>
         </el-row>
-
-        <el-dialog title="Import Data Pengguna Sapawarga" :visible.sync="centerDialogVisible" width="50%">
-          <div class="dialog-text">Anda dapat melakukan import data dengan mengunggah file dengan tipe CSV.</div>
-          <div class="dialog-text">Template file dapat diunduh pada <a href="http://">Tautan berikut</a></div>
-          <div>Pilih lokasi file pada komputer Anda (max. 5 MB)</div>
-          <div slot="footer" class="dialog-footer" align="left">
-            <el-upload
-              class="upload-demo"
-              ref="upload"
-              v-loading="listLoading"
-              action="https://jsonplaceholder.typicode.com/posts/"
-              :on-progress="handleProgress"
-              :on-success="handleSuccess"
-              :limit="1"
-              :on-exceed="handleExceed"
-              :before-remove="beforeRemove"
-              :auto-upload="false">
-              <el-button class="dialog-buttom" slot="trigger" size="small" type="primary">Pilih File</el-button>
-            </el-upload>
-            <el-button type="primary" @click="submitUpload, centerDialogVisible = false">Upload File</el-button>
-            <el-button type="info" @click="centerDialogVisible = false">Cancel</el-button>
+        <el-dialog :title="(importDialogVisible)? `Import Data Pengguna Sapawarga`:`Export Data`" :visible.sync="visibleDialog" :width="(importDialogVisible)? `50%`:`20%`" @close="closeDialog">
+          <div v-if="importDialogVisible">
+            <div class="dialog-text">Anda dapat melakukan import data dengan mengunggah file dengan tipe CSV.</div>
+            <div class="dialog-text">Template file dapat diunduh pada <a href="http://">Tautan berikut</a></div>
+            <div>Pilih lokasi file pada komputer Anda (max. 5 MB)</div>
+            <div slot="footer" class="dialog-footer" align="left">
+              <el-upload
+                ref="upload"
+                v-loading="listLoading"
+                class="upload-demo"
+                action="https://jsonplaceholder.typicode.com/posts/"
+                :on-progress="handleProgress"
+                :on-success="handleSuccess"
+                :limit="1"
+                :on-exceed="handleExceed"
+                :before-remove="beforeRemove"
+                :auto-upload="false"
+              >
+                <el-button slot="trigger" class="dialog-buttom" size="small" type="primary">Pilih File</el-button>
+              </el-upload>
+              <el-button type="primary" @click="submitUpload, visibleDialog = false, importDialogVisible = false">Upload File</el-button>
+              <el-button type="info" @click="closeDialog">Cancel</el-button>
+            </div>
+          </div>
+          <div v-else class="export-user">
+            <span>Pilih File</span><br><br>
+            <el-radio v-model="radio" label="1" border size="medium">CSV</el-radio><br><br>
+            <el-radio v-model="radio" label="2" border size="medium">Excel</el-radio>
+            <div slot="footer" class="dialog-footer" align="left" style="padding-top: 20px;">
+              <el-button type="primary" size="small" @click="closeDialog">Download</el-button>
+              <el-button type="info" size="small" @click="closeDialog">Batal</el-button>
+            </div>
           </div>
         </el-dialog>
 
@@ -157,7 +168,10 @@ export default {
       totalUserKel: 0,
       totalUserRw: 0,
       totalUserSaberhoax: 0,
-      centerDialogVisible: false
+      visibleDialog: false,
+      importDialogVisible: false,
+      exportDialogVisible: false,
+      radio: '1'
     }
   },
 
@@ -287,11 +301,26 @@ export default {
     },
 
     handleExceed(files, fileList) {
-      this.$message.warning(`Hanya dapat mengunggah ${files.length} files. Silahkan hapus untuk mengganti file.`);
+      this.$message.warning(`Hanya dapat mengunggah ${files.length} files. Silahkan hapus untuk mengganti file.`)
     },
 
     beforeRemove(file, fileList) {
-      return this.$confirm(`Anda yakin akan menghapus file ${ file.name } ?`);
+      return this.$confirm(`Anda yakin akan menghapus file ${file.name} ?`)
+    },
+
+    openDialog(type) {
+      if (type === 'export') {
+        this.exportDialogVisible = true
+      } else if (type === 'import') {
+        this.importDialogVisible = true
+      }
+      this.visibleDialog = true
+    },
+
+    closeDialog() {
+      this.exportDialogVisible = false
+      this.importDialogVisible = false
+      this.visibleDialog = false
     },
 
     submitUpload() {
@@ -320,5 +349,9 @@ export default {
 
   a {
     color: #4a96e8;
+  }
+
+  .export-user > span {
+    font-size: 18px;
   }
 </style>
