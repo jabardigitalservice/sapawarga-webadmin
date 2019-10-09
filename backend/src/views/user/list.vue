@@ -21,8 +21,8 @@
         <el-dialog :title="(importDialogVisible)? `Import Data Pengguna Sapawarga`:`Export Data`" :visible.sync="visibleDialog" :width="(importDialogVisible)? `50%`:`20%`" @close="closeDialog">
           <div v-if="importDialogVisible">
             <div class="dialog-text">Anda dapat melakukan import data dengan mengunggah file dengan tipe CSV.</div>
-            <div class="dialog-text">Template file dapat diunduh pada <a href="http://">Tautan berikut</a></div>
-            <div>Pilih lokasi file pada komputer Anda (max. 5 MB)</div>
+            <div class="dialog-text">Template file dapat diunduh pada <a @click="getSample">Tautan berikut.</a></div>
+            <div class="dialog-text">Pilih lokasi file pada komputer Anda (max. 5 MB).</div>
             <div slot="footer" class="dialog-footer" align="left">
               <el-upload
                 ref="upload"
