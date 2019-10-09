@@ -38,8 +38,8 @@
               >
                 <el-button slot="trigger" class="dialog-buttom" size="small" type="primary">Pilih File</el-button>
               </el-upload>
-              <el-button type="primary" @click="submitUpload, visibleDialog = false, importDialogVisible = false">Upload File</el-button>
-              <el-button type="info" @click="closeDialog">Cancel</el-button>
+              <el-button type="primary" @click="submitUpload, visibleDialog = false, importDialogVisible = false">Unggah File</el-button>
+              <el-button type="info" @click="closeDialog">Batal</el-button>
             </div>
           </div>
           <div v-else class="export-user">
@@ -47,7 +47,7 @@
             <el-radio v-model="radio" label="1" border size="medium">CSV</el-radio><br><br>
             <el-radio v-model="radio" label="2" border size="medium">Excel</el-radio>
             <div slot="footer" class="dialog-footer" align="left" style="padding-top: 20px;">
-              <el-button type="primary" size="small" @click="closeDialog">Download</el-button>
+              <el-button type="primary" size="small" @click="closeDialog">Unduh</el-button>
               <el-button type="info" size="small" @click="closeDialog">Batal</el-button>
             </div>
           </div>
