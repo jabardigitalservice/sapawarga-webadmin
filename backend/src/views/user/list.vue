@@ -13,8 +13,8 @@
               </el-button>
             </router-link>
           </el-col>
-          <el-col :span="19" align="right">
-            <el-button type="primary" size="small" @click="openDialog(`export`)">Eksport Data</el-button>
+          <el-col v-if="checkPermission(['admin', 'staffProv'])" :span="19" align="right">
+            <el-button type="primary" size="small" @click="exportData">Unduh Data</el-button>
             <el-button type="primary" size="small" @click="openDialog(`import`)">Import Data</el-button>
           </el-col>
         </el-row>
@@ -47,7 +47,7 @@
             <el-radio v-model="radio" label="1" border size="medium">CSV</el-radio><br><br>
             <el-radio v-model="radio" label="2" border size="medium">Excel</el-radio>
             <div slot="footer" class="dialog-footer" align="left" style="padding-top: 20px;">
-              <el-button type="primary" size="small" @click="closeDialog">Download</el-button>
+              <el-button type="primary" size="small" @click="exportData">Download</el-button>
               <el-button type="info" size="small" @click="closeDialog">Batal</el-button>
             </div>
           </div>
@@ -112,6 +112,7 @@
 
 <script>
 import { fetchList, activate, deactivate, totalUser } from '@/api/staff'
+import { getToken } from '@/utils/auth'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 import PanelGroup from './components/PanelGroup'
 import permission from '@/directive/permission/index.js'
@@ -174,12 +175,10 @@ export default {
       radio: '1'
     }
   },
-
   created() {
     this.getList()
     this.getTotalUser()
   },
-
   methods: {
     checkPermission,
 
@@ -325,6 +324,36 @@ export default {
 
     submitUpload() {
       this.$refs.upload.submit()
+    },
+
+    exportData() {
+      const url = new URL(process.env.VUE_APP_BASE_API + 'staff/export')
+      Object.keys(this.listQuery).forEach(key => url.searchParams.append(key, this.listQuery[key]))
+      fetch(url, {
+        headers: new Headers({
+          'Authorization': 'Bearer ' + getToken()
+        })
+      }).then(resp => resp.blob())
+        .then(blob => {
+          const url = window.URL.createObjectURL(blob)
+          const a = document.createElement('a')
+          a.style.display = 'none'
+          a.href = url
+          a.download = 'pengguna.csv'
+          document.body.appendChild(a)
+          a.click()
+          window.URL.revokeObjectURL(url)
+          this.$message({
+            type: 'success',
+            message: 'Unduh Berhasil'
+          })
+        })
+        .catch(() =>
+          this.$message({
+            type: 'error',
+            message: 'Unduh Gagal'
+          })
+        )
     },
 
     handleProgress() {
