@@ -55,6 +55,7 @@ export default {
         title: null,
         search: null,
         channel_id: null,
+        all_location: true,
         status: 10,
         page: 1,
         limit: 10
