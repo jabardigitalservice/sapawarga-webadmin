@@ -27,7 +27,7 @@ $dark_gray: #889aa4;
   width: 100%;
   background-color: $bg;
   overflow: hidden;
-  .login-form {
+  .login-form, .reset-password-form {
     position: relative;
     width: 520px;
     max-width: 100%;

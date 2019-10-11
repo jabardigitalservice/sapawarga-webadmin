@@ -5,7 +5,7 @@
       ref="resetPasswordForm"
       :model="resetPasswordForm"
       :rules="resetPasswordRules"
-      class="login-form"
+      class="reset-password-form"
       auto-complete="on"
       label-position="left"
     >
@@ -15,7 +15,7 @@
       </div>
       <el-form-item prop="password">
         <span class="svg-container">
-          <svg-icon icon-class="password" />
+          <svg-icon icon-class="password" class-name="password" />
         </span>
         <el-input
           :key="passwordType"
@@ -28,13 +28,13 @@
           @keyup.enter.native="handleResetPassword"
         />
         <span class="show-pwd" @click="showPwd">
-          <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
+          <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" class-name="password-type" />
         </span>
       </el-form-item>
 
       <el-form-item prop="password_confirmation">
         <span class="svg-container">
-          <svg-icon icon-class="password" />
+          <svg-icon icon-class="password" class-name="password" />
         </span>
         <el-input
           :key="confirmPasswordType"
@@ -47,7 +47,7 @@
           @keyup.enter.native="handleResetPassword"
         />
         <span class="show-pwd" @click="showPwdConfirm">
-          <svg-icon :icon-class="confirmPasswordType === 'password' ? 'eye' : 'eye-open'" />
+          <svg-icon :icon-class="confirmPasswordType === 'password' ? 'eye' : 'eye-open'" class-name="password-type" />
         </span>
       </el-form-item>
 
@@ -139,13 +139,13 @@ export default {
     const token = this.$route.query && this.$route.query.token
     if (!token) { this.$router.push({ path: this.redirect || '/login' }) }
     this.resetPasswordForm.token = token
-    this.checkSessionToken(token)
+    // this.checkSessionToken(token)
   },
   mounted() {
     if (this.resetPasswordForm.password === '') {
-      this.$refs.password.focus()
+      this.$refs.password.focus
     } else if (this.resetPasswordForm.password_confirmation === '') {
-      this.$refs.password_confirmation.focus()
+      this.$refs.password_confirmation.focus
     }
   },
   methods: {
@@ -156,7 +156,7 @@ export default {
         this.passwordType = 'password'
       }
       this.$nextTick(() => {
-        this.$refs.password.focus()
+        this.$refs.password.focus
       })
     },
 
@@ -167,7 +167,7 @@ export default {
         this.confirmPasswordType = 'password'
       }
       this.$nextTick(() => {
-        this.$refs.password_confirmation.focus()
+        this.$refs.password_confirmation.focus
       })
     },
 
