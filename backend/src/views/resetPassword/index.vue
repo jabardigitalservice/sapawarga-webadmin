@@ -139,7 +139,7 @@ export default {
     const token = this.$route.query && this.$route.query.token
     if (!token) { this.$router.push({ path: this.redirect || '/login' }) }
     this.resetPasswordForm.token = token
-    // this.checkSessionToken(token)
+    this.checkSessionToken(token)
   },
   mounted() {
     if (this.resetPasswordForm.password === '') {
