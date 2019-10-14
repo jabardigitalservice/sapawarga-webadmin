@@ -46,6 +46,22 @@
             <el-form-item label="Kategori" prop="category_id">
               <InputCategory v-model="broadcast.category_id" category-type="broadcast" prop="category" />
             </el-form-item>
+            <el-form-item v-if="checkPermission(['admin', 'staffProv'])" label="Jadwal">
+              <el-radio-group v-model="broadcast.schedule" name="jadwal">
+                <el-radio-button label="sekarang">Sekarang</el-radio-button>
+                <el-radio-button label="terjadwal">Terjadwal</el-radio-button>
+              </el-radio-group>
+            </el-form-item>
+            <el-form-item v-if="broadcast.schedule === 'terjadwal' && checkPermission(['admin', 'staffProv'])" label="Tanggal dan Waktu" prop="">
+              <el-date-picker
+                v-model="broadcast.datetime"
+                type="datetime"
+                format="dd-MM-yyyy HH:mm"
+                :editable="true"
+                placeholder="Pilih Tanggal dan Waktu"
+              />
+            </el-form-item>
+
             <el-form-item label="Isi Pesan" prop="description">
               <el-input
                 v-model="broadcast.description"
@@ -67,6 +83,7 @@
 <script>
 import InputCategory from '@/components/InputCategory'
 import InputSelectArea from '@/components/InputSelectArea'
+import checkPermission from '@/utils/permission'
 import { create, fetchRecord, update } from '@/api/broadcast'
 import { containsWhitespace } from '@/utils/validate'
 export default {
@@ -109,7 +126,9 @@ export default {
         rw: null,
         title: null,
         category_id: null,
-        description: null
+        description: null,
+        schedule: 'sekarang',
+        datetime: null
       },
       rules: {
         title: [
@@ -200,6 +219,12 @@ export default {
         this.broadcast.rw = null
       }
       this.resetRw()
+    },
+
+    'broadcast.schedule'() {
+      if (this.broadcast.schedule === 'sekarang') {
+        this.broadcast.datetime = null
+      }
     }
   },
   created() {
@@ -209,6 +234,7 @@ export default {
     }
   },
   methods: {
+    checkPermission,
     resetRw() {
       if (this.broadcast.kel_id === null || this.broadcast.kec_id === null || this.broadcast.kabkota_id === null) {
         this.broadcast.kel_id = null
