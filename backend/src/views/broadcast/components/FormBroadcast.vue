@@ -46,13 +46,13 @@
             <el-form-item label="Kategori" prop="category_id">
               <InputCategory v-model="broadcast.category_id" category-type="broadcast" prop="category" />
             </el-form-item>
-            <el-form-item v-if="checkPermission(['admin', 'staffProv'])" label="Jadwal">
+            <el-form-item v-if="checkPermission(['admin', 'staffProv'])" label="Jadwal" prop="schedule">
               <el-radio-group v-model="broadcast.schedule" name="jadwal">
                 <el-radio-button label="sekarang">Sekarang</el-radio-button>
                 <el-radio-button label="terjadwal">Terjadwal</el-radio-button>
               </el-radio-group>
             </el-form-item>
-            <el-form-item v-if="broadcast.schedule === 'terjadwal' && checkPermission(['admin', 'staffProv'])" label="Tanggal dan Waktu" prop="">
+            <el-form-item v-if="broadcast.schedule === 'terjadwal' && checkPermission(['admin', 'staffProv'])" label="Tanggal dan Waktu" prop="datetime">
               <el-date-picker
                 v-model="broadcast.datetime"
                 type="datetime"
@@ -193,6 +193,20 @@ export default {
             required: false,
             message: 'wilayah harus diisi',
             trigger: 'change'
+          }
+        ],
+        schedule: [
+          {
+            required: true,
+            message: 'Jadwal harus diisi',
+            trigger: 'blur'
+          }
+        ],
+        datetime: [
+          {
+            required: true,
+            message: 'Tanggal dan waktu harus diisi',
+            trigger: 'blur'
           }
         ]
       }
