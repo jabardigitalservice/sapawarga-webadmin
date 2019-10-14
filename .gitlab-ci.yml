@@ -155,6 +155,46 @@ deploy_staging:
     - ssh -o StrictHostKeyChecking=no ${SSH_STAGING_USERNAME_AWS}@${STAGING_HOST_AWS} "sudo docker ps"
     - ssh -o StrictHostKeyChecking=no ${SSH_STAGING_USERNAME_AWS}@${STAGING_HOST_AWS} "sudo docker image prune -a -f"
 
+deploy_staging_eks:
+  image: dtzar/helm-kubectl
+  stage: deploy_staging
+  only:
+    - branches
+  dependencies: 
+    - versioning
+  environment:
+    name: staging
+  before_script:
+    - export VERSION=$(cat ./version)
+    - kubectl config set-cluster k8s --server="${EKS_SERVER_V2}"
+    - kubectl config set clusters.k8s.certificate-authority-data ${EKS_CA_V2}
+    - kubectl config set-credentials gitlab-eks-admin-development --token="${EKS_TOKEN_V2}"
+    - kubectl config set-context default --cluster=k8s --user=gitlab-eks-admin-development
+    - kubectl config use-context default
+    - kubectl cluster-info
+  script:
+    # Copy template samples #
+    - cp kubernetes/webadmin-variables-sample.yaml kubernetes/webadmin-variables.yaml
+    # Add ENV for apps # VUE_APP_NODE_ENV
+    - sed -i "s/%VUE_APP_VERSION%/${VERSION}/g" kubernetes/webadmin-variables.yaml
+    - sed -i "s/%VUE_APP_NODE_ENV%/${VUE_APP_NODE_ENV}/g" kubernetes/webadmin-variables.yaml
+    # Vue app base api to staging
+    - sed -i "s/%VUE_APP_BASE_API%/${EKS_VUE_APP_BASE_API_STAGING}/g" kubernetes/webadmin-variables.yaml
+    - sed -i "s/%dockerconfigjson%/${dockerconfigjson}/g" kubernetes/webadmin-variables.yaml
+    - sed -i "s/%SENTRY_DSN_API%/${SENTRY_DSN_API}/g" kubernetes/webadmin-variables.yaml
+    - sed -i "s/%APP_ERROR_ENVIRONMENT%/${APP_ERROR_ENVIRONMENT}/g" kubernetes/webadmin-variables.yaml
+    - sed -i "s/%VERSION%/${VERSION}/g" kubernetes/webadmin-deployment.yaml
+    
+    - cat kubernetes/webadmin-variables.yaml
+    - kubectl create --dry-run --validate -f kubernetes/webadmin-variables.yaml
+        -f kubernetes/webadmin-deployment.yaml
+        -f kubernetes/webadmin-service.yaml # mode development
+    - kubectl apply -f kubernetes/webadmin-variables.yaml
+        -f kubernetes/webadmin-deployment.yaml
+        -f kubernetes/webadmin-service.yaml # mode development
+
+
+
 deploy_prod_eks:
   stage: deploy_prod
   image: dtzar/helm-kubectl
@@ -176,6 +216,7 @@ deploy_prod_eks:
   script:
     - cp kubernetes/webadmin-variables-sample.yaml kubernetes/webadmin-variables.yaml
     - sed -i "s/%VUE_APP_VERSION%/${VERSION}/g" kubernetes/webadmin-variables.yaml
+    - sed -i "s/%VUE_APP_NODE_ENV%/${VUE_APP_NODE_ENV}/g" kubernetes/webadmin-variables.yaml
     - sed -i "s/%VUE_APP_BASE_API%/${EKS_VUE_APP_BASE_API}/g" kubernetes/webadmin-variables.yaml
     - sed -i "s/%dockerconfigjson%/${dockerconfigjson}/g" kubernetes/webadmin-variables.yaml
     - sed -i "s/%SENTRY_DSN_API%/${SENTRY_DSN_API}/g" kubernetes/webadmin-variables.yaml
@@ -204,13 +245,14 @@ deploy_prod_eks_v2:
     - export VERSION=$(cat ./version)
     - kubectl config set-cluster k8s --server="${EKS_SERVER_V2}"
     - kubectl config set clusters.k8s.certificate-authority-data ${EKS_CA_V2}
-    - kubectl config set-credentials gitlab-eks-admin --token="${EKS_TOKEN_V2}"
-    - kubectl config set-context default --cluster=k8s --user=gitlab-eks-admin
+    - kubectl config set-credentials gitlab-eks-admin-development --token="${EKS_TOKEN_V2}"
+    - kubectl config set-context default --cluster=k8s --user=gitlab-eks-admin-development
     - kubectl config use-context default
     - kubectl cluster-info
   script:
     - cp kubernetes/webadmin-variables-sample.yaml kubernetes/webadmin-variables.yaml
     - sed -i "s/%VUE_APP_VERSION%/${VERSION}/g" kubernetes/webadmin-variables.yaml
+    - sed -i "s/%VUE_APP_NODE_ENV%/${VUE_APP_NODE_ENV}/g" kubernetes/webadmin-variables.yaml
     - sed -i "s/%VUE_APP_BASE_API%/${EKS_VUE_APP_BASE_API}/g" kubernetes/webadmin-variables.yaml
     - sed -i "s/%dockerconfigjson%/${dockerconfigjson}/g" kubernetes/webadmin-variables.yaml
     - sed -i "s/%SENTRY_DSN_API%/${SENTRY_DSN_API}/g" kubernetes/webadmin-variables.yaml
