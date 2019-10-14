@@ -209,7 +209,7 @@ router.beforeEach((to, from, next) => {
   const nearestWithTitle = to.matched.slice().reverse().find(r => r.path && r.path)
   const previousNearestWithMeta = from.matched.slice().reverse().find(r => r.path && r.path)
 
-  if (nearestWithTitle !== undefined){
+  if (nearestWithTitle !== undefined) {
     const taged = nearestWithTitle.path.split('/')
     // Remove any stale meta tags from the document using the key attribute we set below.
     Array.from(document.querySelectorAll('[data-vue-router-controlled]')).map(el => el.parentNode.removeChild(el))
