@@ -207,7 +207,6 @@ export function resetRouter() {
 
 router.beforeEach((to, from, next) => {
   const nearestWithTitle = to.matched.slice().reverse().find(r => r.path && r.path)
-  const previousNearestWithMeta = from.matched.slice().reverse().find(r => r.path && r.path)
 
   if (nearestWithTitle !== undefined) {
     const taged = nearestWithTitle.path.split('/')
