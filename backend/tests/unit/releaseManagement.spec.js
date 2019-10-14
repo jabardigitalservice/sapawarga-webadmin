@@ -1,6 +1,7 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import ElementUI from 'element-ui';
 import releaseManagementCreate from '@/views/releaseManagement/create'
+import releaseManagementEdit from '@/views/releaseManagement/edit'
 import releaseManagementList from '@/views/releaseManagement/list'
 import Form from '@/views/releaseManagement/components/Form'
 
@@ -24,6 +25,14 @@ describe('Categories', () => {
 
   it('call create form', () => {
     const wrapper = shallowMount(releaseManagementCreate, {
+      localVue
+    })
+
+    expect(wrapper.find(Form).exists()).toBe(true)
+  })
+
+  it('call edit form', () => {
+    const wrapper = shallowMount(releaseManagementEdit, {
       localVue
     })
 

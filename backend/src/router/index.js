@@ -66,6 +66,7 @@ export const constantRoutes = [
     hidden: true
   },
   {
+    title: 'reset-password',
     path: '/reset-password',
     component: () => import('@/views/resetPassword/index'),
     hidden: true
@@ -76,6 +77,7 @@ export const constantRoutes = [
     hidden: true
   },
   {
+    title: 'verifikasi-user',
     path: '/confirm',
     component: () => import('@/views/verifikasiUser/index'),
     hidden: true
@@ -202,5 +204,25 @@ export function resetRouter() {
   const newRouter = createRouter()
   router.matcher = newRouter.matcher // reset router
 }
+
+router.beforeEach((to, from, next) => {
+  const nearestWithTitle = to.matched.slice().reverse().find(r => r.path && r.path)
+  const previousNearestWithMeta = from.matched.slice().reverse().find(r => r.path && r.path)
+
+  const taged = nearestWithTitle.path.split('/')
+  // Remove any stale meta tags from the document using the key attribute we set below.
+  Array.from(document.querySelectorAll('[data-vue-router-controlled]')).map(el => el.parentNode.removeChild(el))
+
+  // Skip rendering meta tags if there are none.
+  if (!previousNearestWithMeta) return next()
+  // Turn the meta tag definitions into actual elements in the head.
+  if ((taged[1] === 'reset-password') || (taged[1] === 'confirm')) {
+    // If a route with a title was found, set the document (page) title to that value.
+    if (nearestWithTitle) document.title = taged[1]
+  } else {
+    document.title = 'sapawarga-administrator'
+  }
+  next()
+})
 
 export default router
