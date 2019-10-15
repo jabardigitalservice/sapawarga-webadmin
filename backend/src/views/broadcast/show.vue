@@ -92,6 +92,14 @@ export default {
             content: (category !== null ? category.name : '-')
           },
           {
+            title: 'Jadwal',
+            content: 'Sekarang'
+          },
+          {
+            title: 'Tanggal dan Waktu',
+            content: '20-10-2019'
+          },
+          {
             title: 'Isi Pesan',
             content: (description !== null ? description : '-')
           }
