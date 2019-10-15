@@ -88,7 +88,13 @@ export default {
     'banner-list': 'Daftar Banner',
     'banner-create': 'Tambah Banner',
     'banner-edit': 'Edit Banner',
-    'banner-detail': 'Detail Banner'
+    'banner-detail': 'Detail Banner',
+
+    'popup-informasi-manage': 'Pop-Up Informasi',
+    'popup-informasi-list': 'Pop-Up Informasi',
+    'popup-informasi-create': 'Tambah Pop-Up Informasi',
+    'popup-informasi-edit': 'Edit Pop-Up Informasi',
+    'popup-informasi-detail': 'Detail Pop-Up Informasi'
   },
   crud: {
     'list-empty': 'Belum ada data.',
@@ -109,6 +115,7 @@ export default {
     'save-video': 'Tambah Video',
     'save-user': 'Tambah Pengguna',
     'save-banner': 'Tambah Banner',
+    'save-popup': 'Tambah Pop Up',
 
     'back-to-list': 'Kembali ke Daftar',
     'send-polling': 'Publikasikan Polling',
@@ -151,6 +158,7 @@ export default {
     'polling-error-edit-published': 'Sudah dipublish, tidak dapat diedit.',
     'broadcast-error-edit-published': 'Sudah dipublish, tidak dapat di edit.',
     'banner-error-edit-published': 'Sudah dipublish, tidak dapat di edit.',
+    'popup-error-edit-published': 'Sudah dipublish, tidak dapat di edit.',
     'notification-error-edit-published': 'Sudah dipublish, tidak dapat di edit.',
     'video-error-edit-published': 'Sudah dipublish, tidak dapat di edit.',
     'error-edit-role': 'Anda tidak memiliki hak akses halaman ini.',
@@ -173,6 +181,7 @@ export default {
 
     'news-image-null': 'Gambar tidak boleh kosong.',
     'banner-image-null': 'Gambar tidak boleh kosong.',
+    'popup-image-null': 'Gambar tidak boleh kosong.',
 
     'dashboard-map-error': 'Gagal memuat map'
   },
