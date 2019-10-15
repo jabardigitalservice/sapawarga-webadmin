@@ -27,29 +27,29 @@
             </template>
           </el-table-column>
 
-          <el-table-column prop="created_at" sortable="custom" label="Dibuat" width="150">
+          <el-table-column prop="created_at" sortable="custom" align="center" label="Dibuat" width="150">
             <template slot-scope="{row}">
-              {{ row.created_at | moment('D MMMM YYYY HH:mm') }}
+              {{ row.created_at | moment('D MMM YYYY HH:mm') }}
             </template>
           </el-table-column>
 
-          <el-table-column prop="updated_at" sortable="custom" label="Dikirim" width="150">>
+          <el-table-column prop="updated_at" sortable="custom" align="center" label="Dikirim" width="150">>
             <template slot-scope="{row}">
-              {{ getSentDateTime(row) | moment('D MMMM YYYY HH:mm') }}
+              {{ getSentDateTime(row) | moment('D MMM YYYY HH:mm') }}
             </template>
           </el-table-column>
 
-          <el-table-column align="center" label="Actions" width="250px">
+          <el-table-column align="center" label="Actions" width="200px">
             <template slot-scope="scope">
               <router-link :to="'/broadcast/show/'+scope.row.id">
-                <el-button type="white" size="mini">
-                  View
-                </el-button>
+                <el-tooltip content="Detail Pesan" placement="top">
+                  <el-button type="primary" icon="el-icon-view" size="small" />
+                </el-tooltip>
               </router-link>
               <router-link :to="(scope.row.status !== 10 ? '/broadcast/edit/' +scope.row.id : '')">
-                <el-button v-if="roles" type="white" size="mini" :disabled="scope.row.status === 10">
-                  Edit
-                </el-button>
+                <el-tooltip content="Edit Pesan" placement="top">
+                  <el-button v-if="roles" type="warning" icon="el-icon-edit" size="small" :disabled="scope.row.status === 10" />
+                </el-tooltip>
               </router-link>
             </template>
           </el-table-column>
@@ -74,7 +74,8 @@ export default {
       const statusMap = {
         '10': 'success',
         '0': 'info',
-        '-1': 'danger'
+        '-1': 'danger',
+        '5': 'warning'
       }
       return statusMap[status]
     }
