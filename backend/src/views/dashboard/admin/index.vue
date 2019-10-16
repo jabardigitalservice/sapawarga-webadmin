@@ -33,16 +33,29 @@
         <polling />
       </el-col>
     </el-row>
+
+    <!-- Polling -->
+    <h3 style="color:#73737">Top Berita</h3>
+    <el-row>
+      <el-col>
+        <TopBerita :list="listNewsProvinsi" />
+      </el-col>
+      <el-col>
+        <TopBerita :list="listNewsKoKab" />
+      </el-col>
+    </el-row>
   </div>
 </template>
 
 <script>
 // import LineChart from './components/LineChart'
+import { fetchTopFiveNewsProv, fetchTopFiveNewsDistricts } from '@/api/dashboard'
 import Usulan from './components/Usulan'
 import Approval from './components/Approval'
 import Category from './components/Category'
 import MapData from './components/MapData'
 import Polling from './components/Polling'
+import TopBerita from './components/TopBerita'
 
 const lineChartData = {
   newVisitis: {
@@ -71,14 +84,38 @@ export default {
     Usulan,
     Approval,
     MapData,
-    Polling
+    Polling,
+    TopBerita
   },
   data() {
     return {
-      lineChartData: lineChartData.newVisitis
+      lineChartData: lineChartData.newVisitis,
+      listNewsProvinsi: null,
+      listNewsKoKab: null,
+      listLoading: true
     }
   },
+  created() {
+    this.getListProvinsi()
+    this.getLisKoKab()
+  },
   methods: {
+    getListProvinsi() {
+      this.listLoading = true
+      fetchTopFiveNewsProv().then(response => {
+        this.listNewsProvinsi = response.data.items
+        this.listLoading = false
+      })
+    },
+
+    getLisKoKab() {
+      this.listLoading = true
+      fetchTopFiveNewsDistricts().then(response => {
+        this.listNewsKoKab = response.data.items
+        this.listLoading = false
+      })
+    },
+
     handleSetLineChartData(type) {
       this.lineChartData = lineChartData[type]
     }
