@@ -40,7 +40,6 @@ export function fetchTopFiveNewsProv(query) {
   })
 }
 
-
 export function fetchTopFiveNewsDistricts(query) {
   return request({
     url: 'dashboards/polling-latest',

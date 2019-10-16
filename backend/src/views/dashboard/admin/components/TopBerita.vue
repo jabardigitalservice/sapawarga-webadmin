@@ -28,13 +28,13 @@ export default {
     list: {
       type: Object,
       default: null
-    },
+    }
   },
   data() {
     return {
-      listLoading: false,
+      listLoading: false
     }
-  },
+  }
 }
 </script>
 
