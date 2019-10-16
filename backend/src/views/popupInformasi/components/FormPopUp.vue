@@ -31,33 +31,27 @@
           <el-form-item v-if="popup.type === 'internal'" :label="titleFitur" prop="internal_entity_name">
             <el-input v-model="popup.internal_entity_name" disabled type="text" name="internal_entity_name" />
           </el-form-item>
-          <el-form-item label="Tipe Publikasi" prop="type">
-            <el-radio-group v-model="popup.type_publish" name="type">
-              <el-radio-button label="today">Hari Ini</el-radio-button>
-              <el-radio-button label="schedule">Terjadwal</el-radio-button>
-            </el-radio-group>
-          </el-form-item>
-          <el-form-item prop="start_date">
-          <el-row :gutter="10" type="flex">
-            <el-col :span="10">
-              <span class="demonstration">Tanggal Mulai</span>
-              <el-date-picker
-                v-model="popup.start_date"
-                class="pop-up-date"
-                type="datetime"
-                placeholder="Pick a start date">
-              </el-date-picker>
-            </el-col>
-            <el-col :span="10">
-              <span class="demonstration">Tanggal Berakhir</span>
-              <el-date-picker
-                v-model="popup.end_date"
-                class="pop-up-date"
-                type="datetime"
-                placeholder="Pick a end date">
-              </el-date-picker>
-            </el-col>
-          </el-row>
+          <el-form-item class="waktu-publikasi" label="Waktu Publikasi">
+            <el-row :gutter="10" type="flex">
+              <el-col :span="10">
+                <!-- <span class="demonstration">Tanggal Mulai</span> -->
+                <el-date-picker
+                  v-model="popup.start_date"
+                  class="pop-up-date"
+                  type="datetime"
+                  placeholder="Tanggal Mulai"
+                />
+              </el-col>
+              <el-col :span="10">
+                <!-- <span class="demonstration">Tanggal Berakhir</span> -->
+                <el-date-picker
+                  v-model="popup.end_date"
+                  class="pop-up-date"
+                  type="datetime"
+                  placeholder="Tanggal Berakhir"
+                />
+              </el-col>
+            </el-row>
           </el-form-item>
           <el-form-item label="Status" prop="status">
             <el-radio-group v-model="popup.status" :fill="statusColor" name="status">
@@ -122,7 +116,6 @@ export default {
         internal_entity_name: null,
         start_date: null,
         end_date: null,
-        type_publish: 'today',
         status: 0
       },
       dialogName: null,

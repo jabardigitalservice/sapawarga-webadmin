@@ -12,7 +12,7 @@
           </el-col>
         </el-row>
 
-        <ListFilter :list-query.sync="listQuery" @submit-search="getList" @reset-search="resetFilter" />
+        <ListFilter :list-query.sync="listQuery" :is-pop-up="true" @submit-search="getList" @reset-search="resetFilter" />
 
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row @sort-change="changeSort">
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />

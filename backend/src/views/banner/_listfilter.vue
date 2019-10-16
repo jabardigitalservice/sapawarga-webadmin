@@ -4,7 +4,7 @@
       <el-row :gutter="10">
         <el-col :span="10">
           <el-form-item style="margin-bottom: 0">
-            <el-input v-model="listQuery.title" placeholder="Judul Banner" />
+            <el-input v-model="listQuery.title" :placeholder="(isPopUp) ? 'Judul Pop Up' : 'Judul Banner'" />
           </el-form-item>
         </el-col>
         <el-col :span="5">
@@ -59,6 +59,10 @@ export default {
     listQuery: {
       type: Object,
       default: null
+    },
+    isPopUp: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
