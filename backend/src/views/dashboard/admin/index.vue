@@ -37,11 +37,11 @@
     <!-- Polling -->
     <h3 style="color:#73737">Top Berita</h3>
     <el-row>
-      <el-col>
-        <TopBerita :list="listNewsProvinsi" />
+      <el-col :xs="{span: 12}" :sm="{span: 12}" :md="{span: 12}" :lg="{span: 12}" :xl="{span: 12}">
+        <TopBerita :list="listNewsProvinsi" judul="Berita Jawa Barat" />
       </el-col>
-      <el-col>
-        <TopBerita :list="listNewsKoKab" />
+      <el-col :xs="{span: 12}" :sm="{span: 12}" :md="{span: 12}" :lg="{span: 12}" :xl="{span: 12}">
+        <TopBerita :list="listNewsKoKab" judul="Berita Kota/Kabupaten" />
       </el-col>
     </el-row>
   </div>
