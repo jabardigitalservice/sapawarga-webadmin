@@ -46,17 +46,17 @@
             <el-form-item label="Kategori" prop="category_id">
               <InputCategory v-model="broadcast.category_id" category-type="broadcast" prop="category" />
             </el-form-item>
-            <el-form-item label="Jadwal" prop="schedule">
-              <el-radio-group v-model="broadcast.schedule" name="jadwal">
-                <el-radio-button label="sekarang">Sekarang</el-radio-button>
-                <el-radio-button label="terjadwal">Terjadwal</el-radio-button>
+            <el-form-item label="Jadwal" prop="is_scheduled">
+              <el-radio-group v-model="broadcast.is_scheduled" name="jadwal">
+                <el-radio-button :label="false">Sekarang</el-radio-button>
+                <el-radio-button :label="true">Terjadwal</el-radio-button>
               </el-radio-group>
             </el-form-item>
-            <el-form-item v-if="broadcast.schedule === 'terjadwal'" label="Tanggal dan Waktu" prop="datetime">
+            <el-form-item v-if="broadcast.is_scheduled === true" label="Tanggal dan Waktu" prop="scheduled_datetime">
               <el-date-picker
-                v-model="broadcast.datetime"
+                v-model="broadcast.scheduled_datetime"
                 type="datetime"
-                format="dd-MM-yyyy HH:mm"
+                format="yyyy-MM-dd HH:mm:ss"
                 :editable="true"
                 placeholder="Pilih Tanggal dan Waktu"
               />
@@ -85,6 +85,8 @@ import InputCategory from '@/components/InputCategory'
 import InputSelectArea from '@/components/InputSelectArea'
 import { create, fetchRecord, update } from '@/api/broadcast'
 import { containsWhitespace } from '@/utils/validate'
+import moment from 'moment'
+
 export default {
   components: {
     InputCategory,
@@ -126,8 +128,8 @@ export default {
         title: null,
         category_id: null,
         description: null,
-        schedule: 'sekarang',
-        datetime: null
+        is_scheduled: false,
+        scheduled_datetime: null
       },
       rules: {
         title: [
@@ -194,14 +196,14 @@ export default {
             trigger: 'change'
           }
         ],
-        schedule: [
+        is_scheduled: [
           {
             required: true,
             message: 'Jadwal harus diisi',
             trigger: 'blur'
           }
         ],
-        datetime: [
+        scheduled_datetime: [
           {
             required: true,
             message: 'Tanggal dan waktu harus diisi',
@@ -234,9 +236,9 @@ export default {
       this.resetRw()
     },
 
-    'broadcast.schedule'() {
-      if (this.broadcast.schedule === 'sekarang') {
-        this.broadcast.datetime = null
+    'broadcast.is_scheduled'() {
+      if (this.broadcast.is_scheduled === false) {
+        this.broadcast.scheduled_datetime = null
       }
     }
   },
@@ -289,6 +291,7 @@ export default {
         Object.assign(data, this.broadcast)
 
         data.status = status
+        data.scheduled_datetime = moment(this.broadcast.scheduled_datetime).format('YYYY-MM-DD HH:mm:ss')
 
         if (this.isEdit) {
           const id = this.$route.params && this.$route.params.id
@@ -300,6 +303,7 @@ export default {
           this.$router.push('/broadcast/index')
         } else {
           await create(data)
+          console.log(data)
           if (status === 10) {
             this.$message.success(this.$t('crud.send-success'))
             this.$router.push('/broadcast/index')
