@@ -25,7 +25,7 @@
               />
             </el-form-item>
             <el-form-item class="rw" prop="rw">
-              <el-input v-model="polling.rw" placeholder="Semua RW" type="text" :disabled="polling.kel_id === null" />
+              <el-input v-model="polling.rw" placeholder="Semua RW" type="text" name="rw" :disabled="polling.kel_id === null" />
             </el-form-item>
           </el-form>
         </div>
@@ -43,31 +43,22 @@
             :disabled="isEdit === true && checkStatus !== 0"
           >
             <el-form-item label="Nama Polling" prop="name">
-              <el-input v-model="polling.name" type="text" placeholder="Nama Polling" />
+              <el-input v-model="polling.name" type="text" name="title-polling" placeholder="Nama Polling" />
             </el-form-item>
             <el-form-item label="Kategori" prop="category_id">
-              <InputCategory v-model="polling.category_id" category-type="polling" prop="category" />
+              <InputCategory v-model="polling.category_id" name="category_id" category-type="polling" prop="category" />
             </el-form-item>
             <el-form-item label="Deskripsi" prop="description">
-              <el-input
-                v-model="polling.description"
-                type="textarea"
-                :rows="4"
-                placeholder="Deskripsi"
-              />
+              <el-input v-model="polling.description" type="textarea" name="description-polling" :rows="4" placeholder="Deskripsi" />
             </el-form-item>
             <el-form-item label="Pengantar" prop="excerpt">
-              <el-input
-                v-model="polling.excerpt"
-                type="textarea"
-                :rows="4"
-                placeholder="Pengantar"
-              />
+              <el-input v-model="polling.excerpt" type="textarea" name="excerpt-polling" :rows="4" placeholder="Pengantar" />
             </el-form-item>
             <el-form-item label="Dimulai dari" prop="">
               <el-date-picker
                 v-model="start_date"
                 type="date"
+                name="start_date"
                 :editable="false"
                 :clearable="false"
                 format="dd-MM-yyyy"
@@ -78,6 +69,7 @@
               <el-date-picker
                 v-model="end_date"
                 type="date"
+                name="end_date"
                 :editable="false"
                 :clearable="false"
                 format="dd-MM-yyyy"
@@ -86,11 +78,11 @@
             </el-form-item>
 
             <el-form-item label="Pertanyaan" prop="question">
-              <el-input v-model="polling.question" type="text" placeholder="Pertanyaan" />
+              <el-input v-model="polling.question" type="text" name="question" placeholder="Pertanyaan" />
             </el-form-item>
 
             <el-form-item v-if="!isEdit" label="Tipe Pertanyaan" prop="question_type">
-              <el-radio-group v-model="question_type">
+              <el-radio-group v-model="question_type" name="answer">
                 <el-radio label="yesNo" @change="selectAnswer('yes')">Ya / Tidak</el-radio>
                 <el-radio label="multiple" @change="selectAnswer('multiple')">Multiple</el-radio>
                 <el-radio label="custome" @change="selectAnswer('custome')">Custom</el-radio>
@@ -107,7 +99,7 @@
               >
                 <el-row>
                   <el-col :sm="18" :md="18" :lg="20" :xl="20">
-                    <el-input v-model="answer.body" type="text" placeholder="Jawaban" />
+                    <el-input v-model="answer.body" type="text" name="answer-option" placeholder="Jawaban" />
                   </el-col>
                   <el-col :sm="4" :md="4" :lg="4" :xl="4">
                     <el-button type="danger" class="answer" size="mini" icon="el-icon-delete" style="margin-top:3px" @click.prevent="removeAnswer(answer)" />
@@ -436,12 +428,14 @@ export default {
           const id = this.$route.params && this.$route.params.id
 
           await update(id, data)
+          console.log(data.answers.length)
 
           this.$message.info(this.$t('crud.draft-polling-success'))
 
           this.$router.push('/polling/index')
         } else {
           await create(data)
+          console.log(data.answers.length)
           if (status === 10) {
             this.$message.success(this.$t('crud.send-polling-success'))
             this.$router.push('/polling/index')
