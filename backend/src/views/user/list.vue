@@ -14,7 +14,7 @@
             </router-link>
           </el-col>
           <el-col v-if="checkPermission(['admin', 'staffProv'])" :span="19" align="right">
-            <el-button type="primary" size="small" @click="exportData">Unduh Data</el-button>
+            <el-button type="primary" size="small" @click="exportDataURL">Unduh Data</el-button>
             <el-button type="primary" size="small" @click="openDialog(`import`)">Import Data</el-button>
           </el-col>
         </el-row>
@@ -47,7 +47,7 @@
             <el-radio v-model="radio" label="1" border size="medium">CSV</el-radio><br><br>
             <el-radio v-model="radio" label="2" border size="medium">Excel</el-radio>
             <div slot="footer" class="dialog-footer" align="left" style="padding-top: 20px;">
-              <el-button type="primary" size="small" @click="exportData">Download</el-button>
+              <el-button type="primary" size="small" @click="getDataExport">Download</el-button>
               <el-button type="info" size="small" @click="closeDialog">Batal</el-button>
             </div>
           </div>
@@ -111,7 +111,7 @@
 </template>
 
 <script>
-import { fetchList, activate, deactivate, totalUser } from '@/api/staff'
+import { fetchList, activate, deactivate, totalUser, fetchExport } from '@/api/staff'
 import { getToken } from '@/utils/auth'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 import PanelGroup from './components/PanelGroup'
@@ -326,20 +326,26 @@ export default {
       this.$refs.upload.submit()
     },
 
-    exportData() {
-      const url = new URL(process.env.VUE_APP_BASE_API + 'staff/export')
-      Object.keys(this.listQuery).forEach(key => url.searchParams.append(key, this.listQuery[key]))
+    exportDataURL() {
+      fetchExport(this.listQuery).then(response => {
+        let name_file = response.data.split('/')
+        this.getDataExport(response.data, name_file[2])
+      })
+    },
+
+    getDataExport(url, name_file) {
       fetch(url, {
         headers: new Headers({
           'Authorization': 'Bearer ' + getToken()
         })
       }).then(resp => resp.blob())
         .then(blob => {
+          console.log(blob)
           const url = window.URL.createObjectURL(blob)
           const a = document.createElement('a')
           a.style.display = 'none'
           a.href = url
-          a.download = 'pengguna.csv'
+          a.download = name_file
           document.body.appendChild(a)
           a.click()
           window.URL.revokeObjectURL(url)
