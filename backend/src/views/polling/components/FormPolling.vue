@@ -398,12 +398,15 @@ export default {
         this.polling.rw = null
       }
 
-      for (let i = 0; i < this.polling.answers.length; i++) {
-        if (this.polling.answers[i].body === '') {
-          this.$message.error(this.$t('errors.polling-answer-null'))
-          return
-        } else {
-          if (this.polling.answers.length < 2) {
+      if (this.polling.answers.length === 0) {
+        this.$message.error(this.$t('errors.polling-answer-null'))
+        return
+      } else {
+        for (let i = 0; i < this.polling.answers.length; i++) {
+          if (this.polling.answers[i].body === '') {
+            this.$message.error(this.$t('errors.polling-answer-null'))
+            return
+          } else if (this.polling.answers.length < 2) {
             this.$message.error(this.$t('errors.polling-answer-less-then-2'))
             return
           }
