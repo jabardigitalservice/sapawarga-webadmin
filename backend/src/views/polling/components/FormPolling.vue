@@ -428,14 +428,13 @@ export default {
           const id = this.$route.params && this.$route.params.id
 
           await update(id, data)
-          console.log(data.answers.length)
 
           this.$message.info(this.$t('crud.draft-polling-success'))
 
           this.$router.push('/polling/index')
         } else {
           await create(data)
-          console.log(data.answers.length)
+
           if (status === 10) {
             this.$message.success(this.$t('crud.send-polling-success'))
             this.$router.push('/polling/index')
