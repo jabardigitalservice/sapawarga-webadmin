@@ -56,7 +56,7 @@
               <el-date-picker
                 v-model="broadcast.scheduled_datetime"
                 type="datetime"
-                format="yyyy-MM-dd HH:mm:ss"
+                format="dd-MM-yyyy HH:mm:ss"
                 :editable="true"
                 placeholder="Pilih Tanggal dan Waktu"
               />
