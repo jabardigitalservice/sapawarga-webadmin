@@ -34,30 +34,31 @@
           <el-form-item class="waktu-publikasi" label="Waktu Publikasi">
             <el-row :gutter="10" type="flex">
               <el-col :span="10">
-                <!-- <span class="demonstration">Tanggal Mulai</span> -->
                 <el-date-picker
                   v-model="popup.start_date"
                   class="pop-up-date"
-                  type="datetime"
+                  type="date"
+                  format="yyyy-MM-dd"
                   placeholder="Tanggal Mulai"
                 />
               </el-col>
               <el-col :span="10">
-                <!-- <span class="demonstration">Tanggal Berakhir</span> -->
                 <el-date-picker
                   v-model="popup.end_date"
                   class="pop-up-date"
-                  type="datetime"
+                  type="date"
+                  format="yyyy-MM-dd"
                   placeholder="Tanggal Berakhir"
                 />
               </el-col>
             </el-row>
           </el-form-item>
-          <el-form-item label="Status" prop="status">
-            <el-radio-group v-model="popup.status" :fill="statusColor" name="status">
-              <el-radio-button :label="0">Tidak Aktif</el-radio-button>
-              <el-radio-button :label="10">Aktif</el-radio-button>
-            </el-radio-group>
+          <el-form-item label="Deskripsi">
+            <el-input
+              v-model="popup.description"
+              type="textarea"
+              :rows="2"
+            />
           </el-form-item>
           <el-form-item style="margin-top:50px">
             <el-button v-if="isEdit" type="primary" :loading="loading" @click="submitForm">{{ $t('crud.save-update') }}</el-button>
@@ -116,7 +117,7 @@ export default {
         internal_entity_name: null,
         start_date: null,
         end_date: null,
-        status: 0
+        description: null
       },
       dialogName: null,
       showDialog: false,
@@ -156,13 +157,6 @@ export default {
           },
           {
             validator: validatorUrl,
-            trigger: 'blur'
-          }
-        ],
-        status: [
-          {
-            required: true,
-            message: 'Status harus diisi',
             trigger: 'blur'
           }
         ],
@@ -290,7 +284,6 @@ export default {
         }
       } catch (e) {
         const imageError = e.response.data.data[0].field
-        console.log(imageError)
         if (imageError === 'image_path') {
           this.$message.error(this.$t('errors.popup-image-null'))
         }

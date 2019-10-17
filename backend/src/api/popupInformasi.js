@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function fetchList(query) {
   return request({
-    url: '/pop-up-informasi',
+    url: '/popups',
     method: 'get',
     params: query
   })
@@ -10,14 +10,14 @@ export function fetchList(query) {
 
 export function fetchRecord(id) {
   return request({
-    url: `/pop-up-informasi/${id}`,
+    url: `/popups/${id}`,
     method: 'get'
   })
 }
 
 export function create(data) {
   return request({
-    url: '/pop-up-informasi',
+    url: '/popups',
     method: 'post',
     data
   })
@@ -25,7 +25,7 @@ export function create(data) {
 
 export function update(id, data) {
   return request({
-    url: `/pop-up-informasi/${id}`,
+    url: `/popups/${id}`,
     method: 'put',
     data
   })
@@ -33,14 +33,14 @@ export function update(id, data) {
 
 export function deleteData(id) {
   return request({
-    url: `/pop-up-informasi/${id}`,
+    url: `/popups/${id}`,
     method: 'delete'
   })
 }
 
 export function deactivate(id) {
   return request({
-    url: `/pop-up-informasi/${id}`,
+    url: `/popups/${id}`,
     method: 'put',
     data: {
       status: 0
@@ -50,7 +50,7 @@ export function deactivate(id) {
 
 export function activate(id) {
   return request({
-    url: `/pop-up-informasi/${id}`,
+    url: `/popups/${id}`,
     method: 'put',
     data: {
       status: 10
