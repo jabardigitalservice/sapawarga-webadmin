@@ -92,14 +92,14 @@ export default {
       const { start_date, status } = record
 
       const dateStart = moment(start_date).startOf('day')
-      const iscurrentDate = dateStart.isSame(new Date(), 'day')
+      const isCurrentDate = dateStart.isSame(new Date(), 'day')
 
-      if (iscurrentDate) {
+      if (isCurrentDate) {
         this.btnDisableDate = true
       }
 
-      if ((status !== 10) && (!iscurrentDate)) {
-        this.$message.error('Untuk melakukan publikasi survei, tanggal mulai dan tanggal berakhir harus diubah')
+      if ((status !== 10) && (!isCurrentDate)) {
+        this.$message.error(this.$t('errors.survey-change-date'))
       }
     },
 
