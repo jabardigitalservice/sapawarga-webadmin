@@ -58,7 +58,9 @@
             </el-form-item>
 
             <div v-if="question_type === 'custome'">
-              <el-form-item v-for="(answer) in polling.answers" :key="answer.id"
+              <el-form-item
+                v-for="(answer) in polling.answers"
+                :key="answer.id"
                 :rules="{
                   required: true, message: 'Jawaban harus diisi', trigger: 'blur'
                 }"
