@@ -37,8 +37,8 @@
                 <el-date-picker
                   v-model="popup.start_date"
                   class="pop-up-date"
-                  type="date"
-                  format="yyyy-MM-dd"
+                  type="datetime"
+                  format="yyyy-MM-dd HH:mm"
                   placeholder="Tanggal Mulai"
                 />
               </el-col>
@@ -46,8 +46,8 @@
                 <el-date-picker
                   v-model="popup.end_date"
                   class="pop-up-date"
-                  type="date"
-                  format="yyyy-MM-dd"
+                  type="datetime"
+                  format="yyyy-MM-dd HH:mm"
                   placeholder="Tanggal Berakhir"
                 />
               </el-col>
@@ -171,6 +171,27 @@ export default {
           {
             required: true,
             message: 'Judul harus diisi',
+            trigger: 'blur'
+          }
+        ],
+        start_date: [
+          {
+            required: true,
+            message: 'Tanggal Mulai harus diisi',
+            trigger: 'blur'
+          }
+        ],
+        end_date: [
+          {
+            required: true,
+            message: 'Tanggal Berakhir harus diisi',
+            trigger: 'blur'
+          }
+        ],
+        description: [
+          {
+            required: true,
+            message: 'Deskripsi harus diisi',
             trigger: 'blur'
           }
         ]
