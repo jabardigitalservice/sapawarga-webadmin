@@ -89,26 +89,17 @@ export default {
     },
 
     checkStartDate(record) {
-      const { start_date, end_date, status } = record
+      const { start_date, status } = record
 
       const dateStart = moment(start_date).startOf('day')
-      const dateSecond = moment(end_date).endOf('day')
       const iscurrentDate = dateStart.isSame(new Date(), 'day')
-      const currentDate = moment()
 
-      const checkStartDate = currentDate - dateStart
-      const distance = dateSecond - currentDate
-
-      if (checkStartDate < 0) {
+      if (iscurrentDate) {
         this.btnDisableDate = true
       }
 
       if ((status !== 10) && (!iscurrentDate)) {
         this.$message.error('Untuk melakukan publikasi survei, tanggal mulai dan tanggal berakhir harus diubah')
-      }
-
-      if (distance < 0) {
-        this.btnDisableDate = true
       }
     },
 
