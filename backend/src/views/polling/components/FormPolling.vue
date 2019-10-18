@@ -4,15 +4,7 @@
       <el-col :sm="24" :md="10" :lg="10" :xl="12">
         <p class="warn-content">Target</p>
         <div class="polling-target">
-          <el-form
-            ref="polling"
-            :model="polling"
-            label-width="150px"
-            label-position="left"
-            :rules="rules"
-            :status-icon="true"
-            :disabled="isEdit === true && checkStatus !== 0"
-          >
+          <el-form ref="polling" :model="polling" label-width="150px" label-position="left" :rules="rules" :status-icon="true" :disabled="isEdit === true && checkStatus !== 0">
             <el-form-item label="Wilayah" prop="wilayah">
               <InputSelectArea
                 :kabkota-id="polling.kabkota_id"
@@ -33,15 +25,7 @@
       <el-col :sm="24" :md="14" :lg="14" :xl="12">
         <p class="warn-content">Data Polling</p>
         <div class="polling-message">
-          <el-form
-            ref="polling"
-            :model="polling"
-            :rules="rules"
-            label-width="150px"
-            label-position="left"
-            :status-icon="true"
-            :disabled="isEdit === true && checkStatus !== 0"
-          >
+          <el-form ref="polling" :model="polling" :rules="rules" label-width="150px" label-position="left" :status-icon="true" :disabled="isEdit === true && checkStatus !== 0">
             <el-form-item label="Nama Polling" prop="name">
               <el-input v-model="polling.name" type="text" name="title-polling" placeholder="Nama Polling" />
             </el-form-item>
@@ -55,26 +39,10 @@
               <el-input v-model="polling.excerpt" type="textarea" name="excerpt-polling" :rows="4" placeholder="Pengantar" />
             </el-form-item>
             <el-form-item label="Dimulai dari" prop="">
-              <el-date-picker
-                v-model="start_date"
-                type="date"
-                name="start_date"
-                :editable="false"
-                :clearable="false"
-                format="dd-MM-yyyy"
-                placeholder="Pilih tanggal"
-              />
+              <el-date-picker v-model="start_date" type="date" name="start_date" :editable="false" :clearable="false" format="dd-MM-yyyy" placeholder="Pilih tanggal" />
             </el-form-item>
             <el-form-item label="Sampai" prop="">
-              <el-date-picker
-                v-model="end_date"
-                type="date"
-                name="end_date"
-                :editable="false"
-                :clearable="false"
-                format="dd-MM-yyyy"
-                placeholder="Pilih tanggal"
-              />
+              <el-date-picker v-model="end_date" type="date" name="end_date" :editable="false" :clearable="false" format="dd-MM-yyyy" placeholder="Pilih tanggal" />
             </el-form-item>
 
             <el-form-item label="Pertanyaan" prop="question">
