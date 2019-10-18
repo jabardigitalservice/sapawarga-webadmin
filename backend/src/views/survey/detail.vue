@@ -41,37 +41,22 @@ export default {
       btnDisableDate: false
     }
   },
-  created() {
-    const id = this.$route.params && this.$route.params.id
-    this.getDetail(id)
+  async created() {
+    const id = await this.$route.params && this.$route.params.id
+    await this.getDetail(id)
   },
   methods: {
-    getDetail(id) {
-      fetchRecord(id).then(response => {
+    async getDetail(id) {
+      await fetchRecord(id).then((response) => {
         const { title, category, start_date, end_date, external_url, status, status_label } = response.data
-
         this.record = response.data
+        this.checkStartDate(response.data)
 
         const row = {
           start_date: start_date,
           end_date: end_date,
           status: status,
           status_label: status_label
-        }
-
-        const dateStart = moment(start_date).startOf('day')
-        const dateSecond = moment(end_date).endOf('day')
-        const currentDate = moment()
-
-        const checkStartDate = currentDate - dateStart
-        const distance = dateSecond - currentDate
-
-        if (checkStartDate < 0) {
-          this.btnDisableDate = true
-        }
-
-        if (distance < 0) {
-          this.btnDisableDate = true
         }
 
         this.tableDataRecord = [
@@ -101,6 +86,30 @@ export default {
           }
         ]
       })
+    },
+
+    checkStartDate(record) {
+        const { start_date, end_date, status } = record
+
+        const dateStart = moment(start_date).startOf('day')
+        const dateSecond = moment(end_date).endOf('day')
+        const iscurrentDate = dateStart.isSame(new Date(), "day")
+        const currentDate = moment()
+
+        const checkStartDate = currentDate - dateStart
+        const distance = dateSecond - currentDate
+
+        if (checkStartDate < 0) {
+          this.btnDisableDate = true
+        }
+
+        if ((status !== 10) && (!iscurrentDate)) {
+          this.$message.error('Untuk melakukan publikasi survei, tanggal mulai dan tanggal berakhir harus diubah')
+        }
+
+        if (distance < 0) {
+          this.btnDisableDate = true
+        }
     },
 
     async submitForm() {
