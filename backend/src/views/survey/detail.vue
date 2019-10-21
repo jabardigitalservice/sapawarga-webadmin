@@ -30,8 +30,7 @@
 <script>
 import moment from 'moment'
 import { fetchRecord, update } from '@/api/survey'
-import { describedStatus } from '@/utils'
-import { getStatusColor, getStatusLabel } from './status'
+import { getStatusColor, getStatusLabel, describedStatus } from './status'
 
 export default {
   data() {
@@ -95,7 +94,7 @@ export default {
       const isStartedToday = dateStart.isSame(new Date(), 'day')
 
       // jika status sama dengan draft dan tanggal mulai sama dengan hari ini
-      if ((describedStatus(0) === 'draft') && (isStartedToday)) {
+      if ((describedStatus(status) === 'draft') && (isStartedToday)) {
         this.btnDisableDate = false
       // jika status bukan sama dengan active dan tanggal mulai tidak sama dengan hari ini
       } else if (!isStartedToday) {

@@ -43,3 +43,14 @@ export function getStatusLabel(row) {
 
   return row.status_label
 }
+
+export function describedStatus(status) {
+  const draft = 0
+  const active = 10
+  if (status === draft) {
+    return 'draft'
+  }
+  if (status === active) {
+    return 'active'
+  }
+}
