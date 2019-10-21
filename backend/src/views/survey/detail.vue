@@ -94,9 +94,13 @@ export default {
       const dateStart = moment(start_date).startOf('day')
       const isSameDate = dateStart.isSame(new Date(), 'day')
 
+      // status 0 = Draft
+      // status 10 = Active
+      // jika status sama dengan 0 dan tanggal mulai sama dengan hari ini
       if ((status === 0) && (isSameDate)) {
         this.btnDisableDate = false
-      }else if ((status !== 10) && (!isSameDate)) {
+      // jika status bukan sama dengan 10 dan tanggal mulai tidak sama dengan hari ini
+      } else if ((status !== 10) && (!isSameDate)) {
         this.btnDisableDate = true
         this.$message.warning(this.$t('errors.survey-change-date'))
       } else {
