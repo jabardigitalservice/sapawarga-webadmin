@@ -34,7 +34,7 @@ export function fetchLatestPolling(query) {
 
 export function fetchTopFiveNewsProv(query) {
   return request({
-    url: 'dashboards/polling-latest',
+    url: 'dashboards/news-most-likes',
     method: 'get',
     params: query
   })
@@ -42,7 +42,7 @@ export function fetchTopFiveNewsProv(query) {
 
 export function fetchTopFiveNewsDistricts(query) {
   return request({
-    url: 'dashboards/polling-latest',
+    url: 'dashboards/news-most-likes',
     method: 'get',
     params: query
   })

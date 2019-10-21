@@ -11,10 +11,10 @@
         <template slot-scope="{row}">
           <el-row>
             <el-col :span="3">
-              <img :src="row.cover_path_url" style="width: 28px;border-radius: 50%;">
+              <img :src="row.cover_path_url" style="width: 40px;border-radius: 25%;">
             </el-col>
             <el-col :span="10">
-              <div class="title-top-berita cell" style="using display:table-cell; vertical-align:middle;padding-left: 10px;width: 200px;">
+              <div class="title-top-berita cell" style="using display:table-cell; vertical-align:middle;padding-left: 20px;width: 200px;">
                 <span>{{ row.title }}</span>
               </div>
             </el-col>

@@ -102,16 +102,16 @@ export default {
   methods: {
     getListProvinsi() {
       this.listLoading = true
-      fetchTopFiveNewsProv().then(response => {
-        this.listNewsProvinsi = response.data.items
+      fetchTopFiveNewsProv({location:'provinsi'}).then(response => {
+        this.listNewsProvinsi = response.data
         this.listLoading = false
       })
     },
 
     getLisKoKab() {
       this.listLoading = true
-      fetchTopFiveNewsDistricts().then(response => {
-        this.listNewsKoKab = response.data.items
+      fetchTopFiveNewsDistricts({location:'kotkab'}).then(response => {
+        this.listNewsKoKab = response.data
         this.listLoading = false
       })
     },
