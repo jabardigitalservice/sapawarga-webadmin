@@ -30,7 +30,7 @@
 <script>
 import moment from 'moment'
 import { fetchRecord, update } from '@/api/survey'
-
+import { describedStatus } from '@/utils'
 import { getStatusColor, getStatusLabel } from './status'
 
 export default {
@@ -92,15 +92,13 @@ export default {
       const { start_date, status } = record
 
       const dateStart = moment(start_date).startOf('day')
-      const isSameDate = dateStart.isSame(new Date(), 'day')
+      const isStartedToday = dateStart.isSame(new Date(), 'day')
 
-      // status 0 = Draft
-      // status 10 = Active
-      // jika status sama dengan 0 dan tanggal mulai sama dengan hari ini
-      if ((status === 0) && (isSameDate)) {
+      // jika status sama dengan draft dan tanggal mulai sama dengan hari ini
+      if ((describedStatus(0) === 'draft') && (isStartedToday)) {
         this.btnDisableDate = false
-      // jika status bukan sama dengan 10 dan tanggal mulai tidak sama dengan hari ini
-      } else if ((status !== 10) && (!isSameDate)) {
+      // jika status bukan sama dengan active dan tanggal mulai tidak sama dengan hari ini
+      } else if (!isStartedToday) {
         this.btnDisableDate = true
         this.$message.warning(this.$t('errors.survey-change-date'))
       } else {

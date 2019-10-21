@@ -2,6 +2,16 @@
  * Created by jiachenpan on 16/11/18.
  */
 
+export function describedStatus(status) {
+  const draft = 0
+  const active = 10
+  if (status === draft) {
+    return 'draft'
+  } else {
+    return 'active'
+  }
+}
+
 export function parseTime(time, cFormat) {
   if (arguments.length === 0) {
     return null
