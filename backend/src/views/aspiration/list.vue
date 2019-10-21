@@ -22,16 +22,14 @@
 
           <el-table-column prop="created_at" sortable="custom" label="Dibuat" align="center" min-width="125">
             <template slot-scope="{row}">
-              {{ row.created_at | moment('D MMMM YYYY') }}
+              {{ row.created_at | moment('D MMM YYYY HH:mm') }}
             </template>
           </el-table-column>
 
           <el-table-column align="center" label="Actions" width="150px">
             <template slot-scope="scope">
               <router-link :to="'/aspirasi/detail/'+scope.row.id">
-                <el-button type="white" size="medium">
-                  Lihat
-                </el-button>
+                <el-button type="primary" icon="el-icon-view" size="small">Lihat</el-button>
               </router-link>
             </template>
           </el-table-column>
