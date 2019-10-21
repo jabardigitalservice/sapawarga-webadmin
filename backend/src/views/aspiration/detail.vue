@@ -139,7 +139,7 @@ export default {
           },
           {
             title: 'Tanggal Update',
-            content: '22 Okt 2019 22:30' //nunggu response dari API
+            content: '22 Okt 2019 22:30' // nunggu response dari API
           }
         ]
 

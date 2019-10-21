@@ -38,12 +38,12 @@
             <template slot-scope="scope">
               <router-link :to="'/polling/detail/'+scope.row.id">
                 <el-tooltip content="Lihat Polling" placement="top">
-                  <el-button type="primary" icon="el-icon-view" size="mini"></el-button>
+                  <el-button type="primary" icon="el-icon-view" size="mini" />
                 </el-tooltip>
               </router-link>
               <router-link :to="(scope.row.status !== 10 ? '/polling/edit/'+scope.row.id : '')">
                 <el-tooltip content="Edit Polling" placement="top">
-                  <el-button type="warning" icon="el-icon-edit" size="mini" :disabled="scope.row.status === 10"></el-button>
+                  <el-button type="warning" icon="el-icon-edit" size="mini" :disabled="scope.row.status === 10" />
                 </el-tooltip>
               </router-link>
             </template>
