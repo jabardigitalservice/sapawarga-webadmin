@@ -291,12 +291,18 @@ export default {
         Object.assign(data, this.broadcast)
 
         data.status = status
-        data.scheduled_datetime = moment(this.broadcast.scheduled_datetime).format('YYYY-MM-DD HH:mm:ss')
+
+        if (data.is_scheduled === true) {
+          data.scheduled_datetime = moment(this.broadcast.scheduled_datetime).unix()
+        } else {
+          data.scheduled_datetime === null
+        }
 
         if (this.isEdit) {
           const id = this.$route.params && this.$route.params.id
 
           await update(id, data)
+          console.log(data)
 
           this.$message.info(this.$t('crud.draft-success'))
 
