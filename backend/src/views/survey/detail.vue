@@ -46,8 +46,8 @@ export default {
     await this.getDetail(id)
   },
   methods: {
-    async getDetail(id) {
-      await fetchRecord(id).then((response) => {
+    getDetail(id) {
+      fetchRecord(id).then((response) => {
         const { title, category, start_date, end_date, external_url, status, status_label } = response.data
         this.record = response.data
         this.checkStartDate(response.data)
@@ -92,14 +92,15 @@ export default {
       const { start_date, status } = record
 
       const dateStart = moment(start_date).startOf('day')
-      const isCurrentDate = dateStart.isSame(new Date(), 'day')
+      const isSameDate = dateStart.isSame(new Date(), 'day')
 
-      if (isCurrentDate) {
+      if ((status === 0) && (isSameDate)) {
+        this.btnDisableDate = false
+      }else if ((status !== 10) && (!isSameDate)) {
         this.btnDisableDate = true
-      }
-
-      if ((status !== 10) && (!isCurrentDate)) {
-        this.$message.error(this.$t('errors.survey-change-date'))
+        this.$message.warning(this.$t('errors.survey-change-date'))
+      } else {
+        this.btnDisableDate = true
       }
     },
 

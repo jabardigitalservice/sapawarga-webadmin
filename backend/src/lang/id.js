@@ -170,7 +170,7 @@ export default {
     'polling-answer-null': 'Tipe pertanyaan custom harus diisi',
     'survey-start-date': 'Tanggal mulai survei tidak boleh lebih kecil dari tanggal hari ini.',
     'survey-compare-date': 'Tanggal berakhir survei harus lebih besar dari tanggal mulai survei.',
-    'survey-change-date': 'Untuk melakukan publikasi survei, tanggal mulai dan tanggal berakhir harus diubah.',
+    'survey-change-date': 'Untuk melakukan publikasi survei, tanggal mulai harus diisi hari ini.',
 
     'news-image-null': 'Gambar tidak boleh kosong.',
     'banner-image-null': 'Gambar tidak boleh kosong.',
