@@ -17,34 +17,34 @@
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%" @sort-change="changeSort">
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
           <el-table-column prop="name" sortable="custom" label="Nama Polling" min-width="250" />
-          <el-table-column prop="start_date" sortable="custom" label="Mulai" width="170" align="center">
+          <el-table-column prop="start_date" sortable="custom" label="Mulai" min-width="150" align="center">
             <template slot-scope="{row}">
-              {{ row.start_date | moment('D MMMM YYYY') }}
+              {{ row.start_date | moment('D MMM YYYY') }}
             </template>
           </el-table-column>
-          <el-table-column prop="end_date" sortable="custom" label="Berakhir" width="170" align="center">
+          <el-table-column prop="end_date" sortable="custom" label="Berakhir" min-width="150" align="center">
             <template slot-scope="{row}">
-              {{ row.end_date | moment('D MMMM YYYY') }}
+              {{ row.end_date | moment('D MMM YYYY') }}
             </template>
           </el-table-column>
-          <el-table-column prop="status" sortable="custom" class-name="status-col" label="Status" width="200">
+          <el-table-column prop="status" sortable="custom" class-name="status-col" label="Status" min-width="200">
             <template slot-scope="{row}">
               <el-tag :type="getStatusColor(row)">
                 {{ getStatusLabel(row) }}
               </el-tag>
             </template>
           </el-table-column>
-          <el-table-column align="center" label="Actions" width="250">
+          <el-table-column align="center" label="Actions" width="200">
             <template slot-scope="scope">
               <router-link :to="'/polling/detail/'+scope.row.id">
-                <el-button type="white" size="mini">
-                  View
-                </el-button>
+                <el-tooltip content="Lihat Polling" placement="top">
+                  <el-button type="primary" icon="el-icon-view" size="mini"></el-button>
+                </el-tooltip>
               </router-link>
               <router-link :to="(scope.row.status !== 10 ? '/polling/edit/'+scope.row.id : '')">
-                <el-button type="white" size="mini" :disabled="scope.row.status === 10">
-                  Edit
-                </el-button>
+                <el-tooltip content="Edit Polling" placement="top">
+                  <el-button type="warning" icon="el-icon-edit" size="mini" :disabled="scope.row.status === 10"></el-button>
+                </el-tooltip>
               </router-link>
             </template>
           </el-table-column>
