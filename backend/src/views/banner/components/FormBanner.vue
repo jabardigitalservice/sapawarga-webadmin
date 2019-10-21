@@ -182,7 +182,10 @@ export default {
     },
 
     'banner.internal_category'(newVal, oldVal) {
-      if (oldVal !== newVal) {
+      if (oldVal === null) {
+        this.banner.internal_entity_name
+        this.banner.internal_entity_id
+      } else if (oldVal !== newVal) {
         this.banner.internal_entity_name = null
         this.banner.internal_entity_id = null
       }

@@ -8,6 +8,7 @@
           filterable
           clearable
           placeholder="Semua Kabupaten/Kota"
+          name="kabkota"
           style="width: 100%"
           @change="changeSelection($event, 'changeKabkota')"
         >
@@ -29,6 +30,7 @@
           filterable
           clearable
           placeholder="Semua Kecamatan"
+          name="kecamatan"
           style="width: 100%"
           @change="changeSelection($event, 'changeKecamatan')"
         >
@@ -50,6 +52,7 @@
           filterable
           clearable
           placeholder="Semua Desa/Kelurahan"
+          name="kelurahan"
           style="width: 100%"
           @change="changeSelection($event, 'changeKelurahan')"
         >

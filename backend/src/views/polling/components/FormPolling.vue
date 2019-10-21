@@ -4,15 +4,7 @@
       <el-col :sm="24" :md="10" :lg="10" :xl="12">
         <p class="warn-content">Target</p>
         <div class="polling-target">
-          <el-form
-            ref="polling"
-            :model="polling"
-            label-width="150px"
-            label-position="left"
-            :rules="rules"
-            :status-icon="true"
-            :disabled="isEdit === true && checkStatus !== 0"
-          >
+          <el-form ref="polling" :model="polling" label-width="150px" label-position="left" :rules="rules" :status-icon="true" :disabled="isEdit === true && checkStatus !== 0">
             <el-form-item label="Wilayah" prop="wilayah">
               <InputSelectArea
                 :kabkota-id="polling.kabkota_id"
@@ -25,7 +17,7 @@
               />
             </el-form-item>
             <el-form-item class="rw" prop="rw">
-              <el-input v-model="polling.rw" placeholder="Semua RW" type="text" :disabled="polling.kel_id === null" />
+              <el-input v-model="polling.rw" placeholder="Semua RW" type="text" name="rw" :disabled="polling.kel_id === null" />
             </el-form-item>
           </el-form>
         </div>
@@ -33,64 +25,32 @@
       <el-col :sm="24" :md="14" :lg="14" :xl="12">
         <p class="warn-content">Data Polling</p>
         <div class="polling-message">
-          <el-form
-            ref="polling"
-            :model="polling"
-            :rules="rules"
-            label-width="150px"
-            label-position="left"
-            :status-icon="true"
-            :disabled="isEdit === true && checkStatus !== 0"
-          >
+          <el-form ref="polling" :model="polling" :rules="rules" label-width="150px" label-position="left" :status-icon="true" :disabled="isEdit === true && checkStatus !== 0">
             <el-form-item label="Nama Polling" prop="name">
-              <el-input v-model="polling.name" type="text" placeholder="Nama Polling" />
+              <el-input v-model="polling.name" type="text" name="title-polling" placeholder="Nama Polling" />
             </el-form-item>
             <el-form-item label="Kategori" prop="category_id">
-              <InputCategory v-model="polling.category_id" category-type="polling" prop="category" />
+              <InputCategory v-model="polling.category_id" name="category_id" category-type="polling" prop="category" />
             </el-form-item>
             <el-form-item label="Deskripsi" prop="description">
-              <el-input
-                v-model="polling.description"
-                type="textarea"
-                :rows="4"
-                placeholder="Deskripsi"
-              />
+              <el-input v-model="polling.description" type="textarea" name="description-polling" :rows="4" placeholder="Deskripsi" />
             </el-form-item>
             <el-form-item label="Pengantar" prop="excerpt">
-              <el-input
-                v-model="polling.excerpt"
-                type="textarea"
-                :rows="4"
-                placeholder="Pengantar"
-              />
+              <el-input v-model="polling.excerpt" type="textarea" name="excerpt-polling" :rows="4" placeholder="Pengantar" />
             </el-form-item>
             <el-form-item label="Dimulai dari" prop="">
-              <el-date-picker
-                v-model="start_date"
-                type="date"
-                :editable="false"
-                :clearable="false"
-                format="dd-MM-yyyy"
-                placeholder="Pilih tanggal"
-              />
+              <el-date-picker v-model="start_date" type="date" name="start_date" :editable="false" :clearable="false" format="dd-MM-yyyy" placeholder="Pilih tanggal" />
             </el-form-item>
             <el-form-item label="Sampai" prop="">
-              <el-date-picker
-                v-model="end_date"
-                type="date"
-                :editable="false"
-                :clearable="false"
-                format="dd-MM-yyyy"
-                placeholder="Pilih tanggal"
-              />
+              <el-date-picker v-model="end_date" type="date" name="end_date" :editable="false" :clearable="false" format="dd-MM-yyyy" placeholder="Pilih tanggal" />
             </el-form-item>
 
             <el-form-item label="Pertanyaan" prop="question">
-              <el-input v-model="polling.question" type="text" placeholder="Pertanyaan" />
+              <el-input v-model="polling.question" type="text" name="question" placeholder="Pertanyaan" />
             </el-form-item>
 
             <el-form-item v-if="!isEdit" label="Tipe Pertanyaan" prop="question_type">
-              <el-radio-group v-model="question_type">
+              <el-radio-group v-model="question_type" name="answer">
                 <el-radio label="yesNo" @change="selectAnswer('yes')">Ya / Tidak</el-radio>
                 <el-radio label="multiple" @change="selectAnswer('multiple')">Multiple</el-radio>
                 <el-radio label="custome" @change="selectAnswer('custome')">Custom</el-radio>
@@ -107,7 +67,7 @@
               >
                 <el-row>
                   <el-col :sm="18" :md="18" :lg="20" :xl="20">
-                    <el-input v-model="answer.body" type="text" placeholder="Jawaban" />
+                    <el-input v-model="answer.body" type="text" name="answer-option" placeholder="Jawaban" />
                   </el-col>
                   <el-col :sm="4" :md="4" :lg="4" :xl="4">
                     <el-button type="danger" class="answer" size="mini" icon="el-icon-delete" style="margin-top:3px" @click.prevent="removeAnswer(answer)" />
@@ -398,12 +358,15 @@ export default {
         this.polling.rw = null
       }
 
-      for (let i = 0; i < this.polling.answers.length; i++) {
-        if (this.polling.answers[i].body === '') {
-          this.$message.error(this.$t('errors.polling-answer-null'))
-          return
-        } else {
-          if (this.polling.answers.length < 2) {
+      if (this.polling.answers.length === 0) {
+        this.$message.error(this.$t('errors.polling-answer-null'))
+        return
+      } else {
+        for (let i = 0; i < this.polling.answers.length; i++) {
+          if (this.polling.answers[i].body === '') {
+            this.$message.error(this.$t('errors.polling-answer-null'))
+            return
+          } else if (this.polling.answers.length < 2) {
             this.$message.error(this.$t('errors.polling-answer-less-then-2'))
             return
           }
@@ -439,6 +402,7 @@ export default {
           this.$router.push('/polling/index')
         } else {
           await create(data)
+
           if (status === 10) {
             this.$message.success(this.$t('crud.send-polling-success'))
             this.$router.push('/polling/index')
