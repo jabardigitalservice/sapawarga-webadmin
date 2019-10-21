@@ -18,18 +18,18 @@
           <el-form-item v-if="popup.type === 'external'" label="Tautan" prop="link_url">
             <el-input v-model="popup.link_url" type="text" name="link_url" placeholder="URL Pop Up" />
           </el-form-item>
-          <el-form-item v-else label="Fitur" prop="internal_category">
-            <el-select v-model="popup.internal_category" placeholder="Pilih Kategori" name="fitur">
+          <el-form-item v-else label="Fitur" prop="internal_object_type">
+            <el-select v-model="popup.internal_object_type" placeholder="Pilih Kategori" name="fitur">
               <el-option label="Survei" value="survey" />
               <el-option label="Polling" value="polling" />
               <el-option label="Berita" value="news" />
             </el-select>
-            <span v-if="popup.internal_category !== null">
-              <el-button type="success" @click="dialog(popup.internal_category)">Pilihan</el-button>
+            <span v-if="popup.internal_object_type !== null">
+              <el-button type="success" @click="dialog(popup.internal_object_type)">Pilihan</el-button>
             </span>
           </el-form-item>
-          <el-form-item v-if="popup.type === 'internal'" :label="titleFitur" prop="internal_entity_name">
-            <el-input v-model="popup.internal_entity_name" disabled type="text" name="internal_entity_name" />
+          <el-form-item v-if="popup.type === 'internal'" :label="titleFitur" prop="internal_object_name">
+            <el-input v-model="popup.internal_object_name" disabled type="text" name="internal_object_name" />
           </el-form-item>
           <el-form-item class="waktu-publikasi" label="Waktu Publikasi">
             <el-row :gutter="10" type="flex">
@@ -38,7 +38,8 @@
                   v-model="popup.start_date"
                   class="pop-up-date"
                   type="datetime"
-                  format="yyyy-MM-dd HH:mm"
+                  format="yyyy-MM-dd HH:mm:ss"
+                  value-format="yyyy-MM-dd HH:mm:ss"
                   placeholder="Tanggal Mulai"
                 />
               </el-col>
@@ -47,7 +48,8 @@
                   v-model="popup.end_date"
                   class="pop-up-date"
                   type="datetime"
-                  format="yyyy-MM-dd HH:mm"
+                  format="yyyy-MM-dd HH:mm:ss"
+                  value-format="yyyy-MM-dd HH:mm:ss"
                   placeholder="Tanggal Berakhir"
                 />
               </el-col>
@@ -110,18 +112,18 @@ export default {
         title: null,
         image_path_url: null,
         image_path: null,
+        status: 10,
         type: 'external',
         link_url: null,
-        internal_category: null,
-        internal_entity_id: null,
-        internal_entity_name: null,
+        internal_object_type: null,
+        internal_object_id: null,
+        internal_object_name: null,
         start_date: null,
         end_date: null,
         description: null
       },
       dialogName: null,
       showDialog: false,
-      statusColor: '#F56C6C',
       titleFitur: null,
       titlePopup: null,
       rules: {
@@ -160,14 +162,14 @@ export default {
             trigger: 'blur'
           }
         ],
-        internal_category: [
+        internal_object_type: [
           {
             required: true,
             message: 'Fitur Pop Up harus diisi',
             trigger: 'blur'
           }
         ],
-        internal_entity_name: [
+        internal_object_name: [
           {
             required: true,
             message: 'Judul harus diisi',
@@ -207,29 +209,41 @@ export default {
 
   watch: {
     'popup.type'(val) {
-      if (this.popup.type === 'internal') {
-        this.popup.link_url = null
-      } else if (this.popup.type === 'external') {
-        this.popup.internal_category = null
-        this.popup.internal_entity_name = null
-        this.popup.internal_entity_id = null
+      if (this.isEdit) {
+        const id = this.$route.params && this.$route.params.id
+        if (this.popup.type === 'internal') {
+          fetchRecord(id).then(response => {
+            if (response.data.internal_object_type !== undefined) {
+              this.popup.internal_object_type = response.data.internal_object_type
+              this.popup.internal_object_name = response.data.internal_object_name
+              this.popup.internal_object_id = response.data.internal_object_id
+            } else {
+              this.popup.link_url = null
+            }
+          })
+        } else if (this.popup.type === 'external') {
+          fetchRecord(id).then(response => {
+            if (response.data.link_url !== undefined) {
+              this.popup.link_url = response.data.link_url
+            } else {
+              this.popup.internal_object_type = null
+              this.popup.internal_object_name = null
+              this.popup.internal_object_id = null
+            }
+          })
+        }
       }
     },
 
-    'popup.status'() {
-      this.popup.status === 10 ? this.statusColor = '#67C23A' : this.statusColor = '#F56C6C'
-    },
-
-    'popup.internal_category'(newVal, oldVal) {
+    'popup.internal_object_type'(newVal, oldVal) {
       if (oldVal !== newVal) {
-        // this.popup.internal_entity_name = null
-        this.popup.internal_entity_id = null
+        this.popup.internal_object_id = null
       }
 
-      if (this.popup.internal_category === 'survey') {
+      if (this.popup.internal_object_type === 'survey') {
         this.titleFitur = 'Judul Survei'
         this.titlePopup = 'Daftar Survei'
-      } else if (this.popup.internal_category === 'polling') {
+      } else if (this.popup.internal_object_type === 'polling') {
         this.titleFitur = 'Judul Polling'
         this.titlePopup = 'Daftar Polling'
       } else {
@@ -254,8 +268,8 @@ export default {
       this.popup.image_path = path
     },
     getData(value) {
-      this.popup.internal_entity_name = value.name !== undefined ? value.name : value.title
-      this.popup.internal_entity_id = value.id
+      this.popup.internal_object_name = value.name !== undefined ? value.name : value.title
+      this.popup.internal_object_id = value.id
     },
     dialogClose(value) {
       this.showDialog = value
@@ -266,9 +280,6 @@ export default {
 
         if (this.popup.created_by !== this.user_id) {
           this.$message.error(this.$t('crud.error-edit-role'))
-          this.$router.push('/popup-informasi/index')
-        } else if (this.popup.status === 10) {
-          this.$message.error(this.$t('crud.popup-error-edit-published'))
           this.$router.push('/popup-informasi/index')
         }
       }).catch(err => {
@@ -289,9 +300,9 @@ export default {
         if (data.type === 'internal') {
           data.link_url = null
         } else if (data.type === 'external') {
-          data.internal_category = null
-          data.internal_entity_id = null
-          data.internal_entity_name = null
+          data.internal_object_type = null
+          data.internal_object_id = null
+          data.internal_object_name = null
         }
         if (this.isEdit) {
           const id = this.$route.params && this.$route.params.id
@@ -306,7 +317,7 @@ export default {
       } catch (e) {
         const imageError = e.response.data.data[0].field
         if (imageError === 'image_path') {
-          this.$message.error(this.$t('errors.popup-image-null'))
+          this.$message.error(this.$t('errors.banner-image-null'))
         }
       } finally {
         this.loading = false

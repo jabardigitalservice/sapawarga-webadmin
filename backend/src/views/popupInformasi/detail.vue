@@ -38,7 +38,7 @@ export default {
   methods: {
     getDetail() {
       fetchRecord(this.id).then(response => {
-        const { title, status_label, link_url, internal_category, internal_entity_name, type } = response.data
+        const { title, status_label, link_url, internal_object_type, internal_object_name, type } = response.data
         this.popup = response.data
 
         this.tableDataPopUp = [
@@ -52,11 +52,11 @@ export default {
           },
           {
             title: 'Fitur',
-            content: internal_category || '-'
+            content: internal_object_type || '-'
           },
           {
             title: 'Judul Fitur',
-            content: internal_entity_name || '-'
+            content: internal_object_name || '-'
           },
           {
             title: 'Status',

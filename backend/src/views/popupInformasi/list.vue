@@ -34,19 +34,13 @@
                   <el-button type="primary" icon="el-icon-view" size="small" />
                 </el-tooltip>
               </router-link>
-              <router-link :to="(scope.row.status !== 10 && scope.row.created_by === user_id ? '/popup-informasi/edit/' +scope.row.id : '')">
+              <router-link :to="(scope.row.created_by === user_id ? '/popup-informasi/edit/' +scope.row.id : '')">
                 <el-tooltip content="Edit Pop-Up Informasi" placement="top">
-                  <el-button type="warning" icon="el-icon-edit" size="small" :disabled="scope.row.status === 10 || scope.row.created_by !== user_id" />
+                  <el-button type="warning" icon="el-icon-edit" size="small" :disabled="scope.row.created_by !== user_id" />
                 </el-tooltip>
               </router-link>
               <el-tooltip content="Hapus Pop-Up Informasi" placement="top">
-                <el-button type="danger" icon="el-icon-delete" size="small" :disabled="scope.row.status === 10 || scope.row.created_by !== user_id" @click="deletePopUpInformasi(scope.row.id)" />
-              </el-tooltip>
-              <el-tooltip content="Nonaktifkan Pop-Up Informasi" placement="top">
-                <el-button v-if="scope.row.status === 10" type="danger" icon="el-icon-circle-close" size="small" :disabled="scope.row.created_by !== user_id" @click="deactivateRecord(scope.row.id)" />
-              </el-tooltip>
-              <el-tooltip content="Aktifkan Pop-Up Informasi" placement="top">
-                <el-button v-if="scope.row.status === 0" type="success" icon="el-icon-circle-check" size="small" :disabled="scope.row.created_by !== user_id" @click="activateRecord(scope.row.id)" />
+                <el-button type="danger" icon="el-icon-delete" size="small" :disabled="scope.row.created_by !== user_id" @click="deletePopUpInformasi(scope.row.id)" />
               </el-tooltip>
             </template>
           </el-table-column>
@@ -66,7 +60,7 @@
 <script>
 import Pagination from '@/components/Pagination'
 import ListFilter from '@/views/banner/_listfilter'
-import { fetchList, deleteData, activate, deactivate } from '@/api/popupInformasi'
+import { fetchList, deleteData } from '@/api/popupInformasi'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -142,51 +136,6 @@ export default {
         this.$message({
           type: 'success',
           message: this.$t('crud.delete-success')
-        })
-
-        this.getList()
-      } catch (e) {
-        console.log(e)
-      }
-    },
-    async deactivateRecord(id) {
-      try {
-        await this.$confirm(this.$t('crud.deactivate-confirm'), 'Warning', {
-          confirmButtonText: this.$t('common.confirm'),
-          cancelButtonText: this.$t('common.cancel'),
-          type: 'warning'
-        })
-
-        this.listLoading = true
-
-        await deactivate(id)
-
-        this.$message({
-          type: 'success',
-          message: this.$t('crud.deactivate-success')
-        })
-
-        this.getList()
-      } catch (e) {
-        console.log(e)
-      }
-    },
-
-    async activateRecord(id) {
-      try {
-        await this.$confirm(this.$t('crud.activate-confirm'), 'Warning', {
-          confirmButtonText: this.$t('common.confirm'),
-          cancelButtonText: this.$t('common.cancel'),
-          type: 'warning'
-        })
-
-        this.listLoading = true
-
-        await activate(id)
-
-        this.$message({
-          type: 'success',
-          message: this.$t('crud.activate-success')
         })
 
         this.getList()

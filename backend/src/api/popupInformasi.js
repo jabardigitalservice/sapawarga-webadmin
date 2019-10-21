@@ -37,23 +37,3 @@ export function deleteData(id) {
     method: 'delete'
   })
 }
-
-export function deactivate(id) {
-  return request({
-    url: `/popups/${id}`,
-    method: 'put',
-    data: {
-      status: 0
-    }
-  })
-}
-
-export function activate(id) {
-  return request({
-    url: `/popups/${id}`,
-    method: 'put',
-    data: {
-      status: 10
-    }
-  })
-}
