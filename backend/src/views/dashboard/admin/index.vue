@@ -102,7 +102,7 @@ export default {
   methods: {
     getListProvinsi() {
       this.listLoading = true
-      fetchTopFiveNewsProv({location:'provinsi'}).then(response => {
+      fetchTopFiveNewsProv({ location: 'provinsi' }).then(response => {
         this.listNewsProvinsi = response.data
         this.listLoading = false
       })
@@ -110,7 +110,7 @@ export default {
 
     getLisKoKab() {
       this.listLoading = true
-      fetchTopFiveNewsDistricts({location:'kotkab'}).then(response => {
+      fetchTopFiveNewsDistricts({ location: 'kotkab' }).then(response => {
         this.listNewsKoKab = response.data
         this.listLoading = false
       })
