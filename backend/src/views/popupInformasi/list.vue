@@ -12,7 +12,7 @@
           </el-col>
         </el-row>
 
-        <ListFilter :list-query.sync="listQuery" :is-pop-up="true" @submit-search="getList" @reset-search="resetFilter" />
+        <ListFilter :list-query.sync="listQuery" @submit-search="getList" @reset-search="resetFilter" />
 
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row @sort-change="changeSort">
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
@@ -59,7 +59,7 @@
 
 <script>
 import Pagination from '@/components/Pagination'
-import ListFilter from '@/views/banner/_listfilter'
+import ListFilter from './_listfilter'
 import { fetchList, deleteData } from '@/api/popupInformasi'
 import { mapGetters } from 'vuex'
 
