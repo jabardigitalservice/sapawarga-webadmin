@@ -96,7 +96,7 @@ export default {
       // jika status sama dengan draft dan tanggal mulai sama dengan hari ini
       if ((describedStatus(status) === 'draft') && (isStartedToday)) {
         this.btnDisableDate = false
-      // jika status bukan sama dengan active dan tanggal mulai tidak sama dengan hari ini
+      // jika tanggal mulai tidak sama dengan hari ini
       } else if (!isStartedToday) {
         this.btnDisableDate = true
         this.$message.warning(this.$t('errors.survey-change-date'))
