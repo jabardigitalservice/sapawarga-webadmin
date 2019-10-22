@@ -52,11 +52,11 @@
                 <el-radio-button :label="true">Terjadwal</el-radio-button>
               </el-radio-group>
             </el-form-item>
-            <el-form-item v-if="broadcast.is_scheduled === true" label="Tanggal dan Waktu" prop="scheduled_datetime">
+            <el-form-item v-if="broadcast.is_scheduled === true" label="Tanggal dan Waktu" :prop="scheduled_datetime_validation">
               <el-date-picker
                 v-model="broadcast.scheduled_datetime"
                 type="datetime"
-                format="dd-MM-yyyy HH:mm:ss"
+                format="dd-MM-yyyy HH:mm"
                 :editable="true"
                 placeholder="Pilih Tanggal dan Waktu"
                 @focus="changePropDatetime"
@@ -267,6 +267,7 @@ export default {
     fetchData(id) {
       fetchRecord(id).then(response => {
         this.broadcast = response.data
+        this.broadcast.scheduled_datetime = response.data.scheduled_datetime ? moment.unix(response.data.scheduled_datetime) : null
         if (this.broadcast.status === 10) {
           this.$message.error(this.$t('crud.broadcast-error-edit-published'))
           this.$router.push('/broadcast/index')
@@ -311,14 +312,12 @@ export default {
           const id = this.$route.params && this.$route.params.id
 
           await update(id, data)
-          console.log(data)
 
           this.$message.info(this.$t('crud.draft-success'))
 
           this.$router.push('/broadcast/index')
         } else {
           await create(data)
-          console.log(data)
           if (status === 10) {
             this.$message.success(this.$t('crud.send-success'))
             this.$router.push('/broadcast/index')
