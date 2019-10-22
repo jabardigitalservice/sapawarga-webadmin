@@ -59,6 +59,7 @@
                 format="dd-MM-yyyy HH:mm:ss"
                 :editable="true"
                 placeholder="Pilih Tanggal dan Waktu"
+                @focus="changePropDatetime"
               />
             </el-form-item>
 
@@ -131,6 +132,7 @@ export default {
         is_scheduled: false,
         scheduled_datetime: null
       },
+      scheduled_datetime_validation: 'scheduled_datetime',
       rules: {
         title: [
           {
@@ -208,6 +210,13 @@ export default {
             required: true,
             message: 'Tanggal dan waktu harus diisi',
             trigger: 'blur'
+          }
+        ],
+        scheduled_datetime_error: [
+          {
+            required: true,
+            message: 'Tanggal dan waktu yang dipilih telah lewat',
+            trigger: 'change'
           }
         ]
       }
@@ -319,7 +328,13 @@ export default {
           }
         }
       } catch (err) {
-        console.log(err)
+        const error = err.response.data.data.scheduled_datetime
+        if (error) {
+          this.broadcast.scheduled_datetime = null
+          this.scheduled_datetime_validation = 'scheduled_datetime_error'
+        } else {
+          console.log(err)
+        }
       } finally {
         this.loading = false
       }
@@ -342,6 +357,9 @@ export default {
       } catch (e) {
         console.log(e)
       }
+    },
+    changePropDatetime() {
+      this.scheduled_datetime_validation = 'scheduled_datetime'
     }
   }
 
