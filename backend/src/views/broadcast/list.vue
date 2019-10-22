@@ -138,53 +138,7 @@ export default {
       this.listQuery.sort_by = e.prop
       this.listQuery.sort_order = e.order
       this.getList()
-    },
-
-    async activateRecord(id) {
-      try {
-        await this.$confirm(this.$t('crud.deactivate-confirm'), 'Warning', {
-          confirmButtonText: this.$t('common.confirm'),
-          cancelButtonText: this.$t('common.cancel'),
-          type: 'warning'
-        })
-
-        this.listLoading = true
-
-        // await activate(id)
-
-        this.$message({
-          type: 'success',
-          message: this.$t('crud.activate-success')
-        })
-
-        this.getList()
-      } catch (e) {
-        console.log(e)
-      }
-    },
-
-    async deactivateRecord(id) {
-      try {
-        await this.$confirm(this.$t('crud.deactivate-confirm'), 'Warning', {
-          confirmButtonText: this.$t('common.confirm'),
-          cancelButtonText: this.$t('common.cancel'),
-          type: 'warning'
-        })
-
-        this.listLoading = true
-
-        // await deactivate(id)
-
-        this.$message({
-          type: 'success',
-          message: this.$t('crud.deactivate-success')
-        })
-
-        this.getList()
-      } catch (e) {
-        console.log(e)
-      }
-    }
+    }    
   }
 }
 </script>
