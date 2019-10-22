@@ -115,7 +115,7 @@ export default {
           this.tableDataPesan.splice(4, 1)
         }
 
-        if (status === 10) {
+        if (status === 10 || status === 5) {
           this.tableDataPesan.splice(3, 1)
         }
       })
