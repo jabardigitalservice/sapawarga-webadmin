@@ -174,7 +174,9 @@ export default {
     'news-image-null': 'Gambar tidak boleh kosong.',
     'banner-image-null': 'Gambar tidak boleh kosong.',
 
-    'dashboard-map-error': 'Gagal memuat map'
+    'dashboard-map-error': 'Gagal memuat map',
+
+    'broadcast-datetime': 'Jadwal yang dipilih telah lewat'
   },
   navbar: {
     profile: 'Lihat Profil',
