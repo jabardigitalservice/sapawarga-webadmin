@@ -138,7 +138,7 @@ export default {
       this.listQuery.sort_by = e.prop
       this.listQuery.sort_order = e.order
       this.getList()
-    }    
+    }
   }
 }
 </script>
