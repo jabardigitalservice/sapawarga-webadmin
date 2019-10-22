@@ -46,9 +46,9 @@
                   <el-button type="primary" icon="el-icon-view" size="small" />
                 </el-tooltip>
               </router-link>
-              <router-link :to="(scope.row.status !== 10 ? '/broadcast/edit/' +scope.row.id : '')">
+              <router-link :to="scope.row.status === 0 ? '/broadcast/edit/' +scope.row.id : ''">
                 <el-tooltip content="Edit Pesan" placement="top">
-                  <el-button v-if="roles" type="warning" icon="el-icon-edit" size="small" :disabled="scope.row.status === 10" />
+                  <el-button v-if="roles" type="warning" icon="el-icon-edit" size="small" :disabled="scope.row.status === 10 || scope.row.status === 5 " />
                 </el-tooltip>
               </router-link>
             </template>
