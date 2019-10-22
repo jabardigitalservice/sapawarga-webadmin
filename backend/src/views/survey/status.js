@@ -45,6 +45,6 @@ export function getStatusLabel(row) {
 }
 
 export const SurveyStatus = Object.freeze({
-    DRAFT: 0,
-    ACTIVE: 10
-});
+  DRAFT: 0,
+  ACTIVE: 10
+})
