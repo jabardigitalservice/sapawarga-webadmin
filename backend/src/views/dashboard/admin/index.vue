@@ -38,10 +38,10 @@
     <h3 style="color:#73737">Top Berita</h3>
     <el-row>
       <el-col :xs="{span: 12}" :sm="{span: 12}" :md="{span: 12}" :lg="{span: 12}" :xl="{span: 12}">
-        <TopBerita :list="listNewsProvinsi" judul="Berita Jawa Barat" />
+        <TopNews :list="listNewsProvinsi" judul="Berita Jawa Barat" />
       </el-col>
       <el-col :xs="{span: 12}" :sm="{span: 12}" :md="{span: 12}" :lg="{span: 12}" :xl="{span: 12}">
-        <TopBerita :list="listNewsKoKab" judul="Berita Kota/Kabupaten" />
+        <TopNews :list="listNewsKoKab" judul="Berita Kota/Kabupaten" />
       </el-col>
     </el-row>
   </div>
@@ -55,7 +55,7 @@ import Approval from './components/Approval'
 import Category from './components/Category'
 import MapData from './components/MapData'
 import Polling from './components/Polling'
-import TopBerita from './components/TopBerita'
+import TopNews from './components/TopNews'
 
 const lineChartData = {
   newVisitis: {
@@ -85,7 +85,7 @@ export default {
     Approval,
     MapData,
     Polling,
-    TopBerita
+    TopNews
   },
   data() {
     return {
