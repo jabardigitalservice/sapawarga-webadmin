@@ -18,7 +18,7 @@
             <span>Isi Pesan</span>
           </div>
           <el-table stripe :data="tableDataPesan" :show-header="false" style="width: 100%">
-            <el-table-column prop="title" width="180" />
+            <el-table-column prop="title" width="200" />
             <el-table-column prop="content" />
           </el-table>
         </el-card>
@@ -30,6 +30,7 @@
 
 <script>
 import { fetchRecord, update } from '@/api/broadcast'
+import moment from 'moment'
 
 export default {
   data() {
@@ -54,8 +55,9 @@ export default {
   methods: {
     getDetail() {
       fetchRecord(this.id).then(response => {
-        const { title, description, category, kabkota, kecamatan, kelurahan, rw, status } = response.data
+        const { title, description, category, kabkota, kecamatan, kelurahan, rw, status, status_label, scheduled_datetime, is_scheduled } = response.data
         this.broadcast = response.data
+        console.log(response.data)
 
         if (status === 10) {
           this.btnKirimDisable = true
@@ -92,10 +94,30 @@ export default {
             content: (category !== null ? category.name : '-')
           },
           {
+            title: 'Status',
+            content: (status === 5 ? <el-tag type='warning'>{status_label}</el-tag> : status === 10 ? <el-tag type='success'>{status_label}</el-tag> : <el-tag type='info'>{status_label}</el-tag>)
+          },
+          {
+            title: 'Jadwal',
+            content: is_scheduled === false ? 'Sekarang' : 'Terjadwal'
+          },
+          {
+            title: 'Tanggal dan Waktu Kirim',
+            content: moment.unix(scheduled_datetime).format('DD MMM YYYY HH:mm')
+          },
+          {
             title: 'Isi Pesan',
             content: (description !== null ? description : '-')
           }
         ]
+
+        if (scheduled_datetime === null) {
+          this.tableDataPesan.splice(4, 1)
+        }
+
+        if (status === 10 || status === 5) {
+          this.tableDataPesan.splice(3, 1)
+        }
       })
     },
     async submitForm(status) {
