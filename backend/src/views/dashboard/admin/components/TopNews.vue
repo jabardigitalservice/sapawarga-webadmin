@@ -14,8 +14,8 @@
               <img :src="row.cover_path_url" style="width: 40px;border-radius: 25%;">
             </el-col>
             <el-col :span="10">
-              <div class="title-top-berita cell" style="using display:table-cell; vertical-align:middle;padding-left: 20px;width: 200px;">
-                <span>{{ row.title }}</span>
+              <div class="title-top-news cell">
+                {{ row.title }}
               </div>
             </el-col>
           </el-row>
@@ -25,6 +25,7 @@
         prop="total_viewers"
         label="View"
         align="center"
+        width="100"
       />
     </el-table>
     <el-row style="margin: 0 auto; text-align: center;padding-top:10px;">
@@ -40,7 +41,7 @@
 export default {
   props: {
     list: {
-      type: Object,
+      type: Array,
       default: null
     },
     judul: {
@@ -55,4 +56,3 @@ export default {
   }
 }
 </script>
-
