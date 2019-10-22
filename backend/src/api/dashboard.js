@@ -32,3 +32,19 @@ export function fetchLatestPolling(query) {
   })
 }
 
+export function fetchTopFiveNewsProv(query) {
+  return request({
+    url: 'dashboards/news-most-likes',
+    method: 'get',
+    params: query
+  })
+}
+
+export function fetchTopFiveNewsDistricts(query) {
+  return request({
+    url: 'dashboards/news-most-likes',
+    method: 'get',
+    params: query
+  })
+}
+
