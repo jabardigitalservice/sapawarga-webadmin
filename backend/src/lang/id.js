@@ -167,6 +167,7 @@ export default {
   },
   common: {
     confirm: 'Ya',
+    save: 'Simpan',
     cancel: 'Batal'
   },
   errors: {

@@ -16,11 +16,11 @@
         <el-card>
           <div slot="header" class="clearfix">
             <el-row>
-              <el-col :span="20">
+              <el-col :span="18">
                 <span class="aspiration-title">{{ title }}</span>
               </el-col>
-              <el-col :span="4">
-                <span class="aspiration-date"> {{ created_at | moment('D MMMM YYYY') }} </span>
+              <el-col :span="6">
+                <span class="aspiration-date"> {{ created_at | moment('D MMMM YYYY HH:mm') }} </span>
               </el-col>
             </el-row>
           </div>
@@ -136,38 +136,21 @@ export default {
           {
             title: 'Status',
             content: (status === 5 ? <el-tag type='warning'>{status_label}</el-tag> : status === 3 ? <el-tag type='danger'>{status_label}</el-tag> : status === 10 ? <el-tag type='success'>{status_label}</el-tag> : <el-tag type='info'>{status_label}</el-tag>)
+          },
+          {
+            title: 'Tanggal Update',
+            content: '22 Okt 2019 22:30' // nunggu response dari API
           }
         ]
 
         this.approvalNote = [
           {
             title: 'Keterangan',
-            content: (status === 3 || (approval_note && status === 5) ? approval_note : '-')
+            // content: (status === 3 || (approval_note && status === 5) ? approval_note : '-')
+            content: approval_note
           }
         ]
       })
-    },
-
-    async actionApprove() {
-      const id = this.id
-
-      await this.$confirm('Apakah Anda yakin ingin memberikan persetujuan untuk aspirasi ini?', 'Konfirmasi', {
-        confirmButtonText: this.$t('common.confirm'),
-        cancelButtonText: this.$t('common.cancel'),
-        type: 'success'
-      })
-
-      try {
-        await approval(id, {
-          action: 'APPROVE'
-        })
-
-        this.$message.success(this.$t('crud.update-success'))
-
-        this.$router.push('/aspirasi/index')
-      } catch (e) {
-        console.log(e)
-      }
     },
 
     validateInput(input) {
@@ -178,12 +161,36 @@ export default {
       return true
     },
 
+    async actionApprove() {
+      const id = this.id
+
+      const prompt = await this.$prompt('Apakah Anda yakin ingin memberikan persetujuan untuk aspirasi ini?', 'Konfirmasi Persetujuan', {
+        confirmButtonText: this.$t('common.save'),
+        cancelButtonText: this.$t('common.cancel'),
+        inputPlaceholder: 'Isikan catatan untuk pengguna',
+        inputValidator: this.validateInput
+      })
+
+      try {
+        await approval(id, {
+          action: 'APPROVE',
+          note: prompt.value
+        })
+
+        this.$message.success(this.$t('crud.update-success'))
+
+        this.$router.push('/aspirasi/index')
+      } catch (e) {
+        console.log(e)
+      }
+    },
+
     async actionReject() {
       const id = this.id
 
       const prompt = await this.$prompt('Apakah Anda yakin ingin menolak aspirasi ini? Masukkan catatan untuk pengguna.', 'Konfirmasi Penolakan', {
-        confirmButtonText: 'Simpan',
-        cancelButtonText: 'Batal',
+        confirmButtonText: this.$t('common.save'),
+        cancelButtonText: this.$t('common.cancel'),
         inputPlaceholder: 'Isikan catatan untuk pengguna',
         inputValidator: this.validateInput
       })
