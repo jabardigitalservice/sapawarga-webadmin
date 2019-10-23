@@ -57,12 +57,11 @@ export default {
       fetchRecord(this.id).then(response => {
         const { title, description, category, kabkota, kecamatan, kelurahan, rw, status, status_label, scheduled_datetime, is_scheduled } = response.data
         this.broadcast = response.data
-        console.log(response.data)
 
-        if (status === 10) {
-          this.btnKirimDisable = true
-        } else if (status === 0) {
+        if (status === 0) {
           this.btnKirimDisable = false
+        } else {
+          this.btnKirimDisable = true
         }
 
         this.tableDataTarget = [
