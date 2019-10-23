@@ -85,7 +85,6 @@ export function validateHTMLOnInputString(str) {
   return reg.test(str)
 }
 
-
 export function validYoutubeUrl(str) {
   const reg = /^(http:\/\/|https:\/\/)?(www\.youtube\.com)\/.+$/
 

@@ -221,7 +221,7 @@ export default {
         ]
       },
       datePickerOptions: {
-          disabledDate: this.disabledDueDate
+        disabledDate: this.disabledDueDate
       }
     }
   },
@@ -287,7 +287,7 @@ export default {
   methods: {
     disabledDueDate(time) {
       let startdate = moment(this.popup.start_date)
-      startdate = startdate.format("YYYY-MM-DD 00:00:00")
+      startdate = startdate.format('YYYY-MM-DD 00:00:00')
       const parseDate = Date.parse(startdate)
       return time.getTime() < parseDate
     },
