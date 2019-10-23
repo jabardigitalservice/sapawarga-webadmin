@@ -91,7 +91,7 @@ export default {
     },
     getDetail() {
       fetchRecord(this.id).then(response => {
-        const { title, created_at, author, category, description, status, status_label, attachments, approval_note } = response.data
+        const { title, created_at, author, category, description, status, status_label, attachments, approval_note, submitted_at, approved_at } = response.data
         this.title = title
         this.created_at = created_at
         if (status === 10 || status === 3) {
@@ -132,19 +132,26 @@ export default {
             content: description
           },
           {
+            title: 'Tanggal Dibuat',
+            content: parsingDatetime(created_at)
+          },
+          {
+            title: 'Tanggal Dikirim',
+            content: submitted_at ? parsingDatetime(submitted_at) : parsingDatetime(created_at)
+          },
+          {
             title: 'Status',
             content: (status === 5 ? <el-tag type='warning'>{status_label}</el-tag> : status === 3 ? <el-tag type='danger'>{status_label}</el-tag> : status === 10 ? <el-tag type='success'>{status_label}</el-tag> : <el-tag type='info'>{status_label}</el-tag>)
           },
           {
-            title: 'Tanggal Update',
-            content: '22 Okt 2019 22:30' // nunggu response dari API
+            title: 'Tanggal Konfirmasi',
+            content: approved_at ? parsingDatetime(approved_at) : '-'
           }
         ]
 
         this.approvalNote = [
           {
             title: 'Keterangan',
-            // content: (status === 3 || (approval_note && status === 5) ? approval_note : '-')
             content: approval_note
           }
         ]
