@@ -44,19 +44,20 @@
 
           <el-form-item label="Tanggal Lahir" prop="phone">
             <el-date-picker
-              v-model="user.phone"
+              v-model="user.birthdate"
               type="date"
               :editable="false"
               :clearable="false"
-              format="dd-MM-yyyy"
+              format="yyyy-mm-dd"
+              value-format="yyyy-mm-dd"
               placeholder="Pilih tanggal"
             />
           </el-form-item>
 
           <el-row>
             <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
-              <el-form-item label="Pendidikan" prop="role">
-                <el-select v-model="user.role" placeholder="Pilih Pendidikan">
+              <el-form-item label="Pendidikan">
+                <el-select v-model="user.education" placeholder="Pilih Pendidikan">
                   <el-option
                     v-for="item in filterRole"
                     :key="item.value"
@@ -67,10 +68,10 @@
               </el-form-item>
             </el-col>
             <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" :style="{paddingLeft: formRightSide}">
-              <el-form-item label="Pekerjaan" prop="role">
-                <el-select v-model="user.role" placeholder="Pilih Pekerjaan">
+              <el-form-item label="Pekerjaan">
+                <el-select v-model="user.job" placeholder="Pilih Pekerjaan">
                   <el-option
-                    v-for="item in filterRole"
+                    v-for="item in educationList"
                     :key="item.value"
                     :value="item.value"
                     :label="item.label"
@@ -85,7 +86,7 @@
               <el-form-item label="Peran" prop="role">
                 <el-select v-model="user.role" placeholder="Pilih Peran" :disabled="isProfile || isEdit">
                   <el-option
-                    v-for="item in filterRole"
+                    v-for="item in jobList"
                     :key="item.value"
                     :value="item.value"
                     :label="item.label"
@@ -230,7 +231,16 @@
 <script>
 import uploadPhoto from './uploadPhoto'
 import checkPermission from '@/utils/permission'
-import { requestArea, requestKecamatan, requestKelurahan, createUser, fetchUser, editUser } from '@/api/staff'
+import {
+  requestArea,
+  requestKecamatan,
+  requestKelurahan,
+  createUser,
+  fetchUser,
+  editUser,
+  getEducationList,
+  getJobList
+} from '@/api/staff'
 import { fetchProfile, update } from '@/api/user'
 import { Message } from 'element-ui'
 import InputMap from '@/components/InputMap'
@@ -334,6 +344,9 @@ export default {
         role: [],
         twitter: '',
         facebook: '',
+        birthdate: '',
+        education: '',
+        job: '',
         instagram: '',
         photo: '',
         coordinates: []
@@ -374,6 +387,8 @@ export default {
       area: '',
       kecamatan: '',
       kelurahan: '',
+      educationList: [],
+      jobList: [],
       image: '',
       imageData: require('@/assets/user.png'),
       preview: '',
@@ -1129,6 +1144,18 @@ export default {
       }
       requestKelurahan(this.id_kec).then(response => {
         this.kelurahan = response.data.items
+      })
+    },
+
+    getEducation() {
+      getEducationList().then(response => {
+        this.educationList = response.data.items
+      })
+    },
+
+    getJob() {
+      getJobList().then(response => {
+        this.jobList = response.data.items
       })
     },
     // Generate password

@@ -101,3 +101,17 @@ export function fetchUser(id) {
     method: 'get'
   })
 }
+
+export function getEducationList() {
+  return request({
+    url: '/job-types',
+    method: 'get'
+  })
+}
+
+export function getJobList() {
+  return request({
+    url: '/education-types',
+    method: 'get'
+  })
+}
