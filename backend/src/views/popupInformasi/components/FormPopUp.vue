@@ -327,14 +327,14 @@ export default {
           this.$router.push('/popup-informasi/index')
         }
       } catch (e) {
-        for (let x in e.response.data.data) {
-          if (String(x) === 'title'){
+        for (const x in e.response.data.data) {
+          if (String(x) === 'title') {
             this.validateTitle = 'errorTitle'
-          } 
+          }
 
           if (String(x) === 'start_date') {
             this.validateStartDate = 'errorStartDate'
-          } 
+          }
 
           if (String(x) === 'description') {
             this.validateDescription = 'errorDescription'
