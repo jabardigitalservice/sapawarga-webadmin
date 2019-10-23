@@ -110,7 +110,7 @@ export default {
 
     getLisKoKab() {
       this.listLoading = true
-      fetchTopFiveNewsDistricts({ location: 'kotkab' }).then(response => {
+      fetchTopFiveNewsDistricts({ location: 'kabkota' }).then(response => {
         this.listNewsKoKab = response.data
         this.listLoading = false
       })
