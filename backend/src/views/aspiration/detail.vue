@@ -169,7 +169,7 @@ export default {
     async actionApprove() {
       const id = this.id
 
-      const prompt = await this.$prompt('Apakah Anda yakin ingin memberikan persetujuan untuk aspirasi ini?', 'Konfirmasi Persetujuan', {
+      const prompt = await this.$prompt(this.$t('message.confirmation-approve'), this.$t('message.title-approve'), {
         confirmButtonText: this.$t('common.save'),
         cancelButtonText: this.$t('common.cancel'),
         inputPlaceholder: 'Isikan catatan untuk pengguna',
@@ -193,7 +193,7 @@ export default {
     async actionReject() {
       const id = this.id
 
-      const prompt = await this.$prompt('Apakah Anda yakin ingin menolak aspirasi ini? Masukkan catatan untuk pengguna.', 'Konfirmasi Penolakan', {
+      const prompt = await this.$prompt(this.$t('message.confirmation-reject'), this.$t('message.title-reject'), {
         confirmButtonText: this.$t('common.save'),
         cancelButtonText: this.$t('common.cancel'),
         inputPlaceholder: 'Isikan catatan untuk pengguna',
