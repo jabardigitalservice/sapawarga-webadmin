@@ -167,6 +167,7 @@ export default {
   },
   common: {
     confirm: 'Ya',
+    save: 'Simpan',
     cancel: 'Batal'
   },
   errors: {
@@ -189,6 +190,12 @@ export default {
   navbar: {
     profile: 'Lihat Profil',
     'profile-edit': 'Edit Profil'
+  },
+  message: {
+    'confirmation-approve': 'Apakah Anda yakin akan memberikan persetujuan untuk usulan ini?',
+    'confirmation-reject': 'Apakah Anda yakin akan menolak usulan ini?',
+    'title-approve': 'Konfirmasi Persetujuan',
+    'title-reject': 'Konfirmasi Penolakan'
   },
   categoriTypes: {
     'phonebook': 'Nomor Penting',
