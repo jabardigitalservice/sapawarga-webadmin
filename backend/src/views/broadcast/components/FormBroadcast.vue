@@ -305,7 +305,7 @@ export default {
         if (data.is_scheduled === true) {
           data.scheduled_datetime = moment(this.broadcast.scheduled_datetime).unix()
         } else {
-          data.scheduled_datetime === null
+          data.scheduled_datetime = null
         }
 
         if (this.isEdit) {
