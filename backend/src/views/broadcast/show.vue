@@ -30,7 +30,7 @@
 
 <script>
 import { fetchRecord, update } from '@/api/broadcast'
-import moment from 'moment'
+import parsingDatetime from '@/utils/datetimeToString'
 
 export default {
   data() {
@@ -103,7 +103,7 @@ export default {
           },
           {
             title: 'Tanggal dan Waktu Kirim',
-            content: moment.unix(scheduled_datetime).format('DD MMM YYYY HH:mm')
+            content: parsingDatetime(scheduled_datetime)
           },
           {
             title: 'Isi Pesan',
