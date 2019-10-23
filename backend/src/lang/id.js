@@ -196,8 +196,10 @@ export default {
   message: {
     'confirmation-approve': 'Apakah Anda yakin akan memberikan persetujuan untuk usulan ini?',
     'confirmation-reject': 'Apakah Anda yakin akan menolak usulan ini?',
+    'confirmation-send-message': 'Apakah Anda yakin akan mengirimkan pesan: ',
     'title-approve': 'Konfirmasi Persetujuan',
-    'title-reject': 'Konfirmasi Penolakan'
+    'title-reject': 'Konfirmasi Penolakan',
+    'title': 'Konfirmasi'
   },
   categoriTypes: {
     'phonebook': 'Nomor Penting',
