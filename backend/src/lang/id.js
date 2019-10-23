@@ -24,7 +24,7 @@ export default {
     'broadcast-create': 'Tambah Pesan',
     'broadcast-list': 'Daftar Pesan',
     'broadcast-edit': 'Edit Pesan',
-    'broadcast-show': 'Detail Pesan',
+    'broadcast-detail': 'Detail Pesan',
 
     'notification-manage': 'Notifikasi',
     'notification-create': 'Tambah Notifikasi',

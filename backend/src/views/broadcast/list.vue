@@ -41,7 +41,7 @@
 
           <el-table-column align="center" label="Actions" width="200px">
             <template slot-scope="scope">
-              <router-link :to="'/broadcast/show/'+scope.row.id">
+              <router-link :to="'/broadcast/detail/'+scope.row.id">
                 <el-tooltip content="Detail Pesan" placement="top">
                   <el-button type="primary" icon="el-icon-view" size="small" />
                 </el-tooltip>
