@@ -43,7 +43,6 @@
 <script>
 import { fetchList } from '@/api/aspiration'
 import Pagination from '@/components/Pagination'
-
 import ListFilter from './_listfilter'
 
 export default {
