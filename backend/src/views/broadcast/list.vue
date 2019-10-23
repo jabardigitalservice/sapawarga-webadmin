@@ -17,7 +17,7 @@
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%" @sort-change="changeSort">
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
 
-          <el-table-column prop="title" sortable="custom" label="Judul" min-width="350" />
+          <el-table-column prop="title" sortable="custom" label="Judul Pesan" min-width="300" />
 
           <el-table-column prop="status" sortable="custom" class-name="status-col" label="Status" width="150px">
             <template slot-scope="{row}">
@@ -27,29 +27,29 @@
             </template>
           </el-table-column>
 
-          <el-table-column prop="created_at" sortable="custom" label="Dibuat" width="150">
+          <el-table-column prop="created_at" sortable="custom" align="center" label="Dibuat" width="150">
             <template slot-scope="{row}">
-              {{ row.created_at | moment('D MMMM YYYY HH:mm') }}
+              {{ row.created_at | moment('D MMM YYYY HH:mm') }}
             </template>
           </el-table-column>
 
-          <el-table-column prop="updated_at" sortable="custom" label="Dikirim" width="150">>
+          <el-table-column prop="updated_at" sortable="custom" align="center" label="Dikirim" width="150">
             <template slot-scope="{row}">
-              {{ getSentDateTime(row) | moment('D MMMM YYYY HH:mm') }}
+              {{ getSentDateTime(row) | moment('D MMM YYYY HH:mm') }}
             </template>
           </el-table-column>
 
-          <el-table-column align="center" label="Actions" width="250px">
+          <el-table-column align="center" label="Actions" width="200px">
             <template slot-scope="scope">
               <router-link :to="'/broadcast/show/'+scope.row.id">
-                <el-button type="white" size="mini">
-                  View
-                </el-button>
+                <el-tooltip content="Detail Pesan" placement="top">
+                  <el-button type="primary" icon="el-icon-view" size="small" />
+                </el-tooltip>
               </router-link>
-              <router-link :to="(scope.row.status !== 10 ? '/broadcast/edit/' +scope.row.id : '')">
-                <el-button v-if="roles" type="white" size="mini" :disabled="scope.row.status === 10">
-                  Edit
-                </el-button>
+              <router-link :to="scope.row.status === 0 ? '/broadcast/edit/' +scope.row.id : ''">
+                <el-tooltip content="Edit Pesan" placement="top">
+                  <el-button v-if="roles" type="warning" icon="el-icon-edit" size="small" :disabled="scope.row.status === 10 || scope.row.status === 5 " />
+                </el-tooltip>
               </router-link>
             </template>
           </el-table-column>
@@ -74,7 +74,8 @@ export default {
       const statusMap = {
         '10': 'success',
         '0': 'info',
-        '-1': 'danger'
+        '-1': 'danger',
+        '5': 'warning'
       }
       return statusMap[status]
     }
@@ -137,52 +138,6 @@ export default {
       this.listQuery.sort_by = e.prop
       this.listQuery.sort_order = e.order
       this.getList()
-    },
-
-    async activateRecord(id) {
-      try {
-        await this.$confirm(this.$t('crud.deactivate-confirm'), 'Warning', {
-          confirmButtonText: this.$t('common.confirm'),
-          cancelButtonText: this.$t('common.cancel'),
-          type: 'warning'
-        })
-
-        this.listLoading = true
-
-        // await activate(id)
-
-        this.$message({
-          type: 'success',
-          message: this.$t('crud.activate-success')
-        })
-
-        this.getList()
-      } catch (e) {
-        console.log(e)
-      }
-    },
-
-    async deactivateRecord(id) {
-      try {
-        await this.$confirm(this.$t('crud.deactivate-confirm'), 'Warning', {
-          confirmButtonText: this.$t('common.confirm'),
-          cancelButtonText: this.$t('common.cancel'),
-          type: 'warning'
-        })
-
-        this.listLoading = true
-
-        // await deactivate(id)
-
-        this.$message({
-          type: 'success',
-          message: this.$t('crud.deactivate-success')
-        })
-
-        this.getList()
-      } catch (e) {
-        console.log(e)
-      }
     }
   }
 }

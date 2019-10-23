@@ -17,6 +17,7 @@
               style="width: 100%"
             >
               <el-option value="10" label="Dipublikasikan" />
+              <el-option value="5" label="Dijadwalkan" />
               <el-option value="0" label="Draft" />
             </el-select>
           </el-form-item>

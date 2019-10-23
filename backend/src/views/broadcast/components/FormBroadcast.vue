@@ -46,6 +46,23 @@
             <el-form-item label="Kategori" prop="category_id">
               <InputCategory v-model="broadcast.category_id" category-type="broadcast" prop="category" />
             </el-form-item>
+            <el-form-item label="Jadwal" prop="is_scheduled">
+              <el-radio-group v-model="broadcast.is_scheduled" name="jadwal">
+                <el-radio-button :label="false">Sekarang</el-radio-button>
+                <el-radio-button :label="true">Terjadwal</el-radio-button>
+              </el-radio-group>
+            </el-form-item>
+            <el-form-item v-if="broadcast.is_scheduled === true" label="Tanggal dan Waktu" :prop="scheduled_datetime_validation">
+              <el-date-picker
+                v-model="broadcast.scheduled_datetime"
+                type="datetime"
+                format="dd-MM-yyyy HH:mm"
+                :editable="true"
+                placeholder="Pilih Tanggal dan Waktu"
+                @focus="changePropDatetime"
+              />
+            </el-form-item>
+
             <el-form-item label="Isi Pesan" prop="description">
               <el-input
                 v-model="broadcast.description"
@@ -69,6 +86,8 @@ import InputCategory from '@/components/InputCategory'
 import InputSelectArea from '@/components/InputSelectArea'
 import { create, fetchRecord, update } from '@/api/broadcast'
 import { containsWhitespace } from '@/utils/validate'
+import moment from 'moment'
+
 export default {
   components: {
     InputCategory,
@@ -109,8 +128,11 @@ export default {
         rw: null,
         title: null,
         category_id: null,
-        description: null
+        description: null,
+        is_scheduled: false,
+        scheduled_datetime: null
       },
+      scheduled_datetime_validation: 'scheduled_datetime',
       rules: {
         title: [
           {
@@ -175,6 +197,27 @@ export default {
             message: 'wilayah harus diisi',
             trigger: 'change'
           }
+        ],
+        is_scheduled: [
+          {
+            required: true,
+            message: 'Jadwal harus diisi',
+            trigger: 'blur'
+          }
+        ],
+        scheduled_datetime: [
+          {
+            required: true,
+            message: 'Tanggal dan waktu harus diisi',
+            trigger: 'blur'
+          }
+        ],
+        scheduled_datetime_error: [
+          {
+            required: true,
+            message: 'Tanggal dan waktu yang dipilih telah lewat',
+            trigger: 'change'
+          }
         ]
       }
     }
@@ -200,6 +243,12 @@ export default {
         this.broadcast.rw = null
       }
       this.resetRw()
+    },
+
+    'broadcast.is_scheduled'() {
+      if (this.broadcast.is_scheduled === false) {
+        this.broadcast.scheduled_datetime = null
+      }
     }
   },
   created() {
@@ -218,7 +267,8 @@ export default {
     fetchData(id) {
       fetchRecord(id).then(response => {
         this.broadcast = response.data
-        if (this.broadcast.status === 10) {
+        this.broadcast.scheduled_datetime = response.data.scheduled_datetime ? moment.unix(response.data.scheduled_datetime) : null
+        if (this.broadcast.status !== 0) {
           this.$message.error(this.$t('crud.broadcast-error-edit-published'))
           this.$router.push('/broadcast/index')
         }
@@ -252,6 +302,12 @@ export default {
 
         data.status = status
 
+        if (data.is_scheduled === true) {
+          data.scheduled_datetime = moment(this.broadcast.scheduled_datetime).unix()
+        } else {
+          data.scheduled_datetime === null
+        }
+
         if (this.isEdit) {
           const id = this.$route.params && this.$route.params.id
 
@@ -271,7 +327,13 @@ export default {
           }
         }
       } catch (err) {
-        console.log(err)
+        const error = err.response.data.data.scheduled_datetime
+        if (error) {
+          this.broadcast.scheduled_datetime = null
+          this.scheduled_datetime_validation = 'scheduled_datetime_error'
+        } else {
+          console.log(err)
+        }
       } finally {
         this.loading = false
       }
@@ -294,6 +356,9 @@ export default {
       } catch (e) {
         console.log(e)
       }
+    },
+    changePropDatetime() {
+      this.scheduled_datetime_validation = 'scheduled_datetime'
     }
   }
 
