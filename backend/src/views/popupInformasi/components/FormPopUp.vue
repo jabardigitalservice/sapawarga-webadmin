@@ -6,7 +6,7 @@
       </el-col>
       <el-col :xs="24" :sm="13" :lg="16">
         <el-form ref="popup" :model="popup" :rules="rules" :status-icon="true" label-width="160px">
-          <el-form-item label="Judul Pop Up" prop="title">
+          <el-form-item label="Judul Pop Up" :prop="validateTitle">
             <el-input v-model="popup.title" type="text" name="title" placeholder="Judul Pop Up" />
           </el-form-item>
           <el-form-item label="Kategori" prop="type">
@@ -31,7 +31,7 @@
           <el-form-item v-if="popup.type === 'internal'" :label="titleFitur" prop="internal_object_name">
             <el-input v-model="popup.internal_object_name" disabled type="text" name="internal_object_name" />
           </el-form-item>
-          <el-form-item class="waktu-publikasi" label="Waktu Publikasi">
+          <el-form-item class="waktu-publikasi" label="Waktu Publikasi" :prop="validateStartDate">
             <el-row :gutter="10" type="flex">
               <el-col :span="10">
                 <el-date-picker
@@ -55,7 +55,7 @@
               </el-col>
             </el-row>
           </el-form-item>
-          <el-form-item label="Deskripsi">
+          <el-form-item label="Deskripsi" :prop="validateDescription">
             <el-input
               v-model="popup.description"
               type="textarea"
@@ -126,6 +126,9 @@ export default {
       showDialog: false,
       titleFitur: null,
       titlePopup: null,
+      validateTitle: 'title',
+      validateStartDate: 'start_date',
+      validateDescription: 'description',
       rules: {
         title: [
           {
@@ -143,6 +146,9 @@ export default {
             message: 'Judul Pop Up maximal 100 Karakter',
             trigger: 'blur'
           }
+        ],
+        errorTitle: [
+          { required: true, message: 'Isian Judul mengandung karakter yang tidak diizinkan.', trigger: 'blur' }
         ],
         type: [
           {
@@ -183,6 +189,9 @@ export default {
             trigger: 'blur'
           }
         ],
+        errorStartDate: [
+          { required: true, message: 'Rentang waktu tersebut telah digunakan.', trigger: 'blur' }
+        ],
         end_date: [
           {
             required: true,
@@ -196,6 +205,9 @@ export default {
             message: 'Deskripsi harus diisi',
             trigger: 'blur'
           }
+        ],
+        errorDescription: [
+          { required: true, message: 'Isian Deskripsi mengandung karakter yang tidak diizinkan.', trigger: 'blur' }
         ]
       }
     }
@@ -315,9 +327,22 @@ export default {
           this.$router.push('/popup-informasi/index')
         }
       } catch (e) {
-        const imageError = e.response.data.data[0].field
-        if (imageError === 'image_path') {
-          this.$message.error(this.$t('errors.banner-image-null'))
+        for (let x in e.response.data.data) {
+          if (String(x) === 'title'){
+            this.validateTitle = 'errorTitle'
+          } 
+
+          if (String(x) === 'start_date') {
+            this.validateStartDate = 'errorStartDate'
+          } 
+
+          if (String(x) === 'description') {
+            this.validateDescription = 'errorDescription'
+          }
+
+          if (String(x) === 'image_path') {
+            this.$message.error(this.$t('errors.banner-image-null'))
+          }
         }
       } finally {
         this.loading = false

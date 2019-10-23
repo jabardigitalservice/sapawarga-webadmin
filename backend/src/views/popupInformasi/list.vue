@@ -18,15 +18,16 @@
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
           <el-table-column prop="title" sortable="custom" label="Judul Pop-Up Informasi" min-width="250" />
           <el-table-column prop="type" sortable="custom" label="Kategori" align="center" min-width="130" />
-
-          <el-table-column prop="status" sortable="custom" class-name="status-col" label="Status" align="center" min-width="130">
+          <el-table-column prop="start_date" sortable="custom" label="Tanggal Mulai" align="center" min-width="125">
             <template slot-scope="{row}">
-              <el-tag :type="row.status | statusFilter">
-                {{ row.status_label }}
-              </el-tag>
+              {{ row.start_date | moment('D MMM YYYY') }}
             </template>
           </el-table-column>
-
+          <el-table-column prop="end_date" sortable="custom" label="Tanggal Akhir" align="center" min-width="125">
+            <template slot-scope="{row}">
+              {{ row.end_date | moment('D MMM YYYY') }}
+            </template>
+          </el-table-column>
           <el-table-column align="center" label="Actions" width="250">
             <template slot-scope="scope">
               <router-link :to="'/popup-informasi/detail/'+scope.row.id">
