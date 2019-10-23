@@ -42,6 +42,44 @@
             <el-input v-model="user.phone" type="text" placeholder="Contoh: 081254332233" />
           </el-form-item>
 
+          <el-form-item label="Tanggal Lahir" prop="phone">
+            <el-date-picker
+              v-model="user.phone"
+              type="date"
+              :editable="false"
+              :clearable="false"
+              format="dd-MM-yyyy"
+              placeholder="Pilih tanggal"
+            />
+          </el-form-item>
+
+          <el-row>
+            <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
+              <el-form-item label="Pendidikan" prop="role">
+                <el-select v-model="user.role" placeholder="Pilih Pendidikan">
+                  <el-option
+                    v-for="item in filterRole"
+                    :key="item.value"
+                    :value="item.value"
+                    :label="item.label"
+                  >{{ item.label }}</el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" :style="{paddingLeft: formRightSide}">
+              <el-form-item label="Pekerjaan" prop="role">
+                <el-select v-model="user.role" placeholder="Pilih Pekerjaan">
+                  <el-option
+                    v-for="item in filterRole"
+                    :key="item.value"
+                    :value="item.value"
+                    :label="item.label"
+                  >{{ item.label }}</el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+          </el-row>
+
           <el-row>
             <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
               <el-form-item label="Peran" prop="role">
@@ -1110,84 +1148,4 @@ export default {
   }
 }
 </script>
-<style lang="scss" scoped>
-.input-image {
-  margin-left:50px;
-}
-img.preview {
-    width: 200px;
-    background-color: white;
-    border: 1px solid #DDD;
-    padding: 5px;
-}
-.upload-demo {
-  margin: 10px auto;
-}
-.grid-content:first-child {
-  margin-bottom: 20px;
-}
 
-p {
-  color: #42b983;
-  font-weight: 600;
-}
-.app-container {
-  padding: 5px 20px;
-}
-
-#password {
-  .el-row {
-    margin-right: 10px;
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
-}
-
-.el-row {
-  margin-left: 0px;
-  &:last-child {
-    margin-bottom: 0;
-  }
-}
-.el-col {
-  border-radius: 4px;
-}
-.bg-purple {
-  background: #d3dce6;
-}
-.bg-purple-light {
-  background: #e5e9f2;
-}
-.grid-content {
-  border-radius: 4px;
-  min-height: 36px;
-}
-.row-bg {
-  padding: 10px 0;
-  background-color: #f9fafc;
-}
-.el-upload .avatar-uploader {
-  border-radius: 6px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-}
-.avatar-uploader .el-upload:hover {
-  border-color: #409eff;
-}
-.avatar-uploader-icon {
-  font-size: 28px;
-  color: #8c939d;
-  width: 178px;
-  height: 178px;
-  line-height: 178px;
-  text-align: center;
-}
-.avatar {
-  width: 178px;
-  height: 178px;
-  display: block;
-}
-
-</style>
