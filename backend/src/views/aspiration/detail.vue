@@ -16,11 +16,8 @@
         <el-card>
           <div slot="header" class="clearfix">
             <el-row>
-              <el-col :span="18">
+              <el-col :span="20">
                 <span class="aspiration-title">{{ title }}</span>
-              </el-col>
-              <el-col :span="6">
-                <span class="aspiration-date"> {{ created_at | moment('D MMMM YYYY HH:mm') }} </span>
               </el-col>
             </el-row>
           </div>
