@@ -268,7 +268,7 @@ export default {
       fetchRecord(id).then(response => {
         this.broadcast = response.data
         this.broadcast.scheduled_datetime = response.data.scheduled_datetime ? moment.unix(response.data.scheduled_datetime) : null
-        if (this.broadcast.status === 10) {
+        if (this.broadcast.status !== 0) {
           this.$message.error(this.$t('crud.broadcast-error-edit-published'))
           this.$router.push('/broadcast/index')
         }
