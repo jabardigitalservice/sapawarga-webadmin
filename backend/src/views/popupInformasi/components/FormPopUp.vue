@@ -50,6 +50,7 @@
                   type="datetime"
                   format="yyyy-MM-dd HH:mm:ss"
                   value-format="yyyy-MM-dd HH:mm:ss"
+                  :picker-options="datePickerOptions"
                   placeholder="Tanggal Berakhir"
                 />
               </el-col>
@@ -81,10 +82,12 @@
 
 <script>
 import AttachmentPhotoUpload from '@/components/AttachmentPhotoUpload'
-import { validUrl } from '@/utils/validate'
+import { validUrl, validateHTMLOnInputString } from '@/utils/validate'
 import { create, fetchRecord, update } from '@/api/popupInformasi'
 import Fitur from '@/views/banner/components/dialog/fitur'
 import { mapGetters } from 'vuex'
+const moment = require('moment')
+moment().format()
 
 export default {
   components: {
@@ -100,7 +103,15 @@ export default {
   data() {
     const validatorUrl = (rule, value, callback) => {
       if (validUrl(value) === false) {
-        callback(new Error('URL tidak valid'))
+        callback(new Error(this.$t('errors.url-not-valid')))
+      }
+
+      callback()
+    }
+
+    const validatorHTML = (rule, value, callback) => {
+      if (validateHTMLOnInputString(value) === true) {
+        callback(new Error(this.$t('errors.popup-informasi-title')))
       }
 
       callback()
@@ -118,8 +129,8 @@ export default {
         internal_object_type: null,
         internal_object_id: null,
         internal_object_name: null,
-        start_date: null,
-        end_date: null,
+        start_date: moment().format('YYYY-MM-DD HH:mm:ss'),
+        end_date: moment().add(1, 'days').format('YYYY-MM-DD HH:mm:ss'),
         description: null
       },
       dialogName: null,
@@ -133,34 +144,35 @@ export default {
         title: [
           {
             required: true,
-            message: 'Judul Pop Up harus diisi',
+            message: this.$t('errors.popup-title-not-null'),
             trigger: 'blur'
           },
           {
             min: 10,
-            message: 'Judul Pop Up minimal 10 Karakter',
+            message: this.$t('errors.popup-title-min-10'),
             trigger: 'blur'
           },
           {
             max: 100,
-            message: 'Judul Pop Up maximal 100 Karakter',
+            message: this.$t('errors.popup-title-max-100'),
+            trigger: 'blur'
+          },
+          {
+            validator: validatorHTML,
             trigger: 'blur'
           }
-        ],
-        errorTitle: [
-          { required: true, message: 'Isian Judul mengandung karakter yang tidak diizinkan.', trigger: 'blur' }
         ],
         type: [
           {
             required: true,
-            message: 'Kategori Pop Up harus diisi',
+            message: this.$t('errors.popup-kategori-not-null'),
             trigger: 'blur'
           }
         ],
         link_url: [
           {
             required: true,
-            message: 'Tautan harus diisi',
+            message: this.$t('errors.popup-url-not-null'),
             trigger: 'blur'
           },
           {
@@ -171,44 +183,45 @@ export default {
         internal_object_type: [
           {
             required: true,
-            message: 'Fitur Pop Up harus diisi',
+            message: this.$t('errors.popup-fitur-not-null'),
             trigger: 'blur'
           }
         ],
         internal_object_name: [
           {
             required: true,
-            message: 'Judul harus diisi',
+            message: this.$t('errors.popup-type-name-not-null'),
             trigger: 'blur'
           }
         ],
         start_date: [
           {
             required: true,
-            message: 'Tanggal Mulai harus diisi',
+            message: this.$t('errors.popup-start-date-not-null'),
             trigger: 'blur'
           }
-        ],
-        errorStartDate: [
-          { required: true, message: 'Rentang waktu tersebut telah digunakan.', trigger: 'blur' }
         ],
         end_date: [
           {
             required: true,
-            message: 'Tanggal Berakhir harus diisi',
+            message: this.$t('errors.popup-end-date-not-null'),
             trigger: 'blur'
           }
         ],
         description: [
           {
             required: true,
-            message: 'Deskripsi harus diisi',
+            message: this.$t('errors.popup-description-not-null'),
+            trigger: 'blur'
+          },
+          {
+            validator: validatorHTML,
             trigger: 'blur'
           }
-        ],
-        errorDescription: [
-          { required: true, message: 'Isian Deskripsi mengandung karakter yang tidak diizinkan.', trigger: 'blur' }
         ]
+      },
+      datePickerOptions: {
+          disabledDate: this.disabledDueDate
       }
     }
   },
@@ -272,6 +285,12 @@ export default {
     }
   },
   methods: {
+    disabledDueDate(time) {
+      let startdate = moment(this.popup.start_date)
+      startdate = startdate.format("YYYY-MM-DD 00:00:00")
+      const parseDate = Date.parse(startdate)
+      return time.getTime() < parseDate
+    },
     dialog(id) {
       this.dialogName = id
       this.showDialog = true
@@ -327,21 +346,12 @@ export default {
           this.$router.push('/popup-informasi/index')
         }
       } catch (e) {
-        for (const x in e.response.data.data) {
-          if (String(x) === 'title') {
-            this.validateTitle = 'errorTitle'
-          }
-
-          if (String(x) === 'start_date') {
-            this.validateStartDate = 'errorStartDate'
-          }
-
-          if (String(x) === 'description') {
-            this.validateDescription = 'errorDescription'
-          }
-
+        const data = e.response.data.data
+        for (const x in data) {
           if (String(x) === 'image_path') {
-            this.$message.error(this.$t('errors.banner-image-null'))
+            this.$message.error(this.$t('errors.popup-image-null'))
+          } else {
+            this.$message.error(data[String(x)][0])
           }
         }
       } finally {
