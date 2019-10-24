@@ -250,7 +250,7 @@ export default {
     'created_at': 'Dibuat',
     'description': 'Isi Pesan',
     'title-broadcast': 'Judul Pesan',
-    'scheduled_datetime': 'Tanggal dan Waktu Kirim',
+    'scheduled_datetime': 'Tanggal dan Waktu',
 
     'status': 'Status',
     'status-draft': 'Draft',
