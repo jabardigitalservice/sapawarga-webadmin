@@ -6,32 +6,32 @@
       </el-col>
       <el-col :xs="24" :sm="13" :lg="16">
         <el-form ref="popup" :model="popup" :rules="rules" :status-icon="true" label-width="160px">
-          <el-form-item label="Judul Pop Up" :prop="validateTitle">
-            <el-input v-model="popup.title" type="text" name="title" placeholder="Judul Pop Up" />
+          <el-form-item :label="$t('popup.popup-title')" :prop="validateTitle">
+            <el-input v-model="popup.title" type="text" name="title" :placeholder="$t('popup.popup-title')" />
           </el-form-item>
-          <el-form-item label="Kategori" prop="type">
+          <el-form-item :label="$t('popup.popup-category')" prop="type">
             <el-radio-group v-model="popup.type" name="type">
-              <el-radio-button label="external">Eksternal</el-radio-button>
-              <el-radio-button label="internal">Internal</el-radio-button>
+              <el-radio-button label="external">{{ $t('popup.popup-external') }}</el-radio-button>
+              <el-radio-button label="internal">{{ $t('popup.popup-internal') }}</el-radio-button>
             </el-radio-group>
           </el-form-item>
-          <el-form-item v-if="popup.type === 'external'" label="Tautan" prop="link_url">
-            <el-input v-model="popup.link_url" type="text" name="link_url" placeholder="URL Pop Up" />
+          <el-form-item v-if="popup.type === 'external'" :label="$t('popup.popup-link')" prop="link_url">
+            <el-input v-model="popup.link_url" type="text" name="link_url" :placeholder="$t('popup.popup-url-pop-up')" />
           </el-form-item>
-          <el-form-item v-else label="Fitur" prop="internal_object_type">
-            <el-select v-model="popup.internal_object_type" placeholder="Pilih Kategori" name="fitur">
-              <el-option label="Survei" value="survey" />
-              <el-option label="Polling" value="polling" />
-              <el-option label="Berita" value="news" />
+          <el-form-item v-else :label="$t('popup.popup-fitur')" prop="internal_object_type">
+            <el-select v-model="popup.internal_object_type" :placeholder="$t('popup.popup-title')" name="fitur">
+              <el-option :label="$t('popup.popup-survey')" value="survey" />
+              <el-option :label="$t('popup.popup-polling')" value="polling" />
+              <el-option :label="$t('popup.popup-news')" value="news" />
             </el-select>
             <span v-if="popup.internal_object_type !== null">
-              <el-button type="success" @click="dialog(popup.internal_object_type)">Pilihan</el-button>
+              <el-button type="success" @click="dialog(popup.internal_object_type)">{{ $t('popup.popup-selection') }}</el-button>
             </span>
           </el-form-item>
           <el-form-item v-if="popup.type === 'internal'" :label="titleFitur" prop="internal_object_name">
             <el-input v-model="popup.internal_object_name" disabled type="text" name="internal_object_name" />
           </el-form-item>
-          <el-form-item class="waktu-publikasi" label="Waktu Publikasi" :prop="validateStartDate">
+          <el-form-item class="waktu-publikasi" :label="$t('popup.popup-time-publish')" :prop="validateStartDate">
             <el-row :gutter="10" type="flex">
               <el-col :span="10">
                 <el-date-picker
@@ -41,7 +41,7 @@
                   format="yyyy-MM-dd HH:mm:ss"
                   value-format="yyyy-MM-dd HH:mm:ss"
                   :picker-options="dateStartDateOptions"
-                  placeholder="Tanggal Mulai"
+                  :placeholder="$t('popup.popup-start-date')"
                 />
               </el-col>
               <el-col :span="10">
@@ -52,7 +52,7 @@
                   format="yyyy-MM-dd HH:mm:ss"
                   value-format="yyyy-MM-dd HH:mm:ss"
                   :picker-options="dateEndDateOptions"
-                  placeholder="Tanggal Berakhir"
+                  :placeholder="$t('popup.popup-end-date')"
                 />
               </el-col>
             </el-row>

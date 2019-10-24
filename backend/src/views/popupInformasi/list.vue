@@ -6,7 +6,7 @@
           <el-col :span="12">
             <router-link :to="{ path: '/popup-informasi/create' }">
               <el-button type="primary" size="small" icon="el-icon-plus">
-                Tambah Pop-Up Informasi Baru
+                {{ $t('popup.popup-add-new') }}
               </el-button>
             </router-link>
           </el-col>
@@ -16,31 +16,31 @@
 
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row @sort-change="changeSort">
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
-          <el-table-column prop="title" sortable="custom" label="Judul Pop-Up Informasi" min-width="250" />
-          <el-table-column prop="type" sortable="custom" label="Kategori" align="center" min-width="130" />
-          <el-table-column prop="start_date" sortable="custom" label="Tanggal Mulai" align="center" min-width="125">
+          <el-table-column prop="title" sortable="custom" :label="$t('popup.popup-title')" min-width="250" />
+          <el-table-column prop="type" sortable="custom" :label="$t('popup.popup-category')" align="center" min-width="130" />
+          <el-table-column prop="start_date" sortable="custom" :label="$t('popup.popup-start-date')" align="center" min-width="125">
             <template slot-scope="{row}">
               {{ row.start_date | moment('D MMM YYYY') }}
             </template>
           </el-table-column>
-          <el-table-column prop="end_date" sortable="custom" label="Tanggal Akhir" align="center" min-width="125">
+          <el-table-column prop="end_date" sortable="custom" :label="$t('popup.popup-end-date')" align="center" min-width="125">
             <template slot-scope="{row}">
               {{ row.end_date | moment('D MMM YYYY') }}
             </template>
           </el-table-column>
-          <el-table-column align="center" label="Actions" width="250">
+          <el-table-column align="center" :label="$t('popup.popup-actions')" width="250">
             <template slot-scope="scope">
               <router-link :to="'/popup-informasi/detail/'+scope.row.id">
-                <el-tooltip content="Detail Pop-Up Informasi" placement="top">
+                <el-tooltip :content="$t('popup.popup-tooltip-detail')" placement="top">
                   <el-button type="primary" icon="el-icon-view" size="small" />
                 </el-tooltip>
               </router-link>
               <router-link :to="(scope.row.created_by === user_id ? '/popup-informasi/edit/' +scope.row.id : '')">
-                <el-tooltip content="Edit Pop-Up Informasi" placement="top">
+                <el-tooltip :content="$t('popup.popup-tooltip-edit')" placement="top">
                   <el-button type="warning" icon="el-icon-edit" size="small" :disabled="scope.row.created_by !== user_id" />
                 </el-tooltip>
               </router-link>
-              <el-tooltip content="Hapus Pop-Up Informasi" placement="top">
+              <el-tooltip :content="$t('popup.popup-tooltip-delete')" placement="top">
                 <el-button type="danger" icon="el-icon-delete" size="small" :disabled="scope.row.created_by !== user_id" @click="deletePopUpInformasi(scope.row.id)" />
               </el-tooltip>
             </template>

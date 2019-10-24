@@ -169,6 +169,32 @@ export default {
     confirm: 'Ya',
     cancel: 'Batal'
   },
+  popup: {
+    'popup-title': 'Judul Pop Up',
+    'popup-title-data': 'Data Pop-Up Informasi',
+    'popup-category': 'Kategori',
+    'popup-start-date': 'Tanggal Mulai',
+    'popup-end-date': 'Tanggal Akhir',
+    'popup-actions': 'Actions',
+    'popup-external': 'Eksternal',
+    'popup-internal': 'Internal',
+    'popup-link': 'Tautan',
+    'popup-url-pop-up': 'URL Pop Up',
+    'popup-fitur': 'Fitur',
+    'popup-status': 'Status',
+    'popup-title-fitur': 'Judul Fitur',
+    'popup-choose-category': 'Pilih Kategori',
+    'popup-survey': 'Survei',
+    'popup-polling': 'Polling',
+    'popup-news': 'Berita',
+    'popup-selection': 'Pilihan',
+    'popup-time-publish': 'Waktu Publikasi',
+    'popup-add-new': 'Tambah Pop-Up Informasi Baru',
+    'popup-tooltip-detail': 'Detail Pop-Up Informasi',
+    'popup-tooltip-edit': 'Edit Pop-Up Informasi',
+    'popup-tooltip-delete': 'Hapus Pop-Up Informasi'
+
+  },
   errors: {
     'internal-server-error': 'Telah terjadi kesalahan sistem, silahkan muat ulang halaman ini.',
     'url-not-valid': 'URL tidak valid',
