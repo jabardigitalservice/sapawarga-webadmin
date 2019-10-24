@@ -22,7 +22,7 @@
             <el-table-column prop="content" />
           </el-table>
         </el-card>
-        <el-button v-if="!btnKirimDisable" class="button-send" type="primary" @click="actionApprove(status.published)">{{ $t('crud.send') }}</el-button>
+        <el-button v-if="!btnKirimDisable" class="button-send" type="primary" @click="actionApprove(status.PUBLISHED)">{{ $t('crud.send') }}</el-button>
       </el-col>
     </el-row>
   </div>
@@ -41,9 +41,9 @@ export default {
       broadcast: null,
       btnKirimDisable: false,
       status: {
-        draft: 0,
-        scheduled: 5,
-        published: 10
+        DRAFT: 0,
+        SCHEDULED: 5,
+        PUBLISHED: 10
       }
     }
   },
@@ -59,7 +59,7 @@ export default {
         const { title, description, category, kabkota, kecamatan, kelurahan, rw, status, status_label, scheduled_datetime, is_scheduled } = response.data
         this.broadcast = response.data
 
-        if (status === this.status.draft) {
+        if (status === this.status.DRAFT) {
           this.btnKirimDisable = false
         } else {
           this.btnKirimDisable = true
@@ -95,7 +95,7 @@ export default {
           },
           {
             title: this.$t('label.status'),
-            content: (status === this.status.scheduled ? <el-tag type='warning'>{status_label}</el-tag> : status === this.status.published ? <el-tag type='success'>{status_label}</el-tag> : <el-tag type='info'>{status_label}</el-tag>)
+            content: (status === this.status.SCHEDULED ? <el-tag type='warning'>{status_label}</el-tag> : status === this.status.PUBLISHED ? <el-tag type='success'>{status_label}</el-tag> : <el-tag type='info'>{status_label}</el-tag>)
           },
           {
             title: this.$t('label.scheduled'),
@@ -115,7 +115,7 @@ export default {
           this.tableDataPesan.splice(4, 1)
         }
 
-        if (status === this.status.published || status === this.status.scheduled) {
+        if (status === this.status.PUBLISHED || status === this.status.SCHEDULED) {
           this.tableDataPesan.splice(3, 1)
         }
       })

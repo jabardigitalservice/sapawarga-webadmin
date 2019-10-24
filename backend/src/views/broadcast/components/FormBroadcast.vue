@@ -72,8 +72,8 @@
               />
             </el-form-item>
             <el-form-item>
-              <el-button type="info" :disabled="broadcast.status === status.published" :loading="loading" @click="submitForm(status.draft)">{{ $t('crud.draft') }}</el-button>
-              <el-button v-show="!isEdit" type="primary" :loading="loading" @click="actionApprove(status.published)"> {{ $t('crud.send') }}</el-button>
+              <el-button type="info" :disabled="broadcast.status === status.PUBLISHED" :loading="loading" @click="submitForm(status.DRAFT)">{{ $t('crud.draft') }}</el-button>
+              <el-button v-show="!isEdit" type="primary" :loading="loading" @click="actionApprove(status.PUBLISHED)"> {{ $t('crud.send') }}</el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -117,8 +117,8 @@ export default {
     return {
       loading: false,
       status: {
-        draft: 0,
-        published: 10
+        DRAFT: 0,
+        PUBLISHED: 10
       },
       width: '300%',
       broadcast: {
@@ -272,7 +272,7 @@ export default {
       fetchRecord(id).then(response => {
         this.broadcast = response.data
         this.broadcast.scheduled_datetime = response.data.scheduled_datetime ? moment.unix(response.data.scheduled_datetime) : null
-        if (this.broadcast.status !== 0) {
+        if (this.broadcast.status !== this.status.DRAFT) {
           this.$message.error(this.$t('crud.broadcast-error-edit-published'))
           this.$router.push('/broadcast/index')
         }
@@ -322,10 +322,10 @@ export default {
           this.$router.push('/broadcast/index')
         } else {
           await create(data)
-          if (status === this.status.published) {
+          if (status === this.status.PUBLISHED) {
             this.$message.success(this.$t('crud.send-success'))
             this.$router.push('/broadcast/index')
-          } else if (status === this.status.draft) {
+          } else if (status === this.status.DRAFT) {
             this.$message.info(this.$t('crud.draft-success'))
             this.$router.push('/broadcast/index')
           }
