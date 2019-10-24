@@ -101,3 +101,11 @@ export function fetchUser(id) {
     method: 'get'
   })
 }
+
+export function fetchExport(query) {
+  return request({
+    url: '/staff/export',
+    method: 'get',
+    params: query
+  })
+}
