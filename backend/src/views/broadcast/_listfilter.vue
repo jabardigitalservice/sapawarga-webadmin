@@ -16,9 +16,9 @@
               placeholder="Pilih Status"
               style="width: 100%"
             >
-              <el-option value="10" label="Dipublikasikan" />
-              <el-option value="5" label="Dijadwalkan" />
-              <el-option value="0" label="Draft" />
+              <el-option value="10" :label="$t('label.status-published')" />
+              <el-option value="5" :label="$t('label.status-scheduled')" />
+              <el-option value="0" :label="$t('label.status-draft')" />
             </el-select>
           </el-form-item>
         </el-col>
@@ -35,10 +35,10 @@
         </el-col>
         <el-col :span="4">
           <el-button type="primary" size="small" @click="submitSearch">
-            Cari
+            {{ $t('crud.search') }}
           </el-button>
           <el-button type="primary" size="small" @click="resetFilter">
-            Reset
+            {{ $t('crud.reset') }}
           </el-button>
         </el-col>
       </el-row>
