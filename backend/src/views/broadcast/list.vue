@@ -48,7 +48,7 @@
               </router-link>
               <router-link :to="scope.row.status === 0 ? '/broadcast/edit/' +scope.row.id : ''">
                 <el-tooltip content="Edit Pesan" placement="top">
-                  <el-button v-if="roles" type="warning" icon="el-icon-edit" size="small" :disabled="scope.row.status === 10 || scope.row.status === 5 " />
+                  <el-button v-if="roles" type="warning" icon="el-icon-edit" size="small" :disabled="scope.row.status === status.published || scope.row.status === status.scheduled " />
                 </el-tooltip>
               </router-link>
             </template>
@@ -92,6 +92,11 @@ export default {
       total: 0,
       roles: checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']),
       listLoading: true,
+      status: {
+        draft: 0,
+        scheduled: 5,
+        published: 10
+      },
       listQuery: {
         title: null,
         sort_by: 'updated_at',
@@ -130,7 +135,7 @@ export default {
     },
 
     getSentDateTime(row) {
-      return row.status === 10 ? row.updated_at : '-'
+      return row.status === this.status.published ? row.updated_at : '-'
     },
 
     changeSort(e) {

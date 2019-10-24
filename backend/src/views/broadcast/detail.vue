@@ -22,7 +22,7 @@
             <el-table-column prop="content" />
           </el-table>
         </el-card>
-        <el-button v-if="!btnKirimDisable" class="button-send" type="primary" @click="actionApprove(status.active)">{{ $t('crud.send') }}</el-button>
+        <el-button v-if="!btnKirimDisable" class="button-send" type="primary" @click="actionApprove(status.published)">{{ $t('crud.send') }}</el-button>
       </el-col>
     </el-row>
   </div>
@@ -42,7 +42,8 @@ export default {
       btnKirimDisable: false,
       status: {
         draft: 0,
-        active: 10
+        scheduled: 5,
+        published: 10
       }
     }
   },
@@ -58,7 +59,7 @@ export default {
         const { title, description, category, kabkota, kecamatan, kelurahan, rw, status, status_label, scheduled_datetime, is_scheduled } = response.data
         this.broadcast = response.data
 
-        if (status === 0) {
+        if (status === this.status.draft) {
           this.btnKirimDisable = false
         } else {
           this.btnKirimDisable = true
@@ -94,7 +95,7 @@ export default {
           },
           {
             title: this.$t('label.status'),
-            content: (status === 5 ? <el-tag type='warning'>{status_label}</el-tag> : status === 10 ? <el-tag type='success'>{status_label}</el-tag> : <el-tag type='info'>{status_label}</el-tag>)
+            content: (status === this.status.scheduled ? <el-tag type='warning'>{status_label}</el-tag> : status === this.status.published ? <el-tag type='success'>{status_label}</el-tag> : <el-tag type='info'>{status_label}</el-tag>)
           },
           {
             title: this.$t('label.scheduled'),
@@ -114,7 +115,7 @@ export default {
           this.tableDataPesan.splice(4, 1)
         }
 
-        if (status === 10 || status === 5) {
+        if (status === this.status.published || status === this.status.scheduled) {
           this.tableDataPesan.splice(3, 1)
         }
       })

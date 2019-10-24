@@ -72,8 +72,8 @@
               />
             </el-form-item>
             <el-form-item>
-              <el-button type="info" :disabled="broadcast.status === 10" :loading="loading" @click="submitForm(status.draft)">{{ $t('crud.draft') }}</el-button>
-              <el-button v-show="!isEdit" type="primary" :loading="loading" @click="actionApprove(status.active)"> {{ $t('crud.send') }}</el-button>
+              <el-button type="info" :disabled="broadcast.status === status.published" :loading="loading" @click="submitForm(status.draft)">{{ $t('crud.draft') }}</el-button>
+              <el-button v-show="!isEdit" type="primary" :loading="loading" @click="actionApprove(status.published)"> {{ $t('crud.send') }}</el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -118,7 +118,7 @@ export default {
       loading: false,
       status: {
         draft: 0,
-        active: 10
+        published: 10
       },
       width: '300%',
       broadcast: {
@@ -322,10 +322,10 @@ export default {
           this.$router.push('/broadcast/index')
         } else {
           await create(data)
-          if (status === 10) {
+          if (status === this.status.published) {
             this.$message.success(this.$t('crud.send-success'))
             this.$router.push('/broadcast/index')
-          } else if (status === 0) {
+          } else if (status === this.status.draft) {
             this.$message.info(this.$t('crud.draft-success'))
             this.$router.push('/broadcast/index')
           }
