@@ -7,7 +7,7 @@
       <line-chart :chart-data="lineChartData" />
     </el-row> -->
 
-    <h3 style="color:#73737">Usulan</h3>
+    <h3 style="color:#73737">{{$t('dashboard.dashboard-aspiration')}}</h3>
 
     <el-row :gutter="8">
       <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 16}" :xl="{span: 16}" style="padding-right:8px;margin-bottom:10px;">
@@ -27,7 +27,7 @@
     </el-row>
 
     <!-- Polling -->
-    <h3 style="color:#73737">Polling</h3>
+    <h3 style="color:#73737">{{$t('dashboard.dashboard-polling')}}</h3>
     <el-row>
       <el-col>
         <polling />
@@ -35,13 +35,13 @@
     </el-row>
 
     <!-- Polling -->
-    <h3 style="color:#73737">Top Berita</h3>
+    <h3 style="color:#73737">{{$t('dashboard.dashboard-top-news')}}</h3>
     <el-row>
       <el-col :xs="{span: 12}" :sm="{span: 12}" :md="{span: 12}" :lg="{span: 12}" :xl="{span: 12}">
-        <TopNews :list="listNewsProvinsi" judul="Berita Jawa Barat" />
+        <TopNews :list="listNewsProvinsi" :title="$t('dashboard.dashboard-news-prov')" />
       </el-col>
       <el-col :xs="{span: 12}" :sm="{span: 12}" :md="{span: 12}" :lg="{span: 12}" :xl="{span: 12}">
-        <TopNews :list="listNewsKoKab" judul="Berita Kota/Kabupaten" />
+        <TopNews :list="listNewsKoKab" :title="$t('dashboard.dashboard-news-kabkota')" />
       </el-col>
     </el-row>
   </div>

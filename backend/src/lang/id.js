@@ -161,6 +161,15 @@ export default {
     confirm: 'Ya',
     cancel: 'Batal'
   },
+  dashboard: {
+    'dashboard-aspiration': 'Usulan',
+    'dashboard-polling': 'Polling',
+    'dashboard-top-news': 'Top Berita',
+    'dashboard-news-see-all': 'Lihat Semua',
+    'dashboard-news-viewer': 'View',
+    'dashboard-news-prov': 'Berita Jawa Barat',
+    'dashboard-news-kabkota': 'Berita Kota/Kabupaten'
+  },
   errors: {
     'internal-server-error': 'Telah terjadi kesalahan sistem, silahkan muat ulang halaman ini.',
 
