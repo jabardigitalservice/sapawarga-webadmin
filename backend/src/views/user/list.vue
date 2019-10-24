@@ -112,7 +112,6 @@
 
 <script>
 import { fetchList, activate, deactivate, totalUser, fetchExport } from '@/api/staff'
-import { getToken } from '@/utils/auth'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 import PanelGroup from './components/PanelGroup'
 import permission from '@/directive/permission/index.js'

@@ -73,7 +73,6 @@ service.interceptors.response.use(
     // }
   },
   error => {
-
     if (error.response.status === 500) {
       let message = 'Oops, telah terjadi kesalahan, silahkan muat ulang halaman ini.'
       if (error.response.data.data !== undefined) {
