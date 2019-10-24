@@ -42,7 +42,7 @@
             <el-input v-model="user.phone" type="text" placeholder="Contoh: 081254332233" />
           </el-form-item>
 
-          <el-form-item label="Tanggal Lahir" prop="phone">
+          <el-form-item label="Tanggal Lahir">
             <el-date-picker
               v-model="user.birthdate"
               type="date"

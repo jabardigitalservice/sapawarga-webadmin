@@ -12,10 +12,30 @@
         </div>
       </el-col>
       <el-col class="col-right" :xs="24" :sm="24" :md="24" :lg="17" :xl="17">
-        <el-table stripe :data="tableData" :show-header="false" border style="width: 100%">
-          <el-table-column prop="title" width="180" />
-          <el-table-column prop="content" />
-        </el-table>
+        <div class="profile">
+          <p class="warn-content">Profile</p>
+          <el-table stripe :data="tableProfile" :show-header="false" border style="width: 100%">
+            <el-table-column prop="title" width="180" />
+            <el-table-column prop="content" />
+          </el-table>
+        </div>
+
+        <div class="contact">
+          <p class="warn-content">Kontak</p>
+          <el-table stripe :data="tableContact" :show-header="false" border style="width: 100%">
+            <el-table-column prop="title" width="180" />
+            <el-table-column prop="content" />
+          </el-table>
+        </div>
+
+        <div class="address">
+          <p class="warn-content">Alamat</p>
+          <el-table stripe :data="tableAddress" :show-header="false" border style="width: 100%">
+            <el-table-column prop="title" width="180" />
+            <el-table-column prop="content" />
+          </el-table>
+        </div>
+
         <div class="social-media">
           <p class="warn-content">Media Sosial</p>
           <el-table stripe :data="twitterIcon" :show-header="false" border style="width: 100%">
@@ -73,6 +93,10 @@ export default {
       height: '220px',
       tableData: [],
       tableDataTambahan: [],
+      tableDataTambahan: [],
+      tableData: [],
+      tableProfile: [],
+      tableAddress: [],
       instagramIcon: [],
       twitterIcon: [],
       facebookIcon: [],
@@ -184,6 +208,65 @@ export default {
           {
             title: 'Peran',
             content: role_label || '-'
+          }
+        ]
+        this.tableProfile = [
+          {
+            title: 'Nama',
+            content: '-'
+          },
+          {
+            title: 'Username',
+            content: '-'
+          },
+          {
+            title: 'Tanggal Lahir',
+            content: '-'
+          },
+          {
+            title: 'Pendidikan',
+            content: '-'
+          },
+          {
+            title: 'Peran',
+            content: '-'
+          }
+        ]
+
+        this.tableContact = [
+          {
+            title: 'Email',
+            content: '-'
+          },
+          {
+            title: 'Telepon',
+            content: '-'
+          }
+        ]
+        this.tableAddress = [
+          {
+            title: 'Alamat',
+            content: '-'
+          },
+          {
+            title: 'Kab/Kota',
+            content: '-'
+          },
+          {
+            title: 'Kecamatan',
+            content: '-'
+          },
+          {
+            title: 'Kelurahan',
+            content: '-'
+          },
+          {
+            title: 'RT',
+            content: '-'
+          },
+          {
+            title: 'RW',
+            content: '-'
           }
         ]
         this.tableDataTambahan = [
