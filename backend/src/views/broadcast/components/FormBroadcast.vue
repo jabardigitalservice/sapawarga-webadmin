@@ -12,7 +12,7 @@
             :rules="rules"
             :status-icon="true"
           >
-            <el-form-item label="Wilayah" prop="wilayah">
+            <el-form-item :label="$t('label.area')" prop="wilayah">
               <InputSelectArea
                 :kabkota-id="broadcast.kabkota_id"
                 :kec-id="broadcast.kec_id"
@@ -40,19 +40,19 @@
             label-position="left"
             :status-icon="true"
           >
-            <el-form-item label="Judul Pesan" prop="title">
+            <el-form-item :label="$t('label.title-broadcast')" prop="title">
               <el-input v-model="broadcast.title" type="text" placeholder="Judul Pesan (minimum 10 karakter, maksimum 100 karakter)" />
             </el-form-item>
-            <el-form-item label="Kategori" prop="category_id">
+            <el-form-item :label="$t('label.category')" prop="category_id">
               <InputCategory v-model="broadcast.category_id" category-type="broadcast" prop="category" />
             </el-form-item>
-            <el-form-item label="Jadwal" prop="is_scheduled">
+            <el-form-item :label="$t('label.scheduled')" prop="is_scheduled">
               <el-radio-group v-model="broadcast.is_scheduled" name="jadwal">
                 <el-radio-button :label="false">Sekarang</el-radio-button>
                 <el-radio-button :label="true">Terjadwal</el-radio-button>
               </el-radio-group>
             </el-form-item>
-            <el-form-item v-if="broadcast.is_scheduled === true" label="Tanggal dan Waktu" :prop="scheduled_datetime_validation">
+            <el-form-item v-if="broadcast.is_scheduled === true" :label="$t('label.scheduled_datetime')" :prop="scheduled_datetime_validation">
               <el-date-picker
                 v-model="broadcast.scheduled_datetime"
                 type="datetime"
@@ -63,7 +63,7 @@
               />
             </el-form-item>
 
-            <el-form-item label="Isi Pesan" prop="description">
+            <el-form-item :label="$t('label.description')" prop="description">
               <el-input
                 v-model="broadcast.description"
                 type="textarea"
@@ -102,14 +102,14 @@ export default {
   data() {
     const whitespaceTitle = (rule, value, callback) => {
       if (containsWhitespace(value) === true) {
-        callback(new Error('Judul pesan yang diisi tidak valid'))
+        callback(new Error(this.$t('message.broadcast-title-valid')))
       }
       callback()
     }
 
     const whitespaceDescription = (rule, value, callback) => {
       if (containsWhitespace(value) === true) {
-        callback(new Error('Pesan yang diisi tidak valid'))
+        callback(new Error(this.$t('message.broadcast-description-valid')))
       }
       callback()
     }
@@ -137,17 +137,17 @@ export default {
         title: [
           {
             required: true,
-            message: 'Judul pesan harus diisi',
+            message: this.$t('message.broadcast-title-required'),
             trigger: 'blur'
           },
           {
             min: 10,
-            message: 'Judul pesan minimal 10 karakter',
+            message: this.$t('message.broadcast-title-min'),
             trigger: 'blur'
           },
           {
             max: 100,
-            message: 'Judul pesan maksimal 100 karakter',
+            message: this.$t('message.broadcast-title-max'),
             trigger: 'blur'
           },
           {
@@ -156,17 +156,21 @@ export default {
           }
         ],
         category_id: [
-          { required: true, message: 'Kategori harus diisi.', trigger: 'change' }
+          {
+            required: true,
+            message: this.$t('message.category'),
+            trigger: 'change'
+          }
         ],
         description: [
           {
             required: true,
-            message: 'Isi pesan harus diisi',
+            message: this.$t('message.broadcast-description-required'),
             trigger: 'blur'
           },
           {
             max: 1000,
-            message: 'Isi pesan maksimal 1000 karakter',
+            message: this.$t('message.broadcast-description-max'),
             trigger: 'blur'
           },
           {
@@ -177,45 +181,45 @@ export default {
         rw: [
           {
             pattern: /^[0-9]+$/,
-            message: 'RW harus menggunakan angka',
+            message: this.$t('message.broadcast-rw-pattern'),
             trigger: 'blur'
           },
           {
             max: 3,
-            message: 'RW harus 3 angka, contoh 001',
+            message: this.$t('message.broadcast-rw-max'),
             trigger: 'blur'
           },
           {
             min: 3,
-            message: 'RW harus 3 angka, contoh 001',
+            message: this.$t('message.broadcast-rw-min'),
             trigger: 'blur'
           }
         ],
         wilayah: [
           {
             required: false,
-            message: 'wilayah harus diisi',
+            message: this.$t('message.broadcast-area-required'),
             trigger: 'change'
           }
         ],
         is_scheduled: [
           {
             required: true,
-            message: 'Jadwal harus diisi',
+            message: this.$t('message.broadcast-scheduled'),
             trigger: 'blur'
           }
         ],
         scheduled_datetime: [
           {
             required: true,
-            message: 'Tanggal dan waktu harus diisi',
+            message: this.$t('message.broadcast-scheduled_datetime'),
             trigger: 'blur'
           }
         ],
         scheduled_datetime_error: [
           {
             required: true,
-            message: 'Tanggal dan waktu yang dipilih telah lewat',
+            message: this.$t('message.broadcast-scheduled_datetime-expire'),
             trigger: 'change'
           }
         ]
