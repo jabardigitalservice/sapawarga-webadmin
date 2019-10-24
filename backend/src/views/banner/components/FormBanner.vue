@@ -167,10 +167,29 @@ export default {
   },
 
   watch: {
+    'banner.type'(val) {
+      if (this.banner.type === 'internal') {
+        this.banner.link_url = null
+      } else if (this.banner.type === 'external') {
+        this.banner.internal_category = null
+        this.banner.internal_entity_name = null
+        this.banner.internal_entity_id = null
+      }
+    },
+
     'banner.status'() {
       this.banner.status === 10 ? this.statusColor = '#67C23A' : this.statusColor = '#F56C6C'
     },
-    'banner.internal_category'() {
+
+    'banner.internal_category'(newVal, oldVal) {
+      if (oldVal === null) {
+        this.banner.internal_entity_name
+        this.banner.internal_entity_id
+      } else if (oldVal !== newVal) {
+        this.banner.internal_entity_name = null
+        this.banner.internal_entity_id = null
+      }
+
       if (this.banner.internal_category === 'survey') {
         this.titleFitur = 'Judul Survei'
         this.titlePopup = 'Daftar Survei'

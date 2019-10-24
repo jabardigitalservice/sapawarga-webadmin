@@ -220,10 +220,23 @@ p {
   display: block;
 }
 
+.title-top-news {
+  width: 320px;
+}
+
+@media(max-width:1200px) {
+  .title-top-news {
+    width: 300px;
+  }
+}
+
 @media(max-width:980px) {
   .filter-last-activity > span {
     display: inline-block;
     margin: 0px 4px 0 0;
+  }
+  .title-top-news {
+    width: 280px;
   }
 }
 
@@ -233,6 +246,9 @@ p {
       width: 300px;
       margin-bottom: 20px;
     }
+  }
+  .title-top-news {
+    width: 200px;
   }
 }
 

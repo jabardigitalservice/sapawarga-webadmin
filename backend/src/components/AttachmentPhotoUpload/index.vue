@@ -7,7 +7,7 @@
         </div>
       </div>
 
-      <el-button type="primary" style="width: 100%;" @click="launchFilePicker">Pilih Foto</el-button>
+      <el-button name="button-image-upload" type="primary" style="width: 100%;" @click="launchFilePicker">Pilih Foto</el-button>
 
       <p><small><strong>Catatan:</strong><br>Ukuran maksimal 1280x720 pixel (Landscape)</small></p>
       <input ref="file" type="file" accept="image/*" @change="onFileSelected">
