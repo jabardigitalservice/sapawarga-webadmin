@@ -167,33 +167,11 @@ export default {
   },
   common: {
     confirm: 'Ya',
+    save: 'Simpan',
     cancel: 'Batal'
   },
-  popup: {
-    'popup-title': 'Judul Pop Up',
-    'popup-title-data': 'Data Pop-Up Informasi',
-    'popup-category': 'Kategori',
-    'popup-start-date': 'Tanggal Mulai',
-    'popup-end-date': 'Tanggal Akhir',
-    'popup-actions': 'Actions',
-    'popup-external': 'Eksternal',
-    'popup-internal': 'Internal',
-    'popup-link': 'Tautan',
-    'popup-url-pop-up': 'URL Pop Up',
-    'popup-fitur': 'Fitur',
-    'popup-status': 'Status',
-    'popup-title-fitur': 'Judul Fitur',
-    'popup-choose-category': 'Pilih Kategori',
-    'popup-survey': 'Survei',
-    'popup-polling': 'Polling',
-    'popup-news': 'Berita',
-    'popup-selection': 'Pilihan',
-    'popup-time-publish': 'Waktu Publikasi',
-    'popup-add-new': 'Tambah Pop-Up Informasi Baru',
-    'popup-tooltip-detail': 'Detail Pop-Up Informasi',
-    'popup-tooltip-edit': 'Edit Pop-Up Informasi',
-    'popup-tooltip-delete': 'Hapus Pop-Up Informasi'
-
+  users: {
+    'download-data': 'Unduh Data'
   },
   errors: {
     'internal-server-error': 'Telah terjadi kesalahan sistem, silahkan muat ulang halaman ini.',
@@ -205,6 +183,7 @@ export default {
     'polling-answer-null': 'Tipe pertanyaan custom harus diisi',
     'survey-start-date': 'Tanggal mulai survei tidak boleh lebih kecil dari tanggal hari ini.',
     'survey-compare-date': 'Tanggal berakhir survei harus lebih besar dari tanggal mulai survei.',
+    'survey-change-date': 'Untuk melakukan publikasi survei, tanggal mulai harus diisi hari ini.',
 
     'news-image-null': 'Gambar tidak boleh kosong.',
     'banner-image-null': 'Gambar tidak boleh kosong.',
@@ -228,6 +207,12 @@ export default {
   navbar: {
     profile: 'Lihat Profil',
     'profile-edit': 'Edit Profil'
+  },
+  message: {
+    'confirmation-approve': 'Apakah Anda yakin akan memberikan persetujuan untuk usulan ini?',
+    'confirmation-reject': 'Apakah Anda yakin akan menolak usulan ini?',
+    'title-approve': 'Konfirmasi Persetujuan',
+    'title-reject': 'Konfirmasi Penolakan'
   },
   categoriTypes: {
     'phonebook': 'Nomor Penting',
