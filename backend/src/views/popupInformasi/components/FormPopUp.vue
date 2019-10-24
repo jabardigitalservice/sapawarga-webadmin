@@ -83,7 +83,7 @@
 
 <script>
 import AttachmentPhotoUpload from '@/components/AttachmentPhotoUpload'
-import { validUrl, validateHTMLOnInputString } from '@/utils/validate'
+import { validUrl, isContainHtmlTags } from '@/utils/validate'
 import { create, fetchRecord, update } from '@/api/popupInformasi'
 import Fitur from '@/views/banner/components/dialog/fitur'
 import { mapGetters } from 'vuex'
@@ -111,7 +111,7 @@ export default {
     }
 
     const validatorHTML = (rule, value, callback) => {
-      if (validateHTMLOnInputString(value) === true) {
+      if (isContainHtmlTags(value) === true) {
         callback(new Error(this.$t('errors.popup-informasi-title')))
       }
 

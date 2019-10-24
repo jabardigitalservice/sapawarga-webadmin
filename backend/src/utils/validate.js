@@ -79,13 +79,13 @@ export function validUrl(str) {
   return reg.test(str)
 }
 
-export function validateHTMLOnInputString(str) {
+export function isContainHtmlTags(str) {
   const reg = /(\<\w*)((\s\/\>)|(.*\<\/\w*\>))/
 
   return reg.test(str)
 }
 
-export function validYoutubeUrl(str) {
+export function isValidYoutubeUrl(str) {
   const reg = /^(http:\/\/|https:\/\/)?(www\.youtube\.com)\/.+$/
 
   return reg.test(str)
