@@ -6,7 +6,7 @@
           <el-col :span="12">
             <router-link :to="{ path: '/broadcast/create' }">
               <el-button v-if="roles" type="primary" size="small" icon="el-icon-plus">
-                Tambah Pesan Baru
+                {{ $t('route.broadcast-create') }}
               </el-button>
             </router-link>
           </el-col>
@@ -17,9 +17,9 @@
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%" @sort-change="changeSort">
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
 
-          <el-table-column prop="title" sortable="custom" label="Judul Pesan" min-width="300" />
+          <el-table-column prop="title" sortable="custom" :label="$t('label.title-broadcast')" min-width="300" />
 
-          <el-table-column prop="status" sortable="custom" class-name="status-col" label="Status" width="150px">
+          <el-table-column prop="status" sortable="custom" class-name="status-col" :label="$t('label.status')" width="150px">
             <template slot-scope="{row}">
               <el-tag :type="row.status | statusFilter">
                 {{ row.status_label }}
@@ -27,19 +27,19 @@
             </template>
           </el-table-column>
 
-          <el-table-column prop="created_at" sortable="custom" align="center" label="Dibuat" width="150">
+          <el-table-column prop="created_at" sortable="custom" align="center" :label="$t('label.created_at')" width="150">
             <template slot-scope="{row}">
               {{ row.created_at | moment('D MMM YYYY HH:mm') }}
             </template>
           </el-table-column>
 
-          <el-table-column prop="updated_at" sortable="custom" align="center" label="Dikirim" width="150">
+          <el-table-column prop="updated_at" sortable="custom" align="center" :label="$t('label.send_at')" width="150">
             <template slot-scope="{row}">
               {{ getSentDateTime(row) | moment('D MMM YYYY HH:mm') }}
             </template>
           </el-table-column>
 
-          <el-table-column align="center" label="Actions" width="200px">
+          <el-table-column align="center" :label="$t('label.actions')" width="200px">
             <template slot-scope="scope">
               <router-link :to="'/broadcast/detail/'+scope.row.id">
                 <el-tooltip content="Detail Pesan" placement="top">
@@ -122,7 +122,6 @@ export default {
 
     resetFilter() {
       Object.assign(this.$data.listQuery, this.$options.data().listQuery)
-
       this.getList()
     },
 
@@ -131,7 +130,7 @@ export default {
     },
 
     getSentDateTime(row) {
-      return row.status === 10 ? row.updated_at : ''
+      return row.status === 10 ? row.updated_at : '-'
     },
 
     changeSort(e) {
