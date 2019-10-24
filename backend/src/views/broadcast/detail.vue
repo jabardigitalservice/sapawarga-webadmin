@@ -4,7 +4,7 @@
       <el-col class="col-left" :xs="24" :sm="24" :md="24" :lg="10" :xl="10">
         <el-card>
           <div slot="header" class="clearfix">
-            <span>Target</span>
+            <span>{{ $t('label.target') }}</span>
           </div>
           <el-table stripe :data="tableDataTarget" :show-header="false" style="width: 100%">
             <el-table-column prop="title" />
@@ -15,7 +15,7 @@
       <el-col class="col-right" :xs="24" :sm="24" :md="24" :lg="14" :xl="14">
         <el-card>
           <div slot="header" class="clearfix">
-            <span>Isi Pesan</span>
+            <span>{{ $t('label.description') }}</span>
           </div>
           <el-table stripe :data="tableDataPesan" :show-header="false" style="width: 100%">
             <el-table-column prop="title" width="200" />
@@ -66,46 +66,46 @@ export default {
 
         this.tableDataTarget = [
           {
-            title: 'Kabupaten/Kota',
+            title: this.$t('label.area-kabkota'),
             content: ((kabkota !== null) ? kabkota.name : 'Semua Kab/Kota')
           },
           {
-            title: 'Kecamatan',
+            title: this.$t('label.area-kec'),
             content: ((kecamatan !== null) ? kecamatan.name : 'Semua Kecamatan')
           },
           {
-            title: 'Desa/Kelurahan',
+            title: this.$t('label.area-kel'),
             content: ((kelurahan !== null) ? kelurahan.name : 'Semua Desa/Kelurahan')
           },
           {
-            title: 'RW',
+            title: this.$t('label.area-rw'),
             content: ((rw !== null) ? rw : 'Semua RW')
           }
         ]
 
         this.tableDataPesan = [
           {
-            title: 'Judul Pesan',
+            title: this.$t('label.title-broadcast'),
             content: (title !== null ? title : '-')
           },
           {
-            title: 'Kategori',
+            title: this.$t('label.category'),
             content: (category !== null ? category.name : '-')
           },
           {
-            title: 'Status',
+            title: this.$t('label.status'),
             content: (status === 5 ? <el-tag type='warning'>{status_label}</el-tag> : status === 10 ? <el-tag type='success'>{status_label}</el-tag> : <el-tag type='info'>{status_label}</el-tag>)
           },
           {
-            title: 'Jadwal',
+            title: this.$t('label.scheduled'),
             content: is_scheduled === false ? 'Sekarang' : 'Terjadwal'
           },
           {
-            title: 'Tanggal dan Waktu Kirim',
+            title: this.$t('label.scheduled_datetime'),
             content: parsingDatetime(scheduled_datetime)
           },
           {
-            title: 'Isi Pesan',
+            title: this.$t('label.description'),
             content: (description !== null ? description : '-')
           }
         ]
