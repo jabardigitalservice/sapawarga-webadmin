@@ -161,6 +161,9 @@ export default {
     confirm: 'Ya',
     cancel: 'Batal'
   },
+  users: {
+    'download-data': 'Unduh Data'
+  },
   errors: {
     'internal-server-error': 'Telah terjadi kesalahan sistem, silahkan muat ulang halaman ini.',
 
