@@ -40,6 +40,7 @@
                   type="datetime"
                   format="yyyy-MM-dd HH:mm:ss"
                   value-format="yyyy-MM-dd HH:mm:ss"
+                  :picker-options="dateStartDateOptions"
                   placeholder="Tanggal Mulai"
                 />
               </el-col>
@@ -50,7 +51,7 @@
                   type="datetime"
                   format="yyyy-MM-dd HH:mm:ss"
                   value-format="yyyy-MM-dd HH:mm:ss"
-                  :picker-options="datePickerOptions"
+                  :picker-options="dateEndDateOptions"
                   placeholder="Tanggal Berakhir"
                 />
               </el-col>
@@ -220,8 +221,11 @@ export default {
           }
         ]
       },
-      datePickerOptions: {
-        disabledDate: this.disabledDueDate
+      dateStartDateOptions: {
+        disabledDate: this.disabledStartDate
+      },
+      dateEndDateOptions: {
+        disabledDate: this.disabledEndDate
       }
     }
   },
@@ -285,10 +289,14 @@ export default {
     }
   },
   methods: {
-    disabledDueDate(time) {
-      let startdate = moment(this.popup.start_date)
-      startdate = startdate.format('YYYY-MM-DD 00:00:00')
-      const parseDate = Date.parse(startdate)
+    disabledStartDate(time) {
+      const date = moment().format('YYYY-MM-DD 00:00:00')
+      const parseDate = Date.parse(date)
+      return time.getTime() < parseDate
+    },
+    disabledEndDate(time) {
+      const startDate = moment(this.popup.start_date).format('YYYY-MM-DD 00:00:00')
+      const parseDate = Date.parse(startDate)
       return time.getTime() < parseDate
     },
     dialog(id) {
