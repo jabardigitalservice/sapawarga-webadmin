@@ -2,7 +2,7 @@
   <div class="components-container">
     <el-row :gutter="20">
       <el-col :sm="24" :md="10" :lg="10" :xl="12">
-        <p class="warn-content">Target</p>
+        <p class="warn-content">{{ $t('label.target') }}</p>
         <div class="broadcast-target">
           <el-form
             ref="broadcast"
@@ -30,7 +30,7 @@
         </div>
       </el-col>
       <el-col :sm="24" :md="14" :lg="14" :xl="12">
-        <p class="warn-content">Isi Pesan</p>
+        <p class="warn-content">{{ $t('label.description') }}</p>
         <div class="broadcast-message">
           <el-form
             ref="broadcast"
