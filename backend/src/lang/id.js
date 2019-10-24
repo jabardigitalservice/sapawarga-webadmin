@@ -107,6 +107,8 @@ export default {
     'reject': 'Tolak',
     'send': 'Kirim Pesan',
     'draft': 'Simpan sebagai Draft',
+    'search': 'Cari',
+    'reset': 'Reset',
 
     'save-create': 'Simpan',
     'save-update': 'Simpan Perubahan',
@@ -191,7 +193,8 @@ export default {
   },
   navbar: {
     profile: 'Lihat Profil',
-    'profile-edit': 'Edit Profil'
+    'profile-edit': 'Edit Profil',
+    'logOut': 'Log Out'
   },
   message: {
     'confirmation-approve': 'Apakah Anda yakin akan memberikan persetujuan untuk usulan ini?',
@@ -199,7 +202,28 @@ export default {
     'confirmation-send-message': 'Apakah Anda yakin akan mengirimkan pesan: ',
     'title-approve': 'Konfirmasi Persetujuan',
     'title-reject': 'Konfirmasi Penolakan',
-    'title': 'Konfirmasi'
+    'title': 'Konfirmasi',
+    'category': 'Kategori harus diisi',
+
+    'broadcast-title-required': 'Judul pesan harus diisi',
+    'broadcast-title-min': 'Judul pesan minimal 10 karakter',
+    'broadcast-title-max': 'Judul pesan maksimal 100 karakter',
+    'broadcast-title-valid': 'Judul pesan yang diisi tidak valid',
+
+    'broadcast-description-required': 'Isi pesan harus diisi',
+    'broadcast-description-max': 'Isi pesan maksimal 1000 karakter',
+    'broadcast-description-valid': 'Pesan yang diisi tidak valid',
+
+    'broadcast-rw-pattern': 'RW harus menggunakan angka',
+    'broadcast-rw-max': 'RW harus 3 angka, contoh 001',
+    'broadcast-rw-min': 'RW harus 3 angka, contoh 001',
+
+    'broadcast-area-required': 'Wilayah harus diisi',
+
+    'broadcast-scheduled': 'Jadwal harus diisi',
+    'broadcast-scheduled_datetime': 'Tanggal dan waktu harus diisi',
+    'broadcast-scheduled_datetime-expire': 'Tanggal dan waktu yang dipilih telah lewat'
+
   },
   categoriTypes: {
     'phonebook': 'Nomor Penting',
@@ -210,5 +234,27 @@ export default {
     'aspirasi': 'Usulan Masyarakat',
     'video': 'Video',
     'newsHoax': 'Berita Hoax'
+  },
+  label: {
+    'area-rw': 'RW',
+    'area': 'Wilayah',
+    'area-kec': 'Kecamatan',
+    'area-kel': 'Desa/Kelurahan',
+    'area-kabkota': 'Kabupaten/Kota',
+
+    'target': 'Target',
+    'send_at': 'Dikirim',
+    'actions': 'Actions',
+    'scheduled': 'Jadwal',
+    'category': 'Kategori',
+    'created_at': 'Dibuat',
+    'description': 'Isi Pesan',
+    'title-broadcast': 'Judul Pesan',
+    'scheduled_datetime': 'Tanggal dan Waktu Kirim',
+
+    'status': 'Status',
+    'status-draft': 'Draft',
+    'status-scheduled': 'Dijadwalkan',
+    'status-published': 'Dipublikasikan'
   }
 }
