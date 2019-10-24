@@ -15,7 +15,7 @@
           </el-col>
           <el-col v-if="checkPermission(['admin', 'staffProv'])" :span="19" align="right">
             <el-button type="primary" size="small" @click="exportDataURL">Unduh Data</el-button>
-            <el-button type="primary" size="small" @click="openDialog(`import`)">Import Data</el-button>
+            <!-- <el-button type="primary" size="small" @click="openDialog(`import`)">Import Data</el-button> -->
           </el-col>
         </el-row>
         <el-dialog :title="(importDialogVisible)? `Import Data Pengguna Sapawarga`:`Export Data`" :visible.sync="visibleDialog" :width="(importDialogVisible)? `50%`:`20%`" @close="closeDialog">
@@ -328,38 +328,12 @@ export default {
 
     exportDataURL() {
       fetchExport(this.listQuery).then(response => {
-        let name_file = response.data.split('/')
-        this.getDataExport(response.data, name_file[2])
+        this.getDataExport(response.data)
       })
     },
 
-    getDataExport(url, name_file) {
-      fetch(url, {
-        headers: new Headers({
-          'Authorization': 'Bearer ' + getToken()
-        })
-      }).then(resp => resp.blob())
-        .then(blob => {
-          console.log(blob)
-          const url = window.URL.createObjectURL(blob)
-          const a = document.createElement('a')
-          a.style.display = 'none'
-          a.href = url
-          a.download = name_file
-          document.body.appendChild(a)
-          a.click()
-          window.URL.revokeObjectURL(url)
-          this.$message({
-            type: 'success',
-            message: 'Unduh Berhasil'
-          })
-        })
-        .catch(() =>
-          this.$message({
-            type: 'error',
-            message: 'Unduh Gagal'
-          })
-        )
+    getDataExport(url) {
+      window.open(url)
     },
 
     handleProgress() {
