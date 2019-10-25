@@ -6,14 +6,52 @@
     <el-row :gutter="20">
       <el-col :span="24">
         <el-row style="margin: 10px 0px">
-          <el-col :span="12">
+          <el-col :span="5">
             <router-link :to="{ path: '/user/create', query: { role_id: roleId }}">
               <el-button type="primary" size="small" icon="el-icon-plus">
                 Tambah Pengguna Baru
               </el-button>
             </router-link>
           </el-col>
+          <el-col v-if="checkPermission(['admin', 'staffProv'])" :span="19" align="right">
+            <el-button type="primary" size="small" @click="exportDataURL">{{$t('users.download-data')}}</el-button>
+            <!-- <el-button type="primary" size="small" @click="openDialog(`import`)">Import Data</el-button> -->
+          </el-col>
         </el-row>
+        <el-dialog :title="(importDialogVisible)? `Import Data Pengguna Sapawarga`:`Export Data`" :visible.sync="visibleDialog" :width="(importDialogVisible)? `50%`:`20%`" @close="closeDialog">
+          <div v-if="importDialogVisible">
+            <div class="dialog-text">Anda dapat melakukan import data dengan mengunggah file dengan tipe CSV.</div>
+            <div class="dialog-text">Template file dapat diunduh pada <a href="http://">Tautan berikut</a></div>
+            <div>Pilih lokasi file pada komputer Anda (max. 5 MB)</div>
+            <div slot="footer" class="dialog-footer" align="left">
+              <el-upload
+                ref="upload"
+                v-loading="listLoading"
+                class="upload-demo"
+                action="https://jsonplaceholder.typicode.com/posts/"
+                :on-progress="handleProgress"
+                :on-success="handleSuccess"
+                :limit="1"
+                :on-exceed="handleExceed"
+                :before-remove="beforeRemove"
+                :auto-upload="false"
+              >
+                <el-button slot="trigger" class="dialog-buttom" size="small" type="primary">Pilih File</el-button>
+              </el-upload>
+              <el-button type="primary" @click="submitUpload, visibleDialog = false, importDialogVisible = false">Upload File</el-button>
+              <el-button type="info" @click="closeDialog">Cancel</el-button>
+            </div>
+          </div>
+          <div v-else class="export-user">
+            <span>Pilih File</span><br><br>
+            <el-radio v-model="radio" label="1" border size="medium">CSV</el-radio><br><br>
+            <el-radio v-model="radio" label="2" border size="medium">Excel</el-radio>
+            <div slot="footer" class="dialog-footer" align="left" style="padding-top: 20px;">
+              <el-button type="primary" size="small" @click="getDataExport">Download</el-button>
+              <el-button type="info" size="small" @click="closeDialog">Batal</el-button>
+            </div>
+          </div>
+        </el-dialog>
 
         <ListFilter :list-query.sync="listQuery" @submit-search="getList" @reset-search="resetFilter" />
 
@@ -73,7 +111,7 @@
 </template>
 
 <script>
-import { fetchList, activate, deactivate, totalUser } from '@/api/staff'
+import { fetchList, activate, deactivate, totalUser, fetchExport } from '@/api/staff'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 import PanelGroup from './components/PanelGroup'
 import permission from '@/directive/permission/index.js'
@@ -129,15 +167,17 @@ export default {
       totalUserKec: 0,
       totalUserKel: 0,
       totalUserRw: 0,
-      totalUserSaberhoax: 0
+      totalUserSaberhoax: 0,
+      visibleDialog: false,
+      importDialogVisible: false,
+      exportDialogVisible: false,
+      radio: '1'
     }
   },
-
   created() {
     this.getList()
     this.getTotalUser()
   },
-
   methods: {
     checkPermission,
 
@@ -256,7 +296,70 @@ export default {
     formatterCell(row, column, cellValue, index) {
       const value = cellValue ? moment(cellValue).format('D MMM YYYY HH:mm') : '-'
       return value
+    },
+
+    handleExceed(files, fileList) {
+      this.$message.warning(`Hanya dapat mengunggah ${files.length} files. Silahkan hapus untuk mengganti file.`)
+    },
+
+    beforeRemove(file, fileList) {
+      return this.$confirm(`Anda yakin akan menghapus file ${file.name} ?`)
+    },
+
+    openDialog(type) {
+      if (type === 'export') {
+        this.exportDialogVisible = true
+      } else if (type === 'import') {
+        this.importDialogVisible = true
+      }
+      this.visibleDialog = true
+    },
+
+    closeDialog() {
+      this.exportDialogVisible = false
+      this.importDialogVisible = false
+      this.visibleDialog = false
+    },
+
+    submitUpload() {
+      this.$refs.upload.submit()
+    },
+
+    exportDataURL() {
+      fetchExport(this.listQuery).then(response => {
+        this.getDataExport(response.data)
+      })
+    },
+
+    getDataExport(url) {
+      window.open(url)
+    },
+
+    handleProgress() {
+      this.listLoading = true
+    },
+
+    handleSuccess() {
+      this.listLoading = false
     }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+  .dialog-text {
+    margin-bottom: 15px;
+  }
+
+  .dialog-buttom {
+    margin-bottom: 10px;
+  }
+
+  a {
+    color: #4a96e8;
+  }
+
+  .export-user > span {
+    font-size: 18px;
+  }
+</style>

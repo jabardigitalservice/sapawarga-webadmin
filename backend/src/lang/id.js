@@ -88,7 +88,13 @@ export default {
     'banner-list': 'Daftar Banner',
     'banner-create': 'Tambah Banner',
     'banner-edit': 'Edit Banner',
-    'banner-detail': 'Detail Banner'
+    'banner-detail': 'Detail Banner',
+
+    'popup-informasi-manage': 'Pop-Up Informasi',
+    'popup-informasi-list': 'Pop-Up Informasi',
+    'popup-informasi-create': 'Tambah Pop-Up Informasi',
+    'popup-informasi-edit': 'Edit Pop-Up Informasi',
+    'popup-informasi-detail': 'Detail Pop-Up Informasi'
   },
   crud: {
     'list-empty': 'Belum ada data.',
@@ -109,6 +115,7 @@ export default {
     'save-video': 'Tambah Video',
     'save-user': 'Tambah Pengguna',
     'save-banner': 'Tambah Banner',
+    'save-popup': 'Tambah Pop Up',
 
     'back-to-list': 'Kembali ke Daftar',
     'send-polling': 'Publikasikan Polling',
@@ -151,6 +158,7 @@ export default {
     'polling-error-edit-published': 'Sudah dipublish, tidak dapat diedit.',
     'broadcast-error-edit-published': 'Sudah dipublish, tidak dapat di edit.',
     'banner-error-edit-published': 'Sudah dipublish, tidak dapat di edit.',
+    'popup-error-edit-published': 'Sudah dipublish, tidak dapat di edit.',
     'notification-error-edit-published': 'Sudah dipublish, tidak dapat di edit.',
     'video-error-edit-published': 'Sudah dipublish, tidak dapat di edit.',
     'error-edit-role': 'Anda tidak memiliki hak akses halaman ini.',
@@ -159,6 +167,7 @@ export default {
   },
   common: {
     confirm: 'Ya',
+    save: 'Simpan',
     cancel: 'Batal'
   },
   dashboard: {
@@ -170,6 +179,9 @@ export default {
     'dashboard-news-prov': 'Berita Jawa Barat',
     'dashboard-news-kabkota': 'Berita Kota/Kabupaten'
   },
+  users: {
+    'download-data': 'Unduh Data'
+  },
   errors: {
     'internal-server-error': 'Telah terjadi kesalahan sistem, silahkan muat ulang halaman ini.',
 
@@ -179,15 +191,23 @@ export default {
     'polling-answer-null': 'Tipe pertanyaan custom harus diisi',
     'survey-start-date': 'Tanggal mulai survei tidak boleh lebih kecil dari tanggal hari ini.',
     'survey-compare-date': 'Tanggal berakhir survei harus lebih besar dari tanggal mulai survei.',
+    'survey-change-date': 'Untuk melakukan publikasi survei, tanggal mulai harus diisi hari ini.',
 
     'news-image-null': 'Gambar tidak boleh kosong.',
     'banner-image-null': 'Gambar tidak boleh kosong.',
+    'popup-image-null': 'Gambar tidak boleh kosong.',
 
     'dashboard-map-error': 'Gagal memuat map'
   },
   navbar: {
     profile: 'Lihat Profil',
     'profile-edit': 'Edit Profil'
+  },
+  message: {
+    'confirmation-approve': 'Apakah Anda yakin akan memberikan persetujuan untuk usulan ini?',
+    'confirmation-reject': 'Apakah Anda yakin akan menolak usulan ini?',
+    'title-approve': 'Konfirmasi Persetujuan',
+    'title-reject': 'Konfirmasi Penolakan'
   },
   categoriTypes: {
     'phonebook': 'Nomor Penting',
