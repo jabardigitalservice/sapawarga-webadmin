@@ -41,12 +41,12 @@ const broadcastRouter = {
       }
     },
     {
-      name: 'broadcast-show',
-      path: 'show/:id',
-      component: () => import('@/views/broadcast/show'),
+      name: 'broadcast-detail',
+      path: 'detail/:id',
+      component: () => import('@/views/broadcast/detail'),
       hidden: true,
       meta: {
-        title: 'broadcast-show',
+        title: 'broadcast-detail',
         roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']
       }
     }
