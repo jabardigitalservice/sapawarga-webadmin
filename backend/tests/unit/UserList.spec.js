@@ -8,7 +8,12 @@ localVue.use(ElementUI)
 describe('UserList', () => {
   const build = () => {
     // arrange
-    const wrapper = shallowMount(UserList, { localVue })
+    const wrapper = shallowMount(UserList, {
+      localVue,
+      mocks:{
+        $t: () => {}
+      }
+    })
     return {
       wrapper
     }
