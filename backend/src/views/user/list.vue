@@ -317,7 +317,6 @@ export default {
         const data = await fetchExport(this.listQuery)
         this.getDataExport(data.data)
       } catch (error) {
-        console.error(error);
         this.listLoading = false
       }
     },
