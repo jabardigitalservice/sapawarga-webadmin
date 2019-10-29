@@ -163,7 +163,33 @@ export default {
   },
   users: {
     'download-data': 'Unduh Data',
-    'users-add-new': 'Tambah Pengguna Baru'
+    'users-add-new': 'Tambah Pengguna Baru',
+    'users-import-data': 'Import Data Pengguna Sapawarga',
+    'users-dialog-text-import-csv': 'Anda dapat melakukan import data dengan mengunggah file dengan tipe CSV.',
+    'users-dialog-text-template-file': 'Template file dapat diunduh pada',
+    'users-dialog-text-url': 'Tautan berikut',
+    'users-dialog-text-choose-location-file': 'Pilih lokasi file pada komputer Anda (max. 5 MB)',
+    'users-dialog-text-file-delete': 'Anda yakin akan menghapus file {file_name} ?',
+    'users-dialog-text-file-change': 'Hanya dapat mengunggah {file_length} files. Silahkan hapus untuk mengganti file.',
+    'users-dialog-bottom-choose-file': 'Pilih File',
+    'users-dialog-bottom-upload-file': 'Upload File',
+    'users-dialog-bottom-cancel': 'Cancel',
+
+    'users-role-text-staff-rw': 'RW {0}, Desa/Kelurahan {1}, Kecamatan {2}, {3}',
+    'users-role-text-staff-kel': 'Desa/Kelurahan {0}, Kecamatan {1}, {2}',
+    'users-role-text-staff-kec': 'Kecamatan {0}, {1}',
+    'users-role-text-staff-kabkota': '{0}, Provinsi Jawa Barat',
+    'users-role-text-staff-prov': 'Provinsi Jawa Barat',
+
+    'users-fullname': 'Nama Lengkap',
+    'users-username': 'Username',
+    'users-place': 'Kedudukan',
+    'users-last-access': 'Akses Terakhir',
+    'users-telp': 'Telp',
+    'users-status': 'Status',
+    'users-actions': 'Actions',
+
+
   },
   errors: {
     'internal-server-error': 'Telah terjadi kesalahan sistem, silahkan muat ulang halaman ini.',
