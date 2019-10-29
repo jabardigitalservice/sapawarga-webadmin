@@ -15,22 +15,29 @@
               <el-radio-button label="internal">{{ $t('popup.popup-internal') }}</el-radio-button>
             </el-radio-group>
           </el-form-item>
-          <el-form-item v-if="popup.type === 'external'" :label="$t('popup.popup-link')" prop="link_url">
-            <el-input v-model="popup.link_url" type="text" name="link_url" :placeholder="$t('popup.popup-url-pop-up')" />
-          </el-form-item>
-          <el-form-item v-else :label="$t('popup.popup-fitur')" prop="internal_object_type">
-            <el-select v-model="popup.internal_object_type" :placeholder="$t('popup.popup-title')" name="fitur">
-              <el-option :label="$t('popup.popup-survey')" value="survey" />
-              <el-option :label="$t('popup.popup-polling')" value="polling" />
-              <el-option :label="$t('popup.popup-news')" value="news" />
-            </el-select>
-            <span v-if="popup.internal_object_type !== null">
-              <el-button type="success" @click="dialog(popup.internal_object_type)">{{ $t('popup.popup-selection') }}</el-button>
-            </span>
-          </el-form-item>
-          <el-form-item v-if="popup.type === 'internal'" :label="titleFitur" prop="internal_object_name">
-            <el-input v-model="popup.internal_object_name" disabled type="text" name="internal_object_name" />
-          </el-form-item>
+
+          <div v-if="popup.type === 'external'">
+            <el-form-item :label="$t('popup.popup-link')" prop="link_url">
+              <el-input v-model="popup.link_url" type="text" name="link_url" :placeholder="$t('popup.popup-url-pop-up')" />
+            </el-form-item>
+          </div>
+          <div v-else>
+            <el-form-item :label="$t('popup.popup-fitur')" prop="internal_object_type">
+              <el-select v-model="popup.internal_object_type" :placeholder="$t('popup.popup-title')" name="fitur">
+                <el-option :label="$t('popup.popup-survey')" value="survey" />
+                <el-option :label="$t('popup.popup-polling')" value="polling" />
+                <el-option :label="$t('popup.popup-news')" value="news" />
+              </el-select>
+              <span v-if="popup.internal_object_type !== null">
+                <el-button type="success" @click="dialog(popup.internal_object_type)">{{ $t('popup.popup-selection') }}</el-button>
+              </span>
+            </el-form-item>
+
+            <el-form-item v-if="popup.type === 'internal'" :label="titleFitur" prop="internal_object_name">
+              <el-input v-model="popup.internal_object_name" disabled type="text" name="internal_object_name" />
+            </el-form-item>
+          </div>
+
           <el-form-item class="waktu-publikasi" :label="$t('popup.popup-time-publish')" :prop="validateStartDate">
             <el-row :gutter="10" type="flex">
               <el-col :span="10">
@@ -110,9 +117,17 @@ export default {
       callback()
     }
 
-    const validatorHTML = (rule, value, callback) => {
+    const validatorHTMLTitle = (rule, value, callback) => {
       if (isContainHtmlTags(value) === true) {
         callback(new Error(this.$t('errors.popup-informasi-title')))
+      }
+
+      callback()
+    }
+
+    const validatorHTMLDescription = (rule, value, callback) => {
+      if (isContainHtmlTags(value) === true) {
+        callback(new Error(this.$t('errors.popup-informasi-description')))
       }
 
       callback()
@@ -159,7 +174,7 @@ export default {
             trigger: 'blur'
           },
           {
-            validator: validatorHTML,
+            validator: validatorHTMLTitle,
             trigger: 'blur'
           }
         ],
@@ -216,7 +231,7 @@ export default {
             trigger: 'blur'
           },
           {
-            validator: validatorHTML,
+            validator: validatorHTMLDescription,
             trigger: 'blur'
           }
         ]
@@ -262,6 +277,13 @@ export default {
           })
         }
       }
+      if (this.popup.type === 'internal') {
+        this.$refs.popup.model.link_url = ''
+      } else if (this.popup.type === 'external') {
+        this.$refs.popup.model.internal_object_type = ''
+        this.$refs.popup.model.internal_object_name = ''
+      }
+      this.$refs.popup.clearValidate()
     },
 
     'popup.internal_object_type'(newVal, oldVal) {
