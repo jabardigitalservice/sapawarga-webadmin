@@ -9,19 +9,19 @@
           <el-col :span="5">
             <router-link :to="{ path: '/user/create', query: { role_id: roleId }}">
               <el-button type="primary" size="small" icon="el-icon-plus">
-                {{$t('users.users-add-new')}}
+                {{ $t('users.users-add-new') }}
               </el-button>
             </router-link>
           </el-col>
           <el-col v-if="checkPermission(['admin', 'staffProv'])" :span="19" align="right">
-            <el-button type="primary" size="small" @click="exportDataURL">{{$t('users.download-data')}}</el-button>
+            <el-button type="primary" size="small" @click="exportDataURL">{{ $t('users.download-data') }}</el-button>
             <el-button type="primary" size="small" @click="openDialog(`import`)">Import Data</el-button>
           </el-col>
         </el-row>
         <el-dialog :title="$t('users.users-import-data')" :visible.sync="visibleDialog" :width="(importDialogVisible)? `50%`:`20%`" @close="closeDialog">
-          <div class="dialog-text">{{$t('users.users-dialog-text-import-csv')}}</div>
-          <div class="dialog-text">{{$t('users.users-dialog-text-template-file')}}<a href="http://">{{$t('users.users-dialog-text-url')}}</a></div>
-          <div>{{$t('users.users-dialog-text-choose-location-file')}}</div>
+          <div class="dialog-text">{{ $t('users.users-dialog-text-import-csv') }}</div>
+          <div class="dialog-text">{{ $t('users.users-dialog-text-template-file') }}<a href="http://">{{ $t('users.users-dialog-text-url') }}</a></div>
+          <div>{{ $t('users.users-dialog-text-choose-location-file') }}</div>
           <div slot="footer" class="dialog-footer" align="left">
             <el-upload
               ref="upload"
@@ -35,10 +35,10 @@
               :before-remove="beforeRemove"
               :auto-upload="false"
             >
-              <el-button slot="trigger" class="dialog-buttom" size="small" type="primary">{{$t('users.users-dialog-bottom-choose-file')}}</el-button>
+              <el-button slot="trigger" class="dialog-buttom" size="small" type="primary">{{ $t('users.users-dialog-bottom-choose-file') }}</el-button>
             </el-upload>
-            <el-button type="primary" @click="submitUpload, visibleDialog = false, importDialogVisible = false">{{$t('users.users-dialog-bottom-upload-file')}}</el-button>
-            <el-button type="info" @click="closeDialog">{{$t('users.users-dialog-bottom-cancel')}}</el-button>
+            <el-button type="primary" @click="submitUpload, visibleDialog = false, importDialogVisible = false">{{ $t('users.users-dialog-bottom-upload-file') }}</el-button>
+            <el-button type="info" @click="closeDialog">{{ $t('users.users-dialog-bottom-cancel') }}</el-button>
           </div>
         </el-dialog>
 
@@ -209,8 +209,7 @@ export default {
       const kabkota = _.get(user, 'kabkota.name')
 
       if (userRole === 'staffRW') {
-        console.log(rw)
-        return this.$t('users.users-role-text-staff-rw',[rw, kelurahan, kecamatan, kabkota])
+        return this.$t('users.users-role-text-staff-rw', [rw, kelurahan, kecamatan, kabkota])
       }
 
       if (userRole === 'staffKel') {
@@ -218,11 +217,11 @@ export default {
       }
 
       if (userRole === 'staffKec') {
-        return this.$t('users.users-role-text-staff-kec',[kecamatan, kabkota])
+        return this.$t('users.users-role-text-staff-kec', [kecamatan, kabkota])
       }
 
       if (userRole === 'staffKabkota') {
-        return this.$t('users.users-role-text-staff-kabkota',[kabkota])
+        return this.$t('users.users-role-text-staff-kabkota', [kabkota])
       }
 
       if (userRole === 'staffProv') {

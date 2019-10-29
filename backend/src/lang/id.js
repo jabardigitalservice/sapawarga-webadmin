@@ -187,8 +187,7 @@ export default {
     'users-last-access': 'Akses Terakhir',
     'users-telp': 'Telp',
     'users-status': 'Status',
-    'users-actions': 'Actions',
-
+    'users-actions': 'Actions'
 
   },
   errors: {
