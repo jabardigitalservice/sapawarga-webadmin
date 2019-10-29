@@ -290,14 +290,14 @@ export default {
   },
   methods: {
     disabledStartDate(time) {
-      const date = moment().format('YYYY-MM-DD 00:00:00')
-      const parseDate = Date.parse(date)
-      return time.getTime() < parseDate
+      const dateTime = moment().format('YYYY-MM-DD 00:00:00')
+      const parseDateTime = Date.parse(dateTime)
+      return time.getTime() < parseDateTime
     },
     disabledEndDate(time) {
-      const startDate = moment(this.popup.start_date).format('YYYY-MM-DD 00:00:00')
-      const parseDate = Date.parse(startDate)
-      return time.getTime() < parseDate
+      const startDateTime = moment(this.popup.start_date).format('YYYY-MM-DD 00:00:00')
+      const parseDateTime = Date.parse(startDateTime)
+      return time.getTime() < parseDateTime
     },
     dialog(id) {
       this.dialogName = id
