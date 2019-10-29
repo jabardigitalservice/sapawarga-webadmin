@@ -4,7 +4,7 @@
       <el-col class="col-right" :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
         <el-card>
           <div slot="header" class="clearfix">
-            <span>Data Pop-Up Informasi</span>
+            <span>{{ $t('popup.popup-title-data') }}</span>
           </div>
           <el-table stripe :data="tableDataPopUp" :show-header="false" style="width: 100%">
             <el-table-column prop="title" width="180" />
@@ -43,27 +43,27 @@ export default {
 
         this.tableDataPopUp = [
           {
-            title: 'Judul Pop-Up Informasi',
+            title: this.$t('popup.popup-title'),
             content: title || '-'
           },
           {
-            title: 'Kategori',
+            title: this.$t('popup.popup-category'),
             content: type || '-'
           },
           {
-            title: 'Fitur',
+            title: this.$t('popup.popup-fitur'),
             content: internal_object_type || '-'
           },
           {
-            title: 'Judul Fitur',
+            title: this.$t('popup.popup-title-fitur'),
             content: internal_object_name || '-'
           },
           {
-            title: 'Status',
+            title: this.$t('popup.popup-status'),
             content: status_label || '-'
           },
           {
-            title: 'URL Pop-Up Informasi',
+            title: this.$t('popup.popup-url-pop-up'),
             content: link_url || '-'
           }
         ]

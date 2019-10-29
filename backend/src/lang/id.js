@@ -184,8 +184,35 @@ export default {
   users: {
     'download-data': 'Unduh Data'
   },
+  popup: {
+    'popup-title': 'Judul Pop Up',
+    'popup-title-data': 'Data Pop-Up Informasi',
+    'popup-category': 'Kategori',
+    'popup-start-date': 'Tanggal Mulai',
+    'popup-end-date': 'Tanggal Akhir',
+    'popup-actions': 'Actions',
+    'popup-external': 'Eksternal',
+    'popup-internal': 'Internal',
+    'popup-link': 'Tautan',
+    'popup-url-pop-up': 'URL Pop Up',
+    'popup-fitur': 'Fitur',
+    'popup-status': 'Status',
+    'popup-title-fitur': 'Judul Fitur',
+    'popup-choose-category': 'Pilih Kategori',
+    'popup-survey': 'Survei',
+    'popup-polling': 'Polling',
+    'popup-news': 'Berita',
+    'popup-selection': 'Pilihan',
+    'popup-time-publish': 'Waktu Publikasi',
+    'popup-add-new': 'Tambah Pop-Up Informasi Baru',
+    'popup-tooltip-detail': 'Detail Pop-Up Informasi',
+    'popup-tooltip-edit': 'Edit Pop-Up Informasi',
+    'popup-tooltip-delete': 'Hapus Pop-Up Informasi'
+
+  },
   errors: {
     'internal-server-error': 'Telah terjadi kesalahan sistem, silahkan muat ulang halaman ini.',
+    'url-not-valid': 'URL tidak valid',
 
     'polling-compare-date': 'Tanggal berakhir polling harus lebih besar dari tanggal mulai polling.',
     'polling-start-date': 'Tanggal mulai polling tidak boleh lebih kecil dari tanggal hari ini.',
@@ -198,6 +225,19 @@ export default {
     'news-image-null': 'Gambar tidak boleh kosong.',
     'banner-image-null': 'Gambar tidak boleh kosong.',
     'popup-image-null': 'Gambar tidak boleh kosong.',
+    'popup-title-not-null': 'Judul Pop Up harus diisi.',
+    'popup-title-min-10': 'Judul Pop Up minimal 10 Karakter.',
+    'popup-title-max-100': 'Judul Pop Up maximal 100 Karakter.',
+
+    'popup-kategori-not-null': 'Kategori Pop Up harus diisi.',
+    'popup-url-not-null': 'Tautan harus diisi.',
+    'popup-fitur-not-null': 'Fitur Pop Up harus diisi.',
+    'popup-type-name-not-null': 'Judul harus diisi.',
+    'popup-start-date-not-null': 'Tanggal Mulai harus diisi.',
+    'popup-end-date-not-null': 'Tanggal Berakhir harus diisi.',
+    'popup-description-not-null': 'Deskripsi harus diisi.',
+
+    'popup-informasi-title': 'Isian Judul mengandung karakter yang tidak diizinkan.',
 
     'dashboard-map-error': 'Gagal memuat map',
 
