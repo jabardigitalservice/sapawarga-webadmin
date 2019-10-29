@@ -29,13 +29,13 @@
 
           <el-table-column prop="created_at" sortable="custom" label="Dibuat" min-width="150">
             <template slot-scope="{row}">
-              {{ row.created_at | moment('D MMMM YYYY HH:mm') }}
+              {{ row.created_at | moment('D MMM YYYY HH:mm') }}
             </template>
           </el-table-column>
 
           <el-table-column prop="updated_at" sortable="custom" label="Dikirim" min-width="150">>
             <template slot-scope="{row}">
-              {{ getSentDateTime(row) | moment('D MMMM YYYY HH:mm') }}
+              {{ getSentDateTime(row) | moment('D MMM YYYY HH:mm') }}
             </template>
           </el-table-column>
 

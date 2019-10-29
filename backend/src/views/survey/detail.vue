@@ -30,8 +30,7 @@
 <script>
 import moment from 'moment'
 import { fetchRecord, update } from '@/api/survey'
-
-import { getStatusColor, getStatusLabel } from './status'
+import { getStatusColor, getStatusLabel, SurveyStatus } from './status'
 
 export default {
   data() {
@@ -41,37 +40,22 @@ export default {
       btnDisableDate: false
     }
   },
-  created() {
-    const id = this.$route.params && this.$route.params.id
-    this.getDetail(id)
+  async created() {
+    const id = await this.$route.params && this.$route.params.id
+    await this.getDetail(id)
   },
   methods: {
     getDetail(id) {
-      fetchRecord(id).then(response => {
+      fetchRecord(id).then((response) => {
         const { title, category, start_date, end_date, external_url, status, status_label } = response.data
-
         this.record = response.data
+        this.checkStartDate(response.data)
 
         const row = {
           start_date: start_date,
           end_date: end_date,
           status: status,
           status_label: status_label
-        }
-
-        const dateStart = moment(start_date).startOf('day')
-        const dateSecond = moment(end_date).endOf('day')
-        const currentDate = moment()
-
-        const checkStartDate = currentDate - dateStart
-        const distance = dateSecond - currentDate
-
-        if (checkStartDate < 0) {
-          this.btnDisableDate = true
-        }
-
-        if (distance < 0) {
-          this.btnDisableDate = true
         }
 
         this.tableDataRecord = [
@@ -101,6 +85,24 @@ export default {
           }
         ]
       })
+    },
+
+    checkStartDate(record) {
+      const { start_date, status } = record
+
+      const dateStart = moment(start_date).startOf('day')
+      const isStartedToday = dateStart.isSame(new Date(), 'day')
+
+      // jika status sama dengan draft dan tanggal mulai sama dengan hari ini
+      if ((status === SurveyStatus.DRAFT && isStartedToday)) {
+        this.btnDisableDate = false
+      // jika tanggal mulai tidak sama dengan hari ini
+      } else if (status !== SurveyStatus.ACTIVE && !isStartedToday) {
+        this.btnDisableDate = true
+        this.$message.warning(this.$t('errors.survey-change-date'))
+      } else {
+        this.btnDisableDate = true
+      }
     },
 
     async submitForm() {

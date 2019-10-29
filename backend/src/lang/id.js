@@ -167,7 +167,11 @@ export default {
   },
   common: {
     confirm: 'Ya',
+    save: 'Simpan',
     cancel: 'Batal'
+  },
+  users: {
+    'download-data': 'Unduh Data'
   },
   popup: {
     'popup-title': 'Judul Pop Up',
@@ -205,6 +209,7 @@ export default {
     'polling-answer-null': 'Tipe pertanyaan custom harus diisi',
     'survey-start-date': 'Tanggal mulai survei tidak boleh lebih kecil dari tanggal hari ini.',
     'survey-compare-date': 'Tanggal berakhir survei harus lebih besar dari tanggal mulai survei.',
+    'survey-change-date': 'Untuk melakukan publikasi survei, tanggal mulai harus diisi hari ini.',
 
     'news-image-null': 'Gambar tidak boleh kosong.',
     'banner-image-null': 'Gambar tidak boleh kosong.',
@@ -228,6 +233,12 @@ export default {
   navbar: {
     profile: 'Lihat Profil',
     'profile-edit': 'Edit Profil'
+  },
+  message: {
+    'confirmation-approve': 'Apakah Anda yakin akan memberikan persetujuan untuk usulan ini?',
+    'confirmation-reject': 'Apakah Anda yakin akan menolak usulan ini?',
+    'title-approve': 'Konfirmasi Persetujuan',
+    'title-reject': 'Konfirmasi Penolakan'
   },
   categoriTypes: {
     'phonebook': 'Nomor Penting',
