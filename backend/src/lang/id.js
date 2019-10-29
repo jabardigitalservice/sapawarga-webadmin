@@ -162,7 +162,8 @@ export default {
     cancel: 'Batal'
   },
   users: {
-    'download-data': 'Unduh Data'
+    'download-data': 'Unduh Data',
+    'users-add-new': 'Tambah Pengguna Baru'
   },
   errors: {
     'internal-server-error': 'Telah terjadi kesalahan sistem, silahkan muat ulang halaman ini.',

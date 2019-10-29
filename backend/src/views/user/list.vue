@@ -325,14 +325,20 @@ export default {
       this.$refs.upload.submit()
     },
 
-    exportDataURL() {
-      fetchExport(this.listQuery).then(response => {
-        this.getDataExport(response.data)
-      })
+    async exportDataURL() {
+      try {
+        this.listLoading = true
+        const data = await fetchExport(this.listQuery)
+        this.getDataExport(data.data)
+      } catch (error) {
+        console.error(error);
+        this.listLoading = false
+      }
     },
 
     getDataExport(url) {
       window.open(url)
+      this.listLoading = false
     },
 
     handleProgress() {
