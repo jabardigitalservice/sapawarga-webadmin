@@ -8,20 +8,21 @@ import Layout from '@/layout'
 
 /* Router Modules */
 import userRouter from './modules/user'
-import nomorPentingRouter from './modules/nomorPenting'
-import broadcastRouter from './modules/broadcast'
-import notificationRouter from './modules/notification'
-import aspirationRouter from './modules/aspiration'
-import pollingRouter from './modules/polling'
-import surveyRouter from './modules/survey'
 import newsRouter from './modules/news'
-import categoriesRouter from './modules/categories'
 import videoRouter from './modules/video'
-import newsChannelsRouter from './modules/newsChannels'
-import releaseManagementRouter from './modules/releaseManagement'
-import newsHoaxRouter from './modules/newsHoax'
 import bannerRouter from './modules/banner'
+import surveyRouter from './modules/survey'
+import pollingRouter from './modules/polling'
+import newsHoaxRouter from './modules/newsHoax'
+import broadcastRouter from './modules/broadcast'
+import aspirationRouter from './modules/aspiration'
+import categoriesRouter from './modules/categories'
+import nomorPentingRouter from './modules/nomorPenting'
+import notificationRouter from './modules/notification'
+import newsChannelsRouter from './modules/newsChannels'
+import newsImportantRouter from './modules/newsImportant'
 import popupInformasiRouter from './modules/popupInformasi'
+import releaseManagementRouter from './modules/releaseManagement'
 
 /** note: sub-menu only appear when children.length>=1
  *  detail see  https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -189,6 +190,7 @@ export const asyncRoutes = [
   releaseManagementRouter,
   bannerRouter,
   popupInformasiRouter,
+  newsImportantRouter,
   { path: '*', redirect: '/404', hidden: true }
 ]
 
