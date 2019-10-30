@@ -63,7 +63,6 @@
 </template>
 
 <script>
-import data from './data'
 import { fetchList } from '@/api/newsImportant'
 import { mapGetters } from 'vuex'
 import ListFilter from './_listfilter'
@@ -111,7 +110,7 @@ export default {
       this.listLoading = true
       fetchList(this.listQuery).then(response => {
         this.list = response.data.items
-        this.total = data.data._meta.totalCount
+        this.total = response.data._meta.totalCount
         this.listLoading = false
       })
     },
