@@ -20,12 +20,12 @@
           <el-table-column prop="type" sortable="custom" :label="$t('popup.popup-category')" align="center" min-width="130" />
           <el-table-column prop="start_date" sortable="custom" :label="$t('popup.popup-start-date')" align="center" min-width="125">
             <template slot-scope="{row}">
-              {{ row.start_date | moment('D MMM YYYY') }}
+              {{ row.start_date | moment('D MMM YYYY HH:mm') }}
             </template>
           </el-table-column>
           <el-table-column prop="end_date" sortable="custom" :label="$t('popup.popup-end-date')" align="center" min-width="125">
             <template slot-scope="{row}">
-              {{ row.end_date | moment('D MMM YYYY') }}
+              {{ row.end_date | moment('D MMM YYYY HH:mm') }}
             </template>
           </el-table-column>
           <el-table-column align="center" :label="$t('popup.popup-actions')" width="250">

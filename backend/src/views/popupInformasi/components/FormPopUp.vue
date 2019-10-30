@@ -200,14 +200,14 @@ export default {
           {
             required: true,
             message: this.$t('errors.popup-fitur-not-null'),
-            trigger: 'blur'
+            trigger: 'change'
           }
         ],
         internal_object_name: [
           {
             required: true,
             message: this.$t('errors.popup-type-name-not-null'),
-            trigger: 'blur'
+            trigger: 'change'
           }
         ],
         start_date: [
@@ -280,8 +280,8 @@ export default {
       if (this.popup.type === 'internal') {
         this.$refs.popup.model.link_url = ''
       } else if (this.popup.type === 'external') {
-        this.$refs.popup.model.internal_object_type = ''
-        this.$refs.popup.model.internal_object_name = ''
+        this.$refs.popup.model.internal_object_type = null
+        this.$refs.popup.model.internal_object_name = null
       }
       this.$refs.popup.clearValidate()
     },
