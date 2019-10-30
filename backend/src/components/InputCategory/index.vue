@@ -1,5 +1,5 @@
 <template>
-  <el-select v-model="selected" clearable placeholder="Pilih Kategori" @change="$emit('input', $event)">
+  <el-select v-model="selected" clearable placeholder="Pilih Kategori" name="category_id" @change="$emit('input', $event)">
     <el-option
       v-for="item in options"
       :key="item.value"
