@@ -30,7 +30,7 @@
     </el-table>
     <el-row style="margin: 0 auto; text-align: center;padding-top:10px;">
       <router-link :to="{ path: '/news/index' }">
-        <a href="#" style="color: #1890ff;">{{$t('dashboard.dashboard-news-see-all')}}</a>
+        <a href="#" style="color: #1890ff;">{{ $t('dashboard.dashboard-news-see-all') }}</a>
       </router-link>
     </el-row>
   </el-card>
