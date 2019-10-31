@@ -331,6 +331,10 @@ export default {
 
     handleSuccess() {
       this.listLoading = false
+    },
+
+    getSample() {
+      console.log('download')
     }
   }
 }
