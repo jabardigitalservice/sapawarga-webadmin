@@ -92,7 +92,7 @@
 import AttachmentPhotoUpload from '@/components/AttachmentPhotoUpload'
 import { validUrl, isContainHtmlTags } from '@/utils/validate'
 import { create, fetchRecord, update } from '@/api/popupInformasi'
-import { PopupCategory, PopupFitur } from '@/utils/constantVariabel'
+import { PopupCategory, PopupFeature } from '@/utils/constantVariabel'
 import Fitur from '@/views/banner/components/dialog/fitur'
 import { mapGetters } from 'vuex'
 const moment = require('moment')
@@ -292,11 +292,11 @@ export default {
         this.popup.internal_object_id = null
       }
 
-      if (this.popup.internal_object_type === PopupFitur.SURVEY) {
+      if (this.popup.internal_object_type === PopupFeature.SURVEY) {
         this.titleFitur = 'Judul Survei'
         this.titlePopup = 'Daftar Survei'
         this.popup.internal_object_name = ' '
-      } else if (this.popup.internal_object_type === PopupFitur.POLLING) {
+      } else if (this.popup.internal_object_type === PopupFeature.POLLING) {
         this.titleFitur = 'Judul Polling'
         this.titlePopup = 'Daftar Polling'
         this.popup.internal_object_name = ' '

@@ -8,7 +8,7 @@ export const PopupCategory = Object.freeze({
   INTERNAL: 'internal'
 })
 
-export const PopupFitur = Object.freeze({
+export const PopupFeature = Object.freeze({
   SURVEY: 'survey',
   POLLING: 'polling',
   NEWS: 'news'
