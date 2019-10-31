@@ -22,7 +22,7 @@
             <el-table-column prop="content" />
           </el-table>
         </el-card>
-        <el-button v-if="!btnKirimDisable" :disabled="btnKirimDisable" class="button-send" type="primary" @click="actionApprove(status.PUBLISHED)">{{ $t('crud.send') }}</el-button>
+        <el-button v-if="!buttonHidden" :disabled="btnKirimDisable" class="button-send" type="primary" @click="actionApprove(status.PUBLISHED)">{{ $t('crud.send') }}</el-button>
       </el-col>
     </el-row>
   </div>
@@ -41,6 +41,7 @@ export default {
       tableDataPesan: [],
       broadcast: null,
       btnKirimDisable: false,
+      buttonHidden: false,
       status: {
         DRAFT: 0,
         SCHEDULED: 5,
@@ -62,9 +63,9 @@ export default {
         this.checkDate(response.data)
 
         if (status === this.status.DRAFT) {
-          this.btnKirimDisable = false
+          this.buttonHidden = false
         } else {
-          this.btnKirimDisable = true
+          this.buttonHidden = true
         }
 
         this.tableDataTarget = [
@@ -142,6 +143,19 @@ export default {
         this.submitForm(status)
       } catch (e) {
         console.log(e)
+      }
+    },
+    checkDate(response) {
+      const { scheduled_datetime, is_scheduled, status } = response
+      const now = moment()
+      const dateTime = moment.unix(scheduled_datetime).isBefore(now)
+      if (is_scheduled && status === this.status.DRAFT) {
+        if (dateTime) {
+          this.$message.warning(this.$t('errors.broadcast-datetime-edit'))
+          this.btnKirimDisable = true
+        } else {
+          this.btnKirimDisable = false
+        }
       }
     }
   }
