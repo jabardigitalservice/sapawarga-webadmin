@@ -22,13 +22,14 @@
             <el-table-column prop="content" />
           </el-table>
         </el-card>
-        <el-button v-if="!btnKirimDisable" class="button-send" type="primary" @click="actionApprove(status.PUBLISHED)">{{ $t('crud.send') }}</el-button>
+        <el-button v-if="!buttonHidden" :disabled="btnKirimDisable" class="button-send" type="primary" @click="actionApprove(status.PUBLISHED)">{{ $t('crud.send') }}</el-button>
       </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
+import moment from 'moment'
 import { fetchRecord, update } from '@/api/broadcast'
 import { parsingDatetime } from '@/utils/datetimeToString'
 
@@ -40,6 +41,7 @@ export default {
       tableDataPesan: [],
       broadcast: null,
       btnKirimDisable: false,
+      buttonHidden: false,
       status: {
         DRAFT: 0,
         SCHEDULED: 5,
@@ -56,13 +58,14 @@ export default {
   methods: {
     getDetail() {
       fetchRecord(this.id).then(response => {
-        const { title, description, category, kabkota, kecamatan, kelurahan, rw, status, status_label, scheduled_datetime, is_scheduled } = response.data
+        const { title, description, category, kabkota, kecamatan, kelurahan, rw, status, status_label, scheduled_datetime, is_scheduled, updated_at } = response.data
         this.broadcast = response.data
+        this.checkDate(response.data)
 
         if (status === this.status.DRAFT) {
-          this.btnKirimDisable = false
+          this.buttonHidden = false
         } else {
-          this.btnKirimDisable = true
+          this.buttonHidden = true
         }
 
         this.tableDataTarget = [
@@ -103,7 +106,7 @@ export default {
           },
           {
             title: this.$t('label.scheduled_datetime'),
-            content: parsingDatetime(scheduled_datetime)
+            content: status === this.status.PUBLISHED && !is_scheduled ? parsingDatetime(updated_at) : parsingDatetime(scheduled_datetime)
           },
           {
             title: this.$t('label.description'),
@@ -111,7 +114,7 @@ export default {
           }
         ]
 
-        if (scheduled_datetime === null) {
+        if (status === this.status.DRAFT && scheduled_datetime === null) {
           this.tableDataPesan.splice(4, 1)
         }
 
@@ -140,6 +143,19 @@ export default {
         this.submitForm(status)
       } catch (e) {
         console.log(e)
+      }
+    },
+    checkDate(response) {
+      const { scheduled_datetime, is_scheduled, status } = response
+      const now = moment()
+      const dateTime = moment.unix(scheduled_datetime).isBefore(now)
+      if (is_scheduled && status === this.status.DRAFT) {
+        if (dateTime) {
+          this.$message.warning(this.$t('errors.broadcast-datetime-edit'))
+          this.btnKirimDisable = true
+        } else {
+          this.btnKirimDisable = false
+        }
       }
     }
   }
