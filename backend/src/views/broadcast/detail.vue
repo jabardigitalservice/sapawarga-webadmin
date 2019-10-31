@@ -31,7 +31,7 @@
 <script>
 import moment from 'moment'
 import { fetchRecord, update } from '@/api/broadcast'
-import parsingDatetime from '@/utils/datetimeToString'
+import { parsingDatetime } from '@/utils/datetimeToString'
 
 export default {
   data() {

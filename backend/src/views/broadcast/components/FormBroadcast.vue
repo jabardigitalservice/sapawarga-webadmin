@@ -41,7 +41,7 @@
             :status-icon="true"
           >
             <el-form-item :label="$t('label.title-broadcast')" prop="title">
-              <el-input v-model="broadcast.title" type="text" placeholder="Judul Pesan (minimum 10 karakter, maksimum 100 karakter)" />
+              <el-input v-model="broadcast.title" type="text" name="title" placeholder="Judul Pesan (minimum 10 karakter, maksimum 100 karakter)" />
             </el-form-item>
             <el-form-item :label="$t('label.category')" prop="category_id">
               <InputCategory v-model="broadcast.category_id" category-type="broadcast" prop="category" />
@@ -67,6 +67,7 @@
               <el-input
                 v-model="broadcast.description"
                 type="textarea"
+                name="description"
                 :rows="8"
                 placeholder="Tulis pesan (maksimum 1000 karakter)"
               />

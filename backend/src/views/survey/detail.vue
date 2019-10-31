@@ -30,7 +30,8 @@
 <script>
 import moment from 'moment'
 import { fetchRecord, update } from '@/api/survey'
-import { getStatusColor, getStatusLabel, SurveyStatus } from './status'
+import { getStatusColor, getStatusLabel } from './status'
+import { SurveyStatus } from '@/utils/constantVariabel'
 
 export default {
   data() {

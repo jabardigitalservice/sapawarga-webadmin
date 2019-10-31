@@ -264,6 +264,7 @@ export default {
     'popup-description-not-null': 'Deskripsi harus diisi.',
 
     'popup-informasi-title': 'Isian Judul mengandung karakter yang tidak diizinkan.',
+    'popup-informasi-description': 'Isian Deskripsi mengandung karakter yang tidak diizinkan.',
 
     'dashboard-map-error': 'Gagal memuat map',
 
