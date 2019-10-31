@@ -267,7 +267,8 @@ export default {
 
     'dashboard-map-error': 'Gagal memuat map',
 
-    'broadcast-datetime': 'Jadwal yang dipilih telah lewat'
+    'broadcast-datetime': 'Jadwal yang dipilih telah lewat',
+    'broadcast-datetime-edit': 'Jadwal yang dipilih telah lewat. Silahkan edit terlebih dahulu.'
   },
   navbar: {
     profile: 'Lihat Profil',
