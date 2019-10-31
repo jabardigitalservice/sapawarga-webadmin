@@ -18,16 +18,8 @@
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
           <el-table-column prop="title" sortable="custom" :label="$t('popup.popup-title')" min-width="250" />
           <el-table-column prop="type" sortable="custom" :label="$t('popup.popup-category')" align="center" min-width="130" />
-          <el-table-column prop="start_date" sortable="custom" :label="$t('popup.popup-start-date')" align="center" min-width="125">
-            <template slot-scope="{row}">
-              {{ row.start_date | moment('D MMM YYYY') }}
-            </template>
-          </el-table-column>
-          <el-table-column prop="end_date" sortable="custom" :label="$t('popup.popup-end-date')" align="center" min-width="125">
-            <template slot-scope="{row}">
-              {{ row.end_date | moment('D MMM YYYY') }}
-            </template>
-          </el-table-column>
+          <el-table-column prop="start_date" :formatter="formatterCell" sortable="custom" :label="$t('popup.popup-start-date')" align="center" min-width="125" />
+          <el-table-column prop="end_date" :formatter="formatterCell" sortable="custom" :label="$t('popup.popup-end-date')" align="center" min-width="125" />
           <el-table-column align="center" :label="$t('popup.popup-actions')" width="250">
             <template slot-scope="scope">
               <router-link :to="'/popup-informasi/detail/'+scope.row.id">
@@ -63,6 +55,7 @@ import Pagination from '@/components/Pagination'
 import ListFilter from './_listfilter'
 import { fetchList, deleteData } from '@/api/popupInformasi'
 import { mapGetters } from 'vuex'
+import { formatDatetime } from '@/utils/datetimeToString'
 
 export default {
   components: { Pagination, ListFilter },
@@ -116,6 +109,11 @@ export default {
 
     getTableRowNumbering(index) {
       return ((this.listQuery.page - 1) * this.listQuery.limit) + (index + 1)
+    },
+
+    formatterCell(row, column, cellValue, index) {
+      const value = cellValue ? formatDatetime(cellValue, 'DD MMM YYYY HH:mm') : '-'
+      return value
     },
 
     resetFilter() {
