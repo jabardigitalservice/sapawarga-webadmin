@@ -18,10 +18,8 @@
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
           <el-table-column prop="title" sortable="custom" :label="$t('popup.popup-title')" min-width="250" />
           <el-table-column prop="type" sortable="custom" :label="$t('popup.popup-category')" align="center" min-width="130" />
-          <el-table-column prop="start_date" :formatter="formatterCell" sortable="custom" :label="$t('popup.popup-start-date')" align="center" min-width="125">
-          </el-table-column>
-          <el-table-column prop="end_date" :formatter="formatterCell" sortable="custom" :label="$t('popup.popup-end-date')" align="center" min-width="125">
-          </el-table-column>
+          <el-table-column prop="start_date" :formatter="formatterCell" sortable="custom" :label="$t('popup.popup-start-date')" align="center" min-width="125" />
+          <el-table-column prop="end_date" :formatter="formatterCell" sortable="custom" :label="$t('popup.popup-end-date')" align="center" min-width="125" />
           <el-table-column align="center" :label="$t('popup.popup-actions')" width="250">
             <template slot-scope="scope">
               <router-link :to="'/popup-informasi/detail/'+scope.row.id">
