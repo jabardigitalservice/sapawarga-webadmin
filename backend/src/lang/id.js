@@ -186,7 +186,7 @@ export default {
     'users-add-new': 'Tambah Pengguna Baru',
     'users-import-data': 'Import Data Pengguna Sapawarga',
     'users-dialog-text-import-csv': 'Anda dapat melakukan import data dengan mengunggah file dengan tipe CSV.',
-    'users-dialog-text-template-file': 'Template file dapat diunduh pada',
+    'users-dialog-text-template-file': 'Template file dapat diunduh pada ',
     'users-dialog-text-url': 'Tautan berikut',
     'users-dialog-text-choose-location-file': 'Pilih lokasi file pada komputer Anda (max. 5 MB)',
     'users-dialog-text-file-delete': 'Anda yakin akan menghapus file {file_name} ?',
