@@ -269,7 +269,10 @@ export default {
     'dashboard-map-error': 'Gagal memuat map',
 
     'broadcast-datetime': 'Jadwal yang dipilih telah lewat',
-    'broadcast-datetime-edit': 'Jadwal yang dipilih telah lewat. Silahkan edit terlebih dahulu.'
+    'broadcast-datetime-edit': 'Jadwal yang dipilih telah lewat. Silahkan edit terlebih dahulu.',
+    'broadcast-title': 'Judul pesan mengandung karakter yang tidak diperbolehkan',
+    'broadcast-description': 'Isi pesan mengandung karakter yang tidak diperbolehkan',
+    'broadcast-title-description': 'Judul pesan dan Isi pesan mengandung karakter yang tidak diperbolehkan'
   },
   navbar: {
     profile: 'Lihat Profil',
