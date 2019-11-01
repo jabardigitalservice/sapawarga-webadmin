@@ -24,10 +24,9 @@
           <div>{{ $t('users.users-dialog-text-choose-location-file') }}</div>
           <div slot="footer" class="dialog-footer" align="left">
             <label>File
-              <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
+              <input id="file" ref="file" type="file" @change="handleFileUpload()">
             </label>
-            <button v-on:click="submitFile()">Submit</button>
-
+            <button @click="submitFile()">Submit</button>
 
             <el-upload
               ref="upload"
@@ -353,7 +352,7 @@ export default {
     },
 
     submitFile() {
-      let formData = new FormData()
+      const formData = new FormData()
 
       formData.append('file', this.file)
 
