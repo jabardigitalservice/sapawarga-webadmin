@@ -34,10 +34,10 @@ describe('API News Channel', () => {
     }
 
     expect(result).not.toBeDefined()
-    expect(errReceived.success).toBeFalsy()
-    expect(errReceived.status).toBe(422)
-    expect(errReceived.data.name).toEqual(errResponse.data.name)
-    expect(errReceived.data.website).not.toBeDefined()
+    expect(errResponse.success).toBeFalsy()
+    expect(errResponse.status).toBe(422)
+    expect(errResponse.data.name).toEqual(errResponse.data.name)
+    expect(errResponse.data.website).not.toBeDefined()
     expect(request.isDone()).toBe(true)
   })
 
@@ -61,10 +61,10 @@ describe('API News Channel', () => {
     }
 
     expect(result).not.toBeDefined()
-    expect(errReceived.success).toBeFalsy()
-    expect(errReceived.status).toBe(422)
-    expect(errReceived.data.website).toEqual(errResponse.data.website)
-    expect(errReceived.data.name).not.toBeDefined()
+    expect(errResponse.success).toBeFalsy()
+    expect(errResponse.status).toBe(422)
+    expect(errResponse.data.website).toEqual(errResponse.data.website)
+    expect(errResponse.data.name).not.toBeDefined()
     expect(request.isDone()).toBe(true)
   })
 })
