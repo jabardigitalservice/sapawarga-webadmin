@@ -93,8 +93,6 @@ export default {
       height: '220px',
       tableData: [],
       tableDataTambahan: [],
-      tableDataTambahan: [],
-      tableData: [],
       tableProfile: [],
       tableAddress: [],
       instagramIcon: [],

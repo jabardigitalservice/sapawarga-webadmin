@@ -73,7 +73,6 @@ service.interceptors.response.use(
     // }
   },
   error => {
-
     if (error.response.status === 401) {
       router.push('/401')
     }
@@ -83,7 +82,6 @@ service.interceptors.response.use(
     }
 
     if (error.response && error.response.status !== 422) {
-
       if (error.response.status === 500) {
         let message = 'Oops, telah terjadi kesalahan, silahkan muat ulang halaman ini.'
         if (error.response.data.data !== undefined) {
@@ -95,7 +93,6 @@ service.interceptors.response.use(
           duration: 5 * 1000
         })
       } else if (error.response.status !== 422) {
-
         Message({
           message: 'Oops, telah terjadi kesalahan, silahkan muat ulang halaman ini.',
           type: 'error',
