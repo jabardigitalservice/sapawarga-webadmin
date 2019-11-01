@@ -20,14 +20,21 @@
         </el-row>
         <el-dialog :title="$t('users.users-import-data')" :visible.sync="visibleDialog" :width="(importDialogVisible)? `50%`:`20%`" @close="closeDialog">
           <div class="dialog-text">{{ $t('users.users-dialog-text-import-csv') }}</div>
-          <div class="dialog-text">{{ $t('users.users-dialog-text-template-file') }}<a href="http://">{{ $t('users.users-dialog-text-url') }}</a></div>
+          <div class="dialog-text">{{ $t('users.users-dialog-text-template-file') }}<a @click="getSample">{{ $t('users.users-dialog-text-url') }}</a></div>
           <div>{{ $t('users.users-dialog-text-choose-location-file') }}</div>
           <div slot="footer" class="dialog-footer" align="left">
+            <label>File
+              <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
+            </label>
+            <button v-on:click="submitFile()">Submit</button>
+
+
             <el-upload
               ref="upload"
               v-loading="listLoading"
               class="upload-demo"
-              action="https://jsonplaceholder.typicode.com/posts/"
+              accept="file"
+              action="https://sapawarga-staging.jabarprov.go.id/api/v1/staff/import"
               :on-progress="handleProgress"
               :on-success="handleSuccess"
               :limit="1"
@@ -100,7 +107,7 @@
 </template>
 
 <script>
-import { fetchList, activate, deactivate, totalUser, fetchExport } from '@/api/staff'
+import { fetchList, activate, deactivate, totalUser, fetchExport, downloadSample, importUser } from '@/api/staff'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 import PanelGroup from './components/PanelGroup'
 import permission from '@/directive/permission/index.js'
@@ -133,6 +140,7 @@ export default {
       list: null,
       total: 0,
       listLoading: true,
+      file: null,
       listQuery: {
         name: null,
         username: null,
@@ -308,6 +316,7 @@ export default {
 
     submitUpload() {
       this.$refs.upload.submit()
+      importUser()
     },
 
     async exportDataURL() {
@@ -334,8 +343,25 @@ export default {
     },
 
     getSample() {
-      console.log('download')
+      downloadSample(this.listQuery).then(response => {
+        console.log(response)
+      })
+    },
+
+    handleFileUpload() {
+      this.file = this.$refs.file.files[0]
+    },
+
+    submitFile() {
+      let formData = new FormData()
+
+      formData.append('file', this.file)
+
+      importUser(formData).then(response => {
+        console.log('berhasil upload')
+      })
     }
+
   }
 }
 </script>
