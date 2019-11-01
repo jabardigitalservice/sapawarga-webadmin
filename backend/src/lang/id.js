@@ -377,10 +377,8 @@ export default {
     'password': 'Password',
     'repeat-password': 'Ulangi Password',
     'role': 'Peran',
-    'place': 'Kedudukan',
     'last-access': 'Akses Terakhir',
     'telepon': 'Telepon',
-    'status': 'Status',
     'education': 'Pendidikan',
     'job': 'Pekerjaan',
     'birthdate': 'Tanggal Lahir',
@@ -388,7 +386,6 @@ export default {
     'address': 'Alamat',
     'coordinates': 'Koordinat Lokasi',
     'social-media': 'Media Sosial',
-    'actions': 'Actions',
 
     'area-rt': 'RT',
     'area-rw': 'RW',

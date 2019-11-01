@@ -141,7 +141,7 @@
               </el-form-item>
             </el-col>
           </el-row>
-          <p class="warn-content">{{ $t('route.user-detail')}}</p>
+          <p class="warn-content">{{ $t('route.user-detail') }}</p>
           <el-form-item :label="$t('label.education')">
             <el-select v-model="user.education" :placeholder="$t('label.choose-education')">
               <el-option
@@ -173,7 +173,7 @@
               :placeholder="$t('label.choose-birthdate')"
             />
           </el-form-item>
-          <p class="warn-content">{{$t('label.location-user')}}</p>
+          <p class="warn-content">{{ $t('label.location-user') }}</p>
           <el-row>
             <el-col>
               <el-form-item :label="$t('label.address')" prop="address">
@@ -188,7 +188,7 @@
               </el-form-item>
             </el-col>
           </el-row>
-          <p class="warn-content">{{$t('label.social-media')}}</p>
+          <p class="warn-content">{{ $t('label.social-media') }}</p>
 
           <el-form-item label="Twitter" prop="twitter">
             <el-input v-model="user.twitter" type="text" placeholder="Contoh: jabardigitalservice" />
@@ -410,7 +410,7 @@ export default {
           },
           {
             pattern: /^[a-z0-9_.]+$/,
-            message:this.$t('errors.username-only-use-lowercase-letters-numbers-underscore-and-dots'),
+            message: this.$t('errors.username-only-use-lowercase-letters-numbers-underscore-and-dots'),
             trigger: 'blur'
           },
           {
@@ -1043,7 +1043,7 @@ export default {
             instagram: this.user.instagram,
             photo_url: this.user.photo,
             lat: this.user.coordinates[0],
-            lon: this.user.coordinates[1],
+            lon: this.user.coordinates[1]
           }
           if (this.user.confirmation !== '') {
             userEdit['password'] = this.user.confirmation
