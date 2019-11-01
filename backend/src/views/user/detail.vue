@@ -80,7 +80,7 @@ import PhotoBox from '@/components/PhotoBox'
 import MapThumb from '@/components/MapThumb'
 import { fetchUser } from '@/api/staff'
 import permission from '@/directive/permission/index.js'
-import parsingDatetime from '@/utils/datetimeToString'
+import { parsingDatetime } from '@/utils/datetimeToString'
 import moment from 'moment'
 
 export default {

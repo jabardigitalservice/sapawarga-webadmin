@@ -2,7 +2,7 @@
   <div class="components-container">
     <el-row :gutter="20">
       <el-col :sm="24" :md="10" :lg="10" :xl="12">
-        <p class="warn-content">Target</p>
+        <p class="warn-content">{{ $t('label.target') }}</p>
         <div class="broadcast-target">
           <el-form
             ref="broadcast"
@@ -12,7 +12,7 @@
             :rules="rules"
             :status-icon="true"
           >
-            <el-form-item label="Wilayah" prop="wilayah">
+            <el-form-item :label="$t('label.area')" prop="wilayah">
               <InputSelectArea
                 :kabkota-id="broadcast.kabkota_id"
                 :kec-id="broadcast.kec_id"
@@ -30,7 +30,7 @@
         </div>
       </el-col>
       <el-col :sm="24" :md="14" :lg="14" :xl="12">
-        <p class="warn-content">Isi Pesan</p>
+        <p class="warn-content">{{ $t('label.description') }}</p>
         <div class="broadcast-message">
           <el-form
             ref="broadcast"
@@ -40,23 +40,41 @@
             label-position="left"
             :status-icon="true"
           >
-            <el-form-item label="Judul Pesan" prop="title">
-              <el-input v-model="broadcast.title" type="text" placeholder="Judul Pesan (minimum 10 karakter, maksimum 100 karakter)" />
+            <el-form-item :label="$t('label.title-broadcast')" prop="title">
+              <el-input v-model="broadcast.title" type="text" name="title" placeholder="Judul Pesan (minimum 10 karakter, maksimum 100 karakter)" />
             </el-form-item>
-            <el-form-item label="Kategori" prop="category_id">
+            <el-form-item :label="$t('label.category')" prop="category_id">
               <InputCategory v-model="broadcast.category_id" category-type="broadcast" prop="category" />
             </el-form-item>
-            <el-form-item label="Isi Pesan" prop="description">
+            <el-form-item :label="$t('label.scheduled')" prop="is_scheduled">
+              <el-radio-group v-model="broadcast.is_scheduled" name="jadwal">
+                <el-radio-button :label="false">Sekarang</el-radio-button>
+                <el-radio-button :label="true">Terjadwal</el-radio-button>
+              </el-radio-group>
+            </el-form-item>
+            <el-form-item v-if="broadcast.is_scheduled === true" :label="$t('label.scheduled_datetime')" :prop="scheduled_datetime_validation">
+              <el-date-picker
+                v-model="broadcast.scheduled_datetime"
+                type="datetime"
+                format="dd-MM-yyyy HH:mm"
+                :editable="true"
+                placeholder="Pilih Tanggal dan Waktu"
+                @focus="changePropDatetime"
+              />
+            </el-form-item>
+
+            <el-form-item :label="$t('label.description')" prop="description">
               <el-input
                 v-model="broadcast.description"
                 type="textarea"
+                name="description"
                 :rows="8"
                 placeholder="Tulis pesan (maksimum 1000 karakter)"
               />
             </el-form-item>
             <el-form-item>
-              <el-button type="info" :disabled="broadcast.status === 10" :loading="loading" @click="submitForm(status.draft)">{{ $t('crud.draft') }}</el-button>
-              <el-button v-show="!isEdit" type="primary" :loading="loading" @click="actionApprove(status.active)"> {{ $t('crud.send') }}</el-button>
+              <el-button type="info" :disabled="broadcast.status === status.PUBLISHED" :loading="loading" @click="submitForm(status.DRAFT)">{{ $t('crud.draft') }}</el-button>
+              <el-button v-show="!isEdit" type="primary" :loading="loading" @click="actionApprove(status.PUBLISHED)"> {{ $t('crud.send') }}</el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -69,6 +87,8 @@ import InputCategory from '@/components/InputCategory'
 import InputSelectArea from '@/components/InputSelectArea'
 import { create, fetchRecord, update } from '@/api/broadcast'
 import { containsWhitespace } from '@/utils/validate'
+import moment from 'moment'
+
 export default {
   components: {
     InputCategory,
@@ -83,14 +103,14 @@ export default {
   data() {
     const whitespaceTitle = (rule, value, callback) => {
       if (containsWhitespace(value) === true) {
-        callback(new Error('Judul pesan yang diisi tidak valid'))
+        callback(new Error(this.$t('message.broadcast-title-valid')))
       }
       callback()
     }
 
     const whitespaceDescription = (rule, value, callback) => {
       if (containsWhitespace(value) === true) {
-        callback(new Error('Pesan yang diisi tidak valid'))
+        callback(new Error(this.$t('message.broadcast-description-valid')))
       }
       callback()
     }
@@ -98,8 +118,8 @@ export default {
     return {
       loading: false,
       status: {
-        draft: 0,
-        active: 10
+        DRAFT: 0,
+        PUBLISHED: 10
       },
       width: '300%',
       broadcast: {
@@ -109,23 +129,26 @@ export default {
         rw: null,
         title: null,
         category_id: null,
-        description: null
+        description: null,
+        is_scheduled: false,
+        scheduled_datetime: null
       },
+      scheduled_datetime_validation: 'scheduled_datetime',
       rules: {
         title: [
           {
             required: true,
-            message: 'Judul pesan harus diisi',
+            message: this.$t('message.broadcast-title-required'),
             trigger: 'blur'
           },
           {
             min: 10,
-            message: 'Judul pesan minimal 10 karakter',
+            message: this.$t('message.broadcast-title-min'),
             trigger: 'blur'
           },
           {
             max: 100,
-            message: 'Judul pesan maksimal 100 karakter',
+            message: this.$t('message.broadcast-title-max'),
             trigger: 'blur'
           },
           {
@@ -134,17 +157,21 @@ export default {
           }
         ],
         category_id: [
-          { required: true, message: 'Kategori harus diisi.', trigger: 'change' }
+          {
+            required: true,
+            message: this.$t('message.category'),
+            trigger: 'change'
+          }
         ],
         description: [
           {
             required: true,
-            message: 'Isi pesan harus diisi',
+            message: this.$t('message.broadcast-description-required'),
             trigger: 'blur'
           },
           {
             max: 1000,
-            message: 'Isi pesan maksimal 1000 karakter',
+            message: this.$t('message.broadcast-description-max'),
             trigger: 'blur'
           },
           {
@@ -155,24 +182,45 @@ export default {
         rw: [
           {
             pattern: /^[0-9]+$/,
-            message: 'RW harus menggunakan angka',
+            message: this.$t('message.broadcast-rw-pattern'),
             trigger: 'blur'
           },
           {
             max: 3,
-            message: 'RW harus 3 angka, contoh 001',
+            message: this.$t('message.broadcast-rw-max'),
             trigger: 'blur'
           },
           {
             min: 3,
-            message: 'RW harus 3 angka, contoh 001',
+            message: this.$t('message.broadcast-rw-min'),
             trigger: 'blur'
           }
         ],
         wilayah: [
           {
             required: false,
-            message: 'wilayah harus diisi',
+            message: this.$t('message.broadcast-area-required'),
+            trigger: 'change'
+          }
+        ],
+        is_scheduled: [
+          {
+            required: true,
+            message: this.$t('message.broadcast-scheduled'),
+            trigger: 'blur'
+          }
+        ],
+        scheduled_datetime: [
+          {
+            required: true,
+            message: this.$t('message.broadcast-scheduled_datetime'),
+            trigger: 'blur'
+          }
+        ],
+        scheduled_datetime_error: [
+          {
+            required: true,
+            message: this.$t('message.broadcast-scheduled_datetime-expire'),
             trigger: 'change'
           }
         ]
@@ -200,6 +248,12 @@ export default {
         this.broadcast.rw = null
       }
       this.resetRw()
+    },
+
+    'broadcast.is_scheduled'() {
+      if (this.broadcast.is_scheduled === false) {
+        this.broadcast.scheduled_datetime = null
+      }
     }
   },
   created() {
@@ -218,7 +272,8 @@ export default {
     fetchData(id) {
       fetchRecord(id).then(response => {
         this.broadcast = response.data
-        if (this.broadcast.status === 10) {
+        this.broadcast.scheduled_datetime = response.data.scheduled_datetime ? moment.unix(response.data.scheduled_datetime) : null
+        if (this.broadcast.status !== this.status.DRAFT) {
           this.$message.error(this.$t('crud.broadcast-error-edit-published'))
           this.$router.push('/broadcast/index')
         }
@@ -252,6 +307,12 @@ export default {
 
         data.status = status
 
+        if (data.is_scheduled === true) {
+          data.scheduled_datetime = moment(this.broadcast.scheduled_datetime).unix()
+        } else {
+          data.scheduled_datetime = null
+        }
+
         if (this.isEdit) {
           const id = this.$route.params && this.$route.params.id
 
@@ -262,16 +323,22 @@ export default {
           this.$router.push('/broadcast/index')
         } else {
           await create(data)
-          if (status === 10) {
+          if (status === this.status.PUBLISHED) {
             this.$message.success(this.$t('crud.send-success'))
             this.$router.push('/broadcast/index')
-          } else if (status === 0) {
+          } else if (status === this.status.DRAFT) {
             this.$message.info(this.$t('crud.draft-success'))
             this.$router.push('/broadcast/index')
           }
         }
       } catch (err) {
-        console.log(err)
+        const error = err.response.data.data.scheduled_datetime
+        if (error) {
+          this.broadcast.scheduled_datetime = null
+          this.scheduled_datetime_validation = 'scheduled_datetime_error'
+        } else {
+          console.log(err)
+        }
       } finally {
         this.loading = false
       }
@@ -283,7 +350,7 @@ export default {
         return
       }
 
-      await this.$confirm(`Apakah Anda yakin akan mengirimkan pesan: ${this.broadcast.title} ?`, 'Konfirmasi', {
+      await this.$confirm(this.$t('message.confirmation-send-message') + `${this.broadcast.title}` + '?', this.$t('message.title'), {
         confirmButtonText: this.$t('common.confirm'),
         cancelButtonText: this.$t('common.cancel'),
         type: 'success'
@@ -294,6 +361,9 @@ export default {
       } catch (e) {
         console.log(e)
       }
+    },
+    changePropDatetime() {
+      this.scheduled_datetime_validation = 'scheduled_datetime'
     }
   }
 

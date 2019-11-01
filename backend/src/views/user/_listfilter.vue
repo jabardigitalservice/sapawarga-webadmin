@@ -81,12 +81,6 @@
               />
             </el-form-item>
           </el-col>
-          <!--           <el-col :span="14" class="filter-date">
-            <span>Aktifitas Terakhir :</span>
-            <el-row type="flex">
-
-            </el-row>
-          </el-col> -->
         </el-row>
       </div>
       <el-row style="margin-top: 10px">

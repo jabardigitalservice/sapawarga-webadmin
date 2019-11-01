@@ -6,36 +6,63 @@
     <el-row :gutter="20">
       <el-col :span="24">
         <el-row style="margin: 10px 0px">
-          <el-col :span="12">
+          <el-col :span="5">
             <router-link :to="{ path: '/user/create', query: { role_id: roleId }}">
               <el-button type="primary" size="small" icon="el-icon-plus">
-                Tambah Pengguna Baru
+                {{ $t('users.users-add-new') }}
               </el-button>
             </router-link>
           </el-col>
+          <el-col v-if="checkPermission(['admin', 'staffProv'])" :span="19" align="right">
+            <el-button type="primary" size="small" @click="exportDataURL">{{ $t('users.download-data') }}</el-button>
+            <el-button type="primary" size="small" @click="openDialog(`import`)">Import Data</el-button>
+          </el-col>
         </el-row>
+        <el-dialog :title="$t('users.users-import-data')" :visible.sync="visibleDialog" :width="(importDialogVisible)? `50%`:`20%`" @close="closeDialog">
+          <div class="dialog-text">{{ $t('users.users-dialog-text-import-csv') }}</div>
+          <div class="dialog-text">{{ $t('users.users-dialog-text-template-file') }}<a href="http://">{{ $t('users.users-dialog-text-url') }}</a></div>
+          <div>{{ $t('users.users-dialog-text-choose-location-file') }}</div>
+          <div slot="footer" class="dialog-footer" align="left">
+            <el-upload
+              ref="upload"
+              v-loading="listLoading"
+              class="upload-demo"
+              action="https://jsonplaceholder.typicode.com/posts/"
+              :on-progress="handleProgress"
+              :on-success="handleSuccess"
+              :limit="1"
+              :on-exceed="handleExceed"
+              :before-remove="beforeRemove"
+              :auto-upload="false"
+            >
+              <el-button slot="trigger" class="dialog-buttom" size="small" type="primary">{{ $t('users.users-dialog-bottom-choose-file') }}</el-button>
+            </el-upload>
+            <el-button type="primary" @click="submitUpload, visibleDialog = false, importDialogVisible = false">{{ $t('users.users-dialog-bottom-upload-file') }}</el-button>
+            <el-button type="info" @click="closeDialog">{{ $t('users.users-dialog-bottom-cancel') }}</el-button>
+          </div>
+        </el-dialog>
 
         <ListFilter :list-query.sync="listQuery" @submit-search="getList" @reset-search="resetFilter" />
 
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%" @sort-change="changeSort">
           <el-table-column type="index" min-width="50" align="center" :index="getTableRowNumbering" />
 
-          <el-table-column prop="name" sortable="custom" label="Nama Lengkap" min-width="120" />
+          <el-table-column prop="name" sortable="custom" :label="$t('users.users-fullname')" min-width="120" />
 
-          <el-table-column prop="username" sortable="custom" label="Username" min-width="100" />
+          <el-table-column prop="username" sortable="custom" :label="$t('users.users-username')" min-width="100" />
 
-          <el-table-column label="Kedudukan" min-width="150">
+          <el-table-column :label="$t('users.users-place')" min-width="150">
             <template slot-scope="{row}">
               {{ getKedudukan(row) }}
             </template>
           </el-table-column>
 
-          <el-table-column v-if="checkPermission(['admin', 'staffProv'])" prop="last_access_at" :formatter="formatterCell" sortable="custom" label="Akses Terakhir" min-width="120" />
+          <el-table-column v-if="checkPermission(['admin', 'staffProv'])" prop="last_access_at" :formatter="formatterCell" sortable="custom" :label="$t('users.users-last-access')" min-width="120" />
 
-          <el-table-column prop="phone" min-width="120" sortable="custom" label="Telp" />
+          <el-table-column prop="phone" min-width="120" sortable="custom" :label="$t('users.users-telp')" />
           <el-table-column prop="role_label" min-width="150" label="Role" />
 
-          <el-table-column prop="status" sortable="custom" class-name="status-col" label="Status" min-width="120px">
+          <el-table-column prop="status" sortable="custom" class-name="status-col" :label="$t('users.users-status')" min-width="120px">
             <template slot-scope="{row}">
               <el-tag :type="row.status | statusFilter">
                 {{ row.status_label }}
@@ -43,7 +70,7 @@
             </template>
           </el-table-column>
 
-          <el-table-column align="center" label="Actions" min-width="170px">
+          <el-table-column align="center" :label="$t('users.users-actions')" min-width="170px">
             <template slot-scope="scope">
               <router-link :to="'/user/detail/'+scope.row.id">
                 <el-tooltip content="Lihat Pengguna" placement="top">
@@ -73,7 +100,7 @@
 </template>
 
 <script>
-import { fetchList, activate, deactivate, totalUser } from '@/api/staff'
+import { fetchList, activate, deactivate, totalUser, fetchExport } from '@/api/staff'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 import PanelGroup from './components/PanelGroup'
 import permission from '@/directive/permission/index.js'
@@ -129,15 +156,16 @@ export default {
       totalUserKec: 0,
       totalUserKel: 0,
       totalUserRw: 0,
-      totalUserSaberhoax: 0
+      totalUserSaberhoax: 0,
+      visibleDialog: false,
+      importDialogVisible: false,
+      radio: '1'
     }
   },
-
   created() {
     this.getList()
     this.getTotalUser()
   },
-
   methods: {
     checkPermission,
 
@@ -181,23 +209,23 @@ export default {
       const kabkota = _.get(user, 'kabkota.name')
 
       if (userRole === 'staffRW') {
-        return `RW ${rw}, Desa/Kelurahan ${kelurahan}, Kecamatan ${kecamatan}, ${kabkota}`
+        return this.$t('users.users-role-text-staff-rw', [rw, kelurahan, kecamatan, kabkota])
       }
 
       if (userRole === 'staffKel') {
-        return `Desa/Kelurahan ${kelurahan}, Kecamatan ${kecamatan}, ${kabkota}`
+        return this.$t('users.users-role-text-staff-kel', [kelurahan, kecamatan, kabkota])
       }
 
       if (userRole === 'staffKec') {
-        return `Kecamatan ${kecamatan}, ${kabkota}`
+        return this.$t('users.users-role-text-staff-kec', [kecamatan, kabkota])
       }
 
       if (userRole === 'staffKabkota') {
-        return `${kabkota}, Provinsi Jawa Barat`
+        return this.$t('users.users-role-text-staff-kabkota', [kabkota])
       }
 
       if (userRole === 'staffProv') {
-        return `Provinsi Jawa Barat`
+        return this.$t('users.users-role-text-staff-prov')
       }
     },
 
@@ -256,7 +284,72 @@ export default {
     formatterCell(row, column, cellValue, index) {
       const value = cellValue ? moment(cellValue).format('D MMM YYYY HH:mm') : '-'
       return value
+    },
+
+    handleExceed(file, fileList) {
+      this.$message.warning(this.$t('users.users-dialog-text-file-change', { file_length: file.length }))
+    },
+
+    beforeRemove(file, fileList) {
+      return this.$confirm(this.$t('users.users-dialog-text-file-delete', { file_name: file.name }))
+    },
+
+    openDialog(type) {
+      if (type === 'import') {
+        this.importDialogVisible = true
+      }
+      this.visibleDialog = true
+    },
+
+    closeDialog() {
+      this.importDialogVisible = false
+      this.visibleDialog = false
+    },
+
+    submitUpload() {
+      this.$refs.upload.submit()
+    },
+
+    async exportDataURL() {
+      try {
+        this.listLoading = true
+        const data = await fetchExport(this.listQuery)
+        this.getDataExport(data.data)
+      } catch (error) {
+        this.listLoading = false
+      }
+    },
+
+    getDataExport(url) {
+      window.open(url)
+      this.listLoading = false
+    },
+
+    handleProgress() {
+      this.listLoading = true
+    },
+
+    handleSuccess() {
+      this.listLoading = false
     }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+  .dialog-text {
+    margin-bottom: 15px;
+  }
+
+  .dialog-buttom {
+    margin-bottom: 10px;
+  }
+
+  a {
+    color: #4a96e8;
+  }
+
+  .export-user > span {
+    font-size: 18px;
+  }
+</style>

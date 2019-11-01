@@ -6,32 +6,39 @@
       </el-col>
       <el-col :xs="24" :sm="13" :lg="16">
         <el-form ref="popup" :model="popup" :rules="rules" :status-icon="true" label-width="160px">
-          <el-form-item label="Judul Pop Up" prop="title">
-            <el-input v-model="popup.title" type="text" name="title" placeholder="Judul Pop Up" />
+          <el-form-item :label="$t('popup.popup-title')" :prop="validateTitle">
+            <el-input v-model="popup.title" type="text" name="title" :placeholder="$t('popup.popup-title')" />
           </el-form-item>
-          <el-form-item label="Kategori" prop="type">
+          <el-form-item :label="$t('popup.popup-category')" prop="type">
             <el-radio-group v-model="popup.type" name="type">
-              <el-radio-button label="external">Eksternal</el-radio-button>
-              <el-radio-button label="internal">Internal</el-radio-button>
+              <el-radio-button label="external">{{ $t('popup.popup-external') }}</el-radio-button>
+              <el-radio-button label="internal">{{ $t('popup.popup-internal') }}</el-radio-button>
             </el-radio-group>
           </el-form-item>
-          <el-form-item v-if="popup.type === 'external'" label="Tautan" prop="link_url">
-            <el-input v-model="popup.link_url" type="text" name="link_url" placeholder="URL Pop Up" />
-          </el-form-item>
-          <el-form-item v-else label="Fitur" prop="internal_object_type">
-            <el-select v-model="popup.internal_object_type" placeholder="Pilih Kategori" name="fitur">
-              <el-option label="Survei" value="survey" />
-              <el-option label="Polling" value="polling" />
-              <el-option label="Berita" value="news" />
-            </el-select>
-            <span v-if="popup.internal_object_type !== null">
-              <el-button type="success" @click="dialog(popup.internal_object_type)">Pilihan</el-button>
-            </span>
-          </el-form-item>
-          <el-form-item v-if="popup.type === 'internal'" :label="titleFitur" prop="internal_object_name">
-            <el-input v-model="popup.internal_object_name" disabled type="text" name="internal_object_name" />
-          </el-form-item>
-          <el-form-item class="waktu-publikasi" label="Waktu Publikasi">
+
+          <div v-if="popup.type === 'external'">
+            <el-form-item :label="$t('popup.popup-link')" prop="link_url">
+              <el-input v-model="popup.link_url" type="text" name="link_url" :placeholder="$t('popup.popup-url-pop-up')" />
+            </el-form-item>
+          </div>
+          <div v-else>
+            <el-form-item :label="$t('popup.popup-fitur')" prop="internal_object_type">
+              <el-select v-model="popup.internal_object_type" :placeholder="$t('popup.popup-title')" name="fitur">
+                <el-option :label="$t('popup.popup-survey')" value="survey" />
+                <el-option :label="$t('popup.popup-polling')" value="polling" />
+                <el-option :label="$t('popup.popup-news')" value="news" />
+              </el-select>
+              <span v-if="popup.internal_object_type !== null">
+                <el-button type="success" @click="dialog(popup.internal_object_type)">{{ $t('popup.popup-selection') }}</el-button>
+              </span>
+            </el-form-item>
+
+            <el-form-item v-if="popup.type === 'internal'" :label="titleFitur" prop="internal_object_name">
+              <el-input v-model="popup.internal_object_name" disabled type="text" name="internal_object_name" />
+            </el-form-item>
+          </div>
+
+          <el-form-item class="waktu-publikasi" :label="$t('popup.popup-time-publish')" :prop="validateStartDate">
             <el-row :gutter="10" type="flex">
               <el-col :span="10">
                 <el-date-picker
@@ -40,7 +47,8 @@
                   type="datetime"
                   format="yyyy-MM-dd HH:mm:ss"
                   value-format="yyyy-MM-dd HH:mm:ss"
-                  placeholder="Tanggal Mulai"
+                  :picker-options="dateStartDateOptions"
+                  :placeholder="$t('popup.popup-start-date')"
                 />
               </el-col>
               <el-col :span="10">
@@ -50,12 +58,13 @@
                   type="datetime"
                   format="yyyy-MM-dd HH:mm:ss"
                   value-format="yyyy-MM-dd HH:mm:ss"
-                  placeholder="Tanggal Berakhir"
+                  :picker-options="dateEndDateOptions"
+                  :placeholder="$t('popup.popup-end-date')"
                 />
               </el-col>
             </el-row>
           </el-form-item>
-          <el-form-item label="Deskripsi">
+          <el-form-item label="Deskripsi" :prop="validateDescription">
             <el-input
               v-model="popup.description"
               type="textarea"
@@ -81,10 +90,13 @@
 
 <script>
 import AttachmentPhotoUpload from '@/components/AttachmentPhotoUpload'
-import { validUrl } from '@/utils/validate'
+import { validUrl, isContainHtmlTags } from '@/utils/validate'
 import { create, fetchRecord, update } from '@/api/popupInformasi'
+import { PopupCategory, PopupFeature } from '@/utils/constantVariabel'
 import Fitur from '@/views/banner/components/dialog/fitur'
 import { mapGetters } from 'vuex'
+const moment = require('moment')
+moment().format()
 
 export default {
   components: {
@@ -100,7 +112,23 @@ export default {
   data() {
     const validatorUrl = (rule, value, callback) => {
       if (validUrl(value) === false) {
-        callback(new Error('URL tidak valid'))
+        callback(new Error(this.$t('errors.url-not-valid')))
+      }
+
+      callback()
+    }
+
+    const validatorHTMLTitle = (rule, value, callback) => {
+      if (isContainHtmlTags(value) === true) {
+        callback(new Error(this.$t('errors.popup-informasi-title')))
+      }
+
+      callback()
+    }
+
+    const validatorHTMLDescription = (rule, value, callback) => {
+      if (isContainHtmlTags(value) === true) {
+        callback(new Error(this.$t('errors.popup-informasi-description')))
       }
 
       callback()
@@ -118,43 +146,50 @@ export default {
         internal_object_type: null,
         internal_object_id: null,
         internal_object_name: null,
-        start_date: null,
-        end_date: null,
+        start_date: moment().format('YYYY-MM-DD HH:mm:ss'),
+        end_date: moment().add(1, 'days').format('YYYY-MM-DD HH:mm:ss'),
         description: null
       },
       dialogName: null,
       showDialog: false,
       titleFitur: null,
       titlePopup: null,
+      validateTitle: 'title',
+      validateStartDate: 'start_date',
+      validateDescription: 'description',
       rules: {
         title: [
           {
             required: true,
-            message: 'Judul Pop Up harus diisi',
+            message: this.$t('errors.popup-title-not-null'),
             trigger: 'blur'
           },
           {
             min: 10,
-            message: 'Judul Pop Up minimal 10 Karakter',
+            message: this.$t('errors.popup-title-min-10'),
             trigger: 'blur'
           },
           {
             max: 100,
-            message: 'Judul Pop Up maximal 100 Karakter',
+            message: this.$t('errors.popup-title-max-100'),
+            trigger: 'blur'
+          },
+          {
+            validator: validatorHTMLTitle,
             trigger: 'blur'
           }
         ],
         type: [
           {
             required: true,
-            message: 'Kategori Pop Up harus diisi',
+            message: this.$t('errors.popup-kategori-not-null'),
             trigger: 'blur'
           }
         ],
         link_url: [
           {
             required: true,
-            message: 'Tautan harus diisi',
+            message: this.$t('errors.popup-url-not-null'),
             trigger: 'blur'
           },
           {
@@ -165,38 +200,48 @@ export default {
         internal_object_type: [
           {
             required: true,
-            message: 'Fitur Pop Up harus diisi',
-            trigger: 'blur'
+            message: this.$t('errors.popup-fitur-not-null'),
+            trigger: 'change'
           }
         ],
         internal_object_name: [
           {
             required: true,
-            message: 'Judul harus diisi',
-            trigger: 'blur'
+            message: this.$t('errors.popup-type-name-not-null'),
+            trigger: 'change'
           }
         ],
         start_date: [
           {
             required: true,
-            message: 'Tanggal Mulai harus diisi',
+            message: this.$t('errors.popup-start-date-not-null'),
             trigger: 'blur'
           }
         ],
         end_date: [
           {
             required: true,
-            message: 'Tanggal Berakhir harus diisi',
+            message: this.$t('errors.popup-end-date-not-null'),
             trigger: 'blur'
           }
         ],
         description: [
           {
             required: true,
-            message: 'Deskripsi harus diisi',
+            message: this.$t('errors.popup-description-not-null'),
+            trigger: 'blur'
+          },
+          {
+            validator: validatorHTMLDescription,
             trigger: 'blur'
           }
         ]
+      },
+      dateStartDateOptions: {
+        disabledDate: this.disabledStartDate
+      },
+      dateEndDateOptions: {
+        disabledDate: this.disabledEndDate
       }
     }
   },
@@ -211,7 +256,7 @@ export default {
     'popup.type'(val) {
       if (this.isEdit) {
         const id = this.$route.params && this.$route.params.id
-        if (this.popup.type === 'internal') {
+        if (this.popup.type === PopupCategory.INTERNAL) {
           fetchRecord(id).then(response => {
             if (response.data.internal_object_type !== undefined) {
               this.popup.internal_object_type = response.data.internal_object_type
@@ -221,7 +266,7 @@ export default {
               this.popup.link_url = null
             }
           })
-        } else if (this.popup.type === 'external') {
+        } else if (this.popup.type === PopupCategory.EXTERNAL) {
           fetchRecord(id).then(response => {
             if (response.data.link_url !== undefined) {
               this.popup.link_url = response.data.link_url
@@ -233,6 +278,13 @@ export default {
           })
         }
       }
+      if (this.popup.type === PopupCategory.INTERNAL) {
+        this.$refs.popup.model.link_url = ''
+      } else if (this.popup.type === PopupCategory.EXTERNAL) {
+        this.$refs.popup.model.internal_object_type = null
+        this.$refs.popup.model.internal_object_name = null
+      }
+      this.$refs.popup.clearValidate()
     },
 
     'popup.internal_object_type'(newVal, oldVal) {
@@ -240,15 +292,18 @@ export default {
         this.popup.internal_object_id = null
       }
 
-      if (this.popup.internal_object_type === 'survey') {
+      if (this.popup.internal_object_type === PopupFeature.SURVEY) {
         this.titleFitur = 'Judul Survei'
         this.titlePopup = 'Daftar Survei'
-      } else if (this.popup.internal_object_type === 'polling') {
+        this.popup.internal_object_name = ' '
+      } else if (this.popup.internal_object_type === PopupFeature.POLLING) {
         this.titleFitur = 'Judul Polling'
         this.titlePopup = 'Daftar Polling'
+        this.popup.internal_object_name = ' '
       } else {
         this.titleFitur = 'Judul Berita'
         this.titlePopup = 'Daftar Berita'
+        this.popup.internal_object_name = ' '
       }
     }
   },
@@ -260,6 +315,16 @@ export default {
     }
   },
   methods: {
+    disabledStartDate(time) {
+      const dateTime = moment().format('YYYY-MM-DD 00:00:00')
+      const parseDateTime = Date.parse(dateTime)
+      return time.getTime() < parseDateTime
+    },
+    disabledEndDate(time) {
+      const startDateTime = moment(this.popup.start_date).format('YYYY-MM-DD 00:00:00')
+      const parseDateTime = Date.parse(startDateTime)
+      return time.getTime() < parseDateTime
+    },
     dialog(id) {
       this.dialogName = id
       this.showDialog = true
@@ -289,7 +354,8 @@ export default {
     async submitForm() {
       const valid = await this.$refs.popup.validate()
 
-      if (!valid) {
+      if (!valid || this.popup.internal_object_name === ' ') {
+        this.popup.internal_object_name = null
         return
       }
 
@@ -297,9 +363,9 @@ export default {
         this.loading = true
         const data = {}
         Object.assign(data, this.popup)
-        if (data.type === 'internal') {
+        if (data.type === PopupCategory.INTERNAL) {
           data.link_url = null
-        } else if (data.type === 'external') {
+        } else if (data.type === PopupCategory.EXTERNAL) {
           data.internal_object_type = null
           data.internal_object_id = null
           data.internal_object_name = null
@@ -315,9 +381,13 @@ export default {
           this.$router.push('/popup-informasi/index')
         }
       } catch (e) {
-        const imageError = e.response.data.data[0].field
-        if (imageError === 'image_path') {
-          this.$message.error(this.$t('errors.banner-image-null'))
+        const data = e.response.data.data
+        for (const x in data) {
+          if (String(x) === 'image_path') {
+            this.$message.error(this.$t('errors.popup-image-null'))
+          } else {
+            this.$message.error(data[String(x)][0])
+          }
         }
       } finally {
         this.loading = false

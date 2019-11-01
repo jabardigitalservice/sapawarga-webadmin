@@ -6,7 +6,7 @@
           <el-col :span="12">
             <router-link :to="{ path: '/broadcast/create' }">
               <el-button v-if="roles" type="primary" size="small" icon="el-icon-plus">
-                Tambah Pesan Baru
+                {{ $t('route.broadcast-create') }}
               </el-button>
             </router-link>
           </el-col>
@@ -17,9 +17,9 @@
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%" @sort-change="changeSort">
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
 
-          <el-table-column prop="title" sortable="custom" label="Judul" min-width="350" />
+          <el-table-column prop="title" sortable="custom" :label="$t('label.title-broadcast')" min-width="300" />
 
-          <el-table-column prop="status" sortable="custom" class-name="status-col" label="Status" width="150px">
+          <el-table-column prop="status" sortable="custom" class-name="status-col" :label="$t('label.status')" width="150px">
             <template slot-scope="{row}">
               <el-tag :type="row.status | statusFilter">
                 {{ row.status_label }}
@@ -27,29 +27,29 @@
             </template>
           </el-table-column>
 
-          <el-table-column prop="created_at" sortable="custom" label="Dibuat" width="150">
+          <el-table-column prop="created_at" sortable="custom" align="center" :label="$t('label.created_at')" width="150">
             <template slot-scope="{row}">
-              {{ row.created_at | moment('D MMMM YYYY HH:mm') }}
+              {{ row.created_at | moment('D MMM YYYY HH:mm') }}
             </template>
           </el-table-column>
 
-          <el-table-column prop="updated_at" sortable="custom" label="Dikirim" width="150">>
+          <el-table-column prop="updated_at" sortable="custom" align="center" :label="$t('label.send_at')" width="150">
             <template slot-scope="{row}">
-              {{ getSentDateTime(row) | moment('D MMMM YYYY HH:mm') }}
+              {{ getSentDateTime(row) | moment('D MMM YYYY HH:mm') }}
             </template>
           </el-table-column>
 
-          <el-table-column align="center" label="Actions" width="250px">
+          <el-table-column align="center" :label="$t('label.actions')" width="200px">
             <template slot-scope="scope">
-              <router-link :to="'/broadcast/show/'+scope.row.id">
-                <el-button type="white" size="mini">
-                  View
-                </el-button>
+              <router-link :to="'/broadcast/detail/'+scope.row.id">
+                <el-tooltip content="Detail Pesan" placement="top">
+                  <el-button type="primary" icon="el-icon-view" size="small" />
+                </el-tooltip>
               </router-link>
-              <router-link :to="(scope.row.status !== 10 ? '/broadcast/edit/' +scope.row.id : '')">
-                <el-button v-if="roles" type="white" size="mini" :disabled="scope.row.status === 10">
-                  Edit
-                </el-button>
+              <router-link :to="scope.row.status === 0 ? '/broadcast/edit/' +scope.row.id : ''">
+                <el-tooltip content="Edit Pesan" placement="top">
+                  <el-button v-if="roles" type="warning" icon="el-icon-edit" size="small" :disabled="scope.row.status === status.PUBLISHED || scope.row.status === status.SCHEDULED " />
+                </el-tooltip>
               </router-link>
             </template>
           </el-table-column>
@@ -74,7 +74,8 @@ export default {
       const statusMap = {
         '10': 'success',
         '0': 'info',
-        '-1': 'danger'
+        '-1': 'danger',
+        '5': 'warning'
       }
       return statusMap[status]
     }
@@ -91,6 +92,11 @@ export default {
       total: 0,
       roles: checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']),
       listLoading: true,
+      status: {
+        DRAFT: 0,
+        SCHEDULED: 5,
+        PUBLISHED: 10
+      },
       listQuery: {
         title: null,
         sort_by: 'updated_at',
@@ -121,7 +127,6 @@ export default {
 
     resetFilter() {
       Object.assign(this.$data.listQuery, this.$options.data().listQuery)
-
       this.getList()
     },
 
@@ -130,59 +135,13 @@ export default {
     },
 
     getSentDateTime(row) {
-      return row.status === 10 ? row.updated_at : ''
+      return row.is_scheduled === true ? row.scheduled_datetime : row.status === this.status.PUBLISHED ? row.updated_at : '-'
     },
 
     changeSort(e) {
       this.listQuery.sort_by = e.prop
       this.listQuery.sort_order = e.order
       this.getList()
-    },
-
-    async activateRecord(id) {
-      try {
-        await this.$confirm(this.$t('crud.deactivate-confirm'), 'Warning', {
-          confirmButtonText: this.$t('common.confirm'),
-          cancelButtonText: this.$t('common.cancel'),
-          type: 'warning'
-        })
-
-        this.listLoading = true
-
-        // await activate(id)
-
-        this.$message({
-          type: 'success',
-          message: this.$t('crud.activate-success')
-        })
-
-        this.getList()
-      } catch (e) {
-        console.log(e)
-      }
-    },
-
-    async deactivateRecord(id) {
-      try {
-        await this.$confirm(this.$t('crud.deactivate-confirm'), 'Warning', {
-          confirmButtonText: this.$t('common.confirm'),
-          cancelButtonText: this.$t('common.cancel'),
-          type: 'warning'
-        })
-
-        this.listLoading = true
-
-        // await deactivate(id)
-
-        this.$message({
-          type: 'success',
-          message: this.$t('crud.deactivate-success')
-        })
-
-        this.getList()
-      } catch (e) {
-        console.log(e)
-      }
     }
   }
 }

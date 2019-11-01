@@ -43,8 +43,3 @@ export function getStatusLabel(row) {
 
   return row.status_label
 }
-
-export const SurveyStatus = Object.freeze({
-  DRAFT: 0,
-  ACTIVE: 10
-})
