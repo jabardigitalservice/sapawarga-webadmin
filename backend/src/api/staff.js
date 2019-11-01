@@ -104,14 +104,14 @@ export function fetchUser(id) {
 
 export function getEducationList() {
   return request({
-    url: '/job-types',
+    url: 'http://52.74.74.33:3000/v1/job-types',
     method: 'get'
   })
 }
 
 export function getJobList() {
   return request({
-    url: '/education-types',
+    url: 'http://52.74.74.33:3000/v1/education-levels',
     method: 'get'
   })
 }

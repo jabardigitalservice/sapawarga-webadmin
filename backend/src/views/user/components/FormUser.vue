@@ -1,8 +1,8 @@
 <template>
   <div class="app-container">
-    <p v-if="!isEdit" class="warn-content">Tambah Pengguna</p>
-    <p v-if="isEdit && !isProfile" class="warn-content">Edit Pengguna</p>
-    <p v-if="isProfile" class="warn-content">Edit Profil</p>
+    <p v-if="!isEdit" class="warn-content">{{ $t('users.users-add-new') }}</p>
+    <p v-if="isEdit && !isProfile" class="warn-content">{{ $t('users.users-edit') }}</p>
+    <p v-if="isProfile" class="warn-content">{{ $t('users.users-edit-profile') }}</p>
     <el-row :gutter="10">
       <!-- Left colomn -->
       <el-col :sm="24" :md="24" :lg="6" :xl="6" class="grid-content">
@@ -19,74 +19,35 @@
           class="demo-ruleForm"
           :rules="rules"
         >
-          <el-form-item label="Username" :prop="usernameValidation">
+          <el-form-item :label="$t('label.username')" :prop="usernameValidation">
             <el-input v-model="user.username" type="text" @focus="changePropUsername" />
           </el-form-item>
-          <el-form-item label="Nama Lengkap" prop="name">
+          <el-form-item :label="$t('label.fullname')" prop="name">
             <el-input v-model="user.name" type="text" />
           </el-form-item>
 
-          <el-form-item label="Email" :prop="emailValidation">
+          <el-form-item :label="$t('label.email')" :prop="emailValidation">
             <el-input v-model="user.email" type="email" @focus="changePropEmail" />
           </el-form-item>
 
-          <el-form-item label="Password" prop="password">
+          <el-form-item :label="$t('label.password')" prop="password">
             <el-input v-model="user.password" type="password" />
           </el-form-item>
 
-          <el-form-item label="Ulangi Password" prop="confirmation">
+          <el-form-item :label="$t('label.repeat-password')" prop="confirmation">
             <el-input v-model="user.confirmation" type="password" />
           </el-form-item>
 
-          <el-form-item label="Telepon" prop="phone">
+          <el-form-item :label="$t('label.telepon')" prop="phone">
             <el-input v-model="user.phone" type="text" placeholder="Contoh: 081254332233" />
           </el-form-item>
 
-          <el-form-item label="Tanggal Lahir">
-            <el-date-picker
-              v-model="user.birthdate"
-              type="date"
-              :editable="false"
-              :clearable="false"
-              format="yyyy-mm-dd"
-              value-format="yyyy-mm-dd"
-              placeholder="Pilih tanggal"
-            />
-          </el-form-item>
-
           <el-row>
             <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
-              <el-form-item label="Pendidikan">
-                <el-select v-model="user.education" placeholder="Pilih Pendidikan">
-                  <el-option
-                    v-for="item in filterRole"
-                    :key="item.value"
-                    :value="item.value"
-                    :label="item.label"
-                  >{{ item.label }}</el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-            <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" :style="{paddingLeft: formRightSide}">
-              <el-form-item label="Pekerjaan">
-                <el-select v-model="user.job" placeholder="Pilih Pekerjaan">
-                  <el-option
-                    v-for="item in educationList"
-                    :key="item.value"
-                    :value="item.value"
-                    :label="item.label"
-                  >{{ item.label }}</el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-          </el-row>
-
-          <el-row>
-            <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
-              <el-form-item label="Peran" prop="role">
+              <el-form-item :label="$t('label.role')" prop="role">
                 <el-select v-model="user.role" placeholder="Pilih Peran" :disabled="isProfile || isEdit">
                   <el-option
-                    v-for="item in jobList"
+                    v-for="item in opsiPeran"
                     :key="item.value"
                     :value="item.value"
                     :label="item.label"
@@ -97,13 +58,13 @@
             <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" :style="{paddingLeft: formRightSide}">
               <el-form-item
                 v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffSaberhoax') && checkPermission(['admin', 'staffProv']))"
-                label="Kab/Kota"
+                :label="$t('label.area-kabkota')"
                 prop="kabkota"
               >
                 <el-select
                   v-if="area !== null"
                   v-model="user.kabkota"
-                  placeholder="Pilih Kab/Kota"
+                  :placeholder="$t('label.choose-area-kabkota')"
                   :disabled="user.role === '' || isEdit"
                   @change="getKecamatan"
                 >
@@ -121,12 +82,12 @@
             <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
               <el-form-item
                 v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffSaberhoax') && checkPermission(['admin', 'staffProv', 'staffKabkota']))"
-                label="Kecamatan"
+                :label="$t('label.area-kec')"
                 prop="kecamatan"
               >
                 <el-select
                   v-model="user.kecamatan"
-                  placeholder="Pilih Kecamatan"
+                  :placeholder="$t('label.choose-area-kec')"
                   :disabled="(user.kabkota == '' && checkPermission(['admin', 'staffProv']) || user.role === '' || isEdit)"
                   @change="getKelurahan"
                 >
@@ -142,12 +103,12 @@
             <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" :style="{paddingLeft: formRightSide}">
               <el-form-item
                 v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffKec') && !(user.role == 'staffSaberhoax') && ! checkPermission(['staffKel']))"
-                label="Desa/Kelurahan"
+                :label="$t('label.area-kel')"
                 prop="kelurahan"
               >
                 <el-select
                   v-model="user.kelurahan"
-                  placeholder="Pilih Desa/Kelurahan"
+                  :placeholder="$t('label.choose-area-kel')"
                   :disabled="(user.kecamatan == '' && checkPermission(['admin', 'staffProv', 'staffKabkota']) || user.role === '' || isEdit)"
                 >
                   <el-option
@@ -164,7 +125,7 @@
             <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
               <el-form-item
                 v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffKec') && !(user.role == 'staffKel') && !(user.role == 'staffSaberhoax'))"
-                label="RW"
+                :label="$t('label.rw')"
                 prop="rw"
               >
                 <el-input v-model="user.rw" type="text" placeholder="Contoh: 001" :disabled="(user.kelurahan == '' && checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec']) || user.role === '')" />
@@ -173,29 +134,61 @@
             <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" :style="{paddingLeft: formRightSide}">
               <el-form-item
                 v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffKec') && !(user.role == 'staffKel') && !(user.role == 'staffSaberhoax'))"
-                label="RT"
+                :label="$t('label.rt')"
                 prop="rt"
               >
                 <el-input v-model="user.rt" type="text" placeholder="Contoh: 002" :disabled="user.rw == '' && checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel'])" />
               </el-form-item>
             </el-col>
           </el-row>
-          <p class="warn-content">Lokasi pengguna</p>
+          <p class="warn-content">{{ $t('route.user-detail')}}</p>
+          <el-form-item :label="$t('label.education')">
+            <el-select v-model="user.education" :placeholder="$t('label.choose-education')">
+              <el-option
+                v-for="item in educationList"
+                :key="item.id"
+                :value="item.id"
+                :label="item.name"
+              >{{ item.name }}</el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item :label="$t('label.job')">
+            <el-select v-model="user.job" :placeholder="$t('label.choose-job')">
+              <el-option
+                v-for="item in jobList"
+                :key="item.id"
+                :value="item.id"
+                :label="item.name"
+              >{{ item.name }}</el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item :label="$t('label.birthdate')">
+            <el-date-picker
+              v-model="user.birthdate"
+              type="date"
+              :editable="false"
+              :clearable="false"
+              format="yyyy-mm-dd"
+              value-format="yyyy-mm-dd"
+              :placeholder="$t('label.choose-birthdate')"
+            />
+          </el-form-item>
+          <p class="warn-content">{{$t('label.location-user')}}</p>
           <el-row>
             <el-col>
-              <el-form-item label="Alamat" prop="address">
+              <el-form-item :label="$t('label.address')" prop="address">
                 <el-input v-model="user.address" type="text" />
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-              <el-form-item label="Koordinat Lokasi" prop="coordinates">
+              <el-form-item :label="$t('label.coordinates')" prop="coordinates">
                 <InputMap v-model="user.coordinates" />
               </el-form-item>
             </el-col>
           </el-row>
-          <p class="warn-content">Media Sosial</p>
+          <p class="warn-content">{{$t('label.social-media')}}</p>
 
           <el-form-item label="Twitter" prop="twitter">
             <el-input v-model="user.twitter" type="text" placeholder="Contoh: jabardigitalservice" />
@@ -263,7 +256,7 @@ export default {
       const phoneStringFormat = value.toString()
       const checkStringPhone = phoneStringFormat.startsWith('0')
       if (!checkStringPhone) {
-        callback(new Error('Nomor telepon harus dimulai dari 0'))
+        callback(new Error(this.$t('errors.phone-number-must-be-start-0')))
       } else {
         callback()
       }
@@ -277,7 +270,7 @@ export default {
 
     const checkPassword = (rule, value, callback) => {
       if (value !== this.user.password) {
-        callback(new Error('Password tidak sesuai'))
+        callback(new Error(this.$t('errors.password-dont-match')))
       } else {
         callback()
       }
@@ -285,11 +278,11 @@ export default {
 
     const validatorCoordinateRequired = (rule, value, callback) => {
       if (_.isEmpty(this.user.coordinates[0]) === false && _.isEmpty(this.user.coordinates[1]) === true) {
-        callback(new Error('Koordinat Lokasi harus diisi.'))
+        callback(new Error(this.$t('errors.coordinates-must-be-filled')))
       }
 
       if (_.isEmpty(this.user.coordinates[0]) === true && _.isEmpty(this.user.coordinates[1]) === false) {
-        callback(new Error('Koordinat Lokasi harus diisi.'))
+        callback(new Error(this.$t('errors.coordinates-must-be-filled')))
       }
 
       callback()
@@ -297,11 +290,11 @@ export default {
 
     const validatorCoordinateInputNumber = (rule, value, callback) => {
       if (_.isEmpty(this.user.coordinates[0]) === false && validCoordinate(this.user.coordinates[0]) === false) {
-        callback(new Error('Koordinat Lokasi hanya boleh menggunakan angka, titik, - atau +'))
+        callback(new Error(this.$t('errors.coordinates-only-use-numbers-periods')))
       }
 
       if (_.isEmpty(this.user.coordinates[1]) === false && validCoordinate(this.user.coordinates[1]) === false) {
-        callback(new Error('Koordinat Lokasi hanya boleh menggunakan angka, titik, - atau +'))
+        callback(new Error(this.$t('errors.coordinates-only-use-numbers-periods')))
       }
 
       callback()
@@ -309,11 +302,11 @@ export default {
 
     const validatorCoordinateFinite = (rule, value, callback) => {
       if (_.isEmpty(this.user.coordinates[0]) === false && isFinite(this.user.coordinates[0]) === false) {
-        callback(new Error('Koordinat Lokasi tidak sesuai'))
+        callback(new Error(this.$t('errors.coordinates-dont-match')))
       }
 
       if (_.isEmpty(this.user.coordinates[1]) === false && isFinite(this.user.coordinates[1]) === false) {
-        callback(new Error('Koordinat Lokasi tidak sesuai'))
+        callback(new Error(this.$t('errors.coordinates-dont-match')))
       }
 
       callback()
@@ -321,7 +314,7 @@ export default {
 
     const whitespaceText = (rule, value, callback) => {
       if (containsWhitespace(value) === true) {
-        callback(new Error('Text yang diisi tidak valid'))
+        callback(new Error(this.$t('errors.text-not-valid')))
       }
       callback()
     }
@@ -402,23 +395,22 @@ export default {
         username: [
           {
             required: true,
-            message: 'Username harus diisi',
+            message: this.$t('errors.username-must-be-filled'),
             trigger: 'blur'
           },
           {
             min: 4,
-            message: 'Username minimal 4 karakter',
+            message: this.$t('errors.username-must-be-at-least-4-characters'),
             trigger: 'blur'
           },
           {
             max: 255,
-            message: 'Username maksimal 255 karakter',
+            message: this.$t('errors.username-must-be-at-least-255-characters'),
             trigger: 'blur'
           },
           {
             pattern: /^[a-z0-9_.]+$/,
-            message:
-              'Username hanya boleh menggunakan huruf kecil, angka, underscore dan titik',
+            message:this.$t('errors.username-only-use-lowercase-letters-numbers-underscore-and-dots'),
             trigger: 'blur'
           },
           {
@@ -429,7 +421,7 @@ export default {
         errorUsername: [
           {
             required: true,
-            message: 'Username sudah digunakan',
+            message: this.$t('errors.username-already-used'),
             trigger: 'change'
           }
         ],
@@ -440,17 +432,17 @@ export default {
           },
           {
             required: true,
-            message: 'Nama Lengkap harus diisi',
+            message: this.$t('errors.fullname-must-be-filled'),
             trigger: 'blur'
           },
           {
             max: 255,
-            message: 'Nama Lengkap maksimal 255 karakter',
+            message: this.$t('errors.fullname-be-at-least-255-characters'),
             trigger: 'blur'
           },
           {
             pattern: /^[a-zA-Z.'\s]+$/,
-            message: 'Nama Lengkap hanya boleh menggunakan huruf, aposthrope dan titik',
+            message: this.$t('errors.fullname-only-use-letters-aposthrope-dots'),
             trigger: 'blur'
           }
         ],
@@ -461,47 +453,46 @@ export default {
           },
           {
             required: true,
-            message: 'Email harus diisi',
+            message: this.$t('errors.email-must-be-filled'),
             trigger: 'blur'
           },
           {
             max: 255,
-            message: 'Email terlalu panjang, maksimal 255 karakter',
+            message: this.$t('errors.email-must-be-at-least-255-characters'),
             trigger: 'blur'
           },
           {
             min: 3,
-            message: 'Alamat email minimal 3 karakter',
+            message: this.$t('errors.email-must-be-at-least-3-characters'),
             trigger: 'blur'
           },
           {
             type: 'email',
-            message: 'Format email yang Anda masukan salah',
+            message: this.$t('errors.email-wrong-format'),
             trigger: 'blur'
           }
         ],
         errorEmail: [
           {
             required: true,
-            message: 'Alamat email sudah digunakan',
+            message: this.$t('errors.email-already-used'),
             trigger: 'change'
           }
         ],
         password: [
           {
             max: 255,
-            message: 'Password maksimal 255 karakter',
+            message: this.$t('errors.password-must-be-at-least-255-characters'),
             trigger: 'blur'
           },
           {
             min: 5,
-            message: 'Password minimal 5 karakter',
+            message: this.$t('errors.password-must-be-at-least-5-characters'),
             trigger: 'blur'
           },
           {
             pattern: /^[a-zA-Z0-9\w\S]+$/,
-            message:
-              'Karakter password hanya boleh menggunakan huruf, angka dan spesial karakter',
+            message: this.$t('errors.password-only-use-letters-number-characters'),
             trigger: 'blur'
           },
           {
@@ -510,25 +501,24 @@ export default {
           },
           {
             required: !this.isEdit,
-            message: 'Password tidak boleh kosong',
+            message: this.$t('errors.password-must-be-filled'),
             trigger: 'blur'
           }
         ],
         confirmation: [
           {
             max: 255,
-            message: 'Password maksimal 255 karakter',
+            message: this.$t('errors.password-must-be-at-least-255-characters'),
             trigger: 'blur'
           },
           {
             min: 5,
-            message: 'Password minimal 5 karakter',
+            message: this.$t('errors.password-must-be-at-least-5-characters'),
             trigger: 'blur'
           },
           {
             pattern: /^[a-zA-Z0-9\w\S]+$/,
-            message:
-              'Karakter password hanya boleh menggunakan huruf, angka dan spesial karakter',
+            message: this.$t('errors.password-only-use-letters-number-characters'),
             trigger: 'blur'
           },
           {
@@ -537,29 +527,29 @@ export default {
           },
           {
             required: !this.isEdit,
-            message: 'Mohon ulangi password',
+            message: this.$t('errors.please-repeat-the-password'),
             trigger: 'blur'
           }
         ],
         phone: [
           {
             required: true,
-            message: 'Nomor telepon harus diisi',
+            message: this.$t('errors.phone-number-must-be-filled'),
             trigger: 'blur'
           },
           {
             min: 3,
-            message: 'Nomor telepon minimal 3 karakter',
+            message: this.$t('errors.phone-number-must-must-be-at-least-3-characters'),
             trigger: 'blur'
           },
           {
             max: 13,
-            message: 'Nomor telepon maksimal 13 karakter',
+            message: this.$t('errors.phone-number-must-must-be-at-least-13-characters'),
             trigger: 'blur'
           },
           {
             pattern: /^[0-9]+$/,
-            message: 'Nomor telepon hanya boleh menggunakan angka',
+            message: this.$t('errors.phone-number-only-use-number'),
             trigger: 'blur'
           },
           {
@@ -574,12 +564,12 @@ export default {
           },
           {
             required: true,
-            message: 'Alamat harus diisi',
+            message: this.$t('errors.address-must-be-filled'),
             trigger: 'blur'
           },
           {
             max: 255,
-            message: 'Alamat maksimal 255 karakter',
+            message: this.$t('errors.address-must-be-at-least-255-characters'),
             trigger: 'blur'
           }
         ],
@@ -591,72 +581,72 @@ export default {
         kabkota: [
           {
             required: true,
-            message: 'Kab/Kota harus diisi',
+            message: this.$t('errors.area-kabkota-must-be-filled'),
             trigger: 'blur'
           }
         ],
         kecamatan: [
           {
             required: true,
-            message: 'Kecamatan harus diisi',
+            message: this.$t('errors.area-kecamatan-must-be-filled'),
             trigger: 'blur'
           }
         ],
         kelurahan: [
           {
             required: true,
-            message: 'Desa/Kelurahan harus diisi',
+            message: this.$t('errors.area-kel-must-be-filled'),
             trigger: 'blur'
           }
         ],
         rw: [
           {
             required: true,
-            message: 'RW harus diisi',
+            message: this.$t('errors.rw-must-be-filled'),
             trigger: 'blur'
           },
           {
             pattern: /^[0-9]+$/,
-            message: 'RW harus menggunakan angka',
+            message: this.$t('errors.rw-only-use-number'),
             trigger: 'blur'
           },
           {
             max: 3,
-            message: 'RW harus 3 angka',
+            message: this.$t('errors.rw-must-be-at-least-3-number'),
             trigger: 'blur'
           },
           {
             min: 3,
-            message: 'RW harus 3 angka',
+            message: this.$t('errors.rw-must-be-at-least-3-number'),
             trigger: 'blur'
           }
         ],
         rt: [
           {
             required: true,
-            message: 'RT harus diisi',
+            message: this.$t('errors.rt-must-be-filled'),
             trigger: 'blur'
           },
           {
             pattern: /^[0-9]+$/,
-            message: 'RT harus menggunakan angka',
+            message: this.$t('errors.rt-only-use-number'),
             trigger: 'blur'
           },
           {
             max: 3,
-            message: 'RT harus 3 angka',
+            message: this.$t('errors.rt-must-be-at-least-3-number'),
             trigger: 'blur'
           },
           {
             min: 3,
-            message: 'RT harus 3 angka',
+            message: this.$t('errors.rt-must-be-at-least-3-number'),
             trigger: 'blur'
           }
         ],
         role: [
           {
             required: true,
-            message: 'Peran harus diisi',
+            message: this.$t('errors.role-must-be-filled'),
             trigger: 'blur'
           }
         ],
@@ -671,7 +661,7 @@ export default {
           },
           {
             pattern: /^[a-z0-9._]+$/,
-            message: 'Twitter hanya boleh menggunakan huruf, angka, titik dan underscore',
+            message: this.$t('errors.twitter-only-use-lowercase-letters-numbers-underscore-and-dots'),
             trigger: 'blur'
           }
         ],
@@ -686,7 +676,7 @@ export default {
           },
           {
             type: 'url',
-            message: 'Masukan url facebook secara lengkap, contoh: https://www.facebook.com/namapengguna',
+            message: this.$t('errors.enter-your-facebook-URL-in-full'),
             trigger: 'blur'
           }
         ],
@@ -701,7 +691,7 @@ export default {
           },
           {
             pattern: /^[a-z0-9._]+$/,
-            message: 'Instagram hanya boleh menggunakan huruf, angka, titik dan underscore',
+            message: this.$t('errors.instagram-only-use-lowercase-letters-numbers-underscore-and-dots'),
             trigger: 'blur'
           }
         ]
@@ -803,6 +793,8 @@ export default {
       this.getProfile()
     }
     this.getArea()
+    this.getEducation()
+    this.getJob()
     this.parentId
     this.parentArea
     this.parentKecamatan
@@ -937,6 +929,9 @@ export default {
         this.user.coordinates = [lat, lon]
         this.user.rw = dataUser.rw
         this.user.rt = dataUser.rt
+        this.user.birthdate = this.user.birthdate
+        this.user.education = this.user.education
+        this.user.job = this.user.job
         this.user.photo = urlPhoto
         this.imageData = dataUser.photo_url || this.imageData
         this.setLinkEditPhoto = dataUser.photo_url
@@ -968,6 +963,9 @@ export default {
             kel_id: this.user.kelurahan.id || this.id_kel,
             rw: this.user.rw,
             rt: this.user.rt,
+            birthdate: this.user.birthdate,
+            education: this.user.education,
+            job: this.user.job,
             facebook: this.user.facebook,
             twitter: this.user.twitter,
             instagram: this.user.instagram,
@@ -1037,12 +1035,15 @@ export default {
             rw: this.user.rw,
             rt: this.user.rt,
             address: this.user.address,
+            birthdate: this.user.birthdate,
+            education: this.user.education,
+            job: this.user.job,
             facebook: this.user.facebook,
             twitter: this.user.twitter,
             instagram: this.user.instagram,
             photo_url: this.user.photo,
             lat: this.user.coordinates[0],
-            lon: this.user.coordinates[1]
+            lon: this.user.coordinates[1],
           }
           if (this.user.confirmation !== '') {
             userEdit['password'] = this.user.confirmation
@@ -1147,16 +1148,14 @@ export default {
       })
     },
 
-    getEducation() {
-      getEducationList().then(response => {
-        this.educationList = response.data.items
-      })
+    async getEducation() {
+      const response = await getEducationList()
+      this.educationList = response.data.items
     },
 
-    getJob() {
-      getJobList().then(response => {
-        this.jobList = response.data.items
-      })
+    async getJob() {
+      const response = await getJobList()
+      this.jobList = response.data.items
     },
     // Generate password
     randomPassword(length) {
@@ -1175,4 +1174,3 @@ export default {
   }
 }
 </script>
-
