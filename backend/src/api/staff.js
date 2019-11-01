@@ -109,3 +109,19 @@ export function fetchExport(query) {
     params: query
   })
 }
+
+export function downloadSample(query) {
+  return request({
+    url: '/staff/import-template',
+    method: 'get',
+    params: query
+  })
+}
+
+export function importUser(data) {
+  return request({
+    url: '/staff/import',
+    method: 'post',
+    data
+  })
+}
