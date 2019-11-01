@@ -10,16 +10,16 @@
             <el-input v-model="banner.title" type="text" name="title" placeholder="Judul Banner" />
           </el-form-item>
           <el-form-item label="Kategori" prop="type">
-            <el-radio-group v-model="banner.type">
+            <el-radio-group v-model="banner.type" name="type">
               <el-radio-button label="external">Eksternal</el-radio-button>
               <el-radio-button label="internal">Internal</el-radio-button>
             </el-radio-group>
           </el-form-item>
           <el-form-item v-if="banner.type === 'external'" label="Tautan" prop="link_url">
-            <el-input v-model="banner.link_url" type="text" name="title" placeholder="URL Banner" />
+            <el-input v-model="banner.link_url" type="text" name="link_url" placeholder="URL Banner" />
           </el-form-item>
           <el-form-item v-else label="Fitur" prop="internal_category">
-            <el-select v-model="banner.internal_category" placeholder="Pilih Kategori">
+            <el-select v-model="banner.internal_category" placeholder="Pilih Kategori" name="fitur">
               <el-option label="Survei" value="survey" />
               <el-option label="Polling" value="polling" />
               <el-option label="Berita" value="news" />
@@ -32,7 +32,7 @@
             <el-input v-model="banner.internal_entity_name" disabled type="text" name="internal_entity_name" />
           </el-form-item>
           <el-form-item label="Status" prop="status">
-            <el-radio-group v-model="banner.status" :fill="statusColor">
+            <el-radio-group v-model="banner.status" :fill="statusColor" name="status">
               <el-radio-button :label="0">Tidak Aktif</el-radio-button>
               <el-radio-button :label="10">Aktif</el-radio-button>
             </el-radio-group>
@@ -96,8 +96,6 @@ export default {
       },
       dialogName: null,
       showDialog: false,
-      dialogPolling: false,
-      dialogSurvey: false,
       statusColor: '#F56C6C',
       titleFitur: null,
       titlePopup: null,
@@ -169,10 +167,29 @@ export default {
   },
 
   watch: {
+    'banner.type'(val) {
+      if (this.banner.type === 'internal') {
+        this.banner.link_url = null
+      } else if (this.banner.type === 'external') {
+        this.banner.internal_category = null
+        this.banner.internal_entity_name = null
+        this.banner.internal_entity_id = null
+      }
+    },
+
     'banner.status'() {
       this.banner.status === 10 ? this.statusColor = '#67C23A' : this.statusColor = '#F56C6C'
     },
-    'banner.internal_category'() {
+
+    'banner.internal_category'(newVal, oldVal) {
+      if (oldVal === null) {
+        this.banner.internal_entity_name
+        this.banner.internal_entity_id
+      } else if (oldVal !== newVal) {
+        this.banner.internal_entity_name = null
+        this.banner.internal_entity_id = null
+      }
+
       if (this.banner.internal_category === 'survey') {
         this.titleFitur = 'Judul Survei'
         this.titlePopup = 'Daftar Survei'
@@ -206,8 +223,6 @@ export default {
     },
     dialogClose(value) {
       this.showDialog = value
-      this.dialogPolling = value
-      this.dialogSurvey = value
     },
     fetchData(id) {
       fetchRecord(id).then(response => {
@@ -235,6 +250,13 @@ export default {
         this.loading = true
         const data = {}
         Object.assign(data, this.banner)
+        if (data.type === 'internal') {
+          data.link_url = null
+        } else if (data.type === 'external') {
+          data.internal_category = null
+          data.internal_entity_id = null
+          data.internal_entity_name = null
+        }
         if (this.isEdit) {
           const id = this.$route.params && this.$route.params.id
           await update(id, data)

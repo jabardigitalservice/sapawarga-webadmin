@@ -60,7 +60,7 @@ import PhotoBox from '@/components/PhotoBox'
 import MapThumb from '@/components/MapThumb'
 import { fetchUser } from '@/api/staff'
 import permission from '@/directive/permission/index.js'
-import parsingDatetime from '@/utils/datetimeToString'
+import { parsingDatetime } from '@/utils/datetimeToString'
 import moment from 'moment'
 
 export default {
@@ -201,7 +201,7 @@ export default {
           },
           {
             title: 'Terakhir Akses',
-            content: last_access_at ? moment(last_access_at).format('D MMMM YYYY MM:SS') : '-'
+            content: last_access_at ? moment(last_access_at).format('D MMMM YYYY HH:mm') : '-'
           }
         ]
       })

@@ -21,6 +21,7 @@ import newsChannelsRouter from './modules/newsChannels'
 import releaseManagementRouter from './modules/releaseManagement'
 import newsHoaxRouter from './modules/newsHoax'
 import bannerRouter from './modules/banner'
+import popupInformasiRouter from './modules/popupInformasi'
 
 /** note: sub-menu only appear when children.length>=1
  *  detail see  https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -66,6 +67,7 @@ export const constantRoutes = [
     hidden: true
   },
   {
+    title: 'reset-password',
     path: '/reset-password',
     component: () => import('@/views/resetPassword/index'),
     hidden: true
@@ -76,13 +78,9 @@ export const constantRoutes = [
     hidden: true
   },
   {
+    title: 'verifikasi-user',
     path: '/confirm',
     component: () => import('@/views/verifikasiUser/index'),
-    hidden: true
-  },
-  {
-    path: '/404',
-    component: () => import('@/views/errorPage/404'),
     hidden: true
   },
   {
@@ -90,7 +88,11 @@ export const constantRoutes = [
     component: () => import('@/views/errorPage/401'),
     hidden: true
   },
-
+  {
+    path: '/404',
+    component: () => import('@/views/errorPage/404'),
+    hidden: true
+  },
   // rute dashboard ini di matikan sementara, karena dashboard belum siap.
   {
     path: '',
@@ -185,6 +187,7 @@ export const asyncRoutes = [
   categoriesRouter,
   releaseManagementRouter,
   bannerRouter,
+  popupInformasiRouter,
   { path: '*', redirect: '/404', hidden: true }
 ]
 
@@ -202,5 +205,24 @@ export function resetRouter() {
   const newRouter = createRouter()
   router.matcher = newRouter.matcher // reset router
 }
+
+router.beforeEach((to, from, next) => {
+  const nearestWithTitle = to.matched.slice().reverse().find(r => r.path && r.path)
+
+  if (nearestWithTitle !== undefined) {
+    const taged = nearestWithTitle.path.split('/')
+    // Remove any stale meta tags from the document using the key attribute we set below.
+    Array.from(document.querySelectorAll('[data-vue-router-controlled]')).map(el => el.parentNode.removeChild(el))
+
+    // Turn the meta tag definitions into actual elements in the head.
+    if ((taged[1] === 'reset-password') || (taged[1] === 'confirm')) {
+      // If a route with a title was found, set the document (page) title to that value.
+      if (nearestWithTitle) document.title = taged[1]
+    } else {
+      document.title = 'sapawarga-administrator'
+    }
+  }
+  next()
+})
 
 export default router

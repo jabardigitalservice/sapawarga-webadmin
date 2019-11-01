@@ -81,12 +81,6 @@
               />
             </el-form-item>
           </el-col>
-          <!--           <el-col :span="14" class="filter-date">
-            <span>Aktifitas Terakhir :</span>
-            <el-row type="flex">
-
-            </el-row>
-          </el-col> -->
         </el-row>
       </div>
       <el-row style="margin-top: 10px">
@@ -97,7 +91,7 @@
           <el-button type="primary" size="small" style="float: right; margin: 2px;" @click="submitSearch">
             Cari
           </el-button>
-          <el-button type="primary" size="small" style="float: left; margin: 2px;" @click="advanceFilter">
+          <el-button v-permission="['admin', 'staffProv', 'staffKabkota', 'staffKec']" type="primary" size="small" style="float: left; margin: 2px;" @click="advanceFilter">
             <img src="@/assets/filter.svg" width="12" style="vertical-align: middle;">
             <span v-if="isActive">Sembunyikan Filter</span>
             <span v-else>Tambah Filter</span>

@@ -5,17 +5,17 @@
         <el-form ref="form" :model="form" :rules="rules" :status-icon="true" label-width="160px">
 
           <el-form-item label="Nama Kategori" :prop="validateName">
-            <el-input v-model="form.name" type="text" placeholder="Nama Kategori" @focus="changePropName" />
+            <el-input v-model="form.name" type="text" name="category-name" placeholder="Nama Kategori" @focus="changePropName" />
           </el-form-item>
 
           <div v-if="isSaberHoax">
             <el-form-item label="Fitur">
-              <el-input type="text" placeholder="Berita Saber Hoaks" disabled />
+              <el-input type="text" name="fitur" placeholder="Berita Saber Hoaks" disabled />
             </el-form-item>
           </div>
           <div v-else>
             <el-form-item label="Fitur" prop="type">
-              <el-select v-model="form.type" placeholder="Pilih Fitur">
+              <el-select v-model="form.type" name="fitur-select" placeholder="Pilih Fitur">
                 <el-option
                   v-for="item in optionType"
                   :key="item.id"

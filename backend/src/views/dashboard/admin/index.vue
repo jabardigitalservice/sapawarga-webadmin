@@ -1,13 +1,13 @@
 <template>
   <div class="dashboard-editor-container">
 
-    <!-- <h3 style="color:#73737">Trafik User</h3>
+    <!-- <h3>Trafik User</h3>
 
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
       <line-chart :chart-data="lineChartData" />
     </el-row> -->
 
-    <h3 style="color:#73737">Usulan</h3>
+    <h3>{{ $t('dashboard.dashboard-aspiration') }}</h3>
 
     <el-row :gutter="8">
       <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 16}" :xl="{span: 16}" style="padding-right:8px;margin-bottom:10px;">
@@ -27,10 +27,21 @@
     </el-row>
 
     <!-- Polling -->
-    <h3 style="color:#73737">Polling</h3>
+    <h3>{{ $t('dashboard.dashboard-polling') }}</h3>
     <el-row>
       <el-col>
         <polling />
+      </el-col>
+    </el-row>
+
+    <!-- Polling -->
+    <h3>{{ $t('dashboard.dashboard-top-news') }}</h3>
+    <el-row>
+      <el-col :xs="{span: 12}" :sm="{span: 12}" :md="{span: 12}" :lg="{span: 12}" :xl="{span: 12}">
+        <TopNews :list="listNewsProvinsi" :title="$t('dashboard.dashboard-news-prov')" />
+      </el-col>
+      <el-col :xs="{span: 12}" :sm="{span: 12}" :md="{span: 12}" :lg="{span: 12}" :xl="{span: 12}">
+        <TopNews :list="listNewsKoKab" :title="$t('dashboard.dashboard-news-kabkota')" />
       </el-col>
     </el-row>
   </div>
@@ -38,11 +49,13 @@
 
 <script>
 // import LineChart from './components/LineChart'
+import { fetchTopFiveNewsProv, fetchTopFiveNewsDistricts } from '@/api/dashboard'
 import Usulan from './components/Usulan'
 import Approval from './components/Approval'
 import Category from './components/Category'
 import MapData from './components/MapData'
 import Polling from './components/Polling'
+import TopNews from './components/TopNews'
 
 const lineChartData = {
   newVisitis: {
@@ -71,14 +84,38 @@ export default {
     Usulan,
     Approval,
     MapData,
-    Polling
+    Polling,
+    TopNews
   },
   data() {
     return {
-      lineChartData: lineChartData.newVisitis
+      lineChartData: lineChartData.newVisitis,
+      listNewsProvinsi: null,
+      listNewsKoKab: null,
+      listLoading: true
     }
   },
+  created() {
+    this.getListProvinsi()
+    this.getLisKoKab()
+  },
   methods: {
+    getListProvinsi() {
+      this.listLoading = true
+      fetchTopFiveNewsProv({ location: 'provinsi' }).then(response => {
+        this.listNewsProvinsi = response.data
+        this.listLoading = false
+      })
+    },
+
+    getLisKoKab() {
+      this.listLoading = true
+      fetchTopFiveNewsDistricts({ location: 'kabkota' }).then(response => {
+        this.listNewsKoKab = response.data
+        this.listLoading = false
+      })
+    },
+
     handleSetLineChartData(type) {
       this.lineChartData = lineChartData[type]
     }

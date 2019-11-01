@@ -19,9 +19,6 @@
               <el-col :span="20">
                 <span class="aspiration-title">{{ title }}</span>
               </el-col>
-              <el-col :span="4">
-                <span class="aspiration-date"> {{ created_at | moment('D MMMM YYYY') }} </span>
-              </el-col>
             </el-row>
           </div>
           <el-table stripe :data="author" :show-header="false" style="width: 100%">
@@ -50,6 +47,7 @@
 import { fetchRecord, approval } from '@/api/aspiration'
 import checkPermission from '@/utils/permission'
 import { mapState } from 'vuex'
+import { parsingDatetime } from '@/utils/datetimeToString'
 
 export default {
   data() {
@@ -93,7 +91,7 @@ export default {
     },
     getDetail() {
       fetchRecord(this.id).then(response => {
-        const { title, created_at, author, category, description, status, status_label, attachments, approval_note } = response.data
+        const { title, created_at, author, category, description, status, status_label, attachments, approval_note, submitted_at, approved_at } = response.data
         this.title = title
         this.created_at = created_at
         if (status === 10 || status === 3) {
@@ -134,40 +132,30 @@ export default {
             content: description
           },
           {
+            title: 'Tanggal Dibuat',
+            content: parsingDatetime(created_at)
+          },
+          {
+            title: 'Tanggal Dikirim',
+            content: submitted_at ? parsingDatetime(submitted_at) : parsingDatetime(created_at)
+          },
+          {
             title: 'Status',
             content: (status === 5 ? <el-tag type='warning'>{status_label}</el-tag> : status === 3 ? <el-tag type='danger'>{status_label}</el-tag> : status === 10 ? <el-tag type='success'>{status_label}</el-tag> : <el-tag type='info'>{status_label}</el-tag>)
+          },
+          {
+            title: 'Tanggal Konfirmasi',
+            content: approved_at ? parsingDatetime(approved_at) : '-'
           }
         ]
 
         this.approvalNote = [
           {
             title: 'Keterangan',
-            content: (status === 3 || (approval_note && status === 5) ? approval_note : '-')
+            content: approval_note
           }
         ]
       })
-    },
-
-    async actionApprove() {
-      const id = this.id
-
-      await this.$confirm('Apakah Anda yakin ingin memberikan persetujuan untuk aspirasi ini?', 'Konfirmasi', {
-        confirmButtonText: this.$t('common.confirm'),
-        cancelButtonText: this.$t('common.cancel'),
-        type: 'success'
-      })
-
-      try {
-        await approval(id, {
-          action: 'APPROVE'
-        })
-
-        this.$message.success(this.$t('crud.update-success'))
-
-        this.$router.push('/aspirasi/index')
-      } catch (e) {
-        console.log(e)
-      }
     },
 
     validateInput(input) {
@@ -178,12 +166,36 @@ export default {
       return true
     },
 
+    async actionApprove() {
+      const id = this.id
+
+      const prompt = await this.$prompt(this.$t('message.confirmation-approve'), this.$t('message.title-approve'), {
+        confirmButtonText: this.$t('common.save'),
+        cancelButtonText: this.$t('common.cancel'),
+        inputPlaceholder: 'Isikan catatan untuk pengguna',
+        inputValidator: this.validateInput
+      })
+
+      try {
+        await approval(id, {
+          action: 'APPROVE',
+          note: prompt.value
+        })
+
+        this.$message.success(this.$t('crud.update-success'))
+
+        this.$router.push('/aspirasi/index')
+      } catch (e) {
+        console.log(e)
+      }
+    },
+
     async actionReject() {
       const id = this.id
 
-      const prompt = await this.$prompt('Apakah Anda yakin ingin menolak aspirasi ini? Masukkan catatan untuk pengguna.', 'Konfirmasi Penolakan', {
-        confirmButtonText: 'Simpan',
-        cancelButtonText: 'Batal',
+      const prompt = await this.$prompt(this.$t('message.confirmation-reject'), this.$t('message.title-reject'), {
+        confirmButtonText: this.$t('common.save'),
+        cancelButtonText: this.$t('common.cancel'),
         inputPlaceholder: 'Isikan catatan untuk pengguna',
         inputValidator: this.validateInput
       })

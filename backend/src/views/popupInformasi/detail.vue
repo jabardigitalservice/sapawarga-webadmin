@@ -4,9 +4,9 @@
       <el-col class="col-right" :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
         <el-card>
           <div slot="header" class="clearfix">
-            <span>Data Banner</span>
+            <span>{{ $t('popup.popup-title-data') }}</span>
           </div>
-          <el-table stripe :data="tableDataBanner" :show-header="false" style="width: 100%">
+          <el-table stripe :data="tableDataPopUp" :show-header="false" style="width: 100%">
             <el-table-column prop="title" width="180" />
             <el-table-column prop="content">
               <template slot-scope="{row}">
@@ -22,13 +22,13 @@
 </template>
 
 <script>
-import { fetchRecord } from '@/api/banner'
+import { fetchRecord } from '@/api/popupInformasi'
 import { validUrl } from '@/utils/validate'
 export default {
   data() {
     return {
-      tableDataBanner: [],
-      banner: null
+      tableDataPopUp: [],
+      popup: null
     }
   },
   mounted() {
@@ -38,40 +38,40 @@ export default {
   methods: {
     getDetail() {
       fetchRecord(this.id).then(response => {
-        const { title, status_label, link_url, internal_category, internal_entity_name, type } = response.data
-        this.banner = response.data
+        const { title, status_label, link_url, internal_object_type, internal_object_name, type } = response.data
+        this.popup = response.data
 
-        this.tableDataBanner = [
+        this.tableDataPopUp = [
           {
-            title: 'Judul Banner',
+            title: this.$t('popup.popup-title'),
             content: title || '-'
           },
           {
-            title: 'Kategori',
+            title: this.$t('popup.popup-category'),
             content: type || '-'
           },
           {
-            title: 'Fitur',
-            content: internal_category || '-'
+            title: this.$t('popup.popup-fitur'),
+            content: internal_object_type || '-'
           },
           {
-            title: 'Judul Fitur',
-            content: internal_entity_name || '-'
+            title: this.$t('popup.popup-title-fitur'),
+            content: internal_object_name || '-'
           },
           {
-            title: 'Status',
+            title: this.$t('popup.popup-status'),
             content: status_label || '-'
           },
           {
-            title: 'URL Banner',
+            title: this.$t('popup.popup-url-pop-up'),
             content: link_url || '-'
           }
         ]
 
         if (type === 'internal') {
-          this.tableDataBanner.pop()
+          this.tableDataPopUp.pop()
         } else if (type === 'external') {
-          this.tableDataBanner.splice(2, 2)
+          this.tableDataPopUp.splice(2, 2)
         }
       })
     },

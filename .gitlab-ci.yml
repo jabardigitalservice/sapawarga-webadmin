@@ -159,7 +159,7 @@ deploy_staging_eks:
   image: dtzar/helm-kubectl
   stage: deploy_staging
   only:
-    - branches
+    - master
   dependencies: 
     - versioning
   environment:

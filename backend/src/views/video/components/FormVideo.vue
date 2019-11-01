@@ -58,7 +58,7 @@
 
 <script>
 import InputCategory from '@/components/InputCategory'
-import { containsWhitespace, validYoutubeUrl } from '@/utils/validate'
+import { containsWhitespace, isValidYoutubeUrl } from '@/utils/validate'
 import { requestArea } from '@/api/staff'
 import { create, update, fetchRecord } from '@/api/video'
 import checkPermission from '@/utils/permission'
@@ -81,7 +81,7 @@ export default {
     }
 
     const validatorUrl = (rule, value, callback) => {
-      if (validYoutubeUrl(value) === false) {
+      if (isValidYoutubeUrl(value) === false) {
         callback(new Error('URL Video tidak valid'))
       }
       callback()
