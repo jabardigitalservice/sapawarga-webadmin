@@ -1,19 +1,19 @@
 <template>
   <div class="app-container">
-    <p class="warn-content">{{$t('route.user-detail')}}</p>
+    <p class="warn-content">{{ $t('route.user-detail') }}</p>
     <el-row :gutter="10">
       <el-col class="col-left" :xs="24" :sm="24" :md="24" :lg="7" :xl="7">
         <div style="padding: 0 50px">
           <PhotoBox class="image" :image="imageUrl" />
         </div>
         <div v-if="latitude">
-          <p class="warn-content map-title">{{$t('label.your-location')}}</p>
+          <p class="warn-content map-title">{{ $t('label.your-location') }}</p>
           <MapThumb v-if="latitude && longitude" :latitude="latitude" :longitude="longitude" />
         </div>
       </el-col>
       <el-col class="col-right" :xs="24" :sm="24" :md="24" :lg="17" :xl="17">
         <div class="profile">
-          <p class="warn-content">{{$t('route.profile')}}</p>
+          <p class="warn-content">{{ $t('route.profile') }}</p>
           <el-table stripe :data="tableProfile" :show-header="false" border style="width: 100%">
             <el-table-column prop="title" width="180" />
             <el-table-column prop="content" />
@@ -21,7 +21,7 @@
         </div>
 
         <div class="contact">
-          <p class="warn-content">{{$t('label.contact')}}</p>
+          <p class="warn-content">{{ $t('label.contact') }}</p>
           <el-table stripe :data="tableContact" :show-header="false" border style="width: 100%">
             <el-table-column prop="title" width="180" />
             <el-table-column prop="content" />
@@ -29,7 +29,7 @@
         </div>
 
         <div class="address">
-          <p class="warn-content">{{$t('label.address')}}</p>
+          <p class="warn-content">{{ $t('label.address') }}</p>
           <el-table stripe :data="tableAddress" :show-header="false" border style="width: 100%">
             <el-table-column prop="title" width="180" />
             <el-table-column prop="content" />
@@ -37,7 +37,7 @@
         </div>
 
         <div class="social-media">
-          <p class="warn-content">{{$t('label.social-media')}}</p>
+          <p class="warn-content">{{ $t('label.social-media') }}</p>
           <el-table stripe :data="twitterIcon" :show-header="false" border style="width: 100%">
             <el-table-column width="180">
               <a :href="`https://twitter.com/${twitterAccount}`" target="_blank">
@@ -64,7 +64,7 @@
           </el-table>
         </div>
         <div v-permission="['admin','staffProv']" class="informasi-tambahan">
-          <p class="warn-content">{{$t('label.more-information')}}</p>
+          <p class="warn-content">{{ $t('label.more-information') }}</p>
           <el-table stripe :data="tableDataTambahan" :show-header="false" border style="width: 100%">
             <el-table-column prop="title" width="180" />
             <el-table-column prop="content" />
