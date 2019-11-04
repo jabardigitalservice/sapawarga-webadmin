@@ -86,7 +86,7 @@
 import InputCategory from '@/components/InputCategory'
 import InputSelectArea from '@/components/InputSelectArea'
 import { create, fetchRecord, update } from '@/api/broadcast'
-import { containsWhitespace } from '@/utils/validate'
+import { containsWhitespace, isContainHtmlTags } from '@/utils/validate'
 import moment from 'moment'
 
 export default {
@@ -112,6 +112,22 @@ export default {
       if (containsWhitespace(value) === true) {
         callback(new Error(this.$t('message.broadcast-description-valid')))
       }
+      callback()
+    }
+
+    const validatorHTMLTitle = (rule, value, callback) => {
+      if (isContainHtmlTags(value) === true) {
+        callback(new Error(this.$t('errors.broadcast-title')))
+      }
+
+      callback()
+    }
+
+    const validatorHTMLDescription = (rule, value, callback) => {
+      if (isContainHtmlTags(value) === true) {
+        callback(new Error(this.$t('errors.broadcast-description')))
+      }
+
       callback()
     }
 
@@ -152,6 +168,10 @@ export default {
             trigger: 'blur'
           },
           {
+            validator: validatorHTMLTitle,
+            trigger: 'blur'
+          },
+          {
             validator: whitespaceTitle,
             trigger: 'blur'
           }
@@ -172,6 +192,10 @@ export default {
           {
             max: 1000,
             message: this.$t('message.broadcast-description-max'),
+            trigger: 'blur'
+          },
+          {
+            validator: validatorHTMLDescription,
             trigger: 'blur'
           },
           {
