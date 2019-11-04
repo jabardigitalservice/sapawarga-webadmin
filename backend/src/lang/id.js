@@ -315,6 +315,9 @@ export default {
     'newsHoax': 'Berita Hoax'
   },
   label: {
+    'notes': 'Catatan:',
+    'maximum-dimension-image': 'Ukuran maksimal 1280x720 pixel (Landscape)',
+    'maximum-size-image': 'Maximum upload file size: 5 Mb.',
     'area-rw': 'RW',
     'area': 'Wilayah',
     'area-kec': 'Kecamatan',
