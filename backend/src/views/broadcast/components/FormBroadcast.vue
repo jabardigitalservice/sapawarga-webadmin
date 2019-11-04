@@ -356,10 +356,19 @@ export default {
           }
         }
       } catch (err) {
-        const error = err.response.data.data.scheduled_datetime
-        if (error) {
+        const errorDate = err.response.data.data.scheduled_datetime
+        const errorTitle = err.response.data.data.title
+        const errorDescription = err.response.data.data.description
+
+        if (errorDate) {
           this.broadcast.scheduled_datetime = null
           this.scheduled_datetime_validation = 'scheduled_datetime_error'
+        } else if (errorTitle && errorDescription) {
+          this.$message.error(this.$t('errors.broadcast-title-description'))
+        } else if (errorTitle) {
+          this.$message.error(this.$t('errors.broadcast-title'))
+        } else if (errorDescription) {
+          this.$message.error(this.$t('errors.broadcast-description'))
         } else {
           console.log(err)
         }

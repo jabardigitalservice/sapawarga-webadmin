@@ -273,8 +273,10 @@ export default {
 
     'user-import-empty-file': 'File tidak boleh kosong. Silahkan pilih file terlebih dahulu',
 
-    'broadcast-title': 'Judul pesan mengandung karakter yang tidak diizinkan',
-    'broadcast-description': 'Isi pesan mengandung karakter yang tidak diizinkan'
+    'broadcast-datetime-edit': 'Jadwal yang dipilih telah lewat. Silahkan edit terlebih dahulu',
+    'broadcast-title': 'Judul pesan mengandung karakter yang tidak diperbolehkan',
+    'broadcast-description': 'Isi pesan mengandung karakter yang tidak diperbolehkan',
+    'broadcast-title-description': 'Judul pesan dan Isi pesan mengandung karakter yang tidak diperbolehkan'
   },
   navbar: {
     profile: 'Lihat Profil',
