@@ -23,27 +23,14 @@
           <div class="dialog-text">{{ $t('users.users-dialog-text-template-file') }}<a @click="getSample">{{ $t('users.users-dialog-text-url') }}</a></div>
           <div>{{ $t('users.users-dialog-text-choose-location-file') }}</div>
           <div slot="footer" class="dialog-footer" align="left">
-            <label>File
-              <input id="file" ref="file" type="file" @change="handleFileUpload()">
-            </label>
-            <button @click="submitFile()">Submit</button>
+            <div class="import-file">
+              <label class="custom-file-upload primary-custome">{{ $t('label.select-file') }}
+                <input id="file" ref="file" type="file" accept=".csv" @change="handleFileUpload()">
+              </label>
+              <span v-if="file !== null">{{ file.name }}</span>
+            </div>
 
-            <el-upload
-              ref="upload"
-              v-loading="listLoading"
-              class="upload-demo"
-              accept="file"
-              action="https://sapawarga-staging.jabarprov.go.id/api/v1/staff/import"
-              :on-progress="handleProgress"
-              :on-success="handleSuccess"
-              :limit="1"
-              :on-exceed="handleExceed"
-              :before-remove="beforeRemove"
-              :auto-upload="false"
-            >
-              <el-button slot="trigger" class="dialog-buttom" size="small" type="primary">{{ $t('users.users-dialog-bottom-choose-file') }}</el-button>
-            </el-upload>
-            <el-button type="primary" @click="submitUpload, visibleDialog = false, importDialogVisible = false">{{ $t('users.users-dialog-bottom-upload-file') }}</el-button>
+            <el-button type="primary" @click="submitFile(), visibleDialog = false, importDialogVisible = false">{{ $t('users.users-dialog-bottom-upload-file') }}</el-button>
             <el-button type="info" @click="closeDialog">{{ $t('users.users-dialog-bottom-cancel') }}</el-button>
           </div>
         </el-dialog>
@@ -293,14 +280,6 @@ export default {
       return value
     },
 
-    handleExceed(file, fileList) {
-      this.$message.warning(this.$t('users.users-dialog-text-file-change', { file_length: file.length }))
-    },
-
-    beforeRemove(file, fileList) {
-      return this.$confirm(this.$t('users.users-dialog-text-file-delete', { file_name: file.name }))
-    },
-
     openDialog(type) {
       if (type === 'import') {
         this.importDialogVisible = true
@@ -311,11 +290,6 @@ export default {
     closeDialog() {
       this.importDialogVisible = false
       this.visibleDialog = false
-    },
-
-    submitUpload() {
-      this.$refs.upload.submit()
-      importUser()
     },
 
     async exportDataURL() {
@@ -333,17 +307,9 @@ export default {
       this.listLoading = false
     },
 
-    handleProgress() {
-      this.listLoading = true
-    },
-
-    handleSuccess() {
-      this.listLoading = false
-    },
-
     getSample() {
       downloadSample(this.listQuery).then(response => {
-        console.log(response)
+        window.open(response.data.file_url)
       })
     },
 
@@ -357,7 +323,15 @@ export default {
       formData.append('file', this.file)
 
       importUser(formData).then(response => {
-        console.log('berhasil upload')
+        this.file = null
+        this.$message.success(this.$t('message.user-import-sending'))
+      }).catch(error => {
+        const errorEmpty = error.response.data.data.file
+        if (errorEmpty) {
+          this.$message.error(this.$t('errors.user-import-empty-file'))
+        } else {
+          console.log(error)
+        }
       })
     }
 
