@@ -125,7 +125,7 @@
             <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
               <el-form-item
                 v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffKec') && !(user.role == 'staffKel') && !(user.role == 'staffSaberhoax'))"
-                :label="$t('label.rw')"
+                :label="$t('label.area-rw')"
                 prop="rw"
               >
                 <el-input v-model="user.rw" type="text" placeholder="Contoh: 001" :disabled="(user.kelurahan == '' && checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec']) || user.role === '')" />
@@ -134,7 +134,7 @@
             <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" :style="{paddingLeft: formRightSide}">
               <el-form-item
                 v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffKec') && !(user.role == 'staffKel') && !(user.role == 'staffSaberhoax'))"
-                :label="$t('label.rt')"
+                :label="$t('label.area-rt')"
                 prop="rt"
               >
                 <el-input v-model="user.rt" type="text" placeholder="Contoh: 002" :disabled="user.rw == '' && checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel'])" />
@@ -143,33 +143,33 @@
           </el-row>
           <p class="warn-content">{{ $t('route.user-detail') }}</p>
           <el-form-item :label="$t('label.education')">
-            <el-select v-model="user.education" :placeholder="$t('label.choose-education')">
+            <el-select v-model="user.education_level_id" :placeholder="$t('label.choose-education')">
               <el-option
                 v-for="item in educationList"
                 :key="item.id"
                 :value="item.id"
-                :label="item.name"
-              >{{ item.name }}</el-option>
+                :label="item.title"
+              >{{ item.title }}</el-option>
             </el-select>
           </el-form-item>
           <el-form-item :label="$t('label.job')">
-            <el-select v-model="user.job" :placeholder="$t('label.choose-job')">
+            <el-select v-model="user.job_type_id" :placeholder="$t('label.choose-job')">
               <el-option
                 v-for="item in jobList"
                 :key="item.id"
                 :value="item.id"
-                :label="item.name"
-              >{{ item.name }}</el-option>
+                :label="item.title"
+              >{{ item.title }}</el-option>
             </el-select>
           </el-form-item>
           <el-form-item :label="$t('label.birthdate')">
             <el-date-picker
-              v-model="user.birthdate"
+              v-model="user.birth_date"
               type="date"
               :editable="false"
               :clearable="false"
-              format="yyyy-mm-dd"
-              value-format="yyyy-mm-dd"
+              format="yyyy-MM-dd"
+              value-format="yyyy-MM-dd"
               :placeholder="$t('label.choose-birthdate')"
             />
           </el-form-item>
@@ -337,9 +337,9 @@ export default {
         role: [],
         twitter: '',
         facebook: '',
-        birthdate: '',
-        education: '',
-        job: '',
+        birth_date: '',
+        education_level_id: '',
+        job_type_id: '',
         instagram: '',
         photo: '',
         coordinates: []
@@ -929,9 +929,9 @@ export default {
         this.user.coordinates = [lat, lon]
         this.user.rw = dataUser.rw
         this.user.rt = dataUser.rt
-        this.user.birthdate = this.user.birthdate
-        this.user.education = this.user.education
-        this.user.job = this.user.job
+        this.user.birth_date = dataUser.birth_date
+        this.user.education_level_id = dataUser.education_level_id
+        this.user.job_type_id = dataUser.job_type_id
         this.user.photo = urlPhoto
         this.imageData = dataUser.photo_url || this.imageData
         this.setLinkEditPhoto = dataUser.photo_url
@@ -963,9 +963,9 @@ export default {
             kel_id: this.user.kelurahan.id || this.id_kel,
             rw: this.user.rw,
             rt: this.user.rt,
-            birthdate: this.user.birthdate,
-            education: this.user.education,
-            job: this.user.job,
+            birth_date: this.user.birth_date,
+            education_level_id: this.user.education_level_id,
+            job_type_id: this.user.job_type_id,
             facebook: this.user.facebook,
             twitter: this.user.twitter,
             instagram: this.user.instagram,
@@ -974,7 +974,7 @@ export default {
             lon: this.user.coordinates[1]
           }).then(() => {
             Message({
-              message: 'Pengguna berhasil ditambahkan',
+              message: this.$t('message.user-successfully-added'),
               type: 'success',
               duration: 1 * 1000
             })
@@ -1006,7 +1006,7 @@ export default {
                 this.emailValidation = 'errorEmail'
               } else {
                 Message({
-                  message: 'Username dan email sudah digunakan',
+                  message: this.$t('errors.username-email-already-used'),
                   type: 'error',
                   duration: 5 * 1000
                 })
@@ -1035,9 +1035,9 @@ export default {
             rw: this.user.rw,
             rt: this.user.rt,
             address: this.user.address,
-            birthdate: this.user.birthdate,
-            education: this.user.education,
-            job: this.user.job,
+            birth_date: this.user.birth_date,
+            education_level_id: this.user.education_level_id,
+            job_type_id: this.user.job_type_id,
             facebook: this.user.facebook,
             twitter: this.user.twitter,
             instagram: this.user.instagram,
@@ -1050,7 +1050,7 @@ export default {
           }
           editUser(userEdit, id).then(response => {
             Message({
-              message: 'Data user berhasil diupdate',
+              message: this.$t('message.user-data-successfully-updated'),
               type: 'success',
               duration: 1 * 1000
             })
@@ -1077,7 +1077,7 @@ export default {
               })
             } else {
               Message({
-                message: 'Username dan email sudah digunakan',
+                message: this.$t('errors.username-email-already-used'),
                 type: 'error',
                 duration: 5 * 1000
               })

@@ -254,6 +254,7 @@ export default {
     'username-must-be-at-least-255-characters': 'Username maksimal 255 karakter',
     'username-only-use-lowercase-letters-numbers-underscore-and-dots': 'Username hanya boleh menggunakan huruf kecil, angka, underscore dan titik',
     'username-already-used': 'Username sudah digunakan',
+    'username-email-already-used': 'Username dan email sudah digunakan',
     'fullname-must-be-filled': 'Nama Lengkap harus diisi',
     'fullname-be-at-least-255-characters': 'Nama Lengkap maksimal 255 karakter',
     'fullname-only-use-letters-aposthrope-dots': 'Nama Lengkap hanya boleh menggunakan huruf, aposthrope dan titik',
@@ -338,6 +339,8 @@ export default {
     'title-reject': 'Konfirmasi Penolakan',
     'title': 'Konfirmasi',
     'category': 'Kategori harus diisi',
+    'user-successfully-added': 'Pengguna berhasil ditambahkan',
+    'user-data-successfully-updated': 'Data user berhasil diupdate',
 
     'broadcast-title-required': 'Judul pesan harus diisi',
     'broadcast-title-min': 'Judul pesan minimal 10 karakter',
@@ -371,6 +374,7 @@ export default {
   },
   label: {
     'fullname': 'Nama Lengkap',
+    'name': 'Nama',
     'username': 'Username',
     'email': 'Email',
     'place': 'Kedudukan',
@@ -387,6 +391,10 @@ export default {
     'coordinates': 'Koordinat Lokasi',
     'social-media': 'Media Sosial',
 
+    'your-location': 'Lokasi Anda',
+    'contact': 'Kontak',
+    'more-information': 'Informasi Tambahan',
+
     'area-rt': 'RT',
     'area-rw': 'RW',
     'area': 'Wilayah',
@@ -399,6 +407,11 @@ export default {
     'choose-education': 'Pilih Pendidikan',
     'choose-job': 'Pilih Pekerjaan',
     'choose-birthdate': 'Pilih Tanggal Lahir',
+
+    'created-at': 'Tanggal Dibuat',
+    'updated-at': 'Tanggal Diperbarui',
+    'last-login-at': 'Terakhir Login',
+    'last-access-at': 'Terakhir Akses',
 
     'target': 'Target',
     'send_at': 'Dikirim',

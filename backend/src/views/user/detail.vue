@@ -1,19 +1,19 @@
 <template>
   <div class="app-container">
-    <p class="warn-content">Detail Pengguna</p>
+    <p class="warn-content">{{$t('route.user-detail')}}</p>
     <el-row :gutter="10">
       <el-col class="col-left" :xs="24" :sm="24" :md="24" :lg="7" :xl="7">
         <div style="padding: 0 50px">
           <PhotoBox class="image" :image="imageUrl" />
         </div>
         <div v-if="latitude">
-          <p class="warn-content map-title">Lokasi Anda</p>
+          <p class="warn-content map-title">{{$t('label.your-location')}}</p>
           <MapThumb v-if="latitude && longitude" :latitude="latitude" :longitude="longitude" />
         </div>
       </el-col>
       <el-col class="col-right" :xs="24" :sm="24" :md="24" :lg="17" :xl="17">
         <div class="profile">
-          <p class="warn-content">Profile</p>
+          <p class="warn-content">{{$t('route.profile')}}</p>
           <el-table stripe :data="tableProfile" :show-header="false" border style="width: 100%">
             <el-table-column prop="title" width="180" />
             <el-table-column prop="content" />
@@ -21,7 +21,7 @@
         </div>
 
         <div class="contact">
-          <p class="warn-content">Kontak</p>
+          <p class="warn-content">{{$t('label.contact')}}</p>
           <el-table stripe :data="tableContact" :show-header="false" border style="width: 100%">
             <el-table-column prop="title" width="180" />
             <el-table-column prop="content" />
@@ -29,7 +29,7 @@
         </div>
 
         <div class="address">
-          <p class="warn-content">Alamat</p>
+          <p class="warn-content">{{$t('label.address')}}</p>
           <el-table stripe :data="tableAddress" :show-header="false" border style="width: 100%">
             <el-table-column prop="title" width="180" />
             <el-table-column prop="content" />
@@ -37,7 +37,7 @@
         </div>
 
         <div class="social-media">
-          <p class="warn-content">Media Sosial</p>
+          <p class="warn-content">{{$t('label.social-media')}}</p>
           <el-table stripe :data="twitterIcon" :show-header="false" border style="width: 100%">
             <el-table-column width="180">
               <a :href="`https://twitter.com/${twitterAccount}`" target="_blank">
@@ -64,7 +64,7 @@
           </el-table>
         </div>
         <div v-permission="['admin','staffProv']" class="informasi-tambahan">
-          <p class="warn-content">Informasi Tambahan</p>
+          <p class="warn-content">{{$t('label.more-information')}}</p>
           <el-table stripe :data="tableDataTambahan" :show-header="false" border style="width: 100%">
             <el-table-column prop="title" width="180" />
             <el-table-column prop="content" />
@@ -95,6 +95,7 @@ export default {
       tableDataTambahan: [],
       tableProfile: [],
       tableAddress: [],
+      tableContact: [],
       instagramIcon: [],
       twitterIcon: [],
       facebookIcon: [],
@@ -139,6 +140,9 @@ export default {
           updated_at,
           last_login_at,
           last_access_at,
+          job_type,
+          birth_date,
+          education_level,
           role_label
         } = response.data
         this.twitterAccount = twitter || '-'
@@ -162,126 +166,84 @@ export default {
             content: facebook || '-'
           }
         ]
-        this.tableData = [
+        this.tableProfile = [
           {
-            title: 'Nama',
+            title: this.$t('label.name'),
             content: name || '-'
           },
           {
-            title: 'Username',
-            content: username || '-'
+            title: this.$t('label.birthdate'),
+            content: birth_date || '-'
           },
           {
-            title: 'Email',
-            content: email || '-'
+            title: this.$t('label.education'),
+            content: (education_level ? education_level.title : '-')
           },
           {
-            title: 'Telepon',
-            content: phone || '-'
+            title: this.$t('label.job'),
+            content: (job_type ? job_type.title : '-')
           },
           {
-            title: 'Alamat Instansi',
-            content: address || '-'
-          },
-          {
-            title: 'RT',
-            content: rt || '-'
-          },
-          {
-            title: 'RW',
-            content: rw || '-'
-          },
-          {
-            title: 'Kelurahan',
-            content: (kelurahan ? kelurahan.name : '-')
-          },
-          {
-            title: 'Kecamatan',
-            content: (kecamatan ? kecamatan.name : '-')
-          },
-          {
-            title: 'Kab/Kota',
-            content: (kabkota ? kabkota.name : '-')
-          },
-          {
-            title: 'Peran',
+            title: this.$t('label.role'),
             content: role_label || '-'
-          }
-        ]
-        this.tableProfile = [
-          {
-            title: 'Nama',
-            content: '-'
           },
           {
-            title: 'Username',
-            content: '-'
-          },
-          {
-            title: 'Tanggal Lahir',
-            content: '-'
-          },
-          {
-            title: 'Pendidikan',
-            content: '-'
-          },
-          {
-            title: 'Peran',
-            content: '-'
+            title: this.$t('label.username'),
+            content: username || '-'
           }
         ]
 
         this.tableContact = [
           {
-            title: 'Email',
-            content: '-'
+            title: this.$t('label.email'),
+            content: email || '-'
           },
           {
-            title: 'Telepon',
-            content: '-'
+            title: this.$t('label.telepon'),
+            content: phone || '-'
           }
         ]
         this.tableAddress = [
           {
-            title: 'Alamat',
-            content: '-'
+            title: this.$t('label.address'),
+            content: address || '-'
           },
           {
-            title: 'Kab/Kota',
-            content: '-'
+            title: this.$t('label.area-kabkota'),
+            content: (kabkota ? kabkota.name : '-')
           },
           {
-            title: 'Kecamatan',
-            content: '-'
+            title: this.$t('label.area-kec'),
+            content: (kecamatan ? kecamatan.name : '-')
           },
           {
-            title: 'Kelurahan',
-            content: '-'
+            title: this.$t('label.area-kel'),
+            content: (kelurahan ? kelurahan.name : '-')
           },
           {
-            title: 'RT',
-            content: '-'
+            title: this.$t('label.area-rt'),
+            content: rt || '-'
           },
           {
-            title: 'RW',
-            content: '-'
+            title: this.$t('label.area-rw'),
+            content: rw || '-'
           }
         ]
         this.tableDataTambahan = [
           {
-            title: 'Tanggal Dibuat',
+            title: this.$t('label.created-at'),
             content: created_at ? parsingDatetime(created_at) : '-'
           },
           {
-            title: 'Tanggal Diperbarui',
+            title: this.$t('label.updated-at'),
             content: updated_at ? parsingDatetime(updated_at) : '-'
           },
           {
-            title: 'Terakhir Login',
+            title: this.$t('label.last-login-at'),
             content: last_login_at ? parsingDatetime(last_login_at) : 'Belum Pernah'
           },
           {
-            title: 'Terakhir Akses',
+            title: this.$t('label.last-access-at'),
             content: last_access_at ? moment(last_access_at).format('D MMMM YYYY HH:mm') : '-'
           }
         ]
