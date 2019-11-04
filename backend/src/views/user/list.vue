@@ -15,29 +15,22 @@
           </el-col>
           <el-col v-if="checkPermission(['admin', 'staffProv'])" :span="19" align="right">
             <el-button type="primary" size="small" @click="exportDataURL">{{ $t('users.download-data') }}</el-button>
-            <el-button type="primary" size="small" @click="openDialog(`import`)">Import Data</el-button>
+            <el-button type="primary" size="small" @click="openDialog(`import`)">{{ $t('users.users-dialog-bottom-upload-data') }}</el-button>
           </el-col>
         </el-row>
         <el-dialog :title="$t('users.users-import-data')" :visible.sync="visibleDialog" :width="(importDialogVisible)? `50%`:`20%`" @close="closeDialog">
           <div class="dialog-text">{{ $t('users.users-dialog-text-import-csv') }}</div>
-          <div class="dialog-text">{{ $t('users.users-dialog-text-template-file') }}<a href="http://">{{ $t('users.users-dialog-text-url') }}</a></div>
+          <div class="dialog-text">{{ $t('users.users-dialog-text-template-file') }}<a @click="getSample">{{ $t('users.users-dialog-text-url') }}</a></div>
           <div>{{ $t('users.users-dialog-text-choose-location-file') }}</div>
           <div slot="footer" class="dialog-footer" align="left">
-            <el-upload
-              ref="upload"
-              v-loading="listLoading"
-              class="upload-demo"
-              action="https://jsonplaceholder.typicode.com/posts/"
-              :on-progress="handleProgress"
-              :on-success="handleSuccess"
-              :limit="1"
-              :on-exceed="handleExceed"
-              :before-remove="beforeRemove"
-              :auto-upload="false"
-            >
-              <el-button slot="trigger" class="dialog-buttom" size="small" type="primary">{{ $t('users.users-dialog-bottom-choose-file') }}</el-button>
-            </el-upload>
-            <el-button type="primary" @click="submitUpload, visibleDialog = false, importDialogVisible = false">{{ $t('users.users-dialog-bottom-upload-file') }}</el-button>
+            <div class="import-file">
+              <label class="custom-file-upload primary-custome">{{ $t('label.select-file') }}
+                <input id="file" ref="file" type="file" accept=".csv" @change="handleFileUpload()">
+              </label>
+              <span v-if="file !== null">{{ file.name }}</span>
+            </div>
+
+            <el-button type="primary" @click="submitFile(), visibleDialog = false, importDialogVisible = false">{{ $t('users.users-dialog-bottom-upload-file') }}</el-button>
             <el-button type="info" @click="closeDialog">{{ $t('users.users-dialog-bottom-cancel') }}</el-button>
           </div>
         </el-dialog>
@@ -100,7 +93,7 @@
 </template>
 
 <script>
-import { fetchList, activate, deactivate, totalUser, fetchExport } from '@/api/staff'
+import { fetchList, activate, deactivate, totalUser, fetchExport, downloadSample, importUser } from '@/api/staff'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 import PanelGroup from './components/PanelGroup'
 import permission from '@/directive/permission/index.js'
@@ -133,6 +126,7 @@ export default {
       list: null,
       total: 0,
       listLoading: true,
+      file: null,
       listQuery: {
         name: null,
         username: null,
@@ -286,14 +280,6 @@ export default {
       return value
     },
 
-    handleExceed(file, fileList) {
-      this.$message.warning(this.$t('users.users-dialog-text-file-change', { file_length: file.length }))
-    },
-
-    beforeRemove(file, fileList) {
-      return this.$confirm(this.$t('users.users-dialog-text-file-delete', { file_name: file.name }))
-    },
-
     openDialog(type) {
       if (type === 'import') {
         this.importDialogVisible = true
@@ -304,10 +290,6 @@ export default {
     closeDialog() {
       this.importDialogVisible = false
       this.visibleDialog = false
-    },
-
-    submitUpload() {
-      this.$refs.upload.submit()
     },
 
     async exportDataURL() {
@@ -325,13 +307,34 @@ export default {
       this.listLoading = false
     },
 
-    handleProgress() {
-      this.listLoading = true
+    getSample() {
+      downloadSample(this.listQuery).then(response => {
+        window.open(response.data.file_url)
+      })
     },
 
-    handleSuccess() {
-      this.listLoading = false
+    handleFileUpload() {
+      this.file = this.$refs.file.files[0]
+    },
+
+    submitFile() {
+      const formData = new FormData()
+
+      formData.append('file', this.file)
+
+      importUser(formData).then(response => {
+        this.file = null
+        this.$message.success(this.$t('message.user-import-sending'))
+      }).catch(error => {
+        const errorEmpty = error.response.data.data.file
+        if (errorEmpty) {
+          this.$message.error(this.$t('errors.user-import-empty-file'))
+        } else {
+          console.log(error)
+        }
+      })
     }
+
   }
 }
 </script>
@@ -352,4 +355,50 @@ export default {
   .export-user > span {
     font-size: 18px;
   }
+
+  input[type="file"] {
+    display: none;
+  }
+
+  .custom-file-upload {
+    cursor: pointer;
+    background: #FFFFFF;
+    border: 1px solid #DCDFE6;
+    border-color: #DCDFE6;
+    color: #606266;
+    -webkit-appearance: none;
+    text-align: center;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    outline: none;
+    -webkit-transition: .1s;
+    transition: .1s;
+    font-weight: 400;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 4px;
+    width: 100px;
+    display: inline-block;
+    margin-bottom: 20px;
+  }
+
+  .import-file {
+    display: block;
+  }
+
+  .primary-custome {
+    color: white;
+    background:#409eff;
+    border-color: #409eff;
+  }
+
+  .primary-custome:hover {
+    background: #46a6ff;
+    border-color: #46a6ff;
+    color: #FFFFFF;
+  }
+
 </style>

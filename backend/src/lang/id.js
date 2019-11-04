@@ -186,15 +186,16 @@ export default {
     'users-add-new': 'Tambah Pengguna Baru',
     'users-edit': 'Edit Pengguna',
     'users-edit-profile': 'Edit Profil',
-    'users-import-data': 'Import Data Pengguna Sapawarga',
-    'users-dialog-text-import-csv': 'Anda dapat melakukan import data dengan mengunggah file dengan tipe CSV.',
-    'users-dialog-text-template-file': 'Template file dapat diunduh pada',
+    'users-import-data': 'Unggah Data Pengguna Sapawarga',
+    'users-dialog-text-import-csv': 'Anda dapat melakukan unggah data dengan mengunggah file dengan tipe CSV.',
+    'users-dialog-text-template-file': 'Template file dapat diunduh pada ',
     'users-dialog-text-url': 'Tautan berikut',
     'users-dialog-text-choose-location-file': 'Pilih lokasi file pada komputer Anda (max. 5 MB)',
     'users-dialog-text-file-delete': 'Anda yakin akan menghapus file {file_name} ?',
     'users-dialog-text-file-change': 'Hanya dapat mengunggah {file_length} files. Silahkan hapus untuk mengganti file.',
     'users-dialog-bottom-choose-file': 'Pilih File',
-    'users-dialog-bottom-upload-file': 'Upload File',
+    'users-dialog-bottom-upload-file': 'Unggah File',
+    'users-dialog-bottom-upload-data': 'Unggah Data',
     'users-dialog-bottom-cancel': 'Cancel',
 
     'users-role-text-staff-rw': 'RW {0}, Desa/Kelurahan {1}, Kecamatan {2}, {3}',
@@ -210,6 +211,7 @@ export default {
     'users-telp': 'Telp',
     'users-status': 'Status',
     'users-actions': 'Actions'
+
   },
   popup: {
     'popup-title': 'Judul Pop Up',
@@ -312,19 +314,24 @@ export default {
 
     'popup-kategori-not-null': 'Kategori Pop Up harus diisi.',
     'popup-url-not-null': 'Tautan harus diisi.',
-    'popup-fitur-not-null': 'Fitur Pop Up harus diisi.',
     'popup-type-name-not-null': 'Judul harus diisi.',
-    'popup-start-date-not-null': 'Tanggal Mulai harus diisi.',
-    'popup-end-date-not-null': 'Tanggal Berakhir harus diisi.',
-    'popup-description-not-null': 'Deskripsi harus diisi.',
 
     'popup-informasi-title': 'Isian Judul mengandung karakter yang tidak diizinkan.',
     'popup-informasi-description': 'Isian Deskripsi mengandung karakter yang tidak diizinkan.',
 
     'dashboard-map-error': 'Gagal memuat map',
-
     'broadcast-datetime': 'Jadwal yang dipilih telah lewat',
-    'broadcast-datetime-edit': 'Jadwal yang dipilih telah lewat. Silahkan edit terlebih dahulu.'
+
+    'popup-fitur-not-null': 'Fitur Pop Up harus diisi.',
+    'popup-start-date-not-null': 'Tanggal Mulai harus diisi.',
+    'popup-end-date-not-null': 'Tanggal Berakhir harus diisi.',
+    'popup-description-not-null': 'Deskripsi harus diisi.',
+
+    'user-import-empty-file': 'File tidak boleh kosong. Silahkan pilih file terlebih dahulu',
+    'broadcast-datetime-edit': 'Jadwal yang dipilih telah lewat. Silahkan edit terlebih dahulu',
+    'broadcast-title': 'Judul pesan mengandung karakter yang tidak diperbolehkan',
+    'broadcast-description': 'Isi pesan mengandung karakter yang tidak diperbolehkan',
+    'broadcast-title-description': 'Judul pesan dan Isi pesan mengandung karakter yang tidak diperbolehkan'
   },
   navbar: {
     profile: 'Lihat Profil',
@@ -339,6 +346,7 @@ export default {
     'title-reject': 'Konfirmasi Penolakan',
     'title': 'Konfirmasi',
     'category': 'Kategori harus diisi',
+
     'user-successfully-added': 'Pengguna berhasil ditambahkan',
     'user-data-successfully-updated': 'Data user berhasil diupdate',
 
@@ -359,8 +367,9 @@ export default {
 
     'broadcast-scheduled': 'Jadwal harus diisi',
     'broadcast-scheduled_datetime': 'Tanggal dan waktu harus diisi',
-    'broadcast-scheduled_datetime-expire': 'Tanggal dan waktu yang dipilih telah lewat'
+    'broadcast-scheduled_datetime-expire': 'Tanggal dan waktu yang dipilih telah lewat',
 
+    'user-import-sending': 'Cek email Anda untuk progress unggah data'
   },
   categoriTypes: {
     'phonebook': 'Nomor Penting',
@@ -420,6 +429,7 @@ export default {
     'category': 'Kategori',
     'created_at': 'Dibuat',
     'description': 'Isi Pesan',
+    'select-file': 'Pilih File',
     'title-broadcast': 'Judul Pesan',
     'scheduled_datetime': 'Tanggal dan Waktu',
 
