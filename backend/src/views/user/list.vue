@@ -381,4 +381,50 @@ export default {
   .export-user > span {
     font-size: 18px;
   }
+
+  input[type="file"] {
+    display: none;
+  }
+
+  .custom-file-upload {
+    cursor: pointer;
+    background: #FFFFFF;
+    border: 1px solid #DCDFE6;
+    border-color: #DCDFE6;
+    color: #606266;
+    -webkit-appearance: none;
+    text-align: center;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    outline: none;
+    -webkit-transition: .1s;
+    transition: .1s;
+    font-weight: 400;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 4px;
+    width: 100px;
+    display: inline-block;
+    margin-bottom: 20px;
+  }
+
+  .import-file {
+    display: block;
+  }
+
+  .primary-custome {
+    color: white;
+    background:#409eff;
+    border-color: #409eff;
+  }
+
+  .primary-custome:hover {
+    background: #46a6ff;
+    border-color: #46a6ff;
+    color: #FFFFFF;
+  }
+
 </style>
