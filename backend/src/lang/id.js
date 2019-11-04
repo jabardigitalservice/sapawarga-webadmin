@@ -271,7 +271,10 @@ export default {
 
     'broadcast-datetime': 'Jadwal yang dipilih telah lewat',
 
-    'user-import-empty-file': 'File tidak boleh kosong. Silahkan pilih file terlebih dahulu'
+    'user-import-empty-file': 'File tidak boleh kosong. Silahkan pilih file terlebih dahulu',
+
+    'broadcast-title': 'Judul pesan mengandung karakter yang tidak diizinkan',
+    'broadcast-description': 'Isi pesan mengandung karakter yang tidak diizinkan'
   },
   navbar: {
     profile: 'Lihat Profil',
