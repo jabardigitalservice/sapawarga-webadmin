@@ -15,7 +15,7 @@
           </el-col>
           <el-col v-if="checkPermission(['admin', 'staffProv'])" :span="19" align="right">
             <el-button type="primary" size="small" @click="exportDataURL">{{ $t('users.download-data') }}</el-button>
-            <el-button type="primary" size="small" @click="openDialog(`import`)">Import Data</el-button>
+            <el-button type="primary" size="small" @click="openDialog(`import`)">{{ $t('users.users-dialog-bottom-upload-data') }}</el-button>
           </el-col>
         </el-row>
         <el-dialog :title="$t('users.users-import-data')" :visible.sync="visibleDialog" :width="(importDialogVisible)? `50%`:`20%`" @close="closeDialog">
