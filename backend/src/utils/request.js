@@ -133,7 +133,7 @@ service.interceptors.response.use(
       return Promise.reject(error)
     }
     if (error.response && error.response.status === 422) {
-        return Promise.reject(error)
+      return Promise.reject(error)
     }
   }
 )
