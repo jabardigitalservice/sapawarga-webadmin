@@ -9,8 +9,8 @@
 
       <el-button name="button-image-upload" type="primary" style="width: 100%;" @click="launchFilePicker">Pilih Foto</el-button>
 
-      <p><small><strong>{{$t('label.notes')}}</strong><br>{{$t('label.maximum-dimension-image')}}</small></p>
-      <p><small>{{$t('label.maximum-size-image')}}</small></p>
+      <p><small><strong>{{ $t('label.notes') }}</strong><br>{{ $t('label.maximum-dimension-image') }}</small></p>
+      <p><small>{{ $t('label.maximum-size-image') }}</small></p>
       <input ref="file" type="file" accept="image/*" @change="onFileSelected">
     </div>
   </div>
