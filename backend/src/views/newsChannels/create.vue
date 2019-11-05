@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <p class="warn-content"><a href="#">Tambah Sumber Berita</a></p>
+    <p class="warn-content"><a href="#"> {{ $t('route.news-channels-create') }} </a></p>
     <Form />
   </div>
 </template>
