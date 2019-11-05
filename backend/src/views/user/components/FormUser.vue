@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container">
+  <div class="app-container user-form">
     <p v-if="!isEdit" class="warn-content">{{ $t('users.users-add-new') }}</p>
     <p v-if="isEdit && !isProfile" class="warn-content">{{ $t('users.users-edit') }}</p>
     <p v-if="isProfile" class="warn-content">{{ $t('users.users-edit-profile') }}</p>

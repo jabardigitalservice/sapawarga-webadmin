@@ -141,25 +141,74 @@ $dark_gray: #889aa4;
 }
 
 /* user css */
-.input-image {
-  margin-left:50px;
-}
-img.preview {
-    width: 200px;
-    background-color: white !important;
-    border: 1px solid #DDD;
-    padding: 5px;
-}
-.upload-demo {
-  margin: 10px auto;
-}
-.grid-content:first-child {
-  margin-bottom: 20px;
-}
+.user-form {
+  .input-image {
+    margin-left:50px;
+  }
+  img.preview {
+      width: 200px;
+      background-color: white !important;
+      border: 1px solid #DDD;
+      padding: 5px;
+  }
+  .upload-demo {
+    margin: 10px auto;
+  }
+  .grid-content:first-child {
+    margin-bottom: 20px;
+  }
 
-p {
-  color: #42b983;
-  font-weight: 600;
+  p {
+    color: #42b983;
+    font-weight: 600;
+  }
+  
+  .el-row {
+    margin-left: 0px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  .el-col {
+    border-radius: 4px;
+  }
+  .bg-purple {
+    background: #d3dce6;
+  }
+  .bg-purple-light {
+    background: #e5e9f2;
+  }
+  .grid-content {
+    border-radius: 4px;
+    min-height: 36px;
+  }
+  .row-bg {
+    padding: 10px 0;
+    background-color: #f9fafc;
+  }
+  .el-upload .avatar-uploader {
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409eff;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+  .avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+  }
+
 }
 .app-container {
   padding: 5px 20px;
@@ -172,52 +221,6 @@ p {
       margin-bottom: 0;
     }
   }
-}
-
-.el-row {
-  margin-left: 0px;
-  &:last-child {
-    margin-bottom: 0;
-  }
-}
-.el-col {
-  border-radius: 4px;
-}
-.bg-purple {
-  background: #d3dce6;
-}
-.bg-purple-light {
-  background: #e5e9f2;
-}
-.grid-content {
-  border-radius: 4px;
-  min-height: 36px;
-}
-.row-bg {
-  padding: 10px 0;
-  background-color: #f9fafc;
-}
-.el-upload .avatar-uploader {
-  border-radius: 6px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-}
-.avatar-uploader .el-upload:hover {
-  border-color: #409eff;
-}
-.avatar-uploader-icon {
-  font-size: 28px;
-  color: #8c939d;
-  width: 178px;
-  height: 178px;
-  line-height: 178px;
-  text-align: center;
-}
-.avatar {
-  width: 178px;
-  height: 178px;
-  display: block;
 }
 
 .title-top-news {
