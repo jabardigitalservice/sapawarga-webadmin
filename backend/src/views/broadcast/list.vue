@@ -135,7 +135,7 @@ export default {
     },
 
     getSentDateTime(row) {
-      return row.status === this.status.PUBLISHED ? row.updated_at : '-'
+      return row.is_scheduled === true ? row.scheduled_datetime : row.status === this.status.PUBLISHED ? row.updated_at : '-'
     },
 
     changeSort(e) {
