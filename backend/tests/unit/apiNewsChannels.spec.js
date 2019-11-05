@@ -34,6 +34,7 @@ describe('API News Channel', () => {
     }
 
     expect(result).not.toBeDefined()
+    expect(errReceived).not.toBeDefined()
     expect(errResponse.success).toBeFalsy()
     expect(errResponse.status).toBe(422)
     expect(errResponse.data.name).toEqual(errResponse.data.name)
@@ -61,6 +62,7 @@ describe('API News Channel', () => {
     }
 
     expect(result).not.toBeDefined()
+    expect(errReceived).not.toBeDefined()
     expect(errResponse.success).toBeFalsy()
     expect(errResponse.status).toBe(422)
     expect(errResponse.data.website).toEqual(errResponse.data.website)
