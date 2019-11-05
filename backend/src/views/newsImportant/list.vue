@@ -45,7 +45,7 @@
               </el-tooltip>
             </router-link>
             <el-tooltip :content="$t('label.newsImportant-tooltip-delete')" placement="top">
-              <el-button type="danger" icon="el-icon-delete" size="small" :disabled="scope.row.status === 10" @click="deleteNewsImportant(scope.row.id)" />
+              <el-button type="danger" icon="el-icon-delete" size="small" :disabled="scope.row.status === 10 || scope.row.created_by !== user_id" @click="deleteNewsImportant(scope.row.id)" />
             </el-tooltip>
             <el-tooltip :content="$t('label.newsImportant-tooltip-nonactive')" placement="top">
               <el-button v-if="scope.row.status === 10" type="danger" icon="el-icon-circle-close" size="small" :disabled="scope.row.created_by !== user_id" @click="deactivateRecord(scope.row.id)" />
@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import { fetchList } from '@/api/newsImportant'
+import { fetchList, deleteData, deactivate, activate } from '@/api/newsImportant'
 import { mapGetters } from 'vuex'
 import ListFilter from './_listfilter'
 import Pagination from '@/components/Pagination'
@@ -126,7 +126,62 @@ export default {
       Object.assign(this.$data.listQuery, this.$options.data().listQuery)
       this.getList()
     },
-    deleteNewsImportant() {}
+    async deleteNewsImportant(id) {
+      try {
+        await this.$confirm(this.$t('crud.delete-confirm'), 'warning', {
+          confirmButtonText: this.$t('common.confirm'),
+          cancelButtonText: this.$t('common.cancel'),
+          type: 'warning'
+        })
+
+        this.listLoading = true
+
+        await deleteData(id)
+
+        this.$message.success(this.$t('crud.delete-success'))
+
+        this.getList()
+      } catch (e) {
+        console.log(e)
+      }
+    },
+    async deactivateRecord(id) {
+      try {
+        await this.$confirm(this.$t('crud.deactivate-confirm'), 'Warning', {
+          confirmButtonText: this.$t('common.confirm'),
+          cancelButtonText: this.$t('common.cancel'),
+          type: 'warning'
+        })
+
+        this.listLoading = true
+
+        await deactivate(id)
+
+        this.$message.success(this.$t('crud.deactivate-success'))
+
+        this.getList()
+      } catch (e) {
+        console.log(e)
+      }
+    },
+    async activateRecord(id) {
+      try {
+        await this.$confirm(this.$t('crud.activate-confirm'), 'Warning', {
+          confirmButtonText: this.$t('common.confirm'),
+          cancelButtonText: this.$t('common.cancel'),
+          type: 'warning'
+        })
+        this.listLoading = true
+
+        await activate(id)
+
+        this.$message.success(this.$t('crud.activate-success'))
+
+        this.getList()
+      } catch (e) {
+        console.log(e)
+      }
+    }
   }
 }
 </script>
