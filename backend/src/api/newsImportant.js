@@ -2,8 +2,7 @@ import request from '@/utils/request'
 
 export function fetchList(query) {
   return request({
-    // url: '/news-important',
-    baseURL: 'http://52.74.74.33:3000/api/v1/news-important',
+    url: '/news-important',
     method: 'get',
     params: query
   })
