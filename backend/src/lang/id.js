@@ -316,8 +316,8 @@ export default {
     'popup-url-not-null': 'Tautan harus diisi.',
     'popup-type-name-not-null': 'Judul harus diisi.',
 
-    'popup-informasi-title': 'Isian Judul mengandung karakter yang tidak diizinkan.',
-    'popup-informasi-description': 'Isian Deskripsi mengandung karakter yang tidak diizinkan.',
+    'popup-informasi-title': 'Judul pop-up mengandung karakter yang tidak diizinkan.',
+    'popup-informasi-description': 'Deskripsi mengandung karakter yang tidak diizinkan.',
 
     'dashboard-map-error': 'Gagal memuat map',
     'broadcast-datetime': 'Jadwal yang dipilih telah lewat',
@@ -382,6 +382,10 @@ export default {
     'newsHoax': 'Berita Hoax'
   },
   label: {
+    'notes': 'Catatan:',
+    'maximum-dimension-image': 'Ukuran maksimal 1280x720 pixel (Landscape)',
+    'maximum-size-image': 'Maximum upload file size: 5 Mb.',
+
     'fullname': 'Nama Lengkap',
     'name': 'Nama',
     'username': 'Username',
