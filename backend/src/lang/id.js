@@ -94,7 +94,13 @@ export default {
     'popup-informasi-list': 'Pop-Up Informasi',
     'popup-informasi-create': 'Tambah Pop-Up Informasi',
     'popup-informasi-edit': 'Edit Pop-Up Informasi',
-    'popup-informasi-detail': 'Detail Pop-Up Informasi'
+    'popup-informasi-detail': 'Detail Pop-Up Informasi',
+
+    'news-important-manage': 'Info Pendidikan',
+    'news-important-edit': 'Edit Info Pendidikan',
+    'news-important-list': 'Daftar Info Pendidikan',
+    'news-important-create': 'Tambah Info Pendidikan',
+    'news-important-detail': 'Detail Info Pendidikan'
   },
   crud: {
     'list-empty': 'Belum ada data.',
@@ -118,6 +124,7 @@ export default {
     'save-user': 'Tambah Pengguna',
     'save-banner': 'Tambah Banner',
     'save-popup': 'Tambah Pop Up',
+    'save-newsImportant': 'Tambah Info Pendidikan',
 
     'back-to-list': 'Kembali ke Daftar',
     'send-polling': 'Publikasikan Polling',
@@ -344,6 +351,14 @@ export default {
     'status': 'Status',
     'status-draft': 'Draft',
     'status-scheduled': 'Dijadwalkan',
-    'status-published': 'Dipublikasikan'
+    'status-published': 'Dipublikasikan',
+
+    'newsImportant-title': 'Judul Info Pendidikan',
+    'newsImportant-date': 'Tanggal Publikasi',
+    'newsImportant-tooltip-detail': 'Detail Info Pendidikan',
+    'newsImportant-tooltip-edit': 'Edit Info Pendidikan',
+    'newsImportant-tooltip-delete': 'Hapus Info Pendidikan',
+    'newsImportant-tooltip-active': 'Aktifkan Info Pendidikan',
+    'newsImportant-tooltip-nonactive': 'Nonaktifkan Info Pendidikan'
   }
 }
