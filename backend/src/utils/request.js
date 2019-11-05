@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { Message } from 'element-ui'
 import store from '@/store'
+import router from '@/router'
 import { getToken } from '@/utils/auth'
 
 // create an axios instance
@@ -42,7 +43,6 @@ service.interceptors.response.use(
     const res = response.data
 
     return res
-
     // if (res.status !== 20000) {
     // Message({
     //   message: res.message,
@@ -73,6 +73,14 @@ service.interceptors.response.use(
     // }
   },
   error => {
+    if (error.response.status === 401) {
+      router.push('/401')
+    }
+
+    if (error.response.status === 404) {
+      router.push('/404')
+    }
+
     if (error.response.status === 500) {
       let message = 'Oops, telah terjadi kesalahan, silahkan muat ulang halaman ini.'
       if (error.response.data.data !== undefined) {
@@ -97,7 +105,33 @@ service.interceptors.response.use(
       })
     }
 
-    return Promise.reject(error)
+    if (error.response && error.response.status !== 422) {
+      if (error.response.status === 500) {
+        let message = 'Oops, telah terjadi kesalahan, silahkan muat ulang halaman ini.'
+        if (error.response.data.data !== undefined) {
+          message = error.response.data.data.message
+        }
+        Message({
+          message: message,
+          type: 'error',
+          duration: 5 * 1000
+        })
+      } else if (error.response.status !== 422) {
+        Message({
+          message: 'Oops, telah terjadi kesalahan, silahkan muat ulang halaman ini.',
+          type: 'error',
+          duration: 5 * 1000
+        })
+      } else if (error.message === 'Network Error') {
+        Message({
+          message: 'Oops, telah terjadi kesalahan, periksa kembali koneksi Internet Anda.',
+          type: 'error',
+          duration: 5 * 1000
+        })
+      }
+
+      return Promise.reject(error)
+    }
   }
 )
 

@@ -1,6 +1,6 @@
 export default {
   route: {
-    dashboard: 'Dashboard',
+    'dashboard': 'Dashboard',
     'profile': 'Profil',
     'profile-edit': 'Edit Profil',
 
@@ -184,6 +184,8 @@ export default {
   users: {
     'download-data': 'Unduh Data',
     'users-add-new': 'Tambah Pengguna Baru',
+    'users-edit': 'Edit Pengguna',
+    'users-edit-profile': 'Edit Profil',
     'users-import-data': 'Unggah Data Pengguna Sapawarga',
     'users-dialog-text-import-csv': 'Anda dapat melakukan unggah data dengan mengunggah file dengan tipe CSV.',
     'users-dialog-text-template-file': 'Template file dapat diunduh pada ',
@@ -241,6 +243,60 @@ export default {
     'internal-server-error': 'Telah terjadi kesalahan sistem, silahkan muat ulang halaman ini.',
     'url-not-valid': 'URL tidak valid',
 
+    'phone-number-must-be-start-0': 'Nomor telepon harus dimulai dari 0',
+    'password-dont-match': 'Password tidak sesuai',
+    'coordinates-must-be-filled': 'Koordinat Lokasi harus diisi.',
+    'coordinates-only-use-numbers-periods': 'Koordinat Lokasi hanya boleh menggunakan angka, titik, - atau +',
+
+    'coordinates-dont-match': 'Koordinat Lokasi tidak sesuai',
+    'text-not-valid': 'Text yang diisi tidak valid',
+
+    'username-must-be-filled': 'Username harus diisi',
+    'username-must-be-at-least-4-characters': 'Username minimal 4 karakter',
+    'username-must-be-at-least-255-characters': 'Username maksimal 255 karakter',
+    'username-only-use-lowercase-letters-numbers-underscore-and-dots': 'Username hanya boleh menggunakan huruf kecil, angka, underscore dan titik',
+    'username-already-used': 'Username sudah digunakan',
+    'username-email-already-used': 'Username dan email sudah digunakan',
+    'fullname-must-be-filled': 'Nama Lengkap harus diisi',
+    'fullname-be-at-least-255-characters': 'Nama Lengkap maksimal 255 karakter',
+    'fullname-only-use-letters-aposthrope-dots': 'Nama Lengkap hanya boleh menggunakan huruf, aposthrope dan titik',
+
+    'email-must-be-filled': 'Email harus diisi',
+    'email-must-be-at-least-3-characters': 'Alamat email minimal 3 karakter',
+    'email-must-be-at-least-255-characters': 'Email terlalu panjang, maksimal 255 karakter',
+    'email-wrong-format': 'Format email yang Anda masukan salah',
+    'email-already-used': 'Alamat email sudah digunakan',
+
+    'password-must-be-filled': 'Password tidak boleh kosong',
+    'password-must-be-at-least-255-characters': 'Password maksimal 255 karakter',
+    'password-must-be-at-least-5-characters': 'Password minimal 5 karakter',
+    'password-only-use-letters-number-characters': 'Karakter password hanya boleh menggunakan huruf, angka dan spesial karakter',
+
+    'please-repeat-the-password': 'Mohon ulangi password',
+    'phone-number-must-be-filled': 'Nomor telepon harus diisi',
+    'phone-number-must-must-be-at-least-3-characters': 'Nomor telepon minimal 3 karakter',
+    'phone-number-must-must-be-at-least-13-characters': 'Nomor telepon maksimal 13 karakter',
+    'phone-number-only-use-number': 'Nomor telepon hanya boleh menggunakan angka',
+
+    'address-must-be-filled': 'Alamat harus diisi',
+    'address-must-be-at-least-255-characters': 'Alamat maksimal 255 karakter',
+    'area-kabkota-must-be-filled': 'Kab/Kota harus diisi',
+    'area-kecamatan-must-be-filled': 'Kecamatan harus diisi',
+
+    'area-kel-must-be-filled': 'Desa/Kelurahan harus diisi',
+    'rw-must-be-filled': 'RW harus diisi',
+    'rw-only-use-number': 'RW harus menggunakan angka',
+    'rw-must-be-at-least-3-number': 'RW harus 3 angka',
+
+    'rt-must-be-filled': 'RW harus diisi',
+    'rt-only-use-number': 'RW harus menggunakan angka',
+    'rt-must-be-at-least-3-number': 'RW harus 3 angka',
+
+    'role-must-be-filled': 'Peran harus diisi',
+    'twitter-only-use-lowercase-letters-numbers-underscore-and-dots': 'Twitter hanya boleh menggunakan huruf, angka, titik dan underscore',
+    'enter-your-facebook-URL-in-full': 'Masukan url facebook secara lengkap, contoh: https://www.facebook.com/namapengguna',
+    'instagram-only-use-lowercase-letters-numbers-underscore-and-dots': 'Instagram hanya boleh menggunakan huruf, angka, titik dan underscore',
+
     'polling-compare-date': 'Tanggal berakhir polling harus lebih besar dari tanggal mulai polling.',
     'polling-start-date': 'Tanggal mulai polling tidak boleh lebih kecil dari tanggal hari ini.',
     'polling-answer-less-then-2': 'Tipe pertanyaan custom minimal dua pilihan',
@@ -258,21 +314,20 @@ export default {
 
     'popup-kategori-not-null': 'Kategori Pop Up harus diisi.',
     'popup-url-not-null': 'Tautan harus diisi.',
-    'popup-fitur-not-null': 'Fitur Pop Up harus diisi.',
     'popup-type-name-not-null': 'Judul harus diisi.',
-    'popup-start-date-not-null': 'Tanggal Mulai harus diisi.',
-    'popup-end-date-not-null': 'Tanggal Berakhir harus diisi.',
-    'popup-description-not-null': 'Deskripsi harus diisi.',
 
     'popup-informasi-title': 'Isian Judul mengandung karakter yang tidak diizinkan.',
     'popup-informasi-description': 'Isian Deskripsi mengandung karakter yang tidak diizinkan.',
 
     'dashboard-map-error': 'Gagal memuat map',
-
     'broadcast-datetime': 'Jadwal yang dipilih telah lewat',
 
-    'user-import-empty-file': 'File tidak boleh kosong. Silahkan pilih file terlebih dahulu',
+    'popup-fitur-not-null': 'Fitur Pop Up harus diisi.',
+    'popup-start-date-not-null': 'Tanggal Mulai harus diisi.',
+    'popup-end-date-not-null': 'Tanggal Berakhir harus diisi.',
+    'popup-description-not-null': 'Deskripsi harus diisi.',
 
+    'user-import-empty-file': 'File tidak boleh kosong. Silahkan pilih file terlebih dahulu',
     'broadcast-datetime-edit': 'Jadwal yang dipilih telah lewat. Silahkan edit terlebih dahulu',
     'broadcast-title': 'Judul pesan mengandung karakter yang tidak diperbolehkan',
     'broadcast-description': 'Isi pesan mengandung karakter yang tidak diperbolehkan',
@@ -291,6 +346,9 @@ export default {
     'title-reject': 'Konfirmasi Penolakan',
     'title': 'Konfirmasi',
     'category': 'Kategori harus diisi',
+
+    'user-successfully-added': 'Pengguna berhasil ditambahkan',
+    'user-data-successfully-updated': 'Data user berhasil diupdate',
 
     'broadcast-title-required': 'Judul pesan harus diisi',
     'broadcast-title-min': 'Judul pesan minimal 10 karakter',
@@ -324,11 +382,45 @@ export default {
     'newsHoax': 'Berita Hoax'
   },
   label: {
+    'fullname': 'Nama Lengkap',
+    'name': 'Nama',
+    'username': 'Username',
+    'email': 'Email',
+    'place': 'Kedudukan',
+    'password': 'Password',
+    'repeat-password': 'Ulangi Password',
+    'role': 'Peran',
+    'last-access': 'Akses Terakhir',
+    'telepon': 'Telepon',
+    'education': 'Pendidikan',
+    'job': 'Pekerjaan',
+    'birthdate': 'Tanggal Lahir',
+    'location-user': 'Lokasi Pengguna',
+    'address': 'Alamat',
+    'coordinates': 'Koordinat Lokasi',
+    'social-media': 'Media Sosial',
+
+    'your-location': 'Lokasi Anda',
+    'contact': 'Kontak',
+    'more-information': 'Informasi Tambahan',
+
+    'area-rt': 'RT',
     'area-rw': 'RW',
     'area': 'Wilayah',
-    'area-kec': 'Kecamatan',
     'area-kel': 'Desa/Kelurahan',
+    'choose-area-kel': 'Pilih Desa/Kelurahan',
+    'area-kec': 'Kecamatan',
+    'choose-area-kec': 'Pilih Kecamatan',
     'area-kabkota': 'Kabupaten/Kota',
+    'choose-area-kabkota': 'Pilih Kabupaten/Kota',
+    'choose-education': 'Pilih Pendidikan',
+    'choose-job': 'Pilih Pekerjaan',
+    'choose-birthdate': 'Pilih Tanggal Lahir',
+
+    'created-at': 'Tanggal Dibuat',
+    'updated-at': 'Tanggal Diperbarui',
+    'last-login-at': 'Terakhir Login',
+    'last-access-at': 'Terakhir Akses',
 
     'target': 'Target',
     'send_at': 'Dikirim',
