@@ -337,6 +337,7 @@ export default {
     'area-kel': 'Desa/Kelurahan',
     'area-kabkota': 'Kabupaten/Kota',
 
+    'title': 'Judul',
     'target': 'Target',
     'send_at': 'Dikirim',
     'actions': 'Actions',
@@ -353,11 +354,12 @@ export default {
     'status-scheduled': 'Dijadwalkan',
     'status-published': 'Dipublikasikan',
 
-    'newsImportant-title': 'Judul Info Pendidikan',
+    'newsImportant-description': 'Deskripsi',
     'newsImportant-date': 'Tanggal Publikasi',
-    'newsImportant-tooltip-detail': 'Detail Info Pendidikan',
+    'newsImportant-title': 'Judul Info Pendidikan',
     'newsImportant-tooltip-edit': 'Edit Info Pendidikan',
     'newsImportant-tooltip-delete': 'Hapus Info Pendidikan',
+    'newsImportant-tooltip-detail': 'Detail Info Pendidikan',
     'newsImportant-tooltip-active': 'Aktifkan Info Pendidikan',
     'newsImportant-tooltip-nonactive': 'Nonaktifkan Info Pendidikan'
   }
