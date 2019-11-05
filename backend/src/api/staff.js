@@ -102,6 +102,20 @@ export function fetchUser(id) {
   })
 }
 
+export function getEducationList() {
+  return request({
+    url: '/job-types',
+    method: 'get'
+  })
+}
+
+export function getJobList() {
+  return request({
+    url: '/education-levels',
+    method: 'get'
+  })
+}
+
 export function fetchExport(query) {
   return request({
     url: '/staff/export',
