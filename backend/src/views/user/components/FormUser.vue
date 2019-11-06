@@ -170,6 +170,7 @@
               :clearable="false"
               format="yyyy-MM-dd"
               value-format="yyyy-MM-dd"
+              :picker-options="birthdateOptions"
               :placeholder="$t('label.choose-birthdate')"
             />
           </el-form-item>
@@ -238,6 +239,7 @@ import { fetchProfile, update } from '@/api/user'
 import { Message } from 'element-ui'
 import InputMap from '@/components/InputMap'
 import { validCoordinate, containsWhitespace } from '@/utils/validate'
+import moment from 'moment'
 
 export default {
   components: { uploadPhoto, InputMap },
@@ -390,6 +392,10 @@ export default {
       usernameValidation: 'username',
       emitUrlPhoto: '',
       setLinkEditPhoto: '',
+      birthdateOptions: {
+        disabledDate: this.optionsBirthDate,
+        defaultValue: moment().subtract(20, 'years').format("YYYY-MM-DD")
+      },
       // validation
       rules: {
         username: [
@@ -897,6 +903,9 @@ export default {
     },
     getUrlPhoto(url) {
       this.user.photo = url
+    },
+    optionsBirthDate(date) {
+      return date > moment().subtract(20, 'years')
     },
     checkPermission,
     fetchData(id) {
