@@ -47,7 +47,7 @@
               <el-form-item :label="$t('label.role')" prop="role">
                 <el-select v-model="user.role" placeholder="Pilih Peran" :disabled="isProfile || isEdit">
                   <el-option
-                    v-for="item in opsiPeran"
+                    v-for="item in filterRole"
                     :key="item.value"
                     :value="item.value"
                     :label="item.label"
