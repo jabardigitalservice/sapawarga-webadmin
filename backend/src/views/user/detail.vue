@@ -80,8 +80,7 @@ import PhotoBox from '@/components/PhotoBox'
 import MapThumb from '@/components/MapThumb'
 import { fetchUser } from '@/api/staff'
 import permission from '@/directive/permission/index.js'
-import { parsingDatetime } from '@/utils/datetimeToString'
-import moment from 'moment'
+import { parsingDatetime, formatDatetime } from '@/utils/datetimeToString'
 
 export default {
   components: { PhotoBox, MapThumb },
@@ -173,7 +172,7 @@ export default {
           },
           {
             title: this.$t('label.birthdate'),
-            content: birth_date || '-'
+            content: formatDatetime(birth_date, 'DD MMMM YYYY') || '-'
           },
           {
             title: this.$t('label.education'),
@@ -244,7 +243,7 @@ export default {
           },
           {
             title: this.$t('label.last-access-at'),
-            content: last_access_at ? moment(last_access_at).format('D MMMM YYYY HH:mm') : '-'
+            content: last_access_at ? formatDatetime(last_access_at, 'DD MMMM YYYY HH:mm') : '-'
           }
         ]
       })

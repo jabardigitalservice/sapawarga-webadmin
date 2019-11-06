@@ -338,10 +338,16 @@ export default {
     'broadcast-datetime-edit': 'Jadwal yang dipilih telah lewat. Silahkan edit terlebih dahulu',
     'broadcast-title': 'Judul pesan mengandung karakter yang tidak diperbolehkan',
     'broadcast-description': 'Isi pesan mengandung karakter yang tidak diperbolehkan',
-    'broadcast-title-description': 'Judul pesan dan Isi pesan mengandung karakter yang tidak diperbolehkan'
+    'broadcast-title-description': 'Judul pesan dan Isi pesan mengandung karakter yang tidak diperbolehkan',
+    'url-not-null': 'URL harus diisi.',
+    'news-channels-already-used': 'Website Sumber Berita sudah digunakan',
+    'news-channels-must-be-filled': 'Sumber Berita harus diisi.',
+    'news-channels-must-be-at-least-5-characters': 'Sumber Berita minimal 5 karakter',
+    'news-channels-must-be-at-least-25-characters': 'Sumber Berita maksimal 25 karakter',
+    'website-news-channels-already-used': 'Website Sumber Berita sudah digunakan'
   },
   navbar: {
-    profile: 'Lihat Profil',
+    'profile': 'Lihat Profil',
     'profile-edit': 'Edit Profil',
     'logOut': 'Log Out'
   },
@@ -448,6 +454,10 @@ export default {
     'status-draft': 'Draft',
     'status-scheduled': 'Dijadwalkan',
     'status-published': 'Dipublikasikan',
+
+    'popular-category': 'Kategori Populer',
+    'link-logo-news-channels-manage': 'Tautan Logo Sumber Berita',
+    'link': 'Tautan',
 
     'newsImportant-title': 'Judul Info Pendidikan',
     'newsImportant-date': 'Tanggal Publikasi',
