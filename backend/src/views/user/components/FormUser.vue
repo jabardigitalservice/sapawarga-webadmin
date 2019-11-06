@@ -394,7 +394,7 @@ export default {
       setLinkEditPhoto: '',
       birthdateOptions: {
         disabledDate: this.optionsBirthDate,
-        defaultValue: moment().subtract(20, 'years').format("YYYY-MM-DD")
+        defaultValue: moment().subtract(20, 'years').format('YYYY-MM-DD')
       },
       // validation
       rules: {
