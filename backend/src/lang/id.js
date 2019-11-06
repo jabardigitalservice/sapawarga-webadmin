@@ -447,7 +447,7 @@ export default {
     'status-draft': 'Draft',
     'status-scheduled': 'Dijadwalkan',
     'status-published': 'Dipublikasikan',
-    'popular-category': 'Kategori Popular',
+    'popular-category': 'Kategori Populer',
 
     'link-logo-news-channels-manage': 'Tautan Logo Sumber Berita',
     'link': 'Tautan'
