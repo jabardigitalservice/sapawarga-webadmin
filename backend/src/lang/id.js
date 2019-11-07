@@ -383,7 +383,18 @@ export default {
     'broadcast-scheduled_datetime': 'Tanggal dan waktu harus diisi',
     'broadcast-scheduled_datetime-expire': 'Tanggal dan waktu yang dipilih telah lewat',
 
-    'user-import-sending': 'Cek email Anda untuk progress unggah data'
+    'user-import-sending': 'Cek email Anda untuk progress unggah data',
+
+    'newsImportant-title-required': 'Judul info pendidikan harus diisi',
+    'newsImportant-title-min': 'Judul info pendidikan minimal 10 karakter',
+    'newsImportant-title-max': 'Judul info pendidikan maksimal 100 karakter',
+    'newsImportant-title-valid': 'Judul info pendidikan mengandung karakter yang tidak diizinkan',
+    'newsImportant-url-required': 'URL info pendidikan harus diisi',
+    'newsImportant-url-valid': 'URL info pendidikan mengandung karakter yang tidak diizinkan',
+    'newsImportant-url-match': 'URL info pendidikan tidak valid',
+    'newsImportant-description-required': 'Deskripsi harus diisi',
+    'newsImportant-description-max': 'Deskripsi maksimal 65000 karakter'
+
   },
   categoriTypes: {
     'phonebook': 'Nomor Penting',
@@ -440,12 +451,15 @@ export default {
     'last-login-at': 'Terakhir Login',
     'last-access-at': 'Terakhir Akses',
 
+    'url': 'Tautan',
+    'title': 'Judul',
     'target': 'Target',
     'send_at': 'Dikirim',
     'actions': 'Actions',
     'scheduled': 'Jadwal',
     'category': 'Kategori',
     'created_at': 'Dibuat',
+    'attachment': 'Lampiran',
     'description': 'Isi Pesan',
     'select-file': 'Pilih File',
     'title-broadcast': 'Judul Pesan',
@@ -460,11 +474,13 @@ export default {
     'link-logo-news-channels-manage': 'Tautan Logo Sumber Berita',
     'link': 'Tautan',
 
-    'newsImportant-title': 'Judul Info Pendidikan',
+    'newsImportant-description': 'Deskripsi',
     'newsImportant-date': 'Tanggal Publikasi',
-    'newsImportant-tooltip-detail': 'Detail Info Pendidikan',
+    'newsImportant-url': 'https://jabarprov.go.id',
+    'newsImportant-title': 'Judul Info Pendidikan',
     'newsImportant-tooltip-edit': 'Edit Info Pendidikan',
     'newsImportant-tooltip-delete': 'Hapus Info Pendidikan',
+    'newsImportant-tooltip-detail': 'Detail Info Pendidikan',
     'newsImportant-tooltip-active': 'Aktifkan Info Pendidikan',
     'newsImportant-tooltip-nonactive': 'Nonaktifkan Info Pendidikan'
   }
