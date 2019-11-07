@@ -152,17 +152,20 @@ export default {
       }
     }
   },
+
   computed: {
     ...mapGetters([
       'user_id'
     ])
   },
+
   created() {
     if (this.isEdit) {
       const id = this.$route.params && this.$route.params.id
       this.fetchData(id)
     }
   },
+  
   methods: {
     photoUploaded(path, url) {
       this.newsImportant.image_path = path
