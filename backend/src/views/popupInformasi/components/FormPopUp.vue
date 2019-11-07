@@ -379,7 +379,7 @@ export default {
           this.$router.push('/popup-informasi/index')
         } else {
           await create(data)
-          this.$message.success(this.$t('crud.send-success'))
+          this.$message.success(this.$t('crud.pop-up-send-success'))
           this.$router.push('/popup-informasi/index')
         }
       } catch (e) {
