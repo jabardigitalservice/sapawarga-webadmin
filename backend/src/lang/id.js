@@ -142,6 +142,7 @@ export default {
 
     'create-success': 'Data baru berhasil dibuat.',
     'update-success': 'Perubahan data berhasil disimpan.',
+    'pop-up-send-success': 'Popup informasi berhasil dibuat',
     'send-success': 'Pesan berhasil dikirim',
     'draft-success': 'Pesan berhasil disimpan di draft',
 
