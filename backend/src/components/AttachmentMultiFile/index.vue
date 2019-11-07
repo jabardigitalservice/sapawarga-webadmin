@@ -6,7 +6,7 @@
     <span v-if="file !== null" class="file-name">
       {{ file.name }}
       <el-tooltip class="item" effect="dark" content="Hapus lampiran" placement="right">
-        <span class="remove" @click="removeFile">x</span>
+        <span class="remove" @click="removeFile(index)">x</span>
       </el-tooltip>
     </span>
   </div>
@@ -15,18 +15,27 @@
 import { upload } from '@/api/attachments'
 export default {
   props: {
-
+    fileEdit: {
+      default: null,
+      type: String
+    },
+    index: {
+      default: null,
+      type: Number
+    }
   },
   data() {
     return {
       file: null
     }
   },
+  created() {
+    this.file = this.fileEdit
+  },
   methods: {
     handleFileUpload(event) {
       this.file = this.$refs.file.files[0]
-      // this.file = event.target.files[0]
-      console.log(this.file)
+
       this.onUpload()
     },
     async onUpload() {
@@ -48,9 +57,10 @@ export default {
         this.loading = false
       }
     },
-    removeFile() {
+    removeFile(key) {
       this.file = null
-      console.log(this.file)
+
+      this.$emit('getId', key)
     }
   }
 }
