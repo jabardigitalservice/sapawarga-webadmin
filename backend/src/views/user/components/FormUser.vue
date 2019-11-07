@@ -372,6 +372,10 @@ export default {
           value: 'staffKel'
         },
         {
+          label: 'Pelatih',
+          value: 'trainer'
+        },
+        {
           label: 'RW',
           value: 'staffRW'
         }
@@ -835,7 +839,7 @@ export default {
         this.imageData = dataProfile.photo_url || this.imageData
         this.setLinkEditPhoto = dataProfile.photo_url
         // assign to data
-        if (dataProfile.role_id === 'staffRW') {
+        if ((dataProfile.role_id === 'staffRW') || (dataProfile.role_id === 'trainer')) {
           this.user.kabkota = dataProfile.kabkota.name
           this.user.kecamatan = dataProfile.kecamatan.name
           this.user.kelurahan = dataProfile.kelurahan.name
@@ -919,7 +923,7 @@ export default {
           urlPhoto = dataUser.photo_url
         }
         // // assign to data
-        if (dataUser.role_id === 'staffRW') {
+        if ((dataUser.role_id === 'staffRW') || (dataUser.role_id === 'trainer')) {
           this.user.kabkota = dataUser.kabkota.name
           this.user.kecamatan = dataUser.kecamatan.name
           this.user.kelurahan = dataUser.kelurahan.name

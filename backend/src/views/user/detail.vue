@@ -172,7 +172,7 @@ export default {
           },
           {
             title: this.$t('label.birthdate'),
-            content: formatDatetime(birth_date, 'DD MMMM YYYY') || '-'
+            content: (birth_date ? formatDatetime(birth_date, 'DD MMMM YYYY') : '-')
           },
           {
             title: this.$t('label.education'),
