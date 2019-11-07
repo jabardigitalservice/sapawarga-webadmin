@@ -390,11 +390,12 @@ export default {
     'newsImportant-title-min': 'Judul info pendidikan minimal 10 karakter',
     'newsImportant-title-max': 'Judul info pendidikan maksimal 100 karakter',
     'newsImportant-title-valid': 'Judul info pendidikan mengandung karakter yang tidak diizinkan',
-    'newsImportant-url-required': 'URL info pendidikan harus diisi',
-    'newsImportant-url-valid': 'URL info pendidikan mengandung karakter yang tidak diizinkan',
-    'newsImportant-url-match': 'URL info pendidikan tidak valid',
+    'newsImportant-url-required': 'Tautan info pendidikan harus diisi',
+    'newsImportant-url-valid': 'Tautan info pendidikan mengandung karakter yang tidak diizinkan',
+    'newsImportant-url-match': 'Tautan info pendidikan tidak valid',
     'newsImportant-description-required': 'Deskripsi harus diisi',
-    'newsImportant-description-max': 'Deskripsi maksimal 65000 karakter'
+    'newsImportant-description-max': 'Deskripsi maksimal 65000 karakter',
+    'newsImportant-create-success': 'Informasi pendidikan berhasil dibuat'
 
   },
   categoriTypes: {
