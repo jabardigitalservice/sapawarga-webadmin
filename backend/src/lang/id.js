@@ -466,6 +466,9 @@ export default {
     'newsImportant-tooltip-edit': 'Edit Info Pendidikan',
     'newsImportant-tooltip-delete': 'Hapus Info Pendidikan',
     'newsImportant-tooltip-active': 'Aktifkan Info Pendidikan',
-    'newsImportant-tooltip-nonactive': 'Nonaktifkan Info Pendidikan'
+    'newsImportant-tooltip-nonactive': 'Nonaktifkan Info Pendidikan',
+
+    'newsImportant-detail': 'Detail Info Pendidikan',
+    'newsImportant-data': 'Data Info Pendidikan'
   }
 }
