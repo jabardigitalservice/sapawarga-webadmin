@@ -436,7 +436,7 @@ export default {
     'choose-birthdate': 'Pilih Tanggal Lahir',
 
     'created-at': 'Tanggal Dibuat',
-    'updated-at': 'Tanggal Diperbarui',
+    'profile-updated-at': 'Tanggal Profil Diperbarui',
     'last-login-at': 'Terakhir Login',
     'last-access-at': 'Terakhir Akses',
 
