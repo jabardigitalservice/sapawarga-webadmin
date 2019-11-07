@@ -98,8 +98,8 @@ import Pagination from '@/components/Pagination' // Secondary package based on e
 import PanelGroup from './components/PanelGroup'
 import permission from '@/directive/permission/index.js'
 import checkPermission from '@/utils/permission'
-import moment from 'moment'
 import ListFilter from './_listfilter'
+import { parsingDatetime } from '@/utils/datetimeToString'
 
 export default {
   components: { Pagination, ListFilter, PanelGroup },
@@ -276,7 +276,7 @@ export default {
     },
 
     formatterCell(row, column, cellValue, index) {
-      const value = cellValue ? moment(cellValue).format('D MMM YYYY HH:mm') : '-'
+      const value = cellValue ? parsingDatetime(cellValue, 'DD MMM YYYY HH:mm') : '-'
       return value
     },
 

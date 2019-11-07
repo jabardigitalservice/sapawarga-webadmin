@@ -136,7 +136,7 @@ export default {
           twitter,
           username,
           created_at,
-          updated_at,
+          profile_updated_at,
           last_login_at,
           last_access_at,
           job_type,
@@ -234,8 +234,8 @@ export default {
             content: created_at ? parsingDatetime(created_at) : '-'
           },
           {
-            title: this.$t('label.updated-at'),
-            content: updated_at ? parsingDatetime(updated_at) : '-'
+            title: this.$t('label.profile-updated-at'),
+            content: profile_updated_at ? parsingDatetime(profile_updated_at) : '-'
           },
           {
             title: this.$t('label.last-login-at'),
@@ -243,7 +243,7 @@ export default {
           },
           {
             title: this.$t('label.last-access-at'),
-            content: last_access_at ? formatDatetime(last_access_at, 'DD MMMM YYYY HH:mm') : '-'
+            content: last_access_at ? parsingDatetime(last_access_at) : '-'
           }
         ]
       })
