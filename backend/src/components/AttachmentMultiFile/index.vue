@@ -17,7 +17,7 @@ export default {
   props: {
     fileEdit: {
       default: null,
-      type: String
+      type: Object
     },
     index: {
       default: null,

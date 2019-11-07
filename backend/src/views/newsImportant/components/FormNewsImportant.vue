@@ -68,14 +68,6 @@ export default {
       callback()
     }
 
-    const validatorHTMLDescription = (rule, value, callback) => {
-      if (isContainHtmlTags(value) === true) {
-        callback(new Error(this.$t('errors.broadcast-description')))
-      }
-
-      callback()
-    }
-
     const validatorUrl = (rule, value, callback) => {
       if (validUrl(value) === false) {
         callback(new Error(this.$t('message.newsImportant-url-match')))
@@ -155,10 +147,6 @@ export default {
             max: 65000,
             message: this.$t('message.newsImportant-title-max'),
             trigger: 'blur'
-          },
-          {
-            validator: validatorHTMLDescription,
-            trigger: 'blur'
           }
         ]
       }
@@ -206,8 +194,6 @@ export default {
         const data = {}
         Object.assign(data, this.newsImportant)
         data.status = this.status.INACTIVE
-
-        console.log(data)
 
         if (this.isEdit) {
           const id = this.$route.params && this.$route.params.id
