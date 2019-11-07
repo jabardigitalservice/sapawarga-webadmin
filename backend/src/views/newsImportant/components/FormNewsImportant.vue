@@ -165,7 +165,7 @@ export default {
       this.fetchData(id)
     }
   },
-  
+
   methods: {
     photoUploaded(path, url) {
       this.newsImportant.image_path = path
