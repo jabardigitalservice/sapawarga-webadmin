@@ -26,7 +26,7 @@
           </template>
         </el-table-column>
 
-        <el-table-column prop="updated_at" sortable="custom" :label="$t('label.newsImportant-date')" align="center" min-width="60">
+        <el-table-column prop="created_at" sortable="custom" :label="$t('label.newsImportant-date')" align="center" min-width="60">
           <template slot-scope="{row}">
             {{ row.updated_at | moment('D MMM YYYY HH:mm') }}
           </template>
@@ -39,7 +39,7 @@
                 <el-button type="primary" icon="el-icon-view" size="small" />
               </el-tooltip>
             </router-link>
-            <router-link :to="'/news-important/edit'">
+            <router-link :to="(scope.row.status !== 10 && scope.row.created_by === user_id ? '/news-important/edit/' +scope.row.id : '')">
               <el-tooltip :content="$t('label.newsImportant-tooltip-edit')" placement="top">
                 <el-button type="warning" icon="el-icon-edit" size="small" :disabled="scope.row.status === 10" />
               </el-tooltip>
