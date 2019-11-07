@@ -172,6 +172,7 @@ export default {
     'notification-error-edit-published': 'Sudah dipublish, tidak dapat di edit.',
     'video-error-edit-published': 'Sudah dipublish, tidak dapat di edit.',
     'error-edit-role': 'Anda tidak memiliki hak akses halaman ini.',
+    'newsImportant-error-edit-pubished': 'Sudah dipublish, tidak dapat diedit',
 
     'news-selected': 'Berita sudah dipilih'
   },
@@ -475,7 +476,7 @@ export default {
     'link': 'Tautan',
 
     'newsImportant-description': 'Deskripsi',
-    'newsImportant-date': 'Tanggal Publikasi',
+    'newsImportant-date': 'Tanggal Dibuat',
     'newsImportant-url': 'https://jabarprov.go.id',
     'newsImportant-title': 'Judul Info Pendidikan',
     'newsImportant-tooltip-edit': 'Edit Info Pendidikan',
