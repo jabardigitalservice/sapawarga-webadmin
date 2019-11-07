@@ -17,14 +17,13 @@
               <tinymce v-model="newsImportant.content" :height="250" />
             </div>
           </el-form-item>
-          <el-form-item :label="$t('label.url')" prop="link_url">
-            <el-input v-model="newsImportant.link_url" type="text" name="link_url" :placeholder="$t('label.newsImportant-url')" />
+          <el-form-item :label="$t('label.url')" prop="source_url">
+            <el-input v-model="newsImportant.source_url" type="text" name="link_url" :placeholder="$t('label.newsImportant-url')" />
           </el-form-item>
 
-          <!-- attachment -->
           <el-form-item :label="$t('label.attachment')">
             <div v-for="(data, index) in newsImportant.attachments" :key="index">
-              <AttachmentMultiFile @onUpload="attachmentFile" />
+              <AttachmentMultiFile :file-edit="data" :index="index" @onUpload="attachmentFile" @getId="remove" />
             </div>
             <el-button v-if="display" type="text" @click="addAttachment">Tambah Lampiran</el-button>
           </el-form-item>
@@ -44,10 +43,11 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import Tinymce from '@/components/Tinymce'
 import InputCategory from '@/components/InputCategory'
 import { validUrl, isContainHtmlTags } from '@/utils/validate'
-import { create, update } from '@/api/newsImportant'
+import { create, update, fetchRecord } from '@/api/newsImportant'
 import AttachmentMultiFile from '@/components/AttachmentMultiFile'
 import AttachmentPhotoUpload from '@/components/AttachmentPhotoUpload'
 
@@ -68,6 +68,14 @@ export default {
       callback()
     }
 
+    const validatorHTMLDescription = (rule, value, callback) => {
+      if (isContainHtmlTags(value) === true) {
+        callback(new Error(this.$t('errors.broadcast-description')))
+      }
+
+      callback()
+    }
+
     const validatorUrl = (rule, value, callback) => {
       if (validUrl(value) === false) {
         callback(new Error(this.$t('message.newsImportant-url-match')))
@@ -77,6 +85,10 @@ export default {
     }
 
     return {
+      status: {
+        INACTIVE: 0,
+        ACTIVE: 10
+      },
       loading: false,
       file: null,
       display: true,
@@ -84,7 +96,7 @@ export default {
         title: null,
         category_id: null,
         content: null,
-        link_url: null,
+        source_url: null,
         image_path: null,
         image_path_url: null,
         attachments: []
@@ -118,7 +130,7 @@ export default {
             trigger: 'change'
           }
         ],
-        link_url: [
+        source_url: [
           {
             required: true,
             message: this.$t('message.newsImportant-title-required'),
@@ -143,18 +155,44 @@ export default {
             max: 65000,
             message: this.$t('message.newsImportant-title-max'),
             trigger: 'blur'
+          },
+          {
+            validator: validatorHTMLDescription,
+            trigger: 'blur'
           }
-
         ]
       }
     }
   },
-  watch: {
-
+  computed: {
+    ...mapGetters([
+      'user_id'
+    ])
+  },
+  created() {
+    if (this.isEdit) {
+      const id = this.$route.params && this.$route.params.id
+      this.fetchData(id)
+    }
   },
   methods: {
     photoUploaded(path, url) {
       this.newsImportant.image_path = path
+    },
+    fetchData(id) {
+      fetchRecord(id).then(response => {
+        this.newsImportant = response.data
+
+        if (this.newsImportant.created_by !== this.user_id) {
+          this.$message.error(this.$t('crud.error-edit-role'))
+          this.$router.push('/news-important/index')
+        } else if (this.newsImportant.status === this.status.ACTIVE) {
+          this.$message.error(this.$t('crud.newsImportant-error-edit-published'))
+          this.$router.push('/news-important/index')
+        }
+      }).catch(error => {
+        console.log(error)
+      })
     },
     async submitForm() {
       const valid = await this.$refs.newsImportant.validate()
@@ -167,11 +205,12 @@ export default {
         this.loading = true
         const data = {}
         Object.assign(data, this.newsImportant)
-        data.status = 0
+        data.status = this.status.INACTIVE
 
         console.log(data)
 
         if (this.isEdit) {
+          const id = this.$route.params && this.$route.params.id
           await update(id, data)
           this.$message.success(this.$t('crud.update-success'))
           this.$router.push('/news-important/index')
@@ -187,15 +226,6 @@ export default {
       }
     },
     attachmentFile(path, url) {
-      // this.newsImportant.attachments = path
-      // this.newsImportant.attachments.unshift({
-      //   'file_path': path
-      // })
-      // this.newsImportant.attachments[{
-      //   'file_path': path
-      // }]
-      // this.newsImportant.attachments[0]
-
       this.newsImportant.attachments[this.newsImportant.attachments.length - 1] = {
         'file_path': path
       }
@@ -207,6 +237,9 @@ export default {
       if (this.newsImportant.attachments.length === 5) {
         this.display = false
       }
+    },
+    remove(index) {
+      this.newsImportant.attachments.splice(index, 1)
     }
   }
 }
