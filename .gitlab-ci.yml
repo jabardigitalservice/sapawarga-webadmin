@@ -193,7 +193,7 @@ deploy_staging_eks:
         -f kubernetes/webadmin-deployment.yaml
         -f kubernetes/webadmin-service.yaml # mode development
 
-deploy_prod_eks_v2:
+deploy_prod_eks:
   stage: deploy_prod
   image: dtzar/helm-kubectl
   when: manual
