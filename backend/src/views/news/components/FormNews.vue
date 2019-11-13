@@ -140,6 +140,9 @@ export default {
       },
       checkStaff: false,
       area: null,
+      listQueryChannel: {
+        limit: false
+      },
       options: null,
       statusOptions: [
         { value: 10, label: 'Aktif' },
@@ -333,7 +336,7 @@ export default {
       }
     },
     getNewsChannel() {
-      newsChannelList().then(response => {
+      newsChannelList(this.listQueryChannel).then(response => {
         this.options = response.data.items
       })
     }
