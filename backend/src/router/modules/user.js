@@ -97,6 +97,18 @@ const userRouter = {
       }
     },
     {
+      name: 'user-list-trainer',
+      path: 'user-trainer',
+      component: () => import('@/views/user/list'),
+      props: {
+        roleId: 'trainer'
+      },
+      meta: {
+        title: 'user-list-trainer',
+        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec']
+      }
+    },
+    {
       name: 'user-edit',
       path: 'edit/:id',
       component: () => import('@/views/user/edit'),

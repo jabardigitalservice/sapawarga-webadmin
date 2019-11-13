@@ -3,7 +3,7 @@
     <el-row :gutter="40" class="panel-group">
       <el-card class="box-card">
         <div slot="header" class="clearfix">
-          <span>Total user per:</span>
+          <span>{{ $t('label.count-user-each-role') }}:</span>
         </div>
         <div style="margin-bottom:50px;">
           <el-col v-if="(roleId == null && totalAllUser != null)" :xs="12" :sm="12" :lg="6" class="card-panel-col total-all">
@@ -13,7 +13,7 @@
               </div>
               <div class="card-panel-description">
                 <div class="card-panel-text">
-                  Semua
+                  {{ $t('label.all') }}
                 </div>
                 <count-to :start-val="0" :end-val="totalAllUser" :duration="duration" class="card-panel-num" />
               </div>
@@ -26,7 +26,7 @@
               </div>
               <div class="card-panel-description">
                 <div class="card-panel-text">
-                  Provinsi
+                  {{ $t('label.widget-province') }}
                 </div>
                 <count-to :start-val="0" :end-val="totalUserProvince" :duration="duration" class="card-panel-num" />
               </div>
@@ -39,7 +39,7 @@
               </div>
               <div class="card-panel-description">
                 <div class="card-panel-text">
-                  Kota/Kab
+                  {{ $t('label.widget-kabkota') }}
                 </div>
                 <count-to :start-val="0" :end-val="totalUserKabKota" :duration="duration" class="card-panel-num" />
               </div>
@@ -52,7 +52,7 @@
               </div>
               <div class="card-panel-description">
                 <div class="card-panel-text">
-                  Kecamatan
+                  {{ $t('label.widget-kecamatan') }}
                 </div>
                 <count-to :start-val="0" :end-val="totalUserKec" :duration="duration" class="card-panel-num" />
               </div>
@@ -65,7 +65,7 @@
               </div>
               <div class="card-panel-description">
                 <div class="card-panel-text">
-                  Desa/Kel
+                  {{ $t('label.widget-kelurahan') }}
                 </div>
                 <count-to :start-val="0" :end-val="totalUserKel" :duration="duration" class="card-panel-num" />
               </div>
@@ -78,22 +78,35 @@
               </div>
               <div class="card-panel-description">
                 <div class="card-panel-text">
-                  RW
+                  {{ $t('label.widget-rw') }}
                 </div>
                 <count-to :start-val="0" :end-val="totalUserRw" :duration="duration" class="card-panel-num" />
               </div>
             </div>
           </el-col>
-          <el-col v-if="(roleId == null && totalUserProvince != null) || (roleId == 'staffSaberhoax') && (totalUserProvince != null)" :xs="12" :sm="12" :lg="6" class="card-panel-col total-rw">
+          <el-col v-if="(roleId == null && totalUserProvince != null) || (roleId == 'staffSaberhoax') && (totalUserProvince != null)" :xs="12" :sm="12" :lg="6" class="card-panel-col total-saber-hoax">
             <div class="card-panel">
-              <div class="card-panel-icon-wrapper icon-people-rt">
+              <div class="card-panel-icon-wrapper icon-people-saber-hoax">
                 <svg-icon icon-class="peoples" class-name="card-panel-icon" />
               </div>
               <div class="card-panel-description">
-                <div class="card-panel-text-jsh">
-                  Saber Hoax
+                <div class="card-panel-text">
+                  {{ $t('label.widget-saber-hoax') }}
                 </div>
-                <count-to :start-val="0" :end-val="totalUserSaberhoax" :duration="duration" class="card-panel-num" />
+                <count-to :start-val="0" :end-val="totalUserSaberHoax" :duration="duration" class="card-panel-num" />
+              </div>
+            </div>
+          </el-col>
+          <el-col v-if="(roleId == null && totalUserTrainer != null) || (roleId == 'staffProv') || (roleId == 'staffKabkota') || (roleId == 'staffKec') || (roleId == 'staffKel') || (roleId == 'trainer')" :xs="12" :sm="12" :lg="6" class="card-panel-col total-trainer">
+            <div class="card-panel">
+              <div class="card-panel-icon-wrapper icon-people-trainer">
+                <svg-icon icon-class="peoples" class-name="card-panel-icon" />
+              </div>
+              <div class="card-panel-description">
+                <div class="card-panel-text">
+                  {{ $t('label.widget-trainer') }}
+                </div>
+                <count-to :start-val="0" :end-val="totalUserTrainer" :duration="duration" class="card-panel-num" />
               </div>
             </div>
           </el-col>
@@ -140,7 +153,11 @@ export default {
       type: Number,
       default: 0
     },
-    totalUserSaberhoax: {
+    totalUserSaberHoax: {
+      type: Number,
+      default: 0
+    },
+    totalUserTrainer: {
       type: Number,
       default: 0
     },
@@ -223,6 +240,9 @@ export default {
     }
     .icon-people-rt {
       color: #76888e;
+    }
+    .icon-people-trainer {
+      color: #7a4880;
     }
     .icon-message {
       color: #36a3f7;
