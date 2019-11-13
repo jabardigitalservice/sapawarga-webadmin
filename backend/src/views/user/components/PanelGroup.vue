@@ -6,7 +6,7 @@
           <span>{{ $t('label.count-user-each-role') }}:</span>
         </div>
         <div style="margin-bottom:50px;">
-          <el-col v-if="(roleId == null && totalAllUser != null)" :xs="12" :sm="12" :lg="6" class="card-panel-col total-all">
+          <el-col v-if="(rolesWidget[RolesUser.ADMIN].includes(this.roleId))" :xs="12" :sm="12" :lg="6" class="card-panel-col total-all">
             <div class="card-panel">
               <div class="card-panel-icon-wrapper icon-people-all">
                 <svg-icon icon-class="peoples" class-name="card-panel-icon" />
@@ -19,7 +19,7 @@
               </div>
             </div>
           </el-col>
-          <el-col v-if="(roleId == null && totalUserProvince != null) || (roleId == 'staffProv') && (totalUserProvince != null)" :xs="12" :sm="12" :lg="6" class="card-panel-col total-province">
+          <el-col v-if="(rolesWidget[RolesUser.STAFFPROV].includes(this.roleId))" :xs="12" :sm="12" :lg="6" class="card-panel-col total-province">
             <div class="card-panel">
               <div class="card-panel-icon-wrapper icon-people-province">
                 <svg-icon icon-class="peoples" class-name="card-panel-icon" />
@@ -32,7 +32,7 @@
               </div>
             </div>
           </el-col>
-          <el-col v-if="(roleId == null && totalUserKabKota != null) || (roleId == 'staffProv') || (roleId == 'staffKabkota')" :xs="12" :sm="12" :lg="6" class="card-panel-col total-kota">
+          <el-col v-if="(rolesWidget[RolesUser.STAFFKABKOTA].includes(this.roleId))" :xs="12" :sm="12" :lg="6" class="card-panel-col total-kota">
             <div class="card-panel">
               <div class="card-panel-icon-wrapper icon-people-kota">
                 <svg-icon icon-class="peoples" class-name="card-panel-icon" />
@@ -45,7 +45,7 @@
               </div>
             </div>
           </el-col>
-          <el-col v-if="(roleId == null && totalUserKec != null) || (roleId == 'staffProv') || (roleId == 'staffKabkota') || (roleId == 'staffKec')" :xs="12" :sm="12" :lg="6" class="card-panel-col total-kec">
+          <el-col v-if="(rolesWidget[RolesUser.STAFFKEC].includes(this.roleId))" :xs="12" :sm="12" :lg="6" class="card-panel-col total-kec">
             <div class="card-panel">
               <div class="card-panel-icon-wrapper icon-people-kec">
                 <svg-icon icon-class="peoples" class-name="card-panel-icon" />
@@ -58,7 +58,7 @@
               </div>
             </div>
           </el-col>
-          <el-col v-if="(roleId == null && totalUserKel != null) || (roleId == 'staffProv') || (roleId == 'staffKabkota') || (roleId == 'staffKec') || (roleId == 'staffKel')" :xs="12" :sm="12" :lg="6" class="card-panel-col total-kel">
+          <el-col v-if="(rolesWidget[RolesUser.STAFFKEL].includes(this.roleId))" :xs="12" :sm="12" :lg="6" class="card-panel-col total-kel">
             <div class="card-panel">
               <div class="card-panel-icon-wrapper icon-people-kel">
                 <svg-icon icon-class="peoples" class-name="card-panel-icon" />
@@ -71,7 +71,7 @@
               </div>
             </div>
           </el-col>
-          <el-col v-if="(roleId == null && totalUserRw != null) || (roleId == 'staffProv') || (roleId == 'staffKabkota') || (roleId == 'staffKec') || (roleId == 'staffKel') || (roleId == 'staffRW')" :xs="12" :sm="12" :lg="6" class="card-panel-col total-rw">
+          <el-col v-if="(rolesWidget[RolesUser.STAFFRW].includes(this.roleId))" :xs="12" :sm="12" :lg="6" class="card-panel-col total-rw">
             <div class="card-panel">
               <div class="card-panel-icon-wrapper icon-people-rw">
                 <svg-icon icon-class="peoples" class-name="card-panel-icon" />
@@ -84,7 +84,7 @@
               </div>
             </div>
           </el-col>
-          <el-col v-if="(roleId == null && totalUserProvince != null) || (roleId == 'staffSaberhoax') && (totalUserProvince != null)" :xs="12" :sm="12" :lg="6" class="card-panel-col total-saber-hoax">
+          <el-col v-if="(rolesWidget[RolesUser.STAFFSABERHOAX].includes(this.roleId))" :xs="12" :sm="12" :lg="6" class="card-panel-col total-saber-hoax">
             <div class="card-panel">
               <div class="card-panel-icon-wrapper icon-people-saber-hoax">
                 <svg-icon icon-class="peoples" class-name="card-panel-icon" />
@@ -97,7 +97,7 @@
               </div>
             </div>
           </el-col>
-          <el-col v-if="(roleId == null && totalUserTrainer != null) || (roleId == 'staffProv') || (roleId == 'staffKabkota') || (roleId == 'staffKec') || (roleId == 'staffKel') || (roleId == 'trainer')" :xs="12" :sm="12" :lg="6" class="card-panel-col total-trainer">
+          <el-col v-if="(rolesWidget[RolesUser.TRAINER].includes(this.roleId))" :xs="12" :sm="12" :lg="6" class="card-panel-col total-trainer">
             <div class="card-panel">
               <div class="card-panel-icon-wrapper icon-people-trainer">
                 <svg-icon icon-class="peoples" class-name="card-panel-icon" />
@@ -118,11 +118,12 @@
 
 <script>
 import CountTo from 'vue-count-to'
+import { RolesUser, rolesWidget } from '@/utils/constantVariabel'
 
 export default {
   name: 'PanelGroupUser',
   components: {
-    CountTo
+    CountTo,
   },
   props: {
     roleId: {
@@ -165,7 +166,13 @@ export default {
       type: Number,
       default: 2600
     }
-  }
+  },
+  data() {
+    return {
+      RolesUser,
+      rolesWidget,
+    }
+  },
 }
 </script>
 

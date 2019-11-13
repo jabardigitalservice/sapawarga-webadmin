@@ -1,7 +1,17 @@
 <template>
   <div class="app-container">
 
-    <panel-group :role-id="roleId" :total-all-user="totalAllUser" :total-user-province="totalUserProvince" :total-user-kab-kota="totalUserKabKota" :total-user-kec="totalUserKec" :total-user-kel="totalUserKel" :total-user-rw="totalUserRw" :total-user-saberhoax="totalUserSaberhoax" :total-user-trainer="totalUserTrainer" />
+    <panel-group
+      :role-id="roleId"
+      :total-all-user="totalAllUser"
+      :total-user-province="totalUserProvince"
+      :total-user-kab-kota="totalUserKabKota"
+      :total-user-kec="totalUserKec"
+      :total-user-kel="totalUserKel"
+      :total-user-rw="totalUserRw"
+      :total-user-saberhoax="totalUserSaberhoax"
+      :total-user-trainer="totalUserTrainer"
+    />
 
     <el-row :gutter="20">
       <el-col :span="24">
@@ -100,6 +110,7 @@ import permission from '@/directive/permission/index.js'
 import checkPermission from '@/utils/permission'
 import ListFilter from './_listfilter'
 import { parsingDatetime } from '@/utils/datetimeToString'
+import store from '@/store'
 
 export default {
   components: { Pagination, ListFilter, PanelGroup },
@@ -118,7 +129,7 @@ export default {
   props: {
     roleId: {
       type: String,
-      default: null
+      default: store.getters.roles[0]
     }
   },
   data() {
@@ -163,7 +174,6 @@ export default {
   },
   methods: {
     checkPermission,
-
     getList() {
       this.listLoading = true
       fetchList(this.listQuery).then(response => {
