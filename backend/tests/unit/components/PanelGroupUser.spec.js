@@ -2,6 +2,7 @@ import { mount, createLocalVue } from "@vue/test-utils";
 import PanelGroup from "@/views/user/components/PanelGroup";
 import totalUser from "../fixtures/totalUser";
 import ElementUI from "element-ui";
+import { RolesUser, rolesWidget } from '@/utils/constantVariabel'
 //import SVG from '@/components/SvgIcon';
 // src/components/SvgIcon/index.vue
 import SvgIcon from "@/components/SvgIcon"; // svg组件
@@ -35,6 +36,8 @@ describe("PanelGroup User", () => {
 
   const build = () => {
     const wrapper = mount(PanelGroup, {
+      RolesUser,
+      rolesWidget,
       propsData: props,
       localVue,
       i18n
@@ -42,11 +45,9 @@ describe("PanelGroup User", () => {
     return {
       wrapper,
       cardColumnAllUser: () => wrapper.find(".card-panel-col" + selectorAll),
-      cardIconAllUser: () =>
-        wrapper.find(selectorAll).find(".card-panel-icon-wrapper"),
+      cardIconAllUser: () => wrapper.find(selectorAll).find(".card-panel-icon-wrapper"),
       cardTextAllUser: () => wrapper.find(selectorAll).find(".card-panel-text"),
-      cardNumberAllUser: () =>
-        wrapper.find(selectorAll).find(".card-panel-num"),
+      cardNumberAllUser: () => wrapper.find(selectorAll).find(".card-panel-num"),
       cardColumnUserProvince: () =>
         wrapper.find(".card-panel-col" + selectorUserProvince),
       cardIconUserProvince: () =>
@@ -105,7 +106,9 @@ describe("PanelGroup User", () => {
 
   beforeEach(() => {
     props = {
-      roleId: null,
+      roleId: 'admin',
+      rolesWidget: RolesUser,
+      RolesUser: rolesWidget,
       totalAllUser: totalAllUser,
       totalUserProvince: totalUserProvince,
       totalUserKabKota: totalUserKabKota,
@@ -123,7 +126,7 @@ describe("PanelGroup User", () => {
     const { wrapper } = build();
 
     // assert
-    // expect(wrapper.html()).toMatchSnapshot();
+    expect(wrapper.html()).toMatchSnapshot();
   });
 
   it("renders all card", done => {
@@ -165,7 +168,7 @@ describe("PanelGroup User", () => {
     } = build();
 
     // assert
-    expect(wrapper.props().roleId).toBe(null);
+    expect(wrapper.props().roleId).toBe("admin");
     expect(cardColumnAllUser().exists()).toBe(true);
     expect(cardIconAllUser().exists()).toBe(true);
     expect(cardTextAllUser().exists()).toBe(true);
@@ -218,7 +221,6 @@ describe("PanelGroup User", () => {
     expect(cardNumberUserTrainer().text()).toMatch("0");
     expect(cardTextUserTrainer().text()).toMatch("Pelatih");
     setTimeout(() => {
-      // expect(result.data.items[0].value).toEqual(expectedCount);
       expect(cardNumberAllUser().text()).toMatch(totalAllUser.toString());
       expect(cardNumberUserProvince().text()).toMatch(
         totalUserProvince.toString()
