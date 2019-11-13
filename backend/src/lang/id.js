@@ -410,6 +410,7 @@ export default {
     'newsHoax': 'Berita Hoax'
   },
   label: {
+    'sapawarga': 'sapawarga',
     'notes': 'Catatan:',
     'maximum-dimension-image': 'Ukuran maksimal 1280x720 pixel (Landscape)',
     'maximum-size-image': 'Maximum upload file size: 5 Mb.',
