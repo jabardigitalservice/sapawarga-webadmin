@@ -7,7 +7,7 @@
         </div>
         <div style="margin-bottom:50px;">
           <el-col
-            v-if="(rolesWidget[RolesUser.ADMIN].includes(roleId))"
+            v-if="(pages == 'all')"
             :xs="12"
             :sm="12"
             :lg="6"
@@ -175,6 +175,10 @@ export default {
   },
   props: {
     roleId: {
+      type: String,
+      default: null
+    },
+    pages: {
       type: String,
       default: null
     },

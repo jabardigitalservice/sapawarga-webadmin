@@ -26,12 +26,12 @@ export const RolesUser = Object.freeze({
 })
 
 export const rolesWidget = {
-  'admin': ['admin'],
+  'admin': ['admin', 'staffKel'],
   'staffProv': ['admin', 'staffProv'],
   'staffKabkota': ['admin', 'staffProv', 'staffKabkota'],
   'staffKec': ['admin', 'staffProv', 'staffKabkota', 'staffKec'],
   'staffKel': ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel'],
   'staffRW': ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel', 'staffRW'],
   'staffSaberhoax': ['admin', 'staffSaberhoax'],
-  'trainer': ['admin', 'trainer']
+  'trainer': ['admin', 'staffProv', 'trainer']
 }

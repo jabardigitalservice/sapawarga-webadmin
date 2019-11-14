@@ -107,6 +107,7 @@ describe("PanelGroup User", () => {
   beforeEach(() => {
     props = {
       roleId: 'admin',
+      pages: 'all',
       rolesWidget: RolesUser,
       RolesUser: rolesWidget,
       totalAllUser: totalAllUser,
@@ -255,7 +256,7 @@ describe("PanelGroup User", () => {
 
     const cardColumn = () => wrapper.find(".card-panel-col" + mainSelector);
 
-    expect(cardColumn().exists()).toBe(false);
+    expect(cardColumn().exists()).toBe(true);
   });
 
   it("hide total all user province when role is not province", () => {
