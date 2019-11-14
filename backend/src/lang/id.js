@@ -440,12 +440,14 @@ export default {
     'last-login-at': 'Terakhir Login',
     'last-access-at': 'Terakhir Akses',
 
+    'image': 'Gambar',
     'target': 'Target',
     'send_at': 'Dikirim',
     'actions': 'Actions',
     'scheduled': 'Jadwal',
     'category': 'Kategori',
     'created_at': 'Dibuat',
+    'attachment': 'Lampiran',
     'description': 'Isi Pesan',
     'select-file': 'Pilih File',
     'title-broadcast': 'Judul Pesan',
@@ -461,6 +463,7 @@ export default {
     'link': 'Tautan',
 
     'newsImportant-title': 'Judul Info Pendidikan',
+    'newsImportant-description': 'Deskripsi',
     'newsImportant-date': 'Tanggal Publikasi',
     'newsImportant-tooltip-detail': 'Detail Info Pendidikan',
     'newsImportant-tooltip-edit': 'Edit Info Pendidikan',
