@@ -9,7 +9,7 @@
       :total-user-kec="totalUserKec"
       :total-user-kel="totalUserKel"
       :total-user-rw="totalUserRw"
-      :total-user-saberhoax="totalUserSaberhoax"
+      :total-user-saber-hoax="totalUserSaberHoax"
       :total-user-trainer="totalUserTrainer"
     />
 
@@ -162,15 +162,15 @@ export default {
       totalUserKel: 0,
       totalUserRw: 0,
       totalUserTrainer: 0,
-      totalUserSaberhoax: 0,
+      totalUserSaberHoax: 0,
       visibleDialog: false,
       importDialogVisible: false,
       radio: '1'
     }
   },
   created() {
-    this.getList()
     this.getTotalUser()
+    this.getList()
   },
   methods: {
     checkPermission,
@@ -191,8 +191,8 @@ export default {
         this.totalUserKec = (_.find(response.data.items, ['level', 'kec'])) ? _.find(response.data.items, ['level', 'kec']).value : null
         this.totalUserKel = (_.find(response.data.items, ['level', 'kel'])) ? _.find(response.data.items, ['level', 'kel']).value : null
         this.totalUserRw = (_.find(response.data.items, ['level', 'rw'])) ? _.find(response.data.items, ['level', 'rw']).value : null
+        this.totalUserSaberHoax = (_.find(response.data.items, ['level', 'saberhoax'])) ? _.find(response.data.items, ['level', 'saberhoax']).value : null
         this.totalUserTrainer = (_.find(response.data.items, ['level', 'trainer'])) ? _.find(response.data.items, ['level', 'trainer']).value : null
-        this.totalUserSaberhoax = (_.find(response.data.items, ['level', 'saberhoax'])) ? _.find(response.data.items, ['level', 'saberhoax']).value : null
       })
     },
 

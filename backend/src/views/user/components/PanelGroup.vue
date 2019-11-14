@@ -178,6 +178,10 @@ export default {
       type: String,
       default: null
     },
+    duration: {
+      type: Number,
+      default: 2600
+    },
     totalAllUser: {
       type: Number,
       default: 0
@@ -202,17 +206,13 @@ export default {
       type: Number,
       default: 0
     },
-    totalUserSaberHoax: {
-      type: Number,
-      default: 0
-    },
     totalUserTrainer: {
       type: Number,
       default: 0
     },
-    duration: {
+    totalUserSaberHoax: {
       type: Number,
-      default: 2600
+      default: 0
     }
   },
   data() {
