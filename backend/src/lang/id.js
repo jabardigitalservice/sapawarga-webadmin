@@ -480,7 +480,7 @@ export default {
     'newsImportant-date-created': 'Tanggal Dibuat',
     'newsImportant-url': 'https://jabarprov.go.id',
     'newsImportant-title': 'Judul Info Pendidikan',
-    'newsImportant-date': 'Tanggal Publikasi',
+    'newsImportant-date-updated': 'Tanggal Publikasi',
     'newsImportant-tooltip-edit': 'Edit Info Pendidikan',
     'newsImportant-tooltip-delete': 'Hapus Info Pendidikan',
     'newsImportant-tooltip-detail': 'Detail Info Pendidikan',
