@@ -26,7 +26,7 @@
           </template>
         </el-table-column>
 
-        <el-table-column prop="created_at" sortable="custom" :label="$t('label.newsImportant-date')" align="center" min-width="60">
+        <el-table-column prop="created_at" sortable="custom" :label="$t('label.newsImportant-date-created')" align="center" min-width="60">
           <template slot-scope="{row}">
             {{ row.updated_at | moment('D MMM YYYY HH:mm') }}
           </template>
