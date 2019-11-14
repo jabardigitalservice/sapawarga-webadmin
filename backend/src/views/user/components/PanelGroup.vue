@@ -7,7 +7,7 @@
         </div>
         <div style="margin-bottom:50px;">
           <el-col
-            v-if="(pages == 'all')"
+            v-if="(pages == rolesWidget.ALL)"
             :xs="12"
             :sm="12"
             :lg="6"
