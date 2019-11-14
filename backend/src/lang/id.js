@@ -455,6 +455,7 @@ export default {
 
     'url': 'Tautan',
     'title': 'Judul',
+    'image': 'Gambar',
     'target': 'Target',
     'send_at': 'Dikirim',
     'actions': 'Actions',
@@ -476,14 +477,17 @@ export default {
     'link-logo-news-channels-manage': 'Tautan Logo Sumber Berita',
     'link': 'Tautan',
 
-    'newsImportant-description': 'Deskripsi',
-    'newsImportant-date': 'Tanggal Dibuat',
+    'newsImportant-date-created': 'Tanggal Dibuat',
     'newsImportant-url': 'https://jabarprov.go.id',
     'newsImportant-title': 'Judul Info Pendidikan',
+    'newsImportant-date-updated': 'Tanggal Publikasi',
     'newsImportant-tooltip-edit': 'Edit Info Pendidikan',
     'newsImportant-tooltip-delete': 'Hapus Info Pendidikan',
     'newsImportant-tooltip-detail': 'Detail Info Pendidikan',
     'newsImportant-tooltip-active': 'Aktifkan Info Pendidikan',
-    'newsImportant-tooltip-nonactive': 'Nonaktifkan Info Pendidikan'
+    'newsImportant-tooltip-nonactive': 'Nonaktifkan Info Pendidikan',
+
+    'newsImportant-detail': 'Detail Info Pendidikan',
+    'newsImportant-data': 'Data Info Pendidikan'
   }
 }

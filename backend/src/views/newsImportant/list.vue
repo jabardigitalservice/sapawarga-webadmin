@@ -26,9 +26,9 @@
           </template>
         </el-table-column>
 
-        <el-table-column prop="created_at" sortable="custom" :label="$t('label.newsImportant-date')" align="center" min-width="60">
+        <el-table-column prop="created_at" sortable="custom" :label="$t('label.newsImportant-date-updated')" align="center" min-width="60">
           <template slot-scope="{row}">
-            {{ row.updated_at | moment('D MMM YYYY HH:mm') }}
+            {{ parsingDatetime(row.updated_at, 'D MMM YYYY HH:mm') }}
           </template>
         </el-table-column>
 
@@ -67,6 +67,7 @@ import { fetchList, deleteData, deactivate, activate } from '@/api/newsImportant
 import { mapGetters } from 'vuex'
 import ListFilter from './_listfilter'
 import Pagination from '@/components/Pagination'
+import { parsingDatetime } from '@/utils/datetimeToString'
 
 export default {
   components: { Pagination, ListFilter },
@@ -106,6 +107,7 @@ export default {
   },
 
   methods: {
+    parsingDatetime,
     getList() {
       this.listLoading = true
       fetchList(this.listQuery).then(response => {
