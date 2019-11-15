@@ -41,7 +41,7 @@
             </router-link>
             <router-link :to="(scope.row.status !== 10 && scope.row.created_by === user_id ? '/news-important/edit/' +scope.row.id : '')">
               <el-tooltip :content="$t('label.newsImportant-tooltip-edit')" placement="top">
-                <el-button type="warning" icon="el-icon-edit" size="small" :disabled="scope.row.status === 10" />
+                <el-button type="warning" icon="el-icon-edit" size="small" :disabled="scope.row.status === 10 || scope.row.created_by !== user_id" />
               </el-tooltip>
             </router-link>
             <el-tooltip :content="$t('label.newsImportant-tooltip-delete')" placement="top">
