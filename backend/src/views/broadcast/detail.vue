@@ -32,6 +32,7 @@
 import moment from 'moment'
 import { fetchRecord, update } from '@/api/broadcast'
 import { parsingDatetime } from '@/utils/datetimeToString'
+import { render } from '@/utils/htmlRender'
 
 export default {
   data() {
@@ -110,7 +111,7 @@ export default {
           },
           {
             title: this.$t('label.description'),
-            content: (description !== null ? description : '-')
+            content: (description !== null ? render(description) : '-')
           }
         ]
 
