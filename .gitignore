@@ -1,9 +1,5 @@
 .idea/
 .vscode/
-<<<<<<< HEAD
-../.DS_Store
-=======
 backend/.env
 .DS_Store
->>>>>>> master
 /.env
