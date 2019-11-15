@@ -41,7 +41,7 @@
 
 <script>
 import { fetchRecord } from '@/api/newsImportant'
-import { validUrl } from '@/utils/htmlRender'
+import { validUrl } from '@/utils/validate'
 
 export default {
   data() {
