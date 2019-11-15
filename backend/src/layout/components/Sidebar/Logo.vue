@@ -25,7 +25,7 @@ export default {
   data() {
     return {
       title: this.$t('label.sapawarga'),
-      logo: require('@/assets/SW_LOGO-41.svg')
+      logo: require('@/assets/sapawarga-logo.png')
     }
   }
 }
@@ -55,7 +55,7 @@ export default {
     width: 100%;
 
     & .sidebar-logo {
-      width: 32px;
+      width: 25px;
       height: 32px;
       vertical-align: middle;
       margin-right: 12px;
@@ -67,7 +67,7 @@ export default {
       color: #fff;
       font-weight: 600;
       line-height: 50px;
-      font-size: 14px;
+      font-size: 26px;
       font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
       vertical-align: middle;
     }
