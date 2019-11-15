@@ -204,6 +204,7 @@ export default {
           this.$message.success(this.$t('crud.update-success'))
           this.$router.push('/news-important/index')
         } else {
+          console.log(data)
           await create(data)
           this.$message.success(this.$t('message.newsImportant-create-success'))
           this.$router.push('/news-important/index')
