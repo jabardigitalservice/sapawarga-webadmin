@@ -239,6 +239,7 @@ import { fetchProfile, update } from '@/api/user'
 import { Message } from 'element-ui'
 import InputMap from '@/components/InputMap'
 import { validCoordinate, containsWhitespace } from '@/utils/validate'
+import { checkUserKabKota } from '@/utils/permission'
 import moment from 'moment'
 
 export default {
@@ -915,6 +916,7 @@ export default {
     fetchData(id) {
       fetchUser(id).then(response => {
         const dataUser = response.data
+        checkUserKabKota(dataUser.kabkota ? dataUser.kabkota.id : null)
         const dataUserPhotoUrl = dataUser.photo_url
         let urlPhoto = null
         if (dataUser.photo_url !== null) {
