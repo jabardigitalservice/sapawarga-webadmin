@@ -476,7 +476,7 @@ export default {
     'popular-category': 'Kategori Populer',
     'link-logo-news-channels-manage': 'Tautan Logo Sumber Berita',
     'link': 'Tautan',
-    
+
     'newsImportant-description': 'Deskripsi',
     'newsImportant-date-created': 'Tanggal Dibuat',
     'newsImportant-url': 'https://jabarprov.go.id',
