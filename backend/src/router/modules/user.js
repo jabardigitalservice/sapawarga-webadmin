@@ -18,7 +18,7 @@ const userRouter = {
       path: 'user-all',
       component: () => import('@/views/user/list'),
       props: {
-        //
+        pages: 'all'
       },
       meta: {
         title: 'Semua Pengguna'
@@ -94,6 +94,18 @@ const userRouter = {
       meta: {
         title: 'user-list-rw',
         roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec']
+      }
+    },
+    {
+      name: 'user-list-trainer',
+      path: 'user-trainer',
+      component: () => import('@/views/user/list'),
+      props: {
+        roleId: 'trainer'
+      },
+      meta: {
+        title: 'user-list-trainer',
+        roles: ['admin', 'staffProv']
       }
     },
     {

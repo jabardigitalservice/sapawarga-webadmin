@@ -3,97 +3,158 @@
     <el-row :gutter="40" class="panel-group">
       <el-card class="box-card">
         <div slot="header" class="clearfix">
-          <span>Total user per:</span>
+          <span>{{ $t('label.count-user-each-role') }}:</span>
         </div>
         <div style="margin-bottom:50px;">
-          <el-col v-if="(roleId == null && totalAllUser != null)" :xs="12" :sm="12" :lg="6" class="card-panel-col total-all">
+          <el-col
+            v-if="(pages == rolesWidget.ALL)"
+            :xs="12"
+            :sm="12"
+            :lg="6"
+            class="card-panel-col total-all"
+          >
             <div class="card-panel">
               <div class="card-panel-icon-wrapper icon-people-all">
                 <svg-icon icon-class="peoples" class-name="card-panel-icon" />
               </div>
               <div class="card-panel-description">
                 <div class="card-panel-text">
-                  Semua
+                  {{ $t('label.all') }}
                 </div>
                 <count-to :start-val="0" :end-val="totalAllUser" :duration="duration" class="card-panel-num" />
               </div>
             </div>
           </el-col>
-          <el-col v-if="(roleId == null && totalUserProvince != null) || (roleId == 'staffProv') && (totalUserProvince != null)" :xs="12" :sm="12" :lg="6" class="card-panel-col total-province">
+          <el-col
+            v-if="(rolesWidget[RolesUser.STAFFPROV].includes(roleId))"
+            :xs="12"
+            :sm="12"
+            :lg="6"
+            class="card-panel-col total-province"
+          >
             <div class="card-panel">
               <div class="card-panel-icon-wrapper icon-people-province">
                 <svg-icon icon-class="peoples" class-name="card-panel-icon" />
               </div>
               <div class="card-panel-description">
                 <div class="card-panel-text">
-                  Provinsi
+                  {{ $t('label.widget-province') }}
                 </div>
                 <count-to :start-val="0" :end-val="totalUserProvince" :duration="duration" class="card-panel-num" />
               </div>
             </div>
           </el-col>
-          <el-col v-if="(roleId == null && totalUserKabKota != null) || (roleId == 'staffProv') || (roleId == 'staffKabkota')" :xs="12" :sm="12" :lg="6" class="card-panel-col total-kota">
+          <el-col
+            v-if="(rolesWidget[RolesUser.STAFFKABKOTA].includes(roleId))"
+            :xs="12"
+            :sm="12"
+            :lg="6"
+            class="card-panel-col total-kota"
+          >
             <div class="card-panel">
               <div class="card-panel-icon-wrapper icon-people-kota">
                 <svg-icon icon-class="peoples" class-name="card-panel-icon" />
               </div>
               <div class="card-panel-description">
                 <div class="card-panel-text">
-                  Kota/Kab
+                  {{ $t('label.widget-kabkota') }}
                 </div>
                 <count-to :start-val="0" :end-val="totalUserKabKota" :duration="duration" class="card-panel-num" />
               </div>
             </div>
           </el-col>
-          <el-col v-if="(roleId == null && totalUserKec != null) || (roleId == 'staffProv') || (roleId == 'staffKabkota') || (roleId == 'staffKec')" :xs="12" :sm="12" :lg="6" class="card-panel-col total-kec">
+          <el-col
+            v-if="(rolesWidget[RolesUser.STAFFKEC].includes(roleId))"
+            :xs="12"
+            :sm="12"
+            :lg="6"
+            class="card-panel-col total-kec"
+          >
             <div class="card-panel">
               <div class="card-panel-icon-wrapper icon-people-kec">
                 <svg-icon icon-class="peoples" class-name="card-panel-icon" />
               </div>
               <div class="card-panel-description">
                 <div class="card-panel-text">
-                  Kecamatan
+                  {{ $t('label.widget-kecamatan') }}
                 </div>
                 <count-to :start-val="0" :end-val="totalUserKec" :duration="duration" class="card-panel-num" />
               </div>
             </div>
           </el-col>
-          <el-col v-if="(roleId == null && totalUserKel != null) || (roleId == 'staffProv') || (roleId == 'staffKabkota') || (roleId == 'staffKec') || (roleId == 'staffKel')" :xs="12" :sm="12" :lg="6" class="card-panel-col total-kel">
+          <el-col
+            v-if="(rolesWidget[RolesUser.STAFFKEL].includes(roleId))"
+            :xs="12"
+            :sm="12"
+            :lg="6"
+            class="card-panel-col total-kel"
+          >
             <div class="card-panel">
               <div class="card-panel-icon-wrapper icon-people-kel">
                 <svg-icon icon-class="peoples" class-name="card-panel-icon" />
               </div>
               <div class="card-panel-description">
                 <div class="card-panel-text">
-                  Desa/Kel
+                  {{ $t('label.widget-kelurahan') }}
                 </div>
                 <count-to :start-val="0" :end-val="totalUserKel" :duration="duration" class="card-panel-num" />
               </div>
             </div>
           </el-col>
-          <el-col v-if="(roleId == null && totalUserRw != null) || (roleId == 'staffProv') || (roleId == 'staffKabkota') || (roleId == 'staffKec') || (roleId == 'staffKel') || (roleId == 'staffRW')" :xs="12" :sm="12" :lg="6" class="card-panel-col total-rw">
+          <el-col
+            v-if="(rolesWidget[RolesUser.STAFFRW].includes(roleId))"
+            :xs="12"
+            :sm="12"
+            :lg="6"
+            class="card-panel-col total-rw"
+          >
             <div class="card-panel">
               <div class="card-panel-icon-wrapper icon-people-rw">
                 <svg-icon icon-class="peoples" class-name="card-panel-icon" />
               </div>
               <div class="card-panel-description">
                 <div class="card-panel-text">
-                  RW
+                  {{ $t('label.widget-rw') }}
                 </div>
                 <count-to :start-val="0" :end-val="totalUserRw" :duration="duration" class="card-panel-num" />
               </div>
             </div>
           </el-col>
-          <el-col v-if="(roleId == null && totalUserProvince != null) || (roleId == 'staffSaberhoax') && (totalUserProvince != null)" :xs="12" :sm="12" :lg="6" class="card-panel-col total-rw">
+          <el-col
+            v-if="(rolesWidget[RolesUser.STAFFSABERHOAX].includes(roleId))"
+            :xs="12"
+            :sm="12"
+            :lg="6"
+            class="card-panel-col total-saber-hoax"
+          >
             <div class="card-panel">
-              <div class="card-panel-icon-wrapper icon-people-rt">
+              <div class="card-panel-icon-wrapper icon-people-saber-hoax">
                 <svg-icon icon-class="peoples" class-name="card-panel-icon" />
               </div>
               <div class="card-panel-description">
-                <div class="card-panel-text-jsh">
-                  Saber Hoax
+                <div class="card-panel-text">
+                  {{ $t('label.widget-saber-hoax') }}
                 </div>
-                <count-to :start-val="0" :end-val="totalUserSaberhoax" :duration="duration" class="card-panel-num" />
+                <count-to :start-val="0" :end-val="totalUserSaberHoax" :duration="duration" class="card-panel-num" />
+              </div>
+            </div>
+          </el-col>
+          <el-col
+            v-if="(rolesWidget[RolesUser.TRAINER].includes(roleId))"
+            :xs="12"
+            :sm="12"
+            :lg="6"
+            class="card-panel-col total-trainer"
+          >
+            <div class="card-panel">
+              <div class="card-panel-icon-wrapper icon-people-trainer">
+                <svg-icon icon-class="peoples" class-name="card-panel-icon" />
+              </div>
+              <div class="card-panel-description">
+                <div class="card-panel-text">
+                  {{ $t('label.widget-trainer') }}
+                </div>
+                <count-to :start-val="0" :end-val="totalUserTrainer" :duration="duration" class="card-panel-num" />
               </div>
             </div>
           </el-col>
@@ -105,6 +166,7 @@
 
 <script>
 import CountTo from 'vue-count-to'
+import { RolesUser, rolesWidget } from '@/utils/constantVariabel'
 
 export default {
   name: 'PanelGroupUser',
@@ -115,6 +177,14 @@ export default {
     roleId: {
       type: String,
       default: null
+    },
+    pages: {
+      type: String,
+      default: null
+    },
+    duration: {
+      type: Number,
+      default: 2600
     },
     totalAllUser: {
       type: Number,
@@ -140,13 +210,19 @@ export default {
       type: Number,
       default: 0
     },
-    totalUserSaberhoax: {
+    totalUserTrainer: {
       type: Number,
       default: 0
     },
-    duration: {
+    totalUserSaberHoax: {
       type: Number,
-      default: 2600
+      default: 0
+    }
+  },
+  data() {
+    return {
+      RolesUser,
+      rolesWidget
     }
   }
 }
@@ -223,6 +299,9 @@ export default {
     }
     .icon-people-rt {
       color: #76888e;
+    }
+    .icon-people-trainer {
+      color: #7a4880;
     }
     .icon-message {
       color: #36a3f7;

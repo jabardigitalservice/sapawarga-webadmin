@@ -1,7 +1,18 @@
 <template>
   <div class="app-container">
 
-    <panel-group :role-id="roleId" :total-all-user="totalAllUser" :total-user-province="totalUserProvince" :total-user-kab-kota="totalUserKabKota" :total-user-kec="totalUserKec" :total-user-kel="totalUserKel" :total-user-rw="totalUserRw" :total-user-saberhoax="totalUserSaberhoax" />
+    <panel-group
+      :role-id="roleId ? roleId : store.getters.roles[0]"
+      :pages="pages"
+      :total-all-user="totalAllUser"
+      :total-user-province="totalUserProvince"
+      :total-user-kab-kota="totalUserKabKota"
+      :total-user-kec="totalUserKec"
+      :total-user-kel="totalUserKel"
+      :total-user-rw="totalUserRw"
+      :total-user-saber-hoax="totalUserSaberHoax"
+      :total-user-trainer="totalUserTrainer"
+    />
 
     <el-row :gutter="20">
       <el-col :span="24">
@@ -100,6 +111,8 @@ import permission from '@/directive/permission/index.js'
 import checkPermission from '@/utils/permission'
 import ListFilter from './_listfilter'
 import { parsingDatetime } from '@/utils/datetimeToString'
+import { RolesUser } from '@/utils/constantVariabel'
+import store from '@/store'
 
 export default {
   components: { Pagination, ListFilter, PanelGroup },
@@ -117,6 +130,10 @@ export default {
   },
   props: {
     roleId: {
+      type: String,
+      default: null
+    },
+    pages: {
       type: String,
       default: null
     }
@@ -150,19 +167,20 @@ export default {
       totalUserKec: 0,
       totalUserKel: 0,
       totalUserRw: 0,
-      totalUserSaberhoax: 0,
+      totalUserTrainer: 0,
+      totalUserSaberHoax: 0,
       visibleDialog: false,
       importDialogVisible: false,
-      radio: '1'
+      radio: '1',
+      store
     }
   },
   created() {
-    this.getList()
     this.getTotalUser()
+    this.getList()
   },
   methods: {
     checkPermission,
-
     getList() {
       this.listLoading = true
       fetchList(this.listQuery).then(response => {
@@ -174,13 +192,14 @@ export default {
 
     getTotalUser() {
       totalUser().then(response => {
-        this.totalAllUser = (_.find(response.data.items, ['level', 'all'])) ? _.find(response.data.items, ['level', 'all']).value : null
-        this.totalUserProvince = (_.find(response.data.items, ['level', 'prov'])) ? _.find(response.data.items, ['level', 'prov']).value : null
-        this.totalUserKabKota = (_.find(response.data.items, ['level', 'kabkota'])) ? _.find(response.data.items, ['level', 'kabkota']).value : null
-        this.totalUserKec = (_.find(response.data.items, ['level', 'kec'])) ? _.find(response.data.items, ['level', 'kec']).value : null
-        this.totalUserKel = (_.find(response.data.items, ['level', 'kel'])) ? _.find(response.data.items, ['level', 'kel']).value : null
-        this.totalUserRw = (_.find(response.data.items, ['level', 'rw'])) ? _.find(response.data.items, ['level', 'rw']).value : null
-        this.totalUserSaberhoax = (_.find(response.data.items, ['level', 'saberhoax'])) ? _.find(response.data.items, ['level', 'saberhoax']).value : null
+        this.totalUserProvince = (_.find(response.data.items, ['level', RolesUser.STAFFPROV])) ? _.find(response.data.items, ['level', RolesUser.STAFFPROV]).value : 0
+        this.totalUserKabKota = (_.find(response.data.items, ['level', RolesUser.STAFFKABKOTA])) ? _.find(response.data.items, ['level', RolesUser.STAFFKABKOTA]).value : 0
+        this.totalUserKec = (_.find(response.data.items, ['level', RolesUser.STAFFKEC])) ? _.find(response.data.items, ['level', RolesUser.STAFFKEC]).value : 0
+        this.totalUserKel = (_.find(response.data.items, ['level', RolesUser.STAFFKEL])) ? _.find(response.data.items, ['level', RolesUser.STAFFKEL]).value : 0
+        this.totalUserRw = (_.find(response.data.items, ['level', RolesUser.STAFFRW])) ? _.find(response.data.items, ['level', RolesUser.STAFFRW]).value : 0
+        this.totalUserSaberHoax = (_.find(response.data.items, ['level', RolesUser.STAFFSABERHOAX])) ? _.find(response.data.items, ['level', RolesUser.STAFFSABERHOAX]).value : null
+        this.totalUserTrainer = (_.find(response.data.items, ['level', RolesUser.TRAINER])) ? _.find(response.data.items, ['level', RolesUser.TRAINER]).value : 0
+        this.totalAllUser = this.totalUserProvince + this.totalUserKabKota + this.totalUserKec + this.totalUserKel + this.totalUserRw + this.totalUserSaberHoax + this.totalUserTrainer
       })
     },
 
