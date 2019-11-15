@@ -297,7 +297,9 @@ $dark_gray: #889aa4;
 }
 
 // link for css news important
-.link-news-important {
+.link-news-important:link,
+.link-news-important:hover,
+.link-news-important:visited {
   color: blue;
   text-decoration: underline;
 }
