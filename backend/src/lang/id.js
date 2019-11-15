@@ -12,6 +12,7 @@ export default {
     'user-list-kecamatan': 'Kecamatan',
     'user-list-kelurahan': 'Desa / Kelurahan',
     'user-list-rw': 'User Tingkat RW',
+    'user-list-trainer': 'User Pelatih',
     'user-detail': 'Detail Pengguna',
 
     'nomor-penting-manage': 'Nomor Penting',
@@ -409,6 +410,7 @@ export default {
     'newsHoax': 'Berita Hoax'
   },
   label: {
+    'sapawarga': 'sapawarga',
     'notes': 'Catatan:',
     'maximum-dimension-image': 'Ukuran maksimal 1280x720 pixel (Landscape)',
     'maximum-size-image': 'Maximum upload file size: 5 Mb.',
@@ -453,6 +455,18 @@ export default {
     'last-login-at': 'Terakhir Login',
     'last-access-at': 'Terakhir Akses',
 
+    'maximum-dimension-image-profile': 'Ukuran maksimal 640 x 640 piksel',
+    'choose-image-profile': 'Pilih Foto',
+
+    'count-user-each-role': 'Total user per',
+    'all': 'Semua',
+    'widget-province': 'Provinsi',
+    'widget-kabkota': 'Kota/Kab',
+    'widget-kecamatan': 'Kecamatan',
+    'widget-kelurahan': 'Desa/Kel',
+    'widget-rw': 'RW',
+    'widget-saber-hoax': 'Saber Hoax',
+    'widget-trainer': 'Pelatih',
     'url': 'Tautan',
     'title': 'Judul',
     'image': 'Gambar',

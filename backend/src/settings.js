@@ -25,7 +25,7 @@ export default {
    * @type {boolean} true | false
    * @description Whether show the logo in sidebar
    */
-  sidebarLogo: false,
+  sidebarLogo: true,
 
   /**
    * @type {string | array} 'production' | ['production','development']

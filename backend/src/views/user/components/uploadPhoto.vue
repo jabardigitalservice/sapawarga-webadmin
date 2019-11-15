@@ -8,10 +8,10 @@
               <img class="preview" :src="imageData">
             </div>
           </div>
-          <h5>Ukuran maksimal 640 x 640 piksel</h5>
+          <h5>{{ $t('label.maximum-dimension-image-profile') }}</h5>
           <label class="custom-file-upload primary-custome">
             <input type="file" accept="image/*" @change="onFileSelected">
-            Pilih Foto
+            {{ $t('label.choose-image-profile') }}
           </label>
         </div>
       </el-form-item>
