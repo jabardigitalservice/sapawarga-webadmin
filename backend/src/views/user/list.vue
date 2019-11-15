@@ -178,7 +178,6 @@ export default {
   created() {
     this.getTotalUser()
     this.getList()
-    console.log()
   },
   methods: {
     checkPermission,
