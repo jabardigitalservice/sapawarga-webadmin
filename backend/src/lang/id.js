@@ -458,8 +458,8 @@ export default {
     'maximum-dimension-image-profile': 'Ukuran maksimal 640 x 640 piksel',
     'choose-image-profile': 'Pilih Foto',
 
-    'count-user-each-role': 'Total user per',
-    'all': 'Semua',
+    'count-user-each-role': 'Total user aktif per',
+    'widget-all-user': 'Semua',
     'widget-province': 'Provinsi',
     'widget-kabkota': 'Kota/Kab',
     'widget-kecamatan': 'Kecamatan',
