@@ -19,7 +19,17 @@
           </div>
           <el-table stripe :data="tableDataPesan" :show-header="false" style="width: 100%">
             <el-table-column prop="title" width="200" />
-            <el-table-column prop="content" />
+            <el-table-column prop="content">
+              <template slot-scope="{row}">
+                <div v-if="isContainHtmlTags(row.content)" v-html="row.content" />
+                <!-- <div v-if="row.title == 'Status'"> -->
+                  <!-- {{row.content == this.status.SCHEDULED ? <el-tag type='warning'>{this.labelStatus}</el-tag> : row.content == this.status.PUBLISHED ? <el-tag type='success'>{this.labelStatus}</el-tag> : <el-tag type='info'>{this.labelStatus}</el-tag>}} -->
+                <!-- </div> -->
+                <div v-else>
+                  {{row.content}}
+                </div>
+              </template>
+            </el-table-column>
           </el-table>
         </el-card>
         <el-button v-if="!buttonHidden" :disabled="btnKirimDisable" class="button-send" type="primary" @click="actionApprove(status.PUBLISHED)">{{ $t('crud.send') }}</el-button>
@@ -32,7 +42,7 @@
 import moment from 'moment'
 import { fetchRecord, update } from '@/api/broadcast'
 import { parsingDatetime } from '@/utils/datetimeToString'
-import { render } from '@/utils/htmlRender'
+import { isContainHtmlTags } from '@/utils/validate'
 
 export default {
   data() {
@@ -40,9 +50,11 @@ export default {
       id: 0,
       tableDataTarget: [],
       tableDataPesan: [],
+      isiPesan: null,
       broadcast: null,
       btnKirimDisable: false,
       buttonHidden: false,
+      labelStatus: null,
       status: {
         DRAFT: 0,
         SCHEDULED: 5,
@@ -57,12 +69,13 @@ export default {
   },
 
   methods: {
+    isContainHtmlTags,
     getDetail() {
       fetchRecord(this.id).then(response => {
         const { title, description, category, kabkota, kecamatan, kelurahan, rw, status, status_label, scheduled_datetime, is_scheduled, updated_at } = response.data
         this.broadcast = response.data
         this.checkDate(response.data)
-
+        this.labelStatus = status_label
         if (status === this.status.DRAFT) {
           this.buttonHidden = false
         } else {
@@ -99,7 +112,7 @@ export default {
           },
           {
             title: this.$t('label.status'),
-            content: (status === this.status.SCHEDULED ? <el-tag type='warning'>{status_label}</el-tag> : status === this.status.PUBLISHED ? <el-tag type='success'>{status_label}</el-tag> : <el-tag type='info'>{status_label}</el-tag>)
+            content: status_label
           },
           {
             title: this.$t('label.scheduled'),
@@ -111,10 +124,11 @@ export default {
           },
           {
             title: this.$t('label.description'),
-            content: (description !== null ? render(description) : '-')
+            content: (description !== null ? description: '-')
           }
         ]
 
+        this.isiPesan = description
         if (status === this.status.DRAFT && scheduled_datetime === null) {
           this.tableDataPesan.splice(4, 1)
         }
@@ -173,6 +187,9 @@ export default {
   .col-right {
     margin-top: 20px;
     margin-right: 20px !important
+  }
+  .html-div {
+    color: blue !important;
   }
 }
 </style>
