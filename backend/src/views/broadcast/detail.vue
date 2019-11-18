@@ -22,12 +22,7 @@
             <el-table-column prop="content">
               <template slot-scope="{row}">
                 <div v-if="isContainHtmlTags(row.content)" v-html="row.content" />
-                <!-- <div v-if="row.title == 'Status'"> -->
-                  <!-- {{row.content == this.status.SCHEDULED ? <el-tag type='warning'>{this.labelStatus}</el-tag> : row.content == this.status.PUBLISHED ? <el-tag type='success'>{this.labelStatus}</el-tag> : <el-tag type='info'>{this.labelStatus}</el-tag>}} -->
-                <!-- </div> -->
-                <div v-else>
-                  {{row.content}}
-                </div>
+                <div v-else>{{ row.content }}</div>
               </template>
             </el-table-column>
           </el-table>
@@ -54,7 +49,6 @@ export default {
       broadcast: null,
       btnKirimDisable: false,
       buttonHidden: false,
-      labelStatus: null,
       status: {
         DRAFT: 0,
         SCHEDULED: 5,
@@ -72,10 +66,22 @@ export default {
     isContainHtmlTags,
     getDetail() {
       fetchRecord(this.id).then(response => {
-        const { title, description, category, kabkota, kecamatan, kelurahan, rw, status, status_label, scheduled_datetime, is_scheduled, updated_at } = response.data
+        const {
+          title,
+          description,
+          category,
+          kabkota,
+          kecamatan,
+          kelurahan,
+          rw,
+          status,
+          status_label,
+          scheduled_datetime,
+          is_scheduled,
+          updated_at
+        } = response.data
         this.broadcast = response.data
         this.checkDate(response.data)
-        this.labelStatus = status_label
         if (status === this.status.DRAFT) {
           this.buttonHidden = false
         } else {
@@ -112,7 +118,7 @@ export default {
           },
           {
             title: this.$t('label.status'),
-            content: status_label
+            content: this.checkStatus(status, status_label)
           },
           {
             title: this.$t('label.scheduled'),
@@ -124,7 +130,7 @@ export default {
           },
           {
             title: this.$t('label.description'),
-            content: (description !== null ? description: '-')
+            content: (description !== null ? description : '-')
           }
         ]
 
@@ -158,6 +164,15 @@ export default {
         this.submitForm(status)
       } catch (e) {
         console.log(e)
+      }
+    },
+    checkStatus(status, status_label) {
+      if (status === this.status.SCHEDULED) {
+        return `<span class="el-tag el-tag--warning el-tag--medium">` + status_label + `</span>`
+      } else if (status === this.status.PUBLISHED) {
+        return `<span class="el-tag el-tag--success el-tag--medium">` + status_label + `</span>`
+      } else {
+        return `<span class="el-tag el-tag--info el-tag--medium">` + status_label + `</span>`
       }
     },
     checkDate(response) {

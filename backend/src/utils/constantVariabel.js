@@ -1,3 +1,8 @@
+export const ResponseRequest = Object.freeze({
+  TIMEOUT: 'ECONNABORTED',
+  NETWORKERROR: 'Network Error'
+})
+
 export const SurveyStatus = Object.freeze({
   DRAFT: 0,
   ACTIVE: 10

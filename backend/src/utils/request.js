@@ -3,12 +3,13 @@ import { Message } from 'element-ui'
 import store from '@/store'
 import router from '@/router'
 import { getToken } from '@/utils/auth'
+import { ResponseRequest } from '@/utils/constantVariabel'
 
 // create an axios instance
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API, // api 的 base_url
   withCredentials: false, // 跨域请求时发送 cookies
-  timeout: 30000 // request timeout
+  timeout: 10000 // request timeout
 })
 
 // request interceptor
@@ -32,12 +33,6 @@ service.interceptors.response.use(
   /**
    * If you want to get information such as headers or status
    * Please return  response => response
-   */
-  /**
-   * 下面的注释为通过在response里，自定义code来标示请求状态
-   * 当code返回如下情况则说明权限有问题，登出并返回到登录页
-   * 如想通过 XMLHttpRequest 来状态码标识 逻辑可写在下面error中
-   * 以下代码均为样例，请结合自生需求加以修改，若不需要，则可删除
    */
   response => {
     const res = response.data
@@ -73,6 +68,13 @@ service.interceptors.response.use(
     // }
   },
   error => {
+    if (error.code === ResponseRequest.TIMEOUT) {
+      Message({
+        message: 'Oops, telah terjadi kesalahan, periksa kembali koneksi Internet Anda.',
+        type: 'error',
+        duration: 5 * 1000
+      })
+    }
     if (error.response.status === 401) {
       router.push('/401')
     }
@@ -122,7 +124,7 @@ service.interceptors.response.use(
           type: 'error',
           duration: 5 * 1000
         })
-      } else if (error.message === 'Network Error') {
+      } else if (error.message === ResponseRequest.NETWORKERROR) {
         Message({
           message: 'Oops, telah terjadi kesalahan, periksa kembali koneksi Internet Anda.',
           type: 'error',
