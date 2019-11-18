@@ -54,8 +54,11 @@ export default {
         this.fileAccept = path.replace('general/', '')
 
         this.$emit('onUpload', path, url)
-      } catch (e) {
-        console.log(e)
+      } catch (error) {
+        const errorFileSize = error.response.data.data.file
+        errorFileSize.forEach(element => {
+          this.$message.error(element)
+        })
       } finally {
         this.loading = false
       }
