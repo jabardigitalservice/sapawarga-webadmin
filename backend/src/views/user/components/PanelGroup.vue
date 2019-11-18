@@ -19,7 +19,7 @@
               </div>
               <div class="card-panel-description">
                 <div class="card-panel-text">
-                  {{ $t('label.all') }}
+                  {{ $t('label.widget-all-user') }}
                 </div>
                 <count-to :start-val="0" :end-val="totalAllUser" :duration="duration" class="card-panel-num" />
               </div>

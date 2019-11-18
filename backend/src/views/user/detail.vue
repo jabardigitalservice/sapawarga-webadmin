@@ -81,6 +81,7 @@ import MapThumb from '@/components/MapThumb'
 import { fetchUser } from '@/api/staff'
 import permission from '@/directive/permission/index.js'
 import { parsingDatetime, formatDatetime } from '@/utils/datetimeToString'
+import { checkUserKabKota } from '@/utils/permission'
 
 export default {
   components: { PhotoBox, MapThumb },
@@ -144,6 +145,7 @@ export default {
           education_level,
           role_label
         } = response.data
+        checkUserKabKota(kabkota ? kabkota.id : null)
         this.twitterAccount = twitter || '-'
         this.facebookAccount = facebook || '-'
         this.instagramAccount = instagram || '-'
@@ -191,7 +193,6 @@ export default {
             content: username || '-'
           }
         ]
-
         this.tableContact = [
           {
             title: this.$t('label.email'),
