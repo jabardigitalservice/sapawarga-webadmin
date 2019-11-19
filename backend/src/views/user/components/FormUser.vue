@@ -361,6 +361,14 @@ export default {
           value: 'staffProv'
         },
         {
+          label: 'Pelatih',
+          value: 'trainer'
+        },
+        {
+          label: 'Pengguna',
+          value: 'user'
+        },
+        {
           label: 'Admin Kab/kota',
           value: 'staffKabkota'
         },
@@ -371,10 +379,6 @@ export default {
         {
           label: 'Admin Desa/Kelurahan',
           value: 'staffKel'
-        },
-        {
-          label: 'Pelatih',
-          value: 'trainer'
         },
         {
           label: 'RW',
@@ -760,11 +764,11 @@ export default {
         } if (checkPermission(['staffProv'])) {
           return ruleOptions.slice(3, ruleOptions.length)
         } if (checkPermission(['staffKabkota'])) {
-          return ruleOptions.slice(4, ruleOptions.length)
-        } if (checkPermission(['staffKec'])) {
           return ruleOptions.slice(5, ruleOptions.length)
-        } if (checkPermission(['staffKel'])) {
+        } if (checkPermission(['staffKec'])) {
           return ruleOptions.slice(6, ruleOptions.length)
+        } if (checkPermission(['staffKel'])) {
+          return ruleOptions.slice(7, ruleOptions.length)
         }
       }
       return ruleOptions

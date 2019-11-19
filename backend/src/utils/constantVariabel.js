@@ -1,3 +1,8 @@
+export const ResponseRequest = Object.freeze({
+  TIMEOUT: 'ECONNABORTED',
+  NETWORKERROR: 'Network Error'
+})
+
 export const SurveyStatus = Object.freeze({
   DRAFT: 0,
   ACTIVE: 10
@@ -22,7 +27,8 @@ export const RolesUser = Object.freeze({
   STAFFKEL: 'staffKel',
   STAFFRW: 'staffRW',
   STAFFSABERHOAX: 'staffSaberhoax',
-  TRAINER: 'trainer'
+  TRAINER: 'trainer',
+  USER: 'user'
 })
 
 export const rolesWidget = {
@@ -33,5 +39,6 @@ export const rolesWidget = {
   'staffKel': ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel'],
   'staffRW': ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel', 'staffRW'],
   'staffSaberhoax': ['admin', 'staffSaberhoax'],
-  'trainer': ['admin', 'staffProv', 'trainer']
+  'trainer': ['admin', 'staffProv', 'trainer'],
+  'user': ['admin', 'staffProv', 'user']
 }

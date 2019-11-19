@@ -12,6 +12,7 @@
       :total-user-rw="totalUserRw"
       :total-user-saber-hoax="totalUserSaberHoax"
       :total-user-trainer="totalUserTrainer"
+      :total-user-pengguna="totalUserPengguna"
     />
 
     <el-row :gutter="20">
@@ -169,6 +170,7 @@ export default {
       totalUserRw: 0,
       totalUserTrainer: 0,
       totalUserSaberHoax: 0,
+      totalUserPengguna: 0,
       visibleDialog: false,
       importDialogVisible: false,
       radio: '1',
@@ -199,7 +201,8 @@ export default {
         this.totalUserRw = (_.find(response.data.items, ['level', RolesUser.STAFFRW])) ? _.find(response.data.items, ['level', RolesUser.STAFFRW]).value : 0
         this.totalUserSaberHoax = (_.find(response.data.items, ['level', RolesUser.STAFFSABERHOAX])) ? _.find(response.data.items, ['level', RolesUser.STAFFSABERHOAX]).value : null
         this.totalUserTrainer = (_.find(response.data.items, ['level', RolesUser.TRAINER])) ? _.find(response.data.items, ['level', RolesUser.TRAINER]).value : 0
-        this.totalAllUser = this.totalUserProvince + this.totalUserKabKota + this.totalUserKec + this.totalUserKel + this.totalUserRw + this.totalUserSaberHoax + this.totalUserTrainer
+        this.totalUserPengguna = (_.find(response.data.items, ['level', RolesUser.USER])) ? _.find(response.data.items, ['level', RolesUser.USER]).value : 0
+        this.totalAllUser = this.totalUserProvince + this.totalUserKabKota + this.totalUserKec + this.totalUserKel + this.totalUserRw + this.totalUserSaberHoax + this.totalUserTrainer + this.totalUserPengguna
       })
     },
 
@@ -221,23 +224,23 @@ export default {
       const kecamatan = _.get(user, 'kecamatan.name')
       const kabkota = _.get(user, 'kabkota.name')
 
-      if ((userRole === 'staffRW') || userRole === 'trainer') {
+      if ((userRole === RolesUser.STAFFRW) || userRole === RolesUser.TRAINER || userRole === RolesUser.USER) {
         return this.$t('users.users-role-text-staff-rw', [rw, kelurahan, kecamatan, kabkota])
       }
 
-      if (userRole === 'staffKel') {
+      if (userRole === RolesUser.STAFFKEL) {
         return this.$t('users.users-role-text-staff-kel', [kelurahan, kecamatan, kabkota])
       }
 
-      if (userRole === 'staffKec') {
+      if (userRole === RolesUser.STAFFKEC) {
         return this.$t('users.users-role-text-staff-kec', [kecamatan, kabkota])
       }
 
-      if (userRole === 'staffKabkota') {
+      if (userRole === RolesUser.STAFFKABKOTA) {
         return this.$t('users.users-role-text-staff-kabkota', [kabkota])
       }
 
-      if (userRole === 'staffProv') {
+      if (userRole === RolesUser.STAFFPROV) {
         return this.$t('users.users-role-text-staff-prov')
       }
     },

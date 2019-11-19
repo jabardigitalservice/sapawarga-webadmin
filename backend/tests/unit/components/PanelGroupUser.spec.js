@@ -22,6 +22,7 @@ const totalUserKel = totalUser.data.items[4].value;
 const totalUserRw = totalUser.data.items[5].value;
 const totalUserSaberHoax = totalUser.data.items[6].value;
 const totalUserTrainer = totalUser.data.items[7].value;
+const totalUserPengguna = totalUser.data.items[8].value;
 
 describe("PanelGroup User", () => {
   let props;
@@ -33,6 +34,7 @@ describe("PanelGroup User", () => {
   const selectorUserRw = ".total-rw";
   const selectorUserSaberHoax = ".total-saber-hoax";
   const selectorUserTrainer = ".total-trainer";
+  const selectorUserPengguna = ".total-user";
 
   const build = () => {
     const wrapper = mount(PanelGroup, {
@@ -100,7 +102,14 @@ describe("PanelGroup User", () => {
       cardTextUserTrainer: () =>
         wrapper.find(selectorUserTrainer).find(".card-panel-text"),
       cardNumberUserTrainer: () =>
-        wrapper.find(selectorUserTrainer).find(".card-panel-num")
+        wrapper.find(selectorUserTrainer).find(".card-panel-num"),
+      cardColumnUserPengguna: () => wrapper.find(".card-panel-col" + selectorUserPengguna),
+      cardIconUserPengguna: () =>
+        wrapper.find(selectorUserPengguna).find(".card-panel-icon-wrapper"),
+      cardTextUserPengguna: () =>
+        wrapper.find(selectorUserPengguna).find(".card-panel-text"),
+      cardNumberUserPengguna: () =>
+        wrapper.find(selectorUserPengguna).find(".card-panel-num")
     };
   };
 
@@ -118,6 +127,7 @@ describe("PanelGroup User", () => {
       totalUserRw: totalUserRw,
       totalUserSaberHoax: totalUserSaberHoax,
       totalUserTrainer: totalUserTrainer,
+      totalUserPengguna: totalUserPengguna,
       duration: 1
     };
   });
@@ -165,7 +175,11 @@ describe("PanelGroup User", () => {
       cardColumnUserTrainer,
       cardIconUserTrainer,
       cardTextUserTrainer,
-      cardNumberUserTrainer
+      cardNumberUserTrainer,
+      cardColumnUserPengguna,
+      cardIconUserPengguna,
+      cardTextUserPengguna,
+      cardNumberUserPengguna
     } = build();
 
     // assert
@@ -221,6 +235,9 @@ describe("PanelGroup User", () => {
     expect(cardTextUserTrainer().text()).toMatch("Pelatih");
     expect(cardNumberUserTrainer().text()).toMatch("0");
     expect(cardTextUserTrainer().text()).toMatch("Pelatih");
+    expect(cardTextUserPengguna().text()).toMatch("Pengguna");
+    expect(cardNumberUserPengguna().text()).toMatch("0");
+    expect(cardTextUserPengguna().text()).toMatch("Pengguna");
     setTimeout(() => {
       expect(cardNumberAllUser().text()).toMatch(totalAllUser.toString());
       expect(cardNumberUserProvince().text()).toMatch(
@@ -234,6 +251,7 @@ describe("PanelGroup User", () => {
       expect(cardNumberUserRw().text()).toMatch(totalUserRw.toString());
       expect(cardNumberUserSaberHoax().text()).toMatch(totalUserSaberHoax.toString());
       expect(cardNumberUserTrainer().text()).toMatch(totalUserTrainer.toString());
+      expect(cardNumberUserPengguna().text()).toMatch(totalUserPengguna.toString());
       done();
     }, 1100);
 
@@ -245,6 +263,7 @@ describe("PanelGroup User", () => {
     expect(wrapper.props().totalUserRw).toBe(totalUserRw);
     expect(wrapper.props().totalUserSaberHoax).toBe(totalUserSaberHoax);
     expect(wrapper.props().totalUserTrainer).toBe(totalUserTrainer);
+    expect(wrapper.props().totalUserPengguna).toBe(totalUserPengguna);
     // expect(name().text()).toBe(props.user.name)
   });
 
@@ -317,11 +336,22 @@ describe("PanelGroup User", () => {
   it("hide total all user trainer when role is not trainer", () => {
     // arrange
     const { wrapper } = build();
-    const mainSelector = ".total-saber-trainer";
+    const mainSelector = ".total-trainer";
     wrapper.setProps({ roleId: "trainer" });
 
     const cardColumn = () => wrapper.find(".card-panel-col" + mainSelector);
 
-    expect(cardColumn().exists()).toBe(false);
+    expect(cardColumn().exists()).toBe(true);
+  });
+
+  it("hide total all user pengguna when role is not use", () => {
+    // arrange
+    const { wrapper } = build();
+    const mainSelector = ".total-user";
+    wrapper.setProps({ roleId: "user" });
+
+    const cardColumn = () => wrapper.find(".card-panel-col" + mainSelector);
+
+    expect(cardColumn().exists()).toBe(true);
   });
 });

@@ -13,6 +13,7 @@ export default {
     'user-list-kelurahan': 'Desa / Kelurahan',
     'user-list-rw': 'User Tingkat RW',
     'user-list-trainer': 'User Pelatih',
+    'user-list-user': 'User Pengguna',
     'user-detail': 'Detail Pengguna',
 
     'nomor-penting-manage': 'Nomor Penting',
@@ -467,6 +468,7 @@ export default {
     'widget-rw': 'RW',
     'widget-saber-hoax': 'Saber Hoax',
     'widget-trainer': 'Pelatih',
+    'widget-user': 'Pengguna',
     'url': 'Tautan',
     'title': 'Judul',
     'image': 'Gambar',
