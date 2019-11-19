@@ -32,6 +32,15 @@ export default {
       removed: false
     }
   },
+  watch: {
+    'fileEdit'(data) {
+      if (this.removed) {
+        this.fileAccept = data.file_path.replace('general/', '')
+        this.removed = false
+      }
+      this.fileAccept = this.fileEdit.file_path.replace('general/', '')
+    }
+  },
   created() {
     this.fileAccept = this.fileEdit.file_path ? this.fileEdit.file_path.replace('general/', '') : this.fileEdit.file_path
   },
