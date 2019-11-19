@@ -397,7 +397,7 @@ export default {
     'newsImportant-url-match': 'Tautan info pendidikan tidak valid',
     'newsImportant-description-required': 'Deskripsi harus diisi',
     'newsImportant-description-max': 'Deskripsi maksimal 65000 karakter',
-    'newsImportant-create-success': 'Informasi pendidikan berhasil dibuat'
+    'newsImportant-create-success': 'Info pendidikan berhasil dibuat'
 
   },
   categoriTypes: {

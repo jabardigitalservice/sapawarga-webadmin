@@ -3,8 +3,8 @@
     <label class="custom-file-upload primary-custome"> {{ $t('label.select-file') }}
       <input ref="file" class="input-multiple" type="file" accept=".pdf, .doc, .docx, .ppt, .pptx, image/*" @change="handleFileUpload">
     </label>
-    <span v-if="file !== null" class="file-name">
-      {{ file.name }}
+    <span v-if="fileAccept !== null" class="file-name">
+      {{ fileAccept }}
       <el-tooltip class="item" effect="dark" content="Hapus lampiran" placement="right">
         <span class="remove" @click="removeFile(index)">x</span>
       </el-tooltip>
@@ -26,15 +26,27 @@ export default {
   },
   data() {
     return {
-      file: null
+      loading: false,
+      fileSend: null,
+      fileAccept: null,
+      removed: false
+    }
+  },
+  watch: {
+    'fileEdit'(data) {
+      if (this.removed) {
+        this.fileAccept = data.file_path.replace('general/', '')
+        this.removed = false
+      }
+      this.fileAccept = this.fileEdit.file_path.replace('general/', '')
     }
   },
   created() {
-    this.file = this.fileEdit
+    this.fileAccept = this.fileEdit.file_path ? this.fileEdit.file_path.replace('general/', '') : this.fileEdit.file_path
   },
   methods: {
     handleFileUpload(event) {
-      this.file = this.$refs.file.files[0]
+      this.fileSend = this.$refs.file.files[0]
 
       this.onUpload()
     },
@@ -44,23 +56,27 @@ export default {
 
         const formData = new FormData()
 
-        formData.append('file', this.file)
+        formData.append('file', this.fileSend)
         formData.append('type', 'news_important_attachment')
 
         const { data } = await upload(formData)
         const { path, url } = data
 
+        this.fileAccept = path.replace('general/', '')
+
         this.$emit('onUpload', path, url)
-      } catch (e) {
-        console.log(e)
+      } catch (error) {
+        const errorFileSize = error.response.data.data.file
+        errorFileSize.forEach(element => {
+          this.$message.error(element)
+        })
       } finally {
         this.loading = false
       }
     },
     removeFile(key) {
-      this.file = null
-
       this.$emit('getId', key)
+      this.removed = true
     }
   }
 }

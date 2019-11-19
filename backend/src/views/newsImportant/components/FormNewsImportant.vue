@@ -159,6 +159,12 @@ export default {
     ])
   },
 
+  watch: {
+    'newsImportant.attachments'() {
+      this.checkAttachmentLength()
+    }
+  },
+
   created() {
     if (this.isEdit) {
       const id = this.$route.params && this.$route.params.id
@@ -205,7 +211,7 @@ export default {
           this.$router.push('/news-important/index')
         } else {
           await create(data)
-          this.$message.success(this.$t('message.create-success'))
+          this.$message.success(this.$t('message.newsImportant-create-success'))
           this.$router.push('/news-important/index')
         }
       } catch (e) {
@@ -223,8 +229,13 @@ export default {
       this.newsImportant.attachments.push({
         'file_path': null
       })
-      if (this.newsImportant.attachments.length === 5) {
+      this.checkAttachmentLength()
+    },
+    checkAttachmentLength() {
+      if (this.newsImportant.attachments.length >= 5) {
         this.display = false
+      } else {
+        this.display = true
       }
     },
     remove(index) {
