@@ -54,7 +54,7 @@ export default {
       {
         id: 9,
         level: "user",
-        name: "Pengguna",
+        name: "Publik",
         value: 5
       }
     ]
