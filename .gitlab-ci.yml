@@ -111,7 +111,7 @@ build_prod:
 
 
 release_all:
-  image: docker:stable
+  image: docker:dind
   stage: release
   services:
     - docker:dind
@@ -127,7 +127,7 @@ release_all:
     - echo $VERSION
   script:
     - cp .env-template .env
-    - echo $VERSION
+    - echo $VERSIONbranches
     - sed -i "s/%NODE_ENV%/development/g" .env
     - sed -i "s/%VUE_APP_BASE_API%/${VUE_APP_BASE_API}/g" .env
     - sed -i "s/%SENTRY_DSN_API%/${SENTRY_DSN_API}/g" .env
