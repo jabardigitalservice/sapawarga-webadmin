@@ -224,8 +224,13 @@ export default {
       this.newsImportant.attachments.push({
         'file_path': null
       })
-      if (this.newsImportant.attachments.length === 5) {
+      this.checkAttachmentLength()
+    },
+    checkAttachmentLength() {
+      if (this.newsImportant.attachments.length >= 5) {
         this.display = false
+      } else {
+        this.display = true
       }
     },
     remove(index) {
