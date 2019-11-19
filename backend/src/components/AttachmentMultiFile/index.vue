@@ -33,7 +33,7 @@ export default {
     }
   },
   created() {
-    this.fileAccept = this.fileEdit.name
+    this.fileAccept = this.fileEdit.file_path ? this.fileEdit.file_path.replace('general/', '') : this.fileEdit.file_path
   },
   methods: {
     handleFileUpload(event) {
