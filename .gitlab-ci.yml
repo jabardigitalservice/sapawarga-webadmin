@@ -49,7 +49,7 @@ versioning:
 #    expire_in: 1 week
 
 build_prod:
-  image: docker:stable
+  image: docker/compose:latest
   stage: build
   only:
     - branches
@@ -62,8 +62,8 @@ build_prod:
   before_script:
     - export VERSION=$(cat ./version)
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    - apk add --no-cache py-pip python-dev libffi-dev openssl-dev gcc libc-dev make
-    - pip install docker-compose
+  #  - apk add --no-cache py-pip python-dev libffi-dev openssl-dev gcc libc-dev make
+  #  - pip install docker-compose
   script:
     - cp .env-template .env
     - sed -i "s/%NODE_ENV%/production/g" .env
@@ -111,7 +111,7 @@ build_prod:
 
 
 release_all:
-  image: docker:dind
+  image: docker/compose:latest
   stage: release
   services:
     - docker:dind
@@ -122,19 +122,20 @@ release_all:
   before_script:
     - export VERSION=$(cat ./version)
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    - apk add --no-cache py-pip python-dev libffi-dev openssl-dev gcc libc-dev make
-    - pip install docker-compose
+    #- apk add --no-cache py-pip python-dev libffi-dev openssl-dev gcc libc-dev make
+    #- pip install docker-compose
     - echo $VERSION
   script:
     - cp .env-template .env
-    - echo $VERSIONbranches
+    - echo $VERSION
     - sed -i "s/%NODE_ENV%/development/g" .env
     - sed -i "s/%VUE_APP_BASE_API%/${VUE_APP_BASE_API}/g" .env
     - sed -i "s/%SENTRY_DSN_API%/${SENTRY_DSN_API}/g" .env
     - sed -i "s/%GOOGLE_MAPS_WEB_API_KEY%/${GOOGLE_MAPS_WEB_API_KEY}/g" .env
     - sed -i "s/%VERSION%/$VERSION/g" docker-compose.yml
     - cat .env
-    - docker-compose -f docker-compose.yml pull
+    - cat docker-compose.yml
+    - docker-compose pull
     - echo $VERSION
     - docker images
     - docker push registry.gitlab.com/jdsteam/sapa-warga/sapawarga-webadmin:${VERSION}
