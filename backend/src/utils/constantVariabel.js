@@ -28,7 +28,7 @@ export const RolesUser = Object.freeze({
   STAFFRW: 'staffRW',
   STAFFSABERHOAX: 'staffSaberhoax',
   TRAINER: 'trainer',
-  USER: 'user'
+  PUBLIK: 'user'
 })
 
 export const rolesWidget = {

@@ -159,7 +159,7 @@
             </div>
           </el-col>
           <el-col
-            v-if="(rolesWidget[RolesUser.USER].includes(roleId))"
+            v-if="(rolesWidget[RolesUser.PUBLIK].includes(roleId))"
             :xs="12"
             :sm="12"
             :lg="6"
@@ -173,7 +173,7 @@
                 <div class="card-panel-text">
                   {{ $t('label.widget-user') }}
                 </div>
-                <count-to :start-val="0" :end-val="totalUserPengguna" :duration="duration" class="card-panel-num" />
+                <count-to :start-val="0" :end-val="totalUserPublik" :duration="duration" class="card-panel-num" />
               </div>
             </div>
           </el-col>
@@ -237,7 +237,7 @@ export default {
       type: Number,
       default: 0
     },
-    totalUserPengguna: {
+    totalUserPublik: {
       type: Number,
       default: 0
     }

@@ -12,7 +12,7 @@
       :total-user-rw="totalUserRw"
       :total-user-saber-hoax="totalUserSaberHoax"
       :total-user-trainer="totalUserTrainer"
-      :total-user-pengguna="totalUserPengguna"
+      :total-user-publik="totalUserPublik"
     />
 
     <el-row :gutter="20">
@@ -170,7 +170,7 @@ export default {
       totalUserRw: 0,
       totalUserTrainer: 0,
       totalUserSaberHoax: 0,
-      totalUserPengguna: 0,
+      totalUserPublik: 0,
       visibleDialog: false,
       importDialogVisible: false,
       radio: '1',
@@ -201,8 +201,8 @@ export default {
         this.totalUserRw = (_.find(response.data.items, ['level', RolesUser.STAFFRW])) ? _.find(response.data.items, ['level', RolesUser.STAFFRW]).value : 0
         this.totalUserSaberHoax = (_.find(response.data.items, ['level', RolesUser.STAFFSABERHOAX])) ? _.find(response.data.items, ['level', RolesUser.STAFFSABERHOAX]).value : null
         this.totalUserTrainer = (_.find(response.data.items, ['level', RolesUser.TRAINER])) ? _.find(response.data.items, ['level', RolesUser.TRAINER]).value : 0
-        this.totalUserPengguna = (_.find(response.data.items, ['level', RolesUser.USER])) ? _.find(response.data.items, ['level', RolesUser.USER]).value : 0
-        this.totalAllUser = this.totalUserProvince + this.totalUserKabKota + this.totalUserKec + this.totalUserKel + this.totalUserRw + this.totalUserSaberHoax + this.totalUserTrainer + this.totalUserPengguna
+        this.totalUserPublik = (_.find(response.data.items, ['level', RolesUser.PUBLIK])) ? _.find(response.data.items, ['level', RolesUser.PUBLIK]).value : 0
+        this.totalAllUser = this.totalUserProvince + this.totalUserKabKota + this.totalUserKec + this.totalUserKel + this.totalUserRw + this.totalUserSaberHoax + this.totalUserTrainer + this.totalUserPublik
       })
     },
 

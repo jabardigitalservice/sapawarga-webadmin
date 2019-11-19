@@ -73,8 +73,8 @@ service.interceptors.response.use(
     // }
   },
   error => {
-    if (error.response.status === 401) {
-      router.push('/401')
+    if (error.response.status === 403) {
+      router.push('/403')
     }
 
     if (error.response.status === 404) {
