@@ -95,6 +95,13 @@ export default {
         object_resizing: false,
         toolbar: this.toolbar.length > 0 ? this.toolbar : toolbar,
         menubar: this.menubar,
+        nowrap: false,
+        formats: {
+          bold: { inline: 'b', exact: true },
+          italic: { inline: 'i', exact: true },
+          underline: { inline: 'u', exact: true },
+          strikethrough: { inline: 's', exact: true }
+        },
         plugins: plugins,
         end_container_on_empty_block: true,
         powerpaste_word_import: 'clean',
@@ -116,6 +123,7 @@ export default {
             this.$emit('input', editor.getContent())
           })
         },
+
         setup(editor) {
           editor.on('FullscreenStateChanged', (e) => {
             _this.fullscreen = e.state
