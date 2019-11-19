@@ -240,6 +240,7 @@ import { Message } from 'element-ui'
 import InputMap from '@/components/InputMap'
 import { validCoordinate, containsWhitespace } from '@/utils/validate'
 import { checkUserKabKota } from '@/utils/permission'
+import { RolesUser } from '@/utils/constantVariabel'
 import moment from 'moment'
 
 export default {
@@ -361,6 +362,14 @@ export default {
           value: 'staffProv'
         },
         {
+          label: 'Pelatih',
+          value: 'trainer'
+        },
+        {
+          label: 'Publik',
+          value: 'user'
+        },
+        {
           label: 'Admin Kab/kota',
           value: 'staffKabkota'
         },
@@ -371,10 +380,6 @@ export default {
         {
           label: 'Admin Desa/Kelurahan',
           value: 'staffKel'
-        },
-        {
-          label: 'Pelatih',
-          value: 'trainer'
         },
         {
           label: 'RW',
@@ -713,17 +718,17 @@ export default {
   computed: {
     parentId() {
       const authUser = this.$store.state.user
-      if (checkPermission(['staffKabkota'])) {
+      if (checkPermission([RolesUser.STAFFKABKOTA])) {
         return parseInt(authUser.kabkota_id)
       }
-      if (checkPermission(['staffKec'])) {
+      if (checkPermission([RolesUser.STAFFKEC])) {
         return parseInt(authUser.kec_id)
       }
       return null
     },
     parentArea() {
       const authUser = this.$store.state.user
-      if (checkPermission(['staffKabkota'])) {
+      if (checkPermission([RolesUser.STAFFKABKOTA])) {
         const staffKabkota = authUser.kabkota_id
         this.parentKabkotaSet(staffKabkota)
       }
@@ -731,7 +736,7 @@ export default {
     },
     parentKecamatan() {
       const authUser = this.$store.state.user
-      if (checkPermission(['staffKec'])) {
+      if (checkPermission([RolesUser.STAFFKEC])) {
         const staffKecamatan = {
           kabkota: authUser.kabkota_id,
           kecamatan: authUser.kec_id
@@ -742,7 +747,7 @@ export default {
     },
     parentKelurahan() {
       const authUser = this.$store.state.user
-      if (checkPermission(['staffKel'])) {
+      if (checkPermission([RolesUser.STAFFKEL])) {
         const staffKelurahan = {
           kabkota: authUser.kabkota_id,
           kecamatan: authUser.kec_id,
@@ -755,16 +760,16 @@ export default {
     filterRole() {
       const ruleOptions = this.opsiPeran
       if ((this.isEdit && !this.isProfile) || (!this.isEdit && !this.isProfile)) {
-        if (checkPermission(['admin'])) {
+        if (checkPermission([RolesUser.ADMIN])) {
           return ruleOptions.slice(1, ruleOptions.length)
-        } if (checkPermission(['staffProv'])) {
+        } if (checkPermission([RolesUser.STAFFPROV])) {
           return ruleOptions.slice(3, ruleOptions.length)
-        } if (checkPermission(['staffKabkota'])) {
-          return ruleOptions.slice(4, ruleOptions.length)
-        } if (checkPermission(['staffKec'])) {
+        } if (checkPermission([RolesUser.STAFFKABKOTA])) {
           return ruleOptions.slice(5, ruleOptions.length)
-        } if (checkPermission(['staffKel'])) {
+        } if (checkPermission([RolesUser.STAFFKEC])) {
           return ruleOptions.slice(6, ruleOptions.length)
+        } if (checkPermission([RolesUser.STAFFKEL])) {
+          return ruleOptions.slice(7, ruleOptions.length)
         }
       }
       return ruleOptions
@@ -840,18 +845,18 @@ export default {
         this.imageData = dataProfile.photo_url || this.imageData
         this.setLinkEditPhoto = dataProfile.photo_url
         // assign to data
-        if ((dataProfile.role_id === 'staffRW') || (dataProfile.role_id === 'trainer')) {
+        if ((dataProfile.role_id === RolesUser.STAFFRW) || (dataProfile.role_id === RolesUser.TRAINER) || (dataProfile.role_id === RolesUser.PUBLIK)) {
           this.user.kabkota = dataProfile.kabkota.name
           this.user.kecamatan = dataProfile.kecamatan.name
           this.user.kelurahan = dataProfile.kelurahan.name
-        } else if (dataProfile.role_id === 'staffKel') {
+        } else if (dataProfile.role_id === RolesUser.STAFFKEL) {
           this.user.kabkota = dataProfile.kabkota.name
           this.user.kecamatan = dataProfile.kecamatan.name
           this.user.kelurahan = dataProfile.kelurahan.name
-        } else if (dataProfile.role_id === 'staffKec') {
+        } else if (dataProfile.role_id === RolesUser.STAFFKEC) {
           this.user.kabkota = dataProfile.kabkota.name
           this.user.kecamatan = dataProfile.kecamatan.name
-        } else if (dataProfile.role_id === 'staffKabkota') {
+        } else if (dataProfile.role_id === RolesUser.STAFFKABKOTA) {
           this.user.kabkota = dataProfile.kabkota.name
         }
       })
@@ -925,18 +930,18 @@ export default {
           urlPhoto = dataUser.photo_url
         }
         // // assign to data
-        if ((dataUser.role_id === 'staffRW') || (dataUser.role_id === 'trainer')) {
+        if ((dataUser.role_id === RolesUser.STAFFRW) || (dataUser.role_id === RolesUser.TRAINER) || (dataUser.role_id === RolesUser.PUBLIK)) {
           this.user.kabkota = dataUser.kabkota.name
           this.user.kecamatan = dataUser.kecamatan.name
           this.user.kelurahan = dataUser.kelurahan.name
-        } else if (dataUser.role_id === 'staffKel') {
+        } else if (dataUser.role_id === RolesUser.STAFFKEL) {
           this.user.kabkota = dataUser.kabkota.name
           this.user.kecamatan = dataUser.kecamatan.name
           this.user.kelurahan = dataUser.kelurahan.name
-        } else if (dataUser.role_id === 'staffKec') {
+        } else if (dataUser.role_id === RolesUser.STAFFKEC) {
           this.user.kabkota = dataUser.kabkota.name
           this.user.kecamatan = dataUser.kecamatan.name
-        } else if (dataUser.role_id === 'staffKabkota') {
+        } else if (dataUser.role_id === RolesUser.STAFFKABKOTA) {
           this.user.kabkota = dataUser.kabkota.name
         }
 

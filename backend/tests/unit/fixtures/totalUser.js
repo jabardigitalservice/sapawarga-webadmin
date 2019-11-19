@@ -50,6 +50,12 @@ export default {
         level: "trainer",
         name: "Trainer",
         value: 19
+      },
+      {
+        id: 9,
+        level: "user",
+        name: "Publik",
+        value: 5
       }
     ]
   }

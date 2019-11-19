@@ -27,7 +27,8 @@ export const RolesUser = Object.freeze({
   STAFFKEL: 'staffKel',
   STAFFRW: 'staffRW',
   STAFFSABERHOAX: 'staffSaberhoax',
-  TRAINER: 'trainer'
+  TRAINER: 'trainer',
+  PUBLIK: 'user'
 })
 
 export const rolesWidget = {
@@ -38,5 +39,6 @@ export const rolesWidget = {
   'staffKel': ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel'],
   'staffRW': ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel', 'staffRW'],
   'staffSaberhoax': ['admin', 'staffSaberhoax'],
-  'trainer': ['admin', 'staffProv', 'trainer']
+  'trainer': ['admin', 'staffProv', 'trainer'],
+  'user': ['admin', 'staffProv', 'user']
 }

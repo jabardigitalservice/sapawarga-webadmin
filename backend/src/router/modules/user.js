@@ -109,6 +109,18 @@ const userRouter = {
       }
     },
     {
+      name: 'user-list-user',
+      path: 'user-publik',
+      component: () => import('@/views/user/list'),
+      props: {
+        roleId: 'user'
+      },
+      meta: {
+        title: 'user-list-user',
+        roles: ['admin', 'staffProv']
+      }
+    },
+    {
       name: 'user-edit',
       path: 'edit/:id',
       component: () => import('@/views/user/edit'),

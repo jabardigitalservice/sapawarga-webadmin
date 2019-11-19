@@ -26,7 +26,7 @@
             </div>
           </el-col>
           <el-col
-            v-if="(rolesWidget[RolesUser.STAFFPROV].includes(roleId))"
+            v-if="(rolesWidget[RolesUser.STAFFPROV].includes(roleId) && (pages != rolesWidget.ALL || roleId != RolesUser.STAFFPROV))"
             :xs="12"
             :sm="12"
             :lg="6"
@@ -45,7 +45,7 @@
             </div>
           </el-col>
           <el-col
-            v-if="(rolesWidget[RolesUser.STAFFKABKOTA].includes(roleId))"
+            v-if="(rolesWidget[RolesUser.STAFFKABKOTA].includes(roleId) && (pages != rolesWidget.ALL || roleId != RolesUser.STAFFKABKOTA))"
             :xs="12"
             :sm="12"
             :lg="6"
@@ -64,7 +64,7 @@
             </div>
           </el-col>
           <el-col
-            v-if="(rolesWidget[RolesUser.STAFFKEC].includes(roleId))"
+            v-if="(rolesWidget[RolesUser.STAFFKEC].includes(roleId) && (pages != rolesWidget.ALL || roleId != RolesUser.STAFFKEC))"
             :xs="12"
             :sm="12"
             :lg="6"
@@ -158,6 +158,25 @@
               </div>
             </div>
           </el-col>
+          <el-col
+            v-if="(rolesWidget[RolesUser.PUBLIK].includes(roleId))"
+            :xs="12"
+            :sm="12"
+            :lg="6"
+            class="card-panel-col total-user"
+          >
+            <div class="card-panel">
+              <div class="card-panel-icon-wrapper icon-people-user">
+                <svg-icon icon-class="peoples" class-name="card-panel-icon" />
+              </div>
+              <div class="card-panel-description">
+                <div class="card-panel-text">
+                  {{ $t('label.widget-user') }}
+                </div>
+                <count-to :start-val="0" :end-val="totalUserPublik" :duration="duration" class="card-panel-num" />
+              </div>
+            </div>
+          </el-col>
         </div>
       </el-card>
     </el-row>
@@ -215,6 +234,10 @@ export default {
       default: 0
     },
     totalUserSaberHoax: {
+      type: Number,
+      default: 0
+    },
+    totalUserPublik: {
       type: Number,
       default: 0
     }
@@ -302,6 +325,9 @@ export default {
     }
     .icon-people-trainer {
       color: #7a4880;
+    }
+    .icon-people-user {
+      color: #4eaaff;
     }
     .icon-message {
       color: #36a3f7;
