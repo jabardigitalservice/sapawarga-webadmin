@@ -49,7 +49,7 @@ versioning:
 #    expire_in: 1 week
 
 build_prod:
-  image: docker/compose:latest
+  image: docker:latest
   stage: build
   only:
     - branches
@@ -111,7 +111,7 @@ build_prod:
 
 
 release_all:
-  image: docker/compose:latest
+  image: docker:latest
   stage: release
   services:
     - docker:dind
