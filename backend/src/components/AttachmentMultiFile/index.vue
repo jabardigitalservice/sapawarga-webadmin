@@ -26,8 +26,10 @@ export default {
   },
   data() {
     return {
+      loading: false,
       fileSend: null,
-      fileAccept: null
+      fileAccept: null,
+      removed: false
     }
   },
   created() {
@@ -64,10 +66,8 @@ export default {
       }
     },
     removeFile(key) {
-      this.fileSend = null
-      this.fileAccept = null
-
       this.$emit('getId', key)
+      this.removed = true
     }
   }
 }
