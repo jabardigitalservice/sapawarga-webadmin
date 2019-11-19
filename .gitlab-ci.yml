@@ -132,7 +132,7 @@ release_all:
     - sed -i "s/%VUE_APP_BASE_API%/${VUE_APP_BASE_API}/g" .env
     - sed -i "s/%SENTRY_DSN_API%/${SENTRY_DSN_API}/g" .env
     - sed -i "s/%GOOGLE_MAPS_WEB_API_KEY%/${GOOGLE_MAPS_WEB_API_KEY}/g" .env
-    - sed -i "s/%VERSION%/$VERSION/g" docker-compose.yml
+    - sed -i "s/$VERSION%/${VERSION}/g" docker-compose.yml
     - cat .env
     - cat docker-compose.yml
     - docker-compose pull
