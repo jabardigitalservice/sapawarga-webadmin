@@ -135,7 +135,7 @@ release_all:
     - sed -i "s/%VERSION%/$VERSION/g" docker-compose-release.yml
     - cat .env
     - cat docker-compose-release.yml
-    - docker-compose -f docker-compose-release.yml pull --no-parallel -q
+    - docker pull registry.gitlab.com/jdsteam/sapa-warga/sapawarga-webadmin:$VERSION --no-parallel -q
     - echo $VERSION
     - docker images
     - docker push registry.gitlab.com/jdsteam/sapa-warga/sapawarga-webadmin:$VERSION
