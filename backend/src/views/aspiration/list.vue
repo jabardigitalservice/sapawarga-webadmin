@@ -117,6 +117,44 @@ export default {
       this.listQuery.sort_by = e.prop
       this.listQuery.sort_order = e.order
       this.getList()
+    },
+
+    async unpublishRecord(id) {
+      try {
+        await this.$confirm(this.$t('crud.unpublish-confirm'), 'Warning', {
+          confirmButtonText: this.$t('common.confirm'),
+          cancelButtonText: this.$t('common.cancel'),
+          type: 'warning'
+        })
+
+        this.listLoading = true
+
+        await unpublish(id)
+
+        this.$message.success(this.$t('crud.unpublish-success'))
+
+        this.getList()
+      } catch (e) {
+        console.log(e)
+      }
+    },
+    async publishRecord(id, approval_note) {
+      try {
+        await this.$confirm(this.$t('crud.publish-confirm'), 'Warning', {
+          confirmButtonText: this.$t('common.confirm'),
+          cancelButtonText: this.$t('common.cancel'),
+          type: 'warning'
+        })
+        this.listLoading = true
+
+        await publish(id, approval_note)
+
+        this.$message.success(this.$t('crud.publish-success'))
+
+        this.getList()
+      } catch (e) {
+        console.log(e)
+      }
     }
   }
 
