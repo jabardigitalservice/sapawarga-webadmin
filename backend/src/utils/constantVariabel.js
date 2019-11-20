@@ -3,9 +3,17 @@ export const ResponseRequest = Object.freeze({
   NETWORKERROR: 'Network Error'
 })
 
+// status
 export const SurveyStatus = Object.freeze({
   DRAFT: 0,
   ACTIVE: 10
+})
+
+export const AspirationStatus = Object.freeze({
+  PUBLISH: 10,
+  UNPUBLISH: 7,
+  REJECT: 3,
+  SENT: 5
 })
 
 export const PopupCategory = Object.freeze({

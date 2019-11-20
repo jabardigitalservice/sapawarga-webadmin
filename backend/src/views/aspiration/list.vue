@@ -22,15 +22,23 @@
 
           <el-table-column prop="created_at" sortable="custom" label="Dibuat" align="center" min-width="125">
             <template slot-scope="{row}">
-              {{ row.created_at | moment('D MMM YYYY HH:mm') }}
+              {{ parsingDatetime(row.updated_at, 'D MMM YYYY HH:mm') }}
             </template>
           </el-table-column>
 
-          <el-table-column align="center" label="Actions" width="150px">
-            <template slot-scope="scope">
+          <el-table-column prop="status" label="Actions" header-align="center" width="120">
+            <template slot-scope="scope" align="left">
               <router-link :to="'/aspirasi/detail/'+scope.row.id">
-                <el-button type="primary" icon="el-icon-view" size="small">Lihat</el-button>
+                <el-tooltip :content="$t('label.aspiration-tooltip-detail')" placement="top">
+                  <el-button type="primary" align="left" icon="el-icon-view" size="small" style="margin-left:5px" />
+                </el-tooltip>
               </router-link>
+              <el-tooltip :content="$t('label.aspiration-tooltip-publish')" placement="top">
+                <el-button v-if="setPublish(scope.row.status)" type="success" icon="el-icon-circle-check" size="small" @click="publishRecord(scope.row.id, scope.row.approval_note)" />
+              </el-tooltip>
+              <el-tooltip :content="$t('label.aspiration-tooltip-unpublish')" placement="top">
+                <el-button v-if="setUnpublish(scope.row.status)" type="danger" icon="el-icon-circle-close" size="small" @click="unpublishRecord(scope.row.id)" />
+              </el-tooltip>
             </template>
           </el-table-column>
         </el-table>
@@ -41,9 +49,12 @@
 </template>
 
 <script>
-import { fetchList } from '@/api/aspiration'
-import Pagination from '@/components/Pagination'
 import ListFilter from './_listfilter'
+import Pagination from '@/components/Pagination'
+import checkPermission from '@/utils/permission'
+import { parsingDatetime } from '@/utils/datetimeToString'
+import { fetchList, unpublish, publish } from '@/api/aspiration'
+import { AspirationStatus, RolesUser } from '@/utils/constantVariabel'
 
 export default {
   components: { Pagination, ListFilter },
@@ -51,9 +62,10 @@ export default {
     statusFilter(status) {
       const statusMap = {
         '10': 'success',
-        '0': 'info',
+        '0': 'default',
         '5': 'warning',
-        '3': 'danger'
+        '3': 'danger',
+        '7': 'info'
       }
       return statusMap[status]
     }
@@ -66,6 +78,8 @@ export default {
   },
   data() {
     return {
+      AspirationStatus,
+      RolesUser,
       list: null,
       total: 0,
       listLoading: true,
@@ -86,6 +100,8 @@ export default {
   },
 
   methods: {
+    checkPermission,
+    parsingDatetime,
     getList() {
       this.listLoading = true
       fetchList(this.listQuery).then(response => {
@@ -109,8 +125,63 @@ export default {
       this.listQuery.sort_by = e.prop
       this.listQuery.sort_order = e.order
       this.getList()
+    },
+
+    async unpublishRecord(id) {
+      try {
+        await this.$confirm(this.$t('crud.unpublish-confirm'), 'Warning', {
+          confirmButtonText: this.$t('common.confirm'),
+          cancelButtonText: this.$t('common.cancel'),
+          type: 'warning'
+        })
+
+        this.listLoading = true
+
+        await unpublish(id)
+
+        this.$message.success(this.$t('crud.unpublish-success'))
+
+        this.getList()
+      } catch (e) {
+        console.log(e)
+      }
+    },
+    async publishRecord(id, approval_note) {
+      try {
+        await this.$confirm(this.$t('crud.publish-confirm'), 'Warning', {
+          confirmButtonText: this.$t('common.confirm'),
+          cancelButtonText: this.$t('common.cancel'),
+          type: 'warning'
+        })
+        this.listLoading = true
+
+        await publish(id, approval_note)
+
+        this.$message.success(this.$t('crud.publish-success'))
+
+        this.getList()
+      } catch (e) {
+        console.log(e)
+      }
+    },
+    setPublish(status) {
+      const publish = status === AspirationStatus.UNPUBLISH && checkPermission([RolesUser.ADMIN, RolesUser.STAFFPROV])
+
+      if (publish) {
+        return true
+      } else {
+        return false
+      }
+    },
+    setUnpublish(status) {
+      const unpublish = status === AspirationStatus.PUBLISH && checkPermission([RolesUser.ADMIN, RolesUser.STAFFPROV])
+
+      if (unpublish) {
+        return true
+      } else {
+        return false
+      }
     }
   }
-
 }
 </script>

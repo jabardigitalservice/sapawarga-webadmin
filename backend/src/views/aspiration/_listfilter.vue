@@ -21,10 +21,10 @@
               placeholder="Pilih Status"
               style="width: 100%"
             >
-              <el-option value="5" label="Terkirim" />
-              <el-option value="10" label="Dipublikasikan" />
-              <el-option value="3" label="Ditolak" />
-
+              <el-option :value="AspirationStatus.REJECT" label="Ditolak" />
+              <el-option :value="AspirationStatus.SENT" label="Terkirim" />
+              <el-option :value="AspirationStatus.PUBLISH" label="Dipublikasikan" />
+              <el-option :value="AspirationStatus.UNPUBLISH" label="Tidak Dipublikasikan" />
             </el-select>
           </el-form-item>
         </el-col>
@@ -53,6 +53,7 @@
 </template>
 
 <script>
+import { AspirationStatus } from '@/utils/constantVariabel'
 import InputFilterArea from '@/components/InputFilterArea'
 import InputCategory from '@/components/InputCategory'
 import checkPermission from '@/utils/permission'
@@ -64,6 +65,12 @@ export default {
     listQuery: {
       type: Object,
       default: null
+    }
+  },
+
+  data() {
+    return {
+      AspirationStatus
     }
   },
 

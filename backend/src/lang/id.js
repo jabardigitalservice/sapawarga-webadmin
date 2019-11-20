@@ -164,6 +164,11 @@ export default {
     'activate-success': 'Data berhasil diaktifkan.',
     'deactivate-success': 'Data berhasil dinonaktifkan.',
 
+    'publish-confirm': 'Anda yakin ingin mempublikasikan usulan ini?',
+    'unpublish-confirm': 'Anda yakin ingin membatalkan usulan ini?',
+    'publish-success': 'Usulan berhasil dipublikasikan',
+    'unpublish-success': 'Usulan berhasil di batalkan',
+
     'delete-confirm': 'Anda yakin ingin menghapus data ini?',
     'delete-success': 'Data berhasil dihapus.',
 
@@ -505,6 +510,10 @@ export default {
     'newsImportant-tooltip-nonactive': 'Nonaktifkan Info Pendidikan',
 
     'newsImportant-detail': 'Detail Info Pendidikan',
-    'newsImportant-data': 'Data Info Pendidikan'
+    'newsImportant-data': 'Data Info Pendidikan',
+
+    'aspiration-tooltip-publish': 'Publikasikan Usulan',
+    'aspiration-tooltip-unpublish': 'Batalkan Usulan',
+    'aspiration-tooltip-detail': 'Detail Usulan'
   }
 }
