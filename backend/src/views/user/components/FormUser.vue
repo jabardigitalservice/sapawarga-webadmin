@@ -348,34 +348,34 @@ export default {
         photo: '',
         coordinates: []
       },
-      opsiPeran: [
+      roleOptions: [
         {
-          label: 'Admin',
-          value: 'admin'
+          label: this.$t('label.roles-admin'),
+          value: RolesUser.ADMIN
         },
         {
-          label: 'Admin Saber Hoax',
-          value: 'staffSaberhoax'
+          label: this.$t('label.roles-admin-saber-hoax'),
+          value: RolesUser.STAFFSABERHOAX
         },
         {
-          label: 'Admin Provinsi',
-          value: 'staffProv'
+          label: this.$t('label.roles-admin-province'),
+          value: RolesUser.STAFFPROV
         },
         {
-          label: 'Admin Kab/kota',
-          value: 'staffKabkota'
+          label: this.$t('label.roles-admin-kabkota'),
+          value: RolesUser.STAFFKABKOTA
         },
         {
-          label: 'Admin Kecamatan',
-          value: 'staffKec'
+          label: this.$t('label.roles-admin-districts'),
+          value: RolesUser.STAFFKEC
         },
         {
-          label: 'Admin Desa/Kelurahan',
-          value: 'staffKel'
+          label: this.$t('label.roles-admin-village'),
+          value: RolesUser.STAFFKEL
         },
         {
-          label: 'RW',
-          value: 'staffRW'
+          label: this.$t('label.roles-admin-rw'),
+          value: RolesUser.STAFFRW
         }
       ],
       id_kabkota: '',
@@ -707,7 +707,6 @@ export default {
       }
     }
   },
-
   computed: {
     parentId() {
       const authUser = this.$store.state.user
@@ -751,13 +750,13 @@ export default {
       return null
     },
     filterRole() {
-      const ruleOptions = this.opsiPeran
+      const ruleOptions = this.roleOptions
       if ((this.isEdit && !this.isProfile) || (!this.isEdit && !this.isProfile)) {
         if (checkPermission([RolesUser.ADMIN])) {
-          ruleOptions.push({ label: 'Pelatih', value: 'trainer' }, { label: 'Publik', value: 'user' })
+          ruleOptions.push({ label: this.$t('label.roles-trainer'), value: RolesUser.TRAINER }, { label: this.$t('label.roles-public'), value: RolesUser.PUBLIK })
           return ruleOptions.slice(1, ruleOptions.length)
         } if (checkPermission([RolesUser.STAFFPROV])) {
-          ruleOptions.push({ label: 'Pelatih', value: 'trainer' }, { label: 'Publik', value: 'user' })
+          ruleOptions.push({ label: this.$t('label.roles-trainer'), value: RolesUser.TRAINER }, { label: this.$t('label.roles-public'), value: RolesUser.PUBLIK })
           return ruleOptions.slice(3, ruleOptions.length)
         } if (checkPermission([RolesUser.STAFFKABKOTA])) {
           return ruleOptions.slice(4, ruleOptions.length)
@@ -770,7 +769,6 @@ export default {
       return ruleOptions
     }
   },
-
   watch: {
     'user.kabkota'(oldVal, newVal) {
       if (newVal !== '' && this.isEdit === false && this.isProfile === false) {
@@ -794,7 +792,6 @@ export default {
       }
     }
   },
-
   created() {
     if (this.isEdit && !this.isProfile) {
       const id = this.$route.params && this.$route.params.id
@@ -810,15 +807,14 @@ export default {
     this.parentArea
     this.parentKecamatan
     this.parentKelurahan
-    if (checkPermission(['staffKabkota'])) {
+    if (checkPermission([RolesUser.STAFFKABKOTA])) {
       this.getKecamatan()
     }
-    if (checkPermission(['staffKec'])) {
+    if (checkPermission([RolesUser.STAFFKEC])) {
       this.getKelurahan()
       this.formRightSide = '0'
     }
   },
-
   methods: {
     getProfile() {
       fetchProfile().then(response => {
@@ -1057,7 +1053,8 @@ export default {
             instagram: this.user.instagram,
             photo_url: this.user.photo,
             lat: this.user.coordinates[0],
-            lon: this.user.coordinates[1]
+            lon: this.user.coordinates[1],
+            role_id: this.user.role
           }
           if (this.user.confirmation !== '') {
             userEdit['password'] = this.user.confirmation

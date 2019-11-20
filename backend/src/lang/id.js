@@ -501,6 +501,17 @@ export default {
     'status-scheduled': 'Dijadwalkan',
     'status-published': 'Dipublikasikan',
 
+
+    'roles-admin': 'Admin',
+    'roles-admin-saber-hoax': 'Admin Saber Hoax',
+    'roles-admin-province': 'Admin Provinsi',
+    'roles-admin-kabkota': 'Admin Kab/kota',
+    'roles-admin-districts': 'Admin Kecamatan',
+    'roles-admin-village': 'Admin Desa/Kelurahan',
+    'roles-admin-rw': 'RW',
+    'roles-trainer': 'Pelatih',
+    'roles-public': 'Publik',
+
     'popular-category': 'Kategori Populer',
     'link-logo-news-channels-manage': 'Tautan Logo Sumber Berita',
     'link': 'Tautan',
