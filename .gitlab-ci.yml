@@ -49,7 +49,7 @@ versioning:
 #    expire_in: 1 week
 
 build_prod:
-  image: docker:stable
+  image: docker/compose:latest
   stage: build
   only:
     - branches
@@ -57,30 +57,22 @@ build_prod:
     - docker:dind
   variables:
     DOCKER_DRIVER: overlay2
-    #DOCKER_HOST: tcp://52.74.74.33:2375
-    #VERSION: v0.2-253-gaaa0cc8
   dependencies: 
     - versioning
   before_script:
     - export VERSION=$(cat ./version)
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    - apk add --no-cache py-pip python-dev libffi-dev openssl-dev gcc libc-dev make
-    - pip install docker-compose
+    #- apk add --no-cache py-pip python-dev libffi-dev openssl-dev gcc libc-dev make
+    #- pip install docker-compose
   script:
     - cp .env-template .env
     - sed -i "s/%NODE_ENV%/production/g" .env
     - sed -i "s/%VUE_APP_BASE_API%/${VUE_APP_BASE_API}/g" .env
     - sed -i "s/%SENTRY_DSN_API%/${SENTRY_DSN_API}/g" .env
     - sed -i "s/%GOOGLE_MAPS_WEB_API_KEY%/${GOOGLE_MAPS_WEB_API_KEY}/g" .env
-    - cat .env
     - docker-compose build
     - docker images
     - docker-compose push
-    #- docker inspect --format='{{index .RepoDigests 0}}' registry.gitlab.com/jdsteam/sapa-warga/sapawarga-webadmin:$VERSION > sha256
-  #artifacts:
-    #paths:
-      #- sha256
-
 
 
 #test_webadmin:
@@ -119,40 +111,28 @@ build_prod:
 
 
 release_all:
-  image: docker/compose:latest
+  image: tiangolo/docker-with-compose
   stage: release
-  #services:
-  #  - docker:dind
+  services:
+    - docker:dind
   only:
     - branches
-  variables:
-    DOCKER_HOST: tcp://52.74.74.33:2375
-    VERSION: v0.2-253-gaaa0cc8
   dependencies: 
     - versioning
-    #- build_prod
   before_script:
     - export VERSION=$(cat ./version)
-    - export SHA256=$(cat ./sha256)
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    #- apk add --no-cache py-pip python-dev libffi-dev openssl-dev gcc libc-dev make
-    #- pip install docker-compose
     - echo $VERSION
   script:
     - cp .env-template .env
     - echo $VERSION
-    #- echo $SHA256
-    #- cat /home/imam/.docker/config.json
     - sed -i "s/%NODE_ENV%/development/g" .env
     - sed -i "s/%VUE_APP_BASE_API%/${VUE_APP_BASE_API}/g" .env
     - sed -i "s/%SENTRY_DSN_API%/${SENTRY_DSN_API}/g" .env
     - sed -i "s/%GOOGLE_MAPS_WEB_API_KEY%/${GOOGLE_MAPS_WEB_API_KEY}/g" .env
-    - sed -i "s/%IMAGE_VERSION%/$SHA256/g" docker-compose-release.yml
-    - docker-compose -f docker-compose-release.yml pull --no-parallel 
-    #- docker pull $SHA256
-    #- echo $VERSION
+    - docker-compose pull --no-parallel 
     - docker images
-    #- docker push $SHA256
+    - docker push registry.gitlab.com/jdsteam/sapa-warga/sapawarga-webadmin:${VERSION}
 
 deploy_staging:
   image: docker:stable
