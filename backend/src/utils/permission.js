@@ -26,7 +26,7 @@ export default function checkPermission(value) {
   }
 }
 
-function checkUserTrainerPublic(rolesUser, role_detail) {
+function isUserTrainerPublic(rolesUser, role_detail) {
   if (![RolesUser.ADMIN, RolesUser.STAFFPROV].includes(rolesUser) &&
   role_detail === RolesUser.TRAINER || role_detail === RolesUser.PUBLIK) {
     router.push('/403')
@@ -35,13 +35,13 @@ function checkUserTrainerPublic(rolesUser, role_detail) {
   }
 }
 
-export function checkUserKabKota(id_kabkota, role_detail) {
+export function isUserKabKota(id_kabkota, role_detail) {
   const kabKotaUser = store.getters.user ? store.getters.user.kabkota_id : null
   const rolesUser = store.getters.roles ? store.getters.roles[0] : null
   if ([RolesUser.ADMIN, RolesUser.STAFFPROV].includes(rolesUser)) {
     return true
   } else if (kabKotaUser === id_kabkota) {
-    checkUserTrainerPublic(rolesUser, role_detail)
+    isUserTrainerPublic(rolesUser, role_detail)
   } else {
     router.push('/403')
   }

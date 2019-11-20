@@ -81,7 +81,7 @@ import MapThumb from '@/components/MapThumb'
 import { fetchUser } from '@/api/staff'
 import permission from '@/directive/permission/index.js'
 import { parsingDatetime, formatDatetime } from '@/utils/datetimeToString'
-import { checkUserKabKota } from '@/utils/permission'
+import { isUserKabKota } from '@/utils/permission'
 
 export default {
   components: { PhotoBox, MapThumb },
@@ -146,7 +146,7 @@ export default {
           role_id,
           role_label
         } = response.data
-        checkUserKabKota(kabkota ? kabkota.id : null, role_id)
+        isUserKabKota(kabkota ? kabkota.id : null, role_id)
         this.twitterAccount = twitter || '-'
         this.facebookAccount = facebook || '-'
         this.instagramAccount = instagram || '-'

@@ -239,7 +239,7 @@ import { fetchProfile, update } from '@/api/user'
 import { Message } from 'element-ui'
 import InputMap from '@/components/InputMap'
 import { validCoordinate, containsWhitespace } from '@/utils/validate'
-import { checkUserKabKota } from '@/utils/permission'
+import { isUserKabKota } from '@/utils/permission'
 import { RolesUser } from '@/utils/constantVariabel'
 import moment from 'moment'
 
@@ -915,7 +915,7 @@ export default {
     fetchData(id) {
       fetchUser(id).then(response => {
         const dataUser = response.data
-        checkUserKabKota(dataUser.kabkota ? dataUser.kabkota.id : null, dataUser.role_id)
+        isUserKabKota(dataUser.kabkota ? dataUser.kabkota.id : null, dataUser.role_id)
         const dataUserPhotoUrl = dataUser.photo_url
         let urlPhoto = null
         if (dataUser.photo_url !== null) {
