@@ -749,6 +749,7 @@ export default {
       }
       return null
     },
+    // the filterRole() method returns the selected elements in an array, as a new array object.
     filterRole() {
       const ruleOptions = this.roleOptions
       if ((this.isEdit && !this.isProfile) || (!this.isEdit && !this.isProfile)) {
