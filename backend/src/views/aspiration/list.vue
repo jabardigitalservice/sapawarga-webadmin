@@ -162,8 +162,25 @@ export default {
       } catch (e) {
         console.log(e)
       }
+    },
+    setPublish(status) {
+      const publish = status === AspirationStatus.UNPUBLISH && checkPermission([RolesUser.ADMIN, RolesUser.STAFFPROV])
+
+      if (publish) {
+        return true
+      } else {
+        return false
+      }
+    },
+    setUnpublish(status) {
+      const unpublish = status === AspirationStatus.PUBLISH && checkPermission([RolesUser.ADMIN, RolesUser.STAFFPROV])
+
+      if (unpublish) {
+        return true
+      } else {
+        return false
+      }
     }
   }
-
 }
 </script>
