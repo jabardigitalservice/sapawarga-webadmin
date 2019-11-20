@@ -38,3 +38,24 @@ export function approval(id, data) {
     data
   })
 }
+
+export function unpublish(id) {
+  return request({
+    url: `/aspirasi/${id}`,
+    method: 'put',
+    data: {
+      status: 7
+    }
+  })
+}
+
+export function publish(id, approval_note) {
+  return request({
+    url: `/aspirasi/${id}`,
+    method: 'put',
+    data: {
+      status: 10,
+      approval_note
+    }
+  })
+}
