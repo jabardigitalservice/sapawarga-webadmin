@@ -143,9 +143,10 @@ export default {
           job_type,
           birth_date,
           education_level,
+          role_id,
           role_label
         } = response.data
-        checkUserKabKota(kabkota ? kabkota.id : null)
+        checkUserKabKota(kabkota ? kabkota.id : null, role_id)
         this.twitterAccount = twitter || '-'
         this.facebookAccount = facebook || '-'
         this.instagramAccount = instagram || '-'

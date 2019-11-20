@@ -85,7 +85,6 @@ export default {
       return statusMap[status]
     }
   },
-
   props: {
     roleId: {
       type: String,

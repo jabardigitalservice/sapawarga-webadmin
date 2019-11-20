@@ -362,14 +362,6 @@ export default {
           value: 'staffProv'
         },
         {
-          label: 'Pelatih',
-          value: 'trainer'
-        },
-        {
-          label: 'Publik',
-          value: 'user'
-        },
-        {
           label: 'Admin Kab/kota',
           value: 'staffKabkota'
         },
@@ -761,16 +753,19 @@ export default {
       const ruleOptions = this.opsiPeran
       if ((this.isEdit && !this.isProfile) || (!this.isEdit && !this.isProfile)) {
         if (checkPermission([RolesUser.ADMIN])) {
+          ruleOptions.push({ label: 'Pelatih', value: 'trainer' }, { label: 'Publik', value: 'user' })
           return ruleOptions.slice(1, ruleOptions.length)
         } if (checkPermission([RolesUser.STAFFPROV])) {
+          ruleOptions.push({ label: 'Pelatih', value: 'trainer' }, { label: 'Publik', value: 'user' })
           return ruleOptions.slice(3, ruleOptions.length)
         } if (checkPermission([RolesUser.STAFFKABKOTA])) {
-          return ruleOptions.slice(5, ruleOptions.length)
+          return ruleOptions.slice(4, ruleOptions.length)
         } if (checkPermission([RolesUser.STAFFKEC])) {
-          return ruleOptions.slice(6, ruleOptions.length)
+          return ruleOptions.slice(5, ruleOptions.length)
         } if (checkPermission([RolesUser.STAFFKEL])) {
-          return ruleOptions.slice(7, ruleOptions.length)
+          return ruleOptions.slice(6, ruleOptions.length)
         }
+        console.log(ruleOptions)
       }
       return ruleOptions
     }
@@ -921,7 +916,7 @@ export default {
     fetchData(id) {
       fetchUser(id).then(response => {
         const dataUser = response.data
-        checkUserKabKota(dataUser.kabkota ? dataUser.kabkota.id : null)
+        checkUserKabKota(dataUser.kabkota ? dataUser.kabkota.id : null, dataUser.role_id)
         const dataUserPhotoUrl = dataUser.photo_url
         let urlPhoto = null
         if (dataUser.photo_url !== null) {
