@@ -141,15 +141,12 @@ release_all:
     - sed -i "s/%VUE_APP_BASE_API%/${VUE_APP_BASE_API}/g" .env
     - sed -i "s/%SENTRY_DSN_API%/${SENTRY_DSN_API}/g" .env
     - sed -i "s/%GOOGLE_MAPS_WEB_API_KEY%/${GOOGLE_MAPS_WEB_API_KEY}/g" .env
-    - sed -i "s/%VERSION%/$VERSION/g" docker-compose-release.yml
-    - cat .env
-    - cat docker-compose-release.yml
-    - docker-compose pull
-    - docker pull alpine:latest
-    - docker pull $SHA256
-    - echo $VERSION
+    - sed -i "s/%SHA256%/$SHA256/g" docker-compose-release.yml
+    - docker-compose -f docker-compose-release.yml pull
+    #- docker pull $SHA256
+    #- echo $VERSION
     - docker images
-    - docker push registry.gitlab.com/jdsteam/sapa-warga/sapawarga-webadmin:${VERSION}
+    - docker push $SHA256
 
 deploy_staging:
   image: docker:stable
