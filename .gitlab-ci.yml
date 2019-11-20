@@ -53,8 +53,8 @@ build_prod:
   stage: build
   only:
     - branches
-  #services:
-  #  - docker:dind
+  services:
+    - docker:dind
   variables:
     DOCKER_DRIVER: overlay2
   dependencies: 
@@ -135,8 +135,9 @@ release_all:
     - sed -i "s/%VERSION%/$VERSION/g" docker-compose-release.yml
     - cat .env
     - cat docker-compose-release.yml
-    #- docker-compose -f docker-compose-release.yml pull
+    - docker-compose -f docker-compose-release.yml pull
     - docker pull alpine:latest
+    - docker pull registry.gitlab.com/jdsteam/sapa-warga/sapawarga-webadmin:$VERSION
     - echo $VERSION
     - docker images
     - docker push registry.gitlab.com/jdsteam/sapa-warga/sapawarga-webadmin:${VERSION}
