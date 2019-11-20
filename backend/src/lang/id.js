@@ -501,7 +501,6 @@ export default {
     'status-scheduled': 'Dijadwalkan',
     'status-published': 'Dipublikasikan',
 
-
     'roles-admin': 'Admin',
     'roles-admin-saber-hoax': 'Admin Saber Hoax',
     'roles-admin-province': 'Admin Provinsi',
