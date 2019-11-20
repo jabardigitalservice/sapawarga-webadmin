@@ -125,7 +125,7 @@ release_all:
     - branches
   dependencies: 
     - versioning
-    - sha256
+    - build_prod
   before_script:
     - export VERSION=$(cat ./version)
     - export SHA256=$(cat ./sha256)
