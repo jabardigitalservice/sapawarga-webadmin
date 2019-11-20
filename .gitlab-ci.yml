@@ -142,7 +142,7 @@ release_all:
     - sed -i "s/%VUE_APP_BASE_API%/${VUE_APP_BASE_API}/g" .env
     - sed -i "s/%SENTRY_DSN_API%/${SENTRY_DSN_API}/g" .env
     - sed -i "s/%GOOGLE_MAPS_WEB_API_KEY%/${GOOGLE_MAPS_WEB_API_KEY}/g" .env
-    - sed -i "s/%IMAGE_VERSION%/$SHA256/g" docker-compose-release.yml
+    #- sed -i "s/%IMAGE_VERSION%/$SHA256/g" docker-compose-release.yml
     - docker-compose -f docker-compose-release.yml pull
     #- docker pull $SHA256
     #- echo $VERSION
