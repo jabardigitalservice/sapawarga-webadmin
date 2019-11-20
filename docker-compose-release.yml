@@ -10,7 +10,7 @@ services:
         - VUE_APP_GOOGLE_API_KEY=$VUE_APP_GOOGLE_API_KEY
         - VUE_APP_SENTRY_DSN=$VUE_APP_SENTRY_DSN
         - VUE_APP_ERROR_ENVIRONMENT=$VUE_APP_ERROR_ENVIRONMENT
-    image: alpine:latest
+    image: registry.gitlab.com/jdsteam/sapa-warga/sapawarga-webadmin:${VERSION}
     networks:
       - internal
     ports: 
