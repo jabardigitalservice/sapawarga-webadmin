@@ -74,7 +74,7 @@ build_prod:
     - docker-compose build
     - docker images
     - docker-compose push
-    - docker inspect --format='{{.RepoDigests}}' registry.gitlab.com/jdsteam/sapa-warga/sapawarga-webadmin:$VERSION > sha256
+    - docker inspect --format='{{index .RepoDigests 0}}' registry.gitlab.com/jdsteam/sapa-warga/sapawarga-webadmin:$VERSION > sha256
   artifacts:
     paths:
       - sha256
