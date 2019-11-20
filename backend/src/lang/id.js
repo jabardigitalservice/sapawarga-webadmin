@@ -198,7 +198,7 @@ export default {
     'users-edit': 'Edit Pengguna',
     'users-edit-profile': 'Edit Profil',
     'users-import-data': 'Unggah Data Pengguna Sapawarga',
-    'users-dialog-text-import-csv': 'Anda dapat melakukan unggah data dengan mengunggah file dengan tipe CSV.',
+    'users-dialog-text-import-xlsx': 'Anda dapat melakukan unggah data dengan mengunggah file dengan tipe XLSX.',
     'users-dialog-text-template-file': 'Template file dapat diunduh pada ',
     'users-dialog-text-url': 'Tautan berikut',
     'users-dialog-text-choose-location-file': 'Pilih lokasi file pada komputer Anda (max. 5 MB)',
@@ -348,7 +348,16 @@ export default {
     'news-channels-must-be-filled': 'Sumber Berita harus diisi.',
     'news-channels-must-be-at-least-5-characters': 'Sumber Berita minimal 5 karakter',
     'news-channels-must-be-at-least-25-characters': 'Sumber Berita maksimal 25 karakter',
-    'website-news-channels-already-used': 'Website Sumber Berita sudah digunakan'
+    'website-news-channels-already-used': 'Website Sumber Berita sudah digunakan',
+
+    'news-title-not-valid': 'Judul Berita yang diisi tidak valid',
+    'news-content-not-valid': 'Konten Berita yang diisi tidak valid',
+    'news-title-not-null': 'Judul Berita harus diisi',
+    'news-title-must-be-at-least-10-characters': 'Judul Berita minimal 10 karakter',
+    'news-title-must-be-at-least-100-characters': 'Judul Berita maksimal 100 karakter',
+    'news-category-not-null': 'Kategori Berita harus diisi',
+    'news-content-not-null': 'Konten Berita harus diisi'
+
   },
   navbar: {
     'profile': 'Lihat Profil',
@@ -483,7 +492,10 @@ export default {
     'select-file': 'Pilih File',
     'title-broadcast': 'Judul Pesan',
     'scheduled_datetime': 'Tanggal dan Waktu',
+    'date': 'Tanggal',
 
+    'news-title': 'Judul Berita',
+    'news-conet': 'Konten Berita',
     'status': 'Status',
     'status-draft': 'Draft',
     'status-scheduled': 'Dijadwalkan',
@@ -493,6 +505,7 @@ export default {
     'link-logo-news-channels-manage': 'Tautan Logo Sumber Berita',
     'link': 'Tautan',
 
+    'add-news-counter-hoax': 'Tambah Berita Counter Hoax',
     'newsImportant-description': 'Deskripsi',
     'newsImportant-date-created': 'Tanggal Dibuat',
     'newsImportant-url': 'https://jabarprov.go.id',
