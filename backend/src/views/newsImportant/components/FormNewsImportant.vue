@@ -232,10 +232,14 @@ export default {
       this.checkAttachmentLength()
     },
     checkAttachmentLength() {
-      if (this.newsImportant.attachments.length >= 5) {
-        this.display = false
+      if (this.newsImportant.attachments) {
+        if (this.newsImportant.attachments.length >= 5) {
+          this.display = false
+        } else {
+          this.display = true
+        }
       } else {
-        this.display = true
+        this.newsImportant.attachments
       }
     },
     remove(index) {
