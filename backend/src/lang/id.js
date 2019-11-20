@@ -495,7 +495,7 @@ export default {
     'date': 'Tanggal',
 
     'news-title': 'Judul Berita',
-    'news-conet': 'Konten Berita',
+    'news-content': 'Konten Berita',
     'status': 'Status',
     'status-draft': 'Draft',
     'status-scheduled': 'Dijadwalkan',

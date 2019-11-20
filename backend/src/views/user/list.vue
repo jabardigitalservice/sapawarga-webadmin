@@ -224,7 +224,7 @@ export default {
       const kecamatan = _.get(user, 'kecamatan.name')
       const kabkota = _.get(user, 'kabkota.name')
 
-      if ((userRole === RolesUser.STAFFRW) || userRole === RolesUser.TRAINER || userRole === RolesUser.USER) {
+      if ((userRole === RolesUser.STAFFRW) || userRole === RolesUser.TRAINER || userRole === RolesUser.PUBLIK) {
         return this.$t('users.users-role-text-staff-rw', [rw, kelurahan, kecamatan, kabkota])
       }
 
