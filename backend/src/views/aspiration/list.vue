@@ -22,15 +22,23 @@
 
           <el-table-column prop="created_at" sortable="custom" label="Dibuat" align="center" min-width="125">
             <template slot-scope="{row}">
-              {{ row.created_at | moment('D MMM YYYY HH:mm') }}
+              {{ parsingDatetime(row.updated_at, 'D MMM YYYY HH:mm') }}
             </template>
           </el-table-column>
 
-          <el-table-column align="center" label="Actions" width="150px">
-            <template slot-scope="scope">
+          <el-table-column prop="status" label="Actions" header-align="center" width="120">
+            <template slot-scope="scope" align="left">
               <router-link :to="'/aspirasi/detail/'+scope.row.id">
-                <el-button type="primary" icon="el-icon-view" size="small">Lihat</el-button>
+                <el-tooltip :content="$t('label.aspiration-tooltip-detail')" placement="top">
+                  <el-button type="primary" align="left" icon="el-icon-view" size="small" style="margin-left:5px" />
+                </el-tooltip>
               </router-link>
+              <el-tooltip :content="$t('label.aspiration-tooltip-publish')" placement="top">
+                <el-button v-if="scope.row.status === AspirationStatus.UNPUBLISH && checkPermission([RolesUser.ADMIN, RolesUser.STAFFPROV])" type="success" icon="el-icon-circle-check" size="small" @click="publishRecord(scope.row.id, scope.row.approval_note)" />
+              </el-tooltip>
+              <el-tooltip :content="$t('label.aspiration-tooltip-unpublish')" placement="top">
+                <el-button v-if="scope.row.status === AspirationStatus.PUBLISH && checkPermission([RolesUser.ADMIN, RolesUser.STAFFPROV])" type="danger" icon="el-icon-circle-close" size="small" @click="unpublishRecord(scope.row.id)" />
+              </el-tooltip>
             </template>
           </el-table-column>
         </el-table>
