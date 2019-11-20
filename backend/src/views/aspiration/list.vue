@@ -51,7 +51,8 @@
 <script>
 import { fetchList } from '@/api/aspiration'
 import Pagination from '@/components/Pagination'
-import ListFilter from './_listfilter'
+import checkPermission from '@/utils/permission'
+import { parsingDatetime } from '@/utils/datetimeToString'
 import { AspirationStatus, RolesUser } from '@/utils/constantVariabel'
 
 export default {
@@ -97,6 +98,8 @@ export default {
   },
 
   methods: {
+    checkPermission,
+    parsingDatetime,
     getList() {
       this.listLoading = true
       fetchList(this.listQuery).then(response => {
