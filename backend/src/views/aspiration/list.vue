@@ -34,10 +34,10 @@
                 </el-tooltip>
               </router-link>
               <el-tooltip :content="$t('label.aspiration-tooltip-publish')" placement="top">
-                <el-button v-if="scope.row.status === AspirationStatus.UNPUBLISH && checkPermission([RolesUser.ADMIN, RolesUser.STAFFPROV])" type="success" icon="el-icon-circle-check" size="small" @click="publishRecord(scope.row.id, scope.row.approval_note)" />
+                <el-button v-if="setPublish(scope.row.status)" type="success" icon="el-icon-circle-check" size="small" @click="publishRecord(scope.row.id, scope.row.approval_note)" />
               </el-tooltip>
               <el-tooltip :content="$t('label.aspiration-tooltip-unpublish')" placement="top">
-                <el-button v-if="scope.row.status === AspirationStatus.PUBLISH && checkPermission([RolesUser.ADMIN, RolesUser.STAFFPROV])" type="danger" icon="el-icon-circle-close" size="small" @click="unpublishRecord(scope.row.id)" />
+                <el-button v-if="setUnpublish(scope.row.status)" type="danger" icon="el-icon-circle-close" size="small" @click="unpublishRecord(scope.row.id)" />
               </el-tooltip>
             </template>
           </el-table-column>
@@ -62,9 +62,10 @@ export default {
     statusFilter(status) {
       const statusMap = {
         '10': 'success',
-        '0': 'info',
+        '0': 'default',
         '5': 'warning',
-        '3': 'danger'
+        '3': 'danger',
+        '7': 'info'
       }
       return statusMap[status]
     }
