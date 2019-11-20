@@ -1,4 +1,6 @@
 import store from '@/store'
+import { RolesUser } from '@/utils/constantVariabel'
+import router from '@/router'
 
 /**
  * @param {Array} value
@@ -21,5 +23,17 @@ export default function checkPermission(value) {
   } else {
     console.error(`need roles! Like v-permission="['admin','editor']"`)
     return false
+  }
+}
+
+export function checkUserKabKota(id_kabkota) {
+  const kabKotaUser = store.getters.user ? store.getters.user.kabkota_id : null
+  const rolesUser = store.getters.roles ? store.getters.roles[0] : null
+  if ([RolesUser.ADMIN, RolesUser.STAFFPROV].includes(rolesUser)) {
+    return true
+  } else if (kabKotaUser === id_kabkota) {
+    return true
+  } else {
+    router.push('/403')
   }
 }

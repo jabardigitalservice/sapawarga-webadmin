@@ -38,6 +38,24 @@ export default {
         level: "rw",
         name: "RW",
         value: 16
+      },
+      {
+        id: 7,
+        level: "saberhoax",
+        name: "SaberHoax",
+        value: 27
+      },
+      {
+        id: 8,
+        level: "trainer",
+        name: "Trainer",
+        value: 19
+      },
+      {
+        id: 9,
+        level: "user",
+        name: "Publik",
+        value: 5
       }
     ]
   }

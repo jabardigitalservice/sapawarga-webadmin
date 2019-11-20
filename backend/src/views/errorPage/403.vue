@@ -1,27 +1,14 @@
 <template>
   <div class="errPage-container">
     <el-button icon="arrow-left" class="pan-back-btn" @click="back">
-      返回
+      Kembali ke beranda
     </el-button>
     <el-row>
       <el-col :span="12">
         <h1 class="text-jumbo text-ginormous">
           Oops!
         </h1>
-        Sumber gif<a href="https://zh.airbnb.com/" target="_blank">airbnb</a> Halaman
         <h2>Anda tidak memiliki izin untuk membuka halaman ini</h2>
-        <ul class="list-unstyled">
-          <li>或者你可以去:</li>
-          <li class="link-type">
-            <router-link to="/dashboard">
-              回首页
-            </router-link>
-          </li>
-          <li class="link-type">
-            <a href="https://www.taobao.com/">随便看看</a>
-          </li>
-          <li><a href="#" @click.prevent="dialogVisible=true">点我看图</a></li>
-        </ul>
       </el-col>
       <el-col :span="12">
         <img :src="errGif" width="313" height="428" alt="Girl has dropped her ice cream.">
@@ -47,11 +34,7 @@ export default {
   },
   methods: {
     back() {
-      if (this.$route.query.noGoBack) {
-        this.$router.push({ path: '/dashboard' })
-      } else {
-        this.$router.go(-1)
-      }
+      this.$router.push({ path: '/' })
     }
   }
 }

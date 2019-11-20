@@ -64,13 +64,7 @@
             </el-form-item>
 
             <el-form-item :label="$t('label.description')" prop="description">
-              <el-input
-                v-model="broadcast.description"
-                type="textarea"
-                name="description"
-                :rows="8"
-                placeholder="Tulis pesan (maksimum 1000 karakter)"
-              />
+              <tinymce v-model="broadcast.description" :height="300" />
             </el-form-item>
             <el-form-item>
               <el-button type="info" :disabled="broadcast.status === status.PUBLISHED" :loading="loading" @click="submitForm(status.DRAFT)">{{ $t('crud.draft') }}</el-button>
@@ -86,11 +80,13 @@
 import InputCategory from '@/components/InputCategory'
 import InputSelectArea from '@/components/InputSelectArea'
 import { create, fetchRecord, update } from '@/api/broadcast'
-import { containsWhitespace } from '@/utils/validate'
+import { containsWhitespace, isContainHtmlTags } from '@/utils/validate'
+import Tinymce from '@/components/Tinymce'
 import moment from 'moment'
 
 export default {
   components: {
+    Tinymce,
     InputCategory,
     InputSelectArea
   },
@@ -112,6 +108,14 @@ export default {
       if (containsWhitespace(value) === true) {
         callback(new Error(this.$t('message.broadcast-description-valid')))
       }
+      callback()
+    }
+
+    const validatorHTMLTitle = (rule, value, callback) => {
+      if (isContainHtmlTags(value) === true) {
+        callback(new Error(this.$t('errors.broadcast-title')))
+      }
+
       callback()
     }
 
@@ -149,6 +153,10 @@ export default {
           {
             max: 100,
             message: this.$t('message.broadcast-title-max'),
+            trigger: 'blur'
+          },
+          {
+            validator: validatorHTMLTitle,
             trigger: 'blur'
           },
           {
@@ -332,10 +340,19 @@ export default {
           }
         }
       } catch (err) {
-        const error = err.response.data.data.scheduled_datetime
-        if (error) {
+        const errorDate = err.response.data.data.scheduled_datetime
+        const errorTitle = err.response.data.data.title
+        const errorDescription = err.response.data.data.description
+
+        if (errorDate) {
           this.broadcast.scheduled_datetime = null
           this.scheduled_datetime_validation = 'scheduled_datetime_error'
+        } else if (errorTitle && errorDescription) {
+          this.$message.error(this.$t('errors.broadcast-title-description'))
+        } else if (errorTitle) {
+          this.$message.error(this.$t('errors.broadcast-title'))
+        } else if (errorDescription) {
+          this.$message.error(this.$t('errors.broadcast-description'))
         } else {
           console.log(err)
         }
@@ -376,5 +393,4 @@ export default {
 .rw {
   margin-top: -7px;
 }
-
 </style>

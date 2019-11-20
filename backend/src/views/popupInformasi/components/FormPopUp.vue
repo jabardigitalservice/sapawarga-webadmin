@@ -353,9 +353,11 @@ export default {
     },
     async submitForm() {
       const valid = await this.$refs.popup.validate()
-
-      if (!valid || this.popup.internal_object_name === ' ') {
+      if (this.popup.internal_object_name === ' ') {
         this.popup.internal_object_name = null
+        if (!valid) {
+          return
+        }
         return
       }
 
@@ -377,7 +379,7 @@ export default {
           this.$router.push('/popup-informasi/index')
         } else {
           await create(data)
-          this.$message.success(this.$t('crud.send-success'))
+          this.$message.success(this.$t('crud.pop-up-send-success'))
           this.$router.push('/popup-informasi/index')
         }
       } catch (e) {

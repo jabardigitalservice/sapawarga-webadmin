@@ -8,6 +8,14 @@ export function fetchAspirasiMostLikes(query) {
   })
 }
 
+export function fetchCategoryAspirasiMostLikes(query) {
+  return request({
+    url: '/dashboards/aspirasi-category-counts?limit=7',
+    method: 'get',
+    params: query
+  })
+}
+
 export function fetchAspirasiCounts(query) {
   return request({
     url: 'dashboards/aspirasi-counts',
@@ -47,4 +55,3 @@ export function fetchTopFiveNewsDistricts(query) {
     params: query
   })
 }
-

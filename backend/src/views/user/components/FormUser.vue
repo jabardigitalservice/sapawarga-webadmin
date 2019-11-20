@@ -1,8 +1,8 @@
 <template>
-  <div class="app-container">
-    <p v-if="!isEdit" class="warn-content">Tambah Pengguna</p>
-    <p v-if="isEdit && !isProfile" class="warn-content">Edit Pengguna</p>
-    <p v-if="isProfile" class="warn-content">Edit Profil</p>
+  <div class="app-container user-form">
+    <p v-if="!isEdit" class="warn-content">{{ $t('users.users-add-new') }}</p>
+    <p v-if="isEdit && !isProfile" class="warn-content">{{ $t('users.users-edit') }}</p>
+    <p v-if="isProfile" class="warn-content">{{ $t('users.users-edit-profile') }}</p>
     <el-row :gutter="10">
       <!-- Left colomn -->
       <el-col :sm="24" :md="24" :lg="6" :xl="6" class="grid-content">
@@ -19,32 +19,32 @@
           class="demo-ruleForm"
           :rules="rules"
         >
-          <el-form-item label="Username" :prop="usernameValidation">
+          <el-form-item :label="$t('label.username')" :prop="usernameValidation">
             <el-input v-model="user.username" type="text" @focus="changePropUsername" />
           </el-form-item>
-          <el-form-item label="Nama Lengkap" prop="name">
+          <el-form-item :label="$t('label.fullname')" prop="name">
             <el-input v-model="user.name" type="text" />
           </el-form-item>
 
-          <el-form-item label="Email" :prop="emailValidation">
+          <el-form-item :label="$t('label.email')" :prop="emailValidation">
             <el-input v-model="user.email" type="email" @focus="changePropEmail" />
           </el-form-item>
 
-          <el-form-item label="Password" prop="password">
+          <el-form-item :label="$t('label.password')" prop="password">
             <el-input v-model="user.password" type="password" />
           </el-form-item>
 
-          <el-form-item label="Ulangi Password" prop="confirmation">
+          <el-form-item :label="$t('label.repeat-password')" prop="confirmation">
             <el-input v-model="user.confirmation" type="password" />
           </el-form-item>
 
-          <el-form-item label="Telepon" prop="phone">
+          <el-form-item :label="$t('label.telepon')" prop="phone">
             <el-input v-model="user.phone" type="text" placeholder="Contoh: 081254332233" />
           </el-form-item>
 
           <el-row>
             <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
-              <el-form-item label="Peran" prop="role">
+              <el-form-item :label="$t('label.role')" prop="role">
                 <el-select v-model="user.role" placeholder="Pilih Peran" :disabled="isProfile || isEdit">
                   <el-option
                     v-for="item in filterRole"
@@ -58,13 +58,13 @@
             <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" :style="{paddingLeft: formRightSide}">
               <el-form-item
                 v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffSaberhoax') && checkPermission(['admin', 'staffProv']))"
-                label="Kab/Kota"
+                :label="$t('label.area-kabkota')"
                 prop="kabkota"
               >
                 <el-select
                   v-if="area !== null"
                   v-model="user.kabkota"
-                  placeholder="Pilih Kab/Kota"
+                  :placeholder="$t('label.choose-area-kabkota')"
                   :disabled="user.role === '' || isEdit"
                   @change="getKecamatan"
                 >
@@ -82,12 +82,12 @@
             <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
               <el-form-item
                 v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffSaberhoax') && checkPermission(['admin', 'staffProv', 'staffKabkota']))"
-                label="Kecamatan"
+                :label="$t('label.area-kec')"
                 prop="kecamatan"
               >
                 <el-select
                   v-model="user.kecamatan"
-                  placeholder="Pilih Kecamatan"
+                  :placeholder="$t('label.choose-area-kec')"
                   :disabled="(user.kabkota == '' && checkPermission(['admin', 'staffProv']) || user.role === '' || isEdit)"
                   @change="getKelurahan"
                 >
@@ -103,12 +103,12 @@
             <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" :style="{paddingLeft: formRightSide}">
               <el-form-item
                 v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffKec') && !(user.role == 'staffSaberhoax') && ! checkPermission(['staffKel']))"
-                label="Desa/Kelurahan"
+                :label="$t('label.area-kel')"
                 prop="kelurahan"
               >
                 <el-select
                   v-model="user.kelurahan"
-                  placeholder="Pilih Desa/Kelurahan"
+                  :placeholder="$t('label.choose-area-kel')"
                   :disabled="(user.kecamatan == '' && checkPermission(['admin', 'staffProv', 'staffKabkota']) || user.role === '' || isEdit)"
                 >
                   <el-option
@@ -125,7 +125,7 @@
             <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
               <el-form-item
                 v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffKec') && !(user.role == 'staffKel') && !(user.role == 'staffSaberhoax'))"
-                label="RW"
+                :label="$t('label.area-rw')"
                 prop="rw"
               >
                 <el-input v-model="user.rw" type="text" placeholder="Contoh: 001" :disabled="(user.kelurahan == '' && checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec']) || user.role === '')" />
@@ -134,29 +134,62 @@
             <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" :style="{paddingLeft: formRightSide}">
               <el-form-item
                 v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffKec') && !(user.role == 'staffKel') && !(user.role == 'staffSaberhoax'))"
-                label="RT"
+                :label="$t('label.area-rt')"
                 prop="rt"
               >
                 <el-input v-model="user.rt" type="text" placeholder="Contoh: 002" :disabled="user.rw == '' && checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel'])" />
               </el-form-item>
             </el-col>
           </el-row>
-          <p class="warn-content">Lokasi pengguna</p>
+          <p class="warn-content">{{ $t('route.user-detail') }}</p>
+          <el-form-item :label="$t('label.education')">
+            <el-select v-model="user.education_level_id" :placeholder="$t('label.choose-education')">
+              <el-option
+                v-for="item in educationList"
+                :key="item.id"
+                :value="item.id"
+                :label="item.title"
+              >{{ item.title }}</el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item :label="$t('label.job')">
+            <el-select v-model="user.job_type_id" :placeholder="$t('label.choose-job')">
+              <el-option
+                v-for="item in jobList"
+                :key="item.id"
+                :value="item.id"
+                :label="item.title"
+              >{{ item.title }}</el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item :label="$t('label.birthdate')">
+            <el-date-picker
+              v-model="user.birth_date"
+              type="date"
+              :editable="false"
+              :clearable="false"
+              format="yyyy-MM-dd"
+              value-format="yyyy-MM-dd"
+              :picker-options="birthdateOptions"
+              :placeholder="$t('label.choose-birthdate')"
+            />
+          </el-form-item>
+          <p class="warn-content">{{ $t('label.location-user') }}</p>
           <el-row>
             <el-col>
-              <el-form-item label="Alamat" prop="address">
+              <el-form-item :label="$t('label.address')" prop="address">
                 <el-input v-model="user.address" type="text" />
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-              <el-form-item label="Koordinat Lokasi" prop="coordinates">
+              <el-form-item :label="$t('label.coordinates')" prop="coordinates">
                 <InputMap v-model="user.coordinates" />
               </el-form-item>
             </el-col>
           </el-row>
-          <p class="warn-content">Media Sosial</p>
+          <p class="warn-content">{{ $t('label.social-media') }}</p>
 
           <el-form-item label="Twitter" prop="twitter">
             <el-input v-model="user.twitter" type="text" placeholder="Contoh: jabardigitalservice" />
@@ -192,11 +225,23 @@
 <script>
 import uploadPhoto from './uploadPhoto'
 import checkPermission from '@/utils/permission'
-import { requestArea, requestKecamatan, requestKelurahan, createUser, fetchUser, editUser } from '@/api/staff'
+import {
+  requestArea,
+  requestKecamatan,
+  requestKelurahan,
+  createUser,
+  fetchUser,
+  editUser,
+  getEducationList,
+  getJobList
+} from '@/api/staff'
 import { fetchProfile, update } from '@/api/user'
 import { Message } from 'element-ui'
 import InputMap from '@/components/InputMap'
 import { validCoordinate, containsWhitespace } from '@/utils/validate'
+import { checkUserKabKota } from '@/utils/permission'
+import { RolesUser } from '@/utils/constantVariabel'
+import moment from 'moment'
 
 export default {
   components: { uploadPhoto, InputMap },
@@ -215,7 +260,7 @@ export default {
       const phoneStringFormat = value.toString()
       const checkStringPhone = phoneStringFormat.startsWith('0')
       if (!checkStringPhone) {
-        callback(new Error('Nomor telepon harus dimulai dari 0'))
+        callback(new Error(this.$t('errors.phone-number-must-be-start-0')))
       } else {
         callback()
       }
@@ -229,7 +274,7 @@ export default {
 
     const checkPassword = (rule, value, callback) => {
       if (value !== this.user.password) {
-        callback(new Error('Password tidak sesuai'))
+        callback(new Error(this.$t('errors.password-dont-match')))
       } else {
         callback()
       }
@@ -237,11 +282,11 @@ export default {
 
     const validatorCoordinateRequired = (rule, value, callback) => {
       if (_.isEmpty(this.user.coordinates[0]) === false && _.isEmpty(this.user.coordinates[1]) === true) {
-        callback(new Error('Koordinat Lokasi harus diisi.'))
+        callback(new Error(this.$t('errors.coordinates-must-be-filled')))
       }
 
       if (_.isEmpty(this.user.coordinates[0]) === true && _.isEmpty(this.user.coordinates[1]) === false) {
-        callback(new Error('Koordinat Lokasi harus diisi.'))
+        callback(new Error(this.$t('errors.coordinates-must-be-filled')))
       }
 
       callback()
@@ -249,11 +294,11 @@ export default {
 
     const validatorCoordinateInputNumber = (rule, value, callback) => {
       if (_.isEmpty(this.user.coordinates[0]) === false && validCoordinate(this.user.coordinates[0]) === false) {
-        callback(new Error('Koordinat Lokasi hanya boleh menggunakan angka, titik, - atau +'))
+        callback(new Error(this.$t('errors.coordinates-only-use-numbers-periods')))
       }
 
       if (_.isEmpty(this.user.coordinates[1]) === false && validCoordinate(this.user.coordinates[1]) === false) {
-        callback(new Error('Koordinat Lokasi hanya boleh menggunakan angka, titik, - atau +'))
+        callback(new Error(this.$t('errors.coordinates-only-use-numbers-periods')))
       }
 
       callback()
@@ -261,11 +306,11 @@ export default {
 
     const validatorCoordinateFinite = (rule, value, callback) => {
       if (_.isEmpty(this.user.coordinates[0]) === false && isFinite(this.user.coordinates[0]) === false) {
-        callback(new Error('Koordinat Lokasi tidak sesuai'))
+        callback(new Error(this.$t('errors.coordinates-dont-match')))
       }
 
       if (_.isEmpty(this.user.coordinates[1]) === false && isFinite(this.user.coordinates[1]) === false) {
-        callback(new Error('Koordinat Lokasi tidak sesuai'))
+        callback(new Error(this.$t('errors.coordinates-dont-match')))
       }
 
       callback()
@@ -273,7 +318,7 @@ export default {
 
     const whitespaceText = (rule, value, callback) => {
       if (containsWhitespace(value) === true) {
-        callback(new Error('Text yang diisi tidak valid'))
+        callback(new Error(this.$t('errors.text-not-valid')))
       }
       callback()
     }
@@ -296,6 +341,9 @@ export default {
         role: [],
         twitter: '',
         facebook: '',
+        birth_date: '',
+        education_level_id: '',
+        job_type_id: '',
         instagram: '',
         photo: '',
         coordinates: []
@@ -312,6 +360,14 @@ export default {
         {
           label: 'Admin Provinsi',
           value: 'staffProv'
+        },
+        {
+          label: 'Pelatih',
+          value: 'trainer'
+        },
+        {
+          label: 'Publik',
+          value: 'user'
         },
         {
           label: 'Admin Kab/kota',
@@ -336,6 +392,8 @@ export default {
       area: '',
       kecamatan: '',
       kelurahan: '',
+      educationList: [],
+      jobList: [],
       image: '',
       imageData: require('@/assets/user.png'),
       preview: '',
@@ -344,28 +402,31 @@ export default {
       usernameValidation: 'username',
       emitUrlPhoto: '',
       setLinkEditPhoto: '',
+      birthdateOptions: {
+        disabledDate: this.optionsBirthDate,
+        defaultValue: moment().subtract(20, 'years').format('YYYY-MM-DD')
+      },
       // validation
       rules: {
         username: [
           {
             required: true,
-            message: 'Username harus diisi',
+            message: this.$t('errors.username-must-be-filled'),
             trigger: 'blur'
           },
           {
             min: 4,
-            message: 'Username minimal 4 karakter',
+            message: this.$t('errors.username-must-be-at-least-4-characters'),
             trigger: 'blur'
           },
           {
             max: 255,
-            message: 'Username maksimal 255 karakter',
+            message: this.$t('errors.username-must-be-at-least-255-characters'),
             trigger: 'blur'
           },
           {
             pattern: /^[a-z0-9_.]+$/,
-            message:
-              'Username hanya boleh menggunakan huruf kecil, angka, underscore dan titik',
+            message: this.$t('errors.username-only-use-lowercase-letters-numbers-underscore-and-dots'),
             trigger: 'blur'
           },
           {
@@ -376,7 +437,7 @@ export default {
         errorUsername: [
           {
             required: true,
-            message: 'Username sudah digunakan',
+            message: this.$t('errors.username-already-used'),
             trigger: 'change'
           }
         ],
@@ -387,17 +448,17 @@ export default {
           },
           {
             required: true,
-            message: 'Nama Lengkap harus diisi',
+            message: this.$t('errors.fullname-must-be-filled'),
             trigger: 'blur'
           },
           {
             max: 255,
-            message: 'Nama Lengkap maksimal 255 karakter',
+            message: this.$t('errors.fullname-be-at-least-255-characters'),
             trigger: 'blur'
           },
           {
             pattern: /^[a-zA-Z.'\s]+$/,
-            message: 'Nama Lengkap hanya boleh menggunakan huruf, aposthrope dan titik',
+            message: this.$t('errors.fullname-only-use-letters-aposthrope-dots'),
             trigger: 'blur'
           }
         ],
@@ -408,47 +469,46 @@ export default {
           },
           {
             required: true,
-            message: 'Email harus diisi',
+            message: this.$t('errors.email-must-be-filled'),
             trigger: 'blur'
           },
           {
             max: 255,
-            message: 'Email terlalu panjang, maksimal 255 karakter',
+            message: this.$t('errors.email-must-be-at-least-255-characters'),
             trigger: 'blur'
           },
           {
             min: 3,
-            message: 'Alamat email minimal 3 karakter',
+            message: this.$t('errors.email-must-be-at-least-3-characters'),
             trigger: 'blur'
           },
           {
             type: 'email',
-            message: 'Format email yang Anda masukan salah',
+            message: this.$t('errors.email-wrong-format'),
             trigger: 'blur'
           }
         ],
         errorEmail: [
           {
             required: true,
-            message: 'Alamat email sudah digunakan',
+            message: this.$t('errors.email-already-used'),
             trigger: 'change'
           }
         ],
         password: [
           {
             max: 255,
-            message: 'Password maksimal 255 karakter',
+            message: this.$t('errors.password-must-be-at-least-255-characters'),
             trigger: 'blur'
           },
           {
             min: 5,
-            message: 'Password minimal 5 karakter',
+            message: this.$t('errors.password-must-be-at-least-5-characters'),
             trigger: 'blur'
           },
           {
             pattern: /^[a-zA-Z0-9\w\S]+$/,
-            message:
-              'Karakter password hanya boleh menggunakan huruf, angka dan spesial karakter',
+            message: this.$t('errors.password-only-use-letters-number-characters'),
             trigger: 'blur'
           },
           {
@@ -457,25 +517,24 @@ export default {
           },
           {
             required: !this.isEdit,
-            message: 'Password tidak boleh kosong',
+            message: this.$t('errors.password-must-be-filled'),
             trigger: 'blur'
           }
         ],
         confirmation: [
           {
             max: 255,
-            message: 'Password maksimal 255 karakter',
+            message: this.$t('errors.password-must-be-at-least-255-characters'),
             trigger: 'blur'
           },
           {
             min: 5,
-            message: 'Password minimal 5 karakter',
+            message: this.$t('errors.password-must-be-at-least-5-characters'),
             trigger: 'blur'
           },
           {
             pattern: /^[a-zA-Z0-9\w\S]+$/,
-            message:
-              'Karakter password hanya boleh menggunakan huruf, angka dan spesial karakter',
+            message: this.$t('errors.password-only-use-letters-number-characters'),
             trigger: 'blur'
           },
           {
@@ -484,29 +543,29 @@ export default {
           },
           {
             required: !this.isEdit,
-            message: 'Mohon ulangi password',
+            message: this.$t('errors.please-repeat-the-password'),
             trigger: 'blur'
           }
         ],
         phone: [
           {
             required: true,
-            message: 'Nomor telepon harus diisi',
+            message: this.$t('errors.phone-number-must-be-filled'),
             trigger: 'blur'
           },
           {
             min: 3,
-            message: 'Nomor telepon minimal 3 karakter',
+            message: this.$t('errors.phone-number-must-must-be-at-least-3-characters'),
             trigger: 'blur'
           },
           {
             max: 13,
-            message: 'Nomor telepon maksimal 13 karakter',
+            message: this.$t('errors.phone-number-must-must-be-at-least-13-characters'),
             trigger: 'blur'
           },
           {
             pattern: /^[0-9]+$/,
-            message: 'Nomor telepon hanya boleh menggunakan angka',
+            message: this.$t('errors.phone-number-only-use-number'),
             trigger: 'blur'
           },
           {
@@ -521,12 +580,12 @@ export default {
           },
           {
             required: true,
-            message: 'Alamat harus diisi',
+            message: this.$t('errors.address-must-be-filled'),
             trigger: 'blur'
           },
           {
             max: 255,
-            message: 'Alamat maksimal 255 karakter',
+            message: this.$t('errors.address-must-be-at-least-255-characters'),
             trigger: 'blur'
           }
         ],
@@ -538,72 +597,72 @@ export default {
         kabkota: [
           {
             required: true,
-            message: 'Kab/Kota harus diisi',
+            message: this.$t('errors.area-kabkota-must-be-filled'),
             trigger: 'blur'
           }
         ],
         kecamatan: [
           {
             required: true,
-            message: 'Kecamatan harus diisi',
+            message: this.$t('errors.area-kecamatan-must-be-filled'),
             trigger: 'blur'
           }
         ],
         kelurahan: [
           {
             required: true,
-            message: 'Desa/Kelurahan harus diisi',
+            message: this.$t('errors.area-kel-must-be-filled'),
             trigger: 'blur'
           }
         ],
         rw: [
           {
             required: true,
-            message: 'RW harus diisi',
+            message: this.$t('errors.rw-must-be-filled'),
             trigger: 'blur'
           },
           {
             pattern: /^[0-9]+$/,
-            message: 'RW harus menggunakan angka',
+            message: this.$t('errors.rw-only-use-number'),
             trigger: 'blur'
           },
           {
             max: 3,
-            message: 'RW harus 3 angka',
+            message: this.$t('errors.rw-must-be-at-least-3-number'),
             trigger: 'blur'
           },
           {
             min: 3,
-            message: 'RW harus 3 angka',
+            message: this.$t('errors.rw-must-be-at-least-3-number'),
             trigger: 'blur'
           }
         ],
         rt: [
           {
             required: true,
-            message: 'RT harus diisi',
+            message: this.$t('errors.rt-must-be-filled'),
             trigger: 'blur'
           },
           {
             pattern: /^[0-9]+$/,
-            message: 'RT harus menggunakan angka',
+            message: this.$t('errors.rt-only-use-number'),
             trigger: 'blur'
           },
           {
             max: 3,
-            message: 'RT harus 3 angka',
+            message: this.$t('errors.rt-must-be-at-least-3-number'),
             trigger: 'blur'
           },
           {
             min: 3,
-            message: 'RT harus 3 angka',
+            message: this.$t('errors.rt-must-be-at-least-3-number'),
             trigger: 'blur'
           }
         ],
         role: [
           {
             required: true,
-            message: 'Peran harus diisi',
+            message: this.$t('errors.role-must-be-filled'),
             trigger: 'blur'
           }
         ],
@@ -618,7 +677,7 @@ export default {
           },
           {
             pattern: /^[a-z0-9._]+$/,
-            message: 'Twitter hanya boleh menggunakan huruf, angka, titik dan underscore',
+            message: this.$t('errors.twitter-only-use-lowercase-letters-numbers-underscore-and-dots'),
             trigger: 'blur'
           }
         ],
@@ -633,7 +692,7 @@ export default {
           },
           {
             type: 'url',
-            message: 'Masukan url facebook secara lengkap, contoh: https://www.facebook.com/namapengguna',
+            message: this.$t('errors.enter-your-facebook-URL-in-full'),
             trigger: 'blur'
           }
         ],
@@ -648,7 +707,7 @@ export default {
           },
           {
             pattern: /^[a-z0-9._]+$/,
-            message: 'Instagram hanya boleh menggunakan huruf, angka, titik dan underscore',
+            message: this.$t('errors.instagram-only-use-lowercase-letters-numbers-underscore-and-dots'),
             trigger: 'blur'
           }
         ]
@@ -659,17 +718,17 @@ export default {
   computed: {
     parentId() {
       const authUser = this.$store.state.user
-      if (checkPermission(['staffKabkota'])) {
+      if (checkPermission([RolesUser.STAFFKABKOTA])) {
         return parseInt(authUser.kabkota_id)
       }
-      if (checkPermission(['staffKec'])) {
+      if (checkPermission([RolesUser.STAFFKEC])) {
         return parseInt(authUser.kec_id)
       }
       return null
     },
     parentArea() {
       const authUser = this.$store.state.user
-      if (checkPermission(['staffKabkota'])) {
+      if (checkPermission([RolesUser.STAFFKABKOTA])) {
         const staffKabkota = authUser.kabkota_id
         this.parentKabkotaSet(staffKabkota)
       }
@@ -677,7 +736,7 @@ export default {
     },
     parentKecamatan() {
       const authUser = this.$store.state.user
-      if (checkPermission(['staffKec'])) {
+      if (checkPermission([RolesUser.STAFFKEC])) {
         const staffKecamatan = {
           kabkota: authUser.kabkota_id,
           kecamatan: authUser.kec_id
@@ -688,7 +747,7 @@ export default {
     },
     parentKelurahan() {
       const authUser = this.$store.state.user
-      if (checkPermission(['staffKel'])) {
+      if (checkPermission([RolesUser.STAFFKEL])) {
         const staffKelurahan = {
           kabkota: authUser.kabkota_id,
           kecamatan: authUser.kec_id,
@@ -701,16 +760,16 @@ export default {
     filterRole() {
       const ruleOptions = this.opsiPeran
       if ((this.isEdit && !this.isProfile) || (!this.isEdit && !this.isProfile)) {
-        if (checkPermission(['admin'])) {
+        if (checkPermission([RolesUser.ADMIN])) {
           return ruleOptions.slice(1, ruleOptions.length)
-        } if (checkPermission(['staffProv'])) {
+        } if (checkPermission([RolesUser.STAFFPROV])) {
           return ruleOptions.slice(3, ruleOptions.length)
-        } if (checkPermission(['staffKabkota'])) {
-          return ruleOptions.slice(4, ruleOptions.length)
-        } if (checkPermission(['staffKec'])) {
+        } if (checkPermission([RolesUser.STAFFKABKOTA])) {
           return ruleOptions.slice(5, ruleOptions.length)
-        } if (checkPermission(['staffKel'])) {
+        } if (checkPermission([RolesUser.STAFFKEC])) {
           return ruleOptions.slice(6, ruleOptions.length)
+        } if (checkPermission([RolesUser.STAFFKEL])) {
+          return ruleOptions.slice(7, ruleOptions.length)
         }
       }
       return ruleOptions
@@ -750,6 +809,8 @@ export default {
       this.getProfile()
     }
     this.getArea()
+    this.getEducation()
+    this.getJob()
     this.parentId
     this.parentArea
     this.parentKecamatan
@@ -784,18 +845,18 @@ export default {
         this.imageData = dataProfile.photo_url || this.imageData
         this.setLinkEditPhoto = dataProfile.photo_url
         // assign to data
-        if (dataProfile.role_id === 'staffRW') {
+        if ((dataProfile.role_id === RolesUser.STAFFRW) || (dataProfile.role_id === RolesUser.TRAINER) || (dataProfile.role_id === RolesUser.PUBLIK)) {
           this.user.kabkota = dataProfile.kabkota.name
           this.user.kecamatan = dataProfile.kecamatan.name
           this.user.kelurahan = dataProfile.kelurahan.name
-        } else if (dataProfile.role_id === 'staffKel') {
+        } else if (dataProfile.role_id === RolesUser.STAFFKEL) {
           this.user.kabkota = dataProfile.kabkota.name
           this.user.kecamatan = dataProfile.kecamatan.name
           this.user.kelurahan = dataProfile.kelurahan.name
-        } else if (dataProfile.role_id === 'staffKec') {
+        } else if (dataProfile.role_id === RolesUser.STAFFKEC) {
           this.user.kabkota = dataProfile.kabkota.name
           this.user.kecamatan = dataProfile.kecamatan.name
-        } else if (dataProfile.role_id === 'staffKabkota') {
+        } else if (dataProfile.role_id === RolesUser.STAFFKABKOTA) {
           this.user.kabkota = dataProfile.kabkota.name
         }
       })
@@ -853,10 +914,14 @@ export default {
     getUrlPhoto(url) {
       this.user.photo = url
     },
+    optionsBirthDate(date) {
+      return date > moment().subtract(20, 'years')
+    },
     checkPermission,
     fetchData(id) {
       fetchUser(id).then(response => {
         const dataUser = response.data
+        checkUserKabKota(dataUser.kabkota ? dataUser.kabkota.id : null)
         const dataUserPhotoUrl = dataUser.photo_url
         let urlPhoto = null
         if (dataUser.photo_url !== null) {
@@ -865,18 +930,18 @@ export default {
           urlPhoto = dataUser.photo_url
         }
         // // assign to data
-        if (dataUser.role_id === 'staffRW') {
+        if ((dataUser.role_id === RolesUser.STAFFRW) || (dataUser.role_id === RolesUser.TRAINER) || (dataUser.role_id === RolesUser.PUBLIK)) {
           this.user.kabkota = dataUser.kabkota.name
           this.user.kecamatan = dataUser.kecamatan.name
           this.user.kelurahan = dataUser.kelurahan.name
-        } else if (dataUser.role_id === 'staffKel') {
+        } else if (dataUser.role_id === RolesUser.STAFFKEL) {
           this.user.kabkota = dataUser.kabkota.name
           this.user.kecamatan = dataUser.kecamatan.name
           this.user.kelurahan = dataUser.kelurahan.name
-        } else if (dataUser.role_id === 'staffKec') {
+        } else if (dataUser.role_id === RolesUser.STAFFKEC) {
           this.user.kabkota = dataUser.kabkota.name
           this.user.kecamatan = dataUser.kecamatan.name
-        } else if (dataUser.role_id === 'staffKabkota') {
+        } else if (dataUser.role_id === RolesUser.STAFFKABKOTA) {
           this.user.kabkota = dataUser.kabkota.name
         }
 
@@ -884,6 +949,9 @@ export default {
         this.user.coordinates = [lat, lon]
         this.user.rw = dataUser.rw
         this.user.rt = dataUser.rt
+        this.user.birth_date = dataUser.birth_date
+        this.user.education_level_id = dataUser.education_level_id
+        this.user.job_type_id = dataUser.job_type_id
         this.user.photo = urlPhoto
         this.imageData = dataUser.photo_url || this.imageData
         this.setLinkEditPhoto = dataUser.photo_url
@@ -915,6 +983,9 @@ export default {
             kel_id: this.user.kelurahan.id || this.id_kel,
             rw: this.user.rw,
             rt: this.user.rt,
+            birth_date: this.user.birth_date,
+            education_level_id: this.user.education_level_id,
+            job_type_id: this.user.job_type_id,
             facebook: this.user.facebook,
             twitter: this.user.twitter,
             instagram: this.user.instagram,
@@ -923,7 +994,7 @@ export default {
             lon: this.user.coordinates[1]
           }).then(() => {
             Message({
-              message: 'Pengguna berhasil ditambahkan',
+              message: this.$t('message.user-successfully-added'),
               type: 'success',
               duration: 1 * 1000
             })
@@ -955,7 +1026,7 @@ export default {
                 this.emailValidation = 'errorEmail'
               } else {
                 Message({
-                  message: 'Username dan email sudah digunakan',
+                  message: this.$t('errors.username-email-already-used'),
                   type: 'error',
                   duration: 5 * 1000
                 })
@@ -984,6 +1055,9 @@ export default {
             rw: this.user.rw,
             rt: this.user.rt,
             address: this.user.address,
+            birth_date: this.user.birth_date,
+            education_level_id: this.user.education_level_id,
+            job_type_id: this.user.job_type_id,
             facebook: this.user.facebook,
             twitter: this.user.twitter,
             instagram: this.user.instagram,
@@ -996,7 +1070,7 @@ export default {
           }
           editUser(userEdit, id).then(response => {
             Message({
-              message: 'Data user berhasil diupdate',
+              message: this.$t('message.user-data-successfully-updated'),
               type: 'success',
               duration: 1 * 1000
             })
@@ -1023,7 +1097,7 @@ export default {
               })
             } else {
               Message({
-                message: 'Username dan email sudah digunakan',
+                message: this.$t('errors.username-email-already-used'),
                 type: 'error',
                 duration: 5 * 1000
               })
@@ -1093,6 +1167,16 @@ export default {
         this.kelurahan = response.data.items
       })
     },
+
+    async getEducation() {
+      const response = await getEducationList()
+      this.educationList = response.data.items
+    },
+
+    async getJob() {
+      const response = await getJobList()
+      this.jobList = response.data.items
+    },
     // Generate password
     randomPassword(length) {
       var chars =
@@ -1110,84 +1194,3 @@ export default {
   }
 }
 </script>
-<style lang="scss" scoped>
-.input-image {
-  margin-left:50px;
-}
-img.preview {
-    width: 200px;
-    background-color: white;
-    border: 1px solid #DDD;
-    padding: 5px;
-}
-.upload-demo {
-  margin: 10px auto;
-}
-.grid-content:first-child {
-  margin-bottom: 20px;
-}
-
-p {
-  color: #42b983;
-  font-weight: 600;
-}
-.app-container {
-  padding: 5px 20px;
-}
-
-#password {
-  .el-row {
-    margin-right: 10px;
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
-}
-
-.el-row {
-  margin-left: 0px;
-  &:last-child {
-    margin-bottom: 0;
-  }
-}
-.el-col {
-  border-radius: 4px;
-}
-.bg-purple {
-  background: #d3dce6;
-}
-.bg-purple-light {
-  background: #e5e9f2;
-}
-.grid-content {
-  border-radius: 4px;
-  min-height: 36px;
-}
-.row-bg {
-  padding: 10px 0;
-  background-color: #f9fafc;
-}
-.el-upload .avatar-uploader {
-  border-radius: 6px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-}
-.avatar-uploader .el-upload:hover {
-  border-color: #409eff;
-}
-.avatar-uploader-icon {
-  font-size: 28px;
-  color: #8c939d;
-  width: 178px;
-  height: 178px;
-  line-height: 178px;
-  text-align: center;
-}
-.avatar {
-  width: 178px;
-  height: 178px;
-  display: block;
-}
-
-</style>

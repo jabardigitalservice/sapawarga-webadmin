@@ -4,15 +4,15 @@
       <el-col :xs="24" :sm="16">
         <el-form ref="form" :model="form" :rules="rules" :status-icon="true" label-width="210px">
 
-          <el-form-item label="Sumber Berita" :prop="validateName">
+          <el-form-item :label="$t('route.news-channels-manage')" :prop="validateName">
             <el-input v-model="form.name" type="text" placeholder="Sumber Berita" @focus="changePropName" />
           </el-form-item>
 
-          <el-form-item label="Tautan Logo Sumber Berita" prop="icon_url">
+          <el-form-item :label="$t('label.link-logo-news-channels-manage')" prop="icon_url">
             <el-input v-model="form.icon_url" type="text" placeholder="http://www" />
           </el-form-item>
 
-          <el-form-item label="Tautan" :prop="validateWebsite">
+          <el-form-item :label="$t('label.link')" :prop="validateWebsite">
             <el-input v-model="form.website" type="text" placeholder="http://www" @focus="changePropWebsite" />
           </el-form-item>
 
@@ -51,7 +51,7 @@ export default {
   data() {
     const validatorTextWhitespace = (rule, value, callback) => {
       if (containsWhitespace(value) === true) {
-        callback(new Error('Teks yang diisi tidak valid.'))
+        callback(new Error(this.$t('errors.text-not-valid')))
       }
 
       callback()
@@ -59,7 +59,7 @@ export default {
 
     const validatorUrl = (rule, value, callback) => {
       if (validUrl(value) === false) {
-        callback(new Error('URL tidak valid.'))
+        callback(new Error(this.$t('errors.url-not-null')))
       }
 
       callback()
@@ -72,23 +72,23 @@ export default {
       validateName: 'name',
       rules: {
         name: [
-          { required: true, message: 'Sumber Berita harus diisi.', trigger: 'blur' },
-          { min: 5, message: 'Sumber Berita minimal 5 karakter', trigger: 'blur' },
-          { max: 25, message: 'Sumber Berita maksimal 25 karakter', trigger: 'blur' },
+          { required: true, message: this.$t('errors.news-channels-must-be-filled'), trigger: 'blur' },
+          { min: 5, message: this.$t('errors.news-channels-must-be-at-least-5-characters'), trigger: 'blur' },
+          { max: 25, message: this.$t('errors.news-channels-must-be-at-least-25-characters'), trigger: 'blur' },
           { validator: validatorTextWhitespace, trigger: 'blur' }
         ],
         errorName: [
-          { required: true, message: 'Sumber Berita sudah digunakan', trigger: 'change' }
+          { required: true, message: this.$t('errors.news-channels-already-used'), trigger: 'change' }
         ],
         website: [
-          { required: true, message: 'URL harus diisi.', trigger: 'blur' },
+          { required: true, message: this.$t('errors.url-not-null'), trigger: 'blur' },
           { validator: validatorUrl, trigger: 'blur' }
         ],
         errorWebsite: [
-          { required: true, message: 'Website Sumber Berita sudah digunakan', trigger: 'change' }
+          { required: true, message: this.$t('errors.website-news-channels-already-used'), trigger: 'change' }
         ],
         icon_url: [
-          { required: true, message: 'URL harus diisi.', trigger: 'blur' },
+          { required: true, message: this.$t('errors.url-not-null'), trigger: 'blur' },
           { validator: validatorUrl, trigger: 'blur' }
         ]
       }
@@ -123,21 +123,10 @@ export default {
 
         Object.assign(data, this.form)
 
-        if (this.isEdit) {
-          // TODO: edit
-          /* const id = this.$route.params && this.$route.params.id
+        await create(data)
 
-          await update(id, data)
-
-          this.$message.success(this.$t('crud.update-success'))
-
-          this.$router.push('/news-channels/index') */
-        } else {
-          await create(data)
-          this.$message.success(this.$t('crud.create-success'))
-
-          this.$router.push('/news-channels/index')
-        }
+        this.$message.success(this.$t('crud.create-success'))
+        this.$router.push('/news-channels/index')
       } catch (error) {
         const messageApi = error.response.data.data
         const messageList = []

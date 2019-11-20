@@ -102,10 +102,40 @@ export function fetchUser(id) {
   })
 }
 
+export function getEducationList() {
+  return request({
+    url: '/education-levels',
+    method: 'get'
+  })
+}
+
+export function getJobList() {
+  return request({
+    url: '/job-types',
+    method: 'get'
+  })
+}
+
 export function fetchExport(query) {
   return request({
     url: '/staff/export',
     method: 'get',
     params: query
+  })
+}
+
+export function downloadSample(query) {
+  return request({
+    url: '/staff/import-template',
+    method: 'get',
+    params: query
+  })
+}
+
+export function importUser(data) {
+  return request({
+    url: '/staff/import',
+    method: 'post',
+    data
   })
 }

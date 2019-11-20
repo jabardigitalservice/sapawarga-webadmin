@@ -1,6 +1,6 @@
 export default {
   route: {
-    dashboard: 'Dashboard',
+    'dashboard': 'Dashboard',
     'profile': 'Profil',
     'profile-edit': 'Edit Profil',
 
@@ -11,7 +11,9 @@ export default {
     'user-list-kabkota': 'Kabupaten / Kota',
     'user-list-kecamatan': 'Kecamatan',
     'user-list-kelurahan': 'Desa / Kelurahan',
-    'user-list-rw': 'User Tingkat RW',
+    'user-list-rw': 'RW',
+    'user-list-trainer': 'Pelatih',
+    'user-list-user': 'Publik',
     'user-detail': 'Detail Pengguna',
 
     'nomor-penting-manage': 'Nomor Penting',
@@ -94,7 +96,13 @@ export default {
     'popup-informasi-list': 'Pop-Up Informasi',
     'popup-informasi-create': 'Tambah Pop-Up Informasi',
     'popup-informasi-edit': 'Edit Pop-Up Informasi',
-    'popup-informasi-detail': 'Detail Pop-Up Informasi'
+    'popup-informasi-detail': 'Detail Pop-Up Informasi',
+
+    'news-important-manage': 'Info Pendidikan',
+    'news-important-edit': 'Edit Info Pendidikan',
+    'news-important-list': 'Daftar Info Pendidikan',
+    'news-important-create': 'Tambah Info Pendidikan',
+    'news-important-detail': 'Detail Info Pendidikan'
   },
   crud: {
     'list-empty': 'Belum ada data.',
@@ -118,6 +126,7 @@ export default {
     'save-user': 'Tambah Pengguna',
     'save-banner': 'Tambah Banner',
     'save-popup': 'Tambah Pop Up',
+    'save-newsImportant': 'Tambah Info Pendidikan',
 
     'back-to-list': 'Kembali ke Daftar',
     'send-polling': 'Publikasikan Polling',
@@ -135,6 +144,7 @@ export default {
 
     'create-success': 'Data baru berhasil dibuat.',
     'update-success': 'Perubahan data berhasil disimpan.',
+    'pop-up-send-success': 'Popup informasi berhasil dibuat',
     'send-success': 'Pesan berhasil dikirim',
     'draft-success': 'Pesan berhasil disimpan di draft',
 
@@ -164,6 +174,7 @@ export default {
     'notification-error-edit-published': 'Sudah dipublish, tidak dapat di edit.',
     'video-error-edit-published': 'Sudah dipublish, tidak dapat di edit.',
     'error-edit-role': 'Anda tidak memiliki hak akses halaman ini.',
+    'newsImportant-error-edit-pubished': 'Sudah dipublish, tidak dapat diedit',
 
     'news-selected': 'Berita sudah dipilih'
   },
@@ -184,15 +195,18 @@ export default {
   users: {
     'download-data': 'Unduh Data',
     'users-add-new': 'Tambah Pengguna Baru',
-    'users-import-data': 'Import Data Pengguna Sapawarga',
-    'users-dialog-text-import-csv': 'Anda dapat melakukan import data dengan mengunggah file dengan tipe CSV.',
-    'users-dialog-text-template-file': 'Template file dapat diunduh pada',
+    'users-edit': 'Edit Pengguna',
+    'users-edit-profile': 'Edit Profil',
+    'users-import-data': 'Unggah Data Pengguna Sapawarga',
+    'users-dialog-text-import-csv': 'Anda dapat melakukan unggah data dengan mengunggah file dengan tipe CSV.',
+    'users-dialog-text-template-file': 'Template file dapat diunduh pada ',
     'users-dialog-text-url': 'Tautan berikut',
     'users-dialog-text-choose-location-file': 'Pilih lokasi file pada komputer Anda (max. 5 MB)',
     'users-dialog-text-file-delete': 'Anda yakin akan menghapus file {file_name} ?',
     'users-dialog-text-file-change': 'Hanya dapat mengunggah {file_length} files. Silahkan hapus untuk mengganti file.',
     'users-dialog-bottom-choose-file': 'Pilih File',
-    'users-dialog-bottom-upload-file': 'Upload File',
+    'users-dialog-bottom-upload-file': 'Unggah File',
+    'users-dialog-bottom-upload-data': 'Unggah Data',
     'users-dialog-bottom-cancel': 'Cancel',
 
     'users-role-text-staff-rw': 'RW {0}, Desa/Kelurahan {1}, Kecamatan {2}, {3}',
@@ -240,6 +254,60 @@ export default {
     'internal-server-error': 'Telah terjadi kesalahan sistem, silahkan muat ulang halaman ini.',
     'url-not-valid': 'URL tidak valid',
 
+    'phone-number-must-be-start-0': 'Nomor telepon harus dimulai dari 0',
+    'password-dont-match': 'Password tidak sesuai',
+    'coordinates-must-be-filled': 'Koordinat Lokasi harus diisi.',
+    'coordinates-only-use-numbers-periods': 'Koordinat Lokasi hanya boleh menggunakan angka, titik, - atau +',
+
+    'coordinates-dont-match': 'Koordinat Lokasi tidak sesuai',
+    'text-not-valid': 'Text yang diisi tidak valid',
+
+    'username-must-be-filled': 'Username harus diisi',
+    'username-must-be-at-least-4-characters': 'Username minimal 4 karakter',
+    'username-must-be-at-least-255-characters': 'Username maksimal 255 karakter',
+    'username-only-use-lowercase-letters-numbers-underscore-and-dots': 'Username hanya boleh menggunakan huruf kecil, angka, underscore dan titik',
+    'username-already-used': 'Username sudah digunakan',
+    'username-email-already-used': 'Username dan email sudah digunakan',
+    'fullname-must-be-filled': 'Nama Lengkap harus diisi',
+    'fullname-be-at-least-255-characters': 'Nama Lengkap maksimal 255 karakter',
+    'fullname-only-use-letters-aposthrope-dots': 'Nama Lengkap hanya boleh menggunakan huruf, aposthrope dan titik',
+
+    'email-must-be-filled': 'Email harus diisi',
+    'email-must-be-at-least-3-characters': 'Alamat email minimal 3 karakter',
+    'email-must-be-at-least-255-characters': 'Email terlalu panjang, maksimal 255 karakter',
+    'email-wrong-format': 'Format email yang Anda masukan salah',
+    'email-already-used': 'Alamat email sudah digunakan',
+
+    'password-must-be-filled': 'Password tidak boleh kosong',
+    'password-must-be-at-least-255-characters': 'Password maksimal 255 karakter',
+    'password-must-be-at-least-5-characters': 'Password minimal 5 karakter',
+    'password-only-use-letters-number-characters': 'Karakter password hanya boleh menggunakan huruf, angka dan spesial karakter',
+
+    'please-repeat-the-password': 'Mohon ulangi password',
+    'phone-number-must-be-filled': 'Nomor telepon harus diisi',
+    'phone-number-must-must-be-at-least-3-characters': 'Nomor telepon minimal 3 karakter',
+    'phone-number-must-must-be-at-least-13-characters': 'Nomor telepon maksimal 13 karakter',
+    'phone-number-only-use-number': 'Nomor telepon hanya boleh menggunakan angka',
+
+    'address-must-be-filled': 'Alamat harus diisi',
+    'address-must-be-at-least-255-characters': 'Alamat maksimal 255 karakter',
+    'area-kabkota-must-be-filled': 'Kab/Kota harus diisi',
+    'area-kecamatan-must-be-filled': 'Kecamatan harus diisi',
+
+    'area-kel-must-be-filled': 'Desa/Kelurahan harus diisi',
+    'rw-must-be-filled': 'RW harus diisi',
+    'rw-only-use-number': 'RW harus menggunakan angka',
+    'rw-must-be-at-least-3-number': 'RW harus 3 angka',
+
+    'rt-must-be-filled': 'RW harus diisi',
+    'rt-only-use-number': 'RW harus menggunakan angka',
+    'rt-must-be-at-least-3-number': 'RW harus 3 angka',
+
+    'role-must-be-filled': 'Peran harus diisi',
+    'twitter-only-use-lowercase-letters-numbers-underscore-and-dots': 'Twitter hanya boleh menggunakan huruf, angka, titik dan underscore',
+    'enter-your-facebook-URL-in-full': 'Masukan url facebook secara lengkap, contoh: https://www.facebook.com/namapengguna',
+    'instagram-only-use-lowercase-letters-numbers-underscore-and-dots': 'Instagram hanya boleh menggunakan huruf, angka, titik dan underscore',
+
     'polling-compare-date': 'Tanggal berakhir polling harus lebih besar dari tanggal mulai polling.',
     'polling-start-date': 'Tanggal mulai polling tidak boleh lebih kecil dari tanggal hari ini.',
     'polling-answer-less-then-2': 'Tipe pertanyaan custom minimal dua pilihan',
@@ -257,22 +325,33 @@ export default {
 
     'popup-kategori-not-null': 'Kategori Pop Up harus diisi.',
     'popup-url-not-null': 'Tautan harus diisi.',
-    'popup-fitur-not-null': 'Fitur Pop Up harus diisi.',
     'popup-type-name-not-null': 'Judul harus diisi.',
+
+    'popup-informasi-title': 'Judul pop-up mengandung karakter yang tidak diizinkan.',
+    'popup-informasi-description': 'Deskripsi mengandung karakter yang tidak diizinkan.',
+
+    'dashboard-map-error': 'Gagal memuat map',
+    'broadcast-datetime': 'Jadwal yang dipilih telah lewat',
+
+    'popup-fitur-not-null': 'Fitur Pop Up harus diisi.',
     'popup-start-date-not-null': 'Tanggal Mulai harus diisi.',
     'popup-end-date-not-null': 'Tanggal Berakhir harus diisi.',
     'popup-description-not-null': 'Deskripsi harus diisi.',
 
-    'popup-informasi-title': 'Isian Judul mengandung karakter yang tidak diizinkan.',
-    'popup-informasi-description': 'Isian Deskripsi mengandung karakter yang tidak diizinkan.',
-
-    'dashboard-map-error': 'Gagal memuat map',
-
-    'broadcast-datetime': 'Jadwal yang dipilih telah lewat',
-    'broadcast-datetime-edit': 'Jadwal yang dipilih telah lewat. Silahkan edit terlebih dahulu.'
+    'user-import-empty-file': 'File tidak boleh kosong. Silahkan pilih file terlebih dahulu',
+    'broadcast-datetime-edit': 'Jadwal yang dipilih telah lewat. Silahkan edit terlebih dahulu',
+    'broadcast-title': 'Judul pesan mengandung karakter yang tidak diperbolehkan',
+    'broadcast-description': 'Isi pesan mengandung karakter yang tidak diperbolehkan',
+    'broadcast-title-description': 'Judul pesan dan Isi pesan mengandung karakter yang tidak diperbolehkan',
+    'url-not-null': 'URL harus diisi.',
+    'news-channels-already-used': 'Website Sumber Berita sudah digunakan',
+    'news-channels-must-be-filled': 'Sumber Berita harus diisi.',
+    'news-channels-must-be-at-least-5-characters': 'Sumber Berita minimal 5 karakter',
+    'news-channels-must-be-at-least-25-characters': 'Sumber Berita maksimal 25 karakter',
+    'website-news-channels-already-used': 'Website Sumber Berita sudah digunakan'
   },
   navbar: {
-    profile: 'Lihat Profil',
+    'profile': 'Lihat Profil',
     'profile-edit': 'Edit Profil',
     'logOut': 'Log Out'
   },
@@ -284,6 +363,9 @@ export default {
     'title-reject': 'Konfirmasi Penolakan',
     'title': 'Konfirmasi',
     'category': 'Kategori harus diisi',
+
+    'user-successfully-added': 'Pengguna berhasil ditambahkan',
+    'user-data-successfully-updated': 'Data user berhasil diupdate',
 
     'broadcast-title-required': 'Judul pesan harus diisi',
     'broadcast-title-min': 'Judul pesan minimal 10 karakter',
@@ -302,7 +384,20 @@ export default {
 
     'broadcast-scheduled': 'Jadwal harus diisi',
     'broadcast-scheduled_datetime': 'Tanggal dan waktu harus diisi',
-    'broadcast-scheduled_datetime-expire': 'Tanggal dan waktu yang dipilih telah lewat'
+    'broadcast-scheduled_datetime-expire': 'Tanggal dan waktu yang dipilih telah lewat',
+
+    'user-import-sending': 'Cek email Anda untuk progress unggah data',
+
+    'newsImportant-title-required': 'Judul info pendidikan harus diisi',
+    'newsImportant-title-min': 'Judul info pendidikan minimal 10 karakter',
+    'newsImportant-title-max': 'Judul info pendidikan maksimal 100 karakter',
+    'newsImportant-title-valid': 'Judul info pendidikan mengandung karakter yang tidak diizinkan',
+    'newsImportant-url-required': 'Tautan info pendidikan harus diisi',
+    'newsImportant-url-valid': 'Tautan info pendidikan mengandung karakter yang tidak diizinkan',
+    'newsImportant-url-match': 'Tautan info pendidikan tidak valid',
+    'newsImportant-description-required': 'Deskripsi harus diisi',
+    'newsImportant-description-max': 'Deskripsi maksimal 65000 karakter',
+    'newsImportant-create-success': 'Info pendidikan berhasil dibuat'
 
   },
   categoriTypes: {
@@ -316,25 +411,100 @@ export default {
     'newsHoax': 'Berita Hoax'
   },
   label: {
+    'sapawarga': 'sapawarga',
+    'notes': 'Catatan:',
+    'maximum-dimension-image': 'Ukuran maksimal 1280x720 pixel (Landscape)',
+    'maximum-size-image': 'Maximum upload file size: 5 Mb.',
+
+    'fullname': 'Nama Lengkap',
+    'name': 'Nama',
+    'username': 'Username',
+    'email': 'Email',
+    'place': 'Kedudukan',
+    'password': 'Password',
+    'repeat-password': 'Ulangi Password',
+    'role': 'Peran',
+    'last-access': 'Akses Terakhir',
+    'telepon': 'Telepon',
+    'education': 'Pendidikan',
+    'job': 'Pekerjaan',
+    'birthdate': 'Tanggal Lahir',
+    'location-user': 'Lokasi Pengguna',
+    'address': 'Alamat',
+    'coordinates': 'Koordinat Lokasi',
+    'social-media': 'Media Sosial',
+
+    'your-location': 'Lokasi Anda',
+    'contact': 'Kontak',
+    'more-information': 'Informasi Tambahan',
+
+    'area-rt': 'RT',
     'area-rw': 'RW',
     'area': 'Wilayah',
-    'area-kec': 'Kecamatan',
     'area-kel': 'Desa/Kelurahan',
+    'choose-area-kel': 'Pilih Desa/Kelurahan',
+    'area-kec': 'Kecamatan',
+    'choose-area-kec': 'Pilih Kecamatan',
     'area-kabkota': 'Kabupaten/Kota',
+    'choose-area-kabkota': 'Pilih Kabupaten/Kota',
+    'choose-education': 'Pilih Pendidikan',
+    'choose-job': 'Pilih Pekerjaan',
+    'choose-birthdate': 'Pilih Tanggal Lahir',
 
+    'created-at': 'Tanggal Dibuat',
+    'profile-updated-at': 'Tanggal Profil Diperbarui',
+    'last-login-at': 'Terakhir Login',
+    'last-access-at': 'Terakhir Akses',
+
+    'maximum-dimension-image-profile': 'Ukuran maksimal 640 x 640 piksel',
+    'choose-image-profile': 'Pilih Foto',
+
+    'count-user-each-role': 'Total user aktif per',
+    'widget-all-user': 'Semua',
+    'widget-province': 'Provinsi',
+    'widget-kabkota': 'Kota/Kab',
+    'widget-kecamatan': 'Kecamatan',
+    'widget-kelurahan': 'Desa/Kel',
+    'widget-rw': 'RW',
+    'widget-saber-hoax': 'Saber Hoax',
+    'widget-trainer': 'Pelatih',
+    'widget-user': 'Publik',
+    'url': 'Tautan',
+    'title': 'Judul',
+    'image': 'Gambar',
     'target': 'Target',
     'send_at': 'Dikirim',
     'actions': 'Actions',
     'scheduled': 'Jadwal',
     'category': 'Kategori',
     'created_at': 'Dibuat',
+    'attachment': 'Lampiran',
     'description': 'Isi Pesan',
+    'select-file': 'Pilih File',
     'title-broadcast': 'Judul Pesan',
     'scheduled_datetime': 'Tanggal dan Waktu',
 
     'status': 'Status',
     'status-draft': 'Draft',
     'status-scheduled': 'Dijadwalkan',
-    'status-published': 'Dipublikasikan'
+    'status-published': 'Dipublikasikan',
+
+    'popular-category': 'Kategori Populer',
+    'link-logo-news-channels-manage': 'Tautan Logo Sumber Berita',
+    'link': 'Tautan',
+
+    'newsImportant-description': 'Deskripsi',
+    'newsImportant-date-created': 'Tanggal Dibuat',
+    'newsImportant-url': 'https://jabarprov.go.id',
+    'newsImportant-title': 'Judul Info Pendidikan',
+    'newsImportant-date-updated': 'Tanggal Publikasi',
+    'newsImportant-tooltip-edit': 'Edit Info Pendidikan',
+    'newsImportant-tooltip-delete': 'Hapus Info Pendidikan',
+    'newsImportant-tooltip-detail': 'Detail Info Pendidikan',
+    'newsImportant-tooltip-active': 'Aktifkan Info Pendidikan',
+    'newsImportant-tooltip-nonactive': 'Nonaktifkan Info Pendidikan',
+
+    'newsImportant-detail': 'Detail Info Pendidikan',
+    'newsImportant-data': 'Data Info Pendidikan'
   }
 }
