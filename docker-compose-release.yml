@@ -4,7 +4,7 @@ services:
     build:
       context: ./backend
       args:
-        - VUE_APP_NODE_ENV=$NODE_ENV
+        - NODE_ENV=$NODE_ENV
         - VUE_APP_BASE_API=$VUE_APP_BASE_API
         - VUE_APP_VERSION=${VERSION}
         - VUE_APP_GOOGLE_API_KEY=$VUE_APP_GOOGLE_API_KEY
@@ -14,13 +14,13 @@ services:
     networks:
       - internal
     ports: 
-      - 8081:8080
-    volumes:
-      - ./backend/src:/app/src
-      - ./backend/tests:/app/tests
+      - 8081:80
+    # volumes:
+      # - ./backend/src:/app/src
+      # - ./backend/tests:/app/tests
     env_file:
       - .env
-
+      
 networks:
   internal:
     driver: bridge
