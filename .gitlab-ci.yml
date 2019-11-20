@@ -53,17 +53,17 @@ build_prod:
   stage: build
   only:
     - branches
- #services:
- #   - docker:dind
+  services:
+    - docker:dind
   variables:
     DOCKER_DRIVER: overlay2
-    DOCKER_HOST: tcp://52.74.74.33:2375
-    VERSION: v0.2-253-gaaa0cc8
+    #DOCKER_HOST: tcp://52.74.74.33:2375
+    #VERSION: v0.2-253-gaaa0cc8
   dependencies: 
     - versioning
   before_script:
     - export VERSION=$(cat ./version)
-    #- docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     #- apk add --no-cache py-pip python-dev libffi-dev openssl-dev gcc libc-dev make
     #- pip install docker-compose
   script:
