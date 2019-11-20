@@ -45,7 +45,7 @@
           <el-row>
             <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
               <el-form-item :label="$t('label.role')" prop="role">
-                <el-select v-model="user.role" placeholder="Pilih Peran" :disabled="isProfile || isEdit">
+                <el-select v-model="user.role" placeholder="Pilih Peran" :disabled="!checkPermission([RolesUser.ADMIN, RolesUser.STAFFPROV]) && isEdit || isProfile">
                   <el-option
                     v-for="item in filterRole"
                     :key="item.value"
@@ -398,6 +398,7 @@ export default {
         disabledDate: this.optionsBirthDate,
         defaultValue: moment().subtract(20, 'years').format('YYYY-MM-DD')
       },
+      RolesUser,
       // validation
       rules: {
         username: [
@@ -765,7 +766,6 @@ export default {
         } if (checkPermission([RolesUser.STAFFKEL])) {
           return ruleOptions.slice(6, ruleOptions.length)
         }
-        console.log(ruleOptions)
       }
       return ruleOptions
     }
@@ -863,7 +863,6 @@ export default {
 
       try {
         this.loading = true
-
         if (this.isEdit && this.isProfile) {
           const data = {
             username: this.user.username,
@@ -881,7 +880,7 @@ export default {
             kabkota_id: this.id_kabkota,
             kec_id: this.id_kec,
             kel_id: this.id_kel,
-            role_id: this.user.role
+            role_id: this.role
           }
           if (this.user.confirmation !== '') {
             data.password = this.user.confirmation
