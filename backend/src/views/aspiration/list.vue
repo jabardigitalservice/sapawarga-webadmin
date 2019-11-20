@@ -52,6 +52,7 @@
 import { fetchList } from '@/api/aspiration'
 import Pagination from '@/components/Pagination'
 import ListFilter from './_listfilter'
+import { AspirationStatus, RolesUser } from '@/utils/constantVariabel'
 
 export default {
   components: { Pagination, ListFilter },
@@ -74,6 +75,8 @@ export default {
   },
   data() {
     return {
+      AspirationStatus,
+      RolesUser,
       list: null,
       total: 0,
       listLoading: true,
