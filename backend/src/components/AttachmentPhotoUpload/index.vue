@@ -3,14 +3,20 @@
     <div class="user-image">
       <div class="image-preview">
         <div v-loading="loading">
-          <img class="preview" loading="lazy" :src="image_url === null ? image_default : image_url">
+          <img
+            class="preview"
+            loading="lazy"
+            :src="image_url === null ? image_default : image_url"
+          >
         </div>
       </div>
 
       <el-button name="button-image-upload" type="primary" style="width: 100%;" @click="launchFilePicker">Pilih Foto</el-button>
 
-      <p><small><strong>{{ $t('label.notes') }}</strong><br>{{ $t('label.maximum-dimension-image') }}</small></p>
-      <p><small>{{ $t('label.maximum-size-image') }}</small></p>
+      <p><small><strong>{{ $t('label.notes') }}</strong></small></p>
+      <p v-for="(item, index) in listInformation" :key="index">
+        <small>{{ item }}</small>
+      </p>
       <input ref="file" type="file" accept="image/*" @change="onFileSelected">
     </div>
   </div>
@@ -27,6 +33,10 @@ export default {
     type: {
       type: String,
       required: true
+    },
+    listInformation: {
+      type: Array,
+      default: function() { return [] }
     }
   },
   data() {
@@ -45,9 +55,6 @@ export default {
       },
       immediate: true
     }
-  },
-  mounted() {
-    //
   },
   methods: {
     launchFilePicker() {

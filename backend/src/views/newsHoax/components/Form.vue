@@ -2,7 +2,14 @@
   <div class="components-container">
     <el-row :gutter="20">
       <el-col :xs="24" :sm="8" :lg="5">
-        <AttachmentPhotoUpload type="news_photo" :initial-url="news.cover_path_url" style="margin-bottom: 25px" name="news_photo" @onUpload="photoUploaded" />
+        <AttachmentPhotoUpload
+          type="news_photo"
+          :initial-url="news.cover_path_url"
+          :list-information="[this.$t('label.maximum-dimension-image')]"
+          style="margin-bottom: 25px"
+          name="news_photo"
+          @onUpload="photoUploaded"
+        />
       </el-col>
       <el-col :xs="24" :sm="16" :lg="19">
 
@@ -46,7 +53,7 @@
 
 <script>
 import AttachmentPhotoUpload from '@/components/AttachmentPhotoUpload'
-import { containsWhitespace } from '@/utils/validate'
+import { containsWhitespace, isContainHtmlTags } from '@/utils/validate'
 import { fetchRecord, create, update } from '@/api/newsHoax'
 import { fetchList } from '@/api/categories'
 import Tinymce from '@/components/Tinymce'
@@ -62,6 +69,14 @@ export default {
     }
   },
   data() {
+    const validatorHTMLTitle = (rule, value, callback) => {
+      if (isContainHtmlTags(value) === true) {
+        callback(new Error(this.$t('errors.news-title-not-valid-characters')))
+      }
+
+      callback()
+    }
+
     const validatorTitleWhitespace = (rule, value, callback) => {
       if (containsWhitespace(value) === true) {
         callback(new Error(this.$t('errors.news-title-not-valid')))
@@ -108,6 +123,10 @@ export default {
           },
           {
             validator: validatorTitleWhitespace,
+            trigger: 'blur'
+          },
+          {
+            validator: validatorHTMLTitle,
             trigger: 'blur'
           }
         ],

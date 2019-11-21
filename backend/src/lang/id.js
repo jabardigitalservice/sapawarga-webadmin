@@ -352,6 +352,7 @@ export default {
     'website-news-channels-already-used': 'Website Sumber Berita sudah digunakan',
 
     'news-title-not-valid': 'Judul Berita yang diisi tidak valid',
+    'news-title-not-valid-characters': 'Judul Berita mengandung karakter yang tidak diperbolehkan',
     'news-content-not-valid': 'Konten Berita yang diisi tidak valid',
     'news-title-not-null': 'Judul Berita harus diisi',
     'news-title-must-be-at-least-10-characters': 'Judul Berita minimal 10 karakter',
