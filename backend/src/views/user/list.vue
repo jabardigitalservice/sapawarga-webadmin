@@ -31,13 +31,13 @@
           </el-col>
         </el-row>
         <el-dialog :title="$t('users.users-import-data')" :visible.sync="visibleDialog" :width="(importDialogVisible)? `50%`:`20%`" @close="closeDialog">
-          <div class="dialog-text">{{ $t('users.users-dialog-text-import-csv') }}</div>
+          <div class="dialog-text">{{ $t('users.users-dialog-text-import-xlsx') }}</div>
           <div class="dialog-text">{{ $t('users.users-dialog-text-template-file') }}<a @click="getSample">{{ $t('users.users-dialog-text-url') }}</a></div>
           <div>{{ $t('users.users-dialog-text-choose-location-file') }}</div>
           <div slot="footer" class="dialog-footer" align="left">
             <div class="import-file">
               <label class="custom-file-upload primary-custome">{{ $t('label.select-file') }}
-                <input id="file" ref="file" type="file" accept=".csv" @change="handleFileUpload()">
+                <input id="file" ref="file" type="file" accept=".xlsx" @change="handleFileUpload()">
               </label>
               <span v-if="file !== null">{{ file.name }}</span>
             </div>
@@ -224,7 +224,7 @@ export default {
       const kecamatan = _.get(user, 'kecamatan.name')
       const kabkota = _.get(user, 'kabkota.name')
 
-      if ((userRole === RolesUser.STAFFRW) || userRole === RolesUser.TRAINER || userRole === RolesUser.USER) {
+      if ((userRole === RolesUser.STAFFRW) || userRole === RolesUser.TRAINER || userRole === RolesUser.PUBLIK) {
         return this.$t('users.users-role-text-staff-rw', [rw, kelurahan, kecamatan, kabkota])
       }
 

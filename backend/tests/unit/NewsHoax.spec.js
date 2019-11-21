@@ -6,6 +6,7 @@ import newsHoaxDetailFixture from './fixtures/newsHoaxDetail'
 import VueRouter from 'vue-router'
 import newsHoaxApi from '@/api/newsHoax'
 import flushPromises from 'flush-promises'
+import i18n from '@/lang'
 
 const localVue = createLocalVue()
 localVue.use(ElementUI)
@@ -29,7 +30,8 @@ describe('News Hoax List', () => {
       localVue,
       stubs: {
         fetchList: true
-      }
+      },
+      i18n
     })
     wrapper.setData({ list: channel })
     expect(wrapper.vm.list).toBe(channel)
@@ -74,7 +76,8 @@ describe('News Hoax detail', () => {
 
     const wrapper = await shallowMount(NewsHoaxDetail, {
       localVue,
-      router
+      router,
+      i18n
     })
     await flushPromises()
 
@@ -84,4 +87,3 @@ describe('News Hoax detail', () => {
     expect(wrapper.vm.validUrl(newsHoaxDetailFixture.data.source_url)).toBe(true)
   })
 })
-

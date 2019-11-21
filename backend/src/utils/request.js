@@ -4,7 +4,7 @@ import store from '@/store'
 import router from '@/router'
 import { getToken } from '@/utils/auth'
 import { ResponseRequest } from '@/utils/constantVariabel'
-
+import i18n from '@/lang'
 // create an axios instance
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API, // api 的 base_url
@@ -38,53 +38,34 @@ service.interceptors.response.use(
     const res = response.data
 
     return res
-    // if (res.status !== 20000) {
-    // Message({
-    //   message: res.message,
-    //   type: 'error',
-    //   duration: 5 * 1000
-    // });
-    // // 50008:非法的token; 50012:其他客户端登录了;  50014:Token 过期了;
-    // if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
-    //   // 请自行在引入 MessageBox
-    //   // import { Message, MessageBox } from 'element-ui'
-    //   MessageBox.confirm(
-    //     '你已被登出，可以取消继续留在该页面，或者重新登录',
-    //     '确定登出',
-    //     {
-    //       confirmButtonText: '重新登录',
-    //       cancelButtonText: '取消',
-    //       type: 'warning'
-    //     }
-    //   ).then(() => {
-    //     store.dispatch('user/resetToken').then(() => {
-    //       location.reload(); // 为了重新实例化vue-router对象 避免bug
-    //     });
-    //   });
-    // }
-    //   return Promise.reject('error')
-    // } else {
-    //   return res
-    // }
   },
   error => {
     if (error.code === ResponseRequest.TIMEOUT) {
       Message({
-        message: 'Oops, telah terjadi kesalahan, periksa kembali koneksi Internet Anda.',
+        message: i18n.t('errors.request-timeout'),
         type: 'error',
         duration: 5 * 1000
       })
     }
-    if (error.response.status === 403) {
+
+    if (error.message === ResponseRequest.NETWORKERROR) {
+      Message({
+        message: i18n.t('errors.request-timeout'),
+        type: 'error',
+        duration: 5 * 1000
+      })
+    }
+
+    if (error.response && error.response.status === ResponseRequest.FORBIDDEN) {
       router.push('/403')
     }
 
-    if (error.response.status === 404) {
+    if (error.response && error.response.status === ResponseRequest.NOTFOUND) {
       router.push('/404')
     }
 
-    if (error.response.status === 500) {
-      let message = 'Oops, telah terjadi kesalahan, silahkan muat ulang halaman ini.'
+    if (error.response && error.response.status === ResponseRequest.SERVERERROR) {
+      let message = i18n.t('errors.internal-server-error')
       if (error.response.data.data !== undefined) {
         message = error.response.data.data.message
       }
@@ -93,50 +74,17 @@ service.interceptors.response.use(
         type: 'error',
         duration: 5 * 1000
       })
-    } else if (error.response.status !== 422) {
+    }
+
+    if (error.response && error.response.status !== ResponseRequest.UNPROCESSABLE) {
       Message({
-        message: 'Oops, telah terjadi kesalahan, silahkan muat ulang halaman ini.',
-        type: 'error',
-        duration: 5 * 1000
-      })
-    } else if (error.message === 'Network Error') {
-      Message({
-        message: 'Oops, telah terjadi kesalahan, periksa kembali koneksi Internet Anda.',
+        message: i18n.t('errors.internal-server-error'),
         type: 'error',
         duration: 5 * 1000
       })
     }
 
-    if (error.response && error.response.status !== 422) {
-      if (error.response.status === 500) {
-        let message = 'Oops, telah terjadi kesalahan, silahkan muat ulang halaman ini.'
-        if (error.response.data.data !== undefined) {
-          message = error.response.data.data.message
-        }
-        Message({
-          message: message,
-          type: 'error',
-          duration: 5 * 1000
-        })
-      } else if (error.response.status !== 422) {
-        Message({
-          message: 'Oops, telah terjadi kesalahan, silahkan muat ulang halaman ini.',
-          type: 'error',
-          duration: 5 * 1000
-        })
-      } else if (error.message === ResponseRequest.NETWORKERROR) {
-        Message({
-          message: 'Oops, telah terjadi kesalahan, periksa kembali koneksi Internet Anda.',
-          type: 'error',
-          duration: 5 * 1000
-        })
-      }
-
-      return Promise.reject(error)
-    }
-    if (error.response && error.response.status === 422) {
-      return Promise.reject(error)
-    }
+    return Promise.reject(error)
   }
 )
 

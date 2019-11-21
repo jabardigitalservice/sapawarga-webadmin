@@ -6,7 +6,7 @@
           <el-col :span="12">
             <router-link :to="{ path: '/news-hoax/create' }">
               <el-button type="primary" size="small" icon="el-icon-plus">
-                Tambah Berita Counter Hoax
+                {{ $t('label.add-news-counter-hoax') }}
               </el-button>
             </router-link>
           </el-col>
@@ -20,12 +20,12 @@
 
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%" @sort-change="changeSort">
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
-          <el-table-column prop="title" sortable="custom" min-width="200" align="center" label="Judul" />
+          <el-table-column prop="title" sortable="custom" min-width="200" align="center" :label="$t('label.title')" />
           <el-table-column
             prop="status"
             sortable="custom"
             class-name="status-col"
-            label="Status"
+            :label="$t('label.status')"
             align="center"
             min-width="100"
           >
@@ -35,10 +35,10 @@
               </el-tag>
             </template>
           </el-table-column>
-          <el-table-column prop="category.name" align="center" label="Kategori" sortable="custom" />
-          <el-table-column prop="source_date" align="center" label="Tanggal" sortable="custom" />
+          <el-table-column prop="category.name" align="center" :label="$t('label.category')" sortable="custom" />
+          <el-table-column prop="source_date" align="center" :label="$t('label.date')" sortable="custom" />
 
-          <el-table-column align="center" label="Actions" min-width="130">
+          <el-table-column align="center" :label="$t('label.actions')" min-width="130">
             <template slot-scope="scope">
               <router-link :to="'/news-hoax/detail/' +scope.row.id">
                 <el-button type="info" icon="el-icon-view" size="small" />
@@ -85,7 +85,6 @@ export default {
       return statusMap[status]
     }
   },
-
   props: {
     roleId: {
       type: String,

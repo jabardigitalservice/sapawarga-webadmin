@@ -83,7 +83,7 @@
             </div>
           </el-col>
           <el-col
-            v-if="(rolesWidget[RolesUser.STAFFKEL].includes(roleId))"
+            v-if="(rolesWidget[RolesUser.STAFFKEL].includes(roleId) && (pages != rolesWidget.ALL || roleId != RolesUser.STAFFKEL))"
             :xs="12"
             :sm="12"
             :lg="6"

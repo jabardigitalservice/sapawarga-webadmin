@@ -26,13 +26,22 @@ export default function checkPermission(value) {
   }
 }
 
-export function checkUserKabKota(id_kabkota) {
+function isUserTrainerPublic(rolesUser, role_detail) {
+  if (![RolesUser.ADMIN, RolesUser.STAFFPROV].includes(rolesUser) &&
+  role_detail === RolesUser.TRAINER || role_detail === RolesUser.PUBLIK) {
+    router.push('/403')
+  } else {
+    return true
+  }
+}
+
+export function isUserKabKota(id_kabkota, role_detail) {
   const kabKotaUser = store.getters.user ? store.getters.user.kabkota_id : null
   const rolesUser = store.getters.roles ? store.getters.roles[0] : null
   if ([RolesUser.ADMIN, RolesUser.STAFFPROV].includes(rolesUser)) {
     return true
   } else if (kabKotaUser === id_kabkota) {
-    return true
+    isUserTrainerPublic(rolesUser, role_detail)
   } else {
     router.push('/403')
   }

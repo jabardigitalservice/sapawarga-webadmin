@@ -45,7 +45,7 @@
           <el-row>
             <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
               <el-form-item :label="$t('label.role')" prop="role">
-                <el-select v-model="user.role" placeholder="Pilih Peran" :disabled="isProfile || isEdit">
+                <el-select v-model="user.role" placeholder="Pilih Peran" :disabled="!checkPermission([RolesUser.ADMIN, RolesUser.STAFFPROV]) && isEdit || isProfile">
                   <el-option
                     v-for="item in filterRole"
                     :key="item.value"
@@ -239,7 +239,7 @@ import { fetchProfile, update } from '@/api/user'
 import { Message } from 'element-ui'
 import InputMap from '@/components/InputMap'
 import { validCoordinate, containsWhitespace } from '@/utils/validate'
-import { checkUserKabKota } from '@/utils/permission'
+import { isUserKabKota } from '@/utils/permission'
 import { RolesUser } from '@/utils/constantVariabel'
 import moment from 'moment'
 
@@ -348,42 +348,34 @@ export default {
         photo: '',
         coordinates: []
       },
-      opsiPeran: [
+      roleOptions: [
         {
-          label: 'Admin',
-          value: 'admin'
+          label: this.$t('label.roles-admin'),
+          value: RolesUser.ADMIN
         },
         {
-          label: 'Admin Saber Hoax',
-          value: 'staffSaberhoax'
+          label: this.$t('label.roles-admin-saber-hoax'),
+          value: RolesUser.STAFFSABERHOAX
         },
         {
-          label: 'Admin Provinsi',
-          value: 'staffProv'
+          label: this.$t('label.roles-admin-province'),
+          value: RolesUser.STAFFPROV
         },
         {
-          label: 'Pelatih',
-          value: 'trainer'
+          label: this.$t('label.roles-admin-kabkota'),
+          value: RolesUser.STAFFKABKOTA
         },
         {
-          label: 'Publik',
-          value: 'user'
+          label: this.$t('label.roles-admin-districts'),
+          value: RolesUser.STAFFKEC
         },
         {
-          label: 'Admin Kab/kota',
-          value: 'staffKabkota'
+          label: this.$t('label.roles-admin-village'),
+          value: RolesUser.STAFFKEL
         },
         {
-          label: 'Admin Kecamatan',
-          value: 'staffKec'
-        },
-        {
-          label: 'Admin Desa/Kelurahan',
-          value: 'staffKel'
-        },
-        {
-          label: 'RW',
-          value: 'staffRW'
+          label: this.$t('label.roles-admin-rw'),
+          value: RolesUser.STAFFRW
         }
       ],
       id_kabkota: '',
@@ -406,6 +398,7 @@ export default {
         disabledDate: this.optionsBirthDate,
         defaultValue: moment().subtract(20, 'years').format('YYYY-MM-DD')
       },
+      RolesUser,
       // validation
       rules: {
         username: [
@@ -714,7 +707,6 @@ export default {
       }
     }
   },
-
   computed: {
     parentId() {
       const authUser = this.$store.state.user
@@ -757,25 +749,27 @@ export default {
       }
       return null
     },
+    // the filterRole() method returns the selected elements in an array, as a new array object.
     filterRole() {
-      const ruleOptions = this.opsiPeran
+      const ruleOptions = this.roleOptions
       if ((this.isEdit && !this.isProfile) || (!this.isEdit && !this.isProfile)) {
         if (checkPermission([RolesUser.ADMIN])) {
+          ruleOptions.push({ label: this.$t('label.roles-trainer'), value: RolesUser.TRAINER }, { label: this.$t('label.roles-public'), value: RolesUser.PUBLIK })
           return ruleOptions.slice(1, ruleOptions.length)
         } if (checkPermission([RolesUser.STAFFPROV])) {
+          ruleOptions.push({ label: this.$t('label.roles-trainer'), value: RolesUser.TRAINER }, { label: this.$t('label.roles-public'), value: RolesUser.PUBLIK })
           return ruleOptions.slice(3, ruleOptions.length)
         } if (checkPermission([RolesUser.STAFFKABKOTA])) {
-          return ruleOptions.slice(5, ruleOptions.length)
+          return ruleOptions.slice(4, ruleOptions.length)
         } if (checkPermission([RolesUser.STAFFKEC])) {
-          return ruleOptions.slice(6, ruleOptions.length)
+          return ruleOptions.slice(5, ruleOptions.length)
         } if (checkPermission([RolesUser.STAFFKEL])) {
-          return ruleOptions.slice(7, ruleOptions.length)
+          return ruleOptions.slice(6, ruleOptions.length)
         }
       }
       return ruleOptions
     }
   },
-
   watch: {
     'user.kabkota'(oldVal, newVal) {
       if (newVal !== '' && this.isEdit === false && this.isProfile === false) {
@@ -799,7 +793,6 @@ export default {
       }
     }
   },
-
   created() {
     if (this.isEdit && !this.isProfile) {
       const id = this.$route.params && this.$route.params.id
@@ -815,15 +808,14 @@ export default {
     this.parentArea
     this.parentKecamatan
     this.parentKelurahan
-    if (checkPermission(['staffKabkota'])) {
+    if (checkPermission([RolesUser.STAFFKABKOTA])) {
       this.getKecamatan()
     }
-    if (checkPermission(['staffKec'])) {
+    if (checkPermission([RolesUser.STAFFKEC])) {
       this.getKelurahan()
       this.formRightSide = '0'
     }
   },
-
   methods: {
     getProfile() {
       fetchProfile().then(response => {
@@ -868,7 +860,6 @@ export default {
 
       try {
         this.loading = true
-
         if (this.isEdit && this.isProfile) {
           const data = {
             username: this.user.username,
@@ -886,7 +877,7 @@ export default {
             kabkota_id: this.id_kabkota,
             kec_id: this.id_kec,
             kel_id: this.id_kel,
-            role_id: this.user.role
+            role_id: this.role
           }
           if (this.user.confirmation !== '') {
             data.password = this.user.confirmation
@@ -921,7 +912,7 @@ export default {
     fetchData(id) {
       fetchUser(id).then(response => {
         const dataUser = response.data
-        checkUserKabKota(dataUser.kabkota ? dataUser.kabkota.id : null)
+        isUserKabKota(dataUser.kabkota ? dataUser.kabkota.id : null, dataUser.role_id)
         const dataUserPhotoUrl = dataUser.photo_url
         let urlPhoto = null
         if (dataUser.photo_url !== null) {
@@ -1063,7 +1054,8 @@ export default {
             instagram: this.user.instagram,
             photo_url: this.user.photo,
             lat: this.user.coordinates[0],
-            lon: this.user.coordinates[1]
+            lon: this.user.coordinates[1],
+            role_id: this.user.role
           }
           if (this.user.confirmation !== '') {
             userEdit['password'] = this.user.confirmation
