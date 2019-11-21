@@ -252,13 +252,12 @@ export default {
   },
   errors: {
     'internal-server-error': 'Telah terjadi kesalahan sistem, silahkan muat ulang halaman ini.',
+    'request-timeout': 'Telah terjadi kesalahan, periksa kembali koneksi Internet Anda.',
     'url-not-valid': 'URL tidak valid',
-
     'phone-number-must-be-start-0': 'Nomor telepon harus dimulai dari 0',
     'password-dont-match': 'Password tidak sesuai',
     'coordinates-must-be-filled': 'Koordinat Lokasi harus diisi.',
     'coordinates-only-use-numbers-periods': 'Koordinat Lokasi hanya boleh menggunakan angka, titik, - atau +',
-
     'coordinates-dont-match': 'Koordinat Lokasi tidak sesuai',
     'text-not-valid': 'Text yang diisi tidak valid',
 
@@ -322,17 +321,14 @@ export default {
     'popup-title-not-null': 'Judul Pop Up harus diisi.',
     'popup-title-min-10': 'Judul Pop Up minimal 10 Karakter.',
     'popup-title-max-100': 'Judul Pop Up maximal 100 Karakter.',
-
     'popup-kategori-not-null': 'Kategori Pop Up harus diisi.',
     'popup-url-not-null': 'Tautan harus diisi.',
     'popup-type-name-not-null': 'Judul harus diisi.',
-
     'popup-informasi-title': 'Judul pop-up mengandung karakter yang tidak diizinkan.',
     'popup-informasi-description': 'Deskripsi mengandung karakter yang tidak diizinkan.',
 
     'dashboard-map-error': 'Gagal memuat map',
     'broadcast-datetime': 'Jadwal yang dipilih telah lewat',
-
     'popup-fitur-not-null': 'Fitur Pop Up harus diisi.',
     'popup-start-date-not-null': 'Tanggal Mulai harus diisi.',
     'popup-end-date-not-null': 'Tanggal Berakhir harus diisi.',
