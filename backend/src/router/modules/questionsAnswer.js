@@ -19,7 +19,7 @@ const questionsAnswerRouter = {
         title: 'question-answer-list',
         roles: ['admin', 'staffProv']
       }
-    },
+    }
   ]
 }
 

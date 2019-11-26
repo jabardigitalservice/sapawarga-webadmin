@@ -5,7 +5,7 @@
         <el-form>
           <el-form-item class="message-input">
             <el-input v-model="message" placeholder="Tulis Pesan">
-              <el-button slot="append" @click="onSubmitMessage"><img src="@/assets/sentMessage.svg" /></el-button>
+              <el-button slot="append" @click="onSubmitMessage"><img src="@/assets/sentMessage.svg"></el-button>
             </el-input>
           </el-form-item>
         </el-form>
@@ -19,7 +19,7 @@ export default {
   props: {
     value: {
       type: String,
-      required: false
+      required: true
     }
   },
   data() {

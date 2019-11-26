@@ -1,12 +1,14 @@
 <template>
   <div class="app-container">
     <el-row :gutter="20">
-      <el-col :lg="8" :sm="8" :xs="8" >
-        <UserList :list-user="listUser"/>
+      <el-col :lg="8" :sm="8" :xs="8">
+        <UserList
+          :list-user="listUser"
+        />
       </el-col>
-      <el-col :lg="16" :sm="16" :xs="16" >
+      <el-col :lg="16" :sm="16" :xs="16">
         <MessageBox />
-        <MessageInput :value="this.message" />
+        <MessageInput :value="message" />
       </el-col>
     </el-row>
   </div>
@@ -16,7 +18,7 @@
 import UserList from './components/userList'
 import MessageInput from './components/messageInput'
 import MessageBox from './components/messageBox'
-import request from '@/utils/request'
+import { fetchListUser } from '@/api/questionsAnswer'
 
 export default {
   components: {
@@ -32,31 +34,21 @@ export default {
   },
   data() {
     return {
-      listUser: [],
+      listUser: null,
       listMessage: [],
-      message: '',
+      message: ''
     }
   },
 
-  created() {
-    //
+  async created() {
+    await this.getInitialUsers()
   },
 
   methods: {
-    getInitialUsers () {
-      for (var i = 0; i < 10; i++) {
-        return request({
-          url: 'https://randomuser.me/api/',
-          method: 'get'
-        })
-        .then(response => {
-          this.listUser.push(response.results[0])
-        });
-      }
+    async getInitialUsers() {
+      const response = await fetchListUser()
+      this.listUser = await response.data.items
     }
-  },
-  beforeMount() {
-    this.getInitialUsers();
   }
 }
 </script>

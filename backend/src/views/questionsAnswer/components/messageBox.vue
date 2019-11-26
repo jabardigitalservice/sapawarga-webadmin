@@ -5,32 +5,32 @@
         <nav-bar :name="name" :avatar="avatar" />
         <div class="chat">
           <div class="chat-page">
-          <div class="msg-inbox">
-            <div class="chats" id="chats">
-                  <div class="msg-page" id="msg-page">
-                    <div
-                      v-if="loadingMessages"
-                      class="loading-messages-container"
-                    >
-                      <spinner :size="100"/>
-                      <span class="loading-text">
-                        Loading Messages
-                      </span>
-                    </div>
-                    <div class="text-center img-fluid empty-chat" v-else-if="!listMessage.length" >
-                      <div>
-                        <img src="@/assets/emptyMessage.svg" class="img-res" alt="empty chat image">
-                      </div>
-                    </div>
-                    <div v-else>
-                      <div v-for="message in listMessage" v-bind:key="message.id">
-                        <MessageItem :message="message" />
-                      </div>
+            <div class="msg-inbox">
+              <div id="chats" class="chats">
+                <div id="msg-page" class="msg-page">
+                  <div
+                    v-if="loadingMessages"
+                    class="loading-messages-container"
+                  >
+                    <spinner :size="100" />
+                    <span class="loading-text">
+                      Loading Messages
+                    </span>
+                  </div>
+                  <div v-else-if="!listMessage.length" class="text-center img-fluid empty-chat">
+                    <div>
+                      <img src="@/assets/emptyMessage.svg" class="img-res" alt="empty chat image">
                     </div>
                   </div>
+                  <div v-else>
+                    <div v-for="message in listMessage" :key="message.id">
+                      <MessageItem :message="message" />
+                    </div>
+                  </div>
+                </div>
               </div>
+            </div>
           </div>
-        </div>
         </div>
       </el-col>
     </el-row>
@@ -47,19 +47,19 @@ export default {
     MessageItem,
     navBar
   },
-  computed: {
-    ...mapGetters(['name', 'avatar',])
-  },
   props: {
     listMessage: {
       type: Array,
       required: false,
-      default: function () { return [] }
+      default: function() { return [] }
     },
     loadingMessages: {
       type: Boolean,
       required: false
     }
   },
+  computed: {
+    ...mapGetters(['name', 'avatar'])
+  }
 }
 </script>
