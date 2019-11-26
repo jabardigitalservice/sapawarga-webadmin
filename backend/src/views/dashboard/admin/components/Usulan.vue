@@ -7,7 +7,7 @@
       <el-table-column prop="category_name" :label="$t('label.category')" align="center" />
       <el-table-column prop="total_likes" :label="$t('label.aspiration-like')" align="center" />
     </el-table>
-    
+
     <el-row style="margin: 0 auto; text-align: center;padding-top:20px;">
       <router-link :to="{ path: '/aspirasi/index' }">
         <a href="#" style="color: #1890ff;">{{ $t('label.aspiration-view-all') }}</a>
