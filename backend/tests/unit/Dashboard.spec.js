@@ -36,7 +36,10 @@ describe('List dashboard usulan', () => {
 
   it('render list usulan', async() => {
     const wrapper = shallowMount(DashboardUsulan, {
-      localVue
+      localVue,
+      mocks: {
+        $t: () => {}
+      }
     })
 
     await flushPromises()
@@ -76,7 +79,10 @@ describe('List dashboard usulan', () => {
   it('render dashboard approval', async() => {
 
     const wrapper = shallowMount(DashboardApproval, {
-      localVue
+      localVue,
+      mocks: {
+        $t: () => {}
+      }
     })
 
     await flushPromises()
