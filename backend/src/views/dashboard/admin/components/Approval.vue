@@ -1,8 +1,8 @@
 <template>
   <el-card class="box-card">
     <el-table v-loading="listLoading" :data="list" stripe style="width: 100%">
-      <el-table-column prop="accept" label="Diterima" align="center" />
-      <el-table-column prop="publish" label="Dipublikasikan" align="center" />
+      <el-table-column prop="accept" :label="$t('label.aspiration-accept')" align="center" />
+      <el-table-column prop="publish" :label="$t('label.aspiration-publish')" align="center" />
     </el-table>
   </el-card>
 
