@@ -534,6 +534,11 @@ export default {
 
     'aspiration-tooltip-publish': 'Publikasikan Usulan',
     'aspiration-tooltip-unpublish': 'Batalkan Usulan',
-    'aspiration-tooltip-detail': 'Detail Usulan'
+    'aspiration-tooltip-detail': 'Detail Usulan',
+    'aspiration-title': 'Usulan',
+    'aspiration-like': 'Like',
+    'aspiration-view-all': 'Lihat Semua',
+    'aspiration-accept': 'Diterima',
+    'aspiration-publish': 'Dipublikasikan'
   }
 }
