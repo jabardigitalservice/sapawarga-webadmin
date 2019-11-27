@@ -64,7 +64,14 @@
             </el-form-item>
 
             <el-form-item :label="$t('label.description')" prop="description">
-              <tinymce v-model="broadcast.description" :height="300" />
+              <!-- <tinymce v-model="broadcast.description" :height="300" /> -->
+              <el-input
+                v-model="broadcast.description"
+                type="textarea"
+                name="description"
+                :rows="8"
+                placeholder="Tulis pesan (maksimum 1000 karakter)"
+              />
             </el-form-item>
             <el-form-item>
               <el-button type="info" :disabled="broadcast.status === status.PUBLISHED" :loading="loading" @click="submitForm(status.DRAFT)">{{ $t('crud.draft') }}</el-button>
@@ -81,12 +88,12 @@ import InputCategory from '@/components/InputCategory'
 import InputSelectArea from '@/components/InputSelectArea'
 import { create, fetchRecord, update } from '@/api/broadcast'
 import { containsWhitespace, isContainHtmlTags } from '@/utils/validate'
-import Tinymce from '@/components/Tinymce'
+// import Tinymce from '@/components/Tinymce'
 import moment from 'moment'
 
 export default {
   components: {
-    Tinymce,
+    // Tinymce,
     InputCategory,
     InputSelectArea
   },
