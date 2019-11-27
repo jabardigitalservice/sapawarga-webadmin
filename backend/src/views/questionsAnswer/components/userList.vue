@@ -15,7 +15,7 @@
 
         <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="1">
           <div
-            v-for="(user, key) in data"
+            v-for="user in data"
             :key="user.id"
             class="users-containers"
             @click="onSelectUser(user)"
@@ -77,7 +77,7 @@ export default {
       const response = await fetchListUser(this.listQuery)
       this.data = []
       this.data.push(...response.data.items)
-      
+
     },
     async 'listQuery.kabkota_id'() {
       const response = await fetchListUser(this.listQuery)
