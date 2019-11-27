@@ -1,8 +1,9 @@
 import request from '@/utils/request'
 
-export function fetchListUser() {
+export function fetchListUser(query) {
   return request({
     url: '/staff',
-    method: 'get'
+    method: 'get',
+    params: query
   })
 }

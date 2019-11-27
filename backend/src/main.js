@@ -5,6 +5,7 @@ moment.locale('id')
 
 import VueMoment from 'vue-moment'
 import VueTheMask from 'vue-the-mask'
+import InfiniteScroll from 'vue-infinite-scroll'
 
 import Cookies from 'js-cookie'
 
@@ -62,6 +63,8 @@ Vue.use(VueMoment, {
 })
 
 Vue.use(VueTheMask)
+Vue.use(InfiniteScroll)
+
 // register global utility filters.
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])

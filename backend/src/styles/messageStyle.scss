@@ -64,6 +64,44 @@ nav {
   border: 1px solid #BFCDD8;
 }
 
+/* width */
+#style-user-list::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+/* Track */
+#style-user-list::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+#style-user-list::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+#style-user-list::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.style-user-select {
+  .el-input__suffix {
+      right: 6px;
+  }
+
+  .el-select .el-input .el-select__caret {
+      color: transparent;
+  }
+
+  .el-input__suffix-inner {
+    background-image: url('../assets/icon-filter.svg');
+    background-repeat: no-repeat;
+    background-size: 15px;
+    background-position: initial;
+  }  
+}
+
 .user-list {
   height: 550px;
   padding: 4px 0px;

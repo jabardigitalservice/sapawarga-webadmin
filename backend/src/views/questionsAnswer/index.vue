@@ -18,7 +18,6 @@
 import UserList from './components/userList'
 import MessageInput from './components/messageInput'
 import MessageBox from './components/messageBox'
-import { fetchListUser } from '@/api/questionsAnswer'
 
 export default {
   components: {
@@ -41,14 +40,11 @@ export default {
   },
 
   async created() {
-    await this.getInitialUsers()
+    //
   },
 
   methods: {
-    async getInitialUsers() {
-      const response = await fetchListUser()
-      this.listUser = await response.data.items
-    }
+    //
   }
 }
 </script>
