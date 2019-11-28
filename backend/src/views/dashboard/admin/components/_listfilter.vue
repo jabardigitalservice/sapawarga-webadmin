@@ -7,8 +7,8 @@
             <InputCategory v-model="listQuery.category_id" name="category_id" category-type="aspirasi" prop="category" style="width: 100%" />
           </el-form-item>
         </el-col>
-        <el-col :span="9" v-if="role">
-          <el-form-item style="margin-bottom: 0" >
+        <el-col v-if="roleAccess" :span="9">
+          <el-form-item style="margin-bottom: 0">
             <el-select v-model="listQuery.kabkota_id" filterable clearable placeholder="Kota/Kabupaten">
               <el-option
                 v-for="item in area"
@@ -37,6 +37,7 @@ import InputCategory from '@/components/InputCategory'
 import { mapGetters } from 'vuex'
 import { requestArea } from '@/api/staff'
 import checkPermission from '@/utils/permission'
+import { RolesUser } from '@/utils/constantVariabel'
 
 export default {
   components: {
@@ -57,22 +58,19 @@ export default {
     return {
       area: null,
       colWidth: 9,
-      role: checkPermission(['admin', 'staffProv'])
+      roleAccess: checkPermission([RolesUser.ADMIN, RolesUser.STAFFPROV])
     }
   },
 
   computed: {
     ...mapGetters([
       'roles'
-    ]),
+    ])
   },
 
   created() {
     this.getArea()
-    
-    this.roles.forEach(element => {
-      this.colWidth = element === 'staffKabkota' ? 20 : 9
-    })
+    this.setWidth()
   },
 
   methods: {
@@ -87,6 +85,12 @@ export default {
     getArea() {
       requestArea().then(response => {
         this.area = response.data.items
+      })
+    },
+
+    setWidth() {
+      this.roles.forEach(element => {
+        this.colWidth = element === RolesUser.STAFFKABKOTA ? 20 : 9
       })
     }
 
