@@ -77,7 +77,6 @@ export default {
       const response = await fetchListUser(this.listQuery)
       this.data = []
       this.data.push(...response.data.items)
-
     },
     async 'listQuery.kabkota_id'() {
       const response = await fetchListUser(this.listQuery)
