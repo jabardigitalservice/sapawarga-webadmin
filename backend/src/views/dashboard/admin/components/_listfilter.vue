@@ -2,12 +2,12 @@
   <el-card class="box-card" style="margin-bottom: 10px">
     <el-form>
       <el-row :gutter="10" type="flex">
-        <el-col :span="9">
+        <el-col :span="colWidth">
           <el-form-item style="margin-bottom: 0">
             <InputCategory v-model="listQuery.category_id" name="category_id" category-type="aspirasi" prop="category" style="width: 100%" />
           </el-form-item>
         </el-col>
-        <el-col :span="9">
+        <el-col v-if="roleAccess" :span="9">
           <el-form-item style="margin-bottom: 0">
             <el-select v-model="listQuery.kabkota_id" filterable clearable placeholder="Kota/Kabupaten">
               <el-option
@@ -21,10 +21,10 @@
         </el-col>
         <el-col :span="6">
           <el-button type="primary" size="small" @click="submitSearch">
-            Cari
+            {{ $t('crud.search') }}
           </el-button>
           <el-button type="primary" size="small" @click="resetFilter">
-            Reset
+            {{ $t('crud.reset') }}
           </el-button>
         </el-col>
       </el-row>
@@ -34,8 +34,10 @@
 
 <script>
 import InputCategory from '@/components/InputCategory'
-
+import { mapGetters } from 'vuex'
 import { requestArea } from '@/api/staff'
+import checkPermission from '@/utils/permission'
+import { RolesUser } from '@/utils/constantVariabel'
 
 export default {
   components: {
@@ -54,12 +56,21 @@ export default {
 
   data() {
     return {
-      area: null
+      area: null,
+      colWidth: 9,
+      roleAccess: checkPermission([RolesUser.ADMIN, RolesUser.STAFFPROV])
     }
+  },
+
+  computed: {
+    ...mapGetters([
+      'roles'
+    ])
   },
 
   created() {
     this.getArea()
+    this.setWidth()
   },
 
   methods: {
@@ -74,6 +85,12 @@ export default {
     getArea() {
       requestArea().then(response => {
         this.area = response.data.items
+      })
+    },
+
+    setWidth() {
+      this.roles.forEach(element => {
+        this.colWidth = element === RolesUser.STAFFKABKOTA ? 20 : 9
       })
     }
 

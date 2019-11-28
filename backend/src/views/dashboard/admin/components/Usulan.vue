@@ -1,29 +1,16 @@
 <template>
-  <el-card class="box-card">
+  <el-card>
     <ListFilter :list-query.sync="listQuery" @submit-search="getList" @reset-search="resetFilter" />
 
     <el-table v-loading="listLoading" class="title" :data="list" stripe border highlight-current-row style="width: 100%">
-      <el-table-column
-        prop="title"
-        label="Usulan"
-        align="left"
-        min-width="180"
-        style="background:blue"
-      />
-      <el-table-column
-        prop="category_name"
-        label="Kategori"
-        align="center"
-      />
-      <el-table-column
-        prop="total_likes"
-        label="Like"
-        align="center"
-      />
+      <el-table-column prop="title" :label="$t('label.aspiration-title')" align="left" min-width="180" style="background:blue" />
+      <el-table-column prop="category_name" :label="$t('label.category')" align="center" />
+      <el-table-column prop="total_likes" :label="$t('label.aspiration-like')" align="center" />
     </el-table>
-    <el-row>
+
+    <el-row style="margin: 0 auto; text-align: center;padding-top:20px;">
       <router-link :to="{ path: '/aspirasi/index' }">
-        <el-button class="see-more" type="primary" plain>Lihat Semua Usulan</el-button>
+        <a href="#" style="color: #1890ff;">{{ $t('label.aspiration-view-all') }}</a>
       </router-link>
     </el-row>
   </el-card>
@@ -65,14 +52,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-  .box-card {
-    width: 100%;
-  }
-  .see-more {
-    position: relative;
-    float: right;
-    margin-top: 15px;
-  }
-</style>

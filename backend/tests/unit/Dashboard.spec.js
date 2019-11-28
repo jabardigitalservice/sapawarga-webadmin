@@ -36,7 +36,10 @@ describe('List dashboard usulan', () => {
 
   it('render list usulan', async() => {
     const wrapper = shallowMount(DashboardUsulan, {
-      localVue
+      localVue,
+      mocks: {
+        $t: () => {}
+      }
     })
 
     await flushPromises()
@@ -57,8 +60,16 @@ describe('List dashboard usulan', () => {
       kabkota_id: null
     }
 
+    const user = ['admin']
+
     const wrapper = shallowMount(ListFilter, {
       localVue,
+      computed: {
+        roles: () => ['admin']
+      },
+      mocks: {
+        $t: () => {}
+      },
       propsData: {
         listQuery
       }
@@ -67,16 +78,20 @@ describe('List dashboard usulan', () => {
     wrapper.vm.submitSearch()
     wrapper.vm.resetFilter()
     wrapper.vm.getArea()
-
+    
     expect(wrapper.props('listQuery')).toBe(listQuery)
     expect(wrapper.emitted()['submit-search']).toBeTruthy()
     expect(wrapper.emitted()['reset-search']).toBeTruthy()
+    expect(wrapper.vm.roles).toEqual(user)
   })
 
   it('render dashboard approval', async() => {
 
     const wrapper = shallowMount(DashboardApproval, {
-      localVue
+      localVue,
+      mocks: {
+        $t: () => {}
+      }
     })
 
     await flushPromises()
