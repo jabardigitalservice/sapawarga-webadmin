@@ -61,7 +61,7 @@ describe('List dashboard usulan', () => {
     }
 
     const user = ['admin']
-
+        
     const wrapper = shallowMount(ListFilter, {
       localVue,
       computed: {
@@ -78,11 +78,14 @@ describe('List dashboard usulan', () => {
     wrapper.vm.submitSearch()
     wrapper.vm.resetFilter()
     wrapper.vm.getArea()
+    wrapper.vm.setWidth()
     
     expect(wrapper.props('listQuery')).toBe(listQuery)
     expect(wrapper.emitted()['submit-search']).toBeTruthy()
     expect(wrapper.emitted()['reset-search']).toBeTruthy()
     expect(wrapper.vm.roles).toEqual(user)
+    expect(wrapper.vm.setWidth)
+    expect(wrapper.vm.getArea)
   })
 
   it('render dashboard approval', async() => {
@@ -135,7 +138,10 @@ describe('List dashboard usulan', () => {
 
   it('render dashboard polling', () => {
     const wrapper = shallowMount(Polling, {
-      localVue
+      localVue,
+      mocks: {
+        $t: () => {}
+      }
     })
 
     expect(wrapper.is(Polling)).toBe(true)
@@ -143,7 +149,10 @@ describe('List dashboard usulan', () => {
 
   it('function list polling latest', async() => {
     const wrapper = shallowMount(Polling, {
-      localVue
+      localVue,
+      mocks: {
+        $t: () => {}
+      }
     })
 
     await flushPromises()
@@ -152,7 +161,10 @@ describe('List dashboard usulan', () => {
 
   it('function displayChart dashboard polling', () => {
     const wrapper = shallowMount(Polling, {
-      localVue
+      localVue,
+      mocks: {
+        $t: () => {}
+      }
     })
     
     const id = 123
