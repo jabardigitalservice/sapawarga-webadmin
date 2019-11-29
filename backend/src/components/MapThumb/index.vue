@@ -33,7 +33,7 @@ export default {
     this.initMap()
   },
   methods: {
-     initMap() {
+    initMap() {
       try {
         this.map = leaflet
           .map('leafletmap')
