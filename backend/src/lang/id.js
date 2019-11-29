@@ -374,6 +374,7 @@ export default {
     'title-reject': 'Konfirmasi Penolakan',
     'title': 'Konfirmasi',
     'category': 'Kategori harus diisi',
+    'empty': 'Tidak ada data',
 
     'user-successfully-added': 'Pengguna berhasil ditambahkan',
     'user-data-successfully-updated': 'Data user berhasil diupdate',
@@ -539,6 +540,9 @@ export default {
     'aspiration-like': 'Like',
     'aspiration-view-all': 'Lihat Semua',
     'aspiration-accept': 'Diterima',
-    'aspiration-publish': 'Dipublikasikan'
+    'aspiration-publish': 'Dipublikasikan',
+
+    'polling-view-all': 'Lihat Semua',
+    'polling-audience': 'Total Audience'
   }
 }
