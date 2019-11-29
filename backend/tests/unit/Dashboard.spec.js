@@ -107,38 +107,39 @@ describe('List dashboard usulan', () => {
     expect(wrapper.is(DashboardApproval)).toBe(true)
   })
 
-  // it('get list usulan geo', () => {
-  //   const dataList = [
-  //     {
-  //       name: 'KOTA BANDUNG',
-  //       counts: '16',
-  //       kabkota_id: '22',
-  //       latitude: '107.590417459601',
-  //       longitude: '-6.95981961897412'
-  //     }
-  //   ]
-  //
-  //   const stateSidebar =
-  //     {
-  //       opened: true
-  //     }
-  //
-  //   const wrapper = shallowMount(DashboardMap, {
-  //     localVue,
-  //     L,
-  //     i18n,
-  //     computed: {
-  //       sidebar: () => true
-  //     },
-  //     stubs: {
-  //       fetchAspirasiMap: true
-  //     }
-  //   })
-  //
-  //   wrapper.setData({ list: dataList })
-  //   expect(wrapper.vm.list).toBe(dataList)
-  //   expect(wrapper.vm.sidebar).toBe(stateSidebar.opened)
-  // })
+  it('get list usulan geo', () => {
+    const dataList = [
+      {
+        name: 'KOTA BANDUNG',
+        counts: '16',
+        kabkota_id: '22',
+        latitude: '107.590417459601',
+        longitude: '-6.95981961897412'
+      }
+    ]
+
+    const stateSidebar =
+      {
+        opened: true
+      }
+
+    const wrapper = shallowMount(DashboardMap, {
+      localVue,
+      L,
+      i18n,
+      computed: {
+        sidebar: () => true
+      },
+      stubs: {
+        fetchAspirasiMap: true
+      }
+    })
+
+    wrapper.setData({ list: dataList })
+    expect(wrapper.vm.list).toBe(dataList)
+    expect(wrapper.vm.sidebar).toBe(stateSidebar.opened)
+  })
+
 
   it('render dashboard polling', () => {
     const wrapper = shallowMount(Polling, {
