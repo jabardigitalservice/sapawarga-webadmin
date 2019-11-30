@@ -105,18 +105,7 @@ module.exports = {
     config.when(process.env.NODE_ENV === 'development', config =>
       config.devtool('cheap-source-map')
     );
-
-    config.when(process.env.NODE_ENV !== 'development', config => {
-      config
-        .plugin('ScriptExtHtmlWebpackPlugin')
-        .after('html')
-        .use('script-ext-html-webpack-plugin', [
-          {
-            // `runtime` must same as runtimeChunk name. default is `runtime`
-            inline: /runtime\..*\.js$/
-          }
-        ])
-        .end();
+    config.when(process.env.NODE_ENV === 'production', config => {
       config.optimization.splitChunks({
         chunks: 'all',
         cacheGroups: {
