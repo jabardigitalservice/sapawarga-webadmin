@@ -23,7 +23,7 @@ Object.defineProperty(Vue.prototype, '_', { value: _ })
 import App from './App'
 import store from './store'
 import router from './router'
-import './registerServiceWorker';
+import './registerServiceWorker'
 
 import i18n from './lang' // Internationalization
 import './icons' // icon
