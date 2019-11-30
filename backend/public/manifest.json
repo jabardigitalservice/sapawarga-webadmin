@@ -1,0 +1,22 @@
+{
+  "name": "sapawarga",
+  "short_name": "sapawarga",
+  "icons": [
+    {
+      "src": "./favicon.ico",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./favicon.ico",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/?utm_source=a2hs",
+  "background_color": "#FFFFFF",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#FFFFFF",
+  "gcm_sender_id": "103953800507"
+}
