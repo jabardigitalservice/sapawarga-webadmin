@@ -11,8 +11,7 @@ describe('MapThumb', () => {
   it('renders a map', async() => {
     const props = {
       latitude:  '-6.8675185',
-      longitude: '107.0446946',
-      id: 'gmap_canvas'
+      longitude: '107.0446946'
     };
     const wrapper = await mount(MapThumb, {
       propsData: props,

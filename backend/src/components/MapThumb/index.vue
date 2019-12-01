@@ -17,10 +17,6 @@ export default {
       type: String,
       default: '107.0446946',
       required: true
-    },
-    id: {
-      type: String,
-      default: 'gmap_canvas'
     }
   },
   data() {
