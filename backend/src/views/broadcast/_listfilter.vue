@@ -1,13 +1,13 @@
 <template>
   <el-card class="box-card" style="margin-bottom: 10px">
     <el-form>
-      <el-row :gutter="10" type="flex">
-        <el-col :span="8">
+      <el-row :gutter="10" >
+        <el-col class="mb-10" :xs="24" :sm="24" :md="6">
           <el-form-item style="margin-bottom: 0">
             <el-input v-model="listQuery.title" placeholder="Judul Pesan" />
           </el-form-item>
         </el-col>
-        <el-col :span="4">
+        <el-col class="mb-10" :xs="24" :sm="6" :md="4">
           <el-form-item style="margin-bottom: 0">
             <el-select
               v-model="listQuery.status"
@@ -22,7 +22,7 @@
             </el-select>
           </el-form-item>
         </el-col>
-        <el-col :span="8">
+        <el-col class="mb-10" :xs="24" :sm="18" :md="8">
           <input-filter-area
             :parent-id="filterAreaParentId"
             :kabkota-id="listQuery.kabkota_id"
@@ -33,7 +33,7 @@
             @changeKelurahan="changeKelurahan"
           />
         </el-col>
-        <el-col :span="4">
+        <el-col :xs="24" :sm="6" :md="6">
           <el-button type="primary" size="small" @click="submitSearch">
             {{ $t('crud.search') }}
           </el-button>
@@ -102,3 +102,9 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped> 
+  .mb-10 {
+    margin-bottom: 10px;
+  }
+</style>
