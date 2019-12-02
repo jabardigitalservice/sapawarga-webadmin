@@ -3,48 +3,20 @@
   "version": "4.0.0",
   "description": "A magical vue admin. An out-of-box UI solution for enterprise applications. Newest development stack of vue. Lots of awesome features",
   "author": "Pan <panfree23@gmail.com>",
-  "license": "MIT",
   "scripts": {
-    "dev": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "test:unit": "VUE_APP_BASE_API='' && jest --clearCache && vue-cli-service test:unit",
+    "lint": "eslint --ext .js,.vue src",
+    "build-dev": "vue-cli-service build --mode=development --watch",
     "build:prod": "vue-cli-service build",
     "build:stage": "vue-cli-service build --mode staging",
-    "build-dev": "vue-cli-service build --mode=development --watch",
-    "preview": "node build/index.js --preview",
-    "lint": "eslint --ext .js,.vue src",
+    "dev": "vue-cli-service serve",
     "lint:fix": "eslint --fix --ext .js,.vue src",
-    "test:unit": "VUE_APP_BASE_API='' && jest --clearCache && vue-cli-service test:unit",
-    "test:unit:watch": "vue-cli-service test:unit --watchAll",
-    "test:ci": "npm run lint && npm run test:unit",
+    "new": "plop",
+    "preview": "node build/index.js --preview",
     "svgo": "svgo -f src/icons/svg --config=src/icons/svgo.yml",
-    "new": "plop"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": ""
-    }
-  },
-  "lint-staged": {
-    "src/**/*.{js,vue}": [
-      "eslint --fix",
-      "git add"
-    ]
-  },
-  "keywords": [
-    "vue",
-    "admin",
-    "dashboard",
-    "element-ui",
-    "boilerplate",
-    "admin-template",
-    "management-system"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/PanJiaChen/vue-element-admin.git"
-  },
-  "bugs": {
-    "url": "https://github.com/PanJiaChen/vue-element-admin/issues"
+    "test:ci": "npm run lint && npm run test:unit",
+    "test:unit:watch": "vue-cli-service test:unit --watchAll"
   },
   "dependencies": {
     "@babel/register": "7.0.0",
@@ -52,6 +24,7 @@
     "@sentry/integrations": "^5.6.1",
     "@vue/babel-preset-app": "^3.9.2",
     "@vue/cli-plugin-babel": "3.9.2",
+    "@vue/cli-plugin-pwa": "^4.1.1",
     "@vue/cli-plugin-unit-jest": "^3.9.0",
     "@vue/cli-service": "3.9.3",
     "@vue/test-utils": "1.0.0-beta.29",
@@ -67,6 +40,7 @@
     "element-ui": "2.7.0",
     "file-saver": "2.0.1",
     "fuse.js": "3.4.4",
+    "html-webpack-plugin": "^4.0.0-alpha",
     "js-cookie": "2.2.0",
     "jsonlint": "1.6.3",
     "jszip": "3.2.1",
@@ -78,9 +52,9 @@
     "normalize.css": "7.0.0",
     "nprogress": "0.2.0",
     "path-to-regexp": "2.4.0",
+    "register-service-worker": "^1.6.2",
     "sass-loader": "7.1.0",
     "screenfull": "4.2.0",
-    "script-ext-html-webpack-plugin": "2.1.3",
     "showdown": "1.9.0",
     "sortablejs": "1.8.4",
     "svg-sprite-loader": "4.1.3",
@@ -90,6 +64,7 @@
     "vue-friendly-iframe": "0.12.0",
     "vue-gallery": "^2.0.0",
     "vue-i18n": "7.3.2",
+    "vue-infinite-scroll": "^2.0.2",
     "vue-moment": "^4.0.0",
     "vue-router": "3.0.2",
     "vue-splitpane": "1.0.4",
@@ -106,7 +81,6 @@
     "eslint": "5.15.3",
     "eslint-plugin-vue": "5.2.2",
     "flush-promises": "^1.0.2",
-    "html-webpack-plugin": "3.2.0",
     "husky": "1.3.1",
     "lint-staged": "8.1.5",
     "nock": "^10.0.6",
@@ -118,13 +92,41 @@
     "vue-template-compiler": "2.6.10",
     "@vue/cli-plugin-pwa": "^4.1.0"
   },
-  "engines": {
-    "node": ">=8.9",
-    "npm": ">= 3.0.0"
-  },
   "browserslist": [
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "bugs": {
+    "url": "https://github.com/PanJiaChen/vue-element-admin/issues"
+  },
+  "engines": {
+    "node": ">=8.9",
+    "npm": ">= 3.0.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": ""
+    }
+  },
+  "keywords": [
+    "vue",
+    "admin",
+    "dashboard",
+    "element-ui",
+    "boilerplate",
+    "admin-template",
+    "management-system"
+  ],
+  "license": "MIT",
+  "lint-staged": {
+    "src/**/*.{js,vue}": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PanJiaChen/vue-element-admin.git"
+  }
 }

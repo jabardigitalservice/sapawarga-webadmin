@@ -28,6 +28,9 @@ export default {
     'broadcast-edit': 'Edit Pesan',
     'broadcast-detail': 'Detail Pesan',
 
+    'question-answer-manage': 'Pertanyaan Jawaban',
+    'question-answer-list': 'Pertanyaan Jawaban',
+
     'notification-manage': 'Notifikasi',
     'notification-create': 'Tambah Notifikasi',
     'notification-list': 'Daftar Notifikasi',
