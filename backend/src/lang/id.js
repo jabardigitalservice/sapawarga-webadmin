@@ -335,7 +335,7 @@ export default {
     'popup-informasi-title': 'Judul pop-up mengandung karakter yang tidak diizinkan.',
     'popup-informasi-description': 'Deskripsi mengandung karakter yang tidak diizinkan.',
 
-    'dashboard-map-error': 'Gagal memuat map',
+    'map-load-error': 'Gagal memuat map',
     'broadcast-datetime': 'Jadwal yang dipilih telah lewat',
     'popup-fitur-not-null': 'Fitur Pop Up harus diisi.',
     'popup-start-date-not-null': 'Tanggal Mulai harus diisi.',
@@ -537,6 +537,11 @@ export default {
 
     'aspiration-tooltip-publish': 'Publikasikan Usulan',
     'aspiration-tooltip-unpublish': 'Batalkan Usulan',
-    'aspiration-tooltip-detail': 'Detail Usulan'
+    'aspiration-tooltip-detail': 'Detail Usulan',
+    'aspiration-title': 'Usulan',
+    'aspiration-like': 'Like',
+    'aspiration-view-all': 'Lihat Semua',
+    'aspiration-accept': 'Diterima',
+    'aspiration-publish': 'Dipublikasikan'
   }
 }
