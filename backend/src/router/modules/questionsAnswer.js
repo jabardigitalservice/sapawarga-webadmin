@@ -17,6 +17,8 @@ const questionsAnswerRouter = {
       component: () => import('@/views/questionsAnswer/index'),
       meta: {
         title: 'question-answer-list',
+        noCache: true,
+        affix: true,
         roles: ['admin', 'staffProv']
       }
     }
