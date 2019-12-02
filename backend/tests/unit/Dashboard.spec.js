@@ -12,6 +12,8 @@ import flushPromises from 'flush-promises'
 import Vuex from 'vuex'
 import DashboardMap from '@/views/dashboard/admin/components/MapData'
 import Polling from '@/views/dashboard/admin/components/Polling'
+import L from 'leaflet'
+import i18n from '@/lang'
 
 const localVue = createLocalVue()
 localVue.use(ElementUI)
@@ -39,7 +41,8 @@ describe('List dashboard usulan', () => {
       localVue,
       mocks: {
         $t: () => {}
-      }
+      },
+      i18n
     })
 
     await flushPromises()
@@ -70,6 +73,7 @@ describe('List dashboard usulan', () => {
       mocks: {
         $t: () => {}
       },
+      i18n,
       propsData: {
         listQuery
       }
@@ -91,7 +95,8 @@ describe('List dashboard usulan', () => {
       localVue,
       mocks: {
         $t: () => {}
-      }
+      },
+      i18n
     })
 
     await flushPromises()
@@ -120,6 +125,8 @@ describe('List dashboard usulan', () => {
 
     const wrapper = shallowMount(DashboardMap, {
       localVue,
+      L,
+      i18n,
       computed: {
         sidebar: () => true
       },
@@ -133,9 +140,11 @@ describe('List dashboard usulan', () => {
     expect(wrapper.vm.sidebar).toBe(stateSidebar.opened)
   })
 
+
   it('render dashboard polling', () => {
     const wrapper = shallowMount(Polling, {
-      localVue
+      localVue,
+      i18n
     })
 
     expect(wrapper.is(Polling)).toBe(true)
@@ -143,7 +152,8 @@ describe('List dashboard usulan', () => {
 
   it('function list polling latest', async() => {
     const wrapper = shallowMount(Polling, {
-      localVue
+      localVue,
+      i18n
     })
 
     await flushPromises()
@@ -152,13 +162,14 @@ describe('List dashboard usulan', () => {
 
   it('function displayChart dashboard polling', () => {
     const wrapper = shallowMount(Polling, {
-      localVue
+      localVue,
+      i18n
     })
     
     const id = 123
     const data = {
       id: 1
-    }    
+    }
     wrapper.vm.displayChart(data)
     expect(wrapper.vm.id).toBe(data.id)
   })
