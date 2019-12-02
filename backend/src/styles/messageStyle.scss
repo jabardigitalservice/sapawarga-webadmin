@@ -51,9 +51,11 @@ nav {
 
 .container {
   margin: auto;
-  max-width: 800px;
-  width: calc(100% - 20px);
-  height: 588px;
+  // height: 100%;
+  // min-height: 600px;
+  // max-width: 800px;
+  // width: calc(100% - 20px);
+  height: calc(1024px - 20%);
   font-family: sans-serif;
   letter-spacing: 0.5px;
   background: #f8f9fb;
@@ -431,6 +433,8 @@ nav {
 }
 
 .nav-left-section {
+}
+.nav-right-section {
   display: flex;
   align-items: center;
 
@@ -511,7 +515,7 @@ nav .spinner {
   .outgoing-chats-msg p::before {
     display: none;
   }
-  .welcome-message {
-    display: none;
-  }
+  // .welcome-message {
+  //   display: none;
+  // }
 }

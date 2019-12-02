@@ -1,7 +1,7 @@
 import Layout from '@/layout'
 
 const questionsAnswerRouter = {
-  name: 'Pertanyaan Jawaban',
+  name: 'QNA',
   path: '/question-answer',
   component: Layout,
   redirect: '/question-answer/index',
@@ -23,10 +23,10 @@ const questionsAnswerRouter = {
     {
       name: 'question-answer',
       path: 'messages/:id',
-      component: () => import('@/views/questionsAnswer/messageBox'),
+      component: () => import('@/views/questionsAnswer/message'),
       hidden: true,
       meta: {
-        title: 'video-edit',
+        title: 'question-answer-message',
         roles: ['admin', 'staffProv',]
       }
     },
