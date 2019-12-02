@@ -22,7 +22,7 @@ if (process.env.NODE_ENV === 'production') {
     offline() {
       // No internet connection found. App is running in offline mode.
     },
-    error(error) {
+    error() {
       // Error during service worker registration.
     }
   })
