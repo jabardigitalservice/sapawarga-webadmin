@@ -38,7 +38,7 @@
     <h3>{{ $t('dashboard.dashboard-top-news') }}</h3>
     <el-row>
       <el-col :xs="{span: 12}" :sm="{span: 12}" :md="{span: 12}" :lg="{span: 12}" :xl="{span: 12}">
-        <TopNews v-if="roleAccess" :list="listNewsProvinsi" :title="$t('dashboard.dashboard-news-prov')" />
+        <TopNews :list="listNewsProvinsi" :title="$t('dashboard.dashboard-news-prov')" />
       </el-col>
       <el-col :xs="{span: 12}" :sm="{span: 12}" :md="{span: 12}" :lg="{span: 12}" :xl="{span: 12}">
         <TopNews :list="listNewsKoKab" :title="$t('dashboard.dashboard-news-kabkota')" />
@@ -56,9 +56,6 @@ import Category from './components/Category'
 import MapData from './components/MapData'
 import Polling from './components/Polling'
 import TopNews from './components/TopNews'
-import { mapGetters } from 'vuex'
-import checkPermission from '@/utils/permission'
-import { RolesUser } from '@/utils/constantVariabel'
 
 const lineChartData = {
   newVisitis: {
@@ -95,14 +92,8 @@ export default {
       lineChartData: lineChartData.newVisitis,
       listNewsProvinsi: null,
       listNewsKoKab: null,
-      listLoading: true,
-      roleAccess: checkPermission([RolesUser.ADMIN, RolesUser.STAFFPROV])
+      listLoading: true
     }
-  },
-  computed: {
-    ...mapGetters([
-      'roles'
-    ])
   },
   created() {
     this.getListProvinsi()
