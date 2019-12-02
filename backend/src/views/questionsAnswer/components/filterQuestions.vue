@@ -32,11 +32,11 @@ export default {
   props: {
     propsName: {
       type: String,
-      required: false
+      required: true
     },
     propsKabKota: {
       type: Number,
-      required: false
+      required: true
     }
   },
   data() {

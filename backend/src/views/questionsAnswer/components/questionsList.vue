@@ -34,7 +34,7 @@
                           <span class="user-name">{{ question.user_name }}</span>
                           <span class="date-last-message">25/11/2019</span>
                           <div class="img-like">
-                            <span class="el-tag el-tag--primary el-tag--medium">{{question.likes_count}}</span>
+                            <span class="el-tag el-tag--primary el-tag--medium">{{ question.likes_count }}</span>
                             <img src="@/assets/like.svg" alt="" class="like-icon">
                           </div>
                         </div>
@@ -106,7 +106,7 @@ export default {
       this.busy = true
       const response = await fetchListQuestions(this.listQuery)
       this.data.push(...response.data.items)
-      if (response.data.items.length < 10){
+      if (response.data.items.length < 10) {
         this.busy = true
       } else {
         this.listQuery.page++

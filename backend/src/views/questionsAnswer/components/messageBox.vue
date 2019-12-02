@@ -27,7 +27,7 @@
                 <div v-for="message in listMessage" :key="message.id">
                   <MessageItem
                     :message="message"
-                    :userId="user_id"
+                    :user-id="user_id"
                   />
                 </div>
               </div>
@@ -57,23 +57,18 @@ export default {
     },
     detailQuestions: {
       type: String,
-      required: false,
+      required: true
     },
     loadingMessages: {
       type: Boolean,
       required: false
     }
   },
-  data() {
-    return {
-      message: '',
-    }
+  computed: {
+    ...mapGetters(['user_id', 'avatar'])
   },
   async created() {
     //
-  },
-  computed: {
-    ...mapGetters(['user_id','avatar'])
   }
 }
 </script>

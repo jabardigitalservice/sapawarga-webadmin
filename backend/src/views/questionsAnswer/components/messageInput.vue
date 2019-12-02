@@ -19,7 +19,7 @@
                 slot="append"
                 @click="onSubmitMessage"
               >
-                  <img src="@/assets/sentMessage.svg">
+                <img src="@/assets/sentMessage.svg">
               </el-button>
             </el-input>
           </el-form-item>
@@ -57,7 +57,7 @@ export default {
             validator: validatorHTMLTitle,
             trigger: 'blur'
           }
-        ],
+        ]
       }
     }
   },

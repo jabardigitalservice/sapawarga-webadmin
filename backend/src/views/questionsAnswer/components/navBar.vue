@@ -34,7 +34,7 @@ export default {
   methods: {
     onBackPage() {
       router.push(`/question-answer`)
-    },
+    }
   }
 }
 </script>

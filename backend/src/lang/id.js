@@ -364,7 +364,7 @@ export default {
     'news-category-not-null': 'Kategori Berita harus diisi',
     'news-content-not-null': 'Konten Berita harus diisi',
 
-    'input-message': 'Isian pesan mengandung karakter yang tidak diizinkan.',
+    'input-message': 'Isian pesan mengandung karakter yang tidak diizinkan.'
 
   },
   navbar: {
