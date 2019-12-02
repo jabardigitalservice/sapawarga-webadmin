@@ -1,4 +1,6 @@
+@import './messageStyle.scss';
 @import './MapThumbs.scss';
+
 
 $bg: #f4f4f4;
 $light_gray: #283443;
@@ -164,7 +166,7 @@ $dark_gray: #889aa4;
     color: #42b983;
     font-weight: 600;
   }
-  
+
   .el-row {
     margin-left: 0px;
     &:last-child {
