@@ -1,19 +1,10 @@
 <template>
-  <div class="mapouter">
-    <div class="gmap_canvas">
-      <iframe
-        :id="id"
-        :src="urlMap"
-        frameborder="0"
-        scrolling="no"
-        marginheight="0"
-        marginwidth="0"
-      />
-    </div>
-  </div>
+  <div id="leafletmap" ref="mapElement" />
 </template>
 
 <script>
+import leaflet from 'leaflet'
+
 export default {
   name: 'MapThumb',
   props: {
@@ -26,82 +17,41 @@ export default {
       type: String,
       default: '107.0446946',
       required: true
-    },
-    id: {
-      type: String,
-      default: 'gmap_canvas'
     }
   },
   data() {
     return {
-      urlMap: `https://maps.google.com/maps?q=${this.latitude},${this.longitude}&t=&z=16&ie=UTF8&iwloc=&output=embed`
+      map: null,
+      zoom: 12
+    }
+  },
+  mounted() {
+    this.initMap()
+  },
+  methods: {
+    initMap() {
+      try {
+        this.map = leaflet
+          .map('leafletmap')
+          .setView([this.latitude, this.longitude], this.zoom)
+        this.tileLayer = leaflet.tileLayer(
+          'https://cartodb-basemaps-{s}.global.ssl.fastly.net/rastertiles/voyager/{z}/{x}/{y}.png',
+          {
+            maxZoom: 18,
+            attribution:
+              '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attribution">CARTO</a>'
+          }
+        )
+
+        this.tileLayer.addTo(this.map)
+        this.initMarker()
+      } catch (error) {
+        this.$message.error(this.$t('errors.map-load-error'))
+      }
+    },
+    initMarker() {
+      leaflet.marker([this.latitude, this.longitude]).addTo(this.map)
     }
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.map {
-  margin-top: 50px;
-  height: 50px;
-  width: 270px;
-}
-
-.mapouter {
-    position: relative;
-    text-align: right;
-    height: 350px;
-    width: 400px;
-  }
-  .gmap_canvas {
-    background: none !important;
-    width: 400px;
-    height: 350px;
-    margin-left: 20px;
-    border-radius: 5px;
-    margin-top: 20px;
-    -webkit-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.75);
-    box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.75);
-
-    iframe {
-      width: 400px;
-      height: 350px;
-    }
-  }
-
-.map-title {
-  width: 400px;
-  margin-left: 20px;
-  margin-bottom: 10px;
-  margin-top: 50px;
-  padding: 10px;
-}
-
-@media only screen and (min-width: 1200px) and (max-width: 1570px) {
-  .gmap_canvas {
-    background: none !important;
-    width: 250px;
-    height: 230px;
-    margin-left: 20px;
-    border-radius: 5px;
-    margin-top: 20px;
-    -webkit-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.75);
-    box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.75);
-    iframe {
-      width: 250px;
-      height: 230px;
-    }
-  }
-
-  .map-title {
-    width: 250px;
-    margin-left: 20px;
-    margin-bottom: 10px;
-    margin-top: 50px;
-    padding: 10px;
-  }
-}
-
-</style>

@@ -12,6 +12,8 @@ import flushPromises from 'flush-promises'
 import Vuex from 'vuex'
 import DashboardMap from '@/views/dashboard/admin/components/MapData'
 import Polling from '@/views/dashboard/admin/components/Polling'
+import L from 'leaflet'
+import i18n from '@/lang'
 
 const localVue = createLocalVue()
 localVue.use(ElementUI)
@@ -36,7 +38,11 @@ describe('List dashboard usulan', () => {
 
   it('render list usulan', async() => {
     const wrapper = shallowMount(DashboardUsulan, {
-      localVue
+      localVue,
+      mocks: {
+        $t: () => {}
+      },
+      i18n
     })
 
     await flushPromises()
@@ -57,8 +63,17 @@ describe('List dashboard usulan', () => {
       kabkota_id: null
     }
 
+    const user = ['admin']
+
     const wrapper = shallowMount(ListFilter, {
       localVue,
+      computed: {
+        roles: () => ['admin']
+      },
+      mocks: {
+        $t: () => {}
+      },
+      i18n,
       propsData: {
         listQuery
       }
@@ -67,16 +82,21 @@ describe('List dashboard usulan', () => {
     wrapper.vm.submitSearch()
     wrapper.vm.resetFilter()
     wrapper.vm.getArea()
-
+    
     expect(wrapper.props('listQuery')).toBe(listQuery)
     expect(wrapper.emitted()['submit-search']).toBeTruthy()
     expect(wrapper.emitted()['reset-search']).toBeTruthy()
+    expect(wrapper.vm.roles).toEqual(user)
   })
 
   it('render dashboard approval', async() => {
 
     const wrapper = shallowMount(DashboardApproval, {
-      localVue
+      localVue,
+      mocks: {
+        $t: () => {}
+      },
+      i18n
     })
 
     await flushPromises()
@@ -105,6 +125,8 @@ describe('List dashboard usulan', () => {
 
     const wrapper = shallowMount(DashboardMap, {
       localVue,
+      L,
+      i18n,
       computed: {
         sidebar: () => true
       },
@@ -118,9 +140,11 @@ describe('List dashboard usulan', () => {
     expect(wrapper.vm.sidebar).toBe(stateSidebar.opened)
   })
 
+
   it('render dashboard polling', () => {
     const wrapper = shallowMount(Polling, {
-      localVue
+      localVue,
+      i18n
     })
 
     expect(wrapper.is(Polling)).toBe(true)
@@ -128,7 +152,8 @@ describe('List dashboard usulan', () => {
 
   it('function list polling latest', async() => {
     const wrapper = shallowMount(Polling, {
-      localVue
+      localVue,
+      i18n
     })
 
     await flushPromises()
@@ -137,13 +162,14 @@ describe('List dashboard usulan', () => {
 
   it('function displayChart dashboard polling', () => {
     const wrapper = shallowMount(Polling, {
-      localVue
+      localVue,
+      i18n
     })
     
     const id = 123
     const data = {
       id: 1
-    }    
+    }
     wrapper.vm.displayChart(data)
     expect(wrapper.vm.id).toBe(data.id)
   })
