@@ -362,7 +362,9 @@ export default {
     'news-title-must-be-at-least-10-characters': 'Judul Berita minimal 10 karakter',
     'news-title-must-be-at-least-100-characters': 'Judul Berita maksimal 100 karakter',
     'news-category-not-null': 'Kategori Berita harus diisi',
-    'news-content-not-null': 'Konten Berita harus diisi'
+    'news-content-not-null': 'Konten Berita harus diisi',
+
+    'input-message': 'Isian pesan mengandung karakter yang tidak diizinkan.',
 
   },
   navbar: {

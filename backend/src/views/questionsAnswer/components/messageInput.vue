@@ -2,10 +2,25 @@
   <div>
     <el-row>
       <el-col :lg="24" :sm="24" :xs="24">
-        <el-form>
-          <el-form-item class="message-input">
-            <el-input v-model="message" placeholder="Tulis Pesan">
-              <el-button slot="append" @click="onSubmitMessage"><img src="@/assets/sentMessage.svg"></el-button>
+        <el-form
+          ref="messageInput"
+          :model="messageInput"
+          :rules="rules"
+          :status-icon="true"
+          @submit.prevent.native="onSubmitMessage"
+        >
+          <el-form-item class="message-input" prop="message">
+            <el-input
+              v-model="messageInput.message"
+              name="message"
+              placeholder="Tulis Pesan"
+            >
+              <el-button
+                slot="append"
+                @click="onSubmitMessage"
+              >
+                  <img src="@/assets/sentMessage.svg">
+              </el-button>
             </el-input>
           </el-form-item>
         </el-form>
@@ -15,6 +30,8 @@
 </template>
 
 <script>
+import { isContainHtmlTags } from '@/utils/validate'
+
 export default {
   props: {
     value: {
@@ -23,8 +40,25 @@ export default {
     }
   },
   data() {
+    const validatorHTMLTitle = (rule, value, callback) => {
+      if (isContainHtmlTags(value) === true) {
+        callback(new Error(this.$t('errors.input-message')))
+      }
+
+      callback()
+    }
     return {
-      message: null
+      messageInput: {
+        message: null
+      },
+      rules: {
+        message: [
+          {
+            validator: validatorHTMLTitle,
+            trigger: 'blur'
+          }
+        ],
+      }
     }
   },
   watch: {
@@ -36,8 +70,12 @@ export default {
     }
   },
   methods: {
-    onSubmitMessage() {
-      this.$emit('input', this.message)
+    async onSubmitMessage() {
+      const valid = await this.$refs.messageInput.validate()
+      if (!valid) {
+        return
+      }
+      this.$emit('changeMessageInput', this.messageInput.message)
     }
   }
 }
