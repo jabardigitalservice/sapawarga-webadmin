@@ -17,11 +17,19 @@ const questionsAnswerRouter = {
       component: () => import('@/views/questionsAnswer/index'),
       meta: {
         title: 'question-answer-list',
-        noCache: true,
-        affix: true,
         roles: ['admin', 'staffProv']
       }
-    }
+    },
+    {
+      name: 'question-answer',
+      path: 'messages/:id',
+      component: () => import('@/views/questionsAnswer/messageBox'),
+      hidden: true,
+      meta: {
+        title: 'video-edit',
+        roles: ['admin', 'staffProv',]
+      }
+    },
   ]
 }
 

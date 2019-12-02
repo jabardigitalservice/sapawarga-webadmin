@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container">
+  <div>
     <el-row :gutter="20">
       <QuestionsList
         :list-user="listUser"
@@ -9,16 +9,11 @@
 </template>
 
 <script>
-// import UserList from './components/userList'
-// import MessageInput from './components/messageInput'
-// import MessageBox from './components/messageBox'
+
 import QuestionsList from './components/questionsList'
 
 export default {
   components: {
-    // MessageInput,
-    // MessageBox,
-    // UserList,
     QuestionsList
   },
   props: {

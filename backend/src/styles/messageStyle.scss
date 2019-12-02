@@ -57,7 +57,7 @@ nav {
   font-family: sans-serif;
   letter-spacing: 0.5px;
   background: #f8f9fb;
-  padding: 0 !important;
+  padding: 0;
   box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
   border-radius: 7px;
   box-sizing: border-box;
@@ -99,11 +99,11 @@ nav {
     background-repeat: no-repeat;
     background-size: 15px;
     background-position: initial;
-  }  
+  }
 }
 
 .user-list {
-  height: 550px;
+  height: 100%;
   padding: 4px 0px;
   flex-grow: 1;
   overflow-y: auto;
@@ -115,7 +115,6 @@ nav {
   background-color: #ffffff;
   display: flex;
   flex-direction: row;
-  height: 72px;
   pointer-events: all;
   position: relative;
   padding: 0 16px;
@@ -146,7 +145,7 @@ nav {
       .user-name {
         float:left;
         padding: 0 13px;
-        font-size: 11px;
+        font-size: 15px;
         font-weight: 600;
       }
 
@@ -163,9 +162,9 @@ nav {
       text-align: left;
       align-items: center;
       line-height: normal;
-      display: flex;
+      // display: flex;
       .message{
-        font-size: 13px;
+        font-size: 18px;
         padding: 0 13px;
         width: 212px;
         white-space: nowrap;

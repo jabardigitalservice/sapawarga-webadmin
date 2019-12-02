@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row>
-      <el-col :lg="23" :sm="23" :xs="23">
+      <el-col :lg="24" :sm="24" :xs="24">
         <el-form>
           <el-form-item class="message-input">
             <el-input v-model="message" placeholder="Tulis Pesan">

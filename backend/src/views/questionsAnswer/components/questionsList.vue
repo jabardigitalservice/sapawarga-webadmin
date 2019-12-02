@@ -20,7 +20,22 @@
           >
             <el-col>
               <el-card shadow="always">
-                {{ user.name }}
+                <div class="users-containers">
+                  <div class="users-details">
+                    <div class="img-container">
+                      <img src="@/assets/user.png" alt="" class="avatar">&nbsp;
+                    </div>
+                  </div>
+                  <div class="users-details" style="margin-top: 16px;">
+                    <div class="name-detail">
+                      <span class="user-name">{{ user.name }}</span>
+                      <span class="date-last-message">25/11/2019</span>
+                    </div>
+                    <div class="last-messages">
+                      <span class="message">isi pesan yang panjang aja boleh kok</span>
+                    </div>
+                  </div>
+                </div>
               </el-card>
             </el-col>
           </div>
@@ -33,6 +48,7 @@
 <script>
 import FilterQuestions from './filterQuestions'
 import { fetchListUser } from '@/api/questionsAnswer'
+import router from '@/router'
 
 export default {
   components: {
@@ -76,6 +92,7 @@ export default {
   methods: {
     onSelectQuestions: function(user) {
       console.log(user.name)
+      router.push(`/question-answer/messages/${user.id}`)
     },
     async loadMore() {
       this.busy = true
