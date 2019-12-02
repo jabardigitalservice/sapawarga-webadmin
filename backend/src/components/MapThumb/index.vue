@@ -46,7 +46,7 @@ export default {
         this.tileLayer.addTo(this.map)
         this.initMarker()
       } catch (error) {
-        console.error(error)
+        this.$message.error(this.$t('errors.map-load-error'))
       }
     },
     initMarker() {

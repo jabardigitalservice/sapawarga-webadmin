@@ -92,7 +92,7 @@ export default {
         this.tileLayer.addTo(this.map)
         this.initMarkers(dataMap)
       } catch (error) {
-        console.error(error)
+        this.$message.error(this.$t('errors.map-load-error'))
       }
     },
     initMarkers(dataMap) {
