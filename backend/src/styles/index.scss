@@ -135,7 +135,6 @@ code {
 }
 
 .components-container {
-  margin: 30px 50px;
   position: relative;
 }
 
@@ -222,3 +221,9 @@ code {
 .pagination-container .active {
   width: unset;
 }  
+
+@media screen and (min-width: $tabletViewportWidth) {
+  .components-container {
+    margin: 30px 50px;
+  }
+}
