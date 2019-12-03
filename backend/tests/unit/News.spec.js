@@ -7,6 +7,7 @@ import newsDetailFixture from './fixtures/newsDetail'
 import VueRouter from 'vue-router'
 import newsApi from '@/api/news'
 import flushPromises from 'flush-promises'
+import i18n from '@/lang'
 // import moment from 'moment'
 
 const localVue = createLocalVue()
@@ -31,7 +32,8 @@ describe('News List', () => {
       localVue,
       stubs: {
         fetchList: true
-      }
+      },
+      i18n
     })
     wrapper.setData({ tableDataStatistik: channel })
 
@@ -85,7 +87,8 @@ describe('News detail', () => {
 
     const wrapper = await shallowMount(NewsDetail, {
       localVue,
-      router
+      router,
+      i18n
     })
     await flushPromises()
 
@@ -150,7 +153,8 @@ describe('News detail', () => {
 
     const wrapper = await shallowMount(NewsDetail, {
       localVue,
-      router
+      router,
+      i18n
     })
     await flushPromises()
 

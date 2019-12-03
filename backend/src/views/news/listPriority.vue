@@ -13,7 +13,7 @@
           <dnd-list :list1="listPriority" list1-title="List Berita Priority" />
         </div>
         <el-row :gutter="10">
-          <el-col :xs="6" :sm="3" :md="2" >
+          <el-col :xs="6" :sm="3" :md="2">
             <el-button type="primary" @click="onSaveChange">
               {{ $t('crud.save-update') }}
             </el-button>
