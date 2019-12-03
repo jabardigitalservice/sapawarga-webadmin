@@ -37,10 +37,10 @@
     <!-- Polling -->
     <h3>{{ $t('dashboard.dashboard-top-news') }}</h3>
     <el-row>
-      <el-col :xs="{span: 12}" :sm="{span: 12}" :md="{span: 12}" :lg="{span: 12}" :xl="{span: 12}">
+      <el-col :xs="{span: 24, tag:'mb-10'}" :sm="{span: 24, tag:'mb-10'}" :md="{span: 12}" :lg="{span: 12}" :xl="{span: 12}">
         <TopNews :list="listNewsProvinsi" :title="$t('dashboard.dashboard-news-prov')" />
       </el-col>
-      <el-col :xs="{span: 12}" :sm="{span: 12}" :md="{span: 12}" :lg="{span: 12}" :xl="{span: 12}">
+      <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 12}" :lg="{span: 12}" :xl="{span: 12}">
         <TopNews :list="listNewsKoKab" :title="$t('dashboard.dashboard-news-kabkota')" />
       </el-col>
     </el-row>
