@@ -38,10 +38,10 @@
             <el-form-item label="Pengantar" prop="excerpt">
               <el-input v-model="polling.excerpt" type="textarea" name="excerpt-polling" :rows="4" placeholder="Pengantar" />
             </el-form-item>
-            <el-form-item label="Dimulai dari" prop="">
+            <el-form-item label="Dimulai dari" prop="" class="w-100">
               <el-date-picker v-model="start_date" type="date" name="start_date" :editable="false" :clearable="false" format="dd-MM-yyyy" placeholder="Pilih tanggal" />
             </el-form-item>
-            <el-form-item label="Sampai" prop="">
+            <el-form-item label="Sampai" prop="" class="w-100">
               <el-date-picker v-model="end_date" type="date" name="end_date" :editable="false" :clearable="false" format="dd-MM-yyyy" placeholder="Pilih tanggal" />
             </el-form-item>
 
@@ -520,5 +520,9 @@ el-radio {
 
 .draft-button {
   margin-bottom: 7px;
+}
+
+.el-date-editor.el-input {
+  width: 100%;
 }
 </style>
