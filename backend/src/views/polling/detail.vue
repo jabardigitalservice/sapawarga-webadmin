@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-row :gutter="10">
-      <el-col class="col-left" :xs="24" :sm="24" :md="24" :lg="colSize" :xl="colSize">
+      <el-col class="col-left" :xs="{span:24, tag:'mb-10'}" :sm="24" :md="24" :lg="colSize" :xl="colSize">
         <el-card>
           <div slot="header" class="clearfix">
             <span>Target</span>
