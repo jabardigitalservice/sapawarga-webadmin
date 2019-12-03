@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <p class="warn-content"><a href="#">{{ $t('news.news-add-header') }}</a></p>
+    <p class="warn-content"><a href="#">{{ $t('news.news-add-action') }}</a></p>
     <Form />
   </div>
 </template>
