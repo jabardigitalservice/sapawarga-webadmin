@@ -6,7 +6,7 @@
           <el-form-item style="margin-bottom: 0">
             <InputCategory v-model="listQuery.category_id" name="category_id" category-type="aspirasi" prop="category" style="width: 100%" />
           </el-form-item>
-        </el-col>        
+        </el-col>
         <el-col v-if="roleAccess" :xs="{span:24, tag:'mb-10'}" :sm="9" :md="9">
           <el-form-item style="margin-bottom: 0">
             <el-select v-model="listQuery.kabkota_id" filterable clearable placeholder="Kota/Kabupaten">
