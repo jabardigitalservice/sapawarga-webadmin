@@ -146,10 +146,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-  .pagination-container {
-    width: 100%;
-    overflow: auto;
-  }
-</style>

@@ -103,8 +103,3 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-  .el-col-xs-tag-mb-10 {
-    margin-bottom: 10px;
-  }
-</style>
