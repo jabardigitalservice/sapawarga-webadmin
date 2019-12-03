@@ -48,7 +48,7 @@
             </el-form-item>
             <el-form-item :label="$t('label.scheduled')" prop="is_scheduled">
               <el-radio-group v-model="broadcast.is_scheduled" name="jadwal">
-                <el-radio-button :label="false">Sekarang</el-radio-button>
+                <el-radio-button class="mb-10" :label="false">Sekarang</el-radio-button>
                 <el-radio-button :label="true">Terjadwal</el-radio-button>
               </el-radio-group>
             </el-form-item>
@@ -74,7 +74,7 @@
               />
             </el-form-item>
             <el-form-item>
-              <el-button type="info" :disabled="broadcast.status === status.PUBLISHED" :loading="loading" @click="submitForm(status.DRAFT)">{{ $t('crud.draft') }}</el-button>
+              <el-button class="mb-10" type="info" :disabled="broadcast.status === status.PUBLISHED" :loading="loading" @click="submitForm(status.DRAFT)">{{ $t('crud.draft') }}</el-button>
               <el-button v-show="!isEdit" type="primary" :loading="loading" @click="actionApprove(status.PUBLISHED)"> {{ $t('crud.send') }}</el-button>
             </el-form-item>
           </el-form>
@@ -399,5 +399,9 @@ export default {
 }
 .rw {
   margin-top: -7px;
+}
+
+.mb-10 {
+  margin-bottom: 10px;
 }
 </style>

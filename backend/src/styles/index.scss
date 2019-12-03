@@ -205,3 +205,16 @@ code {
     display: none
   }
 }
+
+// custom tag for column 
+@media only screen and (max-width: 991px) {
+  .el-col-xs-tag-mb-10 {
+    margin-bottom: 10px;
+  }
+}
+
+// overflow mobile view
+.pagination-container {
+  width: 100%;
+  overflow: auto;
+}
