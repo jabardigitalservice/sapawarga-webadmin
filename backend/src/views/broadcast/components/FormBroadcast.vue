@@ -73,7 +73,7 @@
                 placeholder="Tulis pesan (maksimum 1000 karakter)"
               />
             </el-form-item>
-            <el-form-item>
+            <el-form-item class="ml-min-40">
               <el-button class="mb-10" type="info" :disabled="broadcast.status === status.PUBLISHED" :loading="loading" @click="submitForm(status.DRAFT)">{{ $t('crud.draft') }}</el-button>
               <el-button v-show="!isEdit" type="primary" :loading="loading" @click="actionApprove(status.PUBLISHED)"> {{ $t('crud.send') }}</el-button>
             </el-form-item>
@@ -403,5 +403,11 @@ export default {
 
 .mb-10 {
   margin-bottom: 10px;
+}
+
+@media only screen and (max-width: 402px) {
+  .ml-min-40 {
+    margin-left: -50px;
+  }
 }
 </style>

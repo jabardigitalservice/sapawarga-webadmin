@@ -201,7 +201,6 @@ export default {
 @media only screen and (max-width: 1200px) {
   .col-right {
     margin-top: 20px;
-    margin-right: 20px !important
   }
   .html-div {
     color: blue !important;
