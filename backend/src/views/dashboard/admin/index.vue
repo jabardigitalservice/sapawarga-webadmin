@@ -50,6 +50,7 @@
 <script>
 // import LineChart from './components/LineChart'
 import { fetchTopFiveNewsProv, fetchTopFiveNewsDistricts } from '@/api/dashboard'
+import { mapGetters } from 'vuex'
 import Usulan from './components/Usulan'
 import Approval from './components/Approval'
 import Category from './components/Category'
@@ -92,8 +93,13 @@ export default {
       lineChartData: lineChartData.newVisitis,
       listNewsProvinsi: null,
       listNewsKoKab: null,
-      listLoading: true
+      listLoading: true,
     }
+  },
+  computed: {
+    ...mapGetters([
+      'user'
+    ])
   },
   created() {
     this.getListProvinsi()
