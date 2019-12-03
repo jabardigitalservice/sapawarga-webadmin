@@ -211,6 +211,11 @@ code {
   .el-col-xs-tag-mb-10 {
     margin-bottom: 10px;
   }
+
+  .components-container {
+    margin: 20px 20px;
+    position: relative;
+  }
 }
 
 // overflow mobile view
@@ -222,3 +227,9 @@ code {
 .pagination-container .active {
   width: unset;
 }  
+
+@media only screen and (max-width: 402px) {
+  .ml-min-40 {
+    margin-left: -50px;
+  }
+}
