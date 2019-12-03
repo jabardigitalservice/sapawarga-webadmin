@@ -279,6 +279,7 @@ export default {
     margin-top: 30px;
     margin-left: 20px;
     padding-right: 30px !important;
+    margin-bottom: 20px;
   }
 
 }
