@@ -1,18 +1,17 @@
 <template>
   <div>
-    <nav style="padding: 0 20px; !important">
+    <nav style="padding: 0 20px;background-color: #ebf5fd;">
       <div class="nav-left-section">
-        <el-button
-          type="info"
-          icon="el-icon-back"
-          circle
+        <i
+          class="el-icon-back"
+          style="padding: 10px;"
           @click="onBackPage"
         />
-        <span class="questions-details"><b>{{ title }}</b> </span>&nbsp;
-      </div>
-      <div class="nav-right-section">
         <img src="@/assets/user.png" alt="" class="avatar">&nbsp;
       </div>
+      <!-- <div class="nav-right-section">
+        <img src="@/assets/user.png" alt="" class="avatar">&nbsp;
+      </div> -->
     </nav>
   </div>
 </template>
@@ -22,10 +21,6 @@ import router from '@/router'
 
 export default {
   props: {
-    title: {
-      type: String,
-      required: true
-    },
     avatar: {
       type: String,
       required: true

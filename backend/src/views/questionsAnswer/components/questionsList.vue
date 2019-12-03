@@ -32,11 +32,13 @@
                       <div class="questions-details" style="margin-top: 16px;">
                         <div class="name-detail">
                           <span class="user-name">{{ question.user_name }}</span>
-                          <span class="date-last-message">25/11/2019</span>
                           <div class="img-like">
-                            <span class="el-tag el-tag--primary el-tag--medium">{{ question.likes_count }}</span>
+                            <span class="el-tag el-tag--primary el-tag--medium" style="height: 25px;">{{ question.likes_count }}</span>
                             <img src="@/assets/like.svg" alt="" class="like-icon">
                           </div>
+                        </div>
+                        <div class="last-messages">
+                          <span class="date-last-message">{{ formatDatetime(question.created_date, 'DD/MM/YYYY') }}</span>
                         </div>
                         <div class="last-messages">
                           <span class="message">{{ question.text }}</span>
@@ -58,6 +60,7 @@
 import FilterQuestions from './filterQuestions'
 import { fetchListQuestions } from '@/api/questionsAnswer'
 import router from '@/router'
+import { formatDatetime } from '@/utils/datetimeToString'
 
 export default {
   components: {
@@ -99,8 +102,8 @@ export default {
     }
   },
   methods: {
-    onSelectQuestions(user) {
-      router.push(`/question-answer/messages/${user.id}`)
+    onSelectQuestions(question) {
+      router.push(`/question-answer/messages/${question.id}`)
     },
     async loadMore() {
       this.busy = true
@@ -112,7 +115,8 @@ export default {
         this.listQuery.page++
         this.busy = false
       }
-    }
+    },
+    formatDatetime
   }
 }
 </script>

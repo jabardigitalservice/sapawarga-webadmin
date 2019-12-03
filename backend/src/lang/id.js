@@ -28,8 +28,8 @@ export default {
     'broadcast-edit': 'Edit Pesan',
     'broadcast-detail': 'Detail Pesan',
 
-    'question-answer-manage': 'QNA',
-    'question-answer-list': 'List Pertanyaan',
+    'question-answer-manage': 'Tanya Jawab',
+    'question-answer-list': 'Tanya Jawab',
     'question-answer-message': 'Jawaban',
 
     'notification-manage': 'Notifikasi',

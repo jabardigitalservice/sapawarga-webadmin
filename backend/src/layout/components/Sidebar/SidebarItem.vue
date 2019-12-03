@@ -86,6 +86,8 @@ export default {
       if (isExternal(routePath)) {
         return routePath
       }
+      // var navbar = document.getElementById('navbar');
+      // navbar.style.display = 'block';
       return path.resolve(this.basePath, routePath)
     },
 

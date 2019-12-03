@@ -1,9 +1,36 @@
 <template>
   <div>
     <nav-bar
-      :title="detailQuestions"
       :avatar="avatar"
     />
+    <el-card shadow="always">
+      <el-row class="message-containers">
+        <el-col :lg="2" :sm="2" :xs="2">
+          <div>
+            <div class="img-container">
+              <img src="@/assets/user.png" alt="" class="avatar">&nbsp;
+            </div>
+          </div>
+        </el-col>
+        <el-col :lg="22" :sm="22" :xs="22" class="message-content">
+          <div class="message-containers" style="margin-top: 16px;">
+            <div class="username">
+              <span class="user-name">Budi, RW 002 Desa Kertayasa Cijulang</span>
+            </div>
+            <div class="datetime">
+              <span class="date-last-message">22/06/2019</span>
+              <div class="img-like">
+                <span class="el-tag el-tag--primary el-tag--medium" style="height: 25px;">{{ totalLikesQuestions }}</span>
+                <img src="@/assets/like.svg" alt="" class="like-icon">
+              </div>
+            </div>
+            <div class="last-messages">
+              <span>{{ detailQuestions }}</span>
+            </div>
+          </div>
+        </el-col>
+      </el-row>
+    </el-card>
     <div class="chat">
       <div class="chat-page">
         <div class="msg-inbox">
@@ -57,6 +84,10 @@ export default {
     },
     detailQuestions: {
       type: String,
+      required: true
+    },
+    totalLikesQuestions: {
+      type: Number,
       required: true
     },
     loadingMessages: {

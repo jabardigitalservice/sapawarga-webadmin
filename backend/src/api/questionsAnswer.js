@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function fetchListQuestions(query) {
   return request({
-    url: '/questions',
+    url: 'http://52.74.74.33:3000/v1/questions',
     method: 'get',
     params: query
   })
@@ -10,21 +10,21 @@ export function fetchListQuestions(query) {
 
 export function fetchDetailQuestions(id) {
   return request({
-    url: `/questions/${id}`,
+    url: `http://52.74.74.33:3000/v1/questions/${id}`,
     method: 'get'
   })
 }
 
 export function fetchListAnswer(id) {
   return request({
-    url: `/questions/${id}/comments`,
+    url: `http://52.74.74.33:3000/v1/questions/${id}/comments`,
     method: 'get'
   })
 }
 
 export function postAnswer(id, data) {
   return request({
-    url: `/questions/${id}/comments`,
+    url: `http://52.74.74.33:3000/v1/questions/${id}/comments`,
     method: 'post',
     data
   })

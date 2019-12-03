@@ -1,7 +1,7 @@
 import Layout from '@/layout'
 
 const questionsAnswerRouter = {
-  name: 'QNA',
+  name: 'Tanya Jawab',
   path: '/question-answer',
   component: Layout,
   redirect: '/question-answer/index',
