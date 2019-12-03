@@ -1,13 +1,13 @@
 <template>
   <el-card class="box-card" style="margin-bottom: 10px">
     <el-form>
-      <el-row :gutter="10" type="flex">
-        <el-col :span="colWidth">
+      <el-row :gutter="10">
+        <el-col :xs="{span:24, tag:'mb-10'}" :sm="colWidth" :md="colWidth">
           <el-form-item style="margin-bottom: 0">
             <InputCategory v-model="listQuery.category_id" name="category_id" category-type="aspirasi" prop="category" style="width: 100%" />
           </el-form-item>
-        </el-col>
-        <el-col v-if="roleAccess" :span="9">
+        </el-col>        
+        <el-col v-if="roleAccess" :xs="{span:24, tag:'mb-10'}" :sm="9" :md="9">
           <el-form-item style="margin-bottom: 0">
             <el-select v-model="listQuery.kabkota_id" filterable clearable placeholder="Kota/Kabupaten">
               <el-option
@@ -19,7 +19,7 @@
             </el-select>
           </el-form-item>
         </el-col>
-        <el-col :span="6">
+        <el-col :xs="24" :sm="6" :md="6">
           <el-button type="primary" size="small" @click="submitSearch">
             {{ $t('crud.search') }}
           </el-button>
@@ -90,7 +90,7 @@ export default {
 
     setWidth() {
       this.roles.forEach(element => {
-        this.colWidth = element === RolesUser.STAFFKABKOTA ? 20 : 9
+        this.colWidth = element === RolesUser.STAFFKABKOTA ? 18 : 9
       })
     }
 
