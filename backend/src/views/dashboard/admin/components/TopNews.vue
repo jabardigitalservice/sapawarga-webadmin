@@ -7,13 +7,14 @@
         align="left"
         style="background:blue"
         valign="middle"
+        min-width="300"
       >
         <template slot-scope="{row}">
           <el-row>
-            <el-col :span="3">
+            <el-col :xs="{span:4, tag:'mb-10'}" :sm="3" :md="3">
               <img :src="row.cover_path_url" style="width: 42px;height: 42px;">
             </el-col>
-            <el-col :span="10">
+            <el-col :xs="{span:20, tag:'mb-10'}" :sm="20" :md="20">
               <div class="title-top-news cell">
                 {{ row.title }}
               </div>
@@ -25,7 +26,7 @@
         prop="total_viewers"
         :label="$t('dashboard.dashboard-news-viewer')"
         align="center"
-        width="100"
+        width="75"
       />
     </el-table>
     <el-row style="margin: 0 auto; text-align: center;padding-top:10px;">

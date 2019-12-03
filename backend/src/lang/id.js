@@ -348,7 +348,7 @@ export default {
     'broadcast-description': 'Isi pesan mengandung karakter yang tidak diperbolehkan',
     'broadcast-title-description': 'Judul pesan dan Isi pesan mengandung karakter yang tidak diperbolehkan',
     'url-not-null': 'URL harus diisi.',
-    'news-channels-already-used': 'Website Sumber Berita sudah digunakan',
+    'news-channels-already-used': 'Sumber Berita sudah digunakan',
     'news-channels-must-be-filled': 'Sumber Berita harus diisi.',
     'news-channels-must-be-at-least-5-characters': 'Sumber Berita minimal 5 karakter',
     'news-channels-must-be-at-least-25-characters': 'Sumber Berita maksimal 25 karakter',
