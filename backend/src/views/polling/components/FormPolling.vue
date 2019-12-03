@@ -77,7 +77,7 @@
               <el-button type="success" class="add-answer" size="mini" icon="el-icon-circle-plus" @click="addAnswer">Jawaban Lain</el-button>
             </div>
 
-            <el-form-item class="polling-button">
+            <el-form-item class="polling-button ml-min-40">
               <el-button v-show="checkStatus === 0 || checkStatus === null" class="draft-button" type="info" :loading="loading" @click="submitForm(status.draft)">{{ $t('crud.draft') }}</el-button>
               <el-button v-show="!isEdit" :disabled="btnDisableDate" type="primary" :loading="loading" @click="actionApprove(status.active)"> {{ $t('crud.send-polling') }}</el-button>
             </el-form-item>
@@ -524,5 +524,19 @@ el-radio {
 
 .el-date-editor.el-input {
   width: 100%;
+}
+
+@media only screen and (max-width: 991px) {
+ .add-answer {
+   float: right;
+    margin-right: 23px;
+    margin-top: -10px;
+ }
+
+ .answer {
+    float: left;
+    margin-left: unset;
+    margin-top: 10px !important;
+ }
 }
 </style>

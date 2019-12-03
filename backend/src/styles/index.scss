@@ -210,6 +210,11 @@ code {
   .el-col-xs-tag-mb-10 {
     margin-bottom: 10px;
   }
+
+  .components-container {
+    margin: 20px 20px;
+    position: relative;
+  }
 }
 
 // overflow mobile view
@@ -225,5 +230,12 @@ code {
 @media screen and (min-width: $tabletViewportWidth) {
   .components-container {
     margin: 30px 50px;
+  }
+}
+
+
+@media only screen and (max-width: 420px) {
+  .ml-min-40 {
+    margin-left: -50px;
   }
 }

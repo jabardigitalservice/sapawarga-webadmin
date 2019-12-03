@@ -404,10 +404,4 @@ export default {
 .mb-10 {
   margin-bottom: 10px;
 }
-
-@media only screen and (max-width: 402px) {
-  .ml-min-40 {
-    margin-left: -50px;
-  }
-}
 </style>

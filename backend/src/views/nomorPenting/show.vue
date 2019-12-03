@@ -95,12 +95,11 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @media only screen and (max-width: 1200px) {
   .col-right {
     margin-top: 30px;
-    margin-left: 20px;
-    margin-right: 20px !important
+    margin-bottom: 20px;
   }
 }
 </style>
