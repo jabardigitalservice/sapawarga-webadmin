@@ -94,6 +94,7 @@ export default {
       listNewsProvinsi: null,
       listNewsKoKab: null,
       listLoading: true,
+      listQuery: null
     }
   },
   computed: {
@@ -116,7 +117,8 @@ export default {
 
     getLisKoKab() {
       this.listLoading = true
-      fetchTopFiveNewsDistricts({ location: 'kabkota' }).then(response => {
+      this.listQuery = this.user.kabkota_id ? { kabkota_id: this.user.kabkota_id } : { location: 'kabkota' }
+      fetchTopFiveNewsDistricts(this.listQuery).then(response => {
         this.listNewsKoKab = response.data
         this.listLoading = false
       })
