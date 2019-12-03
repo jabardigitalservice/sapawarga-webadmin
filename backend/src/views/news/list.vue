@@ -4,7 +4,7 @@
       <el-col class="col-left" :xs="24" :sm="24" :md="24" :lg="7" :xl="7">
         <el-card>
           <div slot="header" class="clearfix">
-            <span>Kanal Media</span>
+            <span>{{ $t('news.media-channel') }}</span>
           </div>
           <el-table stripe :data="tableDataStatistik" :show-header="false" style="width: 100%">
             <el-table-column prop="title" align="left" />
@@ -22,13 +22,13 @@
         <el-row style="margin: 10px 0px" type="flex">
           <router-link :to="{ path: '/news/create' }">
             <el-button type="primary" size="small" icon="el-icon-plus" style="margin: 0 10px 0 0">
-              Tambah Berita Baru
+              {{ $t('news.news-add-header') }}
             </el-button>
           </router-link>
           <div v-permission="['admin','staffProv', 'staffKabkota']">
             <router-link :to="{ path: '/news/priority' }">
               <el-button type="primary" size="small" icon="el-icon-plus">
-                Prioritas Berita
+                {{ $t('news.priority-news-header') }}
               </el-button>
             </router-link>
           </div>

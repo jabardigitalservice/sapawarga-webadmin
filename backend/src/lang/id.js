@@ -547,5 +547,14 @@ export default {
 
     'polling-view-all': 'Lihat Semua',
     'polling-audience': 'Total Audience'
+  },
+  news: {
+    'media-channel': 'Kanal Media',
+    'news-add-header': 'Tambah berita baru',
+    'news-add-action': 'Tambah berita',
+    'news-content-header': 'Data berita',
+    'news-edit-header': 'Edit Berita',
+    'priority-news-header': 'Prioritas Berita',
+    'priority-news-add-header': 'Tambah berita prioritas'
   }
 }
