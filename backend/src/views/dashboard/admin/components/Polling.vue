@@ -65,7 +65,6 @@ export default {
       this.listLoading = true
       fetchLatestPolling(this.listQuery).then(response => {
         this.list = response.data
-        console.log(this.list.length)
         this.listLoading = false
         if (this.list.length === 0) {
           this.id = null
