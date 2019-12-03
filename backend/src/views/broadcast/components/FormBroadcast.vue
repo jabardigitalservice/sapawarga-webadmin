@@ -401,7 +401,7 @@ export default {
   margin-top: -7px;
 }
 
-  .mb-10 {
-    margin-bottom: 10px;
-  }
+.mb-10 {
+  margin-bottom: 10px;
+}
 </style>
