@@ -59,7 +59,9 @@ export default {
   },
   data() {
     return {
-      displayNav: 'block'
+      displayNav: 'block',
+      QNA: 'question-answer',
+      MOBILE: 'mobile'
     }
   },
   computed: {
@@ -67,7 +69,7 @@ export default {
   },
   watch: {
     $route(to, from) {
-      if (to.name === 'question-answer') {
+      if ((to.name === this.QNA) && (this.device === this.MOBILE)) {
         this.displayNav = 'none'
       } else {
         this.displayNav = 'block'

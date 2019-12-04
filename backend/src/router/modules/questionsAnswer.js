@@ -1,7 +1,7 @@
 import Layout from '@/layout'
 
 const questionsAnswerRouter = {
-  name: 'Tanya Jawab',
+  name: 'question-answer-manage',
   path: '/question-answer',
   component: Layout,
   redirect: '/question-answer/index',
@@ -12,9 +12,10 @@ const questionsAnswerRouter = {
   },
   children: [
     {
-      name: 'question-answer-list',
+      name: 'question-answer-manage',
       path: 'index',
       component: () => import('@/views/questionsAnswer/index'),
+      hidden: true,
       meta: {
         title: 'question-answer-list',
         roles: ['admin', 'staffProv']

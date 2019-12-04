@@ -161,8 +161,9 @@ nav {
       display: flex;
       .date-last-message {
         color: rgba(0,0,0,.45);
-        padding-left: 15px;
+        // padding-left: 15px;
         font-size: 11px;
+        padding: 4px 15px;
       }
       .message{
         font-size: 16px;
@@ -204,6 +205,7 @@ nav {
     font-size: 11px;
     max-width: 100%;
     overflow: hidden;
+    padding: 4px 0;
     .img-like {
       float: right;
       padding-bottom: 5px;

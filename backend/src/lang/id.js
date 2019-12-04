@@ -29,7 +29,7 @@ export default {
     'broadcast-detail': 'Detail Pesan',
 
     'question-answer-manage': 'Tanya Jawab',
-    'question-answer-list': 'Tanya Jawab',
+    'question-answer-list': 'List Pertanyaan',
     'question-answer-message': 'Jawaban',
 
     'notification-manage': 'Notifikasi',

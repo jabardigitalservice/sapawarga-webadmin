@@ -7,7 +7,8 @@
           style="padding: 10px;"
           @click="onBackPage"
         />
-        <img src="@/assets/user.png" alt="" class="avatar">&nbsp;
+        <span>Detail</span>
+        <!-- <img src="@/assets/user.png" alt="" class="avatar">&nbsp; -->
       </div>
     </nav>
   </div>
