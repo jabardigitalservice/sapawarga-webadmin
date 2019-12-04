@@ -18,7 +18,7 @@
             <span>{{ $t('label.description') }}</span>
           </div>
           <el-table stripe :data="tableDataPesan" :show-header="false" style="width: 100%">
-            <el-table-column prop="title" width="200" />
+            <el-table-column prop="title" />
             <el-table-column prop="content">
               <template slot-scope="{row}">
                 <div v-if="isContainHtmlTags(row.content)" v-html="row.content" />
