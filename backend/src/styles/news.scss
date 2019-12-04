@@ -1,0 +1,17 @@
+@media screen and (max-width: $mobileViewportWidth) {
+  .form-news {
+    .el-form-item__label {
+      text-align: left;
+    }
+  
+    .el-date-editor.el-input {
+      width: 100%;
+    }
+  
+    .action-button {
+      .el-button:first-child {
+        margin-bottom: 10px;
+      }
+    }
+  }
+}
