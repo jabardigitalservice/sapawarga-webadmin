@@ -11,9 +11,9 @@
             </template>
           </el-table-column>
         </el-table>
-        <el-row>
+        <el-row style="margin: 0 auto; text-align: center;padding-top:20px;">
           <router-link :to="{ path: '/polling/index' }">
-            <el-button class="see-more" type="primary" plain>Lihat Semua Polling</el-button>
+            <a href="#" style="color: #1890ff;">{{ $t('label.polling-view-all') }}</a>
           </router-link>
         </el-row>
       </el-card>
@@ -21,7 +21,7 @@
     <el-col :md="24" :lg="10" :xl="10">
       <el-card class="box-card">
         <div slot="header" class="clearfix">
-          <span>Total Audience:</span>
+          <span>{{ $t('label.polling-audience') }}</span>
           <span class="total_audience">{{ count }}</span>
         </div>
         <p class="question">{{ question }}</p>
@@ -65,12 +65,17 @@ export default {
       this.listLoading = true
       fetchLatestPolling(this.listQuery).then(response => {
         this.list = response.data
-        const firstPolling = this.list[0]
-        this.id = parseInt(firstPolling.id)
-        this.question = firstPolling.question
-        this.chartStart_date = moment(firstPolling.start_date).format('D MMMM YYYY')
-        this.chartEnd_date = moment(firstPolling.end_date).format('D MMMM YYYY')
         this.listLoading = false
+        if (this.list.length === 0) {
+          this.id = null
+          this.question = this.$t('message.empty')
+        } else {
+          const firstPolling = this.list[0]
+          this.id = parseInt(firstPolling.id)
+          this.question = firstPolling.question
+          this.chartStart_date = moment(firstPolling.start_date).format('D MMMM YYYY')
+          this.chartEnd_date = moment(firstPolling.end_date).format('D MMMM YYYY')
+        }
       })
     },
     displayChart(data) {
@@ -101,10 +106,5 @@ export default {
     font-size: 15px;
     text-align:center;
     color: rgba(0, 0, 0, 0.7);
-  }
-  .see-more {
-    position: relative;
-    float: right;
-    margin-top: 15px;
   }
 </style>

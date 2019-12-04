@@ -38,10 +38,10 @@
             <el-form-item label="Pengantar" prop="excerpt">
               <el-input v-model="polling.excerpt" type="textarea" name="excerpt-polling" :rows="4" placeholder="Pengantar" />
             </el-form-item>
-            <el-form-item label="Dimulai dari" prop="">
+            <el-form-item label="Dimulai dari" prop="" class="w-100">
               <el-date-picker v-model="start_date" type="date" name="start_date" :editable="false" :clearable="false" format="dd-MM-yyyy" placeholder="Pilih tanggal" />
             </el-form-item>
-            <el-form-item label="Sampai" prop="">
+            <el-form-item label="Sampai" prop="" class="w-100">
               <el-date-picker v-model="end_date" type="date" name="end_date" :editable="false" :clearable="false" format="dd-MM-yyyy" placeholder="Pilih tanggal" />
             </el-form-item>
 
@@ -77,7 +77,7 @@
               <el-button type="success" class="add-answer" size="mini" icon="el-icon-circle-plus" @click="addAnswer">Jawaban Lain</el-button>
             </div>
 
-            <el-form-item class="polling-button">
+            <el-form-item class="polling-button ml-min-40">
               <el-button v-show="checkStatus === 0 || checkStatus === null" class="draft-button" type="info" :loading="loading" @click="submitForm(status.draft)">{{ $t('crud.draft') }}</el-button>
               <el-button v-show="!isEdit" :disabled="btnDisableDate" type="primary" :loading="loading" @click="actionApprove(status.active)"> {{ $t('crud.send-polling') }}</el-button>
             </el-form-item>
@@ -520,5 +520,23 @@ el-radio {
 
 .draft-button {
   margin-bottom: 7px;
+}
+
+.el-date-editor.el-input {
+  width: 100%;
+}
+
+@media only screen and (max-width: 991px) {
+ .add-answer {
+   float: right;
+    margin-right: 23px;
+    margin-top: -10px;
+ }
+
+ .answer {
+    float: left;
+    margin-left: unset;
+    margin-top: 10px !important;
+ }
 }
 </style>

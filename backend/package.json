@@ -44,6 +44,7 @@
     "js-cookie": "2.2.0",
     "jsonlint": "1.6.3",
     "jszip": "3.2.1",
+    "leaflet": "^1.6.0",
     "lingallery": "^1.1.25",
     "lodash": "^4.17.11",
     "mockjs": "1.0.1-beta3",
@@ -74,6 +75,7 @@
     "xlsx": "0.14.1"
   },
   "devDependencies": {
+    "@vue/cli-plugin-pwa": "^4.1.0",
     "babel-eslint": "10.0.1",
     "chalk": "2.4.2",
     "connect": "3.6.6",

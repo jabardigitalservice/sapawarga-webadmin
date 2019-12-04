@@ -1,26 +1,24 @@
-import { shallowMount, createLocalVue } from '@vue/test-utils'
+import { mount, createLocalVue } from '@vue/test-utils'
 import MapThumb from '@/components/MapThumb'
-import ElementUI from 'element-ui';
+import ElementUI from 'element-ui'
+import i18n from '@/lang'
+import L from 'leaflet';
 
 const localVue = createLocalVue()
 localVue.use(ElementUI)
 
-const factory = (values = {}) => {
-  return shallowMount(MapThumb, {
-    propsData: { ...values },
-    localVue
-  })
-}
-
 describe('MapThumb', () => {
-  it('renders a map', () => {
-    const latitude = '-6.7'
-    const longitude = '107.1'
-    const urlMap = `https://maps.google.com/maps?q=${latitude},${longitude}&t=&z=16&ie=UTF8&iwloc=&output=embed`
-    const wrapper = factory({ latitude, longitude })
-
-    expect(wrapper.find('iframe').exists()).toBeTruthy()
-    expect(wrapper.find('iframe').attributes('src')).toBe(urlMap)
-    expect(wrapper.find('iframe').attributes('id')).toBe('gmap_canvas')
+  it('renders a map', async() => {
+    const props = {
+      latitude:  '-6.8675185',
+      longitude: '107.0446946'
+    };
+    const wrapper = await mount(MapThumb, {
+      propsData: props,
+      localVue,
+      i18n,
+      Map
+    })
+    expect(wrapper.html()).toContain('<div id="leafletmap"></div>')
   })
 })

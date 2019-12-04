@@ -48,7 +48,7 @@
             </el-form-item>
             <el-form-item :label="$t('label.scheduled')" prop="is_scheduled">
               <el-radio-group v-model="broadcast.is_scheduled" name="jadwal">
-                <el-radio-button :label="false">Sekarang</el-radio-button>
+                <el-radio-button class="mb-10" :label="false">Sekarang</el-radio-button>
                 <el-radio-button :label="true">Terjadwal</el-radio-button>
               </el-radio-group>
             </el-form-item>
@@ -64,10 +64,17 @@
             </el-form-item>
 
             <el-form-item :label="$t('label.description')" prop="description">
-              <tinymce v-model="broadcast.description" :height="300" />
+              <!-- <tinymce v-model="broadcast.description" :height="300" /> -->
+              <el-input
+                v-model="broadcast.description"
+                type="textarea"
+                name="description"
+                :rows="8"
+                placeholder="Tulis pesan (maksimum 1000 karakter)"
+              />
             </el-form-item>
-            <el-form-item>
-              <el-button type="info" :disabled="broadcast.status === status.PUBLISHED" :loading="loading" @click="submitForm(status.DRAFT)">{{ $t('crud.draft') }}</el-button>
+            <el-form-item class="ml-min-40">
+              <el-button class="mb-10" type="info" :disabled="broadcast.status === status.PUBLISHED" :loading="loading" @click="submitForm(status.DRAFT)">{{ $t('crud.draft') }}</el-button>
               <el-button v-show="!isEdit" type="primary" :loading="loading" @click="actionApprove(status.PUBLISHED)"> {{ $t('crud.send') }}</el-button>
             </el-form-item>
           </el-form>
@@ -81,12 +88,12 @@ import InputCategory from '@/components/InputCategory'
 import InputSelectArea from '@/components/InputSelectArea'
 import { create, fetchRecord, update } from '@/api/broadcast'
 import { containsWhitespace, isContainHtmlTags } from '@/utils/validate'
-import Tinymce from '@/components/Tinymce'
+// import Tinymce from '@/components/Tinymce'
 import moment from 'moment'
 
 export default {
   components: {
-    Tinymce,
+    // Tinymce,
     InputCategory,
     InputSelectArea
   },
@@ -392,5 +399,9 @@ export default {
 }
 .rw {
   margin-top: -7px;
+}
+
+.mb-10 {
+  margin-bottom: 10px;
 }
 </style>

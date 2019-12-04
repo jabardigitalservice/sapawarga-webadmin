@@ -6,6 +6,7 @@ moment.locale('id')
 import VueMoment from 'vue-moment'
 import VueTheMask from 'vue-the-mask'
 import InfiniteScroll from 'vue-infinite-scroll'
+import L from 'leaflet'
 
 import Cookies from 'js-cookie'
 
@@ -24,6 +25,8 @@ import App from './App'
 import store from './store'
 import router from './router'
 import './registerServiceWorker'
+
+import './registerServiceWorker' // init PWA / register Service Worker
 
 import i18n from './lang' // Internationalization
 import './icons' // icon
@@ -65,6 +68,7 @@ Vue.use(VueMoment, {
 
 Vue.use(VueTheMask)
 Vue.use(InfiniteScroll)
+Vue.use(L)
 
 // register global utility filters.
 Object.keys(filters).forEach(key => {

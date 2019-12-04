@@ -22,7 +22,6 @@ import notificationRouter from './modules/notification'
 import newsChannelsRouter from './modules/newsChannels'
 import newsImportantRouter from './modules/newsImportant'
 import popupInformasiRouter from './modules/popupInformasi'
-import questionsAnswerRouter from './modules/questionsAnswer'
 import releaseManagementRouter from './modules/releaseManagement'
 
 /** note: sub-menu only appear when children.length>=1
@@ -178,7 +177,6 @@ export const asyncRoutes = [
   userRouter,
   nomorPentingRouter,
   broadcastRouter,
-  questionsAnswerRouter,
   notificationRouter,
   aspirationRouter,
   pollingRouter,

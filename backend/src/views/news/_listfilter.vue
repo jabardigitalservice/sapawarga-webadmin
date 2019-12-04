@@ -1,8 +1,8 @@
 <template>
-  <el-card class="box-card" style="margin-bottom: 10px">
+  <el-card class="box-card" style="margin-bottom: 10px" :xs="24">
     <el-form>
-      <el-row :gutter="10" type="flex">
-        <el-col :span="(isPriority)? 12:18">
+      <el-row :gutter="10">
+        <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="(isPriority)? 12:18">
           <el-form-item style="margin-bottom: 0">
             <el-input v-model="listQuery.search" placeholder="Judul" />
           </el-form-item>
@@ -25,9 +25,9 @@
             </el-select>
           </el-form-item>
         </el-col>
-        <el-col :span="6">
-          <el-button type="primary" size="small" @click="submitSearch">Cari</el-button>
-          <el-button type="primary" size="small" @click="resetFilter">Reset</el-button>
+        <el-col :xs="24" :sm="6" :md="4">
+          <el-button type="primary" size="small" @click="submitSearch">{{ $t('crud.search') }}</el-button>
+          <el-button type="primary" size="small" @click="resetFilter">{{ $t('crud.reset') }}</el-button>
         </el-col>
       </el-row>
     </el-form>

@@ -336,7 +336,7 @@ export default {
     'popup-informasi-title': 'Judul pop-up mengandung karakter yang tidak diizinkan.',
     'popup-informasi-description': 'Deskripsi mengandung karakter yang tidak diizinkan.',
 
-    'dashboard-map-error': 'Gagal memuat map',
+    'map-load-error': 'Gagal memuat map',
     'broadcast-datetime': 'Jadwal yang dipilih telah lewat',
     'popup-fitur-not-null': 'Fitur Pop Up harus diisi.',
     'popup-start-date-not-null': 'Tanggal Mulai harus diisi.',
@@ -349,7 +349,7 @@ export default {
     'broadcast-description': 'Isi pesan mengandung karakter yang tidak diperbolehkan',
     'broadcast-title-description': 'Judul pesan dan Isi pesan mengandung karakter yang tidak diperbolehkan',
     'url-not-null': 'URL harus diisi.',
-    'news-channels-already-used': 'Website Sumber Berita sudah digunakan',
+    'news-channels-already-used': 'Sumber Berita sudah digunakan',
     'news-channels-must-be-filled': 'Sumber Berita harus diisi.',
     'news-channels-must-be-at-least-5-characters': 'Sumber Berita minimal 5 karakter',
     'news-channels-must-be-at-least-25-characters': 'Sumber Berita maksimal 25 karakter',
@@ -380,6 +380,7 @@ export default {
     'title-reject': 'Konfirmasi Penolakan',
     'title': 'Konfirmasi',
     'category': 'Kategori harus diisi',
+    'empty': 'Tidak ada data',
 
     'user-successfully-added': 'Pengguna berhasil ditambahkan',
     'user-data-successfully-updated': 'Data user berhasil diupdate',
@@ -476,7 +477,7 @@ export default {
     'maximum-dimension-image-profile': 'Ukuran maksimal 640 x 640 piksel',
     'choose-image-profile': 'Pilih Foto',
 
-    'count-user-each-role': 'Total user aktif per',
+    'count-user-each-role': 'Total user per',
     'widget-all-user': 'Semua',
     'widget-province': 'Provinsi',
     'widget-kabkota': 'Kota/Kab',
@@ -540,6 +541,23 @@ export default {
 
     'aspiration-tooltip-publish': 'Publikasikan Usulan',
     'aspiration-tooltip-unpublish': 'Batalkan Usulan',
-    'aspiration-tooltip-detail': 'Detail Usulan'
+    'aspiration-tooltip-detail': 'Detail Usulan',
+    'aspiration-title': 'Usulan',
+    'aspiration-like': 'Like',
+    'aspiration-view-all': 'Lihat Semua',
+    'aspiration-accept': 'Diterima',
+    'aspiration-publish': 'Dipublikasikan',
+
+    'polling-view-all': 'Lihat Semua',
+    'polling-audience': 'Total Audience'
+  },
+  news: {
+    'media-channel': 'Kanal Media',
+    'news-add-header': 'Tambah berita baru',
+    'news-add-action': 'Tambah berita',
+    'news-content-header': 'Data berita',
+    'news-edit-header': 'Edit Berita',
+    'priority-news-header': 'Prioritas Berita',
+    'priority-news-add-header': 'Tambah berita prioritas'
   }
 }

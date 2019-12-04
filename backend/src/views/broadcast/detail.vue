@@ -192,7 +192,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .button-send {
   margin-top: 30px;
   display: block;
@@ -201,7 +201,7 @@ export default {
 @media only screen and (max-width: 1200px) {
   .col-right {
     margin-top: 20px;
-    margin-right: 20px !important
+    margin-bottom: 20px;
   }
   .html-div {
     color: blue !important;

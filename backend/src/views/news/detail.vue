@@ -4,11 +4,11 @@
       <el-col class="col-right" :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
         <el-card>
           <div slot="header" class="clearfix">
-            <span>Data Berita</span>
+            <span>{{ $t('news.news-content-header') }}</span>
           </div>
           <el-table stripe :data="tableDataNews" :show-header="false" style="width: 100%">
             <el-table-column prop="title" width="180" />
-            <el-table-column prop="content">
+            <el-table-column prop="content" min-width="280">
               <template slot-scope="{row}">
                 <a v-if="validUrl(row.content)" :href="row.content" target="_blank" class="link">{{ row.content }}</a>
                 <span v-else>{{ row.content }}</span>

@@ -1,19 +1,19 @@
 <template>
   <div class="app-container" name="list-priority-berita">
-    <el-row :gutter="20">
+    <el-row :gutter="10">
       <el-col :lg="24">
         <el-row style="margin: 10px 0px">
           <el-col :span="4" style="margin-left: 10px">
             <el-button type="primary" :disabled="isDisabled" @click="dialogTableVisible = true">
-              Tambah Berita Prioritas
+              {{ $t('news.priority-news-add-header') }}
             </el-button>
           </el-col>
         </el-row>
         <div class="editor-container">
           <dnd-list :list1="listPriority" list1-title="List Berita Priority" />
         </div>
-        <el-row>
-          <el-col :span="2">
+        <el-row :gutter="10">
+          <el-col :xs="6" :sm="3" :md="2">
             <el-button type="primary" @click="onSaveChange">
               {{ $t('crud.save-update') }}
             </el-button>
@@ -21,7 +21,7 @@
           <el-col :span="2" style="margin-left: 85px">
             <router-link :to="{ path: '/news' }">
               <el-button type="primary">
-                Kembali
+                {{ $t('crud.back') }}
               </el-button>
             </router-link>
           </el-col>
