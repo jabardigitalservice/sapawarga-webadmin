@@ -7,7 +7,7 @@
             <el-input v-model="listQuery.search" placeholder="Judul" />
           </el-form-item>
         </el-col>
-        <el-col v-if="isPriority" :span="6">
+        <el-col v-if="isPriority" :xs="{span: 24, tag:'mb-10'}" :span="6">
           <el-form-item style="margin-bottom: 0">
             <el-select
               v-model="listQuery.channel_id"

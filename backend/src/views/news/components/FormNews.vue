@@ -1,5 +1,5 @@
 <template>
-  <div class="components-container">
+  <div>
     <el-row :gutter="20">
       <el-col :xs="24" :sm="8" :lg="5">
         <AttachmentPhotoUpload
@@ -71,7 +71,7 @@
             </div>
           </el-form-item>
 
-          <el-form-item>
+          <el-form-item class="action-button">
             <el-button v-if="isEdit" type="primary" :loading="loading" @click="submitForm">{{ $t('crud.save-update') }}</el-button>
             <el-button v-else type="primary" :loading="loading" @click="submitForm">{{ $t('crud.save-news') }}</el-button>
 
