@@ -11,7 +11,7 @@
     </el-col>
     <el-col :xs="24" :sm="16" :lg="19">
 
-      <el-form ref="news" :model="news" :rules="rules" :status-icon="true" label-width="160px">
+      <el-form ref="news" :model="news" :rules="rules" :status-icon="true" label-width="160px" class="form-news">
         <el-form-item label="Judul Berita" prop="title">
           <el-input v-model="news.title" type="text" placeholder="Judul Berita" />
         </el-form-item>
