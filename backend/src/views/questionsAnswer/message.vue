@@ -39,7 +39,7 @@ export default {
       userPhoto: '',
       idQuestions: '',
       detailQuestions: '',
-      totalLikesQuestions: '',
+      totalLikesQuestions: 0,
       message: ''
     }
   },

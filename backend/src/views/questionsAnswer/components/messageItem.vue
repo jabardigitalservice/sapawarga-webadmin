@@ -2,7 +2,7 @@
   <div>
     <el-col>
       <el-card shadow="always">
-        <el-row class="message-containers">
+        <el-row class="message-containers" name="message">
           <el-col :lg="2" :sm="2" :xs="2">
             <div>
               <div class="img-container">

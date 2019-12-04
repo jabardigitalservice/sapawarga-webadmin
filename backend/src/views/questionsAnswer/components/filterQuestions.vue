@@ -1,78 +1,31 @@
 <template>
   <el-col :lg="24" :sm="24" :xs="24">
     <el-form>
-
       <el-col :lg="24" :sm="24" :xs="24">
         <el-form-item>
-          <el-input v-model="name" placeholder="Cari Pertanyaan" @keyup.enter.native="onSubmitSearch">
+          <el-input v-model="name" name="name" placeholder="Cari Pertanyaan" @keyup.enter.native="onSubmitSearch">
             <i slot="prefix" class="el-input__icon el-icon-search" />
           </el-input>
         </el-form-item>
       </el-col>
-      <!-- <el-col :lg="4" :sm="4" :xs="4">
-        <el-form-item class="style-user-select">
-          <el-select v-model="kabkota" placeholder="Pilih Kab/Kota" @change="onSelection">
-            <el-option
-              v-for="item in KabKotaList"
-              :key="item.id"
-              :value="item.id"
-              :label="item.name"
-            >{{ item.name }}</el-option>
-          </el-select>
-        </el-form-item>
-      </el-col> -->
     </el-form>
-
   </el-col>
 </template>
 
 <script>
-import { getKabkotaList } from '@/api/areas'
 export default {
-  props: {
-    propsName: {
-      type: String,
-      required: true
-    },
-    propsKabKota: {
-      type: Number,
-      required: true
-    }
-  },
+  name: 'FilterQuestions',
   data() {
     return {
-      name: null,
-      kabkota: null,
-      KabKotaList: null
-    }
-  },
-  watch: {
-    propsName: {
-      handler: function(propsName) {
-        this.name = propsName
-      },
-      immediate: true
-    },
-    propsKabKota: {
-      handler: function(propsKabKota) {
-        this.kabkota = propsKabKota
-      },
-      immediate: true
+      name: null
     }
   },
   async created() {
-    await this.getListKabKota()
+    //
   },
   methods: {
     onSubmitSearch() {
       this.$emit('changeNameInput', this.name)
-    },
-    onSelection() {
-      this.$emit('changeKabKota', this.kabkota)
-    },
-    async getListKabKota() {
-      const response = await getKabkotaList()
-      this.KabKotaList = await response.data.items
     }
   }
 }

@@ -1,10 +1,8 @@
 <template>
   <div>
-    <el-row :gutter="20">
-      <QuestionsList
-        :list-user="listUser"
-      />
-    </el-row>
+    <QuestionsList
+      :list-user="listUser"
+    />
   </div>
 </template>
 

@@ -9,9 +9,6 @@
         />
         <img src="@/assets/user.png" alt="" class="avatar">&nbsp;
       </div>
-      <!-- <div class="nav-right-section">
-        <img src="@/assets/user.png" alt="" class="avatar">&nbsp;
-      </div> -->
     </nav>
   </div>
 </template>
