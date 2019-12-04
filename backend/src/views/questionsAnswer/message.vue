@@ -3,7 +3,6 @@
     <MessageBox
       :list-message="listMessage"
       :detail-questions="detailQuestions"
-      :total-likes-questions="totalLikesQuestions"
     />
     <MessageInput
       :value="message"
@@ -37,9 +36,11 @@ export default {
     return {
       listMessage: [],
       userPhoto: '',
-      idQuestions: '',
-      detailQuestions: '',
-      totalLikesQuestions: 0,
+      detailQuestions: {
+        user: {
+          name: ''
+        }
+      },
       message: ''
     }
   },
@@ -56,10 +57,7 @@ export default {
   methods: {
     async getListAnswer(id) {
       const res = await fetchDetailQuestions(id)
-      this.userPhoto = res.data.user_photo_url
-      this.detailQuestions = res.data.text
-      this.totalLikesQuestions = res.data.likes_count
-      this.idQuestions = res.data.id
+      this.detailQuestions = res.data
       const response = await fetchListAnswer(id)
       this.listMessage.push(...response.data.items)
     }

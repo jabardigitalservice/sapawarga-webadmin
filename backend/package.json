@@ -75,7 +75,6 @@
     "xlsx": "0.14.1"
   },
   "devDependencies": {
-    "@vue/cli-plugin-pwa": "^4.1.0",
     "babel-eslint": "10.0.1",
     "chalk": "2.4.2",
     "connect": "3.6.6",

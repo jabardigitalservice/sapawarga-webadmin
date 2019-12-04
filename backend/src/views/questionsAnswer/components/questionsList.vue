@@ -19,25 +19,25 @@
               <el-col>
                 <el-card shadow="always">
                   <div class="questions-containers">
-                    <el-row :key="question.user_name">
+                    <el-row :key="question.user.name">
                       <el-col :lg="2" :sm="2" :xs="2">
                         <div>
                           <div class="img-container">
-                            <img src="@/assets/user.png" alt="" class="avatar">&nbsp;
+                            <img :src="(question.user.photo_url_full) ? question.user.photo_url_full: require('@/assets/user.png')" alt="" class="avatar">&nbsp;
                           </div>
                         </div>
                       </el-col>
                       <el-col :lg="12" :sm="12" :xs="12">
                         <div class="questions-details" style="margin-top: 16px;">
                           <div class="name-detail">
-                            <span class="user-name">{{ question.user_name }}</span>
+                            <span class="user-name">{{ question.user.name }}</span>
                             <div class="img-like">
                               <span class="el-tag el-tag--primary el-tag--medium" style="height: 25px;">{{ question.likes_count }}</span>
                               <img src="@/assets/like.svg" alt="" class="like-icon">
                             </div>
                           </div>
                           <div class="last-messages">
-                            <span class="date-last-message">{{ formatDatetime(question.created_date, 'DD/MM/YYYY') }}</span>
+                            <span class="date-last-message">{{ parsingDatetime(question.created_at, 'DD/MM/YYYY') }}</span>
                           </div>
                           <div class="last-messages">
                             <span class="message">{{ question.text }}</span>
@@ -60,7 +60,7 @@
 import FilterQuestions from './filterQuestions'
 import { fetchListQuestions } from '@/api/questionsAnswer'
 import router from '@/router'
-import { formatDatetime } from '@/utils/datetimeToString'
+import { parsingDatetime } from '@/utils/datetimeToString'
 
 export default {
   components: {
@@ -116,7 +116,7 @@ export default {
         this.busy = false
       }
     },
-    formatDatetime
+    parsingDatetime
   }
 }
 </script>
