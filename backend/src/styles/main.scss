@@ -334,6 +334,9 @@ $dark_gray: #889aa4;
   .title-top-news {
     width: 200px;
   }
+  .breadcrumb-container {
+    display: none !important;
+  }
 }
 
 @media(max-width:440px) {

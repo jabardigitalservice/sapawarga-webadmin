@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar">
+  <div id="navbar" class="navbar" :style="{'display': displayNav}">
     <hamburger
       id="hamburger-container"
       :is-active="sidebar.opened"
@@ -57,8 +57,24 @@ export default {
     Hamburger,
     ErrorLog
   },
+  data() {
+    return {
+      displayNav: 'block',
+      QNA: 'question-answer',
+      MOBILE: 'mobile'
+    }
+  },
   computed: {
     ...mapGetters(['sidebar', 'name', 'avatar', 'device', 'user', 'roles_active'])
+  },
+  watch: {
+    $route(to, from) {
+      if ((to.name === this.QNA) && (this.device === this.MOBILE)) {
+        this.displayNav = 'none'
+      } else {
+        this.displayNav = 'block'
+      }
+    }
   },
   methods: {
     toggleSideBar() {
@@ -75,6 +91,7 @@ export default {
 <style lang="scss" scoped>
 .navbar {
   height: 50px;
+  display: block;
   overflow: hidden;
   position: relative;
   background: #fff;
