@@ -3,7 +3,12 @@
     <el-form>
       <el-col :lg="24" :sm="24" :xs="24">
         <el-form-item>
-          <el-input v-model="name" name="name" placeholder="Cari Pertanyaan" @keyup.enter.native="onSubmitSearch">
+          <el-input
+            v-model="name"
+            name="name"
+            placeholder="Cari Pertanyaan"
+            @keyup.enter.native="onSubmitSearch"
+          >
             <i slot="prefix" class="el-input__icon el-icon-search" />
           </el-input>
         </el-form-item>

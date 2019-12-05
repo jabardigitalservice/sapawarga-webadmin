@@ -29,3 +29,11 @@ export function postAnswer(id, data) {
     data
   })
 }
+
+export function updateModeration(id, data) {
+  return request({
+    url: `/questions/${id}`,
+    method: 'put',
+    data
+  })
+}

@@ -27,11 +27,9 @@ export default {
       message: ''
     }
   },
-
   async created() {
     //
   },
-
   methods: {
     //
   }

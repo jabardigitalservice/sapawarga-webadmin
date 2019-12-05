@@ -76,6 +76,7 @@ export default {
         return
       }
       this.$emit('changeMessageInput', this.messageInput.message)
+      this.$refs.messageInput.resetFields()
     }
   }
 }

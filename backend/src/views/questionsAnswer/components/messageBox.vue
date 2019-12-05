@@ -20,8 +20,7 @@
             <div class="datetime">
               <span class="date-last-message">{{ parsingDatetime(detailQuestions.created_at, 'DD/MM/YYYY') }}</span>
               <div class="img-like">
-                <span class="el-tag el-tag--primary el-tag--medium" style="height: 25px;">{{ detailQuestions.likes_count }}</span>
-                <img src="@/assets/like.svg" alt="" class="like-icon">
+                <span class="el-tag el-tag--info el-tag--medium" style="height: 25px;background-color: transparent;">{{ detailQuestions.likes_count }} Likes</span>
               </div>
             </div>
             <div class="last-messages">
@@ -97,7 +96,6 @@ export default {
   },
   async created() {
     //
-    console.log(this.listMessage)
   },
   methods: {
     parsingDatetime

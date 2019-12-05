@@ -13,7 +13,7 @@
           <el-col :lg="22" :sm="22" :xs="22" class="message-content">
             <div class="message-details" style="margin-top: 16px;">
               <div class="username">
-                <span class="user-name">{{ message.user_name }}</span>
+                <span class="user-name">{{ message.user.name }}</span>
               </div>
               <div class="datetime">
                 <span class="date-last-message">{{ formatDatetime(message.created_at, 'DD/MM/YYYY') }}</span>

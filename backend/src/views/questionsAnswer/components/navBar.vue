@@ -8,7 +8,6 @@
           @click="onBackPage"
         />
         <span>Detail</span>
-        <!-- <img src="@/assets/user.png" alt="" class="avatar">&nbsp; -->
       </div>
     </nav>
   </div>

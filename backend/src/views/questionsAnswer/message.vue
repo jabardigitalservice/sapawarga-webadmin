@@ -46,7 +46,17 @@ export default {
   },
   watch: {
     async 'message'() {
-      postAnswer(this.idQuestions, { text: this.message })
+      const response = await postAnswer(this.detailQuestions.id, {
+        'question_id': this.detailQuestions.id,
+        'text': this.message,
+        'status': this.detailQuestions.status,
+        'is_flagged': this.detailQuestions.is_flagged !== 0
+      })
+      if (response.success) {
+        this.listMessage = []
+        const listAnswer = await fetchListAnswer(this.detailQuestions.id)
+        this.listMessage.push(...listAnswer.data.items)
+      }
     }
   },
 
