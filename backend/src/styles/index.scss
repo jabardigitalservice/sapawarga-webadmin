@@ -206,6 +206,10 @@ code {
   }
 }
 
+.rw {
+  margin-top: -7px;
+}
+
 // custom tag for column 
 @media only screen and (max-width: 991px) {
   .el-col-xs-tag-mb-10 {
@@ -219,6 +223,10 @@ code {
 
   .inline-block {
     display: inline-block;
+  }
+
+  .rw {
+    margin-top: -20px;
   }
 }
 
@@ -249,17 +257,16 @@ code {
     width: 300px;
   }
 
-  
   .el-message {
     min-width: 300px !important;
   }
 
-  .datetime {
-    // width: 145px !important;
-  }
-
   .inline-block {
     display: inline-block;
+  }
+
+  .rw {
+    margin-top: -20px;
   }
 
 }
