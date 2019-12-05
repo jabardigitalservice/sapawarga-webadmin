@@ -1,0 +1,19 @@
+@media screen and (max-width: $mobileViewportWidth) {
+  .news-hoax-list {
+    .el-button--small {
+        margin-bottom: 5px;
+    }
+  }
+  
+  .news-hoax-form {
+    .el-form-item__label {
+      text-align: left;
+    }
+
+    .action-button {
+      .el-button:first-child {
+        margin-bottom: 10px;
+      }
+    }
+  }
+}
