@@ -36,7 +36,9 @@
                               <div class="moderasi-switch" @click.stop.prevent="moderationUpdate(question)">
                                 <el-tooltip content="Moderasi" placement="top">
                                   <el-switch
-                                    :model="question.is_flagged === 0 ? false:true"
+                                    v-model="question.is_flagged"
+                                    :active-value="1"
+                                    :inactive-value="0"
                                     active-color="#ff4949"
                                     inactive-color="#13ce66"
                                   />
@@ -127,9 +129,9 @@ export default {
       }
     },
     async moderationUpdate(data) {
-      const response = await updateModeration(data.id, { 'is_flagged': data.is_flagged === 0 ? 1 : 0 })
+      const response = await updateModeration(data.id, { 'is_flagged': data.is_flagged ? 1 : 0 })
       if (response.success) {
-        data.is_flagged = data.is_flagged === 0 ? 1 : 0
+        data.is_flagged = data.is_flagged ? 1 : 0
       }
     }
   }
