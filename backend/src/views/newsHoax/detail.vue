@@ -8,7 +8,7 @@
           </div>
           <el-table stripe :data="tableDataNews" :show-header="false" style="width: 100%">
             <el-table-column prop="title" width="180" />
-            <el-table-column prop="content">
+            <el-table-column prop="content" min-width="280">
               <template slot-scope="{row}">
                 <a v-if="validUrl(row.content)" :href="row.content" target="_blank" class="link">{{ row.content }}</a>
                 <span v-else>{{ row.content }}</span>

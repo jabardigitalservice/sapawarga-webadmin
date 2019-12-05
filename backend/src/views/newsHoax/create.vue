@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <p class="warn-content"><a href="#">Tambah Berita Counter Hoax</a></p>
+    <p class="warn-content"><a href="#">{{ $t('label.add-news-counter-hoax') }}</a></p>
     <Form />
   </div>
 </template>

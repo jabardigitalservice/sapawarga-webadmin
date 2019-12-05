@@ -13,7 +13,7 @@
       </el-col>
       <el-col :xs="24" :sm="16" :lg="19">
 
-        <el-form ref="news" :model="news" :rules="rules" :status-icon="true" label-width="160px">
+        <el-form ref="news" :model="news" :rules="rules" :status-icon="true" label-width="160px" class="news-hoax-form">
           <el-form-item :label="$t('label.news-title')" prop="title">
             <el-input v-model="news.title" name="title" type="text" placeholder="Judul Berita" />
           </el-form-item>
@@ -35,7 +35,7 @@
             </div>
           </el-form-item>
 
-          <el-form-item>
+          <el-form-item class="action-button">
             <el-button v-if="isEdit" type="primary" :loading="loading" @click="submitForm">{{ $t('crud.save-update') }}</el-button>
             <el-button v-else type="primary" :loading="loading" @click="submitForm">{{ $t('crud.save-news') }}</el-button>
 
