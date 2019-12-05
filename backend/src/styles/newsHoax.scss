@@ -7,7 +7,12 @@
   
   .news-hoax-form {
     .el-form-item__label {
+      float: none;
       text-align: left;
+    }
+
+    .el-select {
+      width: 100%;
     }
 
     .action-button {
