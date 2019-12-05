@@ -13,7 +13,7 @@
       </el-col>
       <el-col :xs="24" :sm="16" :lg="19">
 
-        <el-form ref="news" :model="news" :rules="rules" :status-icon="true" label-width="160px" class="news-hoax-form">
+        <el-form ref="news" :model="news" :rules="rules" :status-icon="true" :label-width="device==='desktop'?'160px':null" class="news-hoax-form">
           <el-form-item :label="$t('label.news-title')" prop="title">
             <el-input v-model="news.title" name="title" type="text" placeholder="Judul Berita" />
           </el-form-item>
@@ -156,7 +156,8 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'user_id'
+      'user_id',
+      'device'
     ])
   },
   created() {
