@@ -31,7 +31,7 @@
               <el-input v-model="polling.name" type="text" name="title-polling" placeholder="Nama Polling" />
             </el-form-item>
             <el-form-item label="Kategori" prop="category_id">
-              <InputCategory v-model="polling.category_id" name="category_id" category-type="polling" prop="category" />
+              <InputCategory v-model="polling.category_id" name="category_id" category-type="polling" prop="category" style="width: 100%" />
             </el-form-item>
             <el-form-item label="Deskripsi" prop="description">
               <el-input v-model="polling.description" type="textarea" name="description-polling" :rows="4" placeholder="Deskripsi" />
