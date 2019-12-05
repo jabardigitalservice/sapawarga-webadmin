@@ -406,9 +406,9 @@ export default {
 .broadcast-target, .broadcast-message {
   margin: 10px;
 }
-.rw {
-  margin-top: -7px;
-}
+// .rw {
+//   margin-top: -7px;
+// }
 
 .mb-10 {
   margin-bottom: 10px;
