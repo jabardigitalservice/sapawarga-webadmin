@@ -216,6 +216,10 @@ code {
     margin: 20px 20px;
     position: relative;
   }
+
+  .inline-block {
+    display: inline-block;
+  }
 }
 
 // overflow mobile view
@@ -226,7 +230,8 @@ code {
 
 .pagination-container .active {
   width: unset;
-}  
+}
+
 
 @media screen and (min-width: $tabletViewportWidth) {
   .components-container {
@@ -237,7 +242,7 @@ code {
 
 @media only screen and (max-width: 420px) {
   .ml-min-40 {
-    margin-left: -50px;
+    margin-left: 0px;
   }
 
   .el-message-box {
@@ -247,6 +252,14 @@ code {
   
   .el-message {
     min-width: 300px !important;
+  }
+
+  .datetime {
+    // width: 145px !important;
+  }
+
+  .inline-block {
+    display: inline-block;
   }
 
 }
