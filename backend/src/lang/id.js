@@ -546,7 +546,10 @@ export default {
     'aspiration-publish': 'Dipublikasikan',
 
     'polling-view-all': 'Lihat Semua',
-    'polling-audience': 'Total Audience'
+    'polling-audience': 'Total Audience',
+
+    'broadcast-now': 'Sekarang',
+    'broadcast-scheduled': 'Terjadwal'
   },
   news: {
     'media-channel': 'Kanal Media',
