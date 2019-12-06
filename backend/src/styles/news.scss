@@ -1,10 +1,12 @@
 @media screen and (max-width: $mobileViewportWidth) {
   .form-news {
     .el-form-item__label {
+      float: none;
       text-align: left;
     }
   
-    .el-date-editor.el-input {
+    .el-date-editor.el-input,
+    .el-select {
       width: 100%;
     }
   
