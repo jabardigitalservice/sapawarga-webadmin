@@ -1,88 +1,90 @@
 <template>
-  <el-row :gutter="20">
-    <el-col :xs="24" :sm="8" :lg="5">
-      <AttachmentPhotoUpload
-        type="news_photo"
-        :initial-url="news.cover_path_url"
-        :list-information="[this.$t('label.maximum-dimension-image'), this.$t('label.maximum-size-image')]"
-        style="margin-bottom: 25px"
-        @onUpload="photoUploaded"
-      />
-    </el-col>
-    <el-col :xs="24" :sm="16" :lg="19">
+  <div class="components-container">
+    <el-row :gutter="20">
+      <el-col :xs="24" :sm="8" :lg="5">
+        <AttachmentPhotoUpload
+          type="news_photo"
+          :initial-url="news.cover_path_url"
+          :list-information="[this.$t('label.maximum-dimension-image'), this.$t('label.maximum-size-image')]"
+          style="margin-bottom: 25px"
+          @onUpload="photoUploaded"
+        />
+      </el-col>
+      <el-col :xs="24" :sm="16" :lg="19">
 
-      <el-form ref="news" :model="news" :rules="rules" :status-icon="true" label-width="160px" class="form-news">
-        <el-form-item label="Judul Berita" prop="title">
-          <el-input v-model="news.title" type="text" placeholder="Judul Berita" />
-        </el-form-item>
+        <el-form ref="news" :model="news" :rules="rules" :status-icon="true" :label-width="device==='desktop'?'160px':null" class="form-news">
+          <el-form-item label="Judul Berita" prop="title">
+            <el-input v-model="news.title" type="text" placeholder="Judul Berita" />
+          </el-form-item>
 
-        <el-form-item label="Sumber" prop="channel_id">
-          <el-select v-model="news.channel_id" placeholder="Pilih Sumber">
-            <el-option
-              v-for="item in options"
-              :key="item.id"
-              :label="item.name"
-              :value="item.id"
+          <el-form-item label="Sumber" prop="channel_id" :label-width="device==='desktop'?'160px':null">
+            <el-select v-model="news.channel_id" placeholder="Pilih Sumber">
+              <el-option
+                v-for="item in options"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
+              />
+            </el-select>
+          </el-form-item>
+
+          <el-form-item label="Target" prop="kabkota_id">
+            <el-select v-model="news.kabkota_id" :disabled="checkStaff" placeholder="Pilih Target">
+              <el-option
+                v-for="item in area"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
+              />
+            </el-select>
+          </el-form-item>
+
+          <el-form-item label="Tanggal Berita" prop="source_date">
+            <el-date-picker
+              v-model="news.source_date"
+              type="date"
+              :editable="false"
+              :clearable="false"
+              format="dd-MM-yyyy"
+              placeholder="Pilih Tanggal"
             />
-          </el-select>
-        </el-form-item>
+          </el-form-item>
 
-        <el-form-item label="Target" prop="kabkota_id">
-          <el-select v-model="news.kabkota_id" :disabled="checkStaff" placeholder="Pilih Target">
-            <el-option
-              v-for="item in area"
-              :key="item.id"
-              :label="item.name"
-              :value="item.id"
-            />
-          </el-select>
-        </el-form-item>
+          <el-form-item v-if="isEdit" label="Status" prop="status">
+            <el-select v-model="news.status" placeholder="Pilih status">
+              <el-option
+                v-for="item in statusOptions"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              />
+            </el-select>
+          </el-form-item>
 
-        <el-form-item label="Tanggal Berita" prop="source_date">
-          <el-date-picker
-            v-model="news.source_date"
-            type="date"
-            :editable="false"
-            :clearable="false"
-            format="dd-MM-yyyy"
-            placeholder="Pilih Tanggal"
-          />
-        </el-form-item>
+          <el-form-item label="URL Berita" prop="source_url">
+            <el-input v-model="news.source_url" type="text" placeholder="http://form.google.com" />
+          </el-form-item>
 
-        <el-form-item v-if="isEdit" label="Status" prop="status">
-          <el-select v-model="news.status" placeholder="Pilih status">
-            <el-option
-              v-for="item in statusOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            />
-          </el-select>
-        </el-form-item>
+          <el-form-item label="Konten Berita" prop="content">
+            <div>
+              <tinymce v-model="news.content" :height="300" />
+            </div>
+          </el-form-item>
 
-        <el-form-item label="URL Berita" prop="source_url">
-          <el-input v-model="news.source_url" type="text" placeholder="http://form.google.com" />
-        </el-form-item>
+          <el-form-item class="action-button">
+            <el-button v-if="isEdit" type="primary" :loading="loading" @click="submitForm">{{ $t('crud.save-update') }}</el-button>
+            <el-button v-else type="primary" :loading="loading" @click="submitForm">{{ $t('crud.save-news') }}</el-button>
 
-        <el-form-item label="Konten Berita" prop="content">
-          <div>
-            <tinymce v-model="news.content" :height="300" />
-          </div>
-        </el-form-item>
+            <router-link :to="'/news/index'">
+              <el-button type="info">{{ $t('crud.cancel') }}</el-button>
+            </router-link>
+          </el-form-item>
 
-        <el-form-item class="action-button">
-          <el-button v-if="isEdit" type="primary" :loading="loading" @click="submitForm">{{ $t('crud.save-update') }}</el-button>
-          <el-button v-else type="primary" :loading="loading" @click="submitForm">{{ $t('crud.save-news') }}</el-button>
+        </el-form>
 
-          <router-link :to="'/news/index'">
-            <el-button type="info">{{ $t('crud.cancel') }}</el-button>
-          </router-link>
-        </el-form-item>
-
-      </el-form>
-
-    </el-col>
-  </el-row>
+      </el-col>
+    </el-row>
+  </div>
 </template>
 
 <script>
@@ -240,7 +242,8 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'user_id'
+      'user_id',
+      'device'
     ])
   },
   created() {
