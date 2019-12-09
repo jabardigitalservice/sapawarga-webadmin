@@ -7,7 +7,7 @@
             <el-input v-model="listQuery.title" placeholder="Judul Pesan" />
           </el-form-item>
         </el-col>
-        <el-col :xs="{span:24, tag:'mb-10'}" :sm="6" :md="4">
+        <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="4">
           <el-form-item style="margin-bottom: 0">
             <el-select
               v-model="listQuery.status"
@@ -22,7 +22,7 @@
             </el-select>
           </el-form-item>
         </el-col>
-        <el-col :xs="{span:24, tag:'mb-10'}" :sm="18" :md="8">
+        <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="8">
           <input-filter-area
             :parent-id="filterAreaParentId"
             :kabkota-id="listQuery.kabkota_id"
@@ -33,7 +33,7 @@
             @changeKelurahan="changeKelurahan"
           />
         </el-col>
-        <el-col :xs="24" :sm="6" :md="6">
+        <el-col :xs="24" :sm="24" :md="6">
           <el-button type="primary" size="small" @click="submitSearch">
             {{ $t('crud.search') }}
           </el-button>
