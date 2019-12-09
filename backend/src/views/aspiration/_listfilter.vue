@@ -1,18 +1,18 @@
 <template>
   <el-card class="box-card" style="margin-bottom: 10px">
     <el-form>
-      <el-row :gutter="10" type="flex">
-        <el-col :span="4">
+      <el-row :gutter="10">
+        <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="4">
           <el-form-item style="margin-bottom: 0">
             <el-input v-model="listQuery.title" placeholder="Judul Usulan" />
           </el-form-item>
         </el-col>
-        <el-col :span="4">
+        <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="4">
           <el-form-item style="margin-bottom: 0">
-            <InputCategory v-model="listQuery.category_id" category-type="aspirasi" />
+            <InputCategory v-model="listQuery.category_id" category-type="aspirasi" style="width: 100%" />
           </el-form-item>
         </el-col>
-        <el-col :span="4">
+        <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="4">
           <el-form-item style="margin-bottom: 0">
             <el-select
               v-model="listQuery.status"
@@ -28,7 +28,7 @@
             </el-select>
           </el-form-item>
         </el-col>
-        <el-col :span="8">
+        <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="8">
           <input-filter-area
             :parent-id="filterAreaParentId"
             :kabkota-id="listQuery.kabkota_id"
@@ -39,12 +39,12 @@
             @changeKelurahan="changeKelurahan"
           />
         </el-col>
-        <el-col :span="4">
+        <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="4">
           <el-button type="primary" size="small" @click="submitSearch">
-            Cari
+            {{ $t('crud.search') }}
           </el-button>
           <el-button type="primary" size="small" @click="resetFilter">
-            Reset
+            {{ $t('crud.reset') }}
           </el-button>
         </el-col>
       </el-row>

@@ -207,6 +207,10 @@ code {
   }
 }
 
+.rw {
+  margin-top: -7px;
+}
+
 // custom tag for column 
 @media only screen and (max-width: 991px) {
   .el-col-xs-tag-mb-10 {
@@ -216,6 +220,14 @@ code {
   .components-container {
     margin: 20px 20px;
     position: relative;
+  }
+
+  .inline-block {
+    display: inline-block;
+  }
+
+  .rw {
+    margin-top: -20px;
   }
 }
 
@@ -227,7 +239,9 @@ code {
 
 .pagination-container .active {
   width: unset;
-}  
+  float: unset;
+}
+
 
 @media screen and (min-width: $tabletViewportWidth) {
   .components-container {
@@ -238,16 +252,23 @@ code {
 
 @media only screen and (max-width: 420px) {
   .ml-min-40 {
-    margin-left: -50px;
+    margin-left: 0px;
   }
 
   .el-message-box {
     width: 300px;
   }
 
-  
   .el-message {
     min-width: 300px !important;
+  }
+
+  .inline-block {
+    display: inline-block;
+  }
+
+  .rw {
+    margin-top: -20px;
   }
 
 }

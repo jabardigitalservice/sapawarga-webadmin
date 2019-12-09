@@ -22,17 +22,17 @@
             </el-row>
           </div>
           <el-table stripe :data="author" :show-header="false" style="width: 100%">
-            <el-table-column prop="title" width="180" />
+            <el-table-column prop="title" />
             <el-table-column prop="content" />
           </el-table>
         </el-card>
         <el-card style="margin-top: 10px">
           <el-table stripe :data="aspirationDetail" :show-header="false" style="width: 100%">
-            <el-table-column prop="title" width="180" />
+            <el-table-column prop="title" />
             <el-table-column prop="content" />
           </el-table>
           <el-table v-if="note !== null" :data="approvalNote" :show-header="false" style="width: 100%">
-            <el-table-column prop="title" width="180" />
+            <el-table-column prop="title" />
             <el-table-column prop="content" />
           </el-table>
         </el-card>
