@@ -4,9 +4,10 @@
       <el-col :sm="24" :md="10" :lg="10" :xl="12">
         <p class="warn-content">Target</p>
         <div class="polling-target">
-          <el-form ref="polling" :model="polling" label-width="150px" label-position="left" :rules="rules" :status-icon="true" :disabled="isEdit === true && checkStatus !== 0">
-            <el-form-item label="Wilayah" prop="wilayah">
+          <el-form ref="polling" :model="polling" :label-width="device === 'desktop' ? '150px' : null" label-position="left" :rules="rules" :status-icon="true" :disabled="isEdit === true && checkStatus !== 0">
+            <el-form-item label="Wilayah" prop="wilayah" class="block">
               <InputSelectArea
+                class="inline-block"
                 :kabkota-id="polling.kabkota_id"
                 :kec-id="polling.kec_id"
                 :kel-id="polling.kel_id"
@@ -25,12 +26,12 @@
       <el-col :sm="24" :md="14" :lg="14" :xl="12">
         <p class="warn-content">Data Polling</p>
         <div class="polling-message">
-          <el-form ref="polling" :model="polling" :rules="rules" label-width="150px" label-position="left" :status-icon="true" :disabled="isEdit === true && checkStatus !== 0">
+          <el-form ref="polling" :model="polling" :rules="rules" :label-width="device === 'desktop' ? '150px' : null" label-position="left" :status-icon="true" :disabled="isEdit === true && checkStatus !== 0">
             <el-form-item label="Nama Polling" prop="name">
               <el-input v-model="polling.name" type="text" name="title-polling" placeholder="Nama Polling" />
             </el-form-item>
             <el-form-item label="Kategori" prop="category_id">
-              <InputCategory v-model="polling.category_id" name="category_id" category-type="polling" prop="category" />
+              <InputCategory v-model="polling.category_id" name="category_id" category-type="polling" prop="category" style="width: 100%" />
             </el-form-item>
             <el-form-item label="Deskripsi" prop="description">
               <el-input v-model="polling.description" type="textarea" name="description-polling" :rows="4" placeholder="Deskripsi" />
@@ -93,6 +94,7 @@ import InputCategory from '@/components/InputCategory'
 import InputSelectArea from '@/components/InputSelectArea'
 import { create, fetchRecord, update } from '@/api/polling'
 import { containsWhitespace } from '@/utils/validate'
+import { mapGetters } from 'vuex'
 
 const moment = require('moment')
 moment().format()
@@ -271,6 +273,11 @@ export default {
         ]
       }
     }
+  },
+  computed: {
+    ...mapGetters([
+      'device'
+    ])
   },
   watch: {
     'polling.kel_id'(oldVal, newVal) {
@@ -499,7 +506,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .polling-target, .polling-message {
-  margin: 20px;
+  margin: 10px;
 }
 el-radio {
   display: inline-flex;

@@ -7,13 +7,14 @@
           <el-form
             ref="broadcast"
             :model="broadcast"
-            label-width="150px"
+            :label-width="device === 'desktop' ? '150px' : null"
             label-position="left"
             :rules="rules"
             :status-icon="true"
           >
-            <el-form-item :label="$t('label.area')" prop="wilayah">
+            <el-form-item :label="$t('label.area')" prop="wilayah" class="block">
               <InputSelectArea
+                class="inline-block"
                 :kabkota-id="broadcast.kabkota_id"
                 :kec-id="broadcast.kec_id"
                 :kel-id="broadcast.kel_id"
@@ -33,32 +34,34 @@
         <p class="warn-content">{{ $t('label.description') }}</p>
         <div class="broadcast-message">
           <el-form
+            id="broadcast"
             ref="broadcast"
             :model="broadcast"
             :rules="rules"
-            label-width="150px"
+            :label-width="device === 'desktop' ? '150px' : null"
             label-position="left"
             :status-icon="true"
           >
-            <el-form-item :label="$t('label.title-broadcast')" prop="title">
+            <el-form-item id="title" :label="$t('label.title-broadcast')" prop="title">
               <el-input v-model="broadcast.title" type="text" name="title" placeholder="Judul Pesan (minimum 10 karakter, maksimum 100 karakter)" />
             </el-form-item>
-            <el-form-item :label="$t('label.category')" prop="category_id">
-              <InputCategory v-model="broadcast.category_id" category-type="broadcast" prop="category" />
+            <el-form-item :label="$t('label.category')" prop="category_id" class="inlineBlock">
+              <InputCategory v-model="broadcast.category_id" category-type="broadcast" prop="category" style="width: 100%" />
             </el-form-item>
-            <el-form-item :label="$t('label.scheduled')" prop="is_scheduled">
-              <el-radio-group v-model="broadcast.is_scheduled" name="jadwal">
-                <el-radio-button class="mb-10" :label="false">Sekarang</el-radio-button>
-                <el-radio-button :label="true">Terjadwal</el-radio-button>
+            <el-form-item :label="$t('label.scheduled')" prop="is_scheduled" class="inline-block">
+              <el-radio-group v-model="broadcast.is_scheduled" name="jadwal" class="inline-block">
+                <el-radio-button :label="false">{{ $t('label.broadcast-now') }}</el-radio-button>
+                <el-radio-button :label="true">{{ $t('label.broadcast-scheduled') }}</el-radio-button>
               </el-radio-group>
             </el-form-item>
-            <el-form-item v-if="broadcast.is_scheduled === true" :label="$t('label.scheduled_datetime')" :prop="scheduled_datetime_validation">
+            <el-form-item v-if="broadcast.is_scheduled === true" :label="$t('label.scheduled_datetime')" :prop="scheduled_datetime_validation" class="block">
               <el-date-picker
                 v-model="broadcast.scheduled_datetime"
                 type="datetime"
                 format="dd-MM-yyyy HH:mm"
                 :editable="true"
                 placeholder="Pilih Tanggal dan Waktu"
+                style="width:100%"
                 @focus="changePropDatetime"
               />
             </el-form-item>
@@ -88,6 +91,7 @@ import InputCategory from '@/components/InputCategory'
 import InputSelectArea from '@/components/InputSelectArea'
 import { create, fetchRecord, update } from '@/api/broadcast'
 import { containsWhitespace, isContainHtmlTags } from '@/utils/validate'
+import { mapGetters } from 'vuex'
 // import Tinymce from '@/components/Tinymce'
 import moment from 'moment'
 
@@ -242,6 +246,11 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapGetters([
+      'device'
+    ])
+  },
   watch: {
     'broadcast.kel_id'(oldVal, newVal) {
       if (newVal !== null) {
@@ -395,11 +404,11 @@ export default {
 </script>
 <style lang="scss" scoped>
 .broadcast-target, .broadcast-message {
-  margin: 20px;
+  margin: 10px;
 }
-.rw {
-  margin-top: -7px;
-}
+// .rw {
+//   margin-top: -7px;
+// }
 
 .mb-10 {
   margin-bottom: 10px;
