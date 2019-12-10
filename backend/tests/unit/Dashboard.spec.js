@@ -125,13 +125,18 @@ describe('List dashboard usulan', () => {
       {
         opened: true
       }
+    const kabkota =
+      {
+        id: 22
+      }
 
     const wrapper = shallowMount(DashboardMap, {
       localVue,
       L,
       i18n,
       computed: {
-        sidebar: () => true
+        sidebar: () => true,
+        user: () => 22
       },
       stubs: {
         fetchAspirasiMap: true
@@ -141,6 +146,7 @@ describe('List dashboard usulan', () => {
     wrapper.setData({ list: dataList })
     expect(wrapper.vm.list).toBe(dataList)
     expect(wrapper.vm.sidebar).toBe(stateSidebar.opened)
+    expect(wrapper.vm.user).toBe(kabkota.id)
   })
 
 
