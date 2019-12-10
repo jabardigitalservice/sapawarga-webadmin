@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row v-for="(element, index) in tableContentData" :key="index" :gutter="10">
-      <el-col :xs="24" :sm="6">{{ element.title }} {{device==='mobile'?':':''}}</el-col>
+      <el-col :xs="24" :sm="6">{{ element.title }} {{ device==='mobile'?':':'' }}</el-col>
       <el-col :xs="24" :sm="18">
         <a v-if="validUrl(element.content)" :href="element.content" target="_blank" class="link">{{ element.content }}</a>
         <span v-else>{{ element.content }}</span>
