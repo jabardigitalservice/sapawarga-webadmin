@@ -1,20 +1,12 @@
 <template>
-  <div class="app-container">
+  <div class="app-container news-detail">
     <el-row :gutter="10">
       <el-col class="col-right" :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
         <el-card>
           <div slot="header" class="clearfix">
             <span>{{ $t('news.news-content-header') }}</span>
           </div>
-          <el-table stripe :data="tableDataNews" :show-header="false" style="width: 100%">
-            <el-table-column prop="title" width="180" />
-            <el-table-column prop="content" min-width="280">
-              <template slot-scope="{row}">
-                <a v-if="validUrl(row.content)" :href="row.content" target="_blank" class="link">{{ row.content }}</a>
-                <span v-else>{{ row.content }}</span>
-              </template>
-            </el-table-column>
-          </el-table>
+          <detail-data :table-content-data="tableDataNews" />
         </el-card>
       </el-col>
     </el-row>
@@ -24,7 +16,12 @@
 <script>
 import moment from 'moment'
 import newsApi from '@/api/news'
+import DetailData from '@/components/DetailData'
+
 export default {
+  components: {
+    DetailData
+  },
   data() {
     return {
       tableDataNews: [],
