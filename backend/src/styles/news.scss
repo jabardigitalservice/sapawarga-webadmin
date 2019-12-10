@@ -1,3 +1,12 @@
+@import './element-variables.scss';
+
+.news-detail {
+  .el-row {
+    padding-bottom: 10px;
+    border-bottom: 1px solid $--border-color-lighter;
+  }
+}
+
 @media screen and (max-width: $mobileViewportWidth) {
   .form-news {
     .el-form-item__label {
@@ -14,6 +23,26 @@
       .el-button:first-child {
         margin-bottom: 10px;
       }
+    }
+  }
+
+  .news-detail {
+    .el-row {
+      & > .el-col {
+        margin-bottom: 5px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $tabletViewportWidth) {
+  .news-page {
+    .el-collapse {
+      border-top: none;
+    }
+
+    .el-collapse-item__header {
+      margin-left: 10px;
     }
   }
 }
