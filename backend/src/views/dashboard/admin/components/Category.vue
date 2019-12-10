@@ -1,8 +1,8 @@
 <template>
   <el-table v-loading="listLoading" :data="list" stripe style="width: 100%">
     <el-table-column type="index" align="center" :index="getTableRowNumbering" />
-    <el-table-column prop="name" :label="$t('label.popular-category')" align="left" />
-    <el-table-column prop="total" :label="$t('dashboard.dashboard-aspiration')" align="right" />
+    <el-table-column prop="name" :label="$t('label.popular-category')" align="left" min-width="170" />
+    <el-table-column prop="total" :label="$t('dashboard.dashboard-aspiration')" align="center" />
   </el-table>
 </template>
 <script>
