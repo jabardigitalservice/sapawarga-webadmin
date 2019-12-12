@@ -250,19 +250,12 @@ code {
   .rw {
     margin-top: -20px;
   }
-}
 
-// overflow mobile view
-.pagination-container {
-  width: 100%;
-  overflow: auto;
+  .dashboard-polling {
+    padding-right: 0;
+    margin-bottom: 10px;
+  }
 }
-
-.pagination-container .active {
-  width: unset;
-  float: unset;
-}
-
 
 @media screen and (min-width: $tabletViewportWidth) {
   .components-container {
