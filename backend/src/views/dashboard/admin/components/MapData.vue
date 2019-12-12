@@ -158,9 +158,7 @@ export default {
         }
 
         this.reinitMap()
-
       } else {
-
         if (this.isChecked.kabkota) {
           return
         }
@@ -223,15 +221,14 @@ export default {
   margin-top: 15px;
 }
 
-@media only screen and (min-width: 992px) and (max-width: 1200px) {
+@media only screen and (max-width: 992px) {
   #leafletmap {
-    width: 885px !important;
+    width: 100%;
+    height: 300px;
   }
-}
-
-@media only screen and (min-width: 768px) and (max-width: 992px) {
-  #leafletmap {
-    width: 660px !important;
+  .box-card {
+    width: 100%;
+    height: 340px;
   }
 }
 </style>
