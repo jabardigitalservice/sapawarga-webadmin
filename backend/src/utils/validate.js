@@ -96,3 +96,9 @@ export function containsWhitespace(str) {
 
   return reg.test(str)
 }
+
+export function isPhoneNumber(str) {
+  const reg = /^(^\+62\s?|^0)(\d{3,4}-?){2}\d{3,4}$/g
+
+  return reg.test(str)
+}
