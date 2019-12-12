@@ -211,6 +211,27 @@ code {
   margin-top: -7px;
 }
 
+.dashboard-polling {
+  padding-right: 10px;
+}
+
+.dashboard-btn-all {
+  margin: 0 auto;
+  text-align: center;
+  padding-top: 20px;
+}
+
+// overflow mobile view
+.pagination-container {
+  width: 100%;
+  overflow: auto;
+}
+
+.pagination-container .active {
+  width: unset;
+  float: unset;
+}
+
 // custom tag for column 
 @media only screen and (max-width: 991px) {
   .el-col-xs-tag-mb-10 {
@@ -229,19 +250,12 @@ code {
   .rw {
     margin-top: -20px;
   }
-}
 
-// overflow mobile view
-.pagination-container {
-  width: 100%;
-  overflow: auto;
+  .dashboard-polling {
+    padding-right: 0;
+    margin-bottom: 10px;
+  }
 }
-
-.pagination-container .active {
-  width: unset;
-  float: unset;
-}
-
 
 @media screen and (min-width: $tabletViewportWidth) {
   .components-container {
