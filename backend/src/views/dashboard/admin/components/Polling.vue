@@ -1,6 +1,6 @@
 <template>
   <el-row>
-    <el-col :md="24" :lg="14" :xl="14" style="padding-right:10px;margin-bottom:30px;">
+    <el-col :md="24" :lg="14" :xl="14" class="dashboard-polling">
       <el-card class="box-card">
         <el-table v-loading="listLoading" class="title" :data="list" stripe :show-header="header">
           <el-table-column type="index" width="50" align="center" />
@@ -11,7 +11,7 @@
             </template>
           </el-table-column>
         </el-table>
-        <el-row style="margin: 0 auto; text-align: center;padding-top:20px;">
+        <el-row class="dashboard-btn-all">
           <router-link :to="{ path: '/polling/index' }">
             <a href="#" style="color: #1890ff;">{{ $t('label.polling-view-all') }}</a>
           </router-link>
