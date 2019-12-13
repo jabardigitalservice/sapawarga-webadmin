@@ -26,7 +26,7 @@ export default {
     },
     inputImage: {
       type: String,
-      default : null
+      default: null
     }
   },
   computed: {
@@ -57,14 +57,14 @@ export default {
 }
 
 @media screen and (max-width: 768px) {
-  .el-row { 
+  .el-row {
     display: block;
 
     & .el-col {
       &:first-child {
         margin-bottom: 10px;
       }
-    }  
+    }
   }
 }
 </style>
