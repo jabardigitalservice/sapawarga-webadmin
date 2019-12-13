@@ -41,6 +41,7 @@
             :label-width="device === 'desktop' ? '150px' : null"
             label-position="left"
             :status-icon="true"
+            class="form-editor"
           >
             <el-form-item id="title" :label="$t('label.title-broadcast')" prop="title">
               <el-input v-model="broadcast.title" type="text" name="title" placeholder="Judul Pesan (minimum 10 karakter, maksimum 100 karakter)" />
@@ -67,14 +68,7 @@
             </el-form-item>
 
             <el-form-item :label="$t('label.description')" prop="description">
-              <!-- <tinymce v-model="broadcast.description" :height="300" /> -->
-              <el-input
-                v-model="broadcast.description"
-                type="textarea"
-                name="description"
-                :rows="8"
-                placeholder="Tulis pesan (maksimum 1000 karakter)"
-              />
+              <tinymce v-model="broadcast.description" :height="300" />
             </el-form-item>
             <el-form-item class="ml-min-40">
               <el-button class="mb-10" type="info" :disabled="broadcast.status === status.PUBLISHED" :loading="loading" @click="submitForm(status.DRAFT)">{{ $t('crud.draft') }}</el-button>
@@ -92,12 +86,12 @@ import InputSelectArea from '@/components/InputSelectArea'
 import { create, fetchRecord, update } from '@/api/broadcast'
 import { containsWhitespace, isContainHtmlTags } from '@/utils/validate'
 import { mapGetters } from 'vuex'
-// import Tinymce from '@/components/Tinymce'
+import Tinymce from '@/components/Tinymce'
 import moment from 'moment'
 
 export default {
   components: {
-    // Tinymce,
+    Tinymce,
     InputCategory,
     InputSelectArea
   },
