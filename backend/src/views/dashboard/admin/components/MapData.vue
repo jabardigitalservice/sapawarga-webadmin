@@ -53,7 +53,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['sidebar']),
+    ...mapGetters(['sidebar', 'user']),
     classObj() {
       return {
         openSidebar: this.sidebar.opened
@@ -62,6 +62,11 @@ export default {
   },
 
   mounted() {
+    if (this.user.kabkota_id) {
+      this.listQuery.kabkota_id = this.user.kabkota_id
+      this.labelTitle = this.$t('label.area-kec')
+      this.isChecked = { kabkota: false, kec: true }
+    }
     this.getAPIData()
   },
 
@@ -114,7 +119,7 @@ export default {
         this.listQuery.kabkota_id = id
 
         // change label
-        this.labelTitle = 'Kecamatan'
+        this.labelTitle = this.$t('label.area-kec')
 
         // isCheck
         this.isChecked = { kabkota: false, kec: true }
@@ -122,7 +127,7 @@ export default {
         this.listQuery.kec_id = id
 
         // change label
-        this.labelTitle = 'Kelurahan'
+        this.labelTitle = this.$t('label.area-kel')
 
         // isCheck
         this.isChecked = { kec: false, kel: true }
@@ -138,24 +143,41 @@ export default {
       this.checkLevel(id)
     },
     resetLevel() {
-      if (this.isChecked.kabkota) {
-        return
-      }
+      if (this.user.kabkota_id) {
+        this.labelTitle = this.$t('label.area-kec')
+        this.isChecked = {
+          kabkota: false,
+          kec: true,
+          kel: false
+        }
 
-      this.labelTitle = 'Kota/Kabupaten'
-      this.isChecked = {
-        kabkota: true,
-        kec: false,
-        kel: false
-      }
+        this.listQuery = {
+          kabkota_id: this.user.kabkota_id,
+          kec_id: null,
+          kel_id: null
+        }
 
-      this.listQuery = {
-        kabkota_id: null,
-        kec_id: null,
-        kel_id: null
-      }
+        this.reinitMap()
+      } else {
+        if (this.isChecked.kabkota) {
+          return
+        }
 
-      this.reinitMap()
+        this.labelTitle = this.$t('label.area-kabkota')
+        this.isChecked = {
+          kabkota: true,
+          kec: false,
+          kel: false
+        }
+
+        this.listQuery = {
+          kabkota_id: null,
+          kec_id: null,
+          kel_id: null
+        }
+
+        this.reinitMap()
+      }
     },
     reinitMap() {
       this.map.off()
@@ -199,15 +221,14 @@ export default {
   margin-top: 15px;
 }
 
-@media only screen and (min-width: 992px) and (max-width: 1200px) {
+@media only screen and (max-width: 992px) {
   #leafletmap {
-    width: 885px !important;
+    width: 100%;
+    height: 300px;
   }
-}
-
-@media only screen and (min-width: 768px) and (max-width: 992px) {
-  #leafletmap {
-    width: 660px !important;
+  .box-card {
+    width: 100%;
+    height: 340px;
   }
 }
 </style>
