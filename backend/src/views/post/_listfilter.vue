@@ -1,13 +1,13 @@
 <template>
   <el-card class="box-card" style="margin-bottom: 10px">
     <el-form>
-      <el-row :gutter="10" type="flex">
-        <el-col :span="12">
+      <el-row :gutter="10">
+        <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="12">
           <el-form-item style="margin-bottom: 0">
             <el-input v-model="listQuery.title" placeholder="Nama Kegiatan" />
           </el-form-item>
         </el-col>
-        <el-col :span="7">
+        <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="6">
           <el-form-item style="margin-bottom: 0">
             <el-select
               v-model="listQuery.status"
@@ -21,12 +21,12 @@
             </el-select>
           </el-form-item>
         </el-col>
-        <el-col :span="5">
+        <el-col :xs="24" :sm="6" :md="6">
           <el-button type="primary" size="small" @click="submitSearch">
-            Cari
+            {{ $t('crud.search') }}
           </el-button>
           <el-button type="primary" size="small" @click="resetFilter">
-            Reset
+            {{ $t('crud.reset') }}
           </el-button>
         </el-col>
       </el-row>
