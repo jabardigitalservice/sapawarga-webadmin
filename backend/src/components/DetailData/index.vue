@@ -4,8 +4,13 @@
       <el-col :xs="24" :sm="6">{{ element.title }} {{ device==='mobile'?':':'' }}</el-col>
       <el-col :xs="24" :sm="18">
         <div v-if="inputImage"><img :src="inputImage" alt=""></div>
+        <div v-else-if="inputList">
+          <ul v-for="(data, index) in element.content" :key="index">
+            <li><a :href="data.file_url" target="_blank" class="link-news-important">{{ data.name }}</a><br></li>
+          </ul>
+        </div>
         <div v-else-if="validUrl(element.content)"><a :href="element.content" target="_blank" class="link">{{ element.content }}</a></div>
-        <div v-else-if="isContainHtmlTags(element.content)" v-html="element.content" />
+        <div v-else-if="isContainHtmlTags(element.content)" v-html="element.content" class="is--rich-text" />
         <div v-else><span>{{ element.content }}</span></div>
       </el-col>
     </el-row>
@@ -26,6 +31,10 @@ export default {
     },
     inputImage: {
       type: String,
+      default: null
+    },
+    inputList: {
+      type: Array,
       default: null
     }
   },
@@ -53,6 +62,12 @@ export default {
     width: 100%;
     height: auto;
     max-width: 300px;
+  }
+
+  & .el-col {
+    & .is--rich-text {
+      line-height: 23px;
+    }
   }
 }
 
