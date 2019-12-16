@@ -24,7 +24,6 @@ import newsImportantRouter from './modules/newsImportant'
 import popupInformasiRouter from './modules/popupInformasi'
 import questionsAnswerRouter from './modules/questionsAnswer'
 import releaseManagementRouter from './modules/releaseManagement'
-import chatAdminRouter from './modules/chatAdmin'
 
 /** note: sub-menu only appear when children.length>=1
  *  detail see  https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -193,7 +192,6 @@ export const asyncRoutes = [
   bannerRouter,
   popupInformasiRouter,
   newsImportantRouter,
-  chatAdminRouter,
   { path: '*', redirect: '/404', hidden: true }
 ]
 
