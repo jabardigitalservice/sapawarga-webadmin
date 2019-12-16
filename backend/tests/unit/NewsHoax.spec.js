@@ -83,7 +83,5 @@ describe('News Hoax detail', () => {
 
     // strip the content
     expDataNews[3].content = wrapper.vm.strip(newsHoaxDetailFixture.data.content)
-
-    expect(wrapper.vm.validUrl(newsHoaxDetailFixture.data.source_url)).toBe(true)
   })
 })
