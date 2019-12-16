@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-row :gutter="20">
       <el-col :lg="24">
-        
+
         <ListFilter :list-query.sync="listQuery" @submit-search="getList" @reset-search="resetFilter" />
 
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%" @sort-change="changeSort">
@@ -19,7 +19,7 @@
           </el-table-column>
 
           <el-table-column prop="likes" sortable="custom" align="center" :label="$t('label.post-like')" width="150" />
-          
+
           <el-table-column align="center" :label="$t('label.actions')" width="200px">
             <template slot-scope="scope">
               <router-link :to="'/post/detail/'+scope.row.id">

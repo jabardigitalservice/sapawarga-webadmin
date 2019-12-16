@@ -36,10 +36,9 @@
 
 <script>
 
-
 export default {
   components: {
-    
+
   },
   props: {
     listQuery: {
