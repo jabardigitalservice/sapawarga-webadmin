@@ -106,7 +106,11 @@ export default {
     'news-important-edit': 'Edit Info Pendidikan',
     'news-important-list': 'Daftar Info Pendidikan',
     'news-important-create': 'Tambah Info Pendidikan',
-    'news-important-detail': 'Detail Info Pendidikan'
+    'news-important-detail': 'Detail Info Pendidikan',
+
+    'post-manage': 'Kegiatan RW',
+    'post-list': 'Kegiatan RW',
+    'post-detail': 'Detail Kegiatan RW'
   },
   crud: {
     'list-empty': 'Belum ada data.',
@@ -552,7 +556,10 @@ export default {
     'polling-audience': 'Total Audience',
 
     'broadcast-now': 'Sekarang',
-    'broadcast-scheduled': 'Terjadwal'
+    'broadcast-scheduled': 'Terjadwal',
+
+    'post-title': 'Nama Kegiatan',
+    'post-like': 'Likes'
   },
   news: {
     'media-channel': 'Kanal Media',
