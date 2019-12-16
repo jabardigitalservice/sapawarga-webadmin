@@ -14,11 +14,11 @@
       <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%" @sort-change="changeSort">
         <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
 
-        <el-table-column prop="title" sortable="custom" :label="$t('label.newsImportant-title')" min-width="100" />
+        <el-table-column prop="title" sortable="custom" :label="$t('label.newsImportant-title')" min-width="200" />
 
-        <el-table-column prop="category.name" sortable="custom" :label="$t('label.category')" align="center" min-width="50" />
+        <el-table-column prop="category.name" sortable="custom" :label="$t('label.category')" align="center" min-width="100" />
 
-        <el-table-column prop="status" sortable="custom" class-name="status-col" :label="$t('label.status')" align="center" min-width="50">
+        <el-table-column prop="status" sortable="custom" class-name="status-col" :label="$t('label.status')" align="center" min-width="100">
           <template slot-scope="{row}">
             <el-tag :type="row.status | statusFilter">
               {{ row.status_label }}
@@ -26,7 +26,7 @@
           </template>
         </el-table-column>
 
-        <el-table-column prop="created_at" sortable="custom" :label="$t('label.newsImportant-date-updated')" align="center" min-width="60">
+        <el-table-column prop="created_at" sortable="custom" :label="$t('label.newsImportant-date-updated')" align="center" min-width="100">
           <template slot-scope="{row}">
             {{ parsingDatetime(row.updated_at, 'D MMM YYYY HH:mm') }}
           </template>
