@@ -1,6 +1,4 @@
-@import './element-variables.scss';
-
-@media screen and (max-width: $mobileViewportWidth) {
+@media screen and (max-width: $tabletViewportWidth) {
   .form-news {
     .el-form-item__label {
       float: none;
@@ -26,9 +24,7 @@
       }
     }
   }
-}
-
-@media screen and (max-width: $tabletViewportWidth) {
+  
   .news-page {
     .el-collapse {
       border-top: none;
