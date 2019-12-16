@@ -11,11 +11,11 @@
         />
       </el-col>
       <el-col :xs="24" :sm="16" :lg="19">
-        <el-form id="newsImportant" ref="newsImportant" :model="newsImportant" :rules="rules" :status-icon="true" label-width="150px" label-position="right">
+        <el-form id="newsImportant" ref="newsImportant" :model="newsImportant" :rules="rules" :status-icon="true" :label-width="device==='desktop'?'150px':null" label-position="right" class="form-news">
           <el-form-item :label="$t('label.title')" prop="title">
             <el-input v-model="newsImportant.title" type="text" name="title" :placeholder="$t('label.newsImportant-title')" />
           </el-form-item>
-          <el-form-item :label="$t('label.category')" prop="category_id">
+          <el-form-item :label="$t('label.category')" prop="category_id" :label-width="device==='desktop'?'150px':null">
             <InputCategory v-model="newsImportant.category_id" category-type="news_important" :prop="$t('label.category')" />
           </el-form-item>
           <el-form-item :label="$t('label.newsImportant-description')" prop="content">
@@ -161,7 +161,8 @@ export default {
 
   computed: {
     ...mapGetters([
-      'user_id'
+      'user_id',
+      'device'
     ])
   },
 
