@@ -6,15 +6,7 @@
           <div slot="header" class="clearfix">
             <span>Detail Berita Counter Hoax</span>
           </div>
-          <el-table stripe :data="tableDataNews" :show-header="false" style="width: 100%">
-            <el-table-column prop="title" width="180" />
-            <el-table-column prop="content" min-width="280">
-              <template slot-scope="{row}">
-                <a v-if="validUrl(row.content)" :href="row.content" target="_blank" class="link">{{ row.content }}</a>
-                <span v-else>{{ row.content }}</span>
-              </template>
-            </el-table-column>
-          </el-table>
+          <detail-data :tableContentData="tableDataNews" />
         </el-card>
       </el-col>
     </el-row>
@@ -24,6 +16,8 @@
 <script>
 import moment from 'moment'
 import { fetchRecord } from '@/api/newsHoax'
+import DetailData from '@/components/DetailData'
+
 export default {
   data() {
     return {
@@ -31,10 +25,16 @@ export default {
       news: null
     }
   },
+
   mounted() {
     this.id = this.$route.params && this.$route.params.id
     this.getDetail()
   },
+
+  components: {
+    DetailData
+  },
+
   methods: {
     getDetail() {
       fetchRecord(this.id).then(response => {
@@ -70,16 +70,6 @@ export default {
       var tmp = document.createElement('DIV')
       tmp.innerHTML = html
       return tmp.textContent || tmp.innerText || ''
-    },
-
-    validUrl(str) {
-      var pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
-        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
-        '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-        '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-        '(\\#[-a-z\\d_]*)?$', 'i') // fragment locator
-      return !!pattern.test(str)
     }
   }
 }
