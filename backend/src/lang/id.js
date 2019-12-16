@@ -559,7 +559,9 @@ export default {
     'broadcast-scheduled': 'Terjadwal',
 
     'post-title': 'Nama Kegiatan',
-    'post-like': 'Likes'
+    'post-like': 'Likes',
+    'post-tooltip-active': 'Aktifkan',
+    'post-tooltip-inactive': 'Nonaktifkan'
   },
   news: {
     'media-channel': 'Kanal Media',
