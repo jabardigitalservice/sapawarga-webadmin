@@ -27,11 +27,12 @@
                   <el-button type="primary" icon="el-icon-view" size="small" />
                 </el-tooltip>
               </router-link>
-              <router-link :to="scope.row.status === 0 ? '/broadcast/edit/' +scope.row.id : ''">
-                <el-tooltip content="Edit Pesan" placement="top">
-                  <el-button v-if="roles" type="warning" icon="el-icon-edit" size="small" :disabled="scope.row.status === status.PUBLISHED || scope.row.status === status.SCHEDULED " />
-                </el-tooltip>
-              </router-link>
+              <el-tooltip :content="$t('label.post-tooltip-active')" placement="top">
+                <el-button type="success" icon="el-icon-circle-check" size="small" @click="publishRecord(scope.row.id, scope.row.approval_note)" />
+              </el-tooltip>
+              <el-tooltip :content="$t('label.post-tooltip-inactive')" placement="top">
+                <el-button type="danger" icon="el-icon-circle-close" size="small" @click="unpublishRecord(scope.row.id)" />
+              </el-tooltip>
             </template>
           </el-table-column>
         </el-table>
@@ -46,7 +47,6 @@
 import { fetchList } from '@/api/broadcast'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 import ListFilter from './_listfilter'
-import checkPermission from '@/utils/permission'
 export default {
   components: { Pagination, ListFilter },
   filters: {
@@ -70,7 +70,6 @@ export default {
     return {
       list: null,
       total: 0,
-      roles: checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']),
       listLoading: true,
       status: {
         DRAFT: 0,
@@ -83,10 +82,7 @@ export default {
         sort_order: 'descending',
         page: 1,
         limit: 10,
-        status: null,
-        kabkota_id: null,
-        kec_id: null,
-        kel_id: null
+        status: null
       }
     }
   },
@@ -112,10 +108,6 @@ export default {
 
     getTableRowNumbering(index) {
       return ((this.listQuery.page - 1) * this.listQuery.limit) + (index + 1)
-    },
-
-    getSentDateTime(row) {
-      return row.is_scheduled === true ? row.scheduled_datetime : row.status === this.status.PUBLISHED ? row.updated_at : '-'
     },
 
     changeSort(e) {
