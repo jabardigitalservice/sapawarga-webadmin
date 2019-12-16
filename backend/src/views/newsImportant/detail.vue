@@ -8,31 +8,11 @@
           <div slot="header" class="clearfix">
             <span>{{ $t('label.newsImportant-data') }}</span>
           </div>
-          <el-table stripe :data="tableDataRecord" :show-header="false" style="width: 100%">
-            <el-table-column prop="title" width="180" />
-            <el-table-column prop="content">
-              <template slot-scope="{row}">
-                <a v-if="validUrl(row.content)" :href="row.content" target="_blank" class="link-news-important">{{ row.content }}</a>
-                <span v-else v-html="row.content" />
-              </template>
-            </el-table-column>
-          </el-table>
-          <el-table stripe :data="tableImageAttachment" :show-header="false" style="width: 100%">
-            <el-table-column prop="title" width="180" />
-            <el-table-column prop="content">
-              <img :src="image || imageNone" alt="" width="300" height="225">
-            </el-table-column>
-          </el-table>
-          <el-table v-if="check" stripe :data="attachments" :show-header="false" style="width: 100%">
-            <el-table-column prop="title" width="180" />
-            <el-table-column prop="content">
-              <template slot-scope="{row}">
-                <ul v-for="(data, index) in row.content" :key="index">
-                  <li><a :href="data.file_url" target="_blank" class="link-news-important">{{ data.name }}</a><br></li>
-                </ul>
-              </template>
-            </el-table-column>
-          </el-table>
+          <detail-data :table-content-data="tableDataRecord" />
+
+          <detail-data :table-content-data="tableImageAttachment" :input-image="image || imageNone" />
+
+          <detail-data :table-content-data="attachments" :input-list="attachments" />
         </el-card>
       </el-col>
     </el-row>
@@ -42,8 +22,12 @@
 <script>
 import { fetchRecord } from '@/api/newsImportant'
 import { validUrl } from '@/utils/validate'
+import DetailData from '@/components/DetailData'
 
 export default {
+  components: {
+    DetailData
+  },
   data() {
     return {
       tableDataRecord: [],
