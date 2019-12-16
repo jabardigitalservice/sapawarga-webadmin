@@ -5,12 +5,12 @@
       <el-col :xs="24" :sm="18">
         <div v-if="inputImage"><img :src="inputImage" alt=""></div>
         <div v-else-if="inputList">
-          <ul v-for="(data, index) in element.content" :key="index">
+          <ul v-for="(data, indexData) in element.content" :key="indexData">
             <li><a :href="data.file_url" target="_blank" class="link-news-important">{{ data.name }}</a><br></li>
           </ul>
         </div>
         <div v-else-if="validUrl(element.content)"><a :href="element.content" target="_blank" class="link">{{ element.content }}</a></div>
-        <div v-else-if="isContainHtmlTags(element.content)" v-html="element.content" class="is--rich-text" />
+        <div v-else-if="isContainHtmlTags(element.content)" class="is--rich-text" v-html="element.content" />
         <div v-else><span>{{ element.content }}</span></div>
       </el-col>
     </el-row>
