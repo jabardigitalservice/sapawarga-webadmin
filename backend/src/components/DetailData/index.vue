@@ -65,6 +65,10 @@ export default {
   }
 
   & .el-col {
+    hyphens: auto;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+
     & .is--rich-text {
       line-height: 23px;
     }
