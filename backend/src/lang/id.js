@@ -106,7 +106,10 @@ export default {
     'news-important-edit': 'Edit Info Pendidikan',
     'news-important-list': 'Daftar Info Pendidikan',
     'news-important-create': 'Tambah Info Pendidikan',
-    'news-important-detail': 'Detail Info Pendidikan'
+    'news-important-detail': 'Detail Info Pendidikan',
+
+    'chat-admin-manage': 'Chat Admin',
+    'chat-admin-list': 'List Chat Admin'
   },
   crud: {
     'list-empty': 'Belum ada data.',
@@ -451,6 +454,7 @@ export default {
     'address': 'Alamat',
     'coordinates': 'Koordinat Lokasi',
     'social-media': 'Media Sosial',
+    'phone-number': 'Nomor Telepon',
 
     'your-location': 'Lokasi Anda',
     'contact': 'Kontak',
