@@ -138,6 +138,7 @@ code {
 
 .components-container {
   position: relative;
+  margin: 30px 50px;
 }
 
 .pagination-container {
@@ -211,8 +212,29 @@ code {
   margin-top: -7px;
 }
 
-// custom tag for column 
-@media only screen and (max-width: 991px) {
+.dashboard-polling {
+  padding-right: 10px;
+}
+
+.dashboard-btn-all {
+  margin: 0 auto;
+  text-align: center;
+  padding-top: 20px;
+}
+
+// overflow mobile view
+.pagination-container {
+  width: 100%;
+  overflow: auto;
+}
+
+.pagination-container .active {
+  width: unset;
+  float: unset;
+}
+
+// style for mobile and tablet
+@media only screen and (max-width: $tabletViewportWidth) {
   .el-col-xs-tag-mb-10 {
     margin-bottom: 10px;
   }
@@ -229,28 +251,22 @@ code {
   .rw {
     margin-top: -20px;
   }
-}
 
-// overflow mobile view
-.pagination-container {
-  width: 100%;
-  overflow: auto;
-}
-
-.pagination-container .active {
-  width: unset;
-  float: unset;
-}
-
-
-@media screen and (min-width: $tabletViewportWidth) {
-  .components-container {
-    margin: 30px 50px;
+  .dashboard-polling {
+    padding-right: 0;
+    margin-bottom: 10px;
+  }
+  
+  .form-editor {
+    .el-form-item__label {
+      float: none;
+      text-align: left;
+    }
   }
 }
 
-
-@media only screen and (max-width: 420px) {
+// style for mobile only
+@media only screen and (max-width: $mobileViewportWidth) {
   .ml-min-40 {
     margin-left: 0px;
   }

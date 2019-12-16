@@ -1,8 +1,8 @@
 <template>
-  <div class="app-container">
+  <div class="app-container news-page">
     <el-row :gutter="10">
       <el-col class="col-left" :xs="24" :sm="24" :md="24" :lg="7" :xl="7">
-        <el-card>
+        <el-card v-if="device==='desktop'">
           <div slot="header" class="clearfix">
             <span>{{ $t('news.media-channel') }}</span>
           </div>
@@ -10,6 +10,16 @@
             <el-table-column prop="title" align="left" />
             <el-table-column prop="count" align="right" />
           </el-table>
+        </el-card>
+        <el-card v-else>
+          <el-collapse>
+            <el-collapse-item name="1" title="Kanal Media">
+              <el-table stripe :data="tableDataStatistik" :show-header="false" style="width: 100%">
+                <el-table-column prop="title" align="left" />
+                <el-table-column prop="count" align="right" />
+              </el-table>
+            </el-collapse-item>
+          </el-collapse>
         </el-card>
         <el-card class="top-space">
           <el-table stripe :data="tableDataStatistikTotal" :show-header="false" style="width: 100%">
@@ -154,7 +164,8 @@ export default {
 
   computed: {
     ...mapGetters([
-      'user_id'
+      'user_id',
+      'device'
     ])
   },
 

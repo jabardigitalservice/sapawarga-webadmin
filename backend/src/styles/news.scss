@@ -1,4 +1,4 @@
-@media screen and (max-width: $mobileViewportWidth) {
+@media screen and (max-width: $tabletViewportWidth) {
   .form-news {
     .el-form-item__label {
       float: none;
@@ -14,6 +14,24 @@
       .el-button:first-child {
         margin-bottom: 10px;
       }
+    }
+  }
+
+  .news-detail {
+    .el-row {
+      & > .el-col {
+        margin-bottom: 5px;
+      }
+    }
+  }
+  
+  .news-page {
+    .el-collapse {
+      border-top: none;
+    }
+
+    .el-collapse-item__header {
+      margin-left: 10px;
     }
   }
 }

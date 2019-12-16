@@ -33,7 +33,10 @@ describe('News List', () => {
       stubs: {
         fetchList: true
       },
-      i18n
+      i18n,
+      computed: {
+        device: ()=>'desktop'
+      }
     })
     wrapper.setData({ tableDataStatistik: channel })
 
