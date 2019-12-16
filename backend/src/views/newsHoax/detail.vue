@@ -6,7 +6,7 @@
           <div slot="header" class="clearfix">
             <span>Detail Berita Counter Hoax</span>
           </div>
-          <detail-data :tableContentData="tableDataNews" />
+          <detail-data :table-content-data="tableDataNews" />
         </el-card>
       </el-col>
     </el-row>
