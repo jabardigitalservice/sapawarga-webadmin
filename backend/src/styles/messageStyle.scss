@@ -63,23 +63,23 @@ nav {
 }
 
 /* width */
-#style-user-list::-webkit-scrollbar {
+#style-questions-list::-webkit-scrollbar {
   width: 5px;
   height: 5px;
 }
 
 /* Track */
-#style-user-list::-webkit-scrollbar-track {
+#style-questions-list::-webkit-scrollbar-track {
   background: #f1f1f1;
 }
 
 /* Handle */
-#style-user-list::-webkit-scrollbar-thumb {
+#style-questions-listt::-webkit-scrollbar-thumb {
   background: #888;
 }
 
 /* Handle on hover */
-#style-user-list::-webkit-scrollbar-thumb:hover {
+#style-questions-list::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
 
@@ -100,8 +100,8 @@ nav {
   }
 }
 
-.user-list {
-  height: 600px;
+.questions-list {
+  height: 760px;
   padding: 4px 0px;
   flex-grow: 1;
   overflow-y: auto;
@@ -152,7 +152,7 @@ nav {
         }
         .moderasi-switch {
           padding-left: 10px;
-          padding-top: 10px;  
+          padding-top: 10px;
         }
       }
 
@@ -433,7 +433,7 @@ nav .spinner {
       width: 590px ;
     }
   }
-  .user-list {
+  .questions-list {
     height: 880px;
   }
 }
@@ -458,7 +458,7 @@ nav .spinner {
   .msg-page {
     height: 410px;
   }
-  .user-list {
+  .questions-list {
     height: 540px;
   }
   .outgoing-chats-img {

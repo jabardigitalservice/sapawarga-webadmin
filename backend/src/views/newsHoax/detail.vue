@@ -6,7 +6,7 @@
           <div slot="header" class="clearfix">
             <span>Detail Berita Counter Hoax</span>
           </div>
-          <detail-data :tableContentData="tableDataNews" />
+          <detail-data :table-content-data="tableDataNews" />
         </el-card>
       </el-col>
     </el-row>
@@ -19,6 +19,10 @@ import { fetchRecord } from '@/api/newsHoax'
 import DetailData from '@/components/DetailData'
 
 export default {
+  components: {
+    DetailData
+  },
+
   data() {
     return {
       tableDataNews: [],
@@ -29,10 +33,6 @@ export default {
   mounted() {
     this.id = this.$route.params && this.$route.params.id
     this.getDetail()
-  },
-
-  components: {
-    DetailData
   },
 
   methods: {

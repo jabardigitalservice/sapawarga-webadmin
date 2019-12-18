@@ -16,7 +16,7 @@
                 <span class="user-name">{{ message.user.name }}</span>
               </div>
               <div class="datetime">
-                <span class="date-last-message">{{ formatDatetime(message.created_at, 'DD/MM/YYYY') }}</span>
+                <span class="date-last-message">{{ parsingDatetime(message.created_at, 'DD/MM/YYYY') }}</span>
               </div>
               <div class="last-messages">
                 <span>{{ message.text }}</span>
@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { formatDatetime } from '@/utils/datetimeToString'
+import { parsingDatetime } from '@/utils/datetimeToString'
 
 export default {
   props: {
@@ -44,7 +44,7 @@ export default {
     }
   },
   methods: {
-    formatDatetime
+    parsingDatetime
   }
 }
 </script>
