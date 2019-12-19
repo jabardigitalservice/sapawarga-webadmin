@@ -79,19 +79,19 @@
             <template slot-scope="scope">
               <router-link :to="'/user/detail/'+scope.row.id">
                 <el-tooltip content="Lihat Pengguna" placement="top">
-                  <el-button type="primary" icon="el-icon-view" size="small" />
+                  <el-button type="primary" icon="el-icon-view" style="font-size: 14px;" size="small" />
                 </el-tooltip>
               </router-link>
               <router-link :to="'/user/edit/'+scope.row.id">
                 <el-tooltip content="Edit Pengguna" placement="top">
-                  <el-button type="warning" size="small" icon="el-icon-edit" />
+                  <el-button type="warning" style="font-size: 14px;" size="small" icon="el-icon-edit" />
                 </el-tooltip>
               </router-link>
               <el-tooltip content="Nonaktifkan Pengguna" placement="top">
-                <el-button v-if="scope.row.status === 10" type="danger" icon="el-icon-circle-close" size="small" @click="deactivateUser(scope.row.id)" />
+                <el-button v-if="scope.row.status === 10" type="danger" icon="el-icon-circle-close" style="font-size: 14px;" size="small" @click="deactivateUser(scope.row.id)" />
               </el-tooltip>
               <el-tooltip content="Aktifkan Pengguna" placement="top">
-                <el-button v-if="scope.row.status === 0" type="success" icon="el-icon-circle-check" size="small" @click="activateUser(scope.row.id)" />
+                <el-button v-if="scope.row.status === 0" type="success" icon="el-icon-circle-check" style="font-size: 14px;" size="small" @click="activateUser(scope.row.id)" />
               </el-tooltip>
               <el-tooltip v-if="checkPermission(['admin', 'staffProv'])" content="Chat User" placement="top">
                 <el-button type="info" size="small" @click="onClickChat(scope.row.phone)">
