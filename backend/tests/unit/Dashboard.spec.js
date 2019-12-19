@@ -4,6 +4,7 @@ import DashboardApproval from '@/views/dashboard/admin/components/Approval'
 import ListFilter from '@/views/dashboard/admin/components/_listfilter'
 import * as apiDashboard from '@/api/dashboard'
 import aspirasiMostLikesFixture from './fixtures/aspirasiMostLikes'
+import CategoryaspirasiMostLikesFixture from './fixtures/categoryAspirasiMostLikes'
 import pollingLatestFixture from './fixtures/pollingLatest'
 import aspirationCountFixture from './fixtures/aspirationCount'
 import aspirationMapFixture from './fixtures/aspirationMap'
@@ -11,6 +12,7 @@ import ElementUI from 'element-ui'
 import flushPromises from 'flush-promises'
 import Vuex from 'vuex'
 import DashboardMap from '@/views/dashboard/admin/components/MapData'
+import DashboardCategory from '@/views/dashboard/admin/components/Category'
 import Polling from '@/views/dashboard/admin/components/Polling'
 import L from 'leaflet'
 import i18n from '@/lang'
@@ -29,12 +31,14 @@ apiDashboard.fetchAspirasiMostLikes = () => Promise.resolve(aspirasiMostLikesFix
 apiDashboard.fetchLatestPolling = () => Promise.resolve(pollingLatestFixture)
 apiDashboard.fetchAspirasiCounts = () => Promise.resolve(aspirationCountFixture)
 apiDashboard.fetchAspirasiMap = () => Promise.resolve(aspirationMapFixture)
+apiDashboard.fetchCategoryAspirasiMostLikes = () => Promise.resolve(CategoryaspirasiMostLikesFixture)
 
 describe('List dashboard usulan', () => {
   const expectedList = aspirasiMostLikesFixture.data.items
   const expectedPollingLatest = pollingLatestFixture.data
   const expectedAspirationCount = aspirationCountFixture.data
   const expectedAspirationMap = aspirationMapFixture.data
+  const expectedCategory = CategoryaspirasiMostLikesFixture.data
 
   it('render list usulan', async() => {
     const wrapper = shallowMount(DashboardUsulan, {
@@ -190,5 +194,24 @@ describe('List dashboard usulan', () => {
     }
     wrapper.vm.displayChart(data)
     expect(wrapper.vm.id).toBe(data.id)
+  })
+
+  it('Category', () => {
+    const category = [{ 
+				'name':'Infrastruktur',
+				'total':333
+      }]
+    const wrapper = shallowMount(DashboardCategory, {
+      localVue,
+      mocks: {
+        $t: () => {}
+      },
+      i18n
+    })
+
+    wrapper.vm.getTableRowNumbering()
+    wrapper.setData({ list: category })
+    expect(wrapper.vm.list).toBe(category)
+    
   })
 })
