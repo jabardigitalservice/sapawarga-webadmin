@@ -8,7 +8,7 @@
             @changeKabKota="listQuery.kabkota_id = $event"
           />
         </nav>
-        <div id="style-user-list" class="user-list">
+        <div id="style-questions-list" class="questions-list">
 
           <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="1">
             <div
@@ -77,11 +77,6 @@ export default {
     FilterQuestions
   },
   props: {
-    listUser: {
-      type: Array,
-      required: false,
-      default: function() { return [] }
-    },
     loading: {
       type: Boolean,
       required: false
