@@ -25,7 +25,7 @@ export default {
     async getCategoryAspirasiMostLikes() {
       this.listLoading = true
       const response = await fetchCategoryAspirasiMostLikes()
-      this.list = await response.data
+      this.list = await response.data      
       this.listLoading = false
     }
   }
