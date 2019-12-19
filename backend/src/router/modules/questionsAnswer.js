@@ -7,7 +7,7 @@ const questionsAnswerRouter = {
   redirect: '/question-answer/index',
   meta: {
     title: 'question-answer-manage',
-    roles: ['admin', 'staffProv'],
+    roles: ['admin', 'staffProv', 'pimpinan'],
     icon: 'message'
   },
   children: [
@@ -18,7 +18,7 @@ const questionsAnswerRouter = {
       hidden: true,
       meta: {
         title: 'question-answer-list',
-        roles: ['admin', 'staffProv']
+        roles: ['admin', 'staffProv', 'pimpinan']
       }
     },
     {

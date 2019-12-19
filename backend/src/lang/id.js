@@ -516,6 +516,8 @@ export default {
 
     'roles-admin': 'Admin',
     'roles-admin-saber-hoax': 'Admin Saber Hoax',
+    'roles-admin-leader': 'Pimpinan',
+    'roles-admin-opd': 'Admin OPD',
     'roles-admin-province': 'Admin Provinsi',
     'roles-admin-kabkota': 'Admin Kab/kota',
     'roles-admin-districts': 'Admin Kecamatan',

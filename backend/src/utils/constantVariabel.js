@@ -33,6 +33,8 @@ export const PopupFeature = Object.freeze({
 
 export const RolesUser = Object.freeze({
   ADMIN: 'admin',
+  LEADER: 'pimpinan',
+  STAFFOPD: 'staffOPD',
   STAFFPROV: 'staffProv',
   STAFFKABKOTA: 'staffKabkota',
   STAFFKEC: 'staffKec',

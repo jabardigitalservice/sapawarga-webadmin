@@ -24,6 +24,7 @@ export default {
   },
   created() {
     if (this.roles.includes('admin') || this.roles.includes('staffProv') || this.roles.includes('staffKabkota')) {
+      // || this.roles.includes('pimpinan')
       this.currentRole
     } else {
       this.currentRole = 'editorDashboard'
