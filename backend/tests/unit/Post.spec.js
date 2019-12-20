@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import ElementUI from 'element-ui'
 import PostList from '@/views/post/list'
 import flushPromises from 'flush-promises'
-import * as api from '@/api/broadcast'
+import * as api from '@/api/post'
 import ListFilter from '@/views/post/_listfilter'
 import postListFixture from './fixtures/postList'
 

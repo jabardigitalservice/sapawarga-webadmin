@@ -5,101 +5,37 @@ export default {
 		items: [
 			{
         "id": 1,
-        "title": "Tolong perbaikan jalan berlubang",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        "kabkota_id": 22,
-        "kabkota": {
-          "id": 22,
-          "name": "Kota Bandung"
+        "text": "Sampurasun, selamat siang Pak Gubernur. Saya RW dari Desa Pangandaran. Kapan ada perbaikan kondisi jalan di Kabupaten Pangandaran? Hatur nuhun.",
+        "user_name": "RW 001 Desa Pangandaran",
+        "user_photo_url": "general/1571888674-0NuxEBByUVM2gOviSyIzgytpCx9jcydb.jpg",
+        "top_comment_id": 2,
+        "top_comment": {
+          "id": 2,
+          "text": "Rampes, selamat siang pak RW. Perbaikan jalan di kawasan wisata sudah termasuk dalam 9 Prioritas Pembangunan Jawa Barat 2020. Insya Allah tahun ini sudah bisa dirasakan manfaatnya.",
+          "user_name": "Gubernur Jawa Barat"
         },
-        "kec_id": 446,
-        "kecamatan": {
-          "id": 446,
-          "name": "Bandung Wetan"
-        },
-        "kel_id": 6082,
-        "kelurahan": {
-          "id": 6082,
-          "name": "Cicaheum"
-        },
-        "status": 10,
-        "status_label": "Dipublikasikan",
-        "likes_counts": 10,
-        "author_id": 3,
-        "author": {
-          "id": 1,
-          "name": "Muhammad Rahmat Irfan"
-        },
-        "category_id": 1,
-        "category": {
-          "id": 1,
-          "name": "Infrastruktur"
-        },
-        "images": [
-          {
-            "url": "https://dummyimage.com/wsxga"
-          },
-          {
-            "url": "https://dummyimage.com/wsxga"
-          },
-          {
-            "url": "https://dummyimage.com/wsxga"
-          },
-          {
-            "url": "https://dummyimage.com/wsxga"
-          }
-        ],
-        "created_at": 1554076800,
-        "updated_at": 1554076800
+        "is_liked": true,
+        "likes_count": 5,
+        "comments_count": 3,
+        "created_by": 2,
+        "updated_by": 2,
+        "created_at": 1575011692,
+        "updated_at": 1575011692
 			},
 			{
         "id": 2,
-        "title": "Pungli pada penerimaan siswa baru SMA Negeri Maju Jaya",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        "kabkota_id": 22,
-        "kabkota": {
-          "id": 22,
-          "name": "Kota Bandung"
-        },
-        "kec_id": 446,
-        "kecamatan": {
-          "id": 446,
-          "name": "Bandung Wetan"
-        },
-        "kel_id": 6082,
-        "kelurahan": {
-          "id": 6082,
-          "name": "Cicaheum"
-        },
-        "status": 10,
-        "status_label": "Dipublikasikan",
-        "likes_counts": 10,
-        "author_id": 3,
-        "author": {
-          "id": 1,
-          "name": "Muhammad Rahmat Irfan"
-        },
-        "category_id": 1,
-        "category": {
-          "id": 1,
-          "name": "Infrastruktur"
-        },
-        "images": [
-          {
-            "url": "https://dummyimage.com/wsxga"
-          },
-          {
-            "url": "https://dummyimage.com/wsxga"
-          },
-          {
-            "url": "https://dummyimage.com/wsxga"
-          },
-          {
-            "url": "https://dummyimage.com/wsxga"
-          }
-        ],
-        "created_at": 1554076800,
-        "updated_at": 1554076800
+        "text": "Apakah Kang Emil mendukung wacana Kota Bekasi untuk bergabung dengan Jakarta?",
+        "user_name": "Budi, RW 003 Jatiramat, Jatiasih",
+        "user_photo_url": "general/1571888674-0NuxEBByUVM2gOviSyIzgytpCx9jcydb.jpg",
+        "top_comment_id": null,
+        "top_comment": null,
+        "is_liked": false,
+        "likes_count": 1,
+        "comments_count": 0,
+        "created_by": 4,
+        "updated_by": 4,
+        "created_at": 1575012100,
+        "updated_at": 1575012100  
       }
 		],
 		"_meta": {
