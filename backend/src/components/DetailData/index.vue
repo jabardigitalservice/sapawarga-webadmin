@@ -5,7 +5,7 @@
       <el-col :xs="24" :sm="18">
         <div v-if="inputImage"><img :src="inputImage" alt=""></div>
         <div v-else-if="inputList">
-          <ul v-for="(data, indexData) in element.content" :key="indexData">
+          <ul v-for="(data, arrayIndex) in element.content" :key="arrayIndex">
             <li><a :href="data.file_url" target="_blank" class="link-news-important">{{ data.name }}</a><br></li>
           </ul>
         </div>
@@ -65,6 +65,10 @@ export default {
   }
 
   & .el-col {
+    hyphens: auto;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+
     & .is--rich-text {
       line-height: 23px;
     }

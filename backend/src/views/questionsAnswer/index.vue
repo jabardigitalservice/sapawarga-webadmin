@@ -1,8 +1,6 @@
 <template>
   <div>
-    <QuestionsList
-      :list-user="listUser"
-    />
+    <QuestionsList />
   </div>
 </template>
 
@@ -22,7 +20,6 @@ export default {
   },
   data() {
     return {
-      listUser: null,
       listMessage: [],
       message: ''
     }

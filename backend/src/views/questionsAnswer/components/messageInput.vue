@@ -13,7 +13,7 @@
             <el-input
               v-model="messageInput.message"
               name="message"
-              placeholder="Tulis Pesan"
+              placeholder="Tulis Jawaban"
             >
               <el-button
                 slot="append"

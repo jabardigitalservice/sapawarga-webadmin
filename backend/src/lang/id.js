@@ -108,6 +108,10 @@ export default {
     'news-important-create': 'Tambah Info Pendidikan',
     'news-important-detail': 'Detail Info Pendidikan',
 
+    'chat-admin-manage': 'Chat Admin',
+    'chat-admin-list': 'List Chat Admin'
+    'news-important-detail': 'Detail Info Pendidikan',
+
     'post-manage': 'Kegiatan RW',
     'post-list': 'Kegiatan RW',
     'post-detail': 'Detail Kegiatan RW'
@@ -455,6 +459,7 @@ export default {
     'address': 'Alamat',
     'coordinates': 'Koordinat Lokasi',
     'social-media': 'Media Sosial',
+    'phone-number': 'Nomor Telepon',
 
     'your-location': 'Lokasi Anda',
     'contact': 'Kontak',

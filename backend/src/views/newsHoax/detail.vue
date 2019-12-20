@@ -22,6 +22,7 @@ export default {
   components: {
     DetailData
   },
+
   data() {
     return {
       tableDataNews: [],
