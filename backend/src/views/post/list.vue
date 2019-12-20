@@ -8,7 +8,7 @@
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%" @sort-change="changeSort">
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
 
-          <el-table-column prop="title" sortable="custom" :label="$t('label.post-title')" min-width="300" />
+          <el-table-column prop="text" sortable="custom" :label="$t('label.post-title')" min-width="300" />
 
           <el-table-column prop="status" sortable="custom" class-name="status-col" :label="$t('label.status')" width="150px">
             <template slot-scope="{row}">
@@ -18,7 +18,7 @@
             </template>
           </el-table-column>
 
-          <el-table-column prop="likes" sortable="custom" align="center" :label="$t('label.post-like')" width="150" />
+          <el-table-column prop="likes_count" sortable="custom" align="center" :label="$t('label.post-like')" width="150" />
 
           <el-table-column align="center" :label="$t('label.actions')" width="200px">
             <template slot-scope="scope">
@@ -28,10 +28,10 @@
                 </el-tooltip>
               </router-link>
               <el-tooltip :content="$t('label.post-tooltip-active')" placement="top">
-                <el-button type="success" icon="el-icon-circle-check" size="small" @click="publishRecord(scope.row.id, scope.row.approval_note)" />
+                <el-button v-if="scope.row.status === 0" type="success" icon="el-icon-circle-check" size="small" @click="activateRecord(scope.row.id)" />
               </el-tooltip>
               <el-tooltip :content="$t('label.post-tooltip-inactive')" placement="top">
-                <el-button type="danger" icon="el-icon-circle-close" size="small" @click="unpublishRecord(scope.row.id)" />
+                <el-button v-if="scope.row.status === 10" type="danger" icon="el-icon-circle-close" size="small" @click="deactivateRecord(scope.row.id)" />
               </el-tooltip>
             </template>
           </el-table-column>
@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { fetchList } from '@/api/broadcast'
+import { fetchList, deactivate, activate } from '@/api/post'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 import ListFilter from './_listfilter'
 export default {
@@ -77,8 +77,8 @@ export default {
         PUBLISHED: 10
       },
       listQuery: {
-        title: null,
-        sort_by: 'updated_at',
+        search: null,
+        sort_by: 'created_at',
         sort_order: 'descending',
         page: 1,
         limit: 10,
@@ -114,6 +114,44 @@ export default {
       this.listQuery.sort_by = e.prop
       this.listQuery.sort_order = e.order
       this.getList()
+    },
+
+    async deactivateRecord(id) {
+      try {
+        await this.$confirm(this.$t('crud.deactivate-confirm'), 'Warning', {
+          confirmButtonText: this.$t('common.confirm'),
+          cancelButtonText: this.$t('common.cancel'),
+          type: 'warning'
+        })
+
+        this.listLoading = true
+
+        await deactivate(id)
+
+        this.$message.success(this.$t('crud.deactivate-success'))
+
+        this.getList()
+      } catch (e) {
+        console.log(e)
+      }
+    },
+    async activateRecord(id) {
+      try {
+        await this.$confirm(this.$t('crud.activate-confirm'), 'Warning', {
+          confirmButtonText: this.$t('common.confirm'),
+          cancelButtonText: this.$t('common.cancel'),
+          type: 'warning'
+        })
+        this.listLoading = true
+
+        await activate(id)
+
+        this.$message.success(this.$t('crud.activate-success'))
+
+        this.getList()
+      } catch (e) {
+        console.log(e)
+      }
     }
   }
 }
