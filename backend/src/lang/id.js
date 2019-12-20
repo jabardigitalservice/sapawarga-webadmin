@@ -110,7 +110,6 @@ export default {
 
     'chat-admin-manage': 'Chat Admin',
     'chat-admin-list': 'List Chat Admin',
-    'news-important-detail': 'Detail Info Pendidikan',
 
     'post-manage': 'Kegiatan RW',
     'post-list': 'Kegiatan RW',
