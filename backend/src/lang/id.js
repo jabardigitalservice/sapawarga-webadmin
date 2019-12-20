@@ -109,7 +109,11 @@ export default {
     'news-important-detail': 'Detail Info Pendidikan',
 
     'chat-admin-manage': 'Chat Admin',
-    'chat-admin-list': 'List Chat Admin'
+    'chat-admin-list': 'List Chat Admin',
+
+    'post-manage': 'Kegiatan RW',
+    'post-list': 'Kegiatan RW',
+    'post-detail': 'Detail Kegiatan RW'
   },
   crud: {
     'list-empty': 'Belum ada data.',
@@ -556,7 +560,12 @@ export default {
     'polling-audience': 'Total Audience',
 
     'broadcast-now': 'Sekarang',
-    'broadcast-scheduled': 'Terjadwal'
+    'broadcast-scheduled': 'Terjadwal',
+
+    'post-title': 'Nama Kegiatan',
+    'post-like': 'Likes',
+    'post-tooltip-active': 'Aktifkan',
+    'post-tooltip-inactive': 'Nonaktifkan'
   },
   news: {
     'media-channel': 'Kanal Media',

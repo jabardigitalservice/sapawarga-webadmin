@@ -8,6 +8,7 @@ import Layout from '@/layout'
 
 /* Router Modules */
 import userRouter from './modules/user'
+import postRouter from './modules/post'
 import newsRouter from './modules/news'
 import videoRouter from './modules/video'
 import bannerRouter from './modules/banner'
@@ -192,6 +193,7 @@ export const asyncRoutes = [
   bannerRouter,
   popupInformasiRouter,
   newsImportantRouter,
+  postRouter,
   { path: '*', redirect: '/404', hidden: true }
 ]
 
