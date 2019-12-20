@@ -1,7 +1,7 @@
 <template>
-  <el-tabs v-model="activeTab" v-if="device==='mobile'" @tab-click="handleClick" tab-position="bottom" stretch>
-    <el-tab-pane v-for="(menu, index) in arrMenu" :label="menu.title" :name="menu.title" :key="index">
-      <span slot="label"><i :class="menu.iconClass"></i></span>
+  <el-tabs v-if="device==='mobile'" v-model="activeTab" tab-position="bottom" stretch @tab-click="handleClick">
+    <el-tab-pane v-for="(menu, index) in arrMenu" :key="index" :label="menu.title" :name="menu.title">
+      <span slot="label"><i :class="menu.iconClass" /></span>
     </el-tab-pane>
   </el-tabs>
 </template>
@@ -14,14 +14,14 @@ export default {
     return {
       activeTab: 'User',
       arrMenu: [
-        {title: 'User', iconClass:'el-icon-news'},
-        {title: 'Config', iconClass:'el-icon-edit'},
-        {title: 'Role', iconClass:'el-icon-printer'},
-        {title: 'Task', iconClass:'el-icon-document'}
+        { title: 'User', iconClass: 'el-icon-news' },
+        { title: 'Config', iconClass: 'el-icon-edit' },
+        { title: 'Role', iconClass: 'el-icon-printer' },
+        { title: 'Task', iconClass: 'el-icon-document' }
       ]
-    };
+    }
   },
-  
+
   computed: {
     ...mapGetters([
       'device'
@@ -30,11 +30,11 @@ export default {
 
   methods: {
     handleClick(tab, event) {
-    //@todo: Change route programmatically
-    console.log('event triggered')
+    // @todo: Change route programmatically
+      console.log('event triggered')
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
