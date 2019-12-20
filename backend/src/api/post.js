@@ -16,21 +16,21 @@ export function fetchRecord(id) {
 }
 
 export function deactivate(id) {
-    return request({
-      url: `/user-posts/${id}`,
-      method: 'put',
-      data: {
-        status: 0
-      }
-    })
-  }
-  
-  export function activate(id) {
-    return request({
-      url: `/user-posts/${id}`,
-      method: 'put',
-      data: {
-        status: 10
-      }
-    })
-  }
+  return request({
+    url: `/user-posts/${id}`,
+    method: 'put',
+    data: {
+      status: 0
+    }
+  })
+}
+
+export function activate(id) {
+  return request({
+    url: `/user-posts/${id}`,
+    method: 'put',
+    data: {
+      status: 10
+    }
+  })
+}
