@@ -28,7 +28,7 @@ const questionsAnswerRouter = {
       hidden: true,
       meta: {
         title: 'question-answer-message',
-        roles: ['admin', 'staffProv']
+        roles: ['admin', 'staffProv', 'pimpinan']
       }
     }
   ]

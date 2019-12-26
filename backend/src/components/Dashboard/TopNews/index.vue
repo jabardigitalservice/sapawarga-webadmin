@@ -1,5 +1,5 @@
 <template>
-  <el-card class="box-card">
+  <el-card class="box-card" style="border-radius: 10px;">
     <el-table v-loading="listLoading" class="title" :data="list" stripe border highlight-current-row style="width: 100%">
       <el-table-column
         prop="title"

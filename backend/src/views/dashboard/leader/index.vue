@@ -2,27 +2,23 @@
   <div class="dashboard-leader-container">
     <div class=" clearfix">
       <el-row :gutter="8">
-        <el-col :md="{span: 13}" :lg="{span: 13}" :xl="{span: 13}" style="padding-bottom: 10px;">
-          <!-- grafik saberhoax -->
-          <el-card>
-            <span><b>Saber Hoax</b></span>
-            <line-chart :chart-data="lineChartData" />
-          </el-card>
-        </el-col>
-        <el-col :md="{span: 11}" :lg="{span: 11}" :xl="{span: 11}" style="padding-bottom: 10px;">
-          <!-- <span>&nbsp;</span> -->
-          <!-- card panel -->
-          <card-panel />
+        <el-col class="dashboard-content-map" :md="{span: 24}" :lg="{span: 24}" :xl="{span: 24}">
+          <map-aspiration :additional-data="additionalData" />
         </el-col>
       </el-row>
       <el-row :gutter="8">
-        <el-col :md="{span: 13}" :lg="{span: 13}" :xl="{span: 13}">
-          <!-- list news -->
-          <top-news />
+        <el-col class="dashboard-content" :md="{span: 24}" :lg="{span: 24}" :xl="{span: 24}">
+          <polling />
         </el-col>
-        <el-col :md="{span: 11}" :lg="{span: 11}" :xl="{span: 11}">
+      </el-row>
+      <el-row :gutter="8">
+        <el-col class="dashboard-content" :md="24" :lg="14" :xl="14">
+          <!-- list news -->
+          <top-news :list="listNewsProvinsi" :title="$t('dashboard.dashboard-news-prov')" />
+        </el-col>
+        <el-col class="dashboard-content" :md="24" :lg="10" :xl="10">
           <!-- list qna -->
-          <top-QNA />
+          <top-QNA :list="listTopQNA" />
         </el-col>
       </el-row>
     </div>
@@ -31,10 +27,11 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import CardPanel from './components/CardPanel'
-import LineChart from './components/LineChart'
-import TopNews from './components/TopNews'
-import TopQNA from './components/TopQNA'
+import { fetchTopFiveNewsProv, fetchAspirasiCounts } from '@/api/dashboard'
+import MapAspiration from '@/components/Dashboard/MapAspiration'
+import Polling from '@/components/Dashboard/Polling'
+import TopNews from '@/components/Dashboard/TopNews'
+import TopQNA from '@/components/Dashboard/TopQNA'
 
 const lineChartData = {
   newHoaxChart: {
@@ -42,17 +39,42 @@ const lineChartData = {
     actualData: [120, 82, 91, 154, 162, 140, 145]
   }
 }
+const listTopQNA = {
+  items: [
+    {
+      likes_count: 5,
+      text: 'selamat siang pak gub, sehat?',
+      user: {
+        id: 186100,
+        name: 'staff rw sembilan puluh'
+      }
+    },
+    {
+      likes_count: 5,
+      text: 'selamat siang pak gub, sehat?',
+      user: {
+        id: 186100,
+        name: 'staff rw sembilan puluh'
+      }
+    }
+  ]
+}
+
 export default {
   name: 'DashboardLeader',
   components: {
-    CardPanel,
-    LineChart,
+    MapAspiration,
+    Polling,
     TopNews,
     TopQNA
   },
   data() {
     return {
-      lineChartData: lineChartData.newHoaxChart
+      lineChartData: lineChartData.newHoaxChart,
+      listTopQNA: listTopQNA.items,
+      additionalData: [],
+      listNewsProvinsi: null,
+      listLoading: true
     }
   },
   computed: {
@@ -61,6 +83,26 @@ export default {
       'avatar',
       'roles'
     ])
+  },
+  created() {
+    this.getListProvinsi()
+    this.getAspirasiCounts()
+  },
+  methods: {
+    getListProvinsi() {
+      this.listLoading = true
+      fetchTopFiveNewsProv({ location: 'provinsi' }).then(response => {
+        this.listNewsProvinsi = response.data
+        this.listLoading = false
+      })
+    },
+    getAspirasiCounts() {
+      this.listLoading = true
+      fetchAspirasiCounts().then(response => {
+        this.additionalData.push(response.data)
+      })
+    }
+
   }
 }
 </script>
@@ -70,23 +112,16 @@ export default {
   background-color: #fff;
   min-height: 100vh;
   padding: 20px 14px 0px;
-  .pan-info-roles {
-    font-size: 12px;
-    font-weight: 700;
-    color: #333;
-    display: block;
+
+  .dashboard-content {
+    padding-bottom: 10px;
   }
-  .info-container {
-    position: relative;
-    margin-left: 190px;
-    height: 150px;
-    line-height: 200px;
-    .display_name {
-      font-size: 48px;
-      line-height: 48px;
-      color: #212121;
-      position: absolute;
-      top: 25px;
+}
+
+@media screen and (max-width: 768px) {
+  .dashboard-leader-container {
+    .dashboard-content-map {
+      padding-bottom: 50px;
     }
   }
 }
