@@ -52,6 +52,7 @@ export default {
       fetchRecord(id).then(response => {
         const { user, status_label, created_at, text, image_path_full } = response.data
         this.status = response.data.status
+        this.image = response.data.image_path_full
         this.tableDataRecord = [
           {
             title: this.$t('label.post-detail-name'),
@@ -59,7 +60,7 @@ export default {
           },
           {
             title: this.$t('label.post-detail-area'),
-            content: user.name
+            content: user.kabkota || '-'
           },
           {
             title: this.$t('label.status'),
