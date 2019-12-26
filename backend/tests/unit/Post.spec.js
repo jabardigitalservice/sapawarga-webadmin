@@ -5,6 +5,7 @@ import PostList from '@/views/post/list'
 import flushPromises from 'flush-promises'
 import * as api from '@/api/post'
 import ListFilter from '@/views/post/_listfilter'
+import PostDetail from '@/views/post/detail'
 import postListFixture from './fixtures/postList'
 
 const router = new Router()
@@ -75,5 +76,18 @@ describe('Post', () => {
     expect(wrapper.props('listQuery')).toBe(listQuery)
     expect(wrapper.emitted()['submit-search']).toBeTruthy()
     expect(wrapper.emitted()['reset-search']).toBeTruthy()
+	})
+
+	it('render detail', () => {
+		const wrapper = shallowMount(PostDetail, {
+			localVue,
+			mocks: {
+        $t: () => {}
+			}
+		})
+		wrapper.vm.getDetail()
+		wrapper.vm.deactivateRecord()
+		wrapper.vm.activateRecord()
+		expect(wrapper.contains(PostDetail)).toBe(true)
 	})
 })
