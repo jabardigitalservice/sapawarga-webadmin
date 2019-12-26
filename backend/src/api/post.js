@@ -10,7 +10,7 @@ export function fetchList(query) {
 
 export function fetchRecord(id) {
   return request({
-    url: `/broadcasts/${id}`,
+    url: `/user-posts/${id}`,
     method: 'get'
   })
 }
