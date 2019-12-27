@@ -565,7 +565,14 @@ export default {
     'post-title': 'Nama Kegiatan',
     'post-like': 'Likes',
     'post-tooltip-active': 'Aktifkan',
-    'post-tooltip-inactive': 'Nonaktifkan'
+    'post-tooltip-inactive': 'Nonaktifkan',
+    'post-data': 'Data Kegiatan',
+    'post-detail': 'Detail Kegiatan',
+    'post-detail-name': 'Nama',
+    'post-detail-area': 'Kabupaten/Kota',
+    'post-detail-description': 'Deskripsi',
+    'post-detail-accept': 'Tampilkan',
+    'post-detail-reject': 'Tolak'
   },
   news: {
     'media-channel': 'Kanal Media',

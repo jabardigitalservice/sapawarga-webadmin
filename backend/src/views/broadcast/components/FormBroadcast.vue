@@ -183,7 +183,7 @@ export default {
             trigger: 'blur'
           },
           {
-            max: 1000,
+            max: 65000,
             message: this.$t('message.broadcast-description-max'),
             trigger: 'blur'
           },
