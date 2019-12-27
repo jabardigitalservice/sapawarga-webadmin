@@ -30,11 +30,13 @@
       </el-col>
       <el-col class="col-right" :xs="24" :sm="24" :md="24" :lg="17" :xl="17">
         <el-row style="margin: 10px 0px" type="flex">
-          <router-link :to="{ path: '/news/create' }">
-            <el-button type="primary" size="small" icon="el-icon-plus" style="margin: 0 10px 0 0">
-              {{ $t('news.news-add-header') }}
-            </el-button>
-          </router-link>
+          <div v-permission="['admin','staffProv', 'staffKabkota']">
+            <router-link :to="{ path: '/news/create' }">
+              <el-button type="primary" size="small" icon="el-icon-plus" style="margin: 0 10px 0 0">
+                {{ $t('news.news-add-header') }}
+              </el-button>
+            </router-link>
+          </div>
           <div v-permission="['admin','staffProv', 'staffKabkota']">
             <router-link :to="{ path: '/news/priority' }">
               <el-button type="primary" size="small" icon="el-icon-plus">

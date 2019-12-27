@@ -4,11 +4,13 @@
       <el-col :lg="24">
         <el-row style="margin: 10px 0px">
           <el-col :span="12">
-            <router-link :to="{ path: '/news-hoax/create' }">
-              <el-button type="primary" size="small" icon="el-icon-plus">
-                {{ $t('label.add-news-counter-hoax') }}
-              </el-button>
-            </router-link>
+            <div v-permission="['admin','staffSaberhoax']">
+              <router-link :to="{ path: '/news-hoax/create' }">
+                <el-button type="primary" size="small" icon="el-icon-plus">
+                  {{ $t('label.add-news-counter-hoax') }}
+                </el-button>
+              </router-link>
+            </div>
           </el-col>
         </el-row>
 
