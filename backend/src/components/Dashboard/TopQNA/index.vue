@@ -33,9 +33,6 @@ export default {
     return {
       listLoading: false
     }
-  },
-  created() {
-    //
   }
 }
 </script>
