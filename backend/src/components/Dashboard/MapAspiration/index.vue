@@ -1,5 +1,5 @@
 <template>
-  <el-row :gutter="8">
+  <el-row class="aspiration-maps" :gutter="8">
     <el-col :md="24" :lg="14" :xl="14" style="padding-right:8px;margin-bottom:30px;">
       <div id="leafletmap" :class="['leaflet_canvas', classObj]" />
     </el-col>
@@ -9,12 +9,12 @@
           <div class="header-aspiration">
             <span class="title">{{ $t('label.total-aspiration') }}</span>
             <span>:</span>
-            <span class="total-aspiration">90</span>
+            <span class="total-aspiration">{{ totalAspiration }}</span>
           </div>
           <div class="header-aspiration">
             <span class="title">{{ $t('label.publish-aspiration') }}</span>
             <span>:</span>
-            <span class="total-aspiration">90</span>
+            <span class="total-aspiration">{{ totalPublishedAspiration }}</span>
           </div>
         </div>
         <el-table id="table-geo" :data="list" height="250" stripe style="width: 100%; margin-left:10px;">
@@ -55,6 +55,8 @@ export default {
       list: null,
       map: null,
       activeInfoWindow: null,
+      totalAspiration: 0,
+      totalPublishedAspiration: 0,
       labelTitle: 'Kota/Kabupaten',
       zoom: 8,
       markerCenter: null,
@@ -80,13 +82,16 @@ export default {
     }
   },
 
-  mounted() {
+  async mounted() {
     if (this.user.kabkota_id) {
       this.listQuery.kabkota_id = this.user.kabkota_id
       this.labelTitle = this.$t('label.area-kec')
       this.isChecked = { kabkota: false, kec: true }
     }
-    console.log(this.additionalData[0])
+    if (this.additionalData[0]) {
+      this.totalAspiration = await parseInt(this.additionalData[0]['STATUS_APPROVAL_PENDING']) + parseInt(this.additionalData[0]['STATUS_APPROVAL_REJECTED']) + parseInt(this.additionalData[0]['STATUS_PUBLISHED']) + parseInt(this.additionalData[0]['STATUS_UNPUBLISHED'])
+      this.totalPublishedAspiration = parseInt(this.additionalData[0]['STATUS_PUBLISHED'])
+    }
     this.getAPIData()
   },
 

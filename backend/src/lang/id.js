@@ -508,6 +508,9 @@ export default {
     'scheduled_datetime': 'Tanggal dan Waktu',
     'date': 'Tanggal',
 
+    'created-polling': 'Polling Dibuat',
+    'followed-polling': 'Polling Diikuti',
+
     'news-title': 'Judul Berita',
     'news-content': 'Konten Berita',
     'status': 'Status',

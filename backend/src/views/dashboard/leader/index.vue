@@ -8,7 +8,7 @@
       </el-row>
       <el-row :gutter="8">
         <el-col class="dashboard-content" :md="{span: 24}" :lg="{span: 24}" :xl="{span: 24}">
-          <polling />
+          <polling :total-polling="totalPolling" />
         </el-col>
       </el-row>
       <el-row :gutter="8">
@@ -33,12 +33,6 @@ import Polling from '@/components/Dashboard/Polling'
 import TopNews from '@/components/Dashboard/TopNews'
 import TopQNA from '@/components/Dashboard/TopQNA'
 
-const lineChartData = {
-  newHoaxChart: {
-    monthTitle: ['Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
-    actualData: [120, 82, 91, 154, 162, 140, 145]
-  }
-}
 const listTopQNA = {
   items: [
     {
@@ -60,6 +54,11 @@ const listTopQNA = {
   ]
 }
 
+const countPolling = {
+  createdPolling: 12,
+  followedPolling: 10
+}
+
 export default {
   name: 'DashboardLeader',
   components: {
@@ -70,8 +69,8 @@ export default {
   },
   data() {
     return {
-      lineChartData: lineChartData.newHoaxChart,
       listTopQNA: listTopQNA.items,
+      totalPolling: countPolling,
       additionalData: [],
       listNewsProvinsi: null,
       listLoading: true

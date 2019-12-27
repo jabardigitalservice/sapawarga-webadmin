@@ -4,14 +4,14 @@
       <el-card class="box-card">
         <div slot="header" class="clearfix">
           <div class="header-polling">
-            <span>Polling Dibuat</span>
+            <span>{{ $t('label.created-polling') }}</span>
             <span>:</span>
-            <span class="total-polling">90</span>
+            <span class="total-polling">{{ totalPolling ? totalPolling.createdPolling:0 }}</span>
           </div>
           <div class="header-polling">
-            <span>Polling Diikuti</span>
+            <span>{{ $t('label.followed-polling') }}</span>
             <span>:</span>
-            <span class="total-polling">90</span>
+            <span class="total-polling">{{ totalPolling ? totalPolling.followedPolling:0 }}</span>
           </div>
         </div>
         <el-table v-loading="listLoading" class="title" :data="list" stripe :show-header="header">
@@ -53,6 +53,12 @@ export default {
   components: {
     PollingChart
   },
+  props: {
+    totalPolling: {
+      type: Object,
+      default: null
+    }
+  },
   data() {
     return {
       list: null,
@@ -67,8 +73,6 @@ export default {
         limit: 6
       }
     }
-  },
-  watch: {
   },
   mounted() {
     this.getList()
