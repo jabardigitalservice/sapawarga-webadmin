@@ -572,7 +572,9 @@ export default {
     'post-detail-area': 'Kabupaten/Kota',
     'post-detail-description': 'Deskripsi',
     'post-detail-accept': 'Tampilkan',
-    'post-detail-reject': 'Tolak'
+    'post-detail-reject': 'Tolak',
+
+    'survey-data': 'Data Survey'
   },
   news: {
     'media-channel': 'Kanal Media',
