@@ -7,7 +7,7 @@ const newsRouter = {
   redirect: '/news/index',
   meta: {
     title: 'news-manage',
-    roles: ['admin', 'staffProv', 'staffKabkota'],
+    roles: ['admin', 'staffProv', 'staffKabkota', 'pimpinan'],
     icon: 'documentation'
   },
   children: [
@@ -17,7 +17,7 @@ const newsRouter = {
       component: () => import('@/views/news/list'),
       meta: {
         title: 'news-list',
-        roles: ['admin', 'staffProv', 'staffKabkota']
+        roles: ['admin', 'staffProv', 'staffKabkota', 'pimpinan']
       }
     },
     {

@@ -481,7 +481,8 @@ export default {
     'profile-updated-at': 'Tanggal Profil Diperbarui',
     'last-login-at': 'Terakhir Login',
     'last-access-at': 'Terakhir Akses',
-
+    'total-aspiration': 'Jumlah Usulan',
+    'publish-aspiration': 'Usulan Dipublikasikan',
     'maximum-dimension-image-profile': 'Ukuran maksimal 640 x 640 piksel',
     'choose-image-profile': 'Pilih Foto',
 
@@ -511,6 +512,9 @@ export default {
     'scheduled_datetime': 'Tanggal dan Waktu',
     'date': 'Tanggal',
 
+    'created-polling': 'Polling Dibuat',
+    'followed-polling': 'Polling Diikuti',
+
     'news-title': 'Judul Berita',
     'news-content': 'Konten Berita',
     'status': 'Status',
@@ -520,6 +524,8 @@ export default {
 
     'roles-admin': 'Admin',
     'roles-admin-saber-hoax': 'Admin Saber Hoax',
+    'roles-admin-leader': 'Pimpinan',
+    'roles-admin-opd': 'Admin OPD',
     'roles-admin-province': 'Admin Provinsi',
     'roles-admin-kabkota': 'Admin Kab/kota',
     'roles-admin-districts': 'Admin Kecamatan',

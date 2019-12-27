@@ -7,7 +7,7 @@ const surveyRouter = {
   redirect: '/survey/index',
   meta: {
     title: 'survey-manage',
-    roles: ['admin', 'staffProv', 'staffKabkota'],
+    roles: ['admin', 'staffProv', 'staffKabkota', 'pimpinan'],
     icon: 'clipboard'
   },
   children: [
@@ -17,7 +17,7 @@ const surveyRouter = {
       component: () => import('@/views/survey/list'),
       meta: {
         title: 'survey-list',
-        roles: ['admin', 'staffProv', 'staffKabkota']
+        roles: ['admin', 'staffProv', 'staffKabkota', 'pimpinan']
       }
     },
     {

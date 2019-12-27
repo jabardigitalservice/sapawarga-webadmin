@@ -14,6 +14,7 @@ import Vuex from 'vuex'
 import DashboardMap from '@/views/dashboard/admin/components/MapData'
 import DashboardCategory from '@/views/dashboard/admin/components/Category'
 import Polling from '@/views/dashboard/admin/components/Polling'
+import DashboardLeader from '@/views/dashboard/leader'
 import L from 'leaflet'
 import i18n from '@/lang'
 
@@ -68,7 +69,7 @@ describe('List dashboard usulan', () => {
     }
 
     const user = ['admin']
-        
+
     const wrapper = shallowMount(ListFilter, {
       localVue,
       computed: {
@@ -87,7 +88,7 @@ describe('List dashboard usulan', () => {
     wrapper.vm.resetFilter()
     wrapper.vm.getArea()
     wrapper.vm.setWidth()
-    
+
     expect(wrapper.props('listQuery')).toBe(listQuery)
     expect(wrapper.emitted()['submit-search']).toBeTruthy()
     expect(wrapper.emitted()['reset-search']).toBeTruthy()
@@ -187,7 +188,7 @@ describe('List dashboard usulan', () => {
       },
       i18n
     })
-    
+
     const id = 123
     const data = {
       id: 1
@@ -197,7 +198,7 @@ describe('List dashboard usulan', () => {
   })
 
   it('Category', () => {
-    const category = [{ 
+    const category = [{
 				'name':'Infrastruktur',
 				'total':333
       }]
@@ -212,6 +213,16 @@ describe('List dashboard usulan', () => {
     wrapper.vm.getTableRowNumbering()
     wrapper.setData({ list: category })
     expect(wrapper.vm.list).toBe(category)
-    
+
   })
+
+  it('render dashboard leader', () => {
+    const wrapper = shallowMount(DashboardLeader, {
+      localVue,
+      i18n
+    })
+
+    expect(wrapper.is(DashboardLeader)).toBe(true)
+  })
+
 })

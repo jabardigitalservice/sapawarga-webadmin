@@ -7,7 +7,7 @@ const pollingRouter = {
   redirect: '/polling/index',
   meta: {
     title: 'polling-manage',
-    roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel'],
+    roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel', 'pimpinan'],
     icon: 'peoples'
   },
   children: [
@@ -17,7 +17,7 @@ const pollingRouter = {
       component: () => import('@/views/polling/list'),
       meta: {
         title: 'polling-list',
-        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']
+        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel', 'pimpinan']
       }
     },
     {

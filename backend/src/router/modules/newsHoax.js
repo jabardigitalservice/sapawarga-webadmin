@@ -7,7 +7,7 @@ const newsHoaxRouter = {
   redirect: '/news-hoax/index',
   meta: {
     title: 'news-hoax',
-    roles: ['admin', 'staffSaberhoax'],
+    roles: ['admin', 'staffSaberhoax', 'pimpinan'],
     icon: 'nested'
   },
   children: [
@@ -17,7 +17,7 @@ const newsHoaxRouter = {
       component: () => import('@/views/newsHoax/list'),
       meta: {
         title: 'news-hoax-list',
-        roles: ['admin', 'staffSaberhoax']
+        roles: ['admin', 'staffSaberhoax', 'pimpinan']
       }
     },
     {

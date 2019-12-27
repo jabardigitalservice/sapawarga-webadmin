@@ -57,7 +57,7 @@
             </el-col>
             <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" :style="{paddingLeft: formRightSide}">
               <el-form-item
-                v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffSaberhoax') && checkPermission(['admin', 'staffProv']))"
+                v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffSaberhoax') && !(user.role == 'pimpinan') && checkPermission(['admin', 'staffProv']))"
                 :label="$t('label.area-kabkota')"
                 prop="kabkota"
               >
@@ -81,7 +81,7 @@
           <el-row>
             <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
               <el-form-item
-                v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffSaberhoax') && checkPermission(['admin', 'staffProv', 'staffKabkota']))"
+                v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffSaberhoax') && !(user.role == 'pimpinan') && checkPermission(['admin', 'staffProv', 'staffKabkota']))"
                 :label="$t('label.area-kec')"
                 prop="kecamatan"
               >
@@ -102,7 +102,7 @@
             </el-col>
             <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" :style="{paddingLeft: formRightSide}">
               <el-form-item
-                v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffKec') && !(user.role == 'staffSaberhoax') && ! checkPermission(['staffKel']))"
+                v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffKec') && !(user.role == 'staffSaberhoax') && !(user.role == 'pimpinan') && ! checkPermission(['staffKel']))"
                 :label="$t('label.area-kel')"
                 prop="kelurahan"
               >
@@ -124,7 +124,7 @@
           <el-row>
             <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
               <el-form-item
-                v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffKec') && !(user.role == 'staffKel') && !(user.role == 'staffSaberhoax'))"
+                v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffKec') && !(user.role == 'staffKel') && !(user.role == 'pimpinan') && !(user.role == 'staffSaberhoax'))"
                 :label="$t('label.area-rw')"
                 prop="rw"
               >
@@ -133,7 +133,7 @@
             </el-col>
             <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" :style="{paddingLeft: formRightSide}">
               <el-form-item
-                v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffKec') && !(user.role == 'staffKel') && !(user.role == 'staffSaberhoax'))"
+                v-if="(!(user.role == 'admin') && !(user.role == 'staffProv') && !(user.role == 'staffKabkota') && !(user.role == 'staffKec') && !(user.role == 'staffKel') && !(user.role == 'pimpinan') && !(user.role == 'staffSaberhoax'))"
                 :label="$t('label.area-rt')"
                 prop="rt"
               >
@@ -356,6 +356,14 @@ export default {
         {
           label: this.$t('label.roles-admin-saber-hoax'),
           value: RolesUser.STAFFSABERHOAX
+        },
+        {
+          label: this.$t('label.roles-admin-leader'),
+          value: RolesUser.LEADER
+        },
+        {
+          label: this.$t('label.roles-admin-opd'),
+          value: RolesUser.STAFFOPD
         },
         {
           label: this.$t('label.roles-admin-province'),
@@ -758,13 +766,13 @@ export default {
           return ruleOptions.slice(1, ruleOptions.length)
         } if (checkPermission([RolesUser.STAFFPROV])) {
           ruleOptions.push({ label: this.$t('label.roles-trainer'), value: RolesUser.TRAINER }, { label: this.$t('label.roles-public'), value: RolesUser.PUBLIK })
-          return ruleOptions.slice(3, ruleOptions.length)
-        } if (checkPermission([RolesUser.STAFFKABKOTA])) {
-          return ruleOptions.slice(4, ruleOptions.length)
-        } if (checkPermission([RolesUser.STAFFKEC])) {
           return ruleOptions.slice(5, ruleOptions.length)
-        } if (checkPermission([RolesUser.STAFFKEL])) {
+        } if (checkPermission([RolesUser.STAFFKABKOTA])) {
           return ruleOptions.slice(6, ruleOptions.length)
+        } if (checkPermission([RolesUser.STAFFKEC])) {
+          return ruleOptions.slice(7, ruleOptions.length)
+        } if (checkPermission([RolesUser.STAFFKEL])) {
+          return ruleOptions.slice(8, ruleOptions.length)
         }
       }
       return ruleOptions

@@ -7,7 +7,7 @@ const aspirationRouter = {
   redirect: '/aspirasi/index',
   meta: {
     title: 'aspiration-manage',
-    roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel'],
+    roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel', 'pimpinan'],
     icon: 'guide'
   },
   children: [
@@ -17,7 +17,7 @@ const aspirationRouter = {
       component: () => import('@/views/aspiration/list'),
       meta: {
         title: 'aspiration-list',
-        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']
+        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel', 'pimpinan']
       }
     },
 
