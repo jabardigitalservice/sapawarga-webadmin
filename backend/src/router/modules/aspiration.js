@@ -8,7 +8,7 @@ const aspirationRouter = {
   meta: {
     title: 'aspiration-manage',
     roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel', 'pimpinan'],
-    icon: 'guide'
+    icon: 'icon-aspiration'
   },
   children: [
     {

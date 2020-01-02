@@ -28,7 +28,7 @@ export default {
     'broadcast-edit': 'Edit Pesan',
     'broadcast-detail': 'Detail Pesan',
 
-    'question-answer-manage': 'Tanya Jawab',
+    'question-answer-manage': 'QnA',
     'question-answer-list': 'List Pertanyaan',
     'question-answer-message': 'Jawaban',
 
@@ -39,23 +39,23 @@ export default {
     'notification-show': 'Detail Notifikasi',
 
     'aspiration-manage': 'Usulan Masyarakat',
-    'aspiration-list': 'Usulan Masyarakat',
+    'aspiration-list': 'Usulan',
     'aspiration-detail': 'Detail Usulan',
 
     'polling-manage': 'Polling',
-    'polling-list': 'Daftar Polling',
+    'polling-list': 'Polling',
     'polling-create': 'Tambah Polling',
     'polling-detail': 'Detail Polling',
     'polling-edit': 'Edit Polling',
 
     'survey-manage': 'Survei',
-    'survey-list': 'Daftar Survei',
+    'survey-list': 'Survei',
     'survey-create': 'Tambah Survei',
     'survey-detail': 'Detail Survei',
     'survey-edit': 'Edit Survei',
 
     'news-manage': 'Berita',
-    'news-list': 'Daftar Berita',
+    'news-list': 'Berita',
     'news-create': 'Tambah Berita',
     'news-edit': 'Edit Berita',
     'news-detail': 'Detail Berita',
@@ -84,8 +84,8 @@ export default {
     'release-management-edit': 'Edit Release',
     'release-management-detail': 'Detail Release',
 
-    'news-hoax': 'Berita Hoax',
-    'news-hoax-list': 'Daftar Berita Hoax',
+    'news-hoax': 'Saber Hoax',
+    'news-hoax-list': 'Saber Hoax',
     'news-hoax-create': 'Tambah Berita Hoax',
     'news-hoax-edit': 'Edit Berita Hoax',
     'news-hoax-detail': 'Detail Berita Hoax',

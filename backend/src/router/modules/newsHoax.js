@@ -8,7 +8,7 @@ const newsHoaxRouter = {
   meta: {
     title: 'news-hoax',
     roles: ['admin', 'staffSaberhoax', 'pimpinan'],
-    icon: 'nested'
+    icon: 'icon-saber-hoax'
   },
   children: [
     {
