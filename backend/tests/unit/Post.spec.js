@@ -21,14 +21,15 @@ beforeEach(() => {
 jest.mock('@/api/dashboard')
 api.fetchList = () => Promise.resolve(postListFixture)
 
+const listQuery = {
+  params: '',
+  title: null,
+  status: null
+}
 
 describe('Post', () => {
 	const expectedPostList = postListFixture.data.items
   it('render list post', async() => {
-		const listQuery = {
-			title: null,
-			status: null
-		}
 		const status = {
 			'10': 'success',
 			'0': 'info',
@@ -46,7 +47,7 @@ describe('Post', () => {
 		})
 
 		await flushPromises()
-		
+
 		expect(wrapper.contains(PostList)).toBe(true)
 		wrapper.vm.resetFilter()
 		wrapper.vm.getTableRowNumbering()
@@ -55,11 +56,6 @@ describe('Post', () => {
 	})
 
 	it('render filter', () => {
-		const listQuery = {
-			title: null,
-			status: null
-		}
-
 		const wrapper = shallowMount(ListFilter, {
 			localVue,
 			mocks: {
@@ -72,7 +68,7 @@ describe('Post', () => {
 
 		wrapper.vm.submitSearch()
     wrapper.vm.resetFilter()
-        
+
     expect(wrapper.props('listQuery')).toBe(listQuery)
     expect(wrapper.emitted()['submit-search']).toBeTruthy()
     expect(wrapper.emitted()['reset-search']).toBeTruthy()
@@ -81,6 +77,7 @@ describe('Post', () => {
 	it('render detail', () => {
 		const wrapper = shallowMount(PostDetail, {
 			localVue,
+      router,
 			mocks: {
         $t: () => {}
 			}
