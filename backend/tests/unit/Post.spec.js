@@ -46,7 +46,7 @@ describe('Post', () => {
 		})
 
 		await flushPromises()
-		
+
 		expect(wrapper.contains(PostList)).toBe(true)
 		wrapper.vm.resetFilter()
 		wrapper.vm.getTableRowNumbering()
@@ -72,7 +72,7 @@ describe('Post', () => {
 
 		wrapper.vm.submitSearch()
     wrapper.vm.resetFilter()
-        
+
     expect(wrapper.props('listQuery')).toBe(listQuery)
     expect(wrapper.emitted()['submit-search']).toBeTruthy()
     expect(wrapper.emitted()['reset-search']).toBeTruthy()
@@ -81,6 +81,7 @@ describe('Post', () => {
 	it('render detail', () => {
 		const wrapper = shallowMount(PostDetail, {
 			localVue,
+      router,
 			mocks: {
         $t: () => {}
 			}

@@ -9,7 +9,7 @@
           show-icon
           style="margin-bottom: 15px"
         />
-        <!-- start fiture target -->
+        <!-- start feature target -->
         <p class="warn-content">{{ $t('label.target') }}</p>
         <div>
           <el-form
@@ -39,7 +39,7 @@
         </div>
       </el-col>
 
-      <!-- end fiture target -->
+      <!-- end feature target -->
       <el-col :sm="24" :md="14" :lg="14" :xl="12">
         <p class="warn-content">{{ $t('label.survey-data') }}</p>
         <el-form ref="form" :model="form" :rules="rules" :status-icon="true" :label-width="device === 'desktop' ? '150px' : null" label-position="left">
@@ -60,7 +60,7 @@
               :clearable="false"
               format="dd-MM-yyyy"
               placeholder="Pilih Tanggal"
-              style="width:100%"
+              class="datetime-survey"
             />
           </el-form-item>
 
@@ -72,7 +72,7 @@
               :clearable="false"
               format="dd-MM-yyyy"
               placeholder="Pilih Tanggal"
-              style="width:100%"
+              class="datetime-survey"
             />
           </el-form-item>
 
@@ -282,3 +282,8 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+ .datetime-survey {
+   width:100%;
+ }
+</style>

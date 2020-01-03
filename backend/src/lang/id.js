@@ -574,7 +574,11 @@ export default {
     'post-detail-accept': 'Tampilkan',
     'post-detail-reject': 'Tolak',
 
-    'survey-data': 'Data Survey'
+    'survey-data': 'Data Survei',
+    'detail-survey': 'Detail Survei',
+    'add-new-survey': 'Tambah Survei Baru',
+    'edit-survey': 'Edit Survei',
+    'view-survey': 'Lihat Survei'
   },
   news: {
     'media-channel': 'Kanal Media',

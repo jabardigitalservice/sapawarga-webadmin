@@ -7,7 +7,7 @@
           <el-col :span="12">
             <router-link :to="{ path: '/survey/create' }">
               <el-button v-if="roles" type="primary" size="small" icon="el-icon-plus">
-                Tambah Survei Baru
+                {{ $t('label.add-new-survey') }}
               </el-button>
             </router-link>
           </el-col>
@@ -41,17 +41,17 @@
           <el-table-column align="center" label="Actions" width="250">
             <template slot-scope="scope">
               <a :href="scope.row.external_url" target="_blank">
-                <el-tooltip content="Lihat Survei" placement="top">
+                <el-tooltip :content="$t('label.view-survey')" placement="top">
                   <el-button type="success" icon="el-icon-tickets" />
                 </el-tooltip>
               </a>
               <router-link :to="'/survey/detail/'+scope.row.id">
-                <el-tooltip content="Detail Survei" placement="top">
+                <el-tooltip :content="$t('label.detail-survey')" placement="top">
                   <el-button type="primary" icon="el-icon-view" />
                 </el-tooltip>
               </router-link>
               <router-link :to="scope.row.status === 0 ? `/survey/edit/${scope.row.id}` : ``">
-                <el-tooltip content="Edit Pesan" placement="top">
+                <el-tooltip :content="$t('label.edit-survey')" placement="top">
                   <el-button v-if="roles" type="warning" icon="el-icon-edit" :disabled="scope.row.status === 10" />
                 </el-tooltip>
               </router-link>
@@ -125,6 +125,3 @@ export default {
 
 }
 </script>
-<style lang="scss" scoped>
-
-</style>
