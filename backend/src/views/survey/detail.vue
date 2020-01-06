@@ -1,12 +1,12 @@
 <template>
   <div class="app-container">
-    <p class="warn-content"><a href="#">Detail Survei</a></p>
+    <p class="warn-content"><a href="#">{{ $t('label.detail-survey') }}</a></p>
 
     <el-row>
       <el-col :sm="24">
         <el-card>
           <div slot="header" class="clearfix">
-            <span>Data Survei</span>
+            <span>{{ $t('label.survey-data') }}</span>
           </div>
           <el-table stripe :data="tableDataRecord" :show-header="false" style="width: 100%">
             <el-table-column prop="title" width="180" />

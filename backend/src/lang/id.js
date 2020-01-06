@@ -578,7 +578,13 @@ export default {
     'post-detail-area': 'Kabupaten/Kota',
     'post-detail-description': 'Deskripsi',
     'post-detail-accept': 'Tampilkan',
-    'post-detail-reject': 'Tolak'
+    'post-detail-reject': 'Tolak',
+
+    'survey-data': 'Data Survei',
+    'detail-survey': 'Detail Survei',
+    'add-new-survey': 'Tambah Survei Baru',
+    'edit-survey': 'Edit Survei',
+    'view-survey': 'Lihat Survei'
   },
   news: {
     'media-channel': 'Kanal Media',

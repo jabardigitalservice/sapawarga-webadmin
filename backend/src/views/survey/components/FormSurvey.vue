@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row :gutter="20">
-      <el-col :xs="24" :sm="16">
+      <el-col :xs="24" :sm="24" :md="10" :lg="10" :xl="12">
         <el-alert
           v-if="form.status === 10"
           type="error"
@@ -9,8 +9,40 @@
           show-icon
           style="margin-bottom: 15px"
         />
+        <!-- start feature target -->
+        <p class="warn-content">{{ $t('label.target') }}</p>
+        <div>
+          <el-form
+            ref="form"
+            :model="form"
+            :label-width="device === 'desktop' ? '150px' : null"
+            label-position="left"
+            :rules="rules"
+            :status-icon="true"
+          >
+            <el-form-item :label="$t('label.area')" prop="wilayah" class="block">
+              <InputSelectArea
+                class="inline-block"
+                :kabkota-id="form.kabkota_id"
+                :kec-id="form.kec_id"
+                :kel-id="form.kel_id"
+                :style="{width: width}"
+                @changeKabkota="form.kabkota_id = $event"
+                @changeKecamatan="form.kec_id = $event"
+                @changeKelurahan="form.kel_id = $event"
+              />
+            </el-form-item>
+            <el-form-item class="rw" prop="rw">
+              <el-input v-model="form.rw" placeholder="Semua RW" type="text" :disabled="form.kel_id === null" />
+            </el-form-item>
+          </el-form>
+        </div>
+      </el-col>
 
-        <el-form ref="form" :model="form" :rules="rules" :status-icon="true" label-width="160px">
+      <!-- end feature target -->
+      <el-col :sm="24" :md="14" :lg="14" :xl="12">
+        <p class="warn-content">{{ $t('label.survey-data') }}</p>
+        <el-form ref="form" :model="form" :rules="rules" :status-icon="true" :label-width="device === 'desktop' ? '150px' : null" label-position="left">
 
           <el-form-item label="Judul Survei" prop="title">
             <el-input v-model="form.title" type="text" placeholder="Judul Survei" />
@@ -28,6 +60,7 @@
               :clearable="false"
               format="dd-MM-yyyy"
               placeholder="Pilih Tanggal"
+              class="datetime-survey"
             />
           </el-form-item>
 
@@ -39,6 +72,7 @@
               :clearable="false"
               format="dd-MM-yyyy"
               placeholder="Pilih Tanggal"
+              class="datetime-survey"
             />
           </el-form-item>
 
@@ -46,12 +80,12 @@
             <el-input v-model="form.external_url" type="text" placeholder="http://form.google.com" />
           </el-form-item>
 
-          <el-form-item>
-            <el-button v-if="form.status === null || form.status === 0" :loading="loading" @click="submitDraft">{{ $t('crud.draft') }}</el-button>
+          <el-form-item class="ml-min-40">
+            <el-button v-if="form.status === null || form.status === 0" class="button-mobile" :loading="loading" @click="submitDraft">{{ $t('crud.draft') }}</el-button>
             <el-button v-if="form.status === null || form.status === 0" :disabled="btnDisableDate" type="primary" :loading="loading" @click="submitProcess">{{ $t('crud.save-publish') }}</el-button>
 
             <router-link :to="'/survey/index'">
-              <el-button type="info">{{ $t('crud.cancel') }}</el-button>
+              <el-button type="info" class="button-mobile">{{ $t('crud.cancel') }}</el-button>
             </router-link>
           </el-form-item>
 
@@ -63,9 +97,10 @@
 
 <script>
 import moment from 'moment'
-
+import InputSelectArea from '@/components/InputSelectArea'
 import { fetchRecord, create, update } from '@/api/survey'
 import { containsWhitespace, validUrl } from '@/utils/validate'
+import { mapGetters } from 'vuex'
 
 import InputCategory from '@/components/InputCategory'
 
@@ -75,12 +110,17 @@ const defaultForm = {
   start_date: moment().format('YYYY-MM-DD'),
   end_date: moment().add(1, 'days').format('YYYY-MM-DD'),
   external_url: null,
-  status: null
+  status: null,
+  kabkota_id: null,
+  kec_id: null,
+  kel_id: null,
+  rw: null
 }
 
 export default {
   components: {
-    InputCategory
+    InputCategory,
+    InputSelectArea
   },
   props: {
     isEdit: {
@@ -108,6 +148,7 @@ export default {
     return {
       form: Object.assign({}, defaultForm),
       loading: false,
+      width: '300%',
       btnDisableDate: false,
       rules: {
         title: [
@@ -128,7 +169,9 @@ export default {
     }
   },
   computed: {
-    //
+    ...mapGetters([
+      'device'
+    ])
   },
   watch: {
     'form.start_date'(e) {
@@ -239,3 +282,8 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+ .datetime-survey {
+   width:100%;
+ }
+</style>
