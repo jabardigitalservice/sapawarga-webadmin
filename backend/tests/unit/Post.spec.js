@@ -21,14 +21,15 @@ beforeEach(() => {
 jest.mock('@/api/dashboard')
 api.fetchList = () => Promise.resolve(postListFixture)
 
+const listQuery = {
+  params: '',
+  title: null,
+  status: null
+}
 
 describe('Post', () => {
 	const expectedPostList = postListFixture.data.items
   it('render list post', async() => {
-		const listQuery = {
-			title: null,
-			status: null
-		}
 		const status = {
 			'10': 'success',
 			'0': 'info',
@@ -55,11 +56,6 @@ describe('Post', () => {
 	})
 
 	it('render filter', () => {
-		const listQuery = {
-			title: null,
-			status: null
-		}
-
 		const wrapper = shallowMount(ListFilter, {
 			localVue,
 			mocks: {

@@ -70,12 +70,14 @@ import { fetchList } from '@/api/newsHoax'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 import { deleteData, deactivate, activate } from '@/api/newsHoax'
 import ListFilter from './components/_listfilter'
+import permission from '@/directive/permission/index.js'
 
 export default {
   components: {
     Pagination,
     ListFilter
   },
+  directives: { permission },
   filters: {
     statusFilter(status) {
       const statusMap = {

@@ -8,7 +8,7 @@ const newsRouter = {
   meta: {
     title: 'news-manage',
     roles: ['admin', 'staffProv', 'staffKabkota', 'pimpinan'],
-    icon: 'documentation'
+    icon: 'icon-news'
   },
   children: [
     {

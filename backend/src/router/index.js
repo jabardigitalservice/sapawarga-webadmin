@@ -7,6 +7,7 @@ Vue.use(Router)
 import Layout from '@/layout'
 
 /* Router Modules */
+import dashboardRouter from './modules/dashboard'
 import userRouter from './modules/user'
 import postRouter from './modules/post'
 import newsRouter from './modules/news'
@@ -97,41 +98,21 @@ export const constantRoutes = [
     hidden: true
   },
   // rute dashboard ini di matikan sementara, karena dashboard belum siap.
-  {
-    path: '',
-    component: Layout,
-    redirect: 'dashboard',
-    children: [
-      {
-        path: 'dashboard',
-        component: () => import('@/views/dashboard/index'),
-        name: 'Dashboard',
-        meta: {
-          title: 'dashboard',
-          icon: 'dashboard',
-          noCache: true,
-          affix: true,
-          roles: ['admin', 'staffProv', 'pimpinan']
-        }
-      }
-    ]
-  },
-
-  // dashboard sementara diganti jadi profile.
   // {
   //   path: '',
   //   component: Layout,
-  //   redirect: 'profile',
+  //   redirect: 'dashboard',
   //   children: [
   //     {
   //       path: 'dashboard',
-  //       component: () => import('@/views/profile/index'),
+  //       component: () => import('@/views/dashboard/index'),
   //       name: 'Dashboard',
   //       meta: {
-  //         title: 'profile',
-  //         icon: 'dashboard',
+  //         title: 'dashboard',
+  //         icon: 'home',
   //         noCache: true,
-  //         affix: true
+  //         affix: true,
+  //         roles: ['admin', 'staffProv']
   //       }
   //     }
   //   ]
@@ -175,7 +156,7 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
-
+  dashboardRouter,
   userRouter,
   nomorPentingRouter,
   broadcastRouter,
