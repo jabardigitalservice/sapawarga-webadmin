@@ -398,7 +398,7 @@ export default {
     'broadcast-title-valid': 'Judul pesan yang diisi tidak valid',
 
     'broadcast-description-required': 'Isi pesan harus diisi',
-    'broadcast-description-max': 'Isi pesan maksimal 1000 karakter',
+    'broadcast-description-max': 'Isi pesan maksimal 65000 karakter',
     'broadcast-description-valid': 'Pesan yang diisi tidak valid',
 
     'broadcast-rw-pattern': 'RW harus menggunakan angka',
