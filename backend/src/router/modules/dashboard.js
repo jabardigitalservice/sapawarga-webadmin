@@ -14,7 +14,7 @@ const dashboardRouter = {
         icon: 'home',
         noCache: true,
         affix: true,
-        roles: ['admin', 'staffProv', 'pimpinan']
+        roles: ['admin', 'staffProv', 'staffKabkota', 'pimpinan']
       }
     }
   ]
