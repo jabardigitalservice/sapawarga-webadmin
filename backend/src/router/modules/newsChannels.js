@@ -10,6 +10,7 @@ const newsRouter = {
     roles: ['admin', 'staffProv'],
     icon: 'documentation'
   },
+  active: false,
   children: [
     {
       name: 'news-channels-list',

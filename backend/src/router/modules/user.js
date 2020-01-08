@@ -12,6 +12,7 @@ const userRouter = {
     icon: 'user',
     roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']
   },
+  active: false,
   children: [
     {
       name: 'user-list',

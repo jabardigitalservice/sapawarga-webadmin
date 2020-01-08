@@ -10,6 +10,7 @@ const bannerRouter = {
     roles: ['admin', 'staffProv'],
     icon: 'table'
   },
+  active: false,
   children: [
     {
       name: 'banner-list',

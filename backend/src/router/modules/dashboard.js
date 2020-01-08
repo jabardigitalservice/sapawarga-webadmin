@@ -1,9 +1,11 @@
 import Layout from '@/layout'
 
 const dashboardRouter = {
+  name: 'Dashboard',
   path: '',
   component: Layout,
   redirect: 'dashboard',
+  active: false,
   children: [
     {
       path: 'dashboard',
@@ -14,7 +16,7 @@ const dashboardRouter = {
         icon: 'home',
         noCache: true,
         affix: true,
-        roles: ['admin', 'staffProv', 'pimpinan']
+        roles: ['admin', 'staffProv', 'staffKabkota','pimpinan']
       }
     }
   ]

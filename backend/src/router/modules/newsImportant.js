@@ -10,6 +10,7 @@ const newsImportantRouter = {
     roles: ['admin', 'staffProv'],
     icon: 'documentation'
   },
+  active: false,
   children: [
     {
       name: 'news-important',

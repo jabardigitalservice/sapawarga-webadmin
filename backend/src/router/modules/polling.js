@@ -8,8 +8,9 @@ const pollingRouter = {
   meta: {
     title: 'polling-manage',
     roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel', 'pimpinan'],
-    icon: 'icon-polling'
+    icon: 'polling'
   },
+  active: false,
   children: [
     {
       name: 'polling-list',

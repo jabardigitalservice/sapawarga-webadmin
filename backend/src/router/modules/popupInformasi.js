@@ -10,6 +10,7 @@ const popupInformasiRouter = {
     roles: ['admin', 'staffProv'],
     icon: 'table'
   },
+  active: false,
   children: [
     {
       name: 'popup-informasi-list',

@@ -11,6 +11,7 @@ const nestedRouter = {
     title: 'nested',
     icon: 'nested'
   },
+  active: false,
   children: [
     {
       path: 'menu1',
