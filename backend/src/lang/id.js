@@ -584,7 +584,12 @@ export default {
     'detail-survey': 'Detail Survei',
     'add-new-survey': 'Tambah Survei Baru',
     'edit-survey': 'Edit Survei',
-    'view-survey': 'Lihat Survei'
+    'view-survey': 'Lihat Survei',
+
+    'errorpage-oops': 'OOPS!',
+    'errorpage-headline': 'Anda tidak dapat memasuki halaman ini......',
+    'errorpage-message': 'Harap periksa apakah URL yang Anda masukkan benar. Klik tombol di bawah untuk kembali ke beranda atau mengirim laporan kesalahan.',
+    'errorpage-back': 'Kembali ke beranda'
   },
   news: {
     'media-channel': 'Kanal Media',
