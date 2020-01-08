@@ -18,7 +18,7 @@
           {{ $t('label.errorpage-message') }}
         </div>
 
-        <router-link :to="(user.roles_active.id === RolesUser.ADMIN || user.roles_active.id === RolesUser.STAFFPROV || user.roles_active.id === STAFFKABKOTA || user.roles_active.id === RolesUser.LEADER) ? '/dashboard' : '/profile'" class="bullshit__return-home">
+        <router-link :to="(user.roles_active.id === RolesUser.ADMIN || user.roles_active.id === RolesUser.STAFFPROV || user.roles_active.id === RolesUser.STAFFKABKOTA || user.roles_active.id === RolesUser.LEADER) ? '/dashboard' : '/profile'" class="bullshit__return-home">
           {{ $t('label.errorpage-back') }}
         </router-link>
       </div>
