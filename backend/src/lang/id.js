@@ -66,7 +66,7 @@ export default {
     'categories-edit': 'Edit Kategori',
     'categories-detail': 'Detail Kategori',
 
-    'video-manage': 'Video',
+    'video-manage': 'Video Post',
     'video-list': 'Daftar Video',
     'video-create': 'Tambah Video',
     'video-edit': 'Edit Video',
@@ -102,11 +102,11 @@ export default {
     'popup-informasi-edit': 'Edit Pop-Up Informasi',
     'popup-informasi-detail': 'Detail Pop-Up Informasi',
 
-    'news-important-manage': 'Info Pendidikan',
-    'news-important-edit': 'Edit Info Pendidikan',
-    'news-important-list': 'Daftar Info Pendidikan',
-    'news-important-create': 'Tambah Info Pendidikan',
-    'news-important-detail': 'Detail Info Pendidikan',
+    'news-important-manage': 'Info Penting',
+    'news-important-edit': 'Edit Info Penting',
+    'news-important-list': 'Daftar Info Penting',
+    'news-important-create': 'Tambah Info Penting',
+    'news-important-detail': 'Detail Info Penting',
 
     'chat-admin-manage': 'Chat Admin',
     'chat-admin-list': 'List Chat Admin',
@@ -137,7 +137,7 @@ export default {
     'save-user': 'Tambah Pengguna',
     'save-banner': 'Tambah Banner',
     'save-popup': 'Tambah Pop Up',
-    'save-newsImportant': 'Tambah Info Pendidikan',
+    'save-newsImportant': 'Tambah Info Penting',
 
     'back-to-list': 'Kembali ke Daftar',
     'send-polling': 'Publikasikan Polling',
@@ -413,16 +413,16 @@ export default {
 
     'user-import-sending': 'Cek email Anda untuk progress unggah data',
 
-    'newsImportant-title-required': 'Judul info pendidikan harus diisi',
-    'newsImportant-title-min': 'Judul info pendidikan minimal 10 karakter',
-    'newsImportant-title-max': 'Judul info pendidikan maksimal 100 karakter',
-    'newsImportant-title-valid': 'Judul info pendidikan mengandung karakter yang tidak diizinkan',
-    'newsImportant-url-required': 'Tautan info pendidikan harus diisi',
-    'newsImportant-url-valid': 'Tautan info pendidikan mengandung karakter yang tidak diizinkan',
-    'newsImportant-url-match': 'Tautan info pendidikan tidak valid',
+    'newsImportant-title-required': 'Judul info penting harus diisi',
+    'newsImportant-title-min': 'Judul info penting minimal 10 karakter',
+    'newsImportant-title-max': 'Judul info penting maksimal 100 karakter',
+    'newsImportant-title-valid': 'Judul info penting mengandung karakter yang tidak diizinkan',
+    'newsImportant-url-required': 'Tautan info penting harus diisi',
+    'newsImportant-url-valid': 'Tautan info penting mengandung karakter yang tidak diizinkan',
+    'newsImportant-url-match': 'Tautan info penting tidak valid',
     'newsImportant-description-required': 'Deskripsi harus diisi',
     'newsImportant-description-max': 'Deskripsi maksimal 65000 karakter',
-    'newsImportant-create-success': 'Info pendidikan berhasil dibuat'
+    'newsImportant-create-success': 'Info penting berhasil dibuat'
 
   },
   categoriTypes: {
@@ -542,16 +542,16 @@ export default {
     'newsImportant-description': 'Deskripsi',
     'newsImportant-date-created': 'Tanggal Dibuat',
     'newsImportant-url': 'https://jabarprov.go.id',
-    'newsImportant-title': 'Judul Info Pendidikan',
+    'newsImportant-title': 'Judul Info Penting',
     'newsImportant-date-updated': 'Tanggal Publikasi',
-    'newsImportant-tooltip-edit': 'Edit Info Pendidikan',
-    'newsImportant-tooltip-delete': 'Hapus Info Pendidikan',
-    'newsImportant-tooltip-detail': 'Detail Info Pendidikan',
-    'newsImportant-tooltip-active': 'Aktifkan Info Pendidikan',
-    'newsImportant-tooltip-nonactive': 'Nonaktifkan Info Pendidikan',
+    'newsImportant-tooltip-edit': 'Edit Info Penting',
+    'newsImportant-tooltip-delete': 'Hapus Info Penting',
+    'newsImportant-tooltip-detail': 'Detail Info Penting',
+    'newsImportant-tooltip-active': 'Aktifkan Info Penting',
+    'newsImportant-tooltip-nonactive': 'Nonaktifkan Info Penting',
 
-    'newsImportant-detail': 'Detail Info Pendidikan',
-    'newsImportant-data': 'Data Info Pendidikan',
+    'newsImportant-detail': 'Detail Info Penting',
+    'newsImportant-data': 'Data Info Penting',
 
     'aspiration-tooltip-publish': 'Publikasikan Usulan',
     'aspiration-tooltip-unpublish': 'Batalkan Usulan',
