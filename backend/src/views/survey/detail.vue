@@ -48,7 +48,7 @@ export default {
   methods: {
     getDetail(id) {
       fetchRecord(id).then((response) => {
-        const { title, category, start_date, end_date, external_url, status, status_label } = response.data
+        const { title, category, start_date, end_date, external_url, response_url, status, status_label } = response.data
         this.record = response.data
         this.checkStartDate(response.data)
 
@@ -79,6 +79,10 @@ export default {
           {
             title: 'URL Survei',
             content: <a href={external_url} target='_blank'>{external_url}</a>
+          },
+          {
+            title: 'URL Hasil Survei',
+            content: <a href={response_url} target='_blank'>{external_url}</a> || '-'
           },
           {
             title: 'Status',
