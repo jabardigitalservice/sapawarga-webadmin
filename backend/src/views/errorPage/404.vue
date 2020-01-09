@@ -9,16 +9,17 @@
       </div>
       <div class="bullshit">
         <div class="bullshit__oops">
-          OOPS!
+          {{ $t('label.errorpage-oops') }}
         </div>
         <div class="bullshit__headline">
           {{ message }}
         </div>
         <div class="bullshit__info">
-          Harap periksa apakah URL yang Anda masukkan benar. Klik tombol di bawah untuk kembali ke beranda atau mengirim laporan kesalahan.
+          {{ $t('label.errorpage-message') }}
         </div>
-        <router-link to="/" class="bullshit__return-home">
-          Kembali ke beranda
+
+        <router-link :to="(user.roles_active.id === RolesUser.ADMIN || user.roles_active.id === RolesUser.STAFFPROV || user.roles_active.id === RolesUser.STAFFKABKOTA || user.roles_active.id === RolesUser.LEADER) ? '/dashboard' : '/profile'" class="bullshit__return-home">
+          {{ $t('label.errorpage-back') }}
         </router-link>
       </div>
     </div>
@@ -26,13 +27,23 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+import { RolesUser } from '@/utils/constantVariabel'
 
 export default {
   name: 'Page404',
+  data() {
+    return {
+      RolesUser
+    }
+  },
   computed: {
     message() {
-      return 'Anda tidak dapat memasuki halaman ini......'
-    }
+      return this.$t('label.errorpage-headline')
+    },
+    ...mapGetters([
+      'user'
+    ])
   }
 }
 </script>
