@@ -433,7 +433,8 @@ export default {
     'survey': 'Survei',
     'aspirasi': 'Usulan Masyarakat',
     'video': 'Video',
-    'newsHoax': 'Berita Hoax'
+    'newsHoax': 'Berita Hoax',
+    'news_important': 'Info penting'
   },
   label: {
     'sapawarga': 'sapawarga',
