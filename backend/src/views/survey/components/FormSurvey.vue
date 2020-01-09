@@ -80,6 +80,10 @@
             <el-input v-model="form.external_url" type="text" placeholder="http://form.google.com" />
           </el-form-item>
 
+          <el-form-item label="URL Hasil Survey" prop="response_url">
+            <el-input v-model="form.response_url" type="text" placeholder="http://form.google.com" />
+          </el-form-item>
+
           <el-form-item class="ml-min-40">
             <el-button v-if="form.status === null || form.status === 0" class="button-mobile" :loading="loading" @click="submitDraft">{{ $t('crud.draft') }}</el-button>
             <el-button v-if="form.status === null || form.status === 0" :disabled="btnDisableDate" type="primary" :loading="loading" @click="submitProcess">{{ $t('crud.save-publish') }}</el-button>
@@ -110,6 +114,7 @@ const defaultForm = {
   start_date: moment().format('YYYY-MM-DD'),
   end_date: moment().add(1, 'days').format('YYYY-MM-DD'),
   external_url: null,
+  response_url: null,
   status: null,
   kabkota_id: null,
   kec_id: null,
@@ -138,7 +143,7 @@ export default {
     }
 
     const validatorUrl = (rule, value, callback) => {
-      if (validUrl(value) === false) {
+      if (value !== null && validUrl(value) === false) {
         callback(new Error('URL tidak valid.'))
       }
 
@@ -162,6 +167,10 @@ export default {
         ],
         external_url: [
           { required: true, message: 'URL Survei harus diisi.', trigger: 'blur' },
+          { validator: validatorUrl, trigger: 'blur' }
+        ],
+        response_url: [
+          { required: false },
           { validator: validatorUrl, trigger: 'blur' }
         ]
       },
