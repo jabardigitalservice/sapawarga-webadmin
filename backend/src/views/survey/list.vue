@@ -68,7 +68,7 @@ import { fetchList } from '@/api/survey'
 import Pagination from '@/components/Pagination'
 import checkPermission from '@/utils/permission'
 import ListFilter from './_listfilter'
-
+import { RolesUser } from '@/utils/constantVariabel'
 import { getStatusColor, getStatusLabel } from './status'
 
 export default {
@@ -78,7 +78,8 @@ export default {
       list: null,
       total: 0,
       listLoading: true,
-      roles: checkPermission(['admin', 'staffProv']),
+      RolesUser,
+      roles: checkPermission([RolesUser.ADMIN, RolesUser.STAFFPROV, RolesUser.LEADER]),
       listQuery: {
         title: null,
         status: null,
