@@ -54,5 +54,6 @@ export const rolesWidget = {
   'staffRW': ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel', 'staffRW'],
   'staffSaberhoax': ['admin', 'staffSaberhoax'],
   'trainer': ['admin', 'staffProv', 'trainer'],
-  'user': ['admin', 'staffProv', 'user']
+  'user': ['admin', 'staffProv', 'user'],
+  'pimpinan': ['admin', 'staffProv', 'pimpinan']
 }

@@ -398,7 +398,7 @@ export default {
     'broadcast-title-valid': 'Judul pesan yang diisi tidak valid',
 
     'broadcast-description-required': 'Isi pesan harus diisi',
-    'broadcast-description-max': 'Isi pesan maksimal 1000 karakter',
+    'broadcast-description-max': 'Isi pesan maksimal 65000 karakter',
     'broadcast-description-valid': 'Pesan yang diisi tidak valid',
 
     'broadcast-rw-pattern': 'RW harus menggunakan angka',
@@ -578,7 +578,18 @@ export default {
     'post-detail-area': 'Kabupaten/Kota',
     'post-detail-description': 'Deskripsi',
     'post-detail-accept': 'Tampilkan',
-    'post-detail-reject': 'Tolak'
+    'post-detail-reject': 'Tolak',
+
+    'survey-data': 'Data Survei',
+    'detail-survey': 'Detail Survei',
+    'add-new-survey': 'Tambah Survei Baru',
+    'edit-survey': 'Edit Survei',
+    'view-survey': 'Lihat Survei',
+
+    'errorpage-oops': 'OOPS!',
+    'errorpage-headline': 'Anda tidak dapat memasuki halaman ini......',
+    'errorpage-message': 'Harap periksa apakah URL yang Anda masukkan benar. Klik tombol di bawah untuk kembali ke beranda atau mengirim laporan kesalahan.',
+    'errorpage-back': 'Kembali ke beranda'
   },
   news: {
     'media-channel': 'Kanal Media',
