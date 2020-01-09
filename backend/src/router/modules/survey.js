@@ -26,7 +26,7 @@ const surveyRouter = {
       component: () => import('@/views/survey/create'),
       meta: {
         title: 'survey-create',
-        roles: ['admin', 'staffProv']
+        roles: ['admin', 'staffProv', 'pimpinan']
       }
     },
     {
@@ -36,7 +36,7 @@ const surveyRouter = {
       hidden: true,
       meta: {
         title: 'survey-edit',
-        roles: ['admin', 'staffProv']
+        roles: ['admin', 'staffProv', 'pimpinan']
       }
     },
     {
@@ -46,7 +46,7 @@ const surveyRouter = {
       hidden: true,
       meta: {
         title: 'survey-detail',
-        roles: ['admin', 'staffProv', 'staffKabkota']
+        roles: ['admin', 'staffProv', 'staffKabkota', 'pimpinan']
       }
     }
   ]
