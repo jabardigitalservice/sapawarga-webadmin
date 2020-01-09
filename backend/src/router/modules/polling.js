@@ -1,15 +1,16 @@
 import Layout from '@/layout'
 
 const pollingRouter = {
-  name: 'Polling',
+  name: 'polling',
   path: '/polling',
   component: Layout,
   redirect: '/polling/index',
   meta: {
     title: 'polling-manage',
     roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel', 'pimpinan'],
-    icon: 'icon-polling'
+    icon: 'polling'
   },
+  active: false,
   children: [
     {
       name: 'polling-list',

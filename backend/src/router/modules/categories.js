@@ -10,6 +10,7 @@ const newsRouter = {
     roles: ['admin', 'staffProv'],
     icon: 'nested'
   },
+  active: false,
   children: [
     {
       name: 'categories-list',

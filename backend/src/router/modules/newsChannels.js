@@ -10,9 +10,10 @@ const newsRouter = {
     roles: ['admin', 'staffProv'],
     icon: 'documentation'
   },
+  active: false,
   children: [
     {
-      name: 'news-channels-list',
+      name: 'channels-news-list',
       path: 'index',
       component: () => import('@/views/newsChannels/list'),
       meta: {
@@ -21,7 +22,7 @@ const newsRouter = {
       }
     },
     {
-      name: 'news-channels-create',
+      name: 'channels-news-create',
       path: 'create',
       component: () => import('@/views/newsChannels/create'),
       meta: {

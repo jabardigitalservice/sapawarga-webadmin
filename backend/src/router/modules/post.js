@@ -10,6 +10,7 @@ const postRouter = {
     roles: ['admin', 'staffProv'],
     icon: 'example'
   },
+  active: false,
   children: [
     {
       name: 'post-list',

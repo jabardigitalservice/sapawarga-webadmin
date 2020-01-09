@@ -1,15 +1,16 @@
 import Layout from '@/layout'
 
 const newsRouter = {
-  name: 'News',
+  name: 'news',
   path: '/news',
   component: Layout,
   redirect: '/news/index',
   meta: {
     title: 'news-manage',
     roles: ['admin', 'staffProv', 'staffKabkota', 'pimpinan'],
-    icon: 'icon-news'
+    icon: 'news'
   },
+  active: false,
   children: [
     {
       name: 'news-list',

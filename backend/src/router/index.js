@@ -58,6 +58,7 @@ export const constantRoutes = [
     path: '/redirect',
     component: Layout,
     hidden: true,
+    active: false,
     children: [
       {
         path: '/redirect/:path*',
@@ -68,33 +69,39 @@ export const constantRoutes = [
   {
     path: '/login',
     component: () => import('@/views/login/index'),
+    active: false,
     hidden: true
   },
   {
     title: 'reset-password',
     path: '/reset-password',
     component: () => import('@/views/resetPassword/index'),
+    active: false,
     hidden: true
   },
   {
     path: '/auth-redirect',
     component: () => import('@/views/login/authredirect'),
+    active: false,
     hidden: true
   },
   {
     title: 'verifikasi-user',
     path: '/confirm',
     component: () => import('@/views/verifikasiUser/index'),
+    active: false,
     hidden: true
   },
   {
     path: '/403',
     component: () => import('@/views/errorPage/403'),
+    active: false,
     hidden: true
   },
   {
     path: '/404',
     component: () => import('@/views/errorPage/404'),
+    active: false,
     hidden: true
   },
   // rute dashboard ini di matikan sementara, karena dashboard belum siap.
@@ -120,6 +127,7 @@ export const constantRoutes = [
   {
     path: '/profile',
     component: Layout,
+    active: false,
     children: [
       {
         name: 'Profile',
@@ -136,6 +144,7 @@ export const constantRoutes = [
   {
     path: '/edit-profile',
     component: Layout,
+    active: false,
     children: [
       {
         name: 'profile-edit',
@@ -175,7 +184,7 @@ export const asyncRoutes = [
   popupInformasiRouter,
   newsImportantRouter,
   postRouter,
-  { path: '*', redirect: '/404', hidden: true }
+  { path: '*', redirect: '/404', active: false, hidden: true }
 ]
 
 const createRouter = () =>

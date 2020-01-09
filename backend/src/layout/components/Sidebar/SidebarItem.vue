@@ -2,15 +2,26 @@
   <div v-if="!item.hidden" class="menu-wrapper">
     <template v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children||onlyOneChild.noShowingChildren)&&!item.alwaysShow">
       <app-link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
-        <el-menu-item :index="resolvePath(onlyOneChild.path)" :class="{'submenu-title-noDropdown':!isNest}">
-          <item :icon="onlyOneChild.meta.icon||(item.meta&&item.meta.icon)" :title="generateTitle(onlyOneChild.meta.title)" />
+        <el-menu-item
+          :index="resolvePath(onlyOneChild.path)"
+          :class="{'submenu-title-noDropdown':!isNest}"
+          @click="activeMenu(isActive, item)"
+        >
+          <item
+            :icon="setIcon(onlyOneChild.meta.icon||(item.meta&&item.meta.icon))"
+            :title="generateTitle(onlyOneChild.meta.title)"
+          />
         </el-menu-item>
       </app-link>
     </template>
 
     <el-submenu v-else ref="subMenu" :index="resolvePath(item.path)" popper-append-to-body>
       <template slot="title">
-        <item v-if="item.meta" :icon="item.meta && item.meta.icon" :title="generateTitle(item.meta.title)" />
+        <item
+          v-if="item.meta"
+          :icon="setIcon(item.meta && item.meta.icon)"
+          :title="generateTitle(item.meta.title)"
+        />
       </template>
       <sidebar-item
         v-for="child in item.children"
@@ -26,6 +37,7 @@
 
 <script>
 import path from 'path'
+import { mapGetters } from 'vuex'
 import { generateTitle } from '@/utils/i18n'
 import { isExternal } from '@/utils/validate'
 import Item from './Item'
@@ -46,6 +58,10 @@ export default {
       type: Boolean,
       default: false
     },
+    isActive: {
+      type: Boolean,
+      default: false
+    },
     basePath: {
       type: String,
       default: ''
@@ -56,6 +72,11 @@ export default {
     // TODO: refactor with render function
     this.onlyOneChild = null
     return {}
+  },
+  computed: {
+    ...mapGetters([
+      'permission_routes'
+    ])
   },
   methods: {
     hasOneShowingChild(children = [], parent) {
@@ -89,7 +110,27 @@ export default {
 
       return path.resolve(this.basePath, routePath)
     },
+    async activeMenu(isActive, item) {
+      if (!isActive) {
+        await this.permission_routes.map(
+          function(data) {
+            data.active = false
+          }
+        )
+        const index = this.permission_routes.map(function(data) { return data.name }).indexOf(item.name.split('-')[0])
 
+        if (item.meta.icon === undefined && this.permission_routes[index] !== undefined) {
+          this.permission_routes[index].active = true
+        }
+        await this.$emit('update:isActive', !isActive)
+      }
+    },
+    setIcon(icon) {
+      if (icon !== undefined) {
+        return this.isActive ? icon + '-active' : icon
+      }
+      return undefined
+    },
     generateTitle
   }
 }

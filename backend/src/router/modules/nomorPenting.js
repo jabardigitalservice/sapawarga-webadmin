@@ -12,6 +12,7 @@ const nomorPentingRouter = {
     roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel'],
     icon: 'list'
   },
+  active: false,
   children: [
     {
       name: 'nomor-penting-list',

@@ -8,8 +8,9 @@ const questionsAnswerRouter = {
   meta: {
     title: 'question-answer-manage',
     roles: ['admin', 'staffProv', 'pimpinan'],
-    icon: 'icon-qna'
+    icon: 'qna'
   },
+  active: false,
   children: [
     {
       name: 'question-answer-manage',

@@ -10,6 +10,7 @@ const broadcastRouter = {
     roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel'],
     icon: 'message'
   },
+  active: false,
   children: [
     {
       name: 'broadcast-list',

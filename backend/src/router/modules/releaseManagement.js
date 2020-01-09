@@ -10,6 +10,7 @@ const releaseManagementRouter = {
     roles: ['admin'],
     icon: 'zip'
   },
+  active: false,
   children: [
     {
       name: 'release-management-list',

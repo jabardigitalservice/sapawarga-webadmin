@@ -10,6 +10,7 @@ const notificationRouter = {
     roles: ['admin', 'staffProv'],
     icon: 'email'
   },
+  active: false,
   children: [
     {
       name: 'notification-list',

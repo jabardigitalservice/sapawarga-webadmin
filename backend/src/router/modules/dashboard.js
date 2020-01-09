@@ -1,9 +1,14 @@
 import Layout from '@/layout'
 
 const dashboardRouter = {
+  name: 'Dashboard',
   path: '',
   component: Layout,
   redirect: 'dashboard',
+  meta: {
+    icon: 'home'
+  },
+  active: false,
   children: [
     {
       path: 'dashboard',

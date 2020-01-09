@@ -10,6 +10,7 @@ const videoRouter = {
     roles: ['admin', 'staffProv', 'staffKabkota'],
     icon: 'international'
   },
+  active: false,
   children: [
     {
       name: 'video-list',

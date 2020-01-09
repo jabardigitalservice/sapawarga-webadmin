@@ -1,18 +1,19 @@
 import Layout from '@/layout'
 
 const newsHoaxRouter = {
-  name: 'news-hoax',
+  name: 'newshoax',
   path: '/news-hoax',
   component: Layout,
   redirect: '/news-hoax/index',
   meta: {
     title: 'news-hoax',
     roles: ['admin', 'staffSaberhoax', 'pimpinan'],
-    icon: 'icon-saber-hoax'
+    icon: 'saberhoax'
   },
+  active: false,
   children: [
     {
-      name: 'news-hoax-list',
+      name: 'newshoax-list',
       path: 'index',
       component: () => import('@/views/newsHoax/list'),
       meta: {
@@ -21,7 +22,7 @@ const newsHoaxRouter = {
       }
     },
     {
-      name: 'news-hoax-create',
+      name: 'newshoax-create',
       path: 'create',
       component: () => import('@/views/newsHoax/create'),
       meta: {
@@ -30,7 +31,7 @@ const newsHoaxRouter = {
       }
     },
     {
-      name: 'news-hoax-edit',
+      name: 'newshoax-edit',
       path: 'edit/:id',
       component: () => import('@/views/newsHoax/edit'),
       hidden: true,
@@ -40,7 +41,7 @@ const newsHoaxRouter = {
       }
     },
     {
-      name: 'news-hoax-detail',
+      name: 'newshoax-detail',
       path: 'detail/:id',
       component: () => import('@/views/newsHoax/detail'),
       hidden: true,
