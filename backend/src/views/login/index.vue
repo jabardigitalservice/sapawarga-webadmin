@@ -58,6 +58,9 @@
 </template>
 
 <script>
+
+import { RolesUser, rolesWidget } from '@/utils/constantVariabel'
+
 export default {
   name: 'Login',
   components: { },
@@ -135,8 +138,15 @@ export default {
           this.loading = true
           this.$store
             .dispatch('user/login', this.loginForm)
-            .then(() => {
-              this.$router.push({ path: this.redirect || '/profile' })
+            .then(async() => {
+              let redirectLogin = await this.redirect
+              if (await this.$store.state.user) {
+                const roleUser = await this.$store.state.user.roles_active.id
+                if (rolesWidget[RolesUser.LEADER].includes(roleUser)) {
+                  redirectLogin = '/profile'
+                }
+              }
+              this.$router.push({ path: redirectLogin })
               this.loading = false
             })
             .catch(() => {
@@ -151,4 +161,3 @@ export default {
   }
 }
 </script>
-
