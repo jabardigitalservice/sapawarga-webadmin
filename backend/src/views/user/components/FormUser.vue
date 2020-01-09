@@ -240,7 +240,7 @@ import { Message } from 'element-ui'
 import InputMap from '@/components/InputMap'
 import { validCoordinate, containsWhitespace } from '@/utils/validate'
 import { isUserKabKota } from '@/utils/permission'
-import { RolesUser } from '@/utils/constantVariabel'
+import { RolesUser } from '@/utils/constantVariable'
 import moment from 'moment'
 
 export default {

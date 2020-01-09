@@ -43,19 +43,19 @@ export default {
     'aspiration-detail': 'Detail Usulan',
 
     'polling-manage': 'Polling',
-    'polling-list': 'Polling',
+    'polling-list': 'Daftar Polling',
     'polling-create': 'Tambah Polling',
     'polling-detail': 'Detail Polling',
     'polling-edit': 'Edit Polling',
 
     'survey-manage': 'Survei',
-    'survey-list': 'Survei',
+    'survey-list': 'Daftar Survei',
     'survey-create': 'Tambah Survei',
     'survey-detail': 'Detail Survei',
     'survey-edit': 'Edit Survei',
 
     'news-manage': 'Berita',
-    'news-list': 'Berita',
+    'news-list': 'Daftar Berita',
     'news-create': 'Tambah Berita',
     'news-edit': 'Edit Berita',
     'news-detail': 'Detail Berita',

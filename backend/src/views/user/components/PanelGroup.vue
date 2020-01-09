@@ -185,7 +185,7 @@
 
 <script>
 import CountTo from 'vue-count-to'
-import { RolesUser, rolesWidget } from '@/utils/constantVariabel'
+import { RolesUser, rolesWidget } from '@/utils/constantVariable'
 
 export default {
   name: 'PanelGroupUser',

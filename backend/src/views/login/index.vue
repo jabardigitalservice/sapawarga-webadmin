@@ -59,7 +59,7 @@
 
 <script>
 
-import { RolesUser, rolesWidget } from '@/utils/constantVariabel'
+import { RolesUser, rolesWidget } from '@/utils/constantVariable'
 
 export default {
   name: 'Login',

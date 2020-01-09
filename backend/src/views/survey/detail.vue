@@ -31,7 +31,7 @@
 import moment from 'moment'
 import { fetchRecord, update } from '@/api/survey'
 import { getStatusColor, getStatusLabel } from './status'
-import { SurveyStatus } from '@/utils/constantVariabel'
+import { SurveyStatus } from '@/utils/constantVariable'
 
 export default {
   data() {

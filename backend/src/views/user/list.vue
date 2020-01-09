@@ -116,7 +116,7 @@ import permission from '@/directive/permission/index.js'
 import checkPermission from '@/utils/permission'
 import ListFilter from './_listfilter'
 import { parsingDatetime } from '@/utils/datetimeToString'
-import { RolesUser } from '@/utils/constantVariabel'
+import { RolesUser } from '@/utils/constantVariable'
 import store from '@/store'
 
 export default {
