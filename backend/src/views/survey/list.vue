@@ -68,7 +68,7 @@ import { fetchList } from '@/api/survey'
 import Pagination from '@/components/Pagination'
 import checkPermission from '@/utils/permission'
 import ListFilter from './_listfilter'
-import { RolesUser } from '@/utils/constantVariabel'
+import { RolesUser } from '@/utils/constantVariable'
 import { getStatusColor, getStatusLabel } from './status'
 
 export default {

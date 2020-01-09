@@ -3,7 +3,7 @@ import { Message } from 'element-ui'
 import store from '@/store'
 import router from '@/router'
 import { getToken } from '@/utils/auth'
-import { ResponseRequest } from '@/utils/constantVariabel'
+import { ResponseRequest } from '@/utils/constantVariable'
 import i18n from '@/lang'
 // create an axios instance
 const service = axios.create({

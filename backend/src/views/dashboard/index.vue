@@ -9,7 +9,7 @@ import { mapGetters } from 'vuex'
 import adminDashboard from './admin'
 import editorDashboard from './editor'
 import leaderDashboard from './leader'
-import { RolesUser } from '@/utils/constantVariabel'
+import { RolesUser } from '@/utils/constantVariable'
 
 export default {
   name: 'Dashboard',

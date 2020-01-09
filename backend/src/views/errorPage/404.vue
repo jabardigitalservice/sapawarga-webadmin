@@ -28,7 +28,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { RolesUser } from '@/utils/constantVariabel'
+import { RolesUser } from '@/utils/constantVariable'
 
 export default {
   name: 'Page404',

@@ -37,7 +37,7 @@ import InputCategory from '@/components/InputCategory'
 import { mapGetters } from 'vuex'
 import { requestArea } from '@/api/staff'
 import checkPermission from '@/utils/permission'
-import { RolesUser } from '@/utils/constantVariabel'
+import { RolesUser } from '@/utils/constantVariable'
 
 export default {
   components: {

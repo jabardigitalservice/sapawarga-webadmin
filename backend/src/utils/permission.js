@@ -1,5 +1,5 @@
 import store from '@/store'
-import { RolesUser } from '@/utils/constantVariabel'
+import { RolesUser } from '@/utils/constantVariable'
 import router from '@/router'
 
 /**

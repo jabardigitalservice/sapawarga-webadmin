@@ -2,7 +2,7 @@ import { mount, createLocalVue } from "@vue/test-utils";
 import PanelGroup from "@/views/user/components/PanelGroup";
 import totalUser from "../fixtures/totalUser";
 import ElementUI from "element-ui";
-import { RolesUser, rolesWidget } from '@/utils/constantVariabel'
+import { RolesUser, rolesWidget } from '@/utils/constantVariable'
 //import SVG from '@/components/SvgIcon';
 // src/components/SvgIcon/index.vue
 import SvgIcon from "@/components/SvgIcon"; // svg组件

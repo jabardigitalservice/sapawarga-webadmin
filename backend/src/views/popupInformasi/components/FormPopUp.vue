@@ -98,7 +98,7 @@
 import AttachmentPhotoUpload from '@/components/AttachmentPhotoUpload'
 import { validUrl, isContainHtmlTags } from '@/utils/validate'
 import { create, fetchRecord, update } from '@/api/popupInformasi'
-import { PopupCategory, PopupFeature } from '@/utils/constantVariabel'
+import { PopupCategory, PopupFeature } from '@/utils/constantVariable'
 import Fitur from '@/views/banner/components/dialog/fitur'
 import { mapGetters } from 'vuex'
 const moment = require('moment')

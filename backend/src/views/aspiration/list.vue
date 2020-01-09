@@ -54,7 +54,7 @@ import Pagination from '@/components/Pagination'
 import checkPermission from '@/utils/permission'
 import { parsingDatetime } from '@/utils/datetimeToString'
 import { fetchList, unpublish, publish } from '@/api/aspiration'
-import { AspirationStatus, RolesUser } from '@/utils/constantVariabel'
+import { AspirationStatus, RolesUser } from '@/utils/constantVariable'
 
 export default {
   components: { Pagination, ListFilter },

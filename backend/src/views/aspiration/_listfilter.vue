@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import { AspirationStatus } from '@/utils/constantVariabel'
+import { AspirationStatus } from '@/utils/constantVariable'
 import InputFilterArea from '@/components/InputFilterArea'
 import InputCategory from '@/components/InputCategory'
 import checkPermission from '@/utils/permission'
