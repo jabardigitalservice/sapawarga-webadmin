@@ -42,17 +42,22 @@
             <template slot-scope="scope">
               <a :href="scope.row.external_url" target="_blank">
                 <el-tooltip :content="$t('label.view-survey')" placement="top">
-                  <el-button type="success" icon="el-icon-tickets" />
+                  <el-button type="success" size="small" icon="el-icon-tickets" />
+                </el-tooltip>
+              </a>
+              <a :href="scope.row.response_url" target="_blank">
+                <el-tooltip :content="$t('label.result-survey')" placement="top">
+                  <el-button type="info" size="small" icon="el-icon-document" />
                 </el-tooltip>
               </a>
               <router-link :to="'/survey/detail/'+scope.row.id">
                 <el-tooltip :content="$t('label.detail-survey')" placement="top">
-                  <el-button type="primary" icon="el-icon-view" />
+                  <el-button type="primary" size="small" icon="el-icon-view" />
                 </el-tooltip>
               </router-link>
               <router-link :to="scope.row.status === 0 ? `/survey/edit/${scope.row.id}` : ``">
                 <el-tooltip :content="$t('label.edit-survey')" placement="top">
-                  <el-button v-if="roles" type="warning" icon="el-icon-edit" :disabled="scope.row.status === 10" />
+                  <el-button v-if="roles" type="warning" size="small" icon="el-icon-edit" :disabled="scope.row.status === 10" />
                 </el-tooltip>
               </router-link>
             </template>
