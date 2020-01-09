@@ -13,10 +13,10 @@
       >
         <sidebar-item
           v-for="route in permission_routes"
-            :key="route.path"
-            :item="route"
-            :base-path="route.path"
-            :is-active.sync="route.active" 
+          :key="route.path"
+          :item="route"
+          :base-path="route.path"
+          :is-active.sync="route.active"
         />
       </el-menu>
     </el-scrollbar>
@@ -31,9 +31,9 @@ import variables from '@/styles/variables.scss'
 
 export default {
   components: { SidebarItem, Logo },
-  data(){
+  data() {
     return {
-      isActive:false
+      isActive: false
     }
   },
   computed: {

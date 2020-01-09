@@ -1,7 +1,7 @@
 import Layout from '@/layout'
 
 const newsRouter = {
-  name: 'News',
+  name: 'news',
   path: '/news',
   component: Layout,
   redirect: '/news/index',

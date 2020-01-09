@@ -1,7 +1,7 @@
 import Layout from '@/layout'
 
 const pollingRouter = {
-  name: 'Polling',
+  name: 'polling',
   path: '/polling',
   component: Layout,
   redirect: '/polling/index',

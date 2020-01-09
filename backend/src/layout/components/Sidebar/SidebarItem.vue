@@ -28,7 +28,6 @@
         :key="child.path"
         :is-nest="true"
         :item="child"
-        :is-active.sync="child.active"
         :base-path="resolvePath(child.path)"
         class="nest-menu"
       />
@@ -76,8 +75,8 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'permission_routes',
-    ]),
+      'permission_routes'
+    ])
   },
   methods: {
     hasOneShowingChild(children = [], parent) {
@@ -112,16 +111,23 @@ export default {
       return path.resolve(this.basePath, routePath)
     },
     async activeMenu(isActive, item) {
-      await this.permission_routes.map(
-        function (data) {
-          data.active = false;
+      if (!isActive) {
+        await this.permission_routes.map(
+          function(data) {
+            data.active = false
+          }
+        )
+        const index = this.permission_routes.map(function(data) { return data.name }).indexOf(item.name.split('-')[0])
+
+        if (item.meta.icon === undefined && this.permission_routes[index] !== undefined) {
+          this.permission_routes[index].active = true
         }
-      )
-      await this.$emit("update:isActive", !isActive)
+        await this.$emit('update:isActive', !isActive)
+      }
     },
     setIcon(icon) {
-      if (icon !== undefined){
-        return this.isActive ? icon+'-active':icon
+      if (icon !== undefined) {
+        return this.isActive ? icon + '-active' : icon
       }
       return undefined
     },

@@ -3,14 +3,14 @@
 import Layout from '@/layout'
 
 const tableRouter = {
+  name: 'table',
   path: '/table',
   component: Layout,
   redirect: '/table/complex-table',
-  name: 'Table',
   active: false,
   meta: {
     title: 'Table',
-    icon: 'table',
+    icon: 'table'
   },
   children: [
     {

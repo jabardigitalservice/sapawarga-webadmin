@@ -3,10 +3,10 @@
 import Layout from '@/layout'
 
 const userRouter = {
+  name: 'user',
   path: '/user',
   component: Layout,
   redirect: '/user/user-all',
-  name: 'User',
   meta: {
     title: 'user-manage',
     icon: 'user',

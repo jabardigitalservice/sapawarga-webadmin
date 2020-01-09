@@ -28,7 +28,7 @@ export default {
     'broadcast-edit': 'Edit Pesan',
     'broadcast-detail': 'Detail Pesan',
 
-    'question-answer-manage': 'QnA',
+    'question-answer-manage': 'Tanya Gubernur',
     'question-answer-list': 'List Pertanyaan',
     'question-answer-message': 'Jawaban',
 
