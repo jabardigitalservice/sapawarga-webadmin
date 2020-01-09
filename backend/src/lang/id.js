@@ -586,6 +586,7 @@ export default {
     'add-new-survey': 'Tambah Survei Baru',
     'edit-survey': 'Edit Survei',
     'view-survey': 'Lihat Survei',
+    'result-survey': 'Hasil Survei',
 
     'errorpage-oops': 'OOPS!',
     'errorpage-headline': 'Anda tidak dapat memasuki halaman ini......',
