@@ -45,11 +45,6 @@
                   <el-button type="success" size="small" icon="el-icon-tickets" />
                 </el-tooltip>
               </a>
-              <a :href="scope.row.response_url" target="_blank">
-                <el-tooltip :content="$t('label.result-survey')" placement="top">
-                  <el-button type="info" size="small" icon="el-icon-document" />
-                </el-tooltip>
-              </a>
               <router-link :to="'/survey/detail/'+scope.row.id">
                 <el-tooltip :content="$t('label.detail-survey')" placement="top">
                   <el-button type="primary" size="small" icon="el-icon-view" />
