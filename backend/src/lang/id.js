@@ -444,7 +444,7 @@ export default {
     'aspirasi': 'Usulan Masyarakat',
     'video': 'Video',
     'newsHoax': 'Berita Hoax',
-    'news_important': 'Info penting'
+    'news_important': 'Info Penting'
   },
   label: {
     'sapawarga': 'sapawarga',
