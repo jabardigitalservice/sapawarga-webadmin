@@ -5,7 +5,7 @@
         <el-alert
           v-if="form.status === 10"
           type="error"
-          description="Data sudah aktif, Anda tidak bisa mengubah data ini."
+          :description="$t('label.survey-description-alert')"
           show-icon
           style="margin-bottom: 15px"
         />
@@ -44,44 +44,44 @@
         <p class="warn-content">{{ $t('label.survey-data') }}</p>
         <el-form ref="form" :model="form" :rules="rules" :status-icon="true" :label-width="device === 'desktop' ? '150px' : null" label-position="left">
 
-          <el-form-item label="Judul Survei" prop="title">
-            <el-input v-model="form.title" type="text" placeholder="Judul Survei" />
+          <el-form-item :label="$t('label.survey-title')" prop="title">
+            <el-input v-model="form.title" type="text" :placeholder="$t('label.survey-title')" />
           </el-form-item>
 
-          <el-form-item label="Kategori" prop="category_id">
+          <el-form-item :label="$t('label.category')" prop="category_id">
             <InputCategory v-model="form.category_id" category-type="survey" prop="category" style="width: 100%" />
           </el-form-item>
 
-          <el-form-item label="Tanggal Mulai">
+          <el-form-item :label="$t('label.survey-start-date')">
             <el-date-picker
               v-model="form.start_date"
               type="date"
               :editable="false"
               :clearable="false"
               format="dd-MM-yyyy"
-              placeholder="Pilih Tanggal"
+              :placeholder="$t('label.survvey-select-date')"
               class="datetime-survey"
             />
           </el-form-item>
 
-          <el-form-item label="Tanggal Berakhir">
+          <el-form-item :label="$t('label.survey-end-date')">
             <el-date-picker
               v-model="form.end_date"
               type="date"
               :editable="false"
               :clearable="false"
               format="dd-MM-yyyy"
-              placeholder="Pilih Tanggal"
+              :placeholder="$t('label.survey-select-date')"
               class="datetime-survey"
             />
           </el-form-item>
 
-          <el-form-item label="URL Survei" prop="external_url">
-            <el-input v-model="form.external_url" type="text" placeholder="http://form.google.com" />
+          <el-form-item :label="$t('label.survey-link')" prop="external_url">
+            <el-input v-model="form.external_url" type="text" :placeholder="$t('label.survey-link-sample')" />
           </el-form-item>
 
-          <el-form-item label="URL Hasil Survey" prop="response_url">
-            <el-input v-model="form.response_url" type="text" placeholder="http://form.google.com" />
+          <el-form-item :label="$t('label.survey-link-result')" prop="response_url">
+            <el-input v-model="form.response_url" type="text" :placeholder="$t('label.survey-link-sample')" />
           </el-form-item>
 
           <el-form-item class="ml-min-40">
@@ -136,15 +136,15 @@ export default {
   data() {
     const validatorTitleWhitespace = (rule, value, callback) => {
       if (containsWhitespace(value) === true) {
-        callback(new Error('Judul Survei yang diisi tidak valid.'))
+        callback(new Error('Judul survei yang diisi tidak valid'))
       }
 
       callback()
     }
 
     const validatorUrl = (rule, value, callback) => {
-      if (value !== null && validUrl(value) === false) {
-        callback(new Error('URL tidak valid.'))
+      if (value !== '' && validUrl(value) === false) {
+        callback(new Error('URL tidak valid'))
       }
 
       callback()
@@ -157,24 +157,54 @@ export default {
       btnDisableDate: false,
       rules: {
         title: [
-          { required: true, message: 'Judul Survei harus diisi.', trigger: 'blur' },
-          { min: 10, message: 'Judul Survei minimal 10 karakter', trigger: 'blur' },
-          { max: 100, message: 'Judul Survei maksimal 100 karakter', trigger: 'blur' },
-          { validator: validatorTitleWhitespace, trigger: 'blur' }
+          { 
+            required: true, 
+            message: this.$t('message.survey-title-required'), 
+            trigger: 'blur' 
+          },
+          { 
+            min: 10, 
+            message: this.$t('message.survey-title-min'), 
+            trigger: 'blur' 
+          },
+          { 
+            max: 100, 
+            message: this.$t('message.survey-title-max'), 
+            trigger: 'blur' 
+          },
+          { 
+            validator: validatorTitleWhitespace, 
+            trigger: 'blur' 
+          }
         ],
         category_id: [
-          { required: true, message: 'Kategori harus diisi.', trigger: 'change' }
+          { 
+            required: true, 
+            message: this.$t('message.category'), 
+            trigger: 'change' 
+          }
         ],
         external_url: [
-          { required: true, message: 'URL Survei harus diisi.', trigger: 'blur' },
-          { validator: validatorUrl, trigger: 'blur' }
+          { 
+            required: true, 
+            message: this.$t('message.survey-link-required'), 
+            trigger: 'blur' 
+          },
+          { 
+            validator: validatorUrl, 
+            trigger: 'blur' 
+          }
         ],
         response_url: [
-          { required: false },
-          { validator: validatorUrl, trigger: 'blur' }
+          { 
+            required: false 
+          },
+          { 
+            validator: validatorUrl, 
+            trigger: 'blur' 
+          }
         ]
-      },
-      tempRoute: {}
+      }
     }
   },
   computed: {
