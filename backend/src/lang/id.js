@@ -602,6 +602,9 @@ export default {
     'survey-link': 'URL Survei',
     'survey-link-result': 'URL Hasil Survei',
     'survey-link-sample': 'https://sapawarga.jabarprov.go.id/',
+    'survey-name': 'Nama Survei',
+    'survey-start': 'Mulai',
+    'survey-end': 'Berakhir',
 
     'errorpage-oops': 'OOPS!',
     'errorpage-headline': 'Anda tidak dapat memasuki halaman ini......',
