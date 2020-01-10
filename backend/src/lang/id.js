@@ -422,8 +422,15 @@ export default {
     'newsImportant-url-match': 'Tautan info penting tidak valid',
     'newsImportant-description-required': 'Deskripsi harus diisi',
     'newsImportant-description-max': 'Deskripsi maksimal 65000 karakter',
-    'newsImportant-create-success': 'Info penting berhasil dibuat'
+    'newsImportant-create-success': 'Info penting berhasil dibuat',
 
+    'survey-title-required': 'Judul survei harus diisi',
+    'survey-title-min': 'Judul survei minimal 10 karakter',
+    'survey-title-max': 'Judul survei maksimal 100 karakter',
+    'survey-title-valid': 'Judul survei yang diisi tidak valid',
+    'survey-link-required': 'URL survei harus diisi',
+    'survey-link-valid': 'URL tidak valid'
+    
   },
   categoriTypes: {
     'phonebook': 'Nomor Penting',
@@ -477,7 +484,7 @@ export default {
     'choose-education': 'Pilih Pendidikan',
     'choose-job': 'Pilih Pekerjaan',
     'choose-birthdate': 'Pilih Tanggal Lahir',
-
+    
     'created-at': 'Tanggal Dibuat',
     'profile-updated-at': 'Tanggal Profil Diperbarui',
     'last-login-at': 'Terakhir Login',
@@ -587,6 +594,14 @@ export default {
     'edit-survey': 'Edit Survei',
     'view-survey': 'Lihat Survei',
     'result-survey': 'Hasil Survei',
+    'survey-description-alert': 'Data sudah aktif, Anda tidak bisa mengubah data ini',
+    'survey-title': 'Judul Survei',
+    'survey-start-date': 'Tanggal Mulai',
+    'survey-end-date': 'Tanggal Berakhir',
+    'survey-select-data': 'Pilih Tanggal',
+    'survey-link': 'URL Survei',
+    'survey-link-result': 'URL Hasil Survei',
+    'survey-link-sample': 'https://sapawarga.jabarprov.go.id/',
 
     'errorpage-oops': 'OOPS!',
     'errorpage-headline': 'Anda tidak dapat memasuki halaman ini......',
