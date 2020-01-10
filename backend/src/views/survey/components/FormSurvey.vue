@@ -157,51 +157,51 @@ export default {
       btnDisableDate: false,
       rules: {
         title: [
-          { 
-            required: true, 
-            message: this.$t('message.survey-title-required'), 
-            trigger: 'blur' 
+          {
+            required: true,
+            message: this.$t('message.survey-title-required'),
+            trigger: 'blur'
           },
-          { 
-            min: 10, 
-            message: this.$t('message.survey-title-min'), 
-            trigger: 'blur' 
+          {
+            min: 10,
+            message: this.$t('message.survey-title-min'),
+            trigger: 'blur'
           },
-          { 
-            max: 100, 
-            message: this.$t('message.survey-title-max'), 
-            trigger: 'blur' 
+          {
+            max: 100,
+            message: this.$t('message.survey-title-max'),
+            trigger: 'blur'
           },
-          { 
-            validator: validatorTitleWhitespace, 
-            trigger: 'blur' 
+          {
+            validator: validatorTitleWhitespace,
+            trigger: 'blur'
           }
         ],
         category_id: [
-          { 
-            required: true, 
-            message: this.$t('message.category'), 
-            trigger: 'change' 
+          {
+            required: true,
+            message: this.$t('message.category'),
+            trigger: 'change'
           }
         ],
         external_url: [
-          { 
-            required: true, 
-            message: this.$t('message.survey-link-required'), 
-            trigger: 'blur' 
+          {
+            required: true,
+            message: this.$t('message.survey-link-required'),
+            trigger: 'blur'
           },
-          { 
-            validator: validatorUrl, 
-            trigger: 'blur' 
+          {
+            validator: validatorUrl,
+            trigger: 'blur'
           }
         ],
         response_url: [
-          { 
-            required: false 
+          {
+            required: false
           },
-          { 
-            validator: validatorUrl, 
-            trigger: 'blur' 
+          {
+            validator: validatorUrl,
+            trigger: 'blur'
           }
         ]
       }
