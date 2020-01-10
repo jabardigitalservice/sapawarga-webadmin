@@ -61,31 +61,31 @@ export default {
 
         this.tableDataRecord = [
           {
-            title: 'Nama Survei',
+            title: this.$t('label.survey-name'),
             content: title
           },
           {
-            title: 'Kategori',
+            title: this.$t('label.category'),
             content: category.name
           },
           {
-            title: 'Tanggal Mulai',
+            title: this.$t('label.survey-start-date'),
             content: moment(start_date).format('D MMMM YYYY')
           },
           {
-            title: 'Tanggal Berakhir',
+            title: this.$t('label.survey-end-date'),
             content: moment(end_date).format('D MMMM YYYY')
           },
           {
-            title: 'URL Survei',
+            title: this.$t('label.survey-link'),
             content: <a href={external_url} target='_blank'>{external_url}</a>
           },
           {
-            title: 'URL Hasil Survei',
+            title: this.$t('label.survey-link-result'),
             content: <a href={response_url} target='_blank'>{external_url}</a> || '-'
           },
           {
-            title: 'Status',
+            title: this.$t('label.status'),
             content: <el-tag type={getStatusColor(row)}>{getStatusLabel(row)}</el-tag>
           }
         ]
