@@ -1,3 +1,5 @@
+@import './variables.scss';
+
 #app {
 
   // 主体区域 Main container
@@ -59,12 +61,12 @@
     }
 
     .svg-icon {
-      font-size: 30px;
-      margin-right: 16px;
+      font-size: 24px;
+      margin-right: 12px;
     }
 
     .el-menu {
-      padding-top: 14px;
+      padding-top: 2px;
       border: none;
       height: 100%;
       width: 100% !important;
@@ -215,6 +217,33 @@
     &::-webkit-scrollbar-thumb {
       background: #99a9bf;
       border-radius: 20px;
+    }
+  }
+}
+
+@media only screen and (max-width: $tabletViewportWidth) {
+  #app {
+    .sidebar-container {
+      .el-menu {
+        padding-top: 12px;
+      }
+      .svg-icon {
+        font-size: 30px;
+        margin-right: 16px;
+      }
+    }
+  }
+}
+@media only screen and (max-width: $mobileViewportWidth) {
+  #app {
+    .sidebar-container {
+      .el-menu {
+        padding-top: 12px;
+      }
+      .svg-icon {
+        font-size: 30px;
+        margin-right: 16px;
+      }
     }
   }
 }
