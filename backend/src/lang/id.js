@@ -429,7 +429,10 @@ export default {
     'survey-title-max': 'Judul survei maksimal 100 karakter',
     'survey-title-valid': 'Judul survei yang diisi tidak valid',
     'survey-link-required': 'URL survei harus diisi',
-    'survey-link-valid': 'URL tidak valid'
+    'survey-link-valid': 'URL tidak valid',
+    'survey-area-required': 'Wilayah harus diisi',
+    'survey-rw-pattern': 'RW harus menggunakan angka',
+    'survey-rw-min': 'RW harus 3 angka, contoh 001'
 
   },
   categoriTypes: {
