@@ -430,7 +430,7 @@ export default {
     'survey-title-valid': 'Judul survei yang diisi tidak valid',
     'survey-link-required': 'URL survei harus diisi',
     'survey-link-valid': 'URL tidak valid'
-    
+
   },
   categoriTypes: {
     'phonebook': 'Nomor Penting',
@@ -484,7 +484,7 @@ export default {
     'choose-education': 'Pilih Pendidikan',
     'choose-job': 'Pilih Pekerjaan',
     'choose-birthdate': 'Pilih Tanggal Lahir',
-    
+
     'created-at': 'Tanggal Dibuat',
     'profile-updated-at': 'Tanggal Profil Diperbarui',
     'last-login-at': 'Terakhir Login',
