@@ -203,6 +203,30 @@ export default {
             validator: validatorUrl,
             trigger: 'blur'
           }
+        ],
+        wilayah: [
+          {
+            required: false,
+            message: this.$t('message.survey-area-required'),
+            trigger: 'change'
+          }
+        ],
+        rw: [
+          {
+            pattern: /^[0-9]+$/,
+            message: this.$t('message.survey-rw-pattern'),
+            trigger: 'blur'
+          },
+          {
+            max: 3,
+            message: this.$t('message.survey-rw-min'),
+            trigger: 'blur'
+          },
+          {
+            min: 3,
+            message: this.$t('message.survey-rw-min'),
+            trigger: 'blur'
+          }
         ]
       }
     }
