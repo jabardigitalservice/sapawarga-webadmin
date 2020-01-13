@@ -7,7 +7,7 @@ const newsImportantRouter = {
   redirect: '/news-important/index',
   meta: {
     title: 'news-important-manage',
-    roles: ['admin', 'staffProv'],
+    roles: ['admin', 'staffProv', 'staffOPD'],
     icon: 'documentation'
   },
   active: false,
@@ -18,7 +18,7 @@ const newsImportantRouter = {
       component: () => import('@/views/newsImportant/list'),
       meta: {
         title: 'news-important-list',
-        roles: ['admin', 'staffProv']
+        roles: ['admin', 'staffProv', 'staffOPD']
       }
     },
     {
@@ -27,7 +27,7 @@ const newsImportantRouter = {
       component: () => import('@/views/newsImportant/create'),
       meta: {
         title: 'news-important-create',
-        roles: ['admin', 'staffProv']
+        roles: ['admin', 'staffProv', 'staffOPD']
       }
     },
     {
@@ -37,7 +37,7 @@ const newsImportantRouter = {
       hidden: true,
       meta: {
         title: 'news-important-edit',
-        roles: ['admin', 'staffProv']
+        roles: ['admin', 'staffProv', 'staffOPD']
       }
     },
     {
@@ -47,7 +47,7 @@ const newsImportantRouter = {
       hidden: true,
       meta: {
         title: 'news-important-detail',
-        roles: ['admin', 'staffProv']
+        roles: ['admin', 'staffProv', 'staffOPD']
       }
     }
   ]
