@@ -84,8 +84,8 @@ export default {
     'release-management-edit': 'Edit Release',
     'release-management-detail': 'Detail Release',
 
-    'news-hoax': 'Saber Hoax',
-    'news-hoax-list': 'Saber Hoax',
+    'news-hoax': 'Jabar Saber Hoax',
+    'news-hoax-list': 'Daftar Berita Hoax',
     'news-hoax-create': 'Tambah Berita Hoax',
     'news-hoax-edit': 'Edit Berita Hoax',
     'news-hoax-detail': 'Detail Berita Hoax',
@@ -434,7 +434,17 @@ export default {
     'newsImportant-url-match': 'Tautan info penting tidak valid',
     'newsImportant-description-required': 'Deskripsi harus diisi',
     'newsImportant-description-max': 'Deskripsi maksimal 65000 karakter',
-    'newsImportant-create-success': 'Info penting berhasil dibuat'
+    'newsImportant-create-success': 'Info penting berhasil dibuat',
+
+    'survey-title-required': 'Judul survei harus diisi',
+    'survey-title-min': 'Judul survei minimal 10 karakter',
+    'survey-title-max': 'Judul survei maksimal 100 karakter',
+    'survey-title-valid': 'Judul survei yang diisi tidak valid',
+    'survey-link-required': 'URL survei harus diisi',
+    'survey-link-valid': 'URL tidak valid',
+    'survey-area-required': 'Wilayah harus diisi',
+    'survey-rw-pattern': 'RW harus menggunakan angka',
+    'survey-rw-min': 'RW harus 3 angka, contoh 001'
 
   },
   categoriTypes: {
@@ -445,7 +455,8 @@ export default {
     'survey': 'Survei',
     'aspirasi': 'Usulan Masyarakat',
     'video': 'Video',
-    'newsHoax': 'Berita Hoax'
+    'newsHoax': 'Berita Hoax',
+    'news_important': 'Info Penting'
   },
   label: {
     'sapawarga': 'sapawarga',
@@ -597,6 +608,18 @@ export default {
     'add-new-survey': 'Tambah Survei Baru',
     'edit-survey': 'Edit Survei',
     'view-survey': 'Lihat Survei',
+    'result-survey': 'Hasil Survei',
+    'survey-description-alert': 'Data sudah aktif, Anda tidak bisa mengubah data ini',
+    'survey-title': 'Judul Survei',
+    'survey-start-date': 'Tanggal Mulai',
+    'survey-end-date': 'Tanggal Berakhir',
+    'survey-select-data': 'Pilih Tanggal',
+    'survey-link': 'URL Survei',
+    'survey-link-result': 'URL Hasil Survei',
+    'survey-link-sample': 'https://sapawarga.jabarprov.go.id/',
+    'survey-name': 'Nama Survei',
+    'survey-start': 'Mulai',
+    'survey-end': 'Berakhir',
 
     'gamification-detail': 'Detail Gamification',
     'gamification-add-new': 'Tambah Gamification Baru',

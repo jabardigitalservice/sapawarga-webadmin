@@ -71,6 +71,7 @@
 
 <script>
 import { getKabkotaList, getKecamatanList, getKelurahanList } from '@/api/areas'
+import { RolesUser } from '@/utils/constantVariable'
 import checkPermission from '@/utils/permission'
 
 export default {
@@ -98,6 +99,7 @@ export default {
 
   data() {
     return {
+      RolesUser,
       kabkota_selected: null,
       kecamatan_selected: null,
       kelurahan_selected: null,
@@ -110,7 +112,7 @@ export default {
   computed: {
     enableKabkota() {
       if (this.enableRolePolicy === true) {
-        return checkPermission(['admin', 'staffProv'])
+        return checkPermission([this.RolesUser.ADMIN, this.RolesUser.STAFFPROV, this.RolesUser.LEADER])
       }
 
       return true
@@ -118,7 +120,7 @@ export default {
 
     enableKecamatan() {
       if (this.enableRolePolicy === true) {
-        return checkPermission(['admin', 'staffProv', 'staffKabkota'])
+        return checkPermission([this.RolesUser.ADMIN, this.RolesUser.LEADER, this.RolesUser.STAFFPROV, this.RolesUser.STAFFKABKOTA])
       }
 
       return true
@@ -126,7 +128,7 @@ export default {
 
     enableKelurahan() {
       if (this.enableRolePolicy === true) {
-        return checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec'])
+        return checkPermission([this.RolesUser.ADMIN, this.RolesUser.LEADER, this.RolesUser.STAFFPROV, this.RolesUser.STAFFKABKOTA, this.RolesUser.STAFFKEC])
       }
 
       return true
@@ -247,19 +249,19 @@ export default {
 
       this.getKabkotaOptions()
 
-      if (checkPermission(['staffKabkota', 'staffKec', 'staffKel'])) {
+      if (checkPermission([this.RolesUser.STAFFKABKOTA, this.RolesUser.STAFFKEC, this.RolesUser.STAFFKEL])) {
         this.kabkota_selected = authUser.kabkota_id
 
         this.changeSelection(this.kabkota_selected, 'changeKabkota')
       }
 
-      if (checkPermission(['staffKec', 'staffKel'])) {
+      if (checkPermission([this.RolesUser.STAFFKEC, this.RolesUser.STAFFKEL])) {
         this.kecamatan_selected = authUser.kec_id
 
         this.changeSelection(this.kecamatan_selected, 'changeKecamatan')
       }
 
-      if (checkPermission(['staffKel'])) {
+      if (checkPermission([this.RolesUser.STAFFKEL])) {
         this.kelurahan_selected = authUser.kel_id
 
         this.changeSelection(this.kelurahan_selected, 'changeKelurahan')

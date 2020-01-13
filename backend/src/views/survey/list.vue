@@ -18,41 +18,41 @@
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%" @sort-change="changeSort">
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
 
-          <el-table-column prop="title" sortable="custom" label="Nama Survei" min-width="300" />
+          <el-table-column prop="title" sortable="custom" :label="$t('label.survey-name')" min-width="300" />
 
-          <el-table-column prop="start_date" sortable="custom" label="Mulai" width="150" align="center">
+          <el-table-column prop="start_date" sortable="custom" :label="$t('label.survey-start')" width="150" align="center">
             <template slot-scope="{row}">
               {{ row.start_date | moment('D MMMM YYYY') }}
             </template>
           </el-table-column>
-          <el-table-column prop="end_date" sortable="custom" label="Berakhir" width="150" align="center">
+          <el-table-column prop="end_date" sortable="custom" :label="$t('label.survey-end')" width="150" align="center">
             <template slot-scope="{row}">
               {{ row.end_date | moment('D MMMM YYYY') }}
             </template>
           </el-table-column>
 
-          <el-table-column prop="status" sortable="custom" class-name="status-col" label="Status" width="200">
+          <el-table-column prop="status" sortable="custom" class-name="status-col" :label="$t('label.status')" width="200">
             <template slot-scope="{row}">
               <el-tag :type="statusColor(row)">
                 {{ statusLabel(row) }}
               </el-tag>
             </template>
           </el-table-column>
-          <el-table-column align="center" label="Actions" width="250">
+          <el-table-column align="center" :label="$t('label.actions')" width="250">
             <template slot-scope="scope">
               <a :href="scope.row.external_url" target="_blank">
                 <el-tooltip :content="$t('label.view-survey')" placement="top">
-                  <el-button type="success" icon="el-icon-tickets" />
+                  <el-button type="success" size="small" icon="el-icon-tickets" />
                 </el-tooltip>
               </a>
               <router-link :to="'/survey/detail/'+scope.row.id">
                 <el-tooltip :content="$t('label.detail-survey')" placement="top">
-                  <el-button type="primary" icon="el-icon-view" />
+                  <el-button type="primary" size="small" icon="el-icon-view" />
                 </el-tooltip>
               </router-link>
               <router-link :to="scope.row.status === 0 ? `/survey/edit/${scope.row.id}` : ``">
                 <el-tooltip :content="$t('label.edit-survey')" placement="top">
-                  <el-button v-if="roles" type="warning" icon="el-icon-edit" :disabled="scope.row.status === 10" />
+                  <el-button v-if="roles" type="warning" size="small" icon="el-icon-edit" :disabled="scope.row.status === 10" />
                 </el-tooltip>
               </router-link>
             </template>
