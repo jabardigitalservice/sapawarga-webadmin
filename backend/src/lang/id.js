@@ -113,7 +113,11 @@ export default {
 
     'post-manage': 'Kegiatan RW',
     'post-list': 'Kegiatan RW',
-    'post-detail': 'Detail Kegiatan RW'
+    'post-detail': 'Detail Kegiatan RW',
+
+    'gamification-manage': 'Gamification',
+    'gamification-list': 'Daftar Gamification',
+    'gamification-create': 'Tambah Gamification'
   },
   crud: {
     'list-empty': 'Belum ada data.',
@@ -585,6 +589,11 @@ export default {
     'add-new-survey': 'Tambah Survei Baru',
     'edit-survey': 'Edit Survei',
     'view-survey': 'Lihat Survei',
+
+    'gamification-detail': 'Detail Gamification',
+    'gamification-add-new': 'Tambah Gamification Baru',
+    'gamification-edit': 'Edit Gamification',
+    'gamification-view': 'Lihat Gamification',
 
     'errorpage-oops': 'OOPS!',
     'errorpage-headline': 'Anda tidak dapat memasuki halaman ini......',
