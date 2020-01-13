@@ -84,8 +84,8 @@ export default {
     'release-management-edit': 'Edit Release',
     'release-management-detail': 'Detail Release',
 
-    'news-hoax': 'Saber Hoax',
-    'news-hoax-list': 'Saber Hoax',
+    'news-hoax': 'Jabar Saber Hoax',
+    'news-hoax-list': 'Daftar Berita Hoax',
     'news-hoax-create': 'Tambah Berita Hoax',
     'news-hoax-edit': 'Edit Berita Hoax',
     'news-hoax-detail': 'Detail Berita Hoax',
