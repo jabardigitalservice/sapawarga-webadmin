@@ -142,6 +142,7 @@ export default {
     'save-banner': 'Tambah Banner',
     'save-popup': 'Tambah Pop Up',
     'save-newsImportant': 'Tambah Info Penting',
+    'save-gamification': 'Tambah Gamification',
 
     'back-to-list': 'Kembali ke Daftar',
     'send-polling': 'Publikasikan Polling',
@@ -196,7 +197,9 @@ export default {
     'error-edit-role': 'Anda tidak memiliki hak akses halaman ini.',
     'newsImportant-error-edit-pubished': 'Sudah dipublish, tidak dapat diedit',
 
-    'news-selected': 'Berita sudah dipilih'
+    'news-selected': 'Berita sudah dipilih',
+    'gamification-send-success': 'Gamification berhasil dibuat'
+
   },
   common: {
     confirm: 'Ya',
@@ -375,7 +378,12 @@ export default {
     'news-category-not-null': 'Kategori Berita harus diisi',
     'news-content-not-null': 'Konten Berita harus diisi',
 
-    'input-message': 'Isian pesan mengandung karakter yang tidak diizinkan.'
+    'input-message': 'Isian pesan mengandung karakter yang tidak diizinkan.',
+
+    'gamification-title-must-be-filled': 'Judul Misi harus diisi.',
+    'gamification-name-must-be-filled': 'Nama Penghargaan harus diisi.',
+    'gamification-deskripsi-must-be-filled': 'Deskripsi harus diisi.',
+    'gamification-title-already-used': 'Judul Misi sudah digunakan.'
 
   },
   navbar: {
@@ -598,7 +606,15 @@ export default {
     'errorpage-oops': 'OOPS!',
     'errorpage-headline': 'Anda tidak dapat memasuki halaman ini......',
     'errorpage-message': 'Harap periksa apakah URL yang Anda masukkan benar. Klik tombol di bawah untuk kembali ke beranda atau mengirim laporan kesalahan.',
-    'errorpage-back': 'Kembali ke beranda'
+    'errorpage-back': 'Kembali ke beranda',
+
+    'gamification-title-fitur': 'Fitur',
+    'gamification-title-mision': 'Judul Misi',
+    'gamification-date-mision': 'Tanggal Misi',
+    'gamification-name-reward': 'Nama Penghargaan',
+    'gamification-amount-hit': 'Jumlah Hit',
+    'gamification-description-mision': 'Deskripsi Misi'
+
   },
   news: {
     'media-channel': 'Kanal Media',
