@@ -1,17 +1,19 @@
 <template>
   <div>
     <el-card v-for="(data, index) in list" :key="index" class="box-card-qna">
-      <div class="header-box-qna">
-        <img src="@/assets/notifications.svg">
-        <span class="sender-name"> {{ data.user.name }}</span>
-        <div class="card-qna-likes">
-          <span class="total-likes-qna">{{ data.likes_count }}</span>
-          <img src="@/assets/grey-like.svg">
+      <router-link :to="'/question-answer/messages/'+data.id">
+        <div class="header-box-qna">
+          <img src="@/assets/notifications.svg">
+          <span class="sender-name"> {{ data.user.name }}</span>
+          <div class="card-qna-likes">
+            <span class="total-likes-qna">{{ data.likes_count }}</span>
+            <img src="@/assets/grey-like.svg">
+          </div>
         </div>
-      </div>
-      <div class="card-qna-content">
-        <span>{{ data.text }}</span>
-      </div>
+        <div class="card-qna-content">
+          <span>{{ data.text }}</span>
+        </div>
+      </router-link>
     </el-card>
   </div>
 </template>
@@ -64,6 +66,7 @@ export default {
   .card-qna-content {
     font-size: 15px;
     padding-top: 10px;
+    color: black;
   }
 
 }

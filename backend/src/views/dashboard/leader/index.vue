@@ -3,7 +3,7 @@
     <div class=" clearfix">
       <el-row :gutter="8">
         <el-col class="dashboard-content-map" :md="{span: 24}" :lg="{span: 24}" :xl="{span: 24}">
-          <map-aspiration :additional-data="additionalData" />
+          <map-aspiration />
         </el-col>
       </el-row>
       <el-row :gutter="8">
@@ -27,37 +27,12 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { fetchTopFiveNewsProv, fetchAspirasiCounts } from '@/api/dashboard'
+import { fetchTopFiveNewsProv, fetchPollingCounts } from '@/api/dashboard'
+import { fetchListQuestions } from '@/api/questionsAnswer'
 import MapAspiration from '@/components/Dashboard/MapAspiration'
 import Polling from '@/components/Dashboard/Polling'
 import TopNews from '@/components/Dashboard/TopNews'
 import TopQNA from '@/components/Dashboard/TopQNA'
-
-const listTopQNA = {
-  items: [
-    {
-      likes_count: 5,
-      text: 'selamat siang pak gub, sehat?',
-      user: {
-        id: 186100,
-        name: 'staff rw sembilan puluh'
-      }
-    },
-    {
-      likes_count: 5,
-      text: 'selamat siang pak gub, sehat?',
-      user: {
-        id: 186100,
-        name: 'staff rw sembilan puluh'
-      }
-    }
-  ]
-}
-
-const countPolling = {
-  createdPolling: 12,
-  followedPolling: 10
-}
 
 export default {
   name: 'DashboardLeader',
@@ -69,11 +44,18 @@ export default {
   },
   data() {
     return {
-      listTopQNA: listTopQNA.items,
-      totalPolling: countPolling,
-      additionalData: [],
+      listTopQNA: null,
+      totalPolling: {
+        createdPolling: 0,
+        followedPolling: 0
+      },
       listNewsProvinsi: null,
-      listLoading: true
+      listLoading: true,
+      queryQNA: {
+        sort_by: 'comments_count',
+        sort_order: 'ascending',
+        limit: 3
+      }
     }
   },
   computed: {
@@ -85,7 +67,8 @@ export default {
   },
   created() {
     this.getListProvinsi()
-    this.getAspirasiCounts()
+    this.getPollingCounts()
+    this.getQNAList()
   },
   methods: {
     getListProvinsi() {
@@ -95,10 +78,15 @@ export default {
         this.listLoading = false
       })
     },
-    getAspirasiCounts() {
+    getPollingCounts() {
+      fetchPollingCounts().then(response => {
+        this.totalPolling.createdPolling = response.data.STATUS_PUBLISHED
+      })
+    },
+    getQNAList() {
       this.listLoading = true
-      fetchAspirasiCounts().then(response => {
-        this.additionalData.push(response.data)
+      fetchListQuestions(this.queryQNA).then(response => {
+        this.listTopQNA = response.data.items
       })
     }
 

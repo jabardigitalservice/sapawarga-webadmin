@@ -55,3 +55,11 @@ export function fetchTopFiveNewsDistricts(query) {
     params: query
   })
 }
+
+export function fetchPollingCounts(query) {
+  return request({
+    url: 'dashboards/polling-counts',
+    method: 'get',
+    params: query
+  })
+}
