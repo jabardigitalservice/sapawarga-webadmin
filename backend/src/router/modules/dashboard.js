@@ -6,7 +6,8 @@ const dashboardRouter = {
   component: Layout,
   redirect: 'dashboard',
   meta: {
-    icon: 'home'
+    icon: 'home',
+    roles: ['admin', 'staffProv', 'staffKabkota', 'pimpinan']
   },
   active: false,
   children: [
