@@ -36,20 +36,12 @@
 </template>
 
 <script>
-import { fetchAspirasiMap } from '@/api/dashboard'
+import { fetchAspirasiMap, fetchAspirasiCounts } from '@/api/dashboard'
 import { mapGetters } from 'vuex'
 import leaflet from 'leaflet'
 
 export default {
   name: 'MapAspiration',
-  props: {
-    additionalData: {
-      type: Array,
-      default() {
-        return []
-      }
-    }
-  },
   data() {
     return {
       list: null,
@@ -88,10 +80,8 @@ export default {
       this.labelTitle = this.$t('label.area-kec')
       this.isChecked = { kabkota: false, kec: true }
     }
-    if (this.additionalData[0]) {
-      this.totalAspiration = await parseInt(this.additionalData[0]['STATUS_APPROVAL_PENDING']) + parseInt(this.additionalData[0]['STATUS_APPROVAL_REJECTED']) + parseInt(this.additionalData[0]['STATUS_PUBLISHED']) + parseInt(this.additionalData[0]['STATUS_UNPUBLISHED'])
-      this.totalPublishedAspiration = parseInt(this.additionalData[0]['STATUS_PUBLISHED'])
-    }
+
+    this.getAspirasiCounts()
     this.getAPIData()
   },
 
@@ -104,6 +94,14 @@ export default {
         )
         this.initMap(validData)
       })
+    },
+    async getAspirasiCounts() {
+      this.listLoading = true
+      const response = await fetchAspirasiCounts()
+      if (response.data) {
+        this.totalAspiration = parseInt(response.data.STATUS_APPROVAL_PENDING) + parseInt(response.data.STATUS_APPROVAL_REJECTED) + parseInt(response.data.STATUS_PUBLISHED) + parseInt(response.data.STATUS_UNPUBLISHED)
+        this.totalPublishedAspiration = parseInt(response.data.STATUS_PUBLISHED)
+      }
     },
     initMap(dataMap) {
       try {
