@@ -110,6 +110,12 @@ export default {
     getTableRowNumbering(index) {
       return ((this.listQuery.page - 1) * this.listQuery.limit) + (index + 1)
     },
+
+    changeSort(e) {
+      this.listQuery.sort_by = e.prop
+      this.listQuery.sort_order = e.order
+      this.getList()
+    }
   }
 }
 </script>
