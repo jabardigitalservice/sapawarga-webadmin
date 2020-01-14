@@ -11,14 +11,23 @@
             </router-link>
           </el-col>
         </el-row>
+
+        <ListFilter
+          :list-query.sync="listQuery"
+          @submit-search="getList"
+          @reset-search="resetFilter"
+        />
+
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%" @sort-change="changeSort">
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
 
-          <el-table-column prop="version" label="Version" min-width="150" />
+          <el-table-column prop="version" label="Judul Misi" />
 
-          <el-table-column prop="force_update" :formatter="cellValueRenderer" label="Force Update" min-width="150" />
+          <el-table-column prop="force_update" label="Status" />
+          <!-- <el-table-column prop="force_update" label="Start Date" /> -->
+          <!-- <el-table-column prop="force_update" label="End Date" /> -->
 
-          <el-table-column align="center" label="Actions" min-width="150px">
+          <el-table-column align="center" label="Actions">
             <template v-if="scope.$index === 0" slot-scope="scope">
               <router-link :to="'/gamification/edit/' +scope.row.id">
                 <el-button type="white" size="mini">
@@ -43,9 +52,10 @@
 import { mapGetters } from 'vuex'
 import { fetchList } from '@/api/releaseManagement'
 import Pagination from '@/components/Pagination'
+import ListFilter from './components/_listfilter'
 
 export default {
-  components: { Pagination },
+  components: { Pagination, ListFilter },
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -61,6 +71,8 @@ export default {
       total: 0,
       listLoading: true,
       listQuery: {
+        start_date: '',
+        end_date: '',
         title: null,
         type: null,
         status: null,
@@ -87,6 +99,16 @@ export default {
         this.total = response.data._meta.totalCount
         this.listLoading = false
       })
+    },
+
+    resetFilter() {
+      Object.assign(this.$data.listQuery, this.$options.data().listQuery)
+
+      this.getList()
+    },
+
+    getTableRowNumbering(index) {
+      return ((this.listQuery.page - 1) * this.listQuery.limit) + (index + 1)
     },
   }
 }
