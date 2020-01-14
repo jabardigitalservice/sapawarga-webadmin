@@ -59,7 +59,7 @@
               :editable="false"
               :clearable="false"
               format="dd-MM-yyyy"
-              :placeholder="$t('label.survvey-select-date')"
+              :placeholder="$t('label.survey-select-date')"
               class="datetime-survey"
             />
           </el-form-item>
@@ -143,7 +143,7 @@ export default {
     }
 
     const validatorUrl = (rule, value, callback) => {
-      if (value !== '' && validUrl(value) === false) {
+      if (value === !null && validUrl(value) === false) {
         callback(new Error('URL tidak valid'))
       }
 

@@ -601,7 +601,7 @@ export default {
     'survey-title': 'Judul Survei',
     'survey-start-date': 'Tanggal Mulai',
     'survey-end-date': 'Tanggal Berakhir',
-    'survey-select-data': 'Pilih Tanggal',
+    'survey-select-date': 'Pilih Tanggal',
     'survey-link': 'URL Survei',
     'survey-link-result': 'URL Hasil Survei',
     'survey-link-sample': 'https://sapawarga.jabarprov.go.id/',

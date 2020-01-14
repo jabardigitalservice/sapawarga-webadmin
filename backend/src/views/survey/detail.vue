@@ -82,7 +82,7 @@ export default {
           },
           {
             title: this.$t('label.survey-link-result'),
-            content: <a href={response_url} target='_blank'>{external_url}</a> || '-'
+            content: response_url ? <a href={response_url} target='_blank'>{response_url}</a> : '-'
           },
           {
             title: this.$t('label.status'),
