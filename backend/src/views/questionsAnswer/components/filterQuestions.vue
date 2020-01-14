@@ -1,19 +1,15 @@
 <template>
   <el-col :lg="24" :sm="24" :xs="24">
-    <el-form>
-      <el-col :lg="24" :sm="24" :xs="24">
-        <el-form-item>
-          <el-input
-            v-model="name"
-            name="name"
-            placeholder="Cari Pertanyaan"
-            @keyup.enter.native="onSubmitSearch"
-          >
-            <i slot="prefix" class="el-input__icon el-icon-search" />
-          </el-input>
-        </el-form-item>
-      </el-col>
-    </el-form>
+    <el-col :lg="24" :sm="24" :xs="24">
+      <el-input
+        v-model="search"
+        name="search"
+        placeholder="Cari Pertanyaan"
+        @keyup.enter.native="onSubmitSearch"
+      >
+        <i slot="prefix" class="el-input__icon el-icon-search" />
+      </el-input>
+    </el-col>
   </el-col>
 </template>
 
@@ -22,7 +18,7 @@ export default {
   name: 'FilterQuestions',
   data() {
     return {
-      name: null
+      search: null
     }
   },
   async created() {
@@ -30,7 +26,7 @@ export default {
   },
   methods: {
     onSubmitSearch() {
-      this.$emit('changeNameInput', this.name)
+      this.$emit('changeNameInput', this.search)
     }
   }
 }

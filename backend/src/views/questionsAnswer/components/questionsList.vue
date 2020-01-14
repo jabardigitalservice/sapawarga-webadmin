@@ -4,7 +4,7 @@
       <el-col style="background-color: #f2f2f3;position: relative;pointer-events: auto;">
         <nav style="padding: 0 15px;">
           <FilterQuestions
-            @changeNameInput="listQuery.name = $event"
+            @changeNameInput="listQuery.search = $event"
             @changeKabKota="listQuery.kabkota_id = $event"
           />
         </nav>
@@ -90,14 +90,14 @@ export default {
       isLoading: false,
       listQuery: {
         page: 1,
-        name: null,
+        search: null,
         kabkota_id: null,
         limit: 10
       }
     }
   },
   watch: {
-    async 'listQuery.name'() {
+    async 'listQuery.search'() {
       const response = await fetchListQuestions(this.listQuery)
       this.data = []
       this.data.push(...response.data.items)
