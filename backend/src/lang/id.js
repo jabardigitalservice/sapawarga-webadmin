@@ -632,6 +632,7 @@ export default {
     'errorpage-back': 'Kembali ke beranda',
 
     'gamification-title-fitur': 'Fitur',
+    'gamification-action-fitur': 'Action Fitur',
     'gamification-title-mision': 'Judul Misi',
     'gamification-date-mision': 'Tanggal Misi',
     'gamification-name-reward': 'Nama Penghargaan',

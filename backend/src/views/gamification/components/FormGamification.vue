@@ -29,6 +29,13 @@
             </el-select>
           </el-form-item>
 
+          <el-form-item :label="$t('label.gamification-action-fitur')">
+            <el-select v-model="gamification.action_fitur" :placeholder="$t('label.gamification-action-fitur')" name="action_fitur">
+              <el-option :label="$t('route.news-manage')" value="news" />
+              <el-option :label="$t('route.post-manage')" value="postrw" />
+            </el-select>
+          </el-form-item>
+
           <el-form-item class="waktu-publikasi" :label="$t('label.gamification-date-mision')" :prop="validateStartDate">
             <el-row :gutter="12" type="flex">
               <el-col :xs="12" :sm="8" :lg="12">
@@ -130,6 +137,7 @@ export default {
       gamification: {
         title: null,
         nama_fitur: null,
+        action_fitur: null,
         nama_penghargaan: null,
         jumlah_hit: 0,
         cover_path: null,

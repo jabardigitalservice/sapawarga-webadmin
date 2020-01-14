@@ -21,22 +21,35 @@
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%" @sort-change="changeSort">
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
 
-          <el-table-column prop="version" label="Judul Misi" />
+          <el-table-column prop="judul" label="Judul Misi" />
 
-          <el-table-column prop="force_update" label="Status" />
-          <!-- <el-table-column prop="force_update" label="Start Date" /> -->
-          <!-- <el-table-column prop="force_update" label="End Date" /> -->
+          <el-table-column prop="status" label="Status" />
+          <el-table-column prop="start_date" label="Start Date">
+            <template slot-scope="{row}">
+              {{ parsingDatetime(row.start_date/1000, 'DD MMM YYYY') }}
+            </template>
+          </el-table-column>
+          <el-table-column prop="end_date" label="End Date">
+            <template slot-scope="{row}">
+              {{ parsingDatetime(row.end_date/1000, 'DD MMM YYYY') }}
+            </template>
+          </el-table-column>
 
           <el-table-column align="center" label="Actions">
-            <template v-if="scope.$index === 0" slot-scope="scope">
-              <router-link :to="'/gamification/edit/' +scope.row.id">
-                <el-button type="white" size="mini">
-                  Edit
-                </el-button>
+            <template slot-scope="scope">
+              <router-link :to="'/gamification/detail/' +scope.row.id">
+                <el-tooltip content="Detail Gamification" placement="top">
+                  <el-button type="primary" icon="el-icon-view" size="small" />
+                </el-tooltip>
               </router-link>
-              <el-button type="danger" size="mini">
-                Hapus
-              </el-button>
+              <router-link :to="'/gamification/edit/' +scope.row.id">
+                <el-tooltip content="Edit Gamification" placement="top">
+                  <el-button type="warning" icon="el-icon-edit" size="small" />
+                </el-tooltip>
+              </router-link>
+              <el-tooltip content="Hapus Gamification" placement="top">
+                <el-button type="danger" icon="el-icon-delete" size="small" />
+              </el-tooltip>
             </template>
           </el-table-column>
         </el-table>
@@ -50,9 +63,48 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { fetchList } from '@/api/releaseManagement'
+// import { fetchList } from '@/api/releaseManagement'
+import { parsingDatetime } from '@/utils/datetimeToString'
 import Pagination from '@/components/Pagination'
 import ListFilter from './components/_listfilter'
+
+const listGamifications = [
+  {
+    id: 1,
+    judul: 'coba 1',
+    status: 'Aktif',
+    start_date: Date.now(),
+    end_date: Date.now()
+  },
+  {
+    id: 2,
+    judul: 'coba 2',
+    status: 'Aktif',
+    start_date: Date.now(),
+    end_date: Date.now()
+  },
+  {
+    id: 3,
+    judul: 'coba 3',
+    status: 'Aktif',
+    start_date: Date.now(),
+    end_date: Date.now()
+  },
+  {
+    id: 4,
+    judul: 'coba 4',
+    status: 'Aktif',
+    start_date: Date.now(),
+    end_date: Date.now()
+  },
+  {
+    id: 5,
+    judul: 'coba 5',
+    status: 'Aktif',
+    start_date: Date.now(),
+    end_date: Date.now()
+  }
+]
 
 export default {
   components: { Pagination, ListFilter },
@@ -67,9 +119,9 @@ export default {
   },
   data() {
     return {
-      list: null,
+      list: listGamifications,
       total: 0,
-      listLoading: true,
+      listLoading: false,
       listQuery: {
         start_date: '',
         end_date: '',
@@ -89,16 +141,17 @@ export default {
   },
 
   mounted() {
-    this.getList()
+    // this.getList()
   },
   methods: {
+    parsingDatetime,
     getList() {
       this.listLoading = true
-      fetchList(this.listQuery).then(response => {
-        this.list = response.data.items
-        this.total = response.data._meta.totalCount
-        this.listLoading = false
-      })
+      // fetchList(this.listQuery).then(response => {
+      //   this.list = response.data.items
+      //   this.total = response.data._meta.totalCount
+      //   this.listLoading = false
+      // })
     },
 
     resetFilter() {
