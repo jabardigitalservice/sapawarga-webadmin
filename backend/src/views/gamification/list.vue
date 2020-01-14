@@ -11,6 +11,28 @@
             </router-link>
           </el-col>
         </el-row>
+        <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%" @sort-change="changeSort">
+          <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
+
+          <el-table-column prop="version" label="Version" min-width="150" />
+
+          <el-table-column prop="force_update" :formatter="cellValueRenderer" label="Force Update" min-width="150" />
+
+          <el-table-column align="center" label="Actions" min-width="150px">
+            <template v-if="scope.$index === 0" slot-scope="scope">
+              <router-link :to="'/gamification/edit/' +scope.row.id">
+                <el-button type="white" size="mini">
+                  Edit
+                </el-button>
+              </router-link>
+              <el-button type="danger" size="mini">
+                Hapus
+              </el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+
+        <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
 
       </el-col>
     </el-row>
@@ -19,9 +41,11 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { fetchList } from '@/api/releaseManagement'
+import Pagination from '@/components/Pagination'
 
 export default {
-  components: { },
+  components: { Pagination },
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -52,9 +76,18 @@ export default {
     ])
   },
 
-  created() {
+  mounted() {
+    this.getList()
   },
   methods: {
+    getList() {
+      this.listLoading = true
+      fetchList(this.listQuery).then(response => {
+        this.list = response.data.items
+        this.total = response.data._meta.totalCount
+        this.listLoading = false
+      })
+    },
   }
 }
 </script>
