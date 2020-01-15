@@ -67,6 +67,39 @@
               />
             </el-form-item>
 
+            <el-form-item :label="$t('label.broadcast-link')" prop="is_scheduled" class="inline-block">
+              <el-radio-group v-model="broadcast.is_link" name="link" class="inline-block">
+                <el-radio-button :label="false">{{ $t('label.broadcast-false') }}</el-radio-button>
+                <el-radio-button :label="true">{{ $t('label.broadcast-true') }}</el-radio-button>
+              </el-radio-group>
+            </el-form-item>
+
+            <el-form-item v-if="broadcast.is_link" :label="$t('label.broadcast-source')" prop="is_scheduled" class="inline-block">
+              <el-radio-group v-model="broadcast.source" name="link" class="inline-block">
+                <el-radio-button :label="false">{{ $t('label.broadcast-external') }}</el-radio-button>
+                <el-radio-button :label="true">{{ $t('label.broadcast-internal') }}</el-radio-button>
+              </el-radio-group>
+            </el-form-item>
+
+            <el-form-item v-if="broadcast.is_link && !broadcast.source" label="Tautan" prop="link_url">
+              <el-input v-model="broadcast.link_url" type="text" name="link_url" placeholder="URL Broadcast" />
+            </el-form-item>
+
+            <el-form-item v-else-if="broadcast.is_link && broadcast.source" label="Fitur" prop="internal_category">
+              <el-select v-model="broadcast.internal_category" placeholder="Pilih Fitur" name="fitur">
+                <el-option label="Survei" value="survey" />
+                <el-option label="Polling" value="polling" />
+                <el-option label="Berita" value="news" />
+              </el-select>
+              <span v-if="broadcast.internal_category !== null">
+                <el-button type="success" @click="dialog(broadcast.internal_category)">Pilihan</el-button>
+              </span>
+            </el-form-item>
+
+            <el-form-item v-if="broadcast.is_link && broadcast.source" :label="titleFitur" prop="internal_entity_name">
+              <el-input v-model="broadcast.internal_entity_name" disabled type="text" name="internal_entity_name" />
+            </el-form-item>
+
             <el-form-item :label="$t('label.description')" prop="description">
               <tinymce v-model="broadcast.description" :height="300" />
             </el-form-item>
@@ -84,7 +117,7 @@
 import InputCategory from '@/components/InputCategory'
 import InputSelectArea from '@/components/InputSelectArea'
 import { create, fetchRecord, update } from '@/api/broadcast'
-import { containsWhitespace, isContainHtmlTags } from '@/utils/validate'
+import { containsWhitespace, isContainHtmlTags, validUrl } from '@/utils/validate'
 import { mapGetters } from 'vuex'
 import Tinymce from '@/components/Tinymce'
 import moment from 'moment'
@@ -102,6 +135,14 @@ export default {
     }
   },
   data() {
+    const validatorUrl = (rule, value, callback) => {
+      if (validUrl(value) === false) {
+        callback(new Error('URL tidak valid'))
+      }
+
+      callback()
+    }
+
     const whitespaceTitle = (rule, value, callback) => {
       if (containsWhitespace(value) === true) {
         callback(new Error(this.$t('message.broadcast-title-valid')))
@@ -140,8 +181,16 @@ export default {
         category_id: null,
         description: null,
         is_scheduled: false,
-        scheduled_datetime: null
+        scheduled_datetime: null,
+        // need confirmation
+        is_link: false,
+        source: false,
+        link_url: null,
+        internal_category: null,
+        internal_entity_id: null,
+        internal_entity_name: null
       },
+      titleFitur: null,
       scheduled_datetime_validation: 'scheduled_datetime',
       rules: {
         title: [
@@ -236,6 +285,17 @@ export default {
             message: this.$t('message.broadcast-scheduled_datetime-expire'),
             trigger: 'change'
           }
+        ],
+        link_url: [
+          {
+            required: true,
+            message: 'Tautan harus diisi',
+            trigger: 'blur'
+          },
+          {
+            validator: validatorUrl,
+            trigger: 'blur'
+          }
         ]
       }
     }
@@ -281,6 +341,9 @@ export default {
     }
   },
   methods: {
+    dialog(id) {
+      console.log(id)
+    },
     resetRw() {
       if (this.broadcast.kel_id === null || this.broadcast.kec_id === null || this.broadcast.kabkota_id === null) {
         this.broadcast.kel_id = null
