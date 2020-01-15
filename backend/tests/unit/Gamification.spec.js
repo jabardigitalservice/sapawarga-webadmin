@@ -5,6 +5,7 @@ import flushPromises from 'flush-promises'
 import FormGamification from '@/views/gamification/components/FormGamification'
 import CreateGamification from '@/views/gamification/create'
 import EditGamification from '@/views/gamification/edit'
+import DetailGamification from '@/views/gamification/detail'
 import ListGamification from '@/views/gamification/list'
 import i18n from '@/lang'
 
@@ -63,6 +64,16 @@ describe('Gamification', () => {
 		})
 
     expect(wrapper.contains(CreateGamification)).toBe(true)
+	})
+
+  it('render detail gamification', () => {
+		const wrapper = shallowMount(DetailGamification, {
+			localVue,
+      router,
+			i18n
+		})
+
+    expect(wrapper.contains(DetailGamification)).toBe(true)
 	})
 
   it('render edit gamification', () => {

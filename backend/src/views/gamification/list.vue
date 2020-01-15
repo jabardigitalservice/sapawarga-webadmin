@@ -21,33 +21,33 @@
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%" @sort-change="changeSort">
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
 
-          <el-table-column prop="judul" label="Judul Misi" />
+          <el-table-column prop="judul" :label="$t('label.gamification-title-mision')" />
 
-          <el-table-column prop="status" label="Status" />
-          <el-table-column prop="start_date" label="Start Date">
+          <el-table-column prop="status" :label="$t('label.status')" />
+          <el-table-column prop="start_date" :label="$t('label.start-date')">
             <template slot-scope="{row}">
               {{ parsingDatetime(row.start_date/1000, 'DD MMM YYYY') }}
             </template>
           </el-table-column>
-          <el-table-column prop="end_date" label="End Date">
+          <el-table-column prop="end_date" :label="$t('label.end-date')">
             <template slot-scope="{row}">
               {{ parsingDatetime(row.end_date/1000, 'DD MMM YYYY') }}
             </template>
           </el-table-column>
 
-          <el-table-column align="center" label="Actions">
+          <el-table-column align="center" :label="$t('label.actions')">
             <template slot-scope="scope">
               <router-link :to="'/gamification/detail/' +scope.row.id">
-                <el-tooltip content="Detail Gamification" placement="top">
+                <el-tooltip :content="$t('label.gamification-detail')" placement="top">
                   <el-button type="primary" icon="el-icon-view" size="small" />
                 </el-tooltip>
               </router-link>
               <router-link :to="'/gamification/edit/' +scope.row.id">
-                <el-tooltip content="Edit Gamification" placement="top">
+                <el-tooltip :content="$t('label.gamification-edit')" placement="top">
                   <el-button type="warning" icon="el-icon-edit" size="small" />
                 </el-tooltip>
               </router-link>
-              <el-tooltip content="Hapus Gamification" placement="top">
+              <el-tooltip :content="$t('label.gamification-delete')" placement="top">
                 <el-button type="danger" icon="el-icon-delete" size="small" />
               </el-tooltip>
             </template>
@@ -63,7 +63,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-// import { fetchList } from '@/api/releaseManagement'
+// import { fetchList } from '@/api/gamification'
 import { parsingDatetime } from '@/utils/datetimeToString'
 import Pagination from '@/components/Pagination'
 import ListFilter from './components/_listfilter'

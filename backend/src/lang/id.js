@@ -117,7 +117,9 @@ export default {
 
     'gamification-manage': 'Gamification',
     'gamification-list': 'Daftar Gamification',
-    'gamification-create': 'Tambah Gamification'
+    'gamification-create': 'Tambah Gamification',
+    'gamification-detail': 'Detail Gamification',
+    'gamification-edit': 'Edit Gamification'
   },
   crud: {
     'list-empty': 'Belum ada data.',
@@ -534,6 +536,8 @@ export default {
     'title-broadcast': 'Judul Pesan',
     'scheduled_datetime': 'Tanggal dan Waktu',
     'date': 'Tanggal',
+    'start-date': 'Tanggal Mulai',
+    'end-date': 'Tanggal Berakhir',
 
     'created-polling': 'Polling Dibuat',
     'followed-polling': 'Polling Diikuti',
@@ -625,6 +629,7 @@ export default {
     'gamification-add-new': 'Tambah Gamification Baru',
     'gamification-edit': 'Edit Gamification',
     'gamification-view': 'Lihat Gamification',
+    'gamification-delete': 'Hapus Gamification',
 
     'errorpage-oops': 'OOPS!',
     'errorpage-headline': 'Anda tidak dapat memasuki halaman ini......',

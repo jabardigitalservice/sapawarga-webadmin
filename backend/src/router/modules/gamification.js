@@ -31,6 +31,26 @@ const gamificationRouter = {
         title: 'gamification-create',
         roles: ['admin', 'staffProv']
       }
+    },
+    {
+      name: 'gamification-edit',
+      path: 'edit/:id',
+      component: () => import('@/views/gamification/edit'),
+      hidden: true,
+      meta: {
+        title: 'gamification-edit',
+        roles: ['admin', 'staffProv']
+      }
+    },
+    {
+      name: 'gamification-detail',
+      path: 'detail/:id',
+      component: () => import('@/views/gamification/detail'),
+      hidden: true,
+      meta: {
+        title: 'gamification-detail',
+        roles: ['admin', 'staffProv']
+      }
     }
   ]
 }
