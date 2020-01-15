@@ -578,6 +578,12 @@ export default {
 
     'broadcast-now': 'Sekarang',
     'broadcast-scheduled': 'Terjadwal',
+    'broadcast-link': 'Sambungkan',
+    'broadcast-true': 'Ya',
+    'broadcast-false': 'Tidak',
+    'broadcast-source': 'Sumber',
+    'broadcast-internal': 'Internal',
+    'broadcast-external': 'Eksternal',
 
     'post-title': 'Nama Kegiatan',
     'post-like': 'Likes',
@@ -613,6 +619,7 @@ export default {
     'errorpage-headline': 'Anda tidak dapat memasuki halaman ini......',
     'errorpage-message': 'Harap periksa apakah URL yang Anda masukkan benar. Klik tombol di bawah untuk kembali ke beranda atau mengirim laporan kesalahan.',
     'errorpage-back': 'Kembali ke beranda'
+
   },
   news: {
     'media-channel': 'Kanal Media',
