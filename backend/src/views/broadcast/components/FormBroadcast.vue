@@ -111,6 +111,9 @@
         </div>
       </el-col>
     </el-row>
+    <el-dialog :visible.sync="showDialog" width="70%" :title="titlePopup">
+      <Fitur :category="dialogName" @childData="getData" @closeDialog="dialogClose" />
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -119,12 +122,14 @@ import InputSelectArea from '@/components/InputSelectArea'
 import { create, fetchRecord, update } from '@/api/broadcast'
 import { containsWhitespace, isContainHtmlTags, validUrl } from '@/utils/validate'
 import { mapGetters } from 'vuex'
+import Fitur from '@/views/banner/components/dialog/fitur'
 import Tinymce from '@/components/Tinymce'
 import moment from 'moment'
 
 export default {
   components: {
     Tinymce,
+    Fitur,
     InputCategory,
     InputSelectArea
   },
@@ -191,6 +196,9 @@ export default {
         internal_entity_name: null
       },
       titleFitur: null,
+      titlePopup: null,
+      showDialog: false,
+      dialogName: null,
       scheduled_datetime_validation: 'scheduled_datetime',
       rules: {
         title: [
@@ -332,6 +340,27 @@ export default {
       if (this.broadcast.is_scheduled === false) {
         this.broadcast.scheduled_datetime = null
       }
+    },
+
+    'broadcast.internal_category'(newVal, oldVal) {
+      if (oldVal === null) {
+        this.broadcast.internal_entity_name
+        this.broadcast.internal_entity_id
+      } else if (oldVal !== newVal) {
+        this.broadcast.internal_entity_name = null
+        this.broadcast.internal_entity_id = null
+      }
+
+      if (this.broadcast.internal_category === 'survey') {
+        this.titleFitur = this.$t('label.survey-title')
+        this.titlePopup = this.$t('label.survey-list')
+      } else if (this.broadcast.internal_category === 'polling') {
+        this.titleFitur = this.$t('label.polling-title')
+        this.titlePopup = this.$t('label.polling-list')
+      } else {
+        this.titleFitur = this.$t('news.news-title')
+        this.titlePopup = this.$t('news.news-list')
+      }
     }
   },
   created() {
@@ -342,7 +371,15 @@ export default {
   },
   methods: {
     dialog(id) {
-      console.log(id)
+      this.dialogName = id
+      this.showDialog = true
+    },
+    dialogClose(value) {
+      this.showDialog = value
+    },
+    getData(value) {
+      this.broadcast.internal_entity_name = value.name !== undefined ? value.name : value.title
+      this.broadcast.internal_entity_id = value.id
     },
     resetRw() {
       if (this.broadcast.kel_id === null || this.broadcast.kec_id === null || this.broadcast.kabkota_id === null) {
