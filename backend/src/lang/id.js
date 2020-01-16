@@ -575,6 +575,8 @@ export default {
 
     'polling-view-all': 'Lihat Semua',
     'polling-audience': 'Total Audience',
+    'polling-list': 'Daftar Polling',
+    'polling-title': 'Judul Polling',
 
     'broadcast-now': 'Sekarang',
     'broadcast-scheduled': 'Terjadwal',
@@ -614,6 +616,7 @@ export default {
     'survey-name': 'Nama Survei',
     'survey-start': 'Mulai',
     'survey-end': 'Berakhir',
+    'survey-list': 'Daftar Survey',
 
     'errorpage-oops': 'OOPS!',
     'errorpage-headline': 'Anda tidak dapat memasuki halaman ini......',
@@ -627,6 +630,8 @@ export default {
     'news-add-action': 'Tambah berita',
     'news-content-header': 'Data berita',
     'news-edit-header': 'Edit Berita',
+    'news-title': 'Judul Berita',
+    'news-list': 'Daftar Berita',
     'priority-news-header': 'Prioritas Berita',
     'priority-news-add-header': 'Tambah berita prioritas'
   }
