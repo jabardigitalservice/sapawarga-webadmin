@@ -67,7 +67,7 @@
               />
             </el-form-item>
 
-            <el-form-item :label="$t('label.broadcast-link')" prop="is_scheduled" class="inline-block">
+            <el-form-item :label="$t('label.broadcast-link')" prop="is_link" class="inline-block">
               <el-radio-group v-model="broadcast.is_link" name="link" class="inline-block">
                 <el-radio-button :label="false">{{ $t('label.broadcast-false') }}</el-radio-button>
                 <el-radio-button :label="true">{{ $t('label.broadcast-true') }}</el-radio-button>
@@ -304,6 +304,27 @@ export default {
             validator: validatorUrl,
             trigger: 'blur'
           }
+        ],
+        is_link: [
+          {
+            required: true,
+            message: 'Sambungkan broadcast harus diisi',
+            trigger: 'blur'
+          }
+        ],
+        internal_category: [
+          {
+            required: true,
+            message: 'Fitur Banner harus diisi',
+            trigger: 'blur'
+          }
+        ],
+        internal_entity_name: [
+          {
+            required: true,
+            message: 'Judul harus diisi',
+            trigger: 'blur'
+          }
         ]
       }
     }
@@ -339,6 +360,17 @@ export default {
     'broadcast.is_scheduled'() {
       if (this.broadcast.is_scheduled === false) {
         this.broadcast.scheduled_datetime = null
+      }
+    },
+
+    'broadcast.is_link'(val) {
+      console.log(val)
+      if (val === true) {
+        this.broadcast.link_url = null
+      } else if (val === false) {
+        this.broadcast.internal_category = null
+        this.broadcast.internal_entity_name = null
+        this.broadcast.internal_entity_id = null
       }
     },
 
