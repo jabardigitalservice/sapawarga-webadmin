@@ -383,9 +383,17 @@ export default {
     'input-message': 'Isian pesan mengandung karakter yang tidak diizinkan.',
 
     'gamification-title-must-be-filled': 'Judul Misi harus diisi.',
-    'gamification-name-must-be-filled': 'Nama Penghargaan harus diisi.',
+    'gamification-name-reward-must-be-filled': 'Nama Penghargaan harus diisi.',
     'gamification-deskripsi-must-be-filled': 'Deskripsi harus diisi.',
-    'gamification-title-already-used': 'Judul Misi sudah digunakan.'
+    'gamification-title-already-used': 'Judul Misi sudah digunakan.',
+    'gamification-informasi-title': 'Judul gamification mengandung karakter yang tidak diizinkan.',
+    'gamification-title-min-10': 'Judul Misi minimal 10 Karakter.',
+    'gamification-title-max-100': 'Judul Misi maximal 100 Karakter.',
+    'gamification-name-reward-not-valid-characters': 'Nama penghargaan mengandung karakter yang tidak diizinkan.',
+
+    'description-not-valid-characters': 'Deskripsi mengandung karakter yang tidak diizinkan.',
+
+    'max-file-upload': 'Jumlah file tidak boleh lebih dari {0}.'
 
   },
   navbar: {
@@ -624,6 +632,9 @@ export default {
     'survey-name': 'Nama Survei',
     'survey-start': 'Mulai',
     'survey-end': 'Berakhir',
+
+    'views-news': 'Melihat Berita',
+    'post-activities-rw': 'Posting Rw',
 
     'gamification-detail': 'Detail Gamification',
     'gamification-add-new': 'Tambah Gamification Baru',

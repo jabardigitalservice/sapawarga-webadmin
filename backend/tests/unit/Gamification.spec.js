@@ -7,12 +7,14 @@ import CreateGamification from '@/views/gamification/create'
 import EditGamification from '@/views/gamification/edit'
 import DetailGamification from '@/views/gamification/detail'
 import ListGamification from '@/views/gamification/list'
+import Vuex from 'vuex'
 import i18n from '@/lang'
 
 const router = new Router()
 const localVue = createLocalVue()
 localVue.use(Router)
 localVue.use(ElementUI)
+localVue.use(Vuex)
 
 beforeEach(() => {
   jest.resetModules()
@@ -26,6 +28,27 @@ const listQuery = {
 }
 
 describe('Gamification', () => {
+  let actions
+  let store
+
+  beforeEach(() => {
+    actions = {
+      toggleDevice: jest.fn()
+    }
+    store = new Vuex.Store({
+      modules: {
+      	testunit: {
+          state: {},
+          getters: {
+            myFunc: jest.fn(),
+            device: jest.fn()
+         }
+       },
+       actions
+      }
+    })
+  })
+
   it('render list gamification', async() => {
 		const status = {
 			'10': 'success',
@@ -48,6 +71,7 @@ describe('Gamification', () => {
 
 	it('render form gamification', () => {
 		const wrapper = shallowMount(FormGamification, {
+      store,
 			localVue,
 			i18n
 		})

@@ -1,17 +1,8 @@
 <template>
   <div name="release-management-form">
     <el-row :gutter="20">
-      <el-col :xs="24" :sm="8" :lg="5">
-        <AttachmentPhotoUpload
-          type="gamification_photo"
-          :initial-url="gamification.cover_path"
-          :list-information="[this.$t('label.maximum-dimension-image'), this.$t('label.maximum-size-image')]"
-          style="margin-bottom: 25px"
-          @onUpload="photoUploaded"
-        />
-      </el-col>
-      <el-col :xs="24" :sm="16">
-        <el-form ref="form" :model="gamification" :rules="rules" :status-icon="true" label-width="210px">
+      <el-col :xs="24" :sm="24" :lg="24">
+        <el-form ref="form" :model="gamification" :rules="rules" :status-icon="true" :label-width="device==='desktop'?'160px':'120px'">
 
           <el-form-item :label="$t('label.gamification-title-mision')" :prop="validateTitle">
             <el-input
@@ -22,23 +13,23 @@
             />
           </el-form-item>
 
-          <el-form-item :label="$t('label.gamification-title-fitur')">
+          <el-form-item :label="$t('label.gamification-title-fitur')" prop="nama_fitur">
             <el-select v-model="gamification.nama_fitur" :placeholder="$t('label.gamification-title-fitur')" name="fitur">
               <el-option :label="$t('route.news-manage')" value="news" />
               <el-option :label="$t('route.post-manage')" value="postrw" />
             </el-select>
           </el-form-item>
 
-          <el-form-item :label="$t('label.gamification-action-fitur')">
+          <el-form-item :label="$t('label.gamification-action-fitur')" prop="action_fitur">
             <el-select v-model="gamification.action_fitur" :placeholder="$t('label.gamification-action-fitur')" name="action_fitur">
-              <el-option :label="$t('route.news-manage')" value="news" />
-              <el-option :label="$t('route.post-manage')" value="postrw" />
+              <el-option :label="$t('label.views-news')" value="views_news" />
+              <el-option :label="$t('label.post-activities-rw')" value="post_rw" />
             </el-select>
           </el-form-item>
 
-          <el-form-item class="waktu-publikasi" :label="$t('label.gamification-date-mision')" :prop="validateStartDate">
-            <el-row :gutter="12" type="flex">
-              <el-col :xs="12" :sm="8" :lg="12">
+          <el-row :gutter="20">
+            <el-col :xs="24" :sm="12" :lg="12">
+              <el-form-item :label="$t('popup.popup-start-date')" :prop="validateStartDate">
                 <el-date-picker
                   v-model="gamification.start_date"
                   class="pop-up-date"
@@ -48,8 +39,10 @@
                   :picker-options="dateStartDateOptions"
                   :placeholder="$t('popup.popup-start-date')"
                 />
-              </el-col>
-              <el-col :xs="12" :sm="8" :lg="12">
+              </el-form-item>
+            </el-col>
+            <el-col :xs="24" :sm="12" :lg="12">
+              <el-form-item :label="$t('popup.popup-end-date')" :prop="validateStartDate">
                 <el-date-picker
                   v-model="gamification.end_date"
                   class="pop-up-date"
@@ -59,19 +52,9 @@
                   :picker-options="dateEndDateOptions"
                   :placeholder="$t('popup.popup-end-date')"
                 />
-              </el-col>
-            </el-row>
-          </el-form-item>
-
-          <el-form-item :label="$t('label.gamification-name-reward')" :prop="validateNamaPenghargaan">
-            <el-input
-              v-model="gamification.nama_penghargaan"
-              type="text"
-              name="nama_penghargaan"
-              placeholder="Nama Penghargaan"
-            />
-          </el-form-item>
-
+              </el-form-item>
+            </el-col>
+          </el-row>
           <el-form-item :label="$t('label.gamification-amount-hit')">
             <el-input-number
               v-model="gamification.jumlah_hit"
@@ -92,6 +75,29 @@
             />
           </el-form-item>
 
+          <el-row :gutter="20">
+            <el-col :xs="24" :sm="12" :lg="12">
+              <el-form-item :label="$t('label.gamification-name-reward')" :prop="validateNamaPenghargaan">
+                <el-input
+                  v-model="gamification.nama_penghargaan"
+                  type="text"
+                  name="nama_penghargaan"
+                  placeholder="Nama Penghargaan"
+                />
+              </el-form-item>
+            </el-col>
+
+            <el-col :xs="24" :sm="12" :lg="12">
+              <el-form-item label="Upload Badge" :prop="validateNamaPenghargaan">
+                <AttachmentFileUpload
+                  type="popup_photo"
+                  :limit-file="1"
+                  @onUpload="photoUploaded"
+                />
+              </el-form-item>
+            </el-col>
+          </el-row>
+
           <el-form-item style="margin-top:50px">
             <el-button v-if="isEdit" type="primary" :loading="loading" @click="submitForm">{{ $t('crud.save-update') }}</el-button>
             <el-button v-else type="primary" :loading="loading" @click="submitForm">{{ $t('crud.save-gamification') }}</el-button>
@@ -108,15 +114,16 @@
 </template>
 
 <script>
-import { containsWhitespace } from '@/utils/validate'
-import AttachmentPhotoUpload from '@/components/AttachmentPhotoUpload'
+import { mapGetters } from 'vuex'
+import { containsWhitespace, isContainHtmlTags } from '@/utils/validate'
+import AttachmentFileUpload from '@/components/AttachmentFileUpload'
 
 const moment = require('moment')
 moment().format()
 
 export default {
   components: {
-    AttachmentPhotoUpload
+    AttachmentFileUpload
   },
   props: {
     isEdit: {
@@ -128,6 +135,30 @@ export default {
     const validatorTextWhitespace = (rule, value, callback) => {
       if (containsWhitespace(value) === true) {
         callback(new Error('Teks yang diisi tidak valid.'))
+      }
+
+      callback()
+    }
+
+    const validatorHTMLTitle = (rule, value, callback) => {
+      if (isContainHtmlTags(value) === true) {
+        callback(new Error(this.$t('errors.gamification-informasi-title')))
+      }
+
+      callback()
+    }
+
+    const validatorHTMLDescription = (rule, value, callback) => {
+      if (isContainHtmlTags(value) === true) {
+        callback(new Error(this.$t('errors.description-not-valid-characters')))
+      }
+
+      callback()
+    }
+
+    const validatorHTMLPenghargaan = (rule, value, callback) => {
+      if (isContainHtmlTags(value) === true) {
+        callback(new Error(this.$t('errors.gamification-name-reward-not-valid-characters')))
       }
 
       callback()
@@ -152,16 +183,67 @@ export default {
       validateDeskripsi: 'deskripsi',
       rules: {
         title: [
-          { required: true, message: this.$t('errors.gamification-title-must-be-filled'), trigger: 'blur' },
-          { validator: validatorTextWhitespace, trigger: 'blur' }
+          {
+            required: true,
+            message: this.$t('errors.gamification-title-must-be-filled'),
+            trigger: 'blur'
+          },
+          {
+            min: 10,
+            message: this.$t('errors.gamification-title-min-10'),
+            trigger: 'blur'
+          },
+          {
+            max: 100,
+            message: this.$t('errors.gamification-title-max-100'),
+            trigger: 'blur'
+          },
+          {
+            validator: validatorHTMLTitle,
+            trigger: 'blur'
+          },
+          {
+            validator: validatorTextWhitespace,
+            trigger: 'blur'
+          }
         ],
         nama_penghargaan: [
-          { required: true, message: this.$t('errors.gamification-name-must-be-filled'), trigger: 'blur' },
-          { validator: validatorTextWhitespace, trigger: 'blur' }
+          {
+            required: true,
+            message: this.$t('errors.gamification-name-reward-must-be-filled'),
+            trigger: 'blur'
+          },
+          {
+            validator: validatorTextWhitespace,
+            trigger: 'blur'
+          },
+          {
+            validator: validatorHTMLPenghargaan,
+            trigger: 'blur'
+          }
+        ],
+        start_date: [
+          { required: true, message: 'Target harus diisi', trigger: 'blur' }
+        ],
+        end_date: [
+          { required: true, message: 'Target harus diisi', trigger: 'blur' }
         ],
         deskripsi: [
-          { required: true, message: this.$t('errors.gamification-deskripsi-must-be-filled'), trigger: 'blur' },
-          { validator: validatorTextWhitespace, trigger: 'blur' }
+          {
+            required: true,
+            message: this.$t('errors.gamification-deskripsi-must-be-filled'),
+            trigger: 'blur'
+          },
+          {
+            validator: validatorHTMLDescription,
+            trigger: 'blur'
+          }
+        ],
+        nama_fitur: [
+          { required: true, message: 'Target harus diisi', trigger: 'change' }
+        ],
+        action_fitur: [
+          { required: true, message: 'Target harus diisi', trigger: 'change' }
         ],
         errorTitle: [
           { required: true, message: this.$t('errors.gamification-title-already-used'), trigger: 'change' }
@@ -176,6 +258,9 @@ export default {
     }
   },
   computed: {
+    ...mapGetters([
+      'device'
+    ])
   },
   mounted() {
 
@@ -187,10 +272,10 @@ export default {
       return time.getTime() < parseDateTime
     },
     photoUploaded(path, url) {
-      this.form.cover_path = path
+      this.gamification.cover_path = path
     },
     disabledEndDate(time) {
-      const startDateTime = moment(this.form.start_date).format('YYYY-MM-DD 00:00:00')
+      const startDateTime = moment(this.gamification.start_date).format('YYYY-MM-DD 00:00:00')
       const parseDateTime = Date.parse(startDateTime)
       return time.getTime() < parseDateTime
     },
