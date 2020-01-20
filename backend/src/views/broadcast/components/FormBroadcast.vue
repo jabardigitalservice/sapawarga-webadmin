@@ -363,7 +363,7 @@ export default {
       }
     },
 
-    'broadcast.is_link'(val) {
+    'broadcast.source'(val) {
       console.log(val)
       if (val === true) {
         this.broadcast.link_url = null
@@ -375,6 +375,7 @@ export default {
     },
 
     'broadcast.internal_category'(newVal, oldVal) {
+      console.log(oldVal, newVal)
       if (oldVal === null) {
         this.broadcast.internal_entity_name
         this.broadcast.internal_entity_id
