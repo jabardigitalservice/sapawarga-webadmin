@@ -297,7 +297,7 @@ export default {
         link_url: [
           {
             required: true,
-            message: 'Tautan harus diisi',
+            message: this.$t('message.broadcast-url-required'),
             trigger: 'blur'
           },
           {
@@ -308,21 +308,21 @@ export default {
         is_link: [
           {
             required: true,
-            message: 'Sambungkan broadcast harus diisi',
+            message: this.$t('message.broadcast-isLink-required'),
             trigger: 'blur'
           }
         ],
         internal_category: [
           {
             required: true,
-            message: 'Fitur Banner harus diisi',
+            message: this.$t('message.broadcast-internal-category-required'),
             trigger: 'blur'
           }
         ],
         internal_entity_name: [
           {
             required: true,
-            message: 'Judul harus diisi',
+            message: this.$t('message.broadcast-entity-name-required'),
             trigger: 'blur'
           }
         ]
