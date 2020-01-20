@@ -396,20 +396,20 @@ export default {
     'broadcast-title-min': 'Judul pesan minimal 10 karakter',
     'broadcast-title-max': 'Judul pesan maksimal 100 karakter',
     'broadcast-title-valid': 'Judul pesan yang diisi tidak valid',
-
     'broadcast-description-required': 'Isi pesan harus diisi',
     'broadcast-description-max': 'Isi pesan maksimal 65000 karakter',
     'broadcast-description-valid': 'Pesan yang diisi tidak valid',
-
     'broadcast-rw-pattern': 'RW harus menggunakan angka',
     'broadcast-rw-max': 'RW harus 3 angka, contoh 001',
     'broadcast-rw-min': 'RW harus 3 angka, contoh 001',
-
     'broadcast-area-required': 'Wilayah harus diisi',
-
     'broadcast-scheduled': 'Jadwal harus diisi',
     'broadcast-scheduled_datetime': 'Tanggal dan waktu harus diisi',
     'broadcast-scheduled_datetime-expire': 'Tanggal dan waktu yang dipilih telah lewat',
+    'broadcast-url-required': 'Tautan harus diisi',
+    'broadcast-isLink-required': 'Sambungkan broadcast harus diisi',
+    'broadcast-internal-category-required': 'Fitur broadcast harus diisi',
+    'broadcast-entity-name-required': 'Judul harus diisi',
 
     'user-import-sending': 'Cek email Anda untuk progress unggah data',
 
