@@ -22,8 +22,8 @@
 
           <el-form-item :label="$t('label.gamification-action-fitur')" prop="object_event">
             <el-select v-model="gamification.object_event" :placeholder="$t('label.gamification-action-fitur')" name="action_fitur">
-              <el-option :label="$t('label.views-news')" value="view_news_detail" />
-              <el-option :label="$t('label.post-activities-rw')" value="post_user_post" />
+              <el-option :label="$t('label.views-news')" value="news_view_detail" />
+              <el-option :label="$t('label.post-activities-rw')" value="user_post_create" />
             </el-select>
           </el-form-item>
 
