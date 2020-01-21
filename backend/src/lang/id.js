@@ -400,8 +400,7 @@ export default {
 
     'description-not-valid-characters': 'Deskripsi mengandung karakter yang tidak diizinkan.',
 
-    'max-file-upload': 'Jumlah file tidak boleh lebih dari {0}.',
-    'text-not-valid': 'Teks yang diisi tidak valid.'
+    'max-file-upload': 'Jumlah file tidak boleh lebih dari {0}.'
 
   },
   navbar: {

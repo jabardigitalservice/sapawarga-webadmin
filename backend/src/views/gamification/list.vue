@@ -26,12 +26,12 @@
           <el-table-column prop="status_label" :label="$t('label.status')" />
           <el-table-column prop="start_date" :label="$t('label.start-date')">
             <template slot-scope="{row}">
-              {{ row.start_date | moment('D MMMM YYYY')  }}
+              {{ row.start_date | moment('D MMMM YYYY') }}
             </template>
           </el-table-column>
           <el-table-column prop="end_date" :label="$t('label.end-date')">
             <template slot-scope="{row}">
-              {{ row.end_date | moment('D MMMM YYYY')  }}
+              {{ row.end_date | moment('D MMMM YYYY') }}
             </template>
           </el-table-column>
 
@@ -48,7 +48,7 @@
                 </el-tooltip>
               </router-link>
               <el-tooltip :content="$t('label.gamification-delete')" placement="top">
-                <el-button type="danger" icon="el-icon-delete" size="small" @click="deactivateGamification(scope.row.id)"/>
+                <el-button type="danger" icon="el-icon-delete" size="small" @click="deactivateGamification(scope.row.id)" />
               </el-tooltip>
             </template>
           </el-table-column>
@@ -67,7 +67,6 @@ import { fetchList, deactivate } from '@/api/gamification'
 import { parsingDatetime } from '@/utils/datetimeToString'
 import Pagination from '@/components/Pagination'
 import ListFilter from './components/_listfilter'
-
 
 export default {
   components: { Pagination, ListFilter },

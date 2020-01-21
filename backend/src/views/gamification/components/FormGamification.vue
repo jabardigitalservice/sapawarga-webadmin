@@ -187,7 +187,7 @@ export default {
       validateImage: 'image_badge_path',
       validateDeskripsi: 'deskripsi',
       filepath: null,
-      typeFile: ".jpg, .jpeg, .png",
+      typeFile: '.jpg, .jpeg, .png',
       rules: {
         title: [
           {
@@ -240,7 +240,7 @@ export default {
             required: true,
             message: this.$t('errors.image-not-null'),
             trigger: 'blur'
-          },
+          }
         ],
         description: [
           {
@@ -302,7 +302,10 @@ export default {
         this.gamification = await response.data
         this.filepath = response.data.image_badge_path_url
       } catch (e) {
-        this.$message.error(data[String(x)][0])
+        const data = e.response.data.data
+        for (const x in data) {
+          this.$message.error(data[String(x)][0])
+        }
       }
     },
     async submitForm() {

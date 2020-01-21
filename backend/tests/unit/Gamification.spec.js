@@ -1,7 +1,6 @@
 import { shallowMount, shallow, createLocalVue } from '@vue/test-utils'
 import Router from 'vue-router'
 import ElementUI from 'element-ui'
-import flushPromises from 'flush-promises'
 import FormGamification from '@/views/gamification/components/FormGamification'
 import CreateGamification from '@/views/gamification/create'
 import EditGamification from '@/views/gamification/edit'
@@ -40,7 +39,6 @@ describe('Gamification', () => {
       	testunit: {
           state: {},
           getters: {
-            myFunc: jest.fn(),
             device: jest.fn()
          }
        },
@@ -63,8 +61,6 @@ describe('Gamification', () => {
 				listQuery
 			}
 		})
-
-		await flushPromises()
 
 		expect(wrapper.contains(ListGamification)).toBe(true)
 	})

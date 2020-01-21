@@ -41,7 +41,7 @@ export default {
     },
     filePath: {
       type: String,
-      required: false
+      default: null
     },
     listInformation: {
       type: Array,
@@ -67,7 +67,7 @@ export default {
     filePath: {
       handler: function(value) {
         if (value !== null) {
-          this.fileList.push({name: value, url: value})
+          this.fileList.push({ name: value, url: value })
         }
       },
       immediate: true
@@ -96,7 +96,7 @@ export default {
         this.image_url = url
 
         this.$emit('onUpload', path, url)
-        this.fileList.push({name: path, url: url})
+        this.fileList.push({ name: path, url: url })
       } catch (e) {
         if (e.response && e.response.status === 422) {
           this.$message({

@@ -71,7 +71,7 @@ export default {
         {
           title: this.$t('label.gamification-name-reward'),
           content: detail.data.title_badge
-        },
+        }
 
       ]
       this.tableImageAttachment = [
@@ -84,7 +84,7 @@ export default {
         {
           title: this.$t('label.gamification-description-mision'),
           content: detail.data.description
-        },
+        }
       ]
     }
 
