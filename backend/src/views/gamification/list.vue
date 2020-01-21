@@ -107,13 +107,12 @@ export default {
   },
   methods: {
     parsingDatetime,
-    getList() {
+    async getList() {
       this.listLoading = true
-      fetchList(this.listQuery).then(response => {
-        this.list = response.data.items
-        this.total = response.data._meta.totalCount
-        this.listLoading = false
-      })
+      const response = await fetchList(this.listQuery)
+      this.list = await response.data.items
+      this.total = await response.data._meta.totalCount
+      this.listLoading = false
     },
 
     async deactivateGamification(id) {
