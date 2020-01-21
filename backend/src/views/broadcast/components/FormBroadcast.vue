@@ -74,30 +74,30 @@
               </el-radio-group>
             </el-form-item>
 
-            <el-form-item v-if="broadcast.is_link" :label="$t('label.broadcast-source')" prop="is_scheduled" class="inline-block">
-              <el-radio-group v-model="broadcast.source" name="link" class="inline-block">
-                <el-radio-button :label="false">{{ $t('label.broadcast-external') }}</el-radio-button>
-                <el-radio-button :label="true">{{ $t('label.broadcast-internal') }}</el-radio-button>
+            <el-form-item v-if="broadcast.is_link" :label="$t('label.broadcast-source')" prop="type" class="inline-block">
+              <el-radio-group v-model="broadcast.type" name="link" class="inline-block">
+                <el-radio-button label="external">{{ $t('label.broadcast-external') }}</el-radio-button>
+                <el-radio-button label="internal">{{ $t('label.broadcast-internal') }}</el-radio-button>
               </el-radio-group>
             </el-form-item>
 
-            <el-form-item v-if="broadcast.is_link && !broadcast.source" :label="$t('label.broadcast-url')" prop="link_url">
+            <el-form-item v-if="broadcast.is_link && broadcast.type === 'external'" :label="$t('label.broadcast-url')" prop="link_url">
               <el-input v-model="broadcast.link_url" type="text" name="link_url" placeholder="URL Broadcast" />
             </el-form-item>
 
-            <el-form-item v-else-if="broadcast.is_link && broadcast.source" :label="$t('label.broadcast-feature')" prop="internal_category">
-              <el-select v-model="broadcast.internal_category" placeholder="Pilih Fitur" name="fitur" class="broadcast-feature">
+            <el-form-item v-else-if="broadcast.is_link && broadcast.type === 'internal'" :label="$t('label.broadcast-feature')" prop="internal_object_type">
+              <el-select v-model="broadcast.internal_object_type" placeholder="Pilih Fitur" name="fitur" class="broadcast-feature">
                 <el-option label="Survei" value="survey" />
                 <el-option label="Polling" value="polling" />
                 <el-option label="Berita" value="news" />
               </el-select>
-              <span v-if="broadcast.internal_category !== null">
-                <el-button type="success" class="broadcast-option" @click="dialog(broadcast.internal_category)">{{ $t('label.broadcast-options') }}</el-button>
+              <span v-if="broadcast.internal_object_type !== null">
+                <el-button type="success" class="broadcast-option" @click="dialog(broadcast.internal_object_type)">{{ $t('label.broadcast-options') }}</el-button>
               </span>
             </el-form-item>
 
-            <el-form-item v-if="broadcast.is_link && broadcast.source" :label="titleFitur" prop="internal_entity_name">
-              <el-input v-model="broadcast.internal_entity_name" disabled type="text" name="internal_entity_name" />
+            <el-form-item v-if="broadcast.is_link && broadcast.type === 'internal'" :label="titleFitur" prop="internal_object_name">
+              <el-input v-model="broadcast.internal_object_name" disabled type="text" name="internal_object_name" />
             </el-form-item>
 
             <el-form-item :label="$t('label.description')" prop="description">
@@ -187,13 +187,12 @@ export default {
         description: null,
         is_scheduled: false,
         scheduled_datetime: null,
-        // need confirmation
         is_link: false,
-        source: false,
+        type: 'external',
         link_url: null,
-        internal_category: null,
-        internal_entity_id: null,
-        internal_entity_name: null
+        internal_object_type: null,
+        internal_object_id: null,
+        internal_object_name: null
       },
       titleFitur: null,
       titlePopup: null,
@@ -312,14 +311,21 @@ export default {
             trigger: 'blur'
           }
         ],
-        internal_category: [
+        type: [
+          {
+            required: true,
+            message: this.$t('message.broadcast-type-required'),
+            trigger: 'blur'
+          }
+        ],
+        internal_object_type: [
           {
             required: true,
             message: this.$t('message.broadcast-internal-category-required'),
             trigger: 'blur'
           }
         ],
-        internal_entity_name: [
+        internal_object_name: [
           {
             required: true,
             message: this.$t('message.broadcast-entity-name-required'),
@@ -363,29 +369,29 @@ export default {
       }
     },
 
-    'broadcast.source'(val) {
-      if (val === true) {
+    'broadcast.type'(val) {
+      if (val === 'internal') {
         this.broadcast.link_url = null
-      } else if (val === false) {
-        this.broadcast.internal_category = null
-        this.broadcast.internal_entity_name = null
-        this.broadcast.internal_entity_id = null
+      } else if (val === 'external') {
+        this.broadcast.internal_object_type = null
+        this.broadcast.internal_object_name = null
+        this.broadcast.internal_object_id = null
       }
     },
 
-    'broadcast.internal_category'(newVal, oldVal) {
+    'broadcast.internal_object_type'(newVal, oldVal) {
       if (oldVal === null) {
-        this.broadcast.internal_entity_name
-        this.broadcast.internal_entity_id
+        this.broadcast.internal_object_name
+        this.broadcast.internal_object_id
       } else if (oldVal !== newVal) {
-        this.broadcast.internal_entity_name = null
-        this.broadcast.internal_entity_id = null
+        this.broadcast.internal_object_name = null
+        this.broadcast.internal_object_id = null
       }
 
-      if (this.broadcast.internal_category === 'survey') {
+      if (this.broadcast.internal_object_type === 'survey') {
         this.titleFitur = this.$t('label.survey-title')
         this.titlePopup = this.$t('label.survey-list')
-      } else if (this.broadcast.internal_category === 'polling') {
+      } else if (this.broadcast.internal_object_type === 'polling') {
         this.titleFitur = this.$t('label.polling-title')
         this.titlePopup = this.$t('label.polling-list')
       } else {
@@ -409,8 +415,8 @@ export default {
       this.showDialog = value
     },
     getData(value) {
-      this.broadcast.internal_entity_name = value.name !== undefined ? value.name : value.title
-      this.broadcast.internal_entity_id = value.id
+      this.broadcast.internal_object_name = value.name !== undefined ? value.name : value.title
+      this.broadcast.internal_object_id = value.id
     },
     resetRw() {
       if (this.broadcast.kel_id === null || this.broadcast.kec_id === null || this.broadcast.kabkota_id === null) {
@@ -425,6 +431,12 @@ export default {
         if (this.broadcast.status !== this.status.DRAFT) {
           this.$message.error(this.$t('crud.broadcast-error-edit-published'))
           this.$router.push('/broadcast/index')
+        }
+
+        if (this.broadcast.type) {
+          this.broadcast.is_link = true
+        } else {
+          this.broadcast.is_link = false
         }
       }).catch(err => {
         console.log(err)
@@ -460,6 +472,10 @@ export default {
           data.scheduled_datetime = moment(this.broadcast.scheduled_datetime).unix()
         } else {
           data.scheduled_datetime = null
+        }
+
+        if (data.is_link === false) {
+          data.type = null
         }
 
         if (this.isEdit) {
