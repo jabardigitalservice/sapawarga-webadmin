@@ -82,7 +82,11 @@ export default {
           status_label,
           scheduled_datetime,
           is_scheduled,
-          updated_at
+          updated_at,
+          type,
+          link_url,
+          internal_object_type,
+          internal_object_name
         } = response.data
         this.broadcast = response.data
         this.checkDate(response.data)
@@ -91,8 +95,6 @@ export default {
         } else {
           this.buttonHidden = true
         }
-
-        
 
         this.tableDataTarget = [
           {
@@ -136,19 +138,19 @@ export default {
           },
           {
             title: this.$t('label.broadcast-source'),
-            content: 'Eksternal'
+            content: type || '-'
           },
           {
             title: this.$t('label.broadcast-url'),
-            content: 'https://sapawarga.jabarprov.go.id'
+            content: link_url || '-'
           },
           {
             title: this.$t('label.broadcast-feature'),
-            content: 'Survey'
+            content: internal_object_type === 'news' ? 'berita' : internal_object_type
           },
           {
             title: this.$t('label.broadcast-feature-title'),
-            content: 'Survey terbaru nih'
+            content: internal_object_name || '-'
           },
           {
             title: this.$t('label.description'),
@@ -163,6 +165,14 @@ export default {
 
         if (status === this.status.PUBLISHED || status === this.status.SCHEDULED) {
           this.tableDataPesan.splice(3, 1)
+        }
+
+        if (type === null) {
+          this.tableDataPesan.splice(4, 4)
+        } else if (type === 'internal') {
+          this.tableDataPesan.splice(5, 1)
+        } else {
+          this.tableDataPesan.splice(6, 2)
         }
       })
     },
