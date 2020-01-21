@@ -89,7 +89,7 @@
       </el-col>
     </el-row>
     <el-dialog :visible.sync="showDialog" width="70%" :title="titlePopup">
-      <Fitur :category="dialogName" @childData="getData" @closeDialog="dialogClose" />
+      <Feature :category="dialogName" @childData="getData" @closeDialog="dialogClose" />
     </el-dialog>
   </div>
 </template>
@@ -99,7 +99,7 @@ import AttachmentPhotoUpload from '@/components/AttachmentPhotoUpload'
 import { validUrl, isContainHtmlTags } from '@/utils/validate'
 import { create, fetchRecord, update } from '@/api/popupInformasi'
 import { PopupCategory, PopupFeature } from '@/utils/constantVariable'
-import Fitur from '@/views/banner/components/dialog/fitur'
+import Feature from '@/views/banner/components/dialog/feature'
 import { mapGetters } from 'vuex'
 const moment = require('moment')
 moment().format()
@@ -107,7 +107,7 @@ moment().format()
 export default {
   components: {
     AttachmentPhotoUpload,
-    Fitur
+    Feature
   },
   props: {
     isEdit: {
