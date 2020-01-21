@@ -586,6 +586,7 @@ export default {
     'broadcast-source': 'Sumber',
     'broadcast-internal': 'Internal',
     'broadcast-external': 'Eksternal',
+    'broadcast-options': 'Pilihan',
 
     'post-title': 'Nama Kegiatan',
     'post-like': 'Likes',

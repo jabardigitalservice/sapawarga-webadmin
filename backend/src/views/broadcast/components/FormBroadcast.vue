@@ -92,7 +92,7 @@
                 <el-option label="Berita" value="news" />
               </el-select>
               <span v-if="broadcast.internal_category !== null">
-                <el-button type="success" class="broadcast-option" @click="dialog(broadcast.internal_category)">Pilihan</el-button>
+                <el-button type="success" class="broadcast-option" @click="dialog(broadcast.internal_category)">{{ $t('label.broadcast-options') }}</el-button>
               </span>
             </el-form-item>
 
