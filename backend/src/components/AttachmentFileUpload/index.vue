@@ -3,7 +3,7 @@
     <el-upload
       class="upload-demo"
       action="#"
-      accept=" .jpg, .jpeg, .png"
+      :accept="typeFile"
       :on-change="handleUpload"
       :on-remove="handleRemove"
       :before-remove="beforeRemove"
@@ -31,9 +31,17 @@ export default {
       type: String,
       required: true
     },
+    typeFile: {
+      type: String,
+      required: true
+    },
     limitFile: {
       type: Number,
       required: true
+    },
+    filePath: {
+      type: String,
+      required: false
     },
     listInformation: {
       type: Array,
@@ -55,12 +63,20 @@ export default {
         this.image_url = value
       },
       immediate: true
+    },
+    filePath: {
+      handler: function(value) {
+        if (value !== null) {
+          this.fileList.push({name: value, url: value})
+        }
+      },
+      immediate: true
     }
   },
 
   methods: {
     handleRemove(file, fileList) {
-      console.log(file, fileList)
+      //
     },
     handleExceed(files, fileList) {
       this.$message.warning(this.$t('errors.max-file-upload', [this.limitFile]))
@@ -80,7 +96,7 @@ export default {
         this.image_url = url
 
         this.$emit('onUpload', path, url)
-        // {name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}
+        this.fileList.push({name: path, url: url})
       } catch (e) {
         if (e.response && e.response.status === 422) {
           this.$message({
@@ -90,6 +106,7 @@ export default {
 
           return
         }
+        this.fileList = []
 
         this.$message({
           message: this.$t('errors.internal-server-error'),

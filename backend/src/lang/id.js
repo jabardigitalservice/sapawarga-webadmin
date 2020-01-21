@@ -343,6 +343,7 @@ export default {
     'news-image-null': 'Gambar tidak boleh kosong.',
     'banner-image-null': 'Gambar tidak boleh kosong.',
     'popup-image-null': 'Gambar tidak boleh kosong.',
+    'image-not-null': 'Gambar tidak boleh kosong.',
     'popup-title-not-null': 'Judul Pop Up harus diisi.',
     'popup-title-min-10': 'Judul Pop Up minimal 10 Karakter.',
     'popup-title-max-100': 'Judul Pop Up maximal 100 Karakter.',
@@ -358,6 +359,9 @@ export default {
     'popup-start-date-not-null': 'Tanggal Mulai harus diisi.',
     'popup-end-date-not-null': 'Tanggal Berakhir harus diisi.',
     'popup-description-not-null': 'Deskripsi harus diisi.',
+
+    'start-date-not-null': 'Tanggal Mulai harus diisi.',
+    'end-date-not-null': 'Tanggal Berakhir harus diisi.',
 
     'user-import-empty-file': 'File tidak boleh kosong. Silahkan pilih file terlebih dahulu',
     'broadcast-datetime-edit': 'Jadwal yang dipilih telah lewat. Silahkan edit terlebih dahulu',
@@ -391,9 +395,13 @@ export default {
     'gamification-title-max-100': 'Judul Misi maximal 100 Karakter.',
     'gamification-name-reward-not-valid-characters': 'Nama penghargaan mengandung karakter yang tidak diizinkan.',
 
+    'gamification-fitur-must-be-filled': 'Fitur harus diisi.',
+    'gamification-action-fitur-must-be-filled': 'Action Fitur harus diisi.',
+
     'description-not-valid-characters': 'Deskripsi mengandung karakter yang tidak diizinkan.',
 
-    'max-file-upload': 'Jumlah file tidak boleh lebih dari {0}.'
+    'max-file-upload': 'Jumlah file tidak boleh lebih dari {0}.',
+    'text-not-valid': 'Teks yang diisi tidak valid.'
 
   },
   navbar: {
@@ -653,7 +661,13 @@ export default {
     'gamification-date-mision': 'Tanggal Misi',
     'gamification-name-reward': 'Nama Penghargaan',
     'gamification-amount-hit': 'Jumlah Hit',
-    'gamification-description-mision': 'Deskripsi Misi'
+    'gamification-badge-logo': 'Logo Badge',
+    'gamification-description-mision': 'Deskripsi Misi',
+
+    'gamification-fitur-news': 'Berita',
+    'gamification-fitur-user_post': 'Kegiatan RW',
+    'gamification-event-view_news_detail': 'Melihat berita',
+    'gamification-event-post_user_post': 'Membuat kegiatan RW'
 
   },
   news: {

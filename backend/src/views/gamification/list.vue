@@ -21,17 +21,17 @@
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%" @sort-change="changeSort">
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
 
-          <el-table-column prop="judul" :label="$t('label.gamification-title-mision')" />
+          <el-table-column prop="title" :label="$t('label.gamification-title-mision')" />
 
-          <el-table-column prop="status" :label="$t('label.status')" />
+          <el-table-column prop="status_label" :label="$t('label.status')" />
           <el-table-column prop="start_date" :label="$t('label.start-date')">
             <template slot-scope="{row}">
-              {{ parsingDatetime(row.start_date/1000, 'DD MMM YYYY') }}
+              {{ row.start_date | moment('D MMMM YYYY')  }}
             </template>
           </el-table-column>
           <el-table-column prop="end_date" :label="$t('label.end-date')">
             <template slot-scope="{row}">
-              {{ parsingDatetime(row.end_date/1000, 'DD MMM YYYY') }}
+              {{ row.end_date | moment('D MMMM YYYY')  }}
             </template>
           </el-table-column>
 
@@ -48,7 +48,7 @@
                 </el-tooltip>
               </router-link>
               <el-tooltip :content="$t('label.gamification-delete')" placement="top">
-                <el-button type="danger" icon="el-icon-delete" size="small" />
+                <el-button type="danger" icon="el-icon-delete" size="small" @click="deactivateGamification(scope.row.id)"/>
               </el-tooltip>
             </template>
           </el-table-column>
@@ -63,48 +63,11 @@
 
 <script>
 import { mapGetters } from 'vuex'
-// import { fetchList } from '@/api/gamification'
+import { fetchList, deactivate } from '@/api/gamification'
 import { parsingDatetime } from '@/utils/datetimeToString'
 import Pagination from '@/components/Pagination'
 import ListFilter from './components/_listfilter'
 
-const listGamifications = [
-  {
-    id: 1,
-    judul: 'coba 1',
-    status: 'Aktif',
-    start_date: Date.now(),
-    end_date: Date.now()
-  },
-  {
-    id: 2,
-    judul: 'coba 2',
-    status: 'Aktif',
-    start_date: Date.now(),
-    end_date: Date.now()
-  },
-  {
-    id: 3,
-    judul: 'coba 3',
-    status: 'Aktif',
-    start_date: Date.now(),
-    end_date: Date.now()
-  },
-  {
-    id: 4,
-    judul: 'coba 4',
-    status: 'Aktif',
-    start_date: Date.now(),
-    end_date: Date.now()
-  },
-  {
-    id: 5,
-    judul: 'coba 5',
-    status: 'Aktif',
-    start_date: Date.now(),
-    end_date: Date.now()
-  }
-]
 
 export default {
   components: { Pagination, ListFilter },
@@ -119,7 +82,7 @@ export default {
   },
   data() {
     return {
-      list: listGamifications,
+      list: null,
       total: 0,
       listLoading: false,
       listQuery: {
@@ -127,7 +90,7 @@ export default {
         end_date: '',
         title: null,
         type: null,
-        status: null,
+        status: 10,
         page: 1,
         limit: 10
       }
@@ -141,17 +104,40 @@ export default {
   },
 
   mounted() {
-    // this.getList()
+    this.getList()
   },
   methods: {
     parsingDatetime,
     getList() {
       this.listLoading = true
-      // fetchList(this.listQuery).then(response => {
-      //   this.list = response.data.items
-      //   this.total = response.data._meta.totalCount
-      //   this.listLoading = false
-      // })
+      fetchList(this.listQuery).then(response => {
+        this.list = response.data.items
+        this.total = response.data._meta.totalCount
+        this.listLoading = false
+      })
+    },
+
+    async deactivateGamification(id) {
+      try {
+        await this.$confirm(this.$t('crud.user-deactivate-confirm'), 'Warning', {
+          confirmButtonText: this.$t('common.confirm'),
+          cancelButtonText: this.$t('common.cancel'),
+          type: 'warning'
+        })
+
+        this.listLoading = true
+
+        await deactivate(id)
+
+        this.$message({
+          type: 'success',
+          message: this.$t('crud.deactivate-success')
+        })
+
+        this.getList()
+      } catch (e) {
+        console.log(e)
+      }
     },
 
     resetFilter() {

@@ -4,7 +4,7 @@
       <el-row :gutter="10">
         <el-col :xs="{span:12, tag:'mb-10'}" :sm="8" :md="8">
           <el-form-item style="margin-bottom: 0">
-            <el-input v-model="listQuery.search" placeholder="Judul" />
+            <el-input v-model="listQuery.title" placeholder="Judul" />
           </el-form-item>
         </el-col>
         <el-col :xs="{span: 12, tag:'mb-10'}" :span="12">
@@ -13,21 +13,21 @@
               <el-col :xs="12" :sm="8" :lg="12">
                 <el-date-picker
                   v-model="listQuery.start_date"
-                  class="pop-up-date"
+                  class="last-access-start"
                   type="datetime"
-                  format="yyyy-MM-dd HH:mm:ss"
-                  value-format="yyyy-MM-dd HH:mm:ss"
-                  :placeholder="$t('popup.popup-start-date')"
+                  format="yyyy-MM-dd"
+                  value-format="yyyy-MM-dd"
+                  :placeholder="$t('label.start-date')"
                 />
               </el-col>
               <el-col :xs="12" :sm="8" :lg="12">
                 <el-date-picker
                   v-model="listQuery.end_date"
-                  class="pop-up-date"
+                  class="last-access-start"
                   type="datetime"
-                  format="yyyy-MM-dd HH:mm:ss"
-                  value-format="yyyy-MM-dd HH:mm:ss"
-                  :placeholder="$t('popup.popup-end-date')"
+                  format="yyyy-MM-dd"
+                  value-format="yyyy-MM-dd"
+                  :placeholder="$t('label.end-date')"
                 />
               </el-col>
             </el-row>

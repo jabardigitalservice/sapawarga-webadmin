@@ -7,6 +7,9 @@
             <span>{{ $t('label.gamification-detail') }}</span>
           </div>
           <detail-data :table-content-data="tableDataNews" />
+          <detail-data :table-content-data="tableImageAttachment" :input-image="image || imageNone" />
+          <detail-data :table-content-data="tableDataDescription" />
+
         </el-card>
       </el-col>
     </el-row>
@@ -14,7 +17,9 @@
 </template>
 
 <script>
+import { fetchRecord } from '@/api/gamification'
 import DetailData from '@/components/DetailData'
+import moment from 'moment'
 
 export default {
   components: {
@@ -23,6 +28,10 @@ export default {
   data() {
     return {
       tableDataNews: [],
+      tableImageAttachment: [],
+      tableDataDescription: [],
+      image: null,
+      imageNone: require('@/assets/none.png'),
       news: null
     }
   },
@@ -31,44 +40,51 @@ export default {
     this.getDetail()
   },
   methods: {
-    getDetail() {
+    async getDetail() {
+      const detail = await fetchRecord(this.id)
+      this.image = detail.data.image_badge_path_url
       this.tableDataNews = [
         {
-          title: 'Background',
-          content: '-'
+          title: this.$t('label.gamification-title-mision'),
+          content: detail.data.title
         },
         {
-          title: 'Judul',
-          content: 'Membaca 10 Berita'
+          title: this.$t('label.gamification-title-fitur'),
+          content: this.$t(`label.gamification-fitur-${detail.data.object_type}`)
         },
         {
-          title: 'Fitur',
-          content: 'Berita'
+          title: this.$t('label.gamification-action-fitur'),
+          content: this.$t(`label.gamification-event-${detail.data.object_event}`)
         },
         {
-          title: 'Action',
-          content: '-'
+          title: this.$t('label.start-date'),
+          content: moment(detail.data.start_date).format('D MMMM YYYY')
         },
         {
-          title: 'Dibuat',
-          content: '10 Desember 2020'
+          title: this.$t('label.end-date'),
+          content: moment(detail.data.end_date).format('D MMMM YYYY')
         },
         {
-          title: 'Berakhir',
-          content: '10 Desember 2020'
+          title: this.$t('label.gamification-amount-hit'),
+          content: detail.data.total_hit
         },
         {
-          title: 'Deskripsi',
-          content: '-'
+          title: this.$t('label.gamification-name-reward'),
+          content: detail.data.title_badge
         },
+
+      ]
+      this.tableImageAttachment = [
         {
-          title: 'Penghargaan',
-          content: '-'
-        },
-        {
-          title: 'Jumlah Hit',
-          content: '-'
+          title: this.$t('label.gamification-badge-logo'),
+          content: detail.data.image_badge_path_url
         }
+      ]
+      this.tableDataDescription = [
+        {
+          title: this.$t('label.gamification-description-mision'),
+          content: detail.data.description
+        },
       ]
     }
 

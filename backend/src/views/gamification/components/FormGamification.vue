@@ -9,21 +9,21 @@
               v-model="gamification.title"
               type="text"
               name="title"
-              placeholder="Judul Misi"
+              :placeholder="$t('label.gamification-title-mision')"
             />
           </el-form-item>
 
-          <el-form-item :label="$t('label.gamification-title-fitur')" prop="nama_fitur">
-            <el-select v-model="gamification.nama_fitur" :placeholder="$t('label.gamification-title-fitur')" name="fitur">
+          <el-form-item :label="$t('label.gamification-title-fitur')" prop="object_type">
+            <el-select v-model="gamification.object_type" :placeholder="$t('label.gamification-title-fitur')" name="fitur">
               <el-option :label="$t('route.news-manage')" value="news" />
-              <el-option :label="$t('route.post-manage')" value="postrw" />
+              <el-option :label="$t('route.post-manage')" value="user_post" />
             </el-select>
           </el-form-item>
 
-          <el-form-item :label="$t('label.gamification-action-fitur')" prop="action_fitur">
-            <el-select v-model="gamification.action_fitur" :placeholder="$t('label.gamification-action-fitur')" name="action_fitur">
-              <el-option :label="$t('label.views-news')" value="views_news" />
-              <el-option :label="$t('label.post-activities-rw')" value="post_rw" />
+          <el-form-item :label="$t('label.gamification-action-fitur')" prop="object_event">
+            <el-select v-model="gamification.object_event" :placeholder="$t('label.gamification-action-fitur')" name="action_fitur">
+              <el-option :label="$t('label.views-news')" value="view_news_detail" />
+              <el-option :label="$t('label.post-activities-rw')" value="post_user_post" />
             </el-select>
           </el-form-item>
 
@@ -34,10 +34,10 @@
                   v-model="gamification.start_date"
                   class="pop-up-date"
                   type="datetime"
-                  format="yyyy-MM-dd HH:mm:ss"
-                  value-format="yyyy-MM-dd HH:mm:ss"
+                  format="yyyy-MM-dd "
+                  value-format="yyyy-MM-dd"
                   :picker-options="dateStartDateOptions"
-                  :placeholder="$t('popup.popup-start-date')"
+                  :placeholder="$t('label.start-date')"
                 />
               </el-form-item>
             </el-col>
@@ -47,31 +47,31 @@
                   v-model="gamification.end_date"
                   class="pop-up-date"
                   type="datetime"
-                  format="yyyy-MM-dd HH:mm:ss"
-                  value-format="yyyy-MM-dd HH:mm:ss"
+                  format="yyyy-MM-dd"
+                  value-format="yyyy-MM-dd"
                   :picker-options="dateEndDateOptions"
-                  :placeholder="$t('popup.popup-end-date')"
+                  :placeholder="$t('label.end-date')"
                 />
               </el-form-item>
             </el-col>
           </el-row>
           <el-form-item :label="$t('label.gamification-amount-hit')">
             <el-input-number
-              v-model="gamification.jumlah_hit"
+              v-model="gamification.total_hit"
               :min="0"
               :max="100"
-              name="jumlah_hit"
-              placeholder="Jumlah Hit"
+              name="total_hit"
+              :placeholder="$t('label.gamification-amount-hit')"
             />
           </el-form-item>
 
           <el-form-item :label="$t('label.gamification-description-mision')" :prop="validateDeskripsi">
             <el-input
-              v-model="gamification.deskripsi"
+              v-model="gamification.description"
               type="textarea"
               :autosize="{ minRows: 2, maxRows: 4}"
-              name="deskripsi"
-              placeholder="Deskripsi Misi"
+              name="description"
+              :placeholder="$t('label.gamification-description-mision')"
             />
           </el-form-item>
 
@@ -79,19 +79,21 @@
             <el-col :xs="24" :sm="12" :lg="12">
               <el-form-item :label="$t('label.gamification-name-reward')" :prop="validateNamaPenghargaan">
                 <el-input
-                  v-model="gamification.nama_penghargaan"
+                  v-model="gamification.title_badge"
                   type="text"
-                  name="nama_penghargaan"
-                  placeholder="Nama Penghargaan"
+                  name="title_badge"
+                  :placeholder="$t('label.gamification-name-reward')"
                 />
               </el-form-item>
             </el-col>
 
             <el-col :xs="24" :sm="12" :lg="12">
-              <el-form-item label="Upload Badge" :prop="validateNamaPenghargaan">
+              <el-form-item :label="$t('label.gamification-badge-logo')" :prop="validateImage">
                 <AttachmentFileUpload
-                  type="popup_photo"
+                  type="banner_photo"
+                  :type-file="typeFile"
                   :limit-file="1"
+                  :file-path="filepath"
                   @onUpload="photoUploaded"
                 />
               </el-form-item>
@@ -115,6 +117,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { create, update, fetchRecord } from '@/api/gamification'
 import { containsWhitespace, isContainHtmlTags } from '@/utils/validate'
 import AttachmentFileUpload from '@/components/AttachmentFileUpload'
 
@@ -134,7 +137,7 @@ export default {
   data() {
     const validatorTextWhitespace = (rule, value, callback) => {
       if (containsWhitespace(value) === true) {
-        callback(new Error('Teks yang diisi tidak valid.'))
+        callback(new Error(this.$t('errors.text-not-valid')))
       }
 
       callback()
@@ -167,20 +170,24 @@ export default {
     return {
       gamification: {
         title: null,
-        nama_fitur: null,
-        action_fitur: null,
-        nama_penghargaan: null,
-        jumlah_hit: 0,
-        cover_path: null,
-        deskripsi: null,
-        start_date: moment().format('YYYY-MM-DD HH:mm:ss'),
-        end_date: moment().add(1, 'days').format('YYYY-MM-DD HH:mm:ss')
+        object_type: null,
+        object_event: null,
+        title_badge: null,
+        total_hit: 0,
+        image_badge_path: null,
+        description: null,
+        status: 10,
+        start_date: moment().format('YYYY-MM-DD'),
+        end_date: moment().add(1, 'days').format('YYYY-MM-DD')
       },
       loading: false,
       validateTitle: 'title',
       validateStartDate: 'start_date',
-      validateNamaPenghargaan: 'nama_penghargaan',
+      validateNamaPenghargaan: 'title_badge',
+      validateImage: 'image_badge_path',
       validateDeskripsi: 'deskripsi',
+      filepath: null,
+      typeFile: ".jpg, .jpeg, .png",
       rules: {
         title: [
           {
@@ -207,7 +214,7 @@ export default {
             trigger: 'blur'
           }
         ],
-        nama_penghargaan: [
+        title_badge: [
           {
             required: true,
             message: this.$t('errors.gamification-name-reward-must-be-filled'),
@@ -223,12 +230,19 @@ export default {
           }
         ],
         start_date: [
-          { required: true, message: 'Target harus diisi', trigger: 'blur' }
+          { required: true, message: this.$t('errors.start-date-not-null'), trigger: 'blur' }
         ],
         end_date: [
-          { required: true, message: 'Target harus diisi', trigger: 'blur' }
+          { required: true, message: this.$t('errors.end-date-not-null'), trigger: 'blur' }
         ],
-        deskripsi: [
+        image_badge_path: [
+          {
+            required: true,
+            message: this.$t('errors.image-not-null'),
+            trigger: 'blur'
+          },
+        ],
+        description: [
           {
             required: true,
             message: this.$t('errors.gamification-deskripsi-must-be-filled'),
@@ -239,11 +253,11 @@ export default {
             trigger: 'blur'
           }
         ],
-        nama_fitur: [
-          { required: true, message: 'Target harus diisi', trigger: 'change' }
+        object_type: [
+          { required: true, message: this.$t('errors.gamification-fitur-must-be-filled'), trigger: 'change' }
         ],
-        action_fitur: [
-          { required: true, message: 'Target harus diisi', trigger: 'change' }
+        object_event: [
+          { required: true, message: this.$t('errors.gamification-action-fitur-must-be-filled'), trigger: 'change' }
         ],
         errorTitle: [
           { required: true, message: this.$t('errors.gamification-title-already-used'), trigger: 'change' }
@@ -262,24 +276,35 @@ export default {
       'device'
     ])
   },
-  mounted() {
-
+  async created() {
+    if (this.isEdit) {
+      const id = this.$route.params && this.$route.params.id
+      await this.fetchData(id)
+    }
   },
   methods: {
+    photoUploaded(path, url) {
+      this.gamification.image_badge_path = path
+    },
     disabledStartDate(time) {
       const dateTime = moment().format('YYYY-MM-DD 00:00:00')
       const parseDateTime = Date.parse(dateTime)
       return time.getTime() < parseDateTime
-    },
-    photoUploaded(path, url) {
-      this.gamification.cover_path = path
     },
     disabledEndDate(time) {
       const startDateTime = moment(this.gamification.start_date).format('YYYY-MM-DD 00:00:00')
       const parseDateTime = Date.parse(startDateTime)
       return time.getTime() < parseDateTime
     },
-
+    async fetchData(id) {
+      try {
+        const response = await fetchRecord(id)
+        this.gamification = await response.data
+        this.filepath = response.data.image_badge_path_url
+      } catch (e) {
+        this.$message.error(data[String(x)][0])
+      }
+    },
     async submitForm() {
       const valid = await this.$refs.form.validate()
 
@@ -292,20 +317,20 @@ export default {
         const data = {}
         Object.assign(data, this.gamification)
         if (this.isEdit) {
-          // const id = this.$route.params && this.$route.params.id
-          // await update(id, data)
+          const id = this.$route.params && this.$route.params.id
+          await update(id, data)
           this.$message.success(this.$t('crud.update-success'))
           this.$router.push('/gamification/index')
         } else {
-          // await create(data)
+          await create(data)
           this.$message.success(this.$t('crud.gamification-send-success'))
           this.$router.push('/gamification/index')
         }
       } catch (e) {
         const data = e.response.data.data
         for (const x in data) {
-          if (String(x) === 'image_path') {
-            this.$message.error(this.$t('errors.popup-image-null'))
+          if (String(x) === 'image_badge_path_url') {
+            this.$message.error(this.$t('errors.image-not-null'))
           } else {
             this.$message.error(data[String(x)][0])
           }

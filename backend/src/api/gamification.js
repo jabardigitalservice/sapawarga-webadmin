@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function fetchList(query) {
   return request({
-    url: '/gamification',
+    url: '/gamifications',
     method: 'get',
     params: query
   })
@@ -10,14 +10,14 @@ export function fetchList(query) {
 
 export function fetchRecord(id) {
   return request({
-    url: `/gamification/${id}`,
+    url: `/gamifications/${id}`,
     method: 'get'
   })
 }
 
 export function create(data) {
   return request({
-    url: '/gamification',
+    url: '/gamifications',
     method: 'post',
     data
   })
@@ -25,8 +25,18 @@ export function create(data) {
 
 export function update(id, data) {
   return request({
-    url: `/gamification/${id}`,
+    url: `/gamifications/${id}`,
     method: 'put',
     data
+  })
+}
+
+export function deactivate(id) {
+  return request({
+    url: `/gamifications/${id}`,
+    method: 'put',
+    data: {
+      status: 0
+    }
   })
 }
