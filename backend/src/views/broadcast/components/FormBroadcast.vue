@@ -92,7 +92,7 @@
                 <el-option label="Berita" value="news" />
               </el-select>
               <span v-if="broadcast.internal_category !== null">
-                <el-button type="success" @click="dialog(broadcast.internal_category)">Pilihan</el-button>
+                <el-button type="success" class="broadcast-option" @click="dialog(broadcast.internal_category)">Pilihan</el-button>
               </span>
             </el-form-item>
 
@@ -364,7 +364,6 @@ export default {
     },
 
     'broadcast.source'(val) {
-      console.log(val)
       if (val === true) {
         this.broadcast.link_url = null
       } else if (val === false) {
@@ -375,7 +374,6 @@ export default {
     },
 
     'broadcast.internal_category'(newVal, oldVal) {
-      console.log(oldVal, newVal)
       if (oldVal === null) {
         this.broadcast.internal_entity_name
         this.broadcast.internal_entity_id
@@ -537,4 +535,5 @@ export default {
 .mb-10 {
   margin-bottom: 10px;
 }
+
 </style>
