@@ -55,7 +55,7 @@
       </el-col>
     </el-row>
     <el-dialog :visible.sync="showDialog" width="70%" :title="titlePopup">
-      <Fitur :category="dialogName" @childData="getData" @closeDialog="dialogClose" />
+      <Feature :category="dialogName" @childData="getData" @closeDialog="dialogClose" />
     </el-dialog>
   </div>
 </template>
@@ -64,13 +64,13 @@
 import AttachmentPhotoUpload from '@/components/AttachmentPhotoUpload'
 import { validUrl } from '@/utils/validate'
 import { create, fetchRecord, update } from '@/api/banner'
-import Fitur from './dialog/fitur'
+import Feature from './dialog/feature'
 import { mapGetters } from 'vuex'
 
 export default {
   components: {
     AttachmentPhotoUpload,
-    Fitur
+    Feature
   },
   props: {
     isEdit: {

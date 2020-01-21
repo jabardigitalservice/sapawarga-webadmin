@@ -22,6 +22,7 @@
             <el-table-column prop="content">
               <template slot-scope="{row}">
                 <div v-if="isContainHtmlTags(row.content)" v-html="row.content" />
+                <a v-else-if="validUrl(row.content)" :href="row.content" target="_blank" class="link">{{ row.content }}</a>
                 <div v-else>{{ row.content }}</div>
               </template>
             </el-table-column>
@@ -37,7 +38,7 @@
 import moment from 'moment'
 import { fetchRecord, update } from '@/api/broadcast'
 import { parsingDatetime } from '@/utils/datetimeToString'
-import { isContainHtmlTags } from '@/utils/validate'
+import { isContainHtmlTags, validUrl } from '@/utils/validate'
 
 export default {
   data() {
@@ -64,6 +65,9 @@ export default {
 
   methods: {
     isContainHtmlTags,
+    validUrl(str) {
+      return validUrl(str)
+    },
     getDetail() {
       fetchRecord(this.id).then(response => {
         const {
@@ -78,7 +82,11 @@ export default {
           status_label,
           scheduled_datetime,
           is_scheduled,
-          updated_at
+          updated_at,
+          type,
+          link_url,
+          internal_object_type,
+          internal_object_name
         } = response.data
         this.broadcast = response.data
         this.checkDate(response.data)
@@ -129,6 +137,22 @@ export default {
             content: status === this.status.PUBLISHED && !is_scheduled ? parsingDatetime(updated_at) : parsingDatetime(scheduled_datetime)
           },
           {
+            title: this.$t('label.broadcast-source'),
+            content: type || '-'
+          },
+          {
+            title: this.$t('label.broadcast-url'),
+            content: link_url || '-'
+          },
+          {
+            title: this.$t('label.broadcast-feature'),
+            content: internal_object_type === 'news' ? 'berita' : internal_object_type
+          },
+          {
+            title: this.$t('label.broadcast-feature-title'),
+            content: internal_object_name || '-'
+          },
+          {
             title: this.$t('label.description'),
             content: (description !== null ? description : '-')
           }
@@ -141,6 +165,14 @@ export default {
 
         if (status === this.status.PUBLISHED || status === this.status.SCHEDULED) {
           this.tableDataPesan.splice(3, 1)
+        }
+
+        if (type === null) {
+          this.tableDataPesan.splice(4, 4)
+        } else if (type === 'internal') {
+          this.tableDataPesan.splice(5, 1)
+        } else {
+          this.tableDataPesan.splice(6, 2)
         }
       })
     },

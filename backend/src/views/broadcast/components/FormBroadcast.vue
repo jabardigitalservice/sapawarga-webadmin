@@ -67,6 +67,39 @@
               />
             </el-form-item>
 
+            <el-form-item :label="$t('label.broadcast-link')" prop="is_link" class="inline-block">
+              <el-radio-group v-model="broadcast.is_link" name="link" class="inline-block">
+                <el-radio-button :label="false">{{ $t('label.broadcast-false') }}</el-radio-button>
+                <el-radio-button :label="true">{{ $t('label.broadcast-true') }}</el-radio-button>
+              </el-radio-group>
+            </el-form-item>
+
+            <el-form-item v-if="broadcast.is_link" :label="$t('label.broadcast-source')" prop="type" class="inline-block">
+              <el-radio-group v-model="broadcast.type" name="link" class="inline-block">
+                <el-radio-button label="external">{{ $t('label.broadcast-external') }}</el-radio-button>
+                <el-radio-button label="internal">{{ $t('label.broadcast-internal') }}</el-radio-button>
+              </el-radio-group>
+            </el-form-item>
+
+            <el-form-item v-if="broadcast.is_link && broadcast.type === 'external'" :label="$t('label.broadcast-url')" prop="link_url">
+              <el-input v-model="broadcast.link_url" type="text" name="link_url" placeholder="URL Broadcast" />
+            </el-form-item>
+
+            <el-form-item v-else-if="broadcast.is_link && broadcast.type === 'internal'" :label="$t('label.broadcast-feature')" prop="internal_object_type">
+              <el-select v-model="broadcast.internal_object_type" placeholder="Pilih Fitur" name="fitur" class="broadcast-feature">
+                <el-option label="Survei" value="survey" />
+                <el-option label="Polling" value="polling" />
+                <el-option label="Berita" value="news" />
+              </el-select>
+              <span v-if="broadcast.internal_object_type !== null">
+                <el-button type="success" class="broadcast-option" @click="dialog(broadcast.internal_object_type)">{{ $t('label.broadcast-options') }}</el-button>
+              </span>
+            </el-form-item>
+
+            <el-form-item v-if="broadcast.is_link && broadcast.type === 'internal'" :label="titleFitur" prop="internal_object_name">
+              <el-input v-model="broadcast.internal_object_name" disabled type="text" name="internal_object_name" />
+            </el-form-item>
+
             <el-form-item :label="$t('label.description')" prop="description">
               <tinymce v-model="broadcast.description" :height="300" />
             </el-form-item>
@@ -78,20 +111,25 @@
         </div>
       </el-col>
     </el-row>
+    <el-dialog :visible.sync="showDialog" width="70%" :title="titlePopup">
+      <Feature :category="dialogName" @childData="getData" @closeDialog="dialogClose" />
+    </el-dialog>
   </div>
 </template>
 <script>
 import InputCategory from '@/components/InputCategory'
 import InputSelectArea from '@/components/InputSelectArea'
 import { create, fetchRecord, update } from '@/api/broadcast'
-import { containsWhitespace, isContainHtmlTags } from '@/utils/validate'
+import { containsWhitespace, isContainHtmlTags, validUrl } from '@/utils/validate'
 import { mapGetters } from 'vuex'
+import Feature from '@/views/banner/components/dialog/feature'
 import Tinymce from '@/components/Tinymce'
 import moment from 'moment'
 
 export default {
   components: {
     Tinymce,
+    Feature,
     InputCategory,
     InputSelectArea
   },
@@ -102,6 +140,14 @@ export default {
     }
   },
   data() {
+    const validatorUrl = (rule, value, callback) => {
+      if (validUrl(value) === false) {
+        callback(new Error(this.$t('message.broadcast-link-valid')))
+      }
+
+      callback()
+    }
+
     const whitespaceTitle = (rule, value, callback) => {
       if (containsWhitespace(value) === true) {
         callback(new Error(this.$t('message.broadcast-title-valid')))
@@ -140,8 +186,18 @@ export default {
         category_id: null,
         description: null,
         is_scheduled: false,
-        scheduled_datetime: null
+        scheduled_datetime: null,
+        is_link: false,
+        type: 'external',
+        link_url: null,
+        internal_object_type: null,
+        internal_object_id: null,
+        internal_object_name: null
       },
+      titleFitur: null,
+      titlePopup: null,
+      showDialog: false,
+      dialogName: null,
       scheduled_datetime_validation: 'scheduled_datetime',
       rules: {
         title: [
@@ -236,6 +292,45 @@ export default {
             message: this.$t('message.broadcast-scheduled_datetime-expire'),
             trigger: 'change'
           }
+        ],
+        link_url: [
+          {
+            required: true,
+            message: this.$t('message.broadcast-url-required'),
+            trigger: 'blur'
+          },
+          {
+            validator: validatorUrl,
+            trigger: 'blur'
+          }
+        ],
+        is_link: [
+          {
+            required: true,
+            message: this.$t('message.broadcast-isLink-required'),
+            trigger: 'blur'
+          }
+        ],
+        type: [
+          {
+            required: true,
+            message: this.$t('message.broadcast-type-required'),
+            trigger: 'blur'
+          }
+        ],
+        internal_object_type: [
+          {
+            required: true,
+            message: this.$t('message.broadcast-internal-category-required'),
+            trigger: 'blur'
+          }
+        ],
+        internal_object_name: [
+          {
+            required: true,
+            message: this.$t('message.broadcast-entity-name-required'),
+            trigger: 'blur'
+          }
         ]
       }
     }
@@ -272,6 +367,37 @@ export default {
       if (this.broadcast.is_scheduled === false) {
         this.broadcast.scheduled_datetime = null
       }
+    },
+
+    'broadcast.type'(val) {
+      if (val === 'internal') {
+        this.broadcast.link_url = null
+      } else if (val === 'external') {
+        this.broadcast.internal_object_type = null
+        this.broadcast.internal_object_name = null
+        this.broadcast.internal_object_id = null
+      }
+    },
+
+    'broadcast.internal_object_type'(newVal, oldVal) {
+      if (oldVal === null) {
+        this.broadcast.internal_object_name
+        this.broadcast.internal_object_id
+      } else if (oldVal !== newVal) {
+        this.broadcast.internal_object_name = null
+        this.broadcast.internal_object_id = null
+      }
+
+      if (this.broadcast.internal_object_type === 'survey') {
+        this.titleFitur = this.$t('label.survey-title')
+        this.titlePopup = this.$t('label.survey-list')
+      } else if (this.broadcast.internal_object_type === 'polling') {
+        this.titleFitur = this.$t('label.polling-title')
+        this.titlePopup = this.$t('label.polling-list')
+      } else {
+        this.titleFitur = this.$t('news.news-title')
+        this.titlePopup = this.$t('news.news-list')
+      }
     }
   },
   created() {
@@ -281,6 +407,17 @@ export default {
     }
   },
   methods: {
+    dialog(id) {
+      this.dialogName = id
+      this.showDialog = true
+    },
+    dialogClose(value) {
+      this.showDialog = value
+    },
+    getData(value) {
+      this.broadcast.internal_object_name = value.name !== undefined ? value.name : value.title
+      this.broadcast.internal_object_id = value.id
+    },
     resetRw() {
       if (this.broadcast.kel_id === null || this.broadcast.kec_id === null || this.broadcast.kabkota_id === null) {
         this.broadcast.kel_id = null
@@ -294,6 +431,12 @@ export default {
         if (this.broadcast.status !== this.status.DRAFT) {
           this.$message.error(this.$t('crud.broadcast-error-edit-published'))
           this.$router.push('/broadcast/index')
+        }
+
+        if (this.broadcast.type) {
+          this.broadcast.is_link = true
+        } else {
+          this.broadcast.is_link = false
         }
       }).catch(err => {
         console.log(err)
@@ -329,6 +472,10 @@ export default {
           data.scheduled_datetime = moment(this.broadcast.scheduled_datetime).unix()
         } else {
           data.scheduled_datetime = null
+        }
+
+        if (data.is_link === false) {
+          data.type = null
         }
 
         if (this.isEdit) {
@@ -404,4 +551,5 @@ export default {
 .mb-10 {
   margin-bottom: 10px;
 }
+
 </style>

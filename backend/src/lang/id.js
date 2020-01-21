@@ -427,20 +427,22 @@ export default {
     'broadcast-title-min': 'Judul pesan minimal 10 karakter',
     'broadcast-title-max': 'Judul pesan maksimal 100 karakter',
     'broadcast-title-valid': 'Judul pesan yang diisi tidak valid',
-
     'broadcast-description-required': 'Isi pesan harus diisi',
     'broadcast-description-max': 'Isi pesan maksimal 65000 karakter',
     'broadcast-description-valid': 'Pesan yang diisi tidak valid',
-
     'broadcast-rw-pattern': 'RW harus menggunakan angka',
     'broadcast-rw-max': 'RW harus 3 angka, contoh 001',
     'broadcast-rw-min': 'RW harus 3 angka, contoh 001',
-
     'broadcast-area-required': 'Wilayah harus diisi',
-
     'broadcast-scheduled': 'Jadwal harus diisi',
     'broadcast-scheduled_datetime': 'Tanggal dan waktu harus diisi',
     'broadcast-scheduled_datetime-expire': 'Tanggal dan waktu yang dipilih telah lewat',
+    'broadcast-url-required': 'Tautan harus diisi',
+    'broadcast-isLink-required': 'Sambungkan broadcast harus diisi',
+    'broadcast-internal-category-required': 'Fitur broadcast harus diisi',
+    'broadcast-entity-name-required': 'Judul harus diisi',
+    'broadcast-type-required': 'Sumber broadcast harus diisi',
+    'broadcast-link-valid': 'URL tidak valid',
 
     'user-import-sending': 'Cek email Anda untuk progress unggah data',
 
@@ -608,9 +610,21 @@ export default {
 
     'polling-view-all': 'Lihat Semua',
     'polling-audience': 'Total Audience',
+    'polling-list': 'Daftar Polling',
+    'polling-title': 'Judul Polling',
 
     'broadcast-now': 'Sekarang',
     'broadcast-scheduled': 'Terjadwal',
+    'broadcast-link': 'Sambungkan',
+    'broadcast-true': 'Ya',
+    'broadcast-false': 'Tidak',
+    'broadcast-source': 'Sumber',
+    'broadcast-internal': 'Internal',
+    'broadcast-external': 'Eksternal',
+    'broadcast-options': 'Pilihan',
+    'broadcast-url': 'Tautan',
+    'broadcast-feature': 'Fitur',
+    'broadcast-feature-title': 'Judul Fitur',
 
     'post-title': 'Nama Kegiatan',
     'post-like': 'Likes',
@@ -641,6 +655,7 @@ export default {
     'survey-name': 'Nama Survei',
     'survey-start': 'Mulai',
     'survey-end': 'Berakhir',
+    'survey-list': 'Daftar Survey',
 
     'views-news': 'Melihat Berita',
     'post-activities-rw': 'Posting Rw',
@@ -677,6 +692,8 @@ export default {
     'news-add-action': 'Tambah berita',
     'news-content-header': 'Data berita',
     'news-edit-header': 'Edit Berita',
+    'news-title': 'Judul Berita',
+    'news-list': 'Daftar Berita',
     'priority-news-header': 'Prioritas Berita',
     'priority-news-add-header': 'Tambah berita prioritas'
   }
