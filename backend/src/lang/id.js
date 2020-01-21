@@ -345,6 +345,7 @@ export default {
     'banner-image-null': 'Gambar tidak boleh kosong.',
     'popup-image-null': 'Gambar tidak boleh kosong.',
     'image-not-null': 'Gambar tidak boleh kosong.',
+    'logo-badge-not-null': 'Logo Badge tidak boleh kosong.',
     'popup-title-not-null': 'Judul Pop Up harus diisi.',
     'popup-title-min-10': 'Judul Pop Up minimal 10 Karakter.',
     'popup-title-max-100': 'Judul Pop Up maximal 100 Karakter.',
@@ -656,6 +657,9 @@ export default {
     'survey-start': 'Mulai',
     'survey-end': 'Berakhir',
     'survey-list': 'Daftar Survey',
+
+    'click-upload': 'Click to upload',
+    'image-upload-size': 'jpg/png/jpeg files with a size less than 500kb',
 
     'views-news': 'Melihat Berita',
     'post-activities-rw': 'Posting Rw',

@@ -13,8 +13,8 @@
       :file-list="fileList"
       :auto-upload="false"
     >
-      <el-button size="small" type="primary">Click to upload</el-button>
-      <div slot="tip" class="el-upload__tip">jpg/png/jpeg files with a size less than 500kb</div>
+      <el-button size="small" type="primary">{{ $t('label.click-upload') }}</el-button>
+      <div slot="tip" class="el-upload__tip">{{ description }}</div>
     </el-upload>
   </div>
 </template>
@@ -43,9 +43,9 @@ export default {
       type: String,
       default: null
     },
-    listInformation: {
-      type: Array,
-      default: function() { return [] }
+    description: {
+      type: String,
+      default: null
     }
   },
   data() {
@@ -76,7 +76,8 @@ export default {
 
   methods: {
     handleRemove(file, fileList) {
-      //
+      this.fileList = []
+      this.$emit('onRemove')
     },
     handleExceed(files, fileList) {
       this.$message.warning(this.$t('errors.max-file-upload', [this.limitFile]))

@@ -94,7 +94,9 @@
                   :type-file="typeFile"
                   :limit-file="1"
                   :file-path="filepath"
+                  :description="$t('label.image-upload-size')"
                   @onUpload="photoUploaded"
+                  @onRemove="removeUploaded"
                 />
               </el-form-item>
             </el-col>
@@ -238,7 +240,7 @@ export default {
         image_badge_path: [
           {
             required: true,
-            message: this.$t('errors.image-not-null'),
+            message: this.$t('errors.logo-badge-not-null'),
             trigger: 'blur'
           }
         ],
@@ -286,6 +288,9 @@ export default {
     photoUploaded(path, url) {
       this.gamification.image_badge_path = path
     },
+    removeUploaded() {
+      this.gamification.image_badge_path = null
+    },
     disabledStartDate(time) {
       const dateTime = moment().format('YYYY-MM-DD 00:00:00')
       const parseDateTime = Date.parse(dateTime)
@@ -301,6 +306,7 @@ export default {
         const response = await fetchRecord(id)
         this.gamification = await response.data
         this.filepath = response.data.image_badge_path_url
+        this.gamification.image_badge_path = response.data.image_badge_path_url
       } catch (e) {
         const data = e.response.data.data
         for (const x in data) {
