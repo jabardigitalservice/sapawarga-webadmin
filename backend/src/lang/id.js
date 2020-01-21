@@ -113,7 +113,13 @@ export default {
 
     'post-manage': 'Kegiatan RW',
     'post-list': 'Kegiatan RW',
-    'post-detail': 'Detail Kegiatan RW'
+    'post-detail': 'Detail Kegiatan RW',
+
+    'gamification-manage': 'Gamification',
+    'gamification-list': 'Daftar Gamification',
+    'gamification-create': 'Tambah Gamification',
+    'gamification-detail': 'Detail Gamification',
+    'gamification-edit': 'Edit Gamification'
   },
   crud: {
     'list-empty': 'Belum ada data.',
@@ -138,6 +144,7 @@ export default {
     'save-banner': 'Tambah Banner',
     'save-popup': 'Tambah Pop Up',
     'save-newsImportant': 'Tambah Info Penting',
+    'save-gamification': 'Tambah Gamification',
 
     'back-to-list': 'Kembali ke Daftar',
     'send-polling': 'Publikasikan Polling',
@@ -192,7 +199,10 @@ export default {
     'error-edit-role': 'Anda tidak memiliki hak akses halaman ini.',
     'newsImportant-error-edit-pubished': 'Sudah dipublish, tidak dapat diedit',
 
-    'news-selected': 'Berita sudah dipilih'
+    'news-selected': 'Berita sudah dipilih',
+    'gamification-send-success': 'Gamification berhasil dibuat',
+    '': 'Batalkan'
+
   },
   common: {
     confirm: 'Ya',
@@ -334,6 +344,7 @@ export default {
     'news-image-null': 'Gambar tidak boleh kosong.',
     'banner-image-null': 'Gambar tidak boleh kosong.',
     'popup-image-null': 'Gambar tidak boleh kosong.',
+    'image-not-null': 'Gambar tidak boleh kosong.',
     'popup-title-not-null': 'Judul Pop Up harus diisi.',
     'popup-title-min-10': 'Judul Pop Up minimal 10 Karakter.',
     'popup-title-max-100': 'Judul Pop Up maximal 100 Karakter.',
@@ -349,6 +360,9 @@ export default {
     'popup-start-date-not-null': 'Tanggal Mulai harus diisi.',
     'popup-end-date-not-null': 'Tanggal Berakhir harus diisi.',
     'popup-description-not-null': 'Deskripsi harus diisi.',
+
+    'start-date-not-null': 'Tanggal Mulai harus diisi.',
+    'end-date-not-null': 'Tanggal Berakhir harus diisi.',
 
     'user-import-empty-file': 'File tidak boleh kosong. Silahkan pilih file terlebih dahulu',
     'broadcast-datetime-edit': 'Jadwal yang dipilih telah lewat. Silahkan edit terlebih dahulu',
@@ -371,7 +385,23 @@ export default {
     'news-category-not-null': 'Kategori Berita harus diisi',
     'news-content-not-null': 'Konten Berita harus diisi',
 
-    'input-message': 'Isian pesan mengandung karakter yang tidak diizinkan.'
+    'input-message': 'Isian pesan mengandung karakter yang tidak diizinkan.',
+
+    'gamification-title-must-be-filled': 'Judul Misi harus diisi.',
+    'gamification-name-reward-must-be-filled': 'Nama Penghargaan harus diisi.',
+    'gamification-deskripsi-must-be-filled': 'Deskripsi harus diisi.',
+    'gamification-title-already-used': 'Judul Misi sudah digunakan.',
+    'gamification-informasi-title': 'Judul gamification mengandung karakter yang tidak diizinkan.',
+    'gamification-title-min-10': 'Judul Misi minimal 10 Karakter.',
+    'gamification-title-max-100': 'Judul Misi maximal 100 Karakter.',
+    'gamification-name-reward-not-valid-characters': 'Nama penghargaan mengandung karakter yang tidak diizinkan.',
+
+    'gamification-fitur-must-be-filled': 'Fitur harus diisi.',
+    'gamification-action-fitur-must-be-filled': 'Action Fitur harus diisi.',
+
+    'description-not-valid-characters': 'Deskripsi mengandung karakter yang tidak diizinkan.',
+
+    'max-file-upload': 'Jumlah file tidak boleh lebih dari {0}.'
 
   },
   navbar: {
@@ -383,6 +413,7 @@ export default {
     'confirmation-approve': 'Apakah Anda yakin akan memberikan persetujuan untuk usulan ini?',
     'confirmation-reject': 'Apakah Anda yakin akan menolak usulan ini?',
     'confirmation-send-message': 'Apakah Anda yakin akan mengirimkan pesan: ',
+    'confirmation-delete-file-message': 'Apakah Anda yakin menghapus file {0} ?.',
     'title-approve': 'Konfirmasi Persetujuan',
     'title-reject': 'Konfirmasi Penolakan',
     'title': 'Konfirmasi',
@@ -523,6 +554,8 @@ export default {
     'title-broadcast': 'Judul Pesan',
     'scheduled_datetime': 'Tanggal dan Waktu',
     'date': 'Tanggal',
+    'start-date': 'Tanggal Mulai',
+    'end-date': 'Tanggal Berakhir',
 
     'created-polling': 'Polling Dibuat',
     'followed-polling': 'Polling Diikuti',
@@ -623,10 +656,33 @@ export default {
     'survey-end': 'Berakhir',
     'survey-list': 'Daftar Survey',
 
+    'views-news': 'Melihat Berita',
+    'post-activities-rw': 'Posting Rw',
+
+    'gamification-detail': 'Detail Gamification',
+    'gamification-add-new': 'Tambah Gamification Baru',
+    'gamification-edit': 'Edit Gamification',
+    'gamification-view': 'Lihat Gamification',
+    'gamification-delete': 'Hapus Gamification',
+
     'errorpage-oops': 'OOPS!',
     'errorpage-headline': 'Anda tidak dapat memasuki halaman ini......',
     'errorpage-message': 'Harap periksa apakah URL yang Anda masukkan benar. Klik tombol di bawah untuk kembali ke beranda atau mengirim laporan kesalahan.',
-    'errorpage-back': 'Kembali ke beranda'
+    'errorpage-back': 'Kembali ke beranda',
+
+    'gamification-title-fitur': 'Fitur',
+    'gamification-action-fitur': 'Action Fitur',
+    'gamification-title-mision': 'Judul Misi',
+    'gamification-date-mision': 'Tanggal Misi',
+    'gamification-name-reward': 'Nama Penghargaan',
+    'gamification-amount-hit': 'Jumlah Hit',
+    'gamification-badge-logo': 'Logo Badge',
+    'gamification-description-mision': 'Deskripsi Misi',
+
+    'gamification-fitur-news': 'Berita',
+    'gamification-fitur-user_post': 'Kegiatan RW',
+    'gamification-event-view_news_detail': 'Melihat berita',
+    'gamification-event-post_user_post': 'Membuat kegiatan RW'
 
   },
   news: {
