@@ -86,7 +86,7 @@
             </el-form-item>
 
             <el-form-item v-else-if="broadcast.is_link && broadcast.source" label="Fitur" prop="internal_category">
-              <el-select v-model="broadcast.internal_category" placeholder="Pilih Fitur" name="fitur">
+              <el-select v-model="broadcast.internal_category" placeholder="Pilih Fitur" name="fitur" class="broadcast-feature">
                 <el-option label="Survei" value="survey" />
                 <el-option label="Polling" value="polling" />
                 <el-option label="Berita" value="news" />
