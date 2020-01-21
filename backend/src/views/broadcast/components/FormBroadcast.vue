@@ -142,7 +142,7 @@ export default {
   data() {
     const validatorUrl = (rule, value, callback) => {
       if (validUrl(value) === false) {
-        callback(new Error('URL tidak valid'))
+        callback(new Error(this.$t('message.broadcast-link-valid')))
       }
 
       callback()

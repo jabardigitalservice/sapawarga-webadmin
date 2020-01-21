@@ -411,6 +411,7 @@ export default {
     'broadcast-internal-category-required': 'Fitur broadcast harus diisi',
     'broadcast-entity-name-required': 'Judul harus diisi',
     'broadcast-type-required': 'Sumber broadcast harus diisi',
+    'broadcast-link-valid': 'URL tidak valid',
 
     'user-import-sending': 'Cek email Anda untuk progress unggah data',
 
