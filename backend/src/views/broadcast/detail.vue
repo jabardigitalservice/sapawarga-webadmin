@@ -22,6 +22,7 @@
             <el-table-column prop="content">
               <template slot-scope="{row}">
                 <div v-if="isContainHtmlTags(row.content)" v-html="row.content" />
+                <a v-else-if="validUrl(row.content)" :href="row.content" target="_blank" class="link">{{ row.content }}</a>
                 <div v-else>{{ row.content }}</div>
               </template>
             </el-table-column>
@@ -37,7 +38,7 @@
 import moment from 'moment'
 import { fetchRecord, update } from '@/api/broadcast'
 import { parsingDatetime } from '@/utils/datetimeToString'
-import { isContainHtmlTags } from '@/utils/validate'
+import { isContainHtmlTags, validUrl } from '@/utils/validate'
 
 export default {
   data() {
@@ -64,6 +65,9 @@ export default {
 
   methods: {
     isContainHtmlTags,
+    validUrl(str) {
+      return validUrl(str)
+    },
     getDetail() {
       fetchRecord(this.id).then(response => {
         const {
@@ -87,6 +91,8 @@ export default {
         } else {
           this.buttonHidden = true
         }
+
+        
 
         this.tableDataTarget = [
           {
@@ -127,6 +133,22 @@ export default {
           {
             title: this.$t('label.scheduled_datetime'),
             content: status === this.status.PUBLISHED && !is_scheduled ? parsingDatetime(updated_at) : parsingDatetime(scheduled_datetime)
+          },
+          {
+            title: this.$t('label.broadcast-source'),
+            content: 'Eksternal'
+          },
+          {
+            title: this.$t('label.broadcast-url'),
+            content: 'https://sapawarga.jabarprov.go.id'
+          },
+          {
+            title: this.$t('label.broadcast-feature'),
+            content: 'Survey'
+          },
+          {
+            title: this.$t('label.broadcast-feature-title'),
+            content: 'Survey terbaru nih'
           },
           {
             title: this.$t('label.description'),
