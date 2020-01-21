@@ -587,6 +587,9 @@ export default {
     'broadcast-internal': 'Internal',
     'broadcast-external': 'Eksternal',
     'broadcast-options': 'Pilihan',
+    'broadcast-url': 'Tautan',
+    'broadcast-feature': 'Fitur',
+    'broadcast-feature-title': 'Judul Fitur',
 
     'post-title': 'Nama Kegiatan',
     'post-like': 'Likes',

@@ -81,11 +81,11 @@
               </el-radio-group>
             </el-form-item>
 
-            <el-form-item v-if="broadcast.is_link && !broadcast.source" label="Tautan" prop="link_url">
+            <el-form-item v-if="broadcast.is_link && !broadcast.source" :label="$t('label.broadcast-url')" prop="link_url">
               <el-input v-model="broadcast.link_url" type="text" name="link_url" placeholder="URL Broadcast" />
             </el-form-item>
 
-            <el-form-item v-else-if="broadcast.is_link && broadcast.source" label="Fitur" prop="internal_category">
+            <el-form-item v-else-if="broadcast.is_link && broadcast.source" :label="$t('label.broadcast-feature')" prop="internal_category">
               <el-select v-model="broadcast.internal_category" placeholder="Pilih Fitur" name="fitur" class="broadcast-feature">
                 <el-option label="Survei" value="survey" />
                 <el-option label="Polling" value="polling" />
