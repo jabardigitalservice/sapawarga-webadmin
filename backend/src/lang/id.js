@@ -410,6 +410,7 @@ export default {
     'broadcast-isLink-required': 'Sambungkan broadcast harus diisi',
     'broadcast-internal-category-required': 'Fitur broadcast harus diisi',
     'broadcast-entity-name-required': 'Judul harus diisi',
+    'broadcast-type-required': 'Sumber broadcast harus diisi',
 
     'user-import-sending': 'Cek email Anda untuk progress unggah data',
 
