@@ -29,7 +29,7 @@
 
           <el-row :gutter="20">
             <el-col :xs="24" :sm="12" :lg="12">
-              <el-form-item :label="$t('popup.popup-start-date')" :prop="validateStartDate">
+              <el-form-item :label="$t('label.start-date')" :prop="validateStartDate">
                 <el-date-picker
                   v-model="gamification.start_date"
                   class="pop-up-date"
@@ -42,7 +42,7 @@
               </el-form-item>
             </el-col>
             <el-col :xs="24" :sm="12" :lg="12">
-              <el-form-item :label="$t('popup.popup-end-date')" :prop="validateStartDate">
+              <el-form-item :label="$t('label.end-date')" :prop="validateStartDate">
                 <el-date-picker
                   v-model="gamification.end_date"
                   class="pop-up-date"

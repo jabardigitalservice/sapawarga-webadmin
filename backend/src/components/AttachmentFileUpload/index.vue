@@ -117,7 +117,7 @@ export default {
       }
     },
     beforeRemove(file, fileList) {
-      return this.$confirm(`Cancel the transfert of ${file.name} ?`)
+      return this.$confirm(this.$t('message.confirmation-delete-file-message', [file.name]))
     }
 
   }

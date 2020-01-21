@@ -200,7 +200,8 @@ export default {
     'newsImportant-error-edit-pubished': 'Sudah dipublish, tidak dapat diedit',
 
     'news-selected': 'Berita sudah dipilih',
-    'gamification-send-success': 'Gamification berhasil dibuat'
+    'gamification-send-success': 'Gamification berhasil dibuat',
+    '': 'Batalkan'
 
   },
   common: {
@@ -412,6 +413,7 @@ export default {
     'confirmation-approve': 'Apakah Anda yakin akan memberikan persetujuan untuk usulan ini?',
     'confirmation-reject': 'Apakah Anda yakin akan menolak usulan ini?',
     'confirmation-send-message': 'Apakah Anda yakin akan mengirimkan pesan: ',
+    'confirmation-delete-file-message': 'Apakah Anda yakin menghapus file {0} ?.',
     'title-approve': 'Konfirmasi Persetujuan',
     'title-reject': 'Konfirmasi Penolakan',
     'title': 'Konfirmasi',

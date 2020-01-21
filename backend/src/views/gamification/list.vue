@@ -118,7 +118,7 @@ export default {
 
     async deactivateGamification(id) {
       try {
-        await this.$confirm(this.$t('crud.user-deactivate-confirm'), 'Warning', {
+        await this.$confirm(this.$t('crud.deactivate-confirm'), 'Warning', {
           confirmButtonText: this.$t('common.confirm'),
           cancelButtonText: this.$t('common.cancel'),
           type: 'warning'
