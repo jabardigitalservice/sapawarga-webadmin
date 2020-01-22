@@ -161,18 +161,30 @@ export default {
         this.isiPesan = description
         if (status === this.status.DRAFT && scheduled_datetime === null) {
           this.tableDataPesan.splice(4, 1)
-        }
-
-        if (status === this.status.PUBLISHED || status === this.status.SCHEDULED) {
+          if (type === null) {
+            this.tableDataPesan.splice(4, 4)
+          } else if (type === 'internal') {
+            this.tableDataPesan.splice(5, 1)
+          } else {
+            this.tableDataPesan.splice(6, 2)
+          }
+        } else if (status === this.status.PUBLISHED || status === this.status.SCHEDULED) {
           this.tableDataPesan.splice(3, 1)
-        }
-
-        if (type === null) {
-          this.tableDataPesan.splice(4, 4)
-        } else if (type === 'internal') {
-          this.tableDataPesan.splice(5, 1)
+          if (type === null) {
+            this.tableDataPesan.splice(4, 4)
+          } else if (type === 'internal') {
+            this.tableDataPesan.splice(5, 1)
+          } else {
+            this.tableDataPesan.splice(6, 2)
+          }
         } else {
-          this.tableDataPesan.splice(6, 2)
+          if (type === null) {
+            this.tableDataPesan.splice(5, 4)
+          } else if (type === 'internal') {
+            this.tableDataPesan.splice(6, 1)
+          } else {
+            this.tableDataPesan.splice(7, 2)
+          }
         }
       })
     },
