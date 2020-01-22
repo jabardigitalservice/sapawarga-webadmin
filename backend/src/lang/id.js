@@ -115,11 +115,11 @@ export default {
     'post-list': 'Kegiatan RW',
     'post-detail': 'Detail Kegiatan RW',
 
-    'gamification-manage': 'Gamification',
-    'gamification-list': 'Daftar Gamification',
-    'gamification-create': 'Tambah Gamification',
-    'gamification-detail': 'Detail Gamification',
-    'gamification-edit': 'Edit Gamification'
+    'gamification-manage': 'Misi',
+    'gamification-list': 'Daftar Misi',
+    'gamification-create': 'Tambah Misi',
+    'gamification-detail': 'Detail Misi',
+    'gamification-edit': 'Edit Misi'
   },
   crud: {
     'list-empty': 'Belum ada data.',
@@ -649,11 +649,11 @@ export default {
     'views-news': 'Melihat Berita',
     'post-activities-rw': 'Posting Rw',
 
-    'gamification-detail': 'Detail Gamification',
-    'gamification-add-new': 'Tambah Gamification Baru',
-    'gamification-edit': 'Edit Gamification',
-    'gamification-view': 'Lihat Gamification',
-    'gamification-delete': 'Hapus Gamification',
+    'gamification-detail': 'Detail Misi',
+    'gamification-add-new': 'Tambah Misi Baru',
+    'gamification-edit': 'Edit Misi',
+    'gamification-view': 'Lihat Misi',
+    'gamification-delete': 'Hapus Misi',
 
     'errorpage-oops': 'OOPS!',
     'errorpage-headline': 'Anda tidak dapat memasuki halaman ini......',
