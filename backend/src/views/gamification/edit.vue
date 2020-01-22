@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <p class="warn-content"><a href="#">Ubah Gamification</a></p>
+    <p class="warn-content"><a href="#">{{ $t('route.gamification-edit') }}</a></p>
     <Form :is-edit="true" />
   </div>
 </template>

@@ -21,15 +21,15 @@
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%" @sort-change="changeSort">
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
 
-          <el-table-column prop="title" :label="$t('label.gamification-title-mision')" />
+          <el-table-column prop="title" sortable="custom" :label="$t('label.gamification-title-mision')" />
 
           <el-table-column prop="status_label" :label="$t('label.status')" />
-          <el-table-column prop="start_date" :label="$t('label.start-date')">
+          <el-table-column prop="start_date" sortable="custom" :label="$t('label.start-date')">
             <template slot-scope="{row}">
               {{ row.start_date | moment('D MMMM YYYY') }}
             </template>
           </el-table-column>
-          <el-table-column prop="end_date" :label="$t('label.end-date')">
+          <el-table-column prop="end_date" sortable="custom" :label="$t('label.end-date')">
             <template slot-scope="{row}">
               {{ row.end_date | moment('D MMMM YYYY') }}
             </template>

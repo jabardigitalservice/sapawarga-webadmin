@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <p class="warn-content"><a href="#">Tambah Gamification</a></p>
+    <p class="warn-content"><a href="#">{{ $t('route.gamification-create') }}</a></p>
     <Form />
   </div>
 </template>

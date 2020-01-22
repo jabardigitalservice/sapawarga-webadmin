@@ -12,6 +12,7 @@
       :on-exceed="handleExceed"
       :file-list="fileList"
       :auto-upload="false"
+      list-type="picture"
     >
       <el-button size="small" type="primary">{{ $t('label.click-upload') }}</el-button>
       <div slot="tip" class="el-upload__tip">{{ description }}</div>
