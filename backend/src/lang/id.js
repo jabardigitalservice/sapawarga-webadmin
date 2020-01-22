@@ -395,11 +395,13 @@ export default {
     'gamification-informasi-title': 'Judul gamification mengandung karakter yang tidak diizinkan.',
     'gamification-title-min-10': 'Judul Misi minimal 10 Karakter.',
     'gamification-title-max-100': 'Judul Misi maximal 100 Karakter.',
+    'gamification-name-reward-max-100': 'Nama penghargaan maximal 100 Karakter.',
     'gamification-name-reward-not-valid-characters': 'Nama penghargaan mengandung karakter yang tidak diizinkan.',
 
     'gamification-fitur-must-be-filled': 'Fitur harus diisi.',
     'gamification-action-fitur-must-be-filled': 'Action Fitur harus diisi.',
 
+    'description-max-1000-characters': 'Deskripsi maximal 1000 Karakter.',
     'description-not-valid-characters': 'Deskripsi mengandung karakter yang tidak diizinkan.',
 
     'max-file-upload': 'Jumlah file tidak boleh lebih dari {0}.'
@@ -644,7 +646,7 @@ export default {
     'survey-end': 'Berakhir',
 
     'click-upload': 'Click to upload',
-    'image-upload-size': 'jpg/png/jpeg files with a size less than 500kb',
+    'image-upload-size': 'jpg/png/jpeg files',
 
     'views-news': 'Melihat Berita',
     'post-activities-rw': 'Posting Rw',
