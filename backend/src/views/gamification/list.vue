@@ -36,7 +36,7 @@
               {{ row.start_date | moment('D MMMM YYYY') }}
             </template>
           </el-table-column>
-          
+
           <el-table-column prop="end_date" sortable="custom" :label="$t('label.end-date')">
             <template slot-scope="{row}">
               {{ row.end_date | moment('D MMMM YYYY') }}
