@@ -348,7 +348,7 @@ export default {
     'logo-badge-not-null': 'Logo Badge tidak boleh kosong.',
     'popup-title-not-null': 'Judul Pop Up harus diisi.',
     'popup-title-min-10': 'Judul Pop Up minimal 10 Karakter.',
-    'popup-title-max-100': 'Judul Pop Up maximal 100 Karakter.',
+    'popup-title-max-100': 'Judul Pop Up maksimal 100 Karakter.',
     'popup-kategori-not-null': 'Kategori Pop Up harus diisi.',
     'popup-url-not-null': 'Tautan harus diisi.',
     'popup-type-name-not-null': 'Judul harus diisi.',
@@ -394,12 +394,14 @@ export default {
     'gamification-title-already-used': 'Judul Misi sudah digunakan.',
     'gamification-informasi-title': 'Judul gamification mengandung karakter yang tidak diizinkan.',
     'gamification-title-min-10': 'Judul Misi minimal 10 Karakter.',
-    'gamification-title-max-100': 'Judul Misi maximal 100 Karakter.',
+    'gamification-title-max-100': 'Judul Misi maksimal 100 Karakter.',
+    'gamification-name-reward-max-100': 'Nama penghargaan maksimal 100 Karakter.',
     'gamification-name-reward-not-valid-characters': 'Nama penghargaan mengandung karakter yang tidak diizinkan.',
 
     'gamification-fitur-must-be-filled': 'Fitur harus diisi.',
     'gamification-action-fitur-must-be-filled': 'Action Fitur harus diisi.',
 
+    'description-max-1000-characters': 'Deskripsi maksimal 1000 Karakter.',
     'description-not-valid-characters': 'Deskripsi mengandung karakter yang tidak diizinkan.',
 
     'max-file-upload': 'Jumlah file tidak boleh lebih dari {0}.'
@@ -659,7 +661,7 @@ export default {
     'survey-list': 'Daftar Survey',
 
     'click-upload': 'Click to upload',
-    'image-upload-size': 'jpg/png/jpeg files with a size less than 500kb',
+    'image-upload-size': 'jpg/png/jpeg files',
 
     'views-news': 'Melihat Berita',
     'post-activities-rw': 'Posting Rw',

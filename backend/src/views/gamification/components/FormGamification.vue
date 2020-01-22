@@ -58,14 +58,14 @@
           <el-form-item :label="$t('label.gamification-amount-hit')">
             <el-input-number
               v-model="gamification.total_hit"
-              :min="0"
+              :min="1"
               :max="100"
               name="total_hit"
               :placeholder="$t('label.gamification-amount-hit')"
             />
           </el-form-item>
 
-          <el-form-item :label="$t('label.gamification-description-mision')" :prop="validateDeskripsi">
+          <el-form-item :label="$t('label.gamification-description-mision')" prop="description">
             <el-input
               v-model="gamification.description"
               type="textarea"
@@ -77,7 +77,7 @@
 
           <el-row :gutter="20">
             <el-col :xs="24" :sm="12" :lg="12">
-              <el-form-item :label="$t('label.gamification-name-reward')" :prop="validateNamaPenghargaan">
+              <el-form-item :label="$t('label.gamification-name-reward')" prop="title_badge">
                 <el-input
                   v-model="gamification.title_badge"
                   type="text"
@@ -88,7 +88,7 @@
             </el-col>
 
             <el-col :xs="24" :sm="12" :lg="12">
-              <el-form-item :label="$t('label.gamification-badge-logo')" :prop="validateImage">
+              <el-form-item :label="$t('label.gamification-badge-logo')">
                 <AttachmentFileUpload
                   type="banner_photo"
                   :type-file="typeFile"
@@ -185,9 +185,6 @@ export default {
       loading: false,
       validateTitle: 'title',
       validateStartDate: 'start_date',
-      validateNamaPenghargaan: 'title_badge',
-      validateImage: 'image_badge_path',
-      validateDeskripsi: 'deskripsi',
       filepath: null,
       typeFile: '.jpg, .jpeg, .png',
       rules: {
@@ -223,6 +220,11 @@ export default {
             trigger: 'blur'
           },
           {
+            max: 100,
+            message: this.$t('errors.gamification-name-reward-max-100'),
+            trigger: 'blur'
+          },
+          {
             validator: validatorTextWhitespace,
             trigger: 'blur'
           },
@@ -232,15 +234,16 @@ export default {
           }
         ],
         start_date: [
-          { required: true, message: this.$t('errors.start-date-not-null'), trigger: 'blur' }
-        ],
-        end_date: [
-          { required: true, message: this.$t('errors.end-date-not-null'), trigger: 'blur' }
-        ],
-        image_badge_path: [
           {
             required: true,
-            message: this.$t('errors.logo-badge-not-null'),
+            message: this.$t('errors.start-date-not-null'),
+            trigger: 'blur'
+          }
+        ],
+        end_date: [
+          {
+            required: true,
+            message: this.$t('errors.end-date-not-null'),
             trigger: 'blur'
           }
         ],
@@ -251,18 +254,35 @@ export default {
             trigger: 'blur'
           },
           {
+            max: 1000,
+            message: this.$t('errors.description-max-1000-characters'),
+            trigger: 'blur'
+          },
+          {
             validator: validatorHTMLDescription,
             trigger: 'blur'
           }
         ],
         object_type: [
-          { required: true, message: this.$t('errors.gamification-fitur-must-be-filled'), trigger: 'change' }
+          {
+            required: true,
+            message: this.$t('errors.gamification-fitur-must-be-filled'),
+            trigger: 'change'
+          }
         ],
         object_event: [
-          { required: true, message: this.$t('errors.gamification-action-fitur-must-be-filled'), trigger: 'change' }
+          {
+            required: true,
+            message: this.$t('errors.gamification-action-fitur-must-be-filled'),
+            trigger: 'change'
+          }
         ],
         errorTitle: [
-          { required: true, message: this.$t('errors.gamification-title-already-used'), trigger: 'change' }
+          {
+            required: true,
+            message: this.$t('errors.gamification-title-already-used'),
+            trigger: 'change'
+          }
         ]
       },
       dateStartDateOptions: {
@@ -316,8 +336,11 @@ export default {
     },
     async submitForm() {
       const valid = await this.$refs.form.validate()
-
-      if (!valid) {
+      if (this.gamification.image_badge_path === null) {
+        this.$message.error(this.$t('errors.logo-badge-not-null'))
+        if (!valid) {
+          return
+        }
         return
       }
 
