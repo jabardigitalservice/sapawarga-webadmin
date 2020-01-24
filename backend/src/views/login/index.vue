@@ -52,8 +52,8 @@
         type="primary"
         style="width:100%"
         @click.native.prevent="handleLogin"
-      >Masuk</el-button>
-      <h4>Lupa kata sandi? Hubungi <span class="contact-admin" @click="onClickChat('082315192724')">082315192724</span></h4>
+      >{{ $t('label.login') }}</el-button>
+      <h4>{{ $t('label.login-forgot-password') }} <span class="contact-admin" @click="onClickChat('082315192724')">{{ $t('label.login-forgot-password-number') }}</span></h4>
     </el-form>
   </div>
 </template>
