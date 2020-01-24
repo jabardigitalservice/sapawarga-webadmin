@@ -233,6 +233,12 @@ code {
   float: unset;
 }
 
+.contact-admin {
+  cursor: pointer;
+  color: #4a96e8;
+  font-family:'Open Sans', Arial, sans-serif;
+}
+
 // style for mobile and tablet
 @media only screen and (max-width: $tabletViewportWidth) {
   .el-col-xs-tag-mb-10 {
