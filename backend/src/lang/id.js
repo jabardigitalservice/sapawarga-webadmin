@@ -689,7 +689,11 @@ export default {
     'gamification-fitur-news': 'Berita',
     'gamification-fitur-user_post': 'Kegiatan RW',
     'gamification-event-view_news_detail': 'Melihat berita',
-    'gamification-event-post_user_post': 'Membuat kegiatan RW'
+    'gamification-event-post_user_post': 'Membuat kegiatan RW',
+
+    'login': 'Masuk',
+    'login-forgot-password': 'Lupa kata sandi?',
+    'login-forgot-password-number': '082315192724'
 
   },
   news: {
