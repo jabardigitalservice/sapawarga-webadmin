@@ -50,9 +50,10 @@
       <el-button
         :loading="loading"
         type="primary"
-        style="width:100%;margin-bottom:30px;"
+        style="width:100%"
         @click.native.prevent="handleLogin"
       >Masuk</el-button>
+      <h4>Lupa kata sandi? Hubungi <span class="contact-admin" @click="onClickChat('082315192724')">082315192724</span></h4>
     </el-form>
   </div>
 </template>
@@ -148,7 +149,13 @@ export default {
           return false
         }
       })
+    },
+
+    onClickChat(phone) {
+      const url_link = 'https://wa.me/' + phone.replace(/^0+/, '62')
+      window.open(url_link, '_blank')
     }
+
   }
 }
 </script>
