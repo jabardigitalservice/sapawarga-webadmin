@@ -692,7 +692,7 @@ export default {
     'gamification-event-post_user_post': 'Membuat kegiatan RW',
 
     'login': 'Masuk',
-    'login-forgot-password': 'Lupa kata sandi?',
+    'login-forgot-password': 'Lupa kata sandi? Hubungi',
     'login-forgot-password-number': '082315192724'
 
   },
