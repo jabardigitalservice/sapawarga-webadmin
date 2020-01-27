@@ -68,6 +68,7 @@ build_prod:
     - sed -i "s/%VUE_APP_BASE_API%/${VUE_APP_BASE_API}/g" .env
     - sed -i "s/%SENTRY_DSN_API%/${SENTRY_DSN_API}/g" .env
     - sed -i "s/%GOOGLE_MAPS_WEB_API_KEY%/${GOOGLE_MAPS_WEB_API_KEY}/g" .env
+    - sed -i "s/%VUE_APP_PHONE%/${VUE_APP_PHONE}/g" .env
     - docker-compose build
     - docker images
     - docker-compose push
@@ -93,7 +94,8 @@ test_webadmin:
     - sed -i "s/%VUE_APP_BASE_API%/${VUE_APP_BASE_API}/g" .env
     - sed -i "s/%SENTRY_DSN_API%/${SENTRY_DSN_API}/g" .env
     - sed -i "s/%GOOGLE_MAPS_WEB_API_KEY%/${GOOGLE_MAPS_WEB_API_KEY}/g" .env
-    - cat .env
+    - sed -i "s/%VUE_APP_PHONE%/${VUE_APP_PHONE}/g" .env
+   # - cat .env
     - docker-compose pull
     - docker images
     - COMPOSE_HTTP_TIMEOUT=500 docker-compose up -d
@@ -127,6 +129,7 @@ release_all:
     - sed -i "s/%VUE_APP_BASE_API%/${VUE_APP_BASE_API}/g" .env
     - sed -i "s/%SENTRY_DSN_API%/${SENTRY_DSN_API}/g" .env
     - sed -i "s/%GOOGLE_MAPS_WEB_API_KEY%/${GOOGLE_MAPS_WEB_API_KEY}/g" .env
+    - sed -i "s/%VUE_APP_PHONE%/${VUE_APP_PHONE}/g" .env
     - docker-compose pull
     - docker images
     - docker push registry.gitlab.com/jdsteam/sapa-warga/sapawarga-webadmin:${VERSION}
@@ -174,14 +177,16 @@ deploy_staging_eks:
     # Add ENV for apps # VUE_APP_NODE_ENV
     - sed -i "s/%VUE_APP_VERSION%/${VERSION}/g" kubernetes/webadmin-variables.yaml
     - sed -i "s/%VUE_APP_NODE_ENV%/${VUE_APP_NODE_ENV}/g" kubernetes/webadmin-variables.yaml
+   
     # Vue app base api to staging
     - sed -i "s/%VUE_APP_BASE_API%/${EKS_VUE_APP_BASE_API_STAGING}/g" kubernetes/webadmin-variables.yaml
     - sed -i "s/%dockerconfigjson%/${dockerconfigjson}/g" kubernetes/webadmin-variables.yaml
     - sed -i "s/%SENTRY_DSN_API%/${SENTRY_DSN_API}/g" kubernetes/webadmin-variables.yaml
     - sed -i "s/%APP_ERROR_ENVIRONMENT%/${APP_ERROR_ENVIRONMENT}/g" kubernetes/webadmin-variables.yaml
     - sed -i "s/%VERSION%/${VERSION}/g" kubernetes/webadmin-deployment.yaml
+    - sed -i "s/%VUE_APP_PHONE%/${VUE_APP_PHONE}/g" kubernetes/webadmin-deployment.yaml
     
-    - cat kubernetes/webadmin-variables.yaml
+    #- cat kubernetes/webadmin-variables.yaml
     - kubectl create --dry-run --validate -f kubernetes/webadmin-variables.yaml
         -f kubernetes/webadmin-deployment.yaml
         -f kubernetes/webadmin-service.yaml # mode development
@@ -216,6 +221,7 @@ deploy_prod_eks:
     - sed -i "s/%SENTRY_DSN_API%/${SENTRY_DSN_API}/g" kubernetes/webadmin-variables.yaml
     - sed -i "s/%APP_ERROR_ENVIRONMENT%/${APP_ERROR_ENVIRONMENT}/g" kubernetes/webadmin-variables.yaml
     - sed -i "s/%VERSION%/${VERSION}/g" kubernetes/webadmin-deployment.yaml
+    - sed -i "s/%VUE_APP_PHONE%/${VUE_APP_PHONE}/g" kubernetes/webadmin-deployment.yaml
     - kubectl create --dry-run --validate -f kubernetes/webadmin-variables.yaml
         -f kubernetes/webadmin-deployment.yaml
         -f kubernetes/webadmin-service.yaml

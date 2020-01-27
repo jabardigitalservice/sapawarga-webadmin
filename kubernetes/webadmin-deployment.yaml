@@ -45,5 +45,12 @@ spec:
                 configMapKeyRef:
                   name: sapawarga-webadmin-config-env
                   key: VUE_APP_ERROR_ENVIRONMENT
+
+            - name: VUE_APP_PHONE
+              valueFrom:
+                configMapKeyRef:
+                  name: sapawarga-webadmin-config-env
+                  key: VUE_APP_PHONE
+                  
       imagePullSecrets:
         - name: regcred
