@@ -13,16 +13,17 @@ import categoriesRouter from './modules/categories'
 import newsChannelsRouter from './modules/newsChannels'
 import releaseManagementRouter from './modules/releaseManagement'
 import gamificationRouter from './modules/gamification'
-
-import aspirationLeaderMenuRouter from './modules/aspiration-leader-menu'
-import pollingLeaderMenuRouter from './modules/polling-leader-menu'
-import surveyLeaderMenuRouter from './modules/survey-leader-menu'
-import newsLeaderMenuRouter from './modules/news-leader-menu'
-import newsHoaxLeaderMenuRouter from './modules/newsHoax-leader-menu'
-import qnaLeaderMenuRouter from './modules/qna-leader-menu'
-
 import informationMenuRouter from './modules/information-menu'
 import aspirationMenuRouter from './modules/aspiration-menu'
+
+/* Router Modules for Leader */
+import aspirationLeaderMenuRouter from './modules/LeaderMenu/aspiration-leader-menu'
+import pollingLeaderMenuRouter from './modules/LeaderMenu/polling-leader-menu'
+import surveyLeaderMenuRouter from './modules/LeaderMenu/survey-leader-menu'
+import newsLeaderMenuRouter from './modules/LeaderMenu/news-leader-menu'
+import newsHoaxLeaderMenuRouter from './modules/LeaderMenu/newsHoax-leader-menu'
+import qnaLeaderMenuRouter from './modules/LeaderMenu/qna-leader-menu'
+
 
 /** note: sub-menu only appear when children.length>=1
  *  detail see  https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
