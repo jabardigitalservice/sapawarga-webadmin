@@ -119,7 +119,10 @@ export default {
     'gamification-list': 'Daftar Misi',
     'gamification-create': 'Tambah Misi',
     'gamification-detail': 'Detail Misi',
-    'gamification-edit': 'Edit Misi'
+    'gamification-edit': 'Edit Misi',
+
+    'information': 'Informasi',
+    'aspiration': 'Aspirasi'
   },
   crud: {
     'list-empty': 'Belum ada data.',

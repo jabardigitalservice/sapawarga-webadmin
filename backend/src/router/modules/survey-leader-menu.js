@@ -1,6 +1,6 @@
 import Layout from '@/layout'
 
-const surveyRouter = {
+const surveyLeaderMenuRouter = {
   name: 'survey',
   path: '/survey',
   component: Layout,
@@ -53,4 +53,4 @@ const surveyRouter = {
   ]
 }
 
-export default surveyRouter
+export default surveyLeaderMenuRouter

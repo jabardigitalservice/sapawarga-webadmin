@@ -1,6 +1,6 @@
 import Layout from '@/layout'
 
-const aspirationRouter = {
+const aspirationLeaderMenuRouter = {
   name: 'Aspiration',
   path: '/aspirasi',
   component: Layout,
@@ -34,4 +34,4 @@ const aspirationRouter = {
   ]
 }
 
-export default aspirationRouter
+export default aspirationLeaderMenuRouter

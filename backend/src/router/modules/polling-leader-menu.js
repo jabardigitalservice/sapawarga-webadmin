@@ -1,6 +1,6 @@
 import Layout from '@/layout'
 
-const pollingRouter = {
+const pollingLeaderMenuRouter = {
   name: 'polling',
   path: '/polling',
   component: Layout,
@@ -53,4 +53,4 @@ const pollingRouter = {
   ]
 }
 
-export default pollingRouter
+export default pollingLeaderMenuRouter

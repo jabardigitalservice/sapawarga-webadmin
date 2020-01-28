@@ -78,6 +78,9 @@ export default {
       'permission_routes'
     ])
   },
+  mounted() {
+    this.setActiveMenuMounted(this.$route)
+  },
   methods: {
     hasOneShowingChild(children = [], parent) {
       const showingChildren = children.filter(item => {
@@ -117,12 +120,24 @@ export default {
             data.active = false
           }
         )
+
         const index = this.permission_routes.map(function(data) { return data.name }).indexOf(item.name.split('-')[0])
 
         if (item.meta.icon === undefined && this.permission_routes[index] !== undefined) {
           this.permission_routes[index].active = true
         }
         await this.$emit('update:isActive', !isActive)
+      }
+    },
+    async setActiveMenuMounted(item) {
+      await this.permission_routes.map(
+        function(data) {
+          data.active = false
+        }
+      )
+      const index = await this.permission_routes.map(function(data) { return data.name }).indexOf(item.name.split('-')[0])
+      if (item.meta.icon === undefined && this.permission_routes[index] !== undefined) {
+        this.permission_routes[index].active = true
       }
     },
     setIcon(icon) {

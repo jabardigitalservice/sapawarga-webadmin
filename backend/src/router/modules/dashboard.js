@@ -1,7 +1,7 @@
 import Layout from '@/layout'
 
 const dashboardRouter = {
-  name: 'Dashboard',
+  name: 'dashboard',
   path: '',
   component: Layout,
   redirect: 'dashboard',
@@ -14,7 +14,7 @@ const dashboardRouter = {
     {
       path: 'dashboard',
       component: () => import('@/views/dashboard/index'),
-      name: 'Dashboard',
+      name: 'dashboard',
       meta: {
         title: 'dashboard',
         icon: 'home',
