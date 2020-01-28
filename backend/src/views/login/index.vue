@@ -50,9 +50,10 @@
       <el-button
         :loading="loading"
         type="primary"
-        style="width:100%;margin-bottom:30px;"
+        style="width:100%"
         @click.native.prevent="handleLogin"
-      >Masuk</el-button>
+      >{{ $t('label.login') }}</el-button>
+      <h4>{{ $t('label.login-forgot-password') }} <span class="contact-admin" @click="onClickChat(phone)">{{ $t('label.login-forgot-password-number') }}</span></h4>
     </el-form>
   </div>
 </template>
@@ -94,7 +95,8 @@ export default {
       passwordType: 'password',
       loading: false,
       showDialog: false,
-      redirect: undefined
+      redirect: undefined,
+      phone: process.env.VUE_APP_PHONE
     }
   },
   watch: {
@@ -148,7 +150,14 @@ export default {
           return false
         }
       })
+    },
+
+    onClickChat(phone) {
+      console.log(phone)
+      const url_link = 'https://wa.me/' + phone.replace(/^0+/, '62')
+      window.open(url_link, '_blank')
     }
+
   }
 }
 </script>
