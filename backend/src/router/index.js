@@ -24,7 +24,6 @@ import newsLeaderMenuRouter from './modules/LeaderMenu/news-leader-menu'
 import newsHoaxLeaderMenuRouter from './modules/LeaderMenu/newsHoax-leader-menu'
 import qnaLeaderMenuRouter from './modules/LeaderMenu/qna-leader-menu'
 
-
 /** note: sub-menu only appear when children.length>=1
  *  detail see  https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
  **/
