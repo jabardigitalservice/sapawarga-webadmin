@@ -486,6 +486,7 @@ export default {
     'sapawarga': 'sapawarga',
     'notes': 'Catatan:',
     'maximum-dimension-image': 'Ukuran maksimal 1280x720 piksel (Landscape)',
+    'maximum-dimension-image-pop': 'Ukuran maksimal 720x1280 piksel (Portrait)',
     'maximum-size-image': 'Maximum upload file size: 5 Mb.',
 
     'fullname': 'Nama Lengkap',
