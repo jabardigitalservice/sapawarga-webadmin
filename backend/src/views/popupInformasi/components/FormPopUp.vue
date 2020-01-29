@@ -5,7 +5,7 @@
         <AttachmentPhotoUpload
           type="popup_photo"
           :initial-url="popup.image_path_url"
-          :list-information="[this.$t('label.maximum-dimension-image'), this.$t('label.maximum-size-image')]"
+          :list-information="[this.$t('label.maximum-dimension-image-pop'), this.$t('label.maximum-size-image')]"
           style="margin-bottom: 25px"
           @onUpload="photoUploaded"
         />
@@ -70,13 +70,13 @@
               </el-col>
             </el-row>
           </el-form-item>
-          <el-form-item label="Deskripsi" :prop="validateDescription">
+          <!-- <el-form-item label="Deskripsi" :prop="validateDescription">
             <el-input
               v-model="popup.description"
               type="textarea"
               :rows="2"
             />
-          </el-form-item>
+          </el-form-item> -->
           <el-form-item style="margin-top:50px">
             <el-button v-if="isEdit" type="primary" :loading="loading" @click="submitForm">{{ $t('crud.save-update') }}</el-button>
             <el-button v-else type="primary" :loading="loading" @click="submitForm">{{ $t('crud.save-popup') }}</el-button>
