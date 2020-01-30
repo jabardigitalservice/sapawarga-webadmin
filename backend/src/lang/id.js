@@ -324,9 +324,9 @@ export default {
     'rw-only-use-number': 'RW harus menggunakan angka',
     'rw-must-be-at-least-3-number': 'RW harus 3 angka',
 
-    'rt-must-be-filled': 'RW harus diisi',
-    'rt-only-use-number': 'RW harus menggunakan angka',
-    'rt-must-be-at-least-3-number': 'RW harus 3 angka',
+    'rt-must-be-filled': 'RT harus diisi',
+    'rt-only-use-number': 'RT harus menggunakan angka',
+    'rt-must-be-at-least-3-number': 'RT harus 3 angka',
 
     'role-must-be-filled': 'Peran harus diisi',
     'twitter-only-use-lowercase-letters-numbers-underscore-and-dots': 'Twitter hanya boleh menggunakan huruf, angka, titik dan underscore',
