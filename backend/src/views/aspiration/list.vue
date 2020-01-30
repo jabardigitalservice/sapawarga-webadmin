@@ -22,7 +22,7 @@
 
           <el-table-column prop="created_at" sortable="custom" label="Dibuat" align="center" min-width="125">
             <template slot-scope="{row}">
-              {{ parsingDatetime(row.updated_at, 'D MMM YYYY HH:mm') }}
+              {{ parsingDatetime(row.created_at, 'D MMM YYYY HH:mm') }}
             </template>
           </el-table-column>
 
