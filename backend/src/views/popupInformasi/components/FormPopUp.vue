@@ -70,13 +70,6 @@
               </el-col>
             </el-row>
           </el-form-item>
-          <!-- <el-form-item label="Deskripsi" :prop="validateDescription">
-            <el-input
-              v-model="popup.description"
-              type="textarea"
-              :rows="2"
-            />
-          </el-form-item> -->
           <el-form-item style="margin-top:50px">
             <el-button v-if="isEdit" type="primary" :loading="loading" @click="submitForm">{{ $t('crud.save-update') }}</el-button>
             <el-button v-else type="primary" :loading="loading" @click="submitForm">{{ $t('crud.save-popup') }}</el-button>
