@@ -65,7 +65,7 @@
                   v-if="area !== null"
                   v-model="user.kabkota"
                   :placeholder="$t('label.choose-area-kabkota')"
-                  :disabled="user.role === '' || isEdit"
+                  :disabled="user.role === ''"
                   @change="getKecamatan"
                 >
                   <el-option
@@ -88,7 +88,7 @@
                 <el-select
                   v-model="user.kecamatan"
                   :placeholder="$t('label.choose-area-kec')"
-                  :disabled="(user.kabkota == '' && checkPermission(['admin', 'staffProv']) || user.role === '' || isEdit)"
+                  :disabled="(user.kabkota == '' && checkPermission(['admin', 'staffProv']) || user.role === '')"
                   @change="getKelurahan"
                 >
                   <el-option
@@ -109,7 +109,7 @@
                 <el-select
                   v-model="user.kelurahan"
                   :placeholder="$t('label.choose-area-kel')"
-                  :disabled="(user.kecamatan == '' && checkPermission(['admin', 'staffProv', 'staffKabkota']) || user.role === '' || isEdit)"
+                  :disabled="(user.kecamatan == '' && checkPermission(['admin', 'staffProv', 'staffKabkota']) || user.role === '')"
                 >
                   <el-option
                     v-for="item in kelurahan"
@@ -137,7 +137,7 @@
                 :label="$t('label.area-rt')"
                 prop="rt"
               >
-                <el-input v-model="user.rt" type="text" placeholder="Contoh: 002" :disabled="user.rw == '' && checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel'])" />
+                <el-input v-model="user.rt" type="text" placeholder="Contoh: 002" :disabled="(user.rw == null || user.rw == '') && checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']) || user.role === ''" />
               </el-form-item>
             </el-col>
           </el-row>
