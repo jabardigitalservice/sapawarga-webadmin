@@ -459,6 +459,7 @@ export default {
     'newsImportant-description-required': 'Deskripsi harus diisi',
     'newsImportant-description-max': 'Deskripsi maksimal 65000 karakter',
     'newsImportant-create-success': 'Info penting berhasil dibuat',
+    'newsImportant-target-required': 'Target harus diisi',
 
     'survey-title-required': 'Judul survei harus diisi',
     'survey-title-min': 'Judul survei minimal 10 karakter',
@@ -515,6 +516,7 @@ export default {
     'area-rt': 'RT',
     'area-rw': 'RW',
     'area': 'Wilayah',
+    'area-jabar': 'JAWA BARAT',
     'area-kel': 'Desa/Kelurahan',
     'choose-area-kel': 'Pilih Desa/Kelurahan',
     'area-kec': 'Kecamatan',
