@@ -7,6 +7,9 @@ import ListFilter from '@/views/popupInformasi/_listfilter'
 import popupListFixture from './fixtures/popupList'
 import PopupList from '@/views/popupInformasi/list'
 import PopupDetail from '@/views/popupInformasi/detail'
+import PopupCreate from '@/views/popupInformasi/create'
+import PopupEdit from '@/views/popupInformasi/edit'
+
 
 const router = new Router()
 const localVue = createLocalVue()
@@ -27,6 +30,8 @@ const listQuery = {
 	title: null,
 	status: null
 }
+
+const isEdit = false
 
 describe('Popup', () => {
 	const expectedPopupList = popupListFixture.data.items
@@ -71,8 +76,8 @@ describe('Popup', () => {
 		wrapper.vm.resetFilter()
 
 		expect(wrapper.props('listQuery')).toBe(listQuery)
-    expect(wrapper.emitted()['submit-search']).toBeTruthy()
-    expect(wrapper.emitted()['reset-search']).toBeTruthy()
+    	expect(wrapper.emitted()['submit-search']).toBeTruthy()
+    	expect(wrapper.emitted()['reset-search']).toBeTruthy()
 	})
 
 	it('detail', () => {
@@ -85,5 +90,20 @@ describe('Popup', () => {
 		})
 		wrapper.vm.getDetail()
 		expect(wrapper.contains(PopupDetail)).toBe(true)
+	})
+
+	it('create', () => {
+		const wrapper = shallowMount(PopupCreate, {
+			localVue,
+			router,
+			mocks: {
+				$t: () => {}
+			},
+			propsData: {
+				isEdit
+			}
+		})
+		
+		expect(wrapper.contains(PopupCreate)).toBe(true)
 	})
 })
