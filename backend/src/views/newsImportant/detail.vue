@@ -12,7 +12,7 @@
 
           <detail-data :table-content-data="tableImageAttachment" :input-image="image || imageNone" />
 
-          <detail-data :table-content-data="attachments" :input-list="attachments" />
+          <detail-data v-if="attachments.length > 0" :table-content-data="attachments" :input-list="attachments" />
         </el-card>
       </el-col>
     </el-row>
@@ -47,7 +47,7 @@ export default {
     validUrl,
     getDetail(id) {
       fetchRecord(id).then(response => {
-        const { title, category, source_url, content, image_path_url, attachments } = response.data
+        const { title, category, source_url, content, image_path_url, attachments, kabkota } = response.data
         this.image = response.data.image_path_url
         this.check = response.data.attachments
 
@@ -63,6 +63,10 @@ export default {
           {
             title: this.$t('label.category'),
             content: category.name
+          },
+          {
+            title: this.$t('label.target'),
+            content: kabkota ? kabkota.name : this.$t('label.area-jabar')
           },
           {
             title: this.$t('label.link'),
@@ -87,6 +91,10 @@ export default {
             content: attachments ? attachments.map(logArrayAnswers) : null
           }
         ]
+
+        if (attachments.length < 1) {
+          this.attachments.pop()
+        }
       })
     }
   }
