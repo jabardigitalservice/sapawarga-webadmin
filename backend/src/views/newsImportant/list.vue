@@ -26,7 +26,7 @@
           </template>
         </el-table-column>
 
-        <el-table-column prop="created_at" sortable="custom" :label="$t('label.newsImportant-date-updated')" align="center" min-width="100">
+        <el-table-column prop="created_at" sortable="custom" :label="$t('label.newsImportant-date-updated')" align="center" min-width="110">
           <template slot-scope="{row}">
             {{ parsingDatetime(row.updated_at, 'D MMM YYYY HH:mm') }}
           </template>
