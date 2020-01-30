@@ -15,9 +15,22 @@
           <el-form-item :label="$t('label.title')" prop="title">
             <el-input v-model="newsImportant.title" type="text" name="title" :placeholder="$t('label.newsImportant-title')" />
           </el-form-item>
+
           <el-form-item :label="$t('label.category')" prop="category_id" :label-width="device==='desktop'?'150px':null">
             <InputCategory v-model="newsImportant.category_id" category-type="news_important" :prop="$t('label.category')" />
           </el-form-item>
+
+          <el-form-item :label="$t('label.target')" prop="kabkota_id">
+            <el-select v-model="newsImportant.kabkota_id" placeholder="Pilih Target">
+              <el-option
+                v-for="item in area"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
+              />
+            </el-select>
+          </el-form-item>
+
           <el-form-item :label="$t('label.newsImportant-description')" prop="content">
             <div>
               <tinymce v-model="newsImportant.content" :height="250" />
@@ -50,6 +63,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { requestArea } from '@/api/staff'
 import Tinymce from '@/components/Tinymce'
 import InputCategory from '@/components/InputCategory'
 import { validUrl, isContainHtmlTags } from '@/utils/validate'
@@ -90,9 +104,11 @@ export default {
       loading: false,
       file: null,
       display: true,
+      area: null,
       newsImportant: {
         title: null,
         category_id: null,
+        kabkota_id: null,
         content: null,
         source_url: null,
         image_path: null,
@@ -154,6 +170,13 @@ export default {
             message: this.$t('message.newsImportant-title-max'),
             trigger: 'blur'
           }
+        ],
+        kabkota_id: [
+          {
+            required: true,
+            message: this.$t('message.newsImportant-target-required'),
+            trigger: 'change'
+          }
         ]
       }
     }
@@ -177,11 +200,18 @@ export default {
       const id = this.$route.params && this.$route.params.id
       this.fetchData(id)
     }
+    this.getArea()
   },
 
   methods: {
     photoUploaded(path, url) {
       this.newsImportant.image_path = path
+    },
+    getArea() {
+      requestArea().then(response => {
+        this.area = response.data.items
+        this.area.unshift({ id: 1, name: this.$t('label.area-jabar') })
+      })
     },
     fetchData(id) {
       fetchRecord(id).then(response => {
@@ -210,6 +240,7 @@ export default {
         const data = {}
         Object.assign(data, this.newsImportant)
         data.status = this.status.INACTIVE
+        data.kabkota_id = data.kabkota_id !== 1 ? data.kabkota_id : null
 
         if (this.isEdit) {
           const id = this.$route.params && this.$route.params.id
