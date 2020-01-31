@@ -1,6 +1,6 @@
 const qnaRouter = [
   {
-    name: 'question-answer-manage',
+    name: 'aspiration-qna-manage',
     path: '/question-answer/index',
     component: () => import('@/views/questionsAnswer/index'),
     meta: {

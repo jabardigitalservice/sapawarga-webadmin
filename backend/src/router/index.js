@@ -9,12 +9,14 @@ import Layout from '@/layout'
 /* Router Modules */
 import dashboardRouter from './modules/dashboard'
 import userRouter from './modules/user'
-import categoriesRouter from './modules/categories'
-import newsChannelsRouter from './modules/newsChannels'
 import releaseManagementRouter from './modules/releaseManagement'
 import gamificationRouter from './modules/gamification'
 import informationMenuRouter from './modules/information-menu'
 import aspirationMenuRouter from './modules/aspiration-menu'
+import pollingsurveyMenuRouter from './modules/polling-survey-menu'
+import notifikasiuserMenuRouter from './modules/notification-user-menu'
+import configurationMenuRouter from './modules/configuration-menu'
+import broadcastRouter from './modules/broadcast'
 
 /* Router Modules for Leader */
 import aspirationLeaderMenuRouter from './modules/LeaderMenu/aspiration-leader-menu'
@@ -143,13 +145,15 @@ export const constantRoutes = [
  */
 export const asyncRoutes = [
   dashboardRouter,
-  userRouter,
   informationMenuRouter,
+  pollingsurveyMenuRouter,
   aspirationMenuRouter,
+  notifikasiuserMenuRouter,
+  broadcastRouter,
+  userRouter,
+  configurationMenuRouter,
   releaseManagementRouter,
   gamificationRouter,
-  newsChannelsRouter,
-  categoriesRouter,
   { path: '*', redirect: '/404', active: false, hidden: true }
 ]
 

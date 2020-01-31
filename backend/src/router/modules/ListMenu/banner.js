@@ -1,9 +1,8 @@
 const bannerRouter = [
   {
-    name: 'information-banner',
+    name: 'notification-user',
     path: '/banner/index',
     component: () => import('@/views/banner/list'),
-    hidden: true,
     meta: {
       title: 'banner-manage',
       roles: ['admin', 'staffProv']

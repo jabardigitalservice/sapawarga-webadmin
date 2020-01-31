@@ -1,8 +1,6 @@
 import Layout from '@/layout'
-import pollingRouter from './ListMenu/polling'
 import aspirationRouter from './ListMenu/aspiration'
 import qnaRouter from './ListMenu/qna'
-import surveyRouter from './ListMenu/survey'
 import postRouter from './ListMenu/post'
 
 const aspirationMenuRouter = {
@@ -17,11 +15,9 @@ const aspirationMenuRouter = {
   },
   active: false,
   children: [
-    ...pollingRouter,
-    ...aspirationRouter,
+    ...postRouter,
     ...qnaRouter,
-    ...surveyRouter,
-    ...postRouter
+    ...aspirationRouter
   ]
 }
 

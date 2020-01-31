@@ -1,6 +1,6 @@
 const pollingRouter = [
   {
-    name: 'aspiration-polling',
+    name: 'pollingsurvey-menu',
     path: '/polling/index',
     component: () => import('@/views/polling/list'),
     meta: {

@@ -121,8 +121,8 @@ export default {
           }
         )
 
-        const index = this.permission_routes.map(function(data) { return data.name }).indexOf(item.name.split('-')[0])
-
+        const index = this.permission_routes.map(function(data) { console.log(data.name); return data.name }).indexOf(item.name.split('-')[0])
+        console.log(index)
         if (item.meta.icon === undefined && this.permission_routes[index] !== undefined) {
           this.permission_routes[index].active = true
         }

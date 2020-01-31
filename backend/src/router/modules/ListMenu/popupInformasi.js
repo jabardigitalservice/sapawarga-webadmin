@@ -1,6 +1,6 @@
 const popupInformasiRouter = [
   {
-    name: 'information-popup',
+    name: 'notification-user',
     path: '/popup-informasi/index',
     component: () => import('@/views/popupInformasi/list'),
     meta: {

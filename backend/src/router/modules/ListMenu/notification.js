@@ -1,6 +1,6 @@
 const notificationRouter = [
   {
-    name: 'information-notification',
+    name: 'notification-user',
     path: '/notification/index',
     component: () => import('@/views/notification/list'),
     meta: {
