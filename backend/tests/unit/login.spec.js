@@ -18,7 +18,10 @@ describe('login', () => {
     const wrapper = shallowMount(login, {
       localVue,
       router,
-      stubs: ["svg-icon", "nuxt-link"]
+      stubs: ["svg-icon", "nuxt-link"],
+      mocks: {
+        $t: () => {}
+      }
     })
     return {
       wrapper

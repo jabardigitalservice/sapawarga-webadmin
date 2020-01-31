@@ -462,6 +462,7 @@ export default {
     'newsImportant-description-required': 'Deskripsi harus diisi',
     'newsImportant-description-max': 'Deskripsi maksimal 65000 karakter',
     'newsImportant-create-success': 'Info penting berhasil dibuat',
+    'newsImportant-target-required': 'Target harus diisi',
 
     'survey-title-required': 'Judul survei harus diisi',
     'survey-title-min': 'Judul survei minimal 10 karakter',
@@ -489,6 +490,7 @@ export default {
     'sapawarga': 'sapawarga',
     'notes': 'Catatan:',
     'maximum-dimension-image': 'Ukuran maksimal 1280x720 piksel (Landscape)',
+    'maximum-dimension-image-pop': 'Ukuran maksimal 720x1280 piksel (Portrait)',
     'maximum-size-image': 'Maximum upload file size: 5 Mb.',
 
     'fullname': 'Nama Lengkap',
@@ -517,6 +519,7 @@ export default {
     'area-rt': 'RT',
     'area-rw': 'RW',
     'area': 'Wilayah',
+    'area-jabar': 'JAWA BARAT',
     'area-kel': 'Desa/Kelurahan',
     'choose-area-kel': 'Pilih Desa/Kelurahan',
     'area-kec': 'Kecamatan',
@@ -692,7 +695,11 @@ export default {
     'gamification-fitur-news': 'Berita',
     'gamification-fitur-user_post': 'Kegiatan RW',
     'gamification-event-view_news_detail': 'Melihat berita',
-    'gamification-event-post_user_post': 'Membuat kegiatan RW'
+    'gamification-event-post_user_post': 'Membuat kegiatan RW',
+
+    'login': 'Masuk',
+    'login-forgot-password': 'Lupa kata sandi? Hubungi',
+    'login-forgot-password-number': '082315192724'
 
   },
   news: {
