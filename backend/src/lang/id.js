@@ -22,7 +22,7 @@ export default {
     'nomor-penting-edit': 'Edit Nomor Penting',
     'nomor-penting-detail': 'Detail Nomor Penting',
 
-    'broadcast-manage': 'Pesan',
+    'broadcast-manage': 'Pesan Broadcast',
     'broadcast-create': 'Tambah Pesan',
     'broadcast-list': 'Daftar Pesan',
     'broadcast-edit': 'Edit Pesan',
@@ -119,7 +119,13 @@ export default {
     'gamification-list': 'Daftar Misi',
     'gamification-create': 'Tambah Misi',
     'gamification-detail': 'Detail Misi',
-    'gamification-edit': 'Edit Misi'
+    'gamification-edit': 'Edit Misi',
+
+    'information': 'Informasi',
+    'aspiration': 'Aspirasi',
+    'pollingsurvey': 'Polling & Survey',
+    'notification-user': 'Notifikasi Pengguna',
+    'configuration-menu': 'Konfigurasi'
   },
   crud: {
     'list-empty': 'Belum ada data.',

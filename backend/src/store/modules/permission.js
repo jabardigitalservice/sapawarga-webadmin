@@ -1,4 +1,5 @@
-import { asyncRoutes, constantRoutes } from '@/router'
+import { asyncRoutes, leaderRoutes, constantRoutes } from '@/router'
+import { RolesUser } from '@/utils/constantVariable'
 
 /**
  * 通过meta.role判断是否与当前用户权限匹配
@@ -48,8 +49,12 @@ const mutations = {
 
 const actions = {
   generateRoutes({ commit }, roles) {
+    let routes = asyncRoutes
+    if (roles[0] === RolesUser.LEADER) {
+      routes = leaderRoutes
+    }
     return new Promise(resolve => {
-      const accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
+      const accessedRoutes = filterAsyncRoutes(routes, roles)
 
       commit('SET_ROUTES', accessedRoutes)
       resolve(accessedRoutes)

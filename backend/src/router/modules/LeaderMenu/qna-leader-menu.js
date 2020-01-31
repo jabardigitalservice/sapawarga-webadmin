@@ -1,6 +1,6 @@
 import Layout from '@/layout'
 
-const questionsAnswerRouter = {
+const qnaLeaderMenuRouter = {
   name: 'question-answer-manage',
   path: '/question-answer',
   component: Layout,
@@ -35,4 +35,4 @@ const questionsAnswerRouter = {
   ]
 }
 
-export default questionsAnswerRouter
+export default qnaLeaderMenuRouter

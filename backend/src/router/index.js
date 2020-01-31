@@ -9,24 +9,22 @@ import Layout from '@/layout'
 /* Router Modules */
 import dashboardRouter from './modules/dashboard'
 import userRouter from './modules/user'
-import postRouter from './modules/post'
-import newsRouter from './modules/news'
-import videoRouter from './modules/video'
-import bannerRouter from './modules/banner'
-import surveyRouter from './modules/survey'
-import pollingRouter from './modules/polling'
-import newsHoaxRouter from './modules/newsHoax'
-import broadcastRouter from './modules/broadcast'
-import aspirationRouter from './modules/aspiration'
-import categoriesRouter from './modules/categories'
-import nomorPentingRouter from './modules/nomorPenting'
-import notificationRouter from './modules/notification'
-import newsChannelsRouter from './modules/newsChannels'
-import newsImportantRouter from './modules/newsImportant'
-import popupInformasiRouter from './modules/popupInformasi'
-import questionsAnswerRouter from './modules/questionsAnswer'
 import releaseManagementRouter from './modules/releaseManagement'
 import gamificationRouter from './modules/gamification'
+import informationMenuRouter from './modules/information-menu'
+import aspirationMenuRouter from './modules/aspiration-menu'
+import pollingsurveyMenuRouter from './modules/polling-survey-menu'
+import notifikasiuserMenuRouter from './modules/notification-user-menu'
+import configurationMenuRouter from './modules/configuration-menu'
+import broadcastRouter from './modules/broadcast'
+
+/* Router Modules for Leader */
+import aspirationLeaderMenuRouter from './modules/LeaderMenu/aspiration-leader-menu'
+import pollingLeaderMenuRouter from './modules/LeaderMenu/polling-leader-menu'
+import surveyLeaderMenuRouter from './modules/LeaderMenu/survey-leader-menu'
+import newsLeaderMenuRouter from './modules/LeaderMenu/news-leader-menu'
+import newsHoaxLeaderMenuRouter from './modules/LeaderMenu/newsHoax-leader-menu'
+import qnaLeaderMenuRouter from './modules/LeaderMenu/qna-leader-menu'
 
 /** note: sub-menu only appear when children.length>=1
  *  detail see  https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -105,26 +103,6 @@ export const constantRoutes = [
     active: false,
     hidden: true
   },
-  // rute dashboard ini di matikan sementara, karena dashboard belum siap.
-  // {
-  //   path: '',
-  //   component: Layout,
-  //   redirect: 'dashboard',
-  //   children: [
-  //     {
-  //       path: 'dashboard',
-  //       component: () => import('@/views/dashboard/index'),
-  //       name: 'Dashboard',
-  //       meta: {
-  //         title: 'dashboard',
-  //         icon: 'home',
-  //         noCache: true,
-  //         affix: true,
-  //         roles: ['admin', 'staffProv']
-  //       }
-  //     }
-  //   ]
-  // },
   {
     path: '/profile',
     component: Layout,
@@ -167,25 +145,26 @@ export const constantRoutes = [
  */
 export const asyncRoutes = [
   dashboardRouter,
-  userRouter,
-  nomorPentingRouter,
+  informationMenuRouter,
+  pollingsurveyMenuRouter,
+  aspirationMenuRouter,
+  notifikasiuserMenuRouter,
   broadcastRouter,
-  questionsAnswerRouter,
-  notificationRouter,
-  aspirationRouter,
-  pollingRouter,
-  surveyRouter,
-  newsRouter,
-  newsHoaxRouter,
-  newsChannelsRouter,
-  videoRouter,
-  categoriesRouter,
+  userRouter,
+  configurationMenuRouter,
   releaseManagementRouter,
-  bannerRouter,
-  popupInformasiRouter,
-  newsImportantRouter,
-  postRouter,
   gamificationRouter,
+  { path: '*', redirect: '/404', active: false, hidden: true }
+]
+
+export const leaderRoutes = [
+  dashboardRouter,
+  qnaLeaderMenuRouter,
+  aspirationLeaderMenuRouter,
+  pollingLeaderMenuRouter,
+  surveyLeaderMenuRouter,
+  newsLeaderMenuRouter,
+  newsHoaxLeaderMenuRouter,
   { path: '*', redirect: '/404', active: false, hidden: true }
 ]
 

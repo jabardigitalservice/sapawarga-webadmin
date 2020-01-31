@@ -79,7 +79,6 @@
         background-color: $menuHover !important;
       }
     }
-
     .is-active>.el-submenu__title {
       color: $subMenuActiveText !important;
     }
@@ -91,6 +90,9 @@
 
       &:hover {
         background-color: $subMenuHover !important;
+      }
+      .svg-icon {
+        font-size: 14px;
       }
     }
   }

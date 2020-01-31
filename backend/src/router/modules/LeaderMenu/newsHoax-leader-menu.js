@@ -1,6 +1,6 @@
 import Layout from '@/layout'
 
-const newsHoaxRouter = {
+const newsHoaxLeaderMenuRouter = {
   name: 'newshoax',
   path: '/news-hoax',
   component: Layout,
@@ -53,4 +53,4 @@ const newsHoaxRouter = {
   ]
 }
 
-export default newsHoaxRouter
+export default newsHoaxLeaderMenuRouter

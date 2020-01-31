@@ -1,37 +1,38 @@
 import Layout from '@/layout'
 
 const broadcastRouter = {
-  name: 'Broadcast',
-  path: '/broadcast',
+  name: 'broadcast-manage',
+  path: 'broadcast-manage',
   component: Layout,
-  redirect: '/broadcast/index',
+  redirect: '/',
   meta: {
     title: 'broadcast-manage',
     roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel'],
-    icon: 'message'
+    icon: 'qna'
   },
   active: false,
   children: [
     {
       name: 'broadcast-list',
-      path: 'index',
+      path: '/broadcast/index',
       component: () => import('@/views/broadcast/list'),
       meta: {
-        title: 'broadcast-list',
+        title: 'broadcast-manage',
         roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']
       }
     },
     {
       name: 'broadcast-create',
-      path: 'create',
+      path: '/broadcast/create',
       component: () => import('@/views/broadcast/create'),
+      hidden: true,
       meta: {
         title: 'broadcast-create',
         roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']
       }
     },
     {
-      path: 'edit/:id(\\d+)',
+      path: '/broadcast/edit/:id(\\d+)',
       component: () => import('@/views/broadcast/edit'),
       name: 'broadcast-edit',
       hidden: true,
@@ -43,7 +44,7 @@ const broadcastRouter = {
     },
     {
       name: 'broadcast-detail',
-      path: 'detail/:id',
+      path: '/broadcast/detail/:id',
       component: () => import('@/views/broadcast/detail'),
       hidden: true,
       meta: {
@@ -53,5 +54,4 @@ const broadcastRouter = {
     }
   ]
 }
-
 export default broadcastRouter
