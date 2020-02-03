@@ -268,6 +268,7 @@ export default {
     'popup-survey': 'Survei',
     'popup-polling': 'Polling',
     'popup-news': 'Berita',
+    'popup-newsImportant': 'Info penting',
     'popup-selection': 'Pilihan',
     'popup-time-publish': 'Waktu Publikasi',
     'popup-add-new': 'Tambah Pop-Up Informasi Baru',
@@ -713,8 +714,16 @@ export default {
     'banner-title': 'Judul Banner',
     'banner-external': 'Eksternal',
     'banner-internal': 'Internal',
-    'banner-fitur': 'Fitur',
-    'banner-options': 'Pilihan'
+    'banner-feature': 'Fitur',
+    'banner-options': 'Pilihan',
+    'banner-url': 'URL Banner',
+    'banner-data': 'Data Banner',
+    'banner-feature-select': 'Pilih fitur',
+    'banner-feature-title': 'Judul Fitur',
+    'banner-survey': 'Survei',
+    'banner-polling': 'Polling',
+    'banner-news': 'Berita',
+    'banner-newsImportant': 'Info penting'
 
   },
   news: {
