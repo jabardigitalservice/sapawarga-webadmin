@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import { PopupFeature, PopupCategory } from '@/utils/constantVariable'
 import { fetchRecord } from '@/api/popupInformasi'
 import { validUrl } from '@/utils/validate'
 export default {
@@ -52,7 +53,7 @@ export default {
           },
           {
             title: this.$t('popup.popup-fitur'),
-            content: internal_object_type || '-'
+            content: internal_object_type === PopupFeature.NEWS_IMPORTANT ? this.$t('popup.popup-newsImportant') : internal_object_type === PopupFeature.NEWS ? this.$t('popup.popup-news') : internal_object_type
           },
           {
             title: this.$t('popup.popup-title-fitur'),
@@ -68,9 +69,9 @@ export default {
           }
         ]
 
-        if (type === 'internal') {
+        if (type === PopupCategory.INTERNAL) {
           this.tableDataPopUp.pop()
-        } else if (type === 'external') {
+        } else if (type === PopupCategory.EXTERNAL) {
           this.tableDataPopUp.splice(2, 2)
         }
       })

@@ -22,14 +22,14 @@
             </el-radio-group>
           </el-form-item>
           <el-form-item v-if="banner.type === $t('label.external')" :label="$t('label.url')" prop="link_url">
-            <el-input v-model="banner.link_url" type="text" name="link_url" placeholder="URL Banner" />
+            <el-input v-model="banner.link_url" type="text" name="link_url" :placeholder="$t('label.banner-url')" />
           </el-form-item>
-          <el-form-item v-else :label="$t('label.banner-fitur')" prop="internal_category">
-            <el-select v-model="banner.internal_category" placeholder="Pilih Kategori" name="fitur">
-              <el-option label="Survei" value="survey" />
-              <el-option label="Polling" value="polling" />
-              <el-option label="Berita" value="news" />
-              <el-option label="Info penting" value="news-important" />
+          <el-form-item v-else :label="$t('label.banner-feature')" prop="internal_category">
+            <el-select v-model="banner.internal_category" :placeholder="$t('label.banner-feature-select')" name="fitur">
+              <el-option :label="$t('label.banner-survey')" value="survey" />
+              <el-option :label="$t('label.banner-polling')" value="polling" />
+              <el-option :label="$t('label.banner-news')" value="news" />
+              <el-option :label="$t('label.banner-newsImportant')" value="news-important" />
             </el-select>
             <span v-if="banner.internal_category !== null">
               <el-button type="success" @click="dialog(banner.internal_category)">{{ $t('label.banner-options') }}</el-button>
@@ -63,8 +63,9 @@
 
 <script>
 import AttachmentPhotoUpload from '@/components/AttachmentPhotoUpload'
-import { validUrl } from '@/utils/validate'
+import { PopupCategory, PopupFeature } from '@/utils/constantVariable'
 import { create, fetchRecord, update } from '@/api/banner'
+import { validUrl } from '@/utils/validate'
 import Feature from './dialog/feature'
 import { mapGetters } from 'vuex'
 
@@ -94,7 +95,7 @@ export default {
         title: null,
         image_path_url: null,
         image_path: null,
-        type: this.$t('label.external'),
+        type: PopupCategory.EXTERNAL,
         link_url: null,
         internal_category: null,
         internal_entity_id: null,
@@ -175,9 +176,9 @@ export default {
 
   watch: {
     'banner.type'(val) {
-      if (this.banner.type === this.$t('label.internal')) {
+      if (this.banner.type === PopupCategory.INTERNAL) {
         this.banner.link_url = null
-      } else if (this.banner.type === this.$t('label.external')) {
+      } else if (this.banner.type === PopupCategory.EXTERNAL) {
         this.banner.internal_category = null
         this.banner.internal_entity_name = null
         this.banner.internal_entity_id = null
@@ -197,13 +198,13 @@ export default {
         this.banner.internal_entity_id = null
       }
 
-      if (this.banner.internal_category === 'survey') {
+      if (this.banner.internal_category === PopupFeature.SURVEY) {
         this.titleFitur = this.$t('label.survey-title')
         this.titlePopup = this.$t('label.survey-list')
-      } else if (this.banner.internal_category === 'polling') {
+      } else if (this.banner.internal_category === PopupFeature.POLLING) {
         this.titleFitur = this.$t('label.polling-title')
         this.titlePopup = this.$t('label.polling-list')
-      } else if (this.banner.internal_category === 'news') {
+      } else if (this.banner.internal_category === PopupFeature.NEWS) {
         this.titleFitur = this.$t('news.news-title')
         this.titlePopup = this.$t('news.news-list')
       } else {
@@ -260,9 +261,9 @@ export default {
         this.loading = true
         const data = {}
         Object.assign(data, this.banner)
-        if (data.type === this.$t('label.internal')) {
+        if (data.type === PopupCategory.INTERNAL) {
           data.link_url = null
-        } else if (data.type === this.$t('label.external')) {
+        } else if (data.type === PopupCategory.EXTERNAL) {
           data.internal_category = null
           data.internal_entity_id = null
           data.internal_entity_name = null
