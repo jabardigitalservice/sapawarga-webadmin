@@ -16,6 +16,7 @@ const gamificationRouter = {
       name: 'gamification-list',
       path: 'index',
       component: () => import('@/views/gamification/list'),
+      hidden: true,
       meta: {
         title: 'gamification-list',
         roles: ['admin', 'staffProv']
@@ -25,6 +26,7 @@ const gamificationRouter = {
       name: 'gamification-create',
       path: 'create',
       component: () => import('@/views/gamification/create'),
+      hidden: true,
       meta: {
         title: 'gamification-create',
         roles: ['admin', 'staffProv']
