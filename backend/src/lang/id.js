@@ -397,7 +397,6 @@ export default {
     'gamification-title-max-100': 'Judul Misi maksimal 100 Karakter.',
     'gamification-name-reward-max-100': 'Nama penghargaan maksimal 100 Karakter.',
     'gamification-name-reward-not-valid-characters': 'Nama penghargaan mengandung karakter yang tidak diizinkan.',
-
     'gamification-fitur-must-be-filled': 'Fitur harus diisi.',
     'gamification-action-fitur-must-be-filled': 'Action Fitur harus diisi.',
 
@@ -469,7 +468,15 @@ export default {
     'survey-link-valid': 'URL tidak valid',
     'survey-area-required': 'Wilayah harus diisi',
     'survey-rw-pattern': 'RW harus menggunakan angka',
-    'survey-rw-min': 'RW harus 3 angka, contoh 001'
+    'survey-rw-min': 'RW harus 3 angka, contoh 001',
+
+    'banner-title-required': 'Judul Banner harus diisi',
+    'banner-title-min': 'Judul Banner minimal 10 karakter',
+    'banner-title-max': 'Judul Banner maksimal 100 karakter',
+    'banner-url-required': 'Tautan harus diisi',
+    'banner-status-required': 'Status harus diisi',
+    'banner-feature-required': 'Fitur Banner harus diisi',
+    'banner-feature-title-required': 'Judul harus diisi'
 
   },
   categoriTypes: {
@@ -563,6 +570,10 @@ export default {
     'date': 'Tanggal',
     'start-date': 'Tanggal Mulai',
     'end-date': 'Tanggal Berakhir',
+    'external': 'external',
+    'internal': 'internal',
+    'active': 'Aktif',
+    'inactive': 'Tidak aktif',
 
     'created-polling': 'Polling Dibuat',
     'followed-polling': 'Polling Diikuti',
@@ -595,6 +606,7 @@ export default {
     'newsImportant-date-created': 'Tanggal Dibuat',
     'newsImportant-url': 'https://jabarprov.go.id',
     'newsImportant-title': 'Judul Info Penting',
+    'newsImportant-list': 'Daftar Info Penting',
     'newsImportant-date-updated': 'Tanggal Publikasi',
     'newsImportant-tooltip-edit': 'Edit Info Penting',
     'newsImportant-tooltip-delete': 'Hapus Info Penting',
@@ -661,7 +673,7 @@ export default {
     'survey-name': 'Nama Survei',
     'survey-start': 'Mulai',
     'survey-end': 'Berakhir',
-    'survey-list': 'Daftar Survey',
+    'survey-list': 'Daftar Survei',
 
     'click-upload': 'Click to upload',
     'image-upload-size': 'jpg/png/jpeg files',
@@ -696,7 +708,13 @@ export default {
 
     'login': 'Masuk',
     'login-forgot-password': 'Lupa kata sandi? Hubungi',
-    'login-forgot-password-number': '082315192724'
+    'login-forgot-password-number': '082315192724',
+
+    'banner-title': 'Judul Banner',
+    'banner-external': 'Eksternal',
+    'banner-internal': 'Internal',
+    'banner-fitur': 'Fitur',
+    'banner-options': 'Pilihan'
 
   },
   news: {

@@ -12,35 +12,36 @@
       </el-col>
       <el-col :xs="24" :sm="13" :lg="16">
         <el-form ref="banner" :model="banner" :rules="rules" :status-icon="true" label-width="160px">
-          <el-form-item label="Judul Banner" prop="title">
-            <el-input v-model="banner.title" type="text" name="title" placeholder="Judul Banner" />
+          <el-form-item :label="$t('label.banner-title')" prop="title">
+            <el-input v-model="banner.title" type="text" name="title" :placeholder="$t('label.banner-title')" />
           </el-form-item>
-          <el-form-item label="Kategori" prop="type">
+          <el-form-item :label="$t('label.category')" prop="type">
             <el-radio-group v-model="banner.type" name="type">
-              <el-radio-button label="external">Eksternal</el-radio-button>
-              <el-radio-button label="internal">Internal</el-radio-button>
+              <el-radio-button :label="$t('label.external')">{{ $t('label.banner-external') }}</el-radio-button>
+              <el-radio-button :label="$t('label.internal')">{{ $t('label.banner-internal') }}</el-radio-button>
             </el-radio-group>
           </el-form-item>
-          <el-form-item v-if="banner.type === 'external'" label="Tautan" prop="link_url">
+          <el-form-item v-if="banner.type === $t('label.external')" :label="$t('label.url')" prop="link_url">
             <el-input v-model="banner.link_url" type="text" name="link_url" placeholder="URL Banner" />
           </el-form-item>
-          <el-form-item v-else label="Fitur" prop="internal_category">
+          <el-form-item v-else :label="$t('label.banner-fitur')" prop="internal_category">
             <el-select v-model="banner.internal_category" placeholder="Pilih Kategori" name="fitur">
               <el-option label="Survei" value="survey" />
               <el-option label="Polling" value="polling" />
               <el-option label="Berita" value="news" />
+              <el-option label="Info penting" value="news-important" />
             </el-select>
             <span v-if="banner.internal_category !== null">
-              <el-button type="success" @click="dialog(banner.internal_category)">Pilihan</el-button>
+              <el-button type="success" @click="dialog(banner.internal_category)">{{ $t('label.banner-options') }}</el-button>
             </span>
           </el-form-item>
-          <el-form-item v-if="banner.type === 'internal'" :label="titleFitur" prop="internal_entity_name">
+          <el-form-item v-if="banner.type === $t('label.internal')" :label="titleFitur" prop="internal_entity_name">
             <el-input v-model="banner.internal_entity_name" disabled type="text" name="internal_entity_name" />
           </el-form-item>
-          <el-form-item label="Status" prop="status">
+          <el-form-item :label="$t('label.status')" prop="status">
             <el-radio-group v-model="banner.status" :fill="statusColor" name="status">
-              <el-radio-button :label="0">Tidak Aktif</el-radio-button>
-              <el-radio-button :label="10">Aktif</el-radio-button>
+              <el-radio-button :label="0">{{ $t('label.inactive') }}</el-radio-button>
+              <el-radio-button :label="10">{{ $t('label.active') }}</el-radio-button>
             </el-radio-group>
           </el-form-item>
           <el-form-item style="margin-top:50px">
@@ -81,7 +82,7 @@ export default {
   data() {
     const validatorUrl = (rule, value, callback) => {
       if (validUrl(value) === false) {
-        callback(new Error('URL tidak valid'))
+        callback(new Error(this.$t('errors.url-not-valid')))
       }
 
       callback()
@@ -93,7 +94,7 @@ export default {
         title: null,
         image_path_url: null,
         image_path: null,
-        type: 'external',
+        type: this.$t('label.external'),
         link_url: null,
         internal_category: null,
         internal_entity_id: null,
@@ -109,31 +110,31 @@ export default {
         title: [
           {
             required: true,
-            message: 'Judul Banner harus diisi',
+            message: this.$t('message.banner-title-required'),
             trigger: 'blur'
           },
           {
             min: 10,
-            message: 'Judul Banner minimal 10 Karakter',
+            message: this.$t('message.banner-title-min'),
             trigger: 'blur'
           },
           {
             max: 100,
-            message: 'Judul Banner maximal 100 Karakter',
+            message: this.$t('message.banner-title-max'),
             trigger: 'blur'
           }
         ],
         type: [
           {
             required: true,
-            message: 'Kategori Banner harus diisi',
+            message: this.$t('message.category'),
             trigger: 'blur'
           }
         ],
         link_url: [
           {
             required: true,
-            message: 'Tautan harus diisi',
+            message: this.$t('message.banner-url-required'),
             trigger: 'blur'
           },
           {
@@ -144,21 +145,21 @@ export default {
         status: [
           {
             required: true,
-            message: 'Status harus diisi',
+            message: this.$t('message.banner-status-required'),
             trigger: 'blur'
           }
         ],
         internal_category: [
           {
             required: true,
-            message: 'Fitur Banner harus diisi',
+            message: this.$t('message.banner-feature-required'),
             trigger: 'blur'
           }
         ],
         internal_entity_name: [
           {
             required: true,
-            message: 'Judul harus diisi',
+            message: this.$t('message.banner-feature-title-required'),
             trigger: 'blur'
           }
         ]
@@ -174,9 +175,9 @@ export default {
 
   watch: {
     'banner.type'(val) {
-      if (this.banner.type === 'internal') {
+      if (this.banner.type === this.$t('label.internal')) {
         this.banner.link_url = null
-      } else if (this.banner.type === 'external') {
+      } else if (this.banner.type === this.$t('label.external')) {
         this.banner.internal_category = null
         this.banner.internal_entity_name = null
         this.banner.internal_entity_id = null
@@ -197,14 +198,17 @@ export default {
       }
 
       if (this.banner.internal_category === 'survey') {
-        this.titleFitur = 'Judul Survei'
-        this.titlePopup = 'Daftar Survei'
+        this.titleFitur = this.$t('label.survey-title')
+        this.titlePopup = this.$t('label.survey-list')
       } else if (this.banner.internal_category === 'polling') {
-        this.titleFitur = 'Judul Polling'
-        this.titlePopup = 'Daftar Polling'
+        this.titleFitur = this.$t('label.polling-title')
+        this.titlePopup = this.$t('label.polling-list')
+      } else if (this.banner.internal_category === 'news') {
+        this.titleFitur = this.$t('news.news-title')
+        this.titlePopup = this.$t('news.news-list')
       } else {
-        this.titleFitur = 'Judul Berita'
-        this.titlePopup = 'Daftar Berita'
+        this.titleFitur = this.$t('label.newsImportant-title')
+        this.titlePopup = this.$t('label.newsImportant-list')
       }
     }
   },
@@ -256,9 +260,9 @@ export default {
         this.loading = true
         const data = {}
         Object.assign(data, this.banner)
-        if (data.type === 'internal') {
+        if (data.type === this.$t('label.internal')) {
           data.link_url = null
-        } else if (data.type === 'external') {
+        } else if (data.type === this.$t('label.external')) {
           data.internal_category = null
           data.internal_entity_id = null
           data.internal_entity_name = null
