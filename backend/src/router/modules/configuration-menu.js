@@ -9,7 +9,7 @@ const configurationMenuRouter = {
   redirect: '/',
   meta: {
     title: 'configuration-menu',
-    roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel'],
+    roles: ['admin', 'staffProv'],
     icon: 'tab'
   },
   active: false,

@@ -5,6 +5,9 @@
 </template>
 
 <script>
+import { RolesUser } from '@/utils/constantVariable'
+import store from '@/store'
+
 export default {
   name: 'SvgIcon',
   props: {
@@ -24,6 +27,8 @@ export default {
     svgClass() {
       if (this.className) {
         return 'svg-icon ' + this.className
+      } else if (store.getters.roles[0] === RolesUser.LEADER) {
+        return 'svg-icon leader-icon-menu'
       } else {
         return 'svg-icon'
       }
