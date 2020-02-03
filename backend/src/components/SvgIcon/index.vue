@@ -25,7 +25,6 @@ export default {
       return `#icon-${this.iconClass}`
     },
     svgClass() {
-      console.log()
       if (this.className) {
         return 'svg-icon ' + this.className
       } else if (store.getters.roles[0] === RolesUser.LEADER) {
