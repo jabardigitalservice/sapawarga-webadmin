@@ -10,7 +10,7 @@ const notifikasiuserMenuRouter = {
   redirect: '/',
   meta: {
     title: 'notification-user',
-    roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel'],
+    roles: ['admin', 'staffProv'],
     icon: 'guide'
   },
   active: false,
