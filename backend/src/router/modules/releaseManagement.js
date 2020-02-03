@@ -16,6 +16,7 @@ const releaseManagementRouter = {
       name: 'release-management-list',
       path: 'index',
       component: () => import('@/views/releaseManagement/list'),
+      hidden: true,
       meta: {
         title: 'release-management-list',
         roles: ['admin']
@@ -25,6 +26,7 @@ const releaseManagementRouter = {
       name: 'release-management-create',
       path: 'create',
       component: () => import('@/views/releaseManagement/create'),
+      hidden: true,
       meta: {
         title: 'release-management-create',
         roles: ['admin']
