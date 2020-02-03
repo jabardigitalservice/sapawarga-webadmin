@@ -722,7 +722,7 @@ export default {
     'banner-options': 'Pilihan',
     'banner-url': 'URL Banner',
     'banner-data': 'Data Banner',
-    'banner-feature-select': 'Pilih fitur',
+    'banner-feature-select': 'Pilih Fitur',
     'banner-feature-title': 'Judul Fitur',
     'banner-survey': 'Survei',
     'banner-polling': 'Polling',
