@@ -17,12 +17,12 @@
           </el-form-item>
           <el-form-item :label="$t('popup.popup-category')" prop="type">
             <el-radio-group v-model="popup.type" name="type">
-              <el-radio-button label="external">{{ $t('popup.popup-external') }}</el-radio-button>
-              <el-radio-button label="internal">{{ $t('popup.popup-internal') }}</el-radio-button>
+              <el-radio-button :label="$t('label.external')">{{ $t('popup.popup-external') }}</el-radio-button>
+              <el-radio-button :label="$t('label.internal')">{{ $t('popup.popup-internal') }}</el-radio-button>
             </el-radio-group>
           </el-form-item>
 
-          <div v-if="popup.type === 'external'">
+          <div v-if="popup.type === $t('label.external')">
             <el-form-item :label="$t('popup.popup-link')" prop="link_url">
               <el-input v-model="popup.link_url" type="text" name="link_url" :placeholder="$t('popup.popup-url-pop-up')" />
             </el-form-item>
@@ -40,7 +40,7 @@
               </span>
             </el-form-item>
 
-            <el-form-item v-if="popup.type === 'internal'" :label="titleFitur" prop="internal_object_name">
+            <el-form-item v-if="popup.type === $t('label.internal')" :label="titleFitur" prop="internal_object_name">
               <el-input v-model="popup.internal_object_name" disabled type="text" name="internal_object_name" />
             </el-form-item>
           </div>

@@ -39,6 +39,7 @@ import moment from 'moment'
 import { fetchRecord, update } from '@/api/broadcast'
 import { parsingDatetime } from '@/utils/datetimeToString'
 import { isContainHtmlTags, validUrl } from '@/utils/validate'
+import { PopupFeature, PopupCategory } from '@/utils/constantVariable'
 
 export default {
   data() {
@@ -146,7 +147,7 @@ export default {
           },
           {
             title: this.$t('label.broadcast-feature'),
-            content: internal_object_type === 'news' ? 'berita' : internal_object_type
+            content: internal_object_type === PopupFeature.NEWS_IMPORTANT ? this.$t('label.broadcast-newsImportant') : internal_object_type === PopupFeature.NEWS ? this.$t('label.broadcast-news') : internal_object_type
           },
           {
             title: this.$t('label.broadcast-feature-title'),
@@ -163,7 +164,7 @@ export default {
           this.tableDataPesan.splice(4, 1)
           if (type === null) {
             this.tableDataPesan.splice(4, 4)
-          } else if (type === 'internal') {
+          } else if (type === PopupCategory.INTERNAL) {
             this.tableDataPesan.splice(5, 1)
           } else {
             this.tableDataPesan.splice(6, 2)
@@ -172,7 +173,7 @@ export default {
           this.tableDataPesan.splice(3, 1)
           if (type === null) {
             this.tableDataPesan.splice(4, 4)
-          } else if (type === 'internal') {
+          } else if (type === PopupCategory.INTERNAL) {
             this.tableDataPesan.splice(5, 1)
           } else {
             this.tableDataPesan.splice(6, 2)
@@ -180,7 +181,7 @@ export default {
         } else {
           if (type === null) {
             this.tableDataPesan.splice(5, 4)
-          } else if (type === 'internal') {
+          } else if (type === PopupCategory.INTERNAL) {
             this.tableDataPesan.splice(6, 1)
           } else {
             this.tableDataPesan.splice(7, 2)

@@ -644,6 +644,10 @@ export default {
     'broadcast-url': 'Tautan',
     'broadcast-feature': 'Fitur',
     'broadcast-feature-title': 'Judul Fitur',
+    'broadcast-polling': 'Polling',
+    'broadcast-survey': 'Survei',
+    'broadcast-news': 'Berita',
+    'broadcast-newsImportant': 'Info penting',
 
     'post-title': 'Nama Kegiatan',
     'post-like': 'Likes',
