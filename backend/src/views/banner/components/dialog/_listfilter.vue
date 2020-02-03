@@ -7,6 +7,7 @@
             <el-input v-if="fitur === 'survey'" v-model="listQuery.title" placeholder="Judul Survei" />
             <el-input v-if="fitur === 'polling'" v-model="listQuery.title" placeholder="Judul Polling" />
             <el-input v-if="fitur === 'news'" v-model="listQuery.search" placeholder="Judul Berita" />
+            <el-input v-if="fitur === 'news-important'" v-model="listQuery.search" placeholder="Judul Info penting" />
           </el-form-item>
         </el-col>
         <el-col :span="6">
