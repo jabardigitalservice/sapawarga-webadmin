@@ -17,12 +17,12 @@
           </el-form-item>
           <el-form-item :label="$t('popup.popup-category')" prop="type">
             <el-radio-group v-model="popup.type" name="type">
-              <el-radio-button label="external">{{ $t('popup.popup-external') }}</el-radio-button>
-              <el-radio-button label="internal">{{ $t('popup.popup-internal') }}</el-radio-button>
+              <el-radio-button :label="$t('label.external')">{{ $t('popup.popup-external') }}</el-radio-button>
+              <el-radio-button :label="$t('label.internal')">{{ $t('popup.popup-internal') }}</el-radio-button>
             </el-radio-group>
           </el-form-item>
 
-          <div v-if="popup.type === 'external'">
+          <div v-if="popup.type === $t('label.external')">
             <el-form-item :label="$t('popup.popup-link')" prop="link_url">
               <el-input v-model="popup.link_url" type="text" name="link_url" :placeholder="$t('popup.popup-url-pop-up')" />
             </el-form-item>
@@ -33,13 +33,14 @@
                 <el-option :label="$t('popup.popup-survey')" value="survey" />
                 <el-option :label="$t('popup.popup-polling')" value="polling" />
                 <el-option :label="$t('popup.popup-news')" value="news" />
+                <el-option :label="$t('popup.popup-newsImportant')" value="news-important" />
               </el-select>
               <span v-if="popup.internal_object_type !== null">
                 <el-button type="success" @click="dialog(popup.internal_object_type)">{{ $t('popup.popup-selection') }}</el-button>
               </span>
             </el-form-item>
 
-            <el-form-item v-if="popup.type === 'internal'" :label="titleFitur" prop="internal_object_name">
+            <el-form-item v-if="popup.type === $t('label.internal')" :label="titleFitur" prop="internal_object_name">
               <el-input v-model="popup.internal_object_name" disabled type="text" name="internal_object_name" />
             </el-form-item>
           </div>
@@ -140,7 +141,7 @@ export default {
         image_path_url: null,
         image_path: null,
         status: 10,
-        type: 'external',
+        type: PopupCategory.EXTERNAL,
         link_url: null,
         internal_object_type: null,
         internal_object_id: null,
@@ -292,16 +293,20 @@ export default {
       }
 
       if (this.popup.internal_object_type === PopupFeature.SURVEY) {
-        this.titleFitur = 'Judul Survei'
-        this.titlePopup = 'Daftar Survei'
+        this.titleFitur = this.$t('label.survey-title')
+        this.titlePopup = this.$t('label.survey-list')
         this.popup.internal_object_name = ' '
       } else if (this.popup.internal_object_type === PopupFeature.POLLING) {
-        this.titleFitur = 'Judul Polling'
-        this.titlePopup = 'Daftar Polling'
+        this.titleFitur = this.$t('label.polling-title')
+        this.titlePopup = this.$t('label.polling-list')
+        this.popup.internal_object_name = ' '
+      } else if (this.popup.internal_object_type === PopupFeature.NEWS) {
+        this.titleFitur = this.$t('news.news-title')
+        this.titlePopup = this.$t('news.news-list')
         this.popup.internal_object_name = ' '
       } else {
-        this.titleFitur = 'Judul Berita'
-        this.titlePopup = 'Daftar Berita'
+        this.titleFitur = this.$t('label.newsImportant-title')
+        this.titlePopup = this.$t('label.newsImportant-list')
         this.popup.internal_object_name = ' '
       }
     }

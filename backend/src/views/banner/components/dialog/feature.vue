@@ -17,6 +17,8 @@
 
       <el-table-column v-if="category === 'survey'" property="title" label="Judul Survei" min-width="180" />
 
+      <el-table-column v-if="category === 'news-important'" property="title" label="Judul Survei" min-width="180" />
+
       <el-table-column align="center" label="Actions">
         <template slot-scope="scope">
           <el-tooltip content="Tambah" placement="right">
@@ -34,6 +36,7 @@ import Pagination from '@/components/Pagination'
 import { fetchList as listNews } from '@/api/news'
 import { fetchList as listPolling } from '@/api/polling'
 import { fetchList as listSurvey } from '@/api/survey'
+import { fetchList as listNewsImportant } from '@/api/newsImportant'
 import ListFilter from './_listfilter'
 export default {
   components: {
@@ -81,8 +84,11 @@ export default {
         case 'polling':
           this.listPolling()
           break
-        default:
+        case 'survey':
           this.listSurvey()
+          break
+        default:
+          this.listNewsImportant()
       }
     },
 
@@ -106,6 +112,14 @@ export default {
     async listSurvey() {
       this.listQuery.status = 15
       await listSurvey(this.listQuery).then(response => {
+        this.list = response.data.items
+        this.total = response.data._meta.totalCount
+        this.listLoading = false
+      })
+    },
+
+    async listNewsImportant() {
+      await listNewsImportant(this.listQuery).then(response => {
         this.list = response.data.items
         this.total = response.data._meta.totalCount
         this.listLoading = false

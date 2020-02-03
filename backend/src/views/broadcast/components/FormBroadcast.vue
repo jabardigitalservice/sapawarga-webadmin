@@ -76,27 +76,28 @@
 
             <el-form-item v-if="broadcast.is_link" :label="$t('label.broadcast-source')" prop="type" class="inline-block">
               <el-radio-group v-model="broadcast.type" name="link" class="inline-block">
-                <el-radio-button label="external">{{ $t('label.broadcast-external') }}</el-radio-button>
-                <el-radio-button label="internal">{{ $t('label.broadcast-internal') }}</el-radio-button>
+                <el-radio-button :label="$t('label.external')">{{ $t('label.broadcast-external') }}</el-radio-button>
+                <el-radio-button :label="$t('label.internal')">{{ $t('label.broadcast-internal') }}</el-radio-button>
               </el-radio-group>
             </el-form-item>
 
-            <el-form-item v-if="broadcast.is_link && broadcast.type === 'external'" :label="$t('label.broadcast-url')" prop="link_url">
+            <el-form-item v-if="broadcast.is_link && broadcast.type === $t('label.external')" :label="$t('label.broadcast-url')" prop="link_url">
               <el-input v-model="broadcast.link_url" type="text" name="link_url" placeholder="URL Broadcast" />
             </el-form-item>
 
-            <el-form-item v-else-if="broadcast.is_link && broadcast.type === 'internal'" :label="$t('label.broadcast-feature')" prop="internal_object_type">
+            <el-form-item v-else-if="broadcast.is_link && broadcast.type === $t('label.internal')" :label="$t('label.broadcast-feature')" prop="internal_object_type">
               <el-select v-model="broadcast.internal_object_type" placeholder="Pilih Fitur" name="fitur" class="broadcast-feature">
-                <el-option label="Survei" value="survey" />
-                <el-option label="Polling" value="polling" />
-                <el-option label="Berita" value="news" />
+                <el-option :label="$t('label.broadcast-survey')" value="survey" />
+                <el-option :label="$t('label.broadcast-polling')" value="polling" />
+                <el-option :label="$t('label.broadcast-news')" value="news" />
+                <el-option :label="$t('label.broadcast-newsImportant')" value="news-important" />
               </el-select>
               <span v-if="broadcast.internal_object_type !== null">
                 <el-button type="success" class="broadcast-option" @click="dialog(broadcast.internal_object_type)">{{ $t('label.broadcast-options') }}</el-button>
               </span>
             </el-form-item>
 
-            <el-form-item v-if="broadcast.is_link && broadcast.type === 'internal'" :label="titleFitur" prop="internal_object_name">
+            <el-form-item v-if="broadcast.is_link && broadcast.type === $t('label.internal')" :label="titleFitur" prop="internal_object_name">
               <el-input v-model="broadcast.internal_object_name" disabled type="text" name="internal_object_name" />
             </el-form-item>
 
@@ -118,6 +119,7 @@
 </template>
 <script>
 import InputCategory from '@/components/InputCategory'
+import { PopupCategory, PopupFeature } from '@/utils/constantVariable'
 import InputSelectArea from '@/components/InputSelectArea'
 import { create, fetchRecord, update } from '@/api/broadcast'
 import { containsWhitespace, isContainHtmlTags, validUrl } from '@/utils/validate'
@@ -188,7 +190,7 @@ export default {
         is_scheduled: false,
         scheduled_datetime: null,
         is_link: false,
-        type: 'external',
+        type: PopupCategory.EXTERNAL,
         link_url: null,
         internal_object_type: null,
         internal_object_id: null,
@@ -370,9 +372,9 @@ export default {
     },
 
     'broadcast.type'(val) {
-      if (val === 'internal') {
+      if (val === PopupCategory.INTERNAL) {
         this.broadcast.link_url = null
-      } else if (val === 'external') {
+      } else if (val === PopupCategory.EXTERNAL) {
         this.broadcast.internal_object_type = null
         this.broadcast.internal_object_name = null
         this.broadcast.internal_object_id = null
@@ -388,15 +390,18 @@ export default {
         this.broadcast.internal_object_id = null
       }
 
-      if (this.broadcast.internal_object_type === 'survey') {
+      if (this.broadcast.internal_object_type === PopupFeature.SURVEY) {
         this.titleFitur = this.$t('label.survey-title')
         this.titlePopup = this.$t('label.survey-list')
-      } else if (this.broadcast.internal_object_type === 'polling') {
+      } else if (this.broadcast.internal_object_type === PopupFeature.SURVEY) {
         this.titleFitur = this.$t('label.polling-title')
         this.titlePopup = this.$t('label.polling-list')
-      } else {
+      } else if (this.broadcast.internal_object_type === PopupFeature.NEWS) {
         this.titleFitur = this.$t('news.news-title')
         this.titlePopup = this.$t('news.news-list')
+      } else {
+        this.titleFitur = this.$t('label.newsImportant-title')
+        this.titlePopup = this.$t('label.newsImportant-list')
       }
     }
   },
@@ -465,6 +470,14 @@ export default {
         const data = {}
 
         Object.assign(data, this.broadcast)
+
+        if (data.type === PopupCategory.INTERNAL) {
+          data.link_url = null
+        } else if (data.type === PopupCategory.EXTERNAL) {
+          data.internal_object_type = null
+          data.internal_object_id = null
+          data.internal_object_name = null
+        }
 
         data.status = status
 
