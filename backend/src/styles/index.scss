@@ -316,6 +316,13 @@ code {
       text-align: left;
     }
   }
+
+  // news important public
+  .news-important-public {
+    .text {
+      margin: 0 50px;
+    }
+  }
 }
 
 // style for mobile only
@@ -351,6 +358,13 @@ code {
 
   .broadcast-feature {
     width: 100%;
+  }
+
+  // news important public
+  .news-important-public {
+    .text {
+      margin: 0 25px;
+    }
   }
 
 }
