@@ -564,6 +564,7 @@ export default {
     'title': 'Judul',
     'image': 'Gambar',
     'target': 'Target',
+    'source': 'Sumber',
     'send_at': 'Dikirim',
     'actions': 'Actions',
     'scheduled': 'Jadwal',
