@@ -509,6 +509,7 @@ export default {
     'username': 'Username',
     'email': 'Email',
     'place': 'Kedudukan',
+    'join-date': 'Tanggal Bergabung',
     'password': 'Password',
     'repeat-password': 'Ulangi Password',
     'role': 'Peran',

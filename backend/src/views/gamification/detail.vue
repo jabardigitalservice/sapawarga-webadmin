@@ -14,7 +14,7 @@
           <div slot="header" class="clearfix">
             <span>{{ $t('label.list-participant') }}</span>
           </div>
-          <user-participant :list-participant="tableData" />
+          <user-participant :list-participant="listParticipant" :list-query="listQuery" :total="totalListParticipant"/>
         </el-card>
       </el-col>
     </el-row>
@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { fetchRecord } from '@/api/gamification'
+import { fetchRecord, fetchListParticipant } from '@/api/gamification'
 import DetailData from '@/components/DetailData'
 import moment from 'moment'
 import UserParticipant from './components/_listUserParticipant'
@@ -40,32 +40,26 @@ export default {
       image: null,
       imageNone: require('@/assets/none.png'),
       news: null,
-      tableData: [{
-        date: '2016-05-03',
-        name: 'Tom',
-        task: 8,
-        address: 'No. 189, Grove St, Los Angeles'
-      }, {
-        date: '2016-05-02',
-        name: 'Tom',
-        task: 8,
-        address: 'No. 189, Grove St, Los Angeles'
-      }, {
-        date: '2016-05-04',
-        name: 'Tom',
-        task: 8,
-        address: 'No. 189, Grove St, Los Angeles'
-      }, {
-        date: '2016-05-01',
-        name: 'Tom',
-        task: 8,
-        address: 'No. 189, Grove St, Los Angeles'
-      }]
+      listParticipant: {},
+      listQuery: {
+        id: this.id,
+        page: 1,
+        limit: 10
+      },
+      totalListParticipant: 0
+    }
+  },
+  watch: {
+    'listQuery.page': {
+      handler: function(value) {
+        this.getListParticipant()
+      }
     }
   },
   mounted() {
     this.id = this.$route.params && this.$route.params.id
     this.getDetail()
+    this.getListParticipant()
   },
   methods: {
     async getDetail() {
@@ -114,8 +108,12 @@ export default {
           content: detail.data.description
         }
       ]
+    },
+    async getListParticipant() {
+      const response = await fetchListParticipant(this.listQuery)
+      this.listParticipant = await response.data
+      this.totalListParticipant = await response.data._meta.totalCount
     }
-
   }
 }
 </script>
