@@ -693,6 +693,7 @@ export default {
     'post-activities-rw': 'Posting Rw',
 
     'gamification-detail': 'Detail Misi',
+    'list-participant': 'Daftar Partisipan',
     'gamification-add-new': 'Tambah Misi Baru',
     'gamification-edit': 'Edit Misi',
     'gamification-view': 'Lihat Misi',
@@ -714,8 +715,8 @@ export default {
 
     'gamification-fitur-news': 'Berita',
     'gamification-fitur-user_post': 'Kegiatan RW',
-    'gamification-event-view_news_detail': 'Melihat berita',
-    'gamification-event-post_user_post': 'Membuat kegiatan RW',
+    'gamification-event-news_view_detail': 'Melihat berita',
+    'gamification-event-user_post_create': 'Membuat kegiatan RW',
 
     'login': 'Masuk',
     'login-forgot-password': 'Lupa kata sandi? Hubungi',

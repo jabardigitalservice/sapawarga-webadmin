@@ -9,7 +9,12 @@
           <detail-data :table-content-data="tableDataNews" />
           <detail-data :table-content-data="tableImageAttachment" :input-image="image || imageNone" />
           <detail-data :table-content-data="tableDataDescription" />
-
+        </el-card>
+        <el-card>
+          <div slot="header" class="clearfix">
+            <span>{{ $t('label.list-participant') }}</span>
+          </div>
+          <user-participant :list-participant="tableData"/>
         </el-card>
       </el-col>
     </el-row>
@@ -20,10 +25,12 @@
 import { fetchRecord } from '@/api/gamification'
 import DetailData from '@/components/DetailData'
 import moment from 'moment'
+import UserParticipant from './components/_listUserParticipant'
 
 export default {
   components: {
-    DetailData
+    DetailData,
+    UserParticipant
   },
   data() {
     return {
@@ -32,7 +39,28 @@ export default {
       tableDataDescription: [],
       image: null,
       imageNone: require('@/assets/none.png'),
-      news: null
+      news: null,
+      tableData: [{
+        date: '2016-05-03',
+        name: 'Tom',
+        task: 8,
+        address: 'No. 189, Grove St, Los Angeles'
+      }, {
+        date: '2016-05-02',
+        name: 'Tom',
+        task: 8,
+        address: 'No. 189, Grove St, Los Angeles'
+      }, {
+        date: '2016-05-04',
+        name: 'Tom',
+        task: 8,
+        address: 'No. 189, Grove St, Los Angeles'
+      }, {
+        date: '2016-05-01',
+        name: 'Tom',
+        task: 8,
+        address: 'No. 189, Grove St, Los Angeles'
+      }]
     }
   },
   mounted() {

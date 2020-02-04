@@ -34,9 +34,14 @@ export function update(id, data) {
 export function deactivate(id) {
   return request({
     url: `/gamifications/${id}`,
-    method: 'put',
-    data: {
-      status: 0
-    }
+    method: 'delete'
+  })
+}
+
+export function fetchListParticipant(query) {
+  return request({
+    url: '/gamifications/participant',
+    method: 'get',
+    params: query
   })
 }
