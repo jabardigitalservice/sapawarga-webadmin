@@ -103,6 +103,25 @@ export const constantRoutes = [
     active: false,
     hidden: true
   },
+  // {
+  //   path: '/info-penting/:id',
+  //   // component: Public,
+  //   active: false,
+  //   children: [
+  //     {
+  //       name: 'Info-penting',
+  //       path: '',
+  //       component: () => import('@/views/newsImportant/web'),
+  //       hidden: true
+  //     }
+  //   ]
+  // },
+  {
+    path: '/info-penting/:id',
+    active: false,
+    component: () => import('@/views/newsImportant/web'),
+    hidden: true
+  },
   {
     path: '/profile',
     component: Layout,
