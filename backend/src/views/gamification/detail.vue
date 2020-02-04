@@ -14,7 +14,7 @@
           <div slot="header" class="clearfix">
             <span>{{ $t('label.list-participant') }}</span>
           </div>
-          <user-participant :list-participant="listParticipant" :list-query="listQuery" :total="totalListParticipant"/>
+          <user-participant :list-participant="listParticipant" :list-query="listQuery" :total="totalListParticipant" />
         </el-card>
       </el-col>
     </el-row>

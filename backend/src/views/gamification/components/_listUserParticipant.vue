@@ -18,7 +18,11 @@
       <el-table-column
         prop="address"
         :label="$t('label.place')"
-      />
+      >
+        <template slot-scope="{row}">
+          {{ getKedudukan(row.user) }}
+        </template>
+      </el-table-column>
       <el-table-column
         prop="total_user_hit"
         label="Task"
@@ -67,6 +71,13 @@ export default {
       const value = cellValue ? parsingDatetime(cellValue, 'DD MMMM YYYY') : '-'
       return value
     },
+    getKedudukan(user) {
+      const rw = _.get(user, 'rw', 'N/A')
+      const kelurahan = _.get(user, 'kelurahan', 'N/A')
+      const kecamatan = _.get(user, 'kecamatan')
+      const kabkota = _.get(user, 'kabkota')
+      return this.$t('users.users-role-text-staff-rw', [rw, kelurahan, kecamatan, kabkota])
+    }
   }
 }
 </script>
