@@ -12,7 +12,7 @@ const informationMenuRouter = {
   redirect: '/',
   meta: {
     title: 'information',
-    roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel'],
+    roles: ['admin', 'staffProv', 'staffSaberhoax', 'staffKabkota', 'staffKec', 'staffKel'],
     icon: 'news'
   },
   active: false,
