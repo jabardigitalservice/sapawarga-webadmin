@@ -79,6 +79,12 @@ export const constantRoutes = [
     hidden: true
   },
   {
+    path: '/info-penting',
+    active: false,
+    component: () => import('@/views/public/index'),
+    hidden: true
+  },
+  {
     path: '/auth-redirect',
     component: () => import('@/views/login/authredirect'),
     active: false,
@@ -102,26 +108,7 @@ export const constantRoutes = [
     component: () => import('@/views/errorPage/404'),
     active: false,
     hidden: true
-  },
-  // {
-  //   path: '/info-penting/:id',
-  //   // component: Public,
-  //   active: false,
-  //   children: [
-  //     {
-  //       name: 'Info-penting',
-  //       path: '',
-  //       component: () => import('@/views/newsImportant/web'),
-  //       hidden: true
-  //     }
-  //   ]
-  // },
-  {
-    path: '/info-penting/:id',
-    active: false,
-    component: () => import('@/views/newsImportant/web'),
-    hidden: true
-  },
+  },  
   {
     path: '/profile',
     component: Layout,
