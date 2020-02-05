@@ -9,7 +9,7 @@
         <div class="text">
           <h2>{{ data.title }}</h2>
           <h5>{{ parsingDatetime(data.created_at, 'D MMMM YYYY HH:mm') }}</h5>
-          <div v-html="data.content" />
+          <div id="content" v-html="data.content" />
           <div class="source_url">
             <p class="title">{{ $t('label.source') }}:</p>
             <a class="url" target="_blank" :href="data.source_url">
@@ -39,11 +39,13 @@ export default {
       data: [],
       imageNone: require('@/assets/placeholder.png'),
       target: '_self',
-      length: null
+			length: null,
+			id: null
     }
   },
   mounted() {
-    this.id = this.$route.params && this.$route.params.id
+		this.id = this.$route.query && this.$route.query.id
+		console.log(this.id)
     this.getData()
   },
   methods: {
