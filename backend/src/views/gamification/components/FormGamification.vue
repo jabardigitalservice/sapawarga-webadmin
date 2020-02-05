@@ -10,20 +10,36 @@
               type="text"
               name="title"
               :placeholder="$t('label.gamification-title-mision')"
+              :disabled="isEdit"
             />
           </el-form-item>
 
           <el-form-item :label="$t('label.gamification-title-fitur')" prop="object_type">
-            <el-select v-model="gamification.object_type" :placeholder="$t('label.gamification-title-fitur')" name="fitur">
+            <el-select
+              v-model="gamification.object_type"
+              :placeholder="$t('label.gamification-title-fitur')"
+              name="fitur"
+              :disabled="isEdit"
+            >
               <el-option :label="$t('route.news-manage')" value="news" />
               <el-option :label="$t('route.post-manage')" value="user_post" />
             </el-select>
           </el-form-item>
 
           <el-form-item :label="$t('label.gamification-action-fitur')" prop="object_event">
-            <el-select v-model="gamification.object_event" :placeholder="$t('label.gamification-action-fitur')" name="action_fitur">
-              <el-option :label="$t('label.views-news')" value="news_view_detail" />
-              <el-option :label="$t('label.post-activities-rw')" value="user_post_create" />
+            <el-select
+              v-model="gamification.object_event"
+              :placeholder="$t('label.gamification-action-fitur')"
+              name="action_fitur"
+              value-key="gamification.object_event"
+              :disabled="isEdit"
+            >
+              <el-option
+                v-for="item in actionFeatureList"
+                :key="item.value"
+                :label="$t(item.label)"
+                :value="item.value"
+              />
             </el-select>
           </el-form-item>
 
@@ -62,6 +78,7 @@
               :max="100"
               name="total_hit"
               :placeholder="$t('label.gamification-amount-hit')"
+              :disabled="isEdit"
             />
           </el-form-item>
 
@@ -72,6 +89,7 @@
               :autosize="{ minRows: 2, maxRows: 4}"
               name="description"
               :placeholder="$t('label.gamification-description-mision')"
+              :disabled="isEdit"
             />
           </el-form-item>
 
@@ -83,6 +101,7 @@
                   type="text"
                   name="title_badge"
                   :placeholder="$t('label.gamification-name-reward')"
+                  :disabled="isEdit"
                 />
               </el-form-item>
             </el-col>
@@ -290,13 +309,46 @@ export default {
       },
       dateEndDateOptions: {
         disabledDate: this.disabledEndDate
-      }
+      },
+      actionFeatureList: []
     }
   },
   computed: {
     ...mapGetters([
       'device'
     ])
+  },
+  watch: {
+    'gamification.object_type': {
+      handler: function(value) {
+        if (value === 'news') {
+          this.actionFeatureList.splice(0, 1)
+          this.actionFeatureList.push({
+            label: 'label.views-news',
+            value: 'news_view_detail'
+          })
+          this.gamification.object_event = this.actionFeatureList[0]
+        } else if (value === 'user_post') {
+          this.actionFeatureList.splice(0, 1)
+          this.actionFeatureList.push({
+            label: 'label.post-activities-rw',
+            value: 'user_post_create'
+          })
+          this.gamification.object_event = this.actionFeatureList[0].value
+        }
+      },
+      immediate: true
+    },
+    'gamification.object_event': {
+      handler: function(object) {
+        if ((object !== null) && (object.value !== undefined)) {
+          this.gamification.object_event = object.value
+        } else {
+          this.gamification.object_event = object
+        }
+      },
+      immediate: true
+    }
   },
   async created() {
     if (this.isEdit) {
@@ -361,10 +413,10 @@ export default {
       } catch (e) {
         const data = e.response.data.data
         for (const x in data) {
-          if (String(x) === 'image_badge_path_url') {
+          if (data[x].field === 'image_badge_path_url') {
             this.$message.error(this.$t('errors.image-not-null'))
           } else {
-            this.$message.error(data[String(x)][0])
+            this.$message.error(data[x].message)
           }
         }
       } finally {
