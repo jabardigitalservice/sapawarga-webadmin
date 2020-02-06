@@ -1,41 +1,30 @@
 <template>
   <el-card class="box-card" style="margin-bottom: 10px" :xs="24">
     <el-form>
-      <el-row :gutter="10">
-        <el-col :xs="{span:12, tag:'mb-10'}" :sm="8" :md="8">
+      <el-row :gutter="20">
+        <el-col :xs="24" :sm="12" :lg="12">
           <el-form-item style="margin-bottom: 0">
             <el-input v-model="listQuery.title" placeholder="Judul" />
           </el-form-item>
         </el-col>
-        <el-col :xs="{span: 12, tag:'mb-10'}" :span="12">
+        <el-col :xs="24" :sm="24" :md="12">
           <el-form-item class="waktu-publikasi">
-            <el-row :gutter="12" type="flex">
-              <el-col :xs="12" :sm="8" :lg="12">
-                <el-date-picker
-                  v-model="listQuery.start_date"
-                  class="last-access-start"
-                  type="datetime"
-                  format="yyyy-MM-dd"
-                  value-format="yyyy-MM-dd"
-                  :placeholder="$t('label.start-date')"
-                />
-              </el-col>
-              <el-col :xs="12" :sm="8" :lg="12">
-                <el-date-picker
-                  v-model="listQuery.end_date"
-                  class="last-access-start"
-                  type="datetime"
-                  format="yyyy-MM-dd"
-                  value-format="yyyy-MM-dd"
-                  :placeholder="$t('label.end-date')"
-                />
-              </el-col>
-            </el-row>
+            <el-date-picker
+              v-model="listQuery.daterange"
+              type="daterange"
+              value-format="yyyy-MM-dd"
+              :start-placeholder="$t('label.start-date')"
+              :end-placeholder="$t('label.end-date')"
+              align="center"
+            />
           </el-form-item>
         </el-col>
-        <el-col :xs="4" :sm="4">
-          <el-button type="primary" size="small" @click="submitSearch">{{ $t('crud.search') }}</el-button>
-          <el-button type="primary" size="small" @click="resetFilter">{{ $t('crud.reset') }}</el-button>
+      </el-row>
+      <el-row>
+        <el-col>
+          <el-button type="primary" size="small" style="float: right; margin: 2px;" @click="resetFilter">{{ $t('crud.reset') }}</el-button>
+
+          <el-button type="primary" size="small" style="float: right; margin: 2px;" @click="submitSearch">{{ $t('crud.search') }}</el-button>
         </el-col>
       </el-row>
     </el-form>
@@ -58,7 +47,8 @@ export default {
   },
   data() {
     return {
-      options: []
+      options: [],
+      value2: ''
     }
   },
   created() {
@@ -87,5 +77,10 @@ export default {
 <style lang="scss" scoped>
 .mt-10 {
   margin-top: 10px;
+}
+.waktu-publikasi {
+  .el-date-editor, .el-range-editor {
+    width: 100% !important;
+  }
 }
 </style>
