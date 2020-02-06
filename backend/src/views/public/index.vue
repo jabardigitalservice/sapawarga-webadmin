@@ -33,6 +33,7 @@
 <script>
 import { fetchRecord } from '@/api/newsImportant'
 import { parsingDatetime } from '@/utils/datetimeToString'
+const axios = require('axios')
 export default {
   data() {
     return {
@@ -40,13 +41,13 @@ export default {
       imageNone: require('@/assets/placeholder.png'),
       target: '_self',
 			length: null,
-			id: null
+      id: null,
+      url: process.env.VUE_APP_BASE_API
     }
   },
   mounted() {
 		this.id = this.$route.query && this.$route.query.id
-		console.log(this.id)
-    this.getData()
+    this.getData(this.id)
   },
   methods: {
     parsingDatetime,
@@ -58,11 +59,15 @@ export default {
         this.target = '_self'
       }
     },
-    getData() {
-      fetchRecord(this.id).then(response => {
-        this.data = response.data
-        this.length = this.data.attachments.length
-      })
+    async getData(id) {
+      try {
+        const response = await axios.get(this.url + `news-important/${id}`)
+        this.data = response.data.data
+        console.log(this.url)
+
+      } catch(error) {
+        console.log(error)
+      }
     }
   }
 }
