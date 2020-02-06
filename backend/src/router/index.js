@@ -108,7 +108,7 @@ export const constantRoutes = [
     component: () => import('@/views/errorPage/404'),
     active: false,
     hidden: true
-  },  
+  },
   {
     path: '/profile',
     component: Layout,
