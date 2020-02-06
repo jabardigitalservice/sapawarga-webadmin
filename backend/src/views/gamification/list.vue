@@ -95,6 +95,7 @@ export default {
       listQuery: {
         start_date: '',
         end_date: '',
+        daterange: '',
         title: null,
         type: null,
         status: 10,
@@ -117,6 +118,10 @@ export default {
     parsingDatetime,
     async getList() {
       this.listLoading = true
+      if (this.listQuery.daterange) {
+        this.listQuery.start_date = this.listQuery.daterange[0]
+        this.listQuery.end_date = this.listQuery.daterange[1]
+      }
       const response = await fetchList(this.listQuery)
       this.list = await response.data.items
       this.total = await response.data._meta.totalCount
