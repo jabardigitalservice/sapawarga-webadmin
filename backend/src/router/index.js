@@ -79,6 +79,12 @@ export const constantRoutes = [
     hidden: true
   },
   {
+    path: '/info-penting',
+    active: false,
+    component: () => import('@/views/public/index'),
+    hidden: true
+  },
+  {
     path: '/auth-redirect',
     component: () => import('@/views/login/authredirect'),
     active: false,

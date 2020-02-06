@@ -153,7 +153,6 @@ export default {
     },
 
     onClickChat(phone) {
-      console.log(phone)
       const url_link = 'https://wa.me/' + phone.replace(/^0+/, '62')
       window.open(url_link, '_blank')
     }
