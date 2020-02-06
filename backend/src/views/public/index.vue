@@ -63,8 +63,6 @@ export default {
       try {
         const response = await axios.get(this.url + `news-important/${id}`)
         this.data = response.data.data
-        console.log(this.url)
-
       } catch(error) {
         console.log(error)
       }
