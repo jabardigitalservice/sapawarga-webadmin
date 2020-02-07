@@ -3,12 +3,12 @@ import pollingRouter from './ListMenu/polling'
 import surveyRouter from './ListMenu/survey'
 
 const notifikasiuserMenuRouter = {
-  name: 'pollingsurvey',
+  name: 'questionnaire',
   path: 'pollingsurvey',
   component: Layout,
   redirect: '/',
   meta: {
-    title: 'pollingsurvey',
+    title: 'questionnaire',
     roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel'],
     icon: 'survey'
   },
