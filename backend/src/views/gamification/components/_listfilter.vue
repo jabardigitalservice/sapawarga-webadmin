@@ -2,12 +2,12 @@
   <el-card class="box-card" style="margin-bottom: 10px" :xs="24">
     <el-form>
       <el-row :gutter="20">
-        <el-col :xs="24" :sm="12" :lg="12">
+        <el-col :xs="24" :sm="24" :lg="10">
           <el-form-item style="margin-bottom: 0">
             <el-input v-model="listQuery.title" placeholder="Judul" />
           </el-form-item>
         </el-col>
-        <el-col :xs="24" :sm="24" :md="12">
+        <el-col :xs="24" :sm="24" :md="10">
           <el-form-item class="waktu-publikasi">
             <el-date-picker
               v-model="listQuery.daterange"
@@ -19,12 +19,9 @@
             />
           </el-form-item>
         </el-col>
-      </el-row>
-      <el-row>
-        <el-col>
-          <el-button type="primary" size="small" style="float: right; margin: 2px;" @click="resetFilter">{{ $t('crud.reset') }}</el-button>
-
-          <el-button type="primary" size="small" style="float: right; margin: 2px;" @click="submitSearch">{{ $t('crud.search') }}</el-button>
+        <el-col :xs="24" :sm="24" :md="4">
+          <el-button type="primary" size="small" @click="resetFilter">{{ $t('crud.reset') }}</el-button>
+          <el-button type="primary" size="small" @click="submitSearch">{{ $t('crud.search') }}</el-button>
         </el-col>
       </el-row>
     </el-form>
