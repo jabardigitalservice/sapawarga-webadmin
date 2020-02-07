@@ -123,7 +123,7 @@ export default {
 
     'information': 'Informasi',
     'aspiration': 'Aspirasi',
-    'pollingsurvey': 'Kuesioner',
+    'questionnaire': 'Kuesioner',
     'notification-user': 'Notifikasi Pengguna',
     'configuration-menu': 'Konfigurasi'
   },

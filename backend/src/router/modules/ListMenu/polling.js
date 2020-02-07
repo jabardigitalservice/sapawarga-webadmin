@@ -1,6 +1,6 @@
 const pollingRouter = [
   {
-    name: 'pollingsurvey-menu',
+    name: 'questionnaire-menu',
     path: '/polling/index',
     component: () => import('@/views/polling/list'),
     meta: {

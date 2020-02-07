@@ -1,6 +1,6 @@
 const surveyRouter = [
   {
-    name: 'pollingsurvey-menu',
+    name: 'questionnaire-menu',
     path: '/survey/index',
     component: () => import('@/views/survey/list'),
     meta: {
