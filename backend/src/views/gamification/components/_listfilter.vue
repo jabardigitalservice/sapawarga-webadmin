@@ -20,8 +20,8 @@
           </el-form-item>
         </el-col>
         <el-col :xs="24" :sm="24" :md="4">
-          <el-button type="primary" size="small" @click="resetFilter">{{ $t('crud.reset') }}</el-button>
           <el-button type="primary" size="small" @click="submitSearch">{{ $t('crud.search') }}</el-button>
+          <el-button type="primary" size="small" @click="resetFilter">{{ $t('crud.reset') }}</el-button>
         </el-col>
       </el-row>
     </el-form>
