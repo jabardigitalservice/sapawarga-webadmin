@@ -66,6 +66,8 @@ import { fetchList } from '@/api/broadcast'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 import ListFilter from './_listfilter'
 import checkPermission from '@/utils/permission'
+import { rolesWidget } from '@/utils/constantVariable'
+
 export default {
 
   components: { Pagination, ListFilter },
@@ -90,7 +92,8 @@ export default {
     return {
       list: null,
       total: 0,
-      roles: checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']),
+      rolesWidget,
+      roles: checkPermission(rolesWidget.staffKelOPD),
       listLoading: true,
       status: {
         DRAFT: 0,

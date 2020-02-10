@@ -9,7 +9,7 @@ const notifikasiuserMenuRouter = {
   redirect: '/',
   meta: {
     title: 'questionnaire',
-    roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel'],
+    roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel', 'staffOPD'],
     icon: 'survey'
   },
   active: false,
