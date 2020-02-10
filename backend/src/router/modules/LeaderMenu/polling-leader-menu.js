@@ -7,7 +7,7 @@ const pollingLeaderMenuRouter = {
   redirect: '/polling/index',
   meta: {
     title: 'polling-manage',
-    roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel', 'pimpinan'],
+    roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel', 'pimpinan', 'staffOPD'],
     icon: 'polling'
   },
   active: false,
@@ -18,7 +18,7 @@ const pollingLeaderMenuRouter = {
       component: () => import('@/views/polling/list'),
       meta: {
         title: 'polling-list',
-        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel', 'pimpinan']
+        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel', 'pimpinan', 'staffOPD']
       }
     },
     {
@@ -27,7 +27,7 @@ const pollingLeaderMenuRouter = {
       component: () => import('@/views/polling/create'),
       meta: {
         title: 'polling-create',
-        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel', 'pimpinan']
+        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel', 'pimpinan', 'staffOPD']
       }
     },
     {
@@ -37,7 +37,7 @@ const pollingLeaderMenuRouter = {
       hidden: true,
       meta: {
         title: 'polling-edit',
-        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel', 'pimpinan']
+        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel', 'pimpinan', 'staffOPD']
       }
     },
     {
@@ -47,7 +47,7 @@ const pollingLeaderMenuRouter = {
       hidden: true,
       meta: {
         title: 'polling-detail',
-        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel', 'pimpinan']
+        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel', 'pimpinan', 'staffOPD']
       }
     }
   ]

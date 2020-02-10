@@ -5,7 +5,7 @@ const pollingRouter = [
     component: () => import('@/views/polling/list'),
     meta: {
       title: 'polling-manage',
-      roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel', 'pimpinan']
+      roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel', 'pimpinan', 'staffOPD']
     }
   },
   {
@@ -15,7 +15,7 @@ const pollingRouter = [
     hidden: true,
     meta: {
       title: 'polling-create',
-      roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel', 'pimpinan']
+      roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel', 'pimpinan', 'staffOPD']
     }
   },
   {
@@ -25,7 +25,7 @@ const pollingRouter = [
     hidden: true,
     meta: {
       title: 'polling-edit',
-      roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel', 'pimpinan']
+      roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel', 'pimpinan', 'staffOPD']
     }
   },
   {
@@ -35,7 +35,7 @@ const pollingRouter = [
     hidden: true,
     meta: {
       title: 'polling-detail',
-      roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel', 'pimpinan']
+      roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel', 'pimpinan', 'staffOPD']
     }
   }
 ]
