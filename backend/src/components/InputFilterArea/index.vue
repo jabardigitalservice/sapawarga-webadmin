@@ -62,6 +62,7 @@
 
 <script>
 import { getKabkotaList, getKecamatanList, getKelurahanList } from '@/api/areas'
+import { RolesUser } from '@/utils/constantVariable'
 import checkPermission from '@/utils/permission'
 
 export default {
@@ -95,6 +96,7 @@ export default {
 
   data() {
     return {
+      RolesUser,
       kabkota_selected: null,
       kecamatan_selected: null,
       kelurahan_selected: null,
@@ -107,7 +109,7 @@ export default {
   computed: {
     enableKabkota() {
       if (this.enableRolePolicy === true) {
-        return checkPermission(['admin', 'staffProv'])
+        return checkPermission([this.RolesUser.ADMIN, this.RolesUser.STAFFPROV, this.RolesUser.STAFFOPD])
       }
 
       return false
@@ -115,7 +117,7 @@ export default {
 
     enableKecamatan() {
       if (this.enableRolePolicy === true) {
-        return checkPermission(['admin', 'staffProv', 'staffKabkota'])
+        return checkPermission([this.RolesUser.ADMIN, this.RolesUser.STAFFPROV, this.RolesUser.STAFFOPD, this.RolesUser.STAFFKABKOTA])
       }
 
       return false
@@ -123,7 +125,7 @@ export default {
 
     enableKelurahan() {
       if (this.enableRolePolicy === true) {
-        return checkPermission(['admin', 'staffProv', 'staffKabkota', 'staffKec'])
+        return checkPermission([this.RolesUser.ADMIN, this.RolesUser.STAFFPROV, this.RolesUser.STAFFOPD, this.RolesUser.STAFFKABKOTA, this.RolesUser.STAFFKEC])
       }
 
       return false
