@@ -53,7 +53,7 @@
         style="width:100%"
         @click.native.prevent="handleLogin"
       >{{ $t('label.login') }}</el-button>
-      <h4>{{ $t('label.login-forgot-password') }} <span class="contact-admin" @click="onClickChat(phone)">{{ $t('label.login-forgot-password-number') }}</span></h4>
+      <h4>{{ $t('label.login-forgot-password') }} <span class="contact-admin" @click="onClickChat(phone)">{{ phone }}</span></h4>
     </el-form>
   </div>
 </template>
