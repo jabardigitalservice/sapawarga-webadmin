@@ -87,7 +87,7 @@ export default {
       total: 0,
       listLoading: true,
       listQuery: {
-        title: null,
+        search: null,
         category_id: null,
         status: null,
         page: 1,
