@@ -722,7 +722,6 @@ export default {
 
     'login': 'Masuk',
     'login-forgot-password': 'Lupa kata sandi? Hubungi',
-    'login-forgot-password-number': '081212124023',
 
     'banner-title': 'Judul Banner',
     'banner-external': 'Eksternal',
