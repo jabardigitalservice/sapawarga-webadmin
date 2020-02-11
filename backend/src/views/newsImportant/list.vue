@@ -32,6 +32,8 @@
           </template>
         </el-table-column>
 
+        <el-table-column prop="likes_count" sortable="custom" class-name="status-col" :label="$t('label.newsImportant-viewer')" align="center" min-width="100" />
+
         <el-table-column :label="$t('label.actions')" align="center" width="225">
           <template slot-scope="scope">
             <router-link :to="'/news-important/detail/' + scope.row.id">
