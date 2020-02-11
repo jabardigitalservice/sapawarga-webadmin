@@ -47,9 +47,11 @@ export default {
     validUrl,
     getDetail(id) {
       fetchRecord(id).then(response => {
-        const { title, category, source_url, content, image_path_url, attachments, kabkota } = response.data
+        const { title, category, source_url, content, image_path_url, attachments, kabkota, likes_count } = response.data
         this.image = response.data.image_path_url
         this.check = response.data.attachments
+
+        console.log(response.data)
 
         function logArrayAnswers(value, index, array) {
           return value
@@ -75,6 +77,14 @@ export default {
           {
             title: this.$t('label.newsImportant-description'),
             content: content
+          },
+          {
+            title: this.$t('label.newsImportant-likes-count'),
+            content: likes_count
+          },
+          {
+            title: this.$t('label.newsImportant-viewer'),
+            content: 100
           }
         ]
 
