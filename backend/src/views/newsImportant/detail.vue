@@ -51,8 +51,6 @@ export default {
         this.image = response.data.image_path_url
         this.check = response.data.attachments
 
-        console.log(response.data)
-
         function logArrayAnswers(value, index, array) {
           return value
         }
