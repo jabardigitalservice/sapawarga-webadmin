@@ -65,14 +65,12 @@
             <el-input v-model="news.source_url" type="text" :placeholder="$t('news.news-url-sample')" />
           </el-form-item>
 
-          <el-form-item label="Kirim Notifikasi" prop="status">
-            <el-radio-group v-model="news.is_push_notification" :fill="statusColor" name="status">
+          <el-form-item label="Kirim Notifikasi">
+            <el-radio-group v-model="news.is_push_notification" fill="blue" name="status">
               <el-radio-button label="true">Ya</el-radio-button>
               <el-radio-button label="false">Tidak</el-radio-button>
             </el-radio-group>
           </el-form-item>
-
-          {{ news.is_push_notification }}
 
           <el-form-item :label="$t('label.news-content')" prop="content">
             <div>
