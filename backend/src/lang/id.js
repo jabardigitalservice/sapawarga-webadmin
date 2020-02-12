@@ -774,7 +774,7 @@ export default {
     'news-date-required': 'Tanggal harus diisi',
     'news-target-required': 'Target harus diisi',
     'news-url-required': 'URL Berita harus diisi',
-    'news-soure-required': 'Sumber Berita harus diisi',
+    'news-source-required': 'Sumber Berita harus diisi',
     'news-status-required': 'Status Berita harus diisi',
     'news-content-required': 'Konten Berita harus diisi',
     'news-content-invalid': 'Konten Berita yang diisi tidak valid'
