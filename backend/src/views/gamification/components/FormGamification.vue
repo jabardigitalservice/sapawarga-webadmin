@@ -10,7 +10,6 @@
               type="text"
               name="title"
               :placeholder="$t('label.gamification-title-mision')"
-              :disabled="isEdit"
             />
           </el-form-item>
 
@@ -54,6 +53,7 @@
                   value-format="yyyy-MM-dd"
                   :picker-options="dateStartDateOptions"
                   :placeholder="$t('label.start-date')"
+                  :disabled="isEdit"
                 />
               </el-form-item>
             </el-col>
@@ -89,7 +89,6 @@
               :autosize="{ minRows: 2, maxRows: 4}"
               name="description"
               :placeholder="$t('label.gamification-description-mision')"
-              :disabled="isEdit"
             />
           </el-form-item>
 
@@ -101,7 +100,6 @@
                   type="text"
                   name="title_badge"
                   :placeholder="$t('label.gamification-name-reward')"
-                  :disabled="isEdit"
                 />
               </el-form-item>
             </el-col>
