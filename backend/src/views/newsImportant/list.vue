@@ -32,6 +32,8 @@
           </template>
         </el-table-column>
 
+        <el-table-column prop="total_viewers" sortable="custom" class-name="status-col" :label="$t('label.newsImportant-viewer')" align="center" min-width="100" />
+
         <el-table-column :label="$t('label.actions')" align="center" width="225">
           <template slot-scope="scope">
             <router-link :to="'/news-important/detail/' + scope.row.id">
@@ -63,11 +65,11 @@
 </template>
 
 <script>
-import { fetchList, deleteData, deactivate, activate } from '@/api/newsImportant'
 import { mapGetters } from 'vuex'
 import ListFilter from './_listfilter'
 import Pagination from '@/components/Pagination'
 import { parsingDatetime } from '@/utils/datetimeToString'
+import { fetchList, deleteData, deactivate, activate } from '@/api/newsImportant'
 
 export default {
   components: { Pagination, ListFilter },

@@ -611,20 +611,22 @@ export default {
     'link': 'Tautan',
 
     'add-news-counter-hoax': 'Tambah Berita Counter Hoax',
+
     'newsImportant-description': 'Deskripsi',
-    'newsImportant-date-created': 'Tanggal Dibuat',
-    'newsImportant-url': 'https://jabarprov.go.id',
+    'newsImportant-data': 'Data Info Penting',
     'newsImportant-title': 'Judul Info Penting',
     'newsImportant-list': 'Daftar Info Penting',
+    'newsImportant-viewer': 'Jumlah Pengunjung',
+    'newsImportant-likes-count': 'Jumlah Disukai',
+    'newsImportant-detail': 'Detail Info Penting',
+    'newsImportant-date-created': 'Tanggal Dibuat',
+    'newsImportant-url': 'https://jabarprov.go.id',
     'newsImportant-date-updated': 'Tanggal Publikasi',
     'newsImportant-tooltip-edit': 'Edit Info Penting',
     'newsImportant-tooltip-delete': 'Hapus Info Penting',
     'newsImportant-tooltip-detail': 'Detail Info Penting',
     'newsImportant-tooltip-active': 'Aktifkan Info Penting',
     'newsImportant-tooltip-nonactive': 'Nonaktifkan Info Penting',
-
-    'newsImportant-detail': 'Detail Info Penting',
-    'newsImportant-data': 'Data Info Penting',
 
     'aspiration-tooltip-publish': 'Publikasikan Usulan',
     'aspiration-tooltip-unpublish': 'Batalkan Usulan',
