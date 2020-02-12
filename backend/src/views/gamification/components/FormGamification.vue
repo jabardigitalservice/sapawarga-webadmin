@@ -416,7 +416,7 @@ export default {
           if (data[x].field === 'image_badge_path_url') {
             this.$message.error(this.$t('errors.image-not-null'))
           } else {
-            this.$message.error(data[x].message)
+            this.$message.error(data[x][0])
           }
         }
       } finally {
