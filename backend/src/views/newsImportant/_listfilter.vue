@@ -4,7 +4,7 @@
       <el-row :gutter="10">
         <el-col :xs="{span:24, tag:'mb-10'}" :sm="10" :md="10">
           <el-form-item style="margin-bottom: 0">
-            <el-input v-model="listQuery.title" :placeholder="$t('label.newsImportant-title')" />
+            <el-input v-model="listQuery.search" :placeholder="$t('label.newsImportant-title')" />
           </el-form-item>
         </el-col>
         <el-col :xs="{span:12, tag:'mb-10'}" :sm="5" :md="5">
