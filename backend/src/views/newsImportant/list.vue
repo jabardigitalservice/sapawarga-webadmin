@@ -65,11 +65,11 @@
 </template>
 
 <script>
-import { fetchList, deleteData, deactivate, activate } from '@/api/newsImportant'
 import { mapGetters } from 'vuex'
 import ListFilter from './_listfilter'
 import Pagination from '@/components/Pagination'
 import { parsingDatetime } from '@/utils/datetimeToString'
+import { fetchList, deleteData, deactivate, activate } from '@/api/newsImportant'
 
 export default {
   components: { Pagination, ListFilter },
