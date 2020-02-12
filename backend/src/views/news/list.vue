@@ -87,10 +87,10 @@
               <el-tooltip :content="$t('news.news-delete')" placement="top">
                 <el-button type="danger" icon="el-icon-delete" size="small" :disabled="scope.row.status === 10 || scope.row.created_by !== user_id" @click="deleteNews(scope.row.id)" />
               </el-tooltip>
-              <el-tooltip :content="$t('news-news-inactive')" placement="top">
+              <el-tooltip :content="$t('news.news-inactivate')" placement="top">
                 <el-button v-if="scope.row.status === 10" type="danger" icon="el-icon-circle-close" size="small" :disabled="scope.row.created_by !== user_id" @click="deactivateRecord(scope.row.id)" />
               </el-tooltip>
-              <el-tooltip :content="$t('news-news-active')" placement="top">
+              <el-tooltip :content="$t('news.news-activate')" placement="top">
                 <el-button v-if="scope.row.status === 0" type="success" icon="el-icon-circle-check" size="small" :disabled="scope.row.created_by !== user_id" @click="activateRecord(scope.row.id)" />
               </el-tooltip>
             </template>
