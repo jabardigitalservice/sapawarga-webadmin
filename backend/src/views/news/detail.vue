@@ -35,44 +35,40 @@ export default {
   methods: {
     getDetail() {
       newsApi.fetchRecord(this.id).then(response => {
-        const { status_label, title, channel, source_date, featured, source_url, content, total_viewers, kabkota } = response.data
+        const { status_label, title, channel, source_date, source_url, content, total_viewers, kabkota } = response.data
         this.news = response.data
 
         this.tableDataNews = [
           {
-            title: 'Judul Berita',
+            title: this.$t('news.news-title'),
             content: title || 'Error'
           },
           {
-            title: 'Sumber',
+            title: this.$t('label.source'),
             content: (channel ? channel.name : 'Error')
           },
           {
-            title: 'Target Area Berita',
-            content: kabkota ? kabkota.name : 'JAWA BARAT'
+            title: this.$t('news.news-target'),
+            content: kabkota ? kabkota.name : this.$t('label.area-jabar')
           },
           {
-            title: 'Tanggal Berita',
+            title: this.$t('news.news-date'),
             content: (source_date ? moment(source_date).format('D MMMM YYYY') : 'Error')
           },
           {
-            title: 'Status',
+            title: this.$t('label.status'),
             content: status_label || '-'
           },
           {
-            title: 'Prioritas Berita',
-            content: (featured === 1 ? 'Halaman Utama' : 'List')
-          },
-          {
-            title: 'URL Berita',
+            title: this.$t('news.news-url'),
             content: source_url || 'Error'
           },
           {
-            title: 'Konten Berita',
+            title: this.$t('label.news-content'),
             content: this.strip(content) || 'Error'
           },
           {
-            title: 'Jumlah Pengunjung',
+            title: this.$t('news.news-viewer'),
             content: (total_viewers) ? total_viewers + ' Pengunjung' : '-'
           }
         ]
