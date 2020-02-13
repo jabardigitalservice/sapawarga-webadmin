@@ -695,7 +695,7 @@ export default {
 
     'views-news': 'Melihat Berita',
     'post-activities-rw': 'Posting Rw',
-    'views-news-important': 'Melihat Informasi Penting',
+    'views-news-important': 'Melihat Info Penting',
 
     'gamification-detail': 'Detail Misi',
     'list-participant': 'Daftar Partisipan',
