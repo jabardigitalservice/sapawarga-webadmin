@@ -22,6 +22,7 @@
             >
               <el-option :label="$t('route.news-manage')" value="news" />
               <el-option :label="$t('route.post-manage')" value="user_post" />
+              <el-option :label="$t('route.news-important-manage')" value="news_important" />
             </el-select>
           </el-form-item>
 
@@ -331,6 +332,13 @@ export default {
           this.actionFeatureList.push({
             label: 'label.post-activities-rw',
             value: 'user_post_create'
+          })
+          this.gamification.object_event = this.actionFeatureList[0].value
+        } else if (value === 'news_important') {
+          this.actionFeatureList.splice(0, 1)
+          this.actionFeatureList.push({
+            label: 'label.views-news-important',
+            value: 'news_important_view_detail'
           })
           this.gamification.object_event = this.actionFeatureList[0].value
         }

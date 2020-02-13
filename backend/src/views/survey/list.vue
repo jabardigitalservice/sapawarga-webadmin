@@ -79,7 +79,7 @@ export default {
       total: 0,
       listLoading: true,
       RolesUser,
-      roles: checkPermission([RolesUser.ADMIN, RolesUser.STAFFPROV, RolesUser.LEADER, RolesUser.STAFFOPD]),
+      roles: checkPermission([RolesUser.ADMIN, RolesUser.STAFFPROV, RolesUser.LEADER, RolesUser.STAFFOPD, RolesUser.STAFFKABKOTA]),
       listQuery: {
         title: null,
         status: null,
