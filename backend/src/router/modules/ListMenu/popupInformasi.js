@@ -30,8 +30,8 @@ const popupInformasiRouter = [
     }
   },
   {
-    name: '/popup-informasi/popup-informasi-detail',
-    path: 'detail/:id',
+    name: 'popup-informasi-detail',
+    path: '/popup-informasi/detail/:id',
     component: () => import('@/views/popupInformasi/detail'),
     hidden: true,
     meta: {

@@ -9,7 +9,7 @@ const informationMenuRouter = {
   name: 'information',
   path: 'information',
   component: Layout,
-  redirect: '/',
+  redirect: 'noredirect',
   meta: {
     title: 'information',
     roles: ['admin', 'staffProv', 'staffSaberhoax', 'staffKabkota', 'staffKec', 'staffKel', 'staffOPD'],
