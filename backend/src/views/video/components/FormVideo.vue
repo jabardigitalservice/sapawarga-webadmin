@@ -3,16 +3,16 @@
     <el-row :gutter="20">
       <el-col :xs="24" :sm="16">
         <el-form ref="video" :model="video" :rules="rules" :status-icon="true" label-width="160px">
-          <el-form-item label="Judul Video" prop="title">
-            <el-input v-model="video.title" type="text" name="title" placeholder="Judul Video, minimal 10 karakter" />
+          <el-form-item :label="$t('label.video-title')" prop="title">
+            <el-input v-model="video.title" type="text" name="title" :placeholder="$t('label.video-title')" />
           </el-form-item>
 
-          <el-form-item label="Kategori" prop="category_id">
+          <el-form-item :label="$t('label.category')" prop="category_id">
             <InputCategory v-model="video.category_id" name="category_id" category-type="video" prop="category" style="width: 100%" />
           </el-form-item>
 
-          <el-form-item label="Target" prop="kabkota_id">
-            <el-select v-model="video.kabkota_id" :disabled="checkStaff" placeholder="Pilih Target">
+          <el-form-item :label="$t('label.target')" prop="kabkota_id">
+            <el-select v-model="video.kabkota_id" :disabled="checkStaff" :placeholder="$t('label.select-target')">
               <el-option
                 v-for="item in area"
                 :key="item.id"
@@ -22,12 +22,12 @@
             </el-select>
           </el-form-item>
 
-          <el-form-item label="Sumber" prop="source">
-            <el-select v-model="video.source" name="source" placeholder="Pilih Sumber" disabled />
+          <el-form-item :label="$t('label.source')" prop="source">
+            <el-select v-model="video.source" name="source" disabled :placeholder="$t('label.select-source')" />
           </el-form-item>
 
-          <el-form-item label="Set Prioritas" prop="seq">
-            <el-select v-model="video.seq" filterable placeholder="Pilih Prioritas">
+          <el-form-item :label="$t('label.video-set-priority')" prop="seq">
+            <el-select v-model="video.seq" filterable :placeholder="$t('label.video-select-priority')">
               <el-option
                 v-for="item in priorityOptions"
                 :key="item.id"
@@ -37,8 +37,15 @@
             </el-select>
           </el-form-item>
 
-          <el-form-item label="URL Video" prop="video_url">
-            <el-input v-model="video.video_url" type="text" name="video_url" placeholder="https://www.youtube.com/watch?v=ejThfEGcN3I" />
+          <el-form-item :label="$t('label.push-notification')">
+            <el-radio-group v-model="video.is_push_notification" name="notification">
+              <el-radio-button label="true">{{ $t('label.true') }}</el-radio-button>
+              <el-radio-button label="false">{{ $t('label.false') }}</el-radio-button>
+            </el-radio-group>
+          </el-form-item>
+
+          <el-form-item :label="$t('label.video-url')" prop="video_url">
+            <el-input v-model="video.video_url" type="text" name="video_url" :placeholder="$t('label.video-url-sample')" />
           </el-form-item>
 
           <el-form-item>
@@ -57,11 +64,13 @@
 </template>
 
 <script>
-import InputCategory from '@/components/InputCategory'
+
 import { containsWhitespace, isValidYoutubeUrl } from '@/utils/validate'
-import { requestArea } from '@/api/staff'
 import { create, update, fetchRecord } from '@/api/video'
+import InputCategory from '@/components/InputCategory'
+import { RolesUser } from '@/utils/constantVariable'
 import checkPermission from '@/utils/permission'
+import { requestArea } from '@/api/staff'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -75,19 +84,20 @@ export default {
   data() {
     const validatorTitleWhitespace = (rule, value, callback) => {
       if (containsWhitespace(value) === true) {
-        callback(new Error('Judul Video yang diisi tidak valid'))
+        callback(new Error(this.$t('label.video-title-invalid')))
       }
       callback()
     }
 
     const validatorUrl = (rule, value, callback) => {
       if (isValidYoutubeUrl(value) === false) {
-        callback(new Error('URL Video tidak valid'))
+        callback(new Error(this.$t('valid.video-url-invalid')))
       }
       callback()
     }
 
     return {
+      RolesUser,
       loading: false,
       video: {
         title: null,
@@ -96,7 +106,8 @@ export default {
         video_url: null,
         kabkota_id: null,
         seq: null,
-        status: null
+        status: null,
+        is_push_notification: true
       },
       checkStaff: false,
       area: null,
@@ -109,26 +120,26 @@ export default {
       ],
       rules: {
         title: [
-          { required: true, message: 'Judul Video harus diisi', trigger: 'blur' },
-          { min: 10, message: 'Judul Video minimal 10 karakter', trigger: 'blur' },
-          { max: 100, message: 'Judul Video maksimal 100 karakter', trigger: 'blur' },
+          { required: true, message: this.$t('label.video-title-required'), trigger: 'blur' },
+          { min: 10, message: this.$t('label.video-title-min'), trigger: 'blur' },
+          { max: 100, message: this.$t('label.video-title-max'), trigger: 'blur' },
           { validator: validatorTitleWhitespace, trigger: 'blur' }
         ],
         category_id: [
-          { required: true, message: 'Kategori harus diisi', trigger: 'change' }
+          { required: true, message: this.$t('message.category'), trigger: 'change' }
         ],
         seq: [
-          { required: true, message: 'Prioritas video harus diisi', trigger: 'change' }
+          { required: true, message: this.$t('label.video-priority-required'), trigger: 'change' }
         ],
         source: [
-          { required: true, message: 'Sumber harus diisi', trigger: 'change' }
+          { required: true, message: this.$t('label.video-source-required'), trigger: 'change' }
         ],
         video_url: [
-          { required: true, message: 'URL Video harus diisi', trigger: 'blur' },
+          { required: true, message: this.$t('label.video-url-required'), trigger: 'blur' },
           { validator: validatorUrl, trigger: 'blur' }
         ],
         kabkota_id: [
-          { required: true, message: 'Target harus diisi', trigger: 'change' }
+          { required: true, message: this.$t('label.video-source-required'), trigger: 'change' }
         ]
       }
     }
@@ -154,7 +165,7 @@ export default {
 
       this.getArea()
 
-      if (checkPermission(['staffKabkota'])) {
+      if (checkPermission([this.RolesUser.STAFFKABKOTA])) {
         this.video.kabkota_id = authUser.kabkota_id
         this.checkStaff = true
       }
@@ -162,7 +173,7 @@ export default {
     getArea() {
       requestArea().then(response => {
         this.area = response.data.items
-        this.area.unshift({ id: 1, name: 'JAWA BARAT' })
+        this.area.unshift({ id: 1, name: this.$t('label.area-jabar') })
       })
     },
     fetchData(id) {
@@ -221,4 +232,3 @@ export default {
   }
 }
 </script>
-
