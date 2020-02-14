@@ -4,7 +4,7 @@
       <el-row :gutter="10">
         <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="6">
           <el-form-item style="margin-bottom: 0">
-            <el-input v-model="listQuery.title" placeholder="Judul Polling" />
+            <el-input v-model="listQuery.title" :placeholder="$t('label.polling-name')" />
           </el-form-item>
         </el-col>
         <el-col :xs="{span:24, tag:'mb-10'}" :sm="6" :md="4">
@@ -13,12 +13,12 @@
               v-model="listQuery.status"
               clearable
               filterable
-              placeholder="Pilih Status"
+              :placeholder="$t('label.status')"
               style="width: 100%"
             >
-              <el-option value="0" label="Draft" />
-              <el-option value="20" label="Berakhir" />
-              <el-option value="15" label="Sedang Berlangsung" />
+              <el-option value="0" :label="$t('label.status-draft')" />
+              <el-option value="20" :label="$t('label.polling-end')" />
+              <el-option value="15" :label="$t('label.polling-live')" />
             </el-select>
           </el-form-item>
         </el-col>
@@ -35,10 +35,10 @@
         </el-col>
         <el-col :xs="24" :sm="6" :md="6">
           <el-button type="primary" size="small" @click="submitSearch">
-            Cari
+            {{ $t('crud.search') }}
           </el-button>
           <el-button type="primary" size="small" @click="resetFilter">
-            Reset
+            {{ $t('crud.reset') }}
           </el-button>
         </el-col>
       </el-row>
@@ -48,7 +48,7 @@
 
 <script>
 import InputFilterArea from '@/components/InputFilterArea'
-
+import { RolesUser } from '@/utils/constantVariable'
 import checkPermission from '@/utils/permission'
 
 export default {
@@ -61,15 +61,21 @@ export default {
     }
   },
 
+  data() {
+    return {
+      RolesUser
+    }
+  },
+
   computed: {
     filterAreaParentId() {
       const authUser = this.$store.state.user
 
-      if (checkPermission(['staffKabkota'])) {
+      if (checkPermission([this.RolesUser.STAFFKABKOTA])) {
         return parseInt(authUser.kabkota_id)
       }
 
-      if (checkPermission(['staffKec'])) {
+      if (checkPermission([this.RolesUser.STAFFKEC])) {
         return parseInt(authUser.kec_id)
       }
 
