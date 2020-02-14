@@ -13,6 +13,13 @@ export const SurveyStatus = Object.freeze({
   ACTIVE: 10
 })
 
+export const PollingStatus = Object.freeze({
+  INACTIVE: 'Tidak Aktif',
+  END: 'Berakhir',
+  LIVE: 'Sedang Berlangsung',
+  PUBLISHED: 'Dipublikasikan'
+})
+
 export const AspirationStatus = Object.freeze({
   PUBLISH: 10,
   UNPUBLISH: 7,
