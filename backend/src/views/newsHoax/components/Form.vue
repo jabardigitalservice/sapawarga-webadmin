@@ -29,6 +29,13 @@
             </el-select>
           </el-form-item>
 
+          <el-form-item :label="$t('label.push-notification')">
+            <el-radio-group v-model="news.is_push_notification" name="notification">
+              <el-radio-button label="true">{{ $t('label.true') }}</el-radio-button>
+              <el-radio-button label="false">{{ $t('label.false') }}</el-radio-button>
+            </el-radio-group>
+          </el-form-item>
+
           <el-form-item :label="$t('label.news-content')" prop="content">
             <div>
               <tinymce v-model="news.content" :height="300" name="content" />
@@ -101,7 +108,8 @@ export default {
         source_date: moment().startOf('day'),
         content: null,
         seq: null,
-        status: null
+        status: null,
+        is_push_notification: true
       },
       area: null,
       rules: {

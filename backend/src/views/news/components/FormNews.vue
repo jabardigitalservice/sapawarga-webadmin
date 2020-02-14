@@ -65,10 +65,10 @@
             <el-input v-model="news.source_url" type="text" :placeholder="$t('news.news-url-sample')" />
           </el-form-item>
 
-          <el-form-item label="Kirim Notifikasi">
-            <el-radio-group v-model="news.is_push_notification" fill="blue" name="status">
-              <el-radio-button label="true">Ya</el-radio-button>
-              <el-radio-button label="false">Tidak</el-radio-button>
+          <el-form-item :label="$t('label.push-notification')">
+            <el-radio-group v-model="news.is_push_notification" name="notification">
+              <el-radio-button label="true">{{ $t('label.true') }}</el-radio-button>
+              <el-radio-button label="false">{{ $t('label.false') }}</el-radio-button>
             </el-radio-group>
           </el-form-item>
 
