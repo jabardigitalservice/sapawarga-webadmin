@@ -225,6 +225,8 @@ export default {
       fetchRecord(id).then(response => {
         this.newsImportant = response.data
 
+        this.newsImportant.kabkota_id = this.newsImportant.kabkota_id !== null ? this.newsImportant.kabkota_id : 1
+
         if (this.newsImportant.created_by !== this.user_id) {
           this.$message.error(this.$t('crud.error-edit-role'))
           this.$router.push('/news-important/index')
