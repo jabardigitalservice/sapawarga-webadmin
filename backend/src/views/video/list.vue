@@ -4,7 +4,7 @@
       <el-col class="col-left" :xs="24" :sm="24" :md="24" :lg="7" :xl="7">
         <el-card>
           <div slot="header" class="clearfix">
-            <span>Kategori</span>
+            <span>{{ $t('label.category') }}</span>
           </div>
           <el-table stripe :data="tableDataStatistik" :show-header="false" style="width: 100%">
             <el-table-column prop="name" align="left" />
@@ -25,7 +25,7 @@
           <el-col :span="12">
             <router-link :to="{ path: '/video/create' }">
               <el-button type="primary" size="small" icon="el-icon-plus">
-                Tambah Video Baru
+                {{ $t('label.video-add') }}
               </el-button>
             </router-link>
           </el-col>
@@ -36,22 +36,15 @@
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%" @sort-change="changeSort">
           <el-table-column type="index" align="center" width="50" :index="getTableRowNumbering" />
 
-          <el-table-column label="Judul Video" sortable="custom" prop="title" min-width="200">
+          <el-table-column :label="$t('label.video-title')" sortable="custom" prop="title" min-width="200">
             <template slot-scope="{row}">
               {{ text_truncate(row.title) }}
             </template>
           </el-table-column>
 
-          <el-table-column prop="category.name" sortable="custom" label="Kategori" align="center" width="120" />
+          <el-table-column prop="category.name" sortable="custom" :label="$t('label.category')" align="center" width="120" />
 
-          <el-table-column
-            prop="status"
-            sortable="custom"
-            class-name="status-col"
-            label="Status"
-            align="center"
-            min-width="100"
-          >
+          <el-table-column prop="status" sortable="custom" class-name="status-col" :label="$t('label.status')" align="center" min-width="100">
             <template slot-scope="{row}">
               <el-tag :type="row.status | statusFilter">
                 {{ row.status_label }}
@@ -59,31 +52,31 @@
             </template>
           </el-table-column>
 
-          <el-table-column prop="created_at" sortable="custom" label="Dibuat" align="center" min-width="180">
+          <el-table-column prop="created_at" sortable="custom" :label="$t('label.created_at')" align="center" min-width="180">
             <template slot-scope="{row}">
               {{ row.created_at | moment('DD MMMM YYYY HH:MM') }}
             </template>
           </el-table-column>
 
-          <el-table-column align="center" label="Actions" min-width="250px">
+          <el-table-column align="center" :label="$t('label.actions')" min-width="250px">
             <template slot-scope="scope">
               <router-link :to="'/video/detail/'+scope.row.id">
-                <el-tooltip content="Detail Video" placement="top">
+                <el-tooltip :content="$t('label.video-detail')" placement="top">
                   <el-button type="primary" icon="el-icon-view" size="small" />
                 </el-tooltip>
               </router-link>
               <router-link :to="(scope.row.status !== 10 && scope.row.created_by === user_id ? '/video/edit/' + scope.row.id : '')">
-                <el-tooltip content="Edit Video" placement="top">
+                <el-tooltip :content="$t('label.video-edit')" placement="top">
                   <el-button type="warning" icon="el-icon-edit" size="small" :disabled="scope.row.status === 10 || scope.row.created_by !== user_id" />
                 </el-tooltip>
               </router-link>
-              <el-tooltip content="Hapus Video" placement="top">
+              <el-tooltip :content="$t('label.video-delete')" placement="top">
                 <el-button type="danger" icon="el-icon-delete" size="small" :disabled="scope.row.status === 10 || scope.row.created_by !== user_id" @click="deleteVideo(scope.row.id)" />
               </el-tooltip>
-              <el-tooltip content="Nonaktifkan Video" placement="top">
+              <el-tooltip :content="$t('label.video-inactivate')" placement="top">
                 <el-button v-if="scope.row.status === 10" type="danger" icon="el-icon-circle-close" size="small" :disabled="scope.row.created_by !== user_id" @click="deactivateRecord(scope.row.id)" />
               </el-tooltip>
-              <el-tooltip content="Aktifkan Video" placement="top">
+              <el-tooltip :content="$t('label.video-activate')" placement="top">
                 <el-button v-if="scope.row.status === 0" type="success" icon="el-icon-circle-check" size="small" :disabled="scope.row.created_by !== user_id" @click="activateRecord(scope.row.id)" />
               </el-tooltip>
             </template>
@@ -91,13 +84,7 @@
 
         </el-table>
 
-        <pagination
-          v-show="total>0"
-          :total="total"
-          :page.sync="listQuery.page"
-          :limit.sync="listQuery.limit"
-          @pagination="getList"
-        />
+        <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
 
       </el-col>
     </el-row>
@@ -105,8 +92,8 @@
 </template>
 
 <script>
-import Pagination from '@/components/Pagination'
 import { fetchList, fetchStatistic, deleteData, deactivate, activate } from '@/api/video'
+import Pagination from '@/components/Pagination'
 import ListFilter from './_listfilter'
 import { mapGetters } from 'vuex'
 

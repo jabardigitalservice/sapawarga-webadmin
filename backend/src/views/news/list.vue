@@ -13,7 +13,7 @@
         </el-card>
         <el-card v-else>
           <el-collapse>
-            <el-collapse-item name="1" title="Kanal Media">
+            <el-collapse-item name="1" :title="$t('news.media-channel')">
               <el-table stripe :data="tableDataStatistik" :show-header="false" style="width: 100%">
                 <el-table-column prop="title" align="left" />
                 <el-table-column prop="count" align="right" />
@@ -46,35 +46,17 @@
           </div>
         </el-row>
 
-        <ListFilter
-          :list-query.sync="listQuery"
-          @submit-search="getList"
-          @reset-search="resetFilter"
-        />
+        <ListFilter :list-query.sync="listQuery" @submit-search="getList" @reset-search="resetFilter" />
 
-        <el-table
-          v-loading="listLoading"
-          :data="list"
-          border
-          stripe
-          fit
-          highlight-current-row
-          @sort-change="changeSort"
-        >
+        <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row @sort-change="changeSort">
+
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
 
-          <el-table-column prop="title" sortable="custom" label="Judul Berita" min-width="200" />
+          <el-table-column prop="title" sortable="custom" :label="$t('news.news-title')" min-width="200" />
 
-          <el-table-column prop="channel.name" sortable="custom" label="Sumber" align="center" min-width="100" />
+          <el-table-column prop="channel.name" sortable="custom" :label="$t('label.source')" align="center" min-width="100" />
 
-          <el-table-column
-            prop="status"
-            sortable="custom"
-            class-name="status-col"
-            label="Status"
-            align="center"
-            min-width="100"
-          >
+          <el-table-column prop="status" sortable="custom" class-name="status-col" :label="$t('label.status')" align="center" min-width="100">
             <template slot-scope="{row}">
               <el-tag :type="row.status | statusFilter">
                 {{ row.status_label }}
@@ -82,45 +64,41 @@
             </template>
           </el-table-column>
 
-          <el-table-column prop="total_viewers" sortable="custom" label="Jumlah Pengunjung" align="center" min-width="130" />
+          <el-table-column prop="total_viewers" sortable="custom" :label="$t('news.news-viewer')" align="center" min-width="130" />
 
-          <el-table-column prop="source_date" sortable="custom" label="Tanggal" align="center" min-width="150">
+          <el-table-column prop="source_date" sortable="custom" :label="$t('news.news-date')" align="center" min-width="150">
             <template slot-scope="{row}">
               {{ row.source_date | moment('D MMMM YYYY') }}
             </template>
           </el-table-column>
 
-          <el-table-column align="center" label="Actions" min-width="250px">
+          <el-table-column align="center" :label="$t('label.actions')" min-width="250px">
             <template slot-scope="scope">
               <router-link :to="'/news/detail/'+scope.row.id">
-                <el-tooltip content="Detail Berita" placement="top">
+                <el-tooltip :content="$t('news.news-detail')" placement="top">
                   <el-button type="primary" icon="el-icon-view" size="small" />
                 </el-tooltip>
               </router-link>
               <router-link :to="(scope.row.status !== 10 && scope.row.created_by === user_id ? '/news/edit/' +scope.row.id : '')">
-                <el-tooltip content="Edit Berita" placement="top">
+                <el-tooltip :content="$t('news.news-edit-header')" placement="top">
                   <el-button type="warning" icon="el-icon-edit" size="small" :disabled="scope.row.status === 10 || scope.row.created_by !== user_id" />
                 </el-tooltip>
               </router-link>
-              <el-tooltip content="Hapus Berita" placement="top">
+              <el-tooltip :content="$t('news.news-delete')" placement="top">
                 <el-button type="danger" icon="el-icon-delete" size="small" :disabled="scope.row.status === 10 || scope.row.created_by !== user_id" @click="deleteNews(scope.row.id)" />
               </el-tooltip>
-              <el-tooltip content="Nonaktifkan Berita" placement="top">
+              <el-tooltip :content="$t('news.news-inactivate')" placement="top">
                 <el-button v-if="scope.row.status === 10" type="danger" icon="el-icon-circle-close" size="small" :disabled="scope.row.created_by !== user_id" @click="deactivateRecord(scope.row.id)" />
               </el-tooltip>
-              <el-tooltip content="Aktifkan Berita" placement="top">
+              <el-tooltip :content="$t('news.news-activate')" placement="top">
                 <el-button v-if="scope.row.status === 0" type="success" icon="el-icon-circle-check" size="small" :disabled="scope.row.created_by !== user_id" @click="activateRecord(scope.row.id)" />
               </el-tooltip>
             </template>
           </el-table-column>
         </el-table>
-        <pagination
-          v-show="total>0"
-          :total="total"
-          :page.sync="listQuery.page"
-          :limit.sync="listQuery.limit"
-          @pagination="getList"
-        />
+
+        <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
+
       </el-col>
     </el-row>
   </div>
@@ -128,11 +106,11 @@
 
 <script>
 import { fetchList, fetchStatistic, deleteData, deactivate, activate } from '@/api/news'
-import moment from 'moment'
-import Pagination from '@/components/Pagination'
 import permission from '@/directive/permission/index.js'
+import Pagination from '@/components/Pagination'
 import ListFilter from './_listfilter'
 import { mapGetters } from 'vuex'
+import moment from 'moment'
 
 export default {
   components: { Pagination, ListFilter },
@@ -160,7 +138,7 @@ export default {
         limit: 10
       },
       tableDataStatistik: [],
-      tableDataStatistikTotal: [{ title: 'Semua Kategori', count: 0 }]
+      tableDataStatistikTotal: [{ title: this.$t('news.news-category-all'), count: 0 }]
     }
   },
 

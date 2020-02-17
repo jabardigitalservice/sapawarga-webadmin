@@ -6,7 +6,7 @@
           <el-col :span="12">
             <router-link :to="{ path: '/polling/create' }">
               <el-button type="primary" size="small" icon="el-icon-plus">
-                Tambah Polling Baru
+                {{ $t('label.polling-add') }}
               </el-button>
             </router-link>
           </el-col>
@@ -16,33 +16,33 @@
 
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%" @sort-change="changeSort">
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
-          <el-table-column prop="name" sortable="custom" label="Nama Polling" min-width="250" />
-          <el-table-column prop="start_date" sortable="custom" label="Mulai" min-width="150" align="center">
+          <el-table-column prop="name" sortable="custom" :label="$t('label.polling-name')" min-width="250" />
+          <el-table-column prop="start_date" sortable="custom" :label="$t('label.polling-start')" min-width="150" align="center">
             <template slot-scope="{row}">
               {{ row.start_date | moment('D MMM YYYY') }}
             </template>
           </el-table-column>
-          <el-table-column prop="end_date" sortable="custom" label="Berakhir" min-width="150" align="center">
+          <el-table-column prop="end_date" sortable="custom" :label="$t('label.polling-end')" min-width="150" align="center">
             <template slot-scope="{row}">
               {{ row.end_date | moment('D MMM YYYY') }}
             </template>
           </el-table-column>
-          <el-table-column prop="status" sortable="custom" class-name="status-col" label="Status" min-width="200">
+          <el-table-column prop="status" sortable="custom" class-name="status-col" :label="$t('label.status')" min-width="200">
             <template slot-scope="{row}">
               <el-tag :type="getStatusColor(row)">
                 {{ getStatusLabel(row) }}
               </el-tag>
             </template>
           </el-table-column>
-          <el-table-column align="center" label="Actions" width="200">
+          <el-table-column align="center" :label="$t('label.actions')" width="200">
             <template slot-scope="scope">
               <router-link :to="'/polling/detail/'+scope.row.id">
-                <el-tooltip content="Lihat Polling" placement="top">
+                <el-tooltip :content="$t('label.polling-view')" placement="top">
                   <el-button type="primary" icon="el-icon-view" size="mini" />
                 </el-tooltip>
               </router-link>
               <router-link :to="(scope.row.status !== 10 ? '/polling/edit/'+scope.row.id : '')">
-                <el-tooltip content="Edit Polling" placement="top">
+                <el-tooltip :content="$t('label.polling-edit')" placement="top">
                   <el-button type="warning" icon="el-icon-edit" size="mini" :disabled="scope.row.status === 10" />
                 </el-tooltip>
               </router-link>
@@ -141,11 +141,11 @@ export default {
       const isRunning = now.isBetween(startDate, endDate, null, '[]')
 
       if (row.status === 10 && isRunning) {
-        return 'Sedang Berlangsung'
+        return this.$t('label.polling-live')
       }
 
       if (row.status === 10 && now.isAfter(endDate)) {
-        return 'Berakhir'
+        return this.$t('label.polling-end')
       }
 
       return row.status_label

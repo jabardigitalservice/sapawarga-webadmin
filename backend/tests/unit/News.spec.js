@@ -59,7 +59,7 @@ describe('News detail', () => {
         content: newsDetailFixture.data.channel.name
       },
       {
-        title: 'Target Area Berita',
+        title: 'Target Berita',
         content: newsDetailFixture.data.kabkota.name
       },
       {
@@ -69,10 +69,6 @@ describe('News detail', () => {
       {
         title: 'Status',
         content: newsDetailFixture.data.status_label
-      },
-      {
-        title: 'Prioritas Berita',
-        content: 'Halaman Utama'
       },
       {
         title: 'URL Berita',
@@ -96,7 +92,7 @@ describe('News detail', () => {
     await flushPromises()
 
     // strip the content
-    expDataNews[7].content = wrapper.vm.strip(newsDetailFixture.data.content)
+    expDataNews[6].content = wrapper.vm.strip(newsDetailFixture.data.content)
 
     expect(wrapper.vm.news).toEqual(newsDetailFixture.data)
     expect(wrapper.vm.tableDataNews).toEqual(expDataNews)
@@ -125,7 +121,7 @@ describe('News detail', () => {
         content: 'Error'
       },
       {
-        title: 'Target Area Berita',
+        title: 'Target Berita',
         content: 'JAWA BARAT'
       },
       {
@@ -135,10 +131,6 @@ describe('News detail', () => {
       {
         title: 'Status',
         content: '-'
-      },
-      {
-        title: 'Prioritas Berita',
-        content: 'List'
       },
       {
         title: 'URL Berita',
