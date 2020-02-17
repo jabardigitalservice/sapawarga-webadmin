@@ -1,35 +1,40 @@
 <template>
   <el-card class="box-card" style="margin-bottom: 10px">
     <el-form>
-      <el-row :gutter="10" type="flex">
-        <el-col>
+      <el-row :gutter="10">
+        <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="6">
           <el-form-item style="margin-bottom: 0">
-            <el-input v-model="listQuery.name" placeholder="Nama Lengkap" />
+            <el-input v-model="listQuery.name" :placeholder="$t('users.users-fullname')" />
           </el-form-item>
         </el-col>
-        <el-col>
+        <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="6">
           <el-form-item style="margin-bottom: 0">
-            <el-input v-model="listQuery.phone" placeholder="Nomor Telepon" />
+            <el-input v-model="listQuery.username" :placeholder="$t('users.users-username')" />
           </el-form-item>
         </el-col>
-        <el-col>
+        <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="6">
+          <el-form-item style="margin-bottom: 0">
+            <el-input v-model="listQuery.phone" :placeholder="$t('users.users-phone')" />
+          </el-form-item>
+        </el-col>
+        <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="6">
           <el-form-item style="margin-bottom: 0">
             <el-select
               v-model="listQuery.status"
               clearable
               filterable
-              placeholder="Pilih Status"
+              :placeholder="$t('label.status-select')"
               style="width: 100%"
             >
-              <el-option value="10" label="Aktif" />
-              <el-option value="0" label="Tidak Aktif" />
+              <el-option value="10" :label="$t('label.active')" />
+              <el-option value="0" :label="$t('label.inactive')" />
             </el-select>
           </el-form-item>
         </el-col>
       </el-row>
       <div :class="(isActive) ? 'advance-filter-active' : 'advance-filter'" style="margin-top: 10px;">
-        <el-row :gutter="10" type="flex" style="margin-top: 10px">
-          <el-col :span="24">
+        <el-row :gutter="10" style="margin-top: 10px">
+          <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="24">
             <input-filter-area
               :parent-id="filterAreaParentId"
               :kabkota-id="listQuery.kabkota_id"
@@ -41,41 +46,41 @@
             />
           </el-col>
         </el-row>
-        <el-row v-permission="['admin','staffProv']" :gutter="10" type="flex" style="margin-top: 10px">
-          <el-col :span="8">
-            <el-form-item>
-              <span>Update Terakhir :</span>
+        <el-row v-permission="['admin','staffProv']" :gutter="10">
+          <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="8">
+            <el-form-item style="margin-bottom: 0">
+              <span>{{ $t('users.users-last-update') }} :</span>
               <el-select
                 v-model="listQuery.profile_completed"
                 clearable
                 filterable
-                placeholder="Pilih Kelengkapan Profile"
+                :placeholder="$t('users.users-option-profile')"
                 style="width: 100%"
               >
-                <el-option value="true" label="Lengkap" />
-                <el-option value="false" label="Tidak Lengkap" />
+                <el-option value="true" :label="$t('users.users-profile-complete')" />
+                <el-option value="false" :label="$t('users.users-profile-incomplete')" />
               </el-select>
             </el-form-item>
           </el-col>
-          <el-col :span="8">
-            <el-form-item>
-              <span>Aktifitas Terakhir :</span>
+          <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="8">
+            <el-form-item style="margin-bottom: 0">
+              <span>{{ $t('users.users-last-activities') }} :</span>
               <el-date-picker
                 v-model="listQuery.last_access_start"
                 type="date"
-                placeholder="Tanggal Mulai"
+                :placeholder="$t('label.start-date')"
                 value-format="yyyy-MM-dd"
                 class="last-access-start"
               />
             </el-form-item>
           </el-col>
-          <el-col :span="8">
-            <el-form-item>
-              <span>&nbsp;</span>
+          <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="8">
+            <el-form-item style="margin-bottom: 0">
+              <span v-if="device === 'desktop'">&nbsp;</span>
               <el-date-picker
                 v-model="listQuery.last_access_end"
                 type="date"
-                placeholder="Tanggal Akhir"
+                :placeholder="$t('label.end-date')"
                 value-format="yyyy-MM-dd"
                 class="last-access-end"
               />
@@ -86,15 +91,15 @@
       <el-row style="margin-top: 10px">
         <el-col>
           <el-button type="primary" size="small" style="float: right; margin: 2px;" @click="resetFilter">
-            Reset
+            {{ $t('crud.reset') }}
           </el-button>
           <el-button type="primary" size="small" style="float: right; margin: 2px;" @click="submitSearch">
-            Cari
+            {{ $t('crud.search') }}
           </el-button>
           <el-button v-permission="['admin', 'staffProv', 'staffKabkota', 'staffKec']" type="primary" size="small" style="float: left; margin: 2px;" @click="advanceFilter">
             <img src="@/assets/filter.svg" width="12" style="vertical-align: middle;">
-            <span v-if="isActive">Sembunyikan Filter</span>
-            <span v-else>Tambah Filter</span>
+            <span v-if="isActive">{{ $t('users.users-filter-hide') }}</span>
+            <span v-else>{{ $t('users.users-filter-add') }}</span>
           </el-button>
         </el-col>
       </el-row>
@@ -106,6 +111,7 @@
 import InputFilterArea from '@/components/InputFilterArea'
 import permission from '@/directive/permission/index.js'
 import checkPermission from '@/utils/permission'
+import { mapGetters } from 'vuex'
 
 export default {
   components: { InputFilterArea },
@@ -136,7 +142,12 @@ export default {
       }
 
       return null
-    }
+    },
+
+    ...mapGetters([
+      'device'
+    ])
+
   },
 
   methods: {
