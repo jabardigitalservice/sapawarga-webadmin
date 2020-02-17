@@ -18,14 +18,14 @@
     <el-row :gutter="20">
       <el-col :span="24">
         <el-row style="margin: 10px 0px">
-          <el-col :span="5">
+          <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="5">
             <router-link :to="{ path: '/user/create', query: { role_id: roleId }}">
               <el-button type="primary" size="small" icon="el-icon-plus">
                 {{ $t('users.users-add-new') }}
               </el-button>
             </router-link>
           </el-col>
-          <el-col v-if="checkPermission(['admin', 'staffProv'])" :span="19" align="right">
+          <el-col v-if="checkPermission(['admin', 'staffProv'])" :xs="{span:24, tag:'mb-10'}" :sm="24" :md="19" align="right">
             <el-button type="primary" size="small" @click="exportDataURL">{{ $t('users.download-data') }}</el-button>
             <el-button type="primary" size="small" @click="openDialog(`import`)">{{ $t('users.users-dialog-bottom-upload-data') }}</el-button>
           </el-col>
