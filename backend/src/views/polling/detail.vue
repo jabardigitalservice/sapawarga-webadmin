@@ -188,7 +188,7 @@ export default {
       this.$router.push('/polling/index')
     },
     async actionApprove(status) {
-      await this.$confirm(this.$t('label.polling-confirm') ` : ${this.polling.name} ?`, this.$t('message.title'), {
+      await this.$confirm(this.$t('label.polling-confirm') + ` : ${this.polling.name} ?`, this.$t('message.title'), {
         confirmButtonText: this.$t('common.confirm'),
         cancelButtonText: this.$t('common.cancel'),
         type: 'success'
