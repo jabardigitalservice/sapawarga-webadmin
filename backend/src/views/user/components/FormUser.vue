@@ -1037,7 +1037,7 @@ export default {
               this.loading = false
             })
         } else {
-          return false
+          return
         }
       })
     },
@@ -1107,7 +1107,7 @@ export default {
             this.loading = false
           })
         } else {
-          return false
+          return
         }
       })
     },

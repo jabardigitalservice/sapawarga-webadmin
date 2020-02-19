@@ -152,7 +152,7 @@ export default {
     }
 
     const validatorUrl = (rule, value, callback) => {
-      if (value === !null && validUrl(value) === false) {
+      if (value !== null && !validUrl(value)) {
         callback(new Error('URL tidak valid'))
       }
 
@@ -205,9 +205,6 @@ export default {
           }
         ],
         response_url: [
-          {
-            required: false
-          },
           {
             validator: validatorUrl,
             trigger: 'blur'
