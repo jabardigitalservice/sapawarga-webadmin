@@ -203,13 +203,11 @@ export default {
         confirmButtonText: this.$t('common.confirm'),
         cancelButtonText: this.$t('common.cancel'),
         type: 'success'
-      })
-
-      try {
+      }).then(() => {
         this.submitForm(status)
-      } catch (e) {
-        console.log(e)
-      }
+      }).catch((error) => {
+        console.log(error)
+      })
     },
     checkStatus(status, status_label) {
       if (status === this.status.SCHEDULED) {

@@ -170,6 +170,7 @@ export default {
     'update-success': 'Perubahan data berhasil disimpan.',
     'pop-up-send-success': 'Popup informasi berhasil dibuat',
     'send-success': 'Pesan berhasil dikirim',
+    'send-error': 'Pesan tidak berhasil dikirim',
     'draft-success': 'Pesan berhasil disimpan di draft',
 
     'send-polling-success': 'Polling berhasil dipublikasikan',
