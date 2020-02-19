@@ -66,9 +66,11 @@ const actions = {
       login({ LoginForm: { username: username.trim(), password: password }})
         .then(response => {
           const { data } = response
-          commit('SET_TOKEN', data.access_token)
-          setToken(data.access_token)
-          resolve()
+          if (data !== undefined) {
+            commit('SET_TOKEN', data.access_token)
+            setToken(data.access_token)
+            resolve(data)
+          }
         })
         .catch(error => {
           const errData = error.response.data.data

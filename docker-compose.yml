@@ -13,14 +13,14 @@ services:
     image: registry.gitlab.com/jdsteam/sapa-warga/sapawarga-webadmin:${VERSION}
     networks:
       - internal
-    ports: 
+    ports:
       - 8081:80
     # volumes:
       # - ./backend/src:/app/src
       # - ./backend/tests:/app/tests
     env_file:
       - .env
-      
+
 networks:
   internal:
     driver: bridge
