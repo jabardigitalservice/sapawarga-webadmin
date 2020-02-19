@@ -4,7 +4,7 @@
       <el-col class="col-left" :xs="{span:24, tag:'mb-10'}" :sm="24" :md="24" :lg="colSize" :xl="colSize">
         <el-card>
           <div slot="header" class="clearfix">
-            <span>Target</span>
+            <span>{{ $t('label.target') }}</span>
           </div>
           <el-table stripe :data="tableDataTarget" :show-header="false" style="width: 100%">
             <el-table-column prop="title" />
@@ -13,7 +13,7 @@
         </el-card>
         <el-card style="margin-top:10px">
           <div slot="header" class="clearfix">
-            <span>Data Polling</span>
+            <span>{{ $t('label.polling-data') }}</span>
           </div>
           <el-table stripe :data="tableDataPolling" :show-header="false" style="width: 100%">
             <el-table-column prop="title" />
@@ -26,7 +26,7 @@
         <div style="margin-top:0px">
           <el-card>
             <div slot="header" class="clearfix">
-              <span>Total Audience:</span>
+              <span>{{ $t('label.polling-total-audience') }}:</span>
               <span class="total_audience">{{ totalPolling }}</span>
             </div>
             <p class="question">{{ polling.question }}</p>
@@ -40,6 +40,7 @@
 </template>
 
 <script>
+import { PollingStatus } from '@/utils/constantVariable'
 import PollingChart from '@/components/PollingChart'
 import { fetchRecord, update } from '@/api/polling'
 import moment from 'moment'
@@ -50,6 +51,7 @@ export default {
   data() {
     return {
       id: 0,
+      PollingStatus,
       tableDataTarget: [],
       tableDataPolling: [],
       totalPolling: null,
@@ -109,43 +111,43 @@ export default {
 
         this.tableDataTarget = [
           {
-            title: 'Kabupaten/Kota',
-            content: ((kabkota !== null) ? kabkota.name : 'Semua Kab/Kota')
+            title: this.$t('label.area-kabkota'),
+            content: ((kabkota !== null) ? kabkota.name : this.$t('label.area-kabkota-all'))
           },
           {
-            title: 'Kecamatan',
-            content: ((kecamatan !== null) ? kecamatan.name : 'Semua Kecamatan')
+            title: this.$t('label.area-kec'),
+            content: ((kecamatan !== null) ? kecamatan.name : this.$t('label.area-kec-all'))
           },
           {
-            title: 'Desa/Kelurahan',
-            content: ((kelurahan !== null) ? kelurahan.name : 'Semua Desa/Kelurahan')
+            title: this.$t('label.area-kel'),
+            content: ((kelurahan !== null) ? kelurahan.name : this.$t('label.area-kel-all'))
           },
           {
-            title: 'RW',
-            content: ((rw !== null) ? rw : 'Semua RW')
+            title: this.$t('label.area-rw'),
+            content: ((rw !== null) ? rw : this.$t('label.area-rw-all'))
           }
         ]
 
         this.tableDataPolling = [
           {
-            title: 'Nama Polling',
+            title: this.$t('label.polling-name'),
             content: name || '-'
           },
           {
-            title: 'Kategori',
+            title: this.$t('label.category'),
             content: (category !== null ? category.name : '-')
           },
           {
-            title: 'Deskripsi',
+            title: this.$t('label.polling-description'),
             content: description || '-'
           },
           {
-            title: 'Pengantar',
+            title: this.$t('label.polling-excerpt'),
             content: excerpt || '-'
           },
           {
-            title: 'Status',
-            content: (status === 1 ? <el-tag type='danger'>Tidak Aktif</el-tag> : status === 10 && expired === true && beforeStart === false ? <el-tag type='warning'>Berakhir</el-tag> : status === 10 && expired === false && beforeStart === false ? <el-tag type='success'>Sedang Berlangsung</el-tag> : status === 10 && beforeStart === true && expired === false ? <el-tag type='primary'>Dipublikasikan</el-tag> : <el-tag type='info'>{status_label}</el-tag>)
+            title: this.$t('label.status'),
+            content: (status === 1 ? <el-tag type='danger'>{PollingStatus.INACTIVE}</el-tag> : status === 10 && expired === true && beforeStart === false ? <el-tag type='warning'>{PollingStatus.END}</el-tag> : status === 10 && expired === false && beforeStart === false ? <el-tag type='success'>{PollingStatus.LIVE}</el-tag> : status === 10 && beforeStart === true && expired === false ? <el-tag type='primary'>{PollingStatus.PUBLISHED}</el-tag> : <el-tag type='info'>{status_label}</el-tag>)
           }
         ]
 
@@ -159,15 +161,15 @@ export default {
           this.colSize = 18
           this.tableDataPolling.push(
             {
-              title: 'Dimulai dari',
+              title: this.$t('label.polling-start-date'),
               content: moment(start_date).format('D MMMM YYYY') || '-'
             },
             {
-              title: 'Sampai',
+              title: this.$t('label.polling-end-date'),
               content: moment(end_date).format('D MMMM YYYY') || '-'
             },
             {
-              title: 'Pertanyaan',
+              title: this.$t('label.polling-question'),
               content: question || '-'
             },
             {
@@ -186,7 +188,7 @@ export default {
       this.$router.push('/polling/index')
     },
     async actionApprove(status) {
-      await this.$confirm(`Apakah Anda yakin akan mengirimkan polling: ${this.polling.name} ?`, 'Konfirmasi', {
+      await this.$confirm(this.$t('label.polling-confirm') + ` : ${this.polling.name} ?`, this.$t('message.title'), {
         confirmButtonText: this.$t('common.confirm'),
         cancelButtonText: this.$t('common.cancel'),
         type: 'success'

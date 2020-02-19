@@ -31,6 +31,13 @@
             </el-select>
           </el-form-item>
 
+          <el-form-item :label="$t('label.push-notification')">
+            <el-radio-group v-model="newsImportant.is_push_notification" name="notification">
+              <el-radio-button :label="true">{{ $t('label.true') }}</el-radio-button>
+              <el-radio-button :label="false">{{ $t('label.false') }}</el-radio-button>
+            </el-radio-group>
+          </el-form-item>
+
           <el-form-item :label="$t('label.newsImportant-description')" prop="content">
             <div>
               <tinymce v-model="newsImportant.content" :height="250" />
@@ -113,7 +120,8 @@ export default {
         source_url: null,
         image_path: null,
         image_path_url: null,
-        attachments: []
+        attachments: [],
+        is_push_notification: true
       },
       rules: {
         title: [
@@ -216,6 +224,8 @@ export default {
     fetchData(id) {
       fetchRecord(id).then(response => {
         this.newsImportant = response.data
+
+        this.newsImportant.kabkota_id = this.newsImportant.kabkota_id !== null ? this.newsImportant.kabkota_id : 1
 
         if (this.newsImportant.created_by !== this.user_id) {
           this.$message.error(this.$t('crud.error-edit-role'))

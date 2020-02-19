@@ -6,7 +6,7 @@ const notifikasiuserMenuRouter = {
   name: 'questionnaire',
   path: 'pollingsurvey',
   component: Layout,
-  redirect: '/',
+  redirect: 'noredirect',
   meta: {
     title: 'questionnaire',
     roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel', 'staffOPD'],

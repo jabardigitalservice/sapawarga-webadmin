@@ -4,7 +4,7 @@
       <el-row :gutter="10">
         <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="(isPriority)? 12:18">
           <el-form-item style="margin-bottom: 0">
-            <el-input v-model="listQuery.search" placeholder="Judul" />
+            <el-input v-model="listQuery.search" :placeholder="$t('label.title')" />
           </el-form-item>
         </el-col>
         <el-col v-if="isPriority" :xs="{span: 24, tag:'mb-10'}" :span="6">
@@ -13,7 +13,7 @@
               v-model="listQuery.channel_id"
               clearable
               filterable
-              placeholder="Pilih Sumber Berita"
+              :placeholder="$t('label.select-source')"
               style="width: 100%"
             >
               <el-option

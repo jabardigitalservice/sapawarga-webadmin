@@ -22,15 +22,15 @@ versioning:
       - version
 
 code_quality:
-  image: docker:stable
+  image: docker:19.03.5
   stage: code_quality
   only:
     - branches
   services:
-    - docker:stable-dind
+    - docker:19.03.5-dind
   variables:
     DOCKER_DRIVER: overlay2
-  dependencies: 
+  dependencies:
     - versioning
   before_script:
     - export VERSION=$(cat ./version)
@@ -54,10 +54,10 @@ build_prod:
   only:
     - branches
   services:
-    - docker:dind
+    - docker:19.03.5-dind
   variables:
     DOCKER_DRIVER: overlay2
-  dependencies: 
+  dependencies:
     - versioning
   before_script:
     - export VERSION=$(cat ./version)
@@ -75,13 +75,13 @@ build_prod:
 
 
 test_webadmin:
-  image: docker:stable
+  image: docker:19.03.5
   stage: test
   only:
     - branches
   services:
-    - docker:dind
-  dependencies: 
+    - docker:19.03.5-dind
+  dependencies:
     - versioning
   before_script:
     - export VERSION=$(cat ./version)
@@ -114,10 +114,10 @@ release_all:
   image: tiangolo/docker-with-compose
   stage: release
   services:
-    - docker:dind
+    - docker:19.03.5-dind
   only:
     - master
-  dependencies: 
+  dependencies:
     - versioning
   before_script:
     - export VERSION=$(cat ./version)
@@ -135,11 +135,11 @@ release_all:
     - docker push registry.gitlab.com/jdsteam/sapa-warga/sapawarga-webadmin:${VERSION}
 
 deploy_staging:
-  image: docker:stable
+  image: docker:19.03.5
   stage: deploy_staging
   only:
     - master
-  dependencies: 
+  dependencies:
     - versioning
   before_script:
     - export VERSION=$(cat ./version)
@@ -159,7 +159,7 @@ deploy_staging_eks:
   stage: deploy_staging
   only:
     - master
-  dependencies: 
+  dependencies:
     - versioning
   environment:
     name: staging
@@ -177,7 +177,7 @@ deploy_staging_eks:
     # Add ENV for apps # VUE_APP_NODE_ENV
     - sed -i "s/%VUE_APP_VERSION%/${VERSION}/g" kubernetes/webadmin-variables.yaml
     - sed -i "s/%VUE_APP_NODE_ENV%/${VUE_APP_NODE_ENV}/g" kubernetes/webadmin-variables.yaml
-   
+
     # Vue app base api to staging
     - sed -i "s/%VUE_APP_BASE_API%/${EKS_VUE_APP_BASE_API_STAGING}/g" kubernetes/webadmin-variables.yaml
     - sed -i "s/%dockerconfigjson%/${dockerconfigjson}/g" kubernetes/webadmin-variables.yaml
@@ -185,7 +185,7 @@ deploy_staging_eks:
     - sed -i "s/%APP_ERROR_ENVIRONMENT%/${APP_ERROR_ENVIRONMENT}/g" kubernetes/webadmin-variables.yaml
     - sed -i "s/%VERSION%/${VERSION}/g" kubernetes/webadmin-deployment.yaml
     - sed -i "s/%VUE_APP_PHONE%/${VUE_APP_PHONE}/g" kubernetes/webadmin-variables.yaml
-    
+
     #- cat kubernetes/webadmin-variables.yaml
     - kubectl create --dry-run --validate -f kubernetes/webadmin-variables.yaml
         -f kubernetes/webadmin-deployment.yaml
@@ -202,7 +202,7 @@ deploy_prod_eks:
     name: production
   only:
     - master
-  dependencies: 
+  dependencies:
     - versioning
   before_script:
     - export VERSION=$(cat ./version)

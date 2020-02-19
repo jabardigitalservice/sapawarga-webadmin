@@ -22,7 +22,7 @@
 
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%" class="news-hoax-list" @sort-change="changeSort">
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
-          <el-table-column prop="title" sortable="custom" min-width="200" align="center" :label="$t('label.title')" />
+          <el-table-column prop="title" sortable="custom" min-width="200" align="left" :label="$t('label.title')" />
           <el-table-column
             prop="status"
             sortable="custom"

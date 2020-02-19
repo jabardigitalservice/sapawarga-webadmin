@@ -5,7 +5,7 @@
         <p class="warn-content">Target</p>
         <div class="polling-target">
           <el-form ref="polling" :model="polling" :label-width="device === 'desktop' ? '150px' : null" label-position="left" :rules="rules" :status-icon="true" :disabled="isEdit === true && checkStatus !== 0">
-            <el-form-item label="Wilayah" prop="wilayah" class="block">
+            <el-form-item :label="$t('label.area')" prop="wilayah" class="block">
               <InputSelectArea
                 class="inline-block"
                 :kabkota-id="polling.kabkota_id"
@@ -18,64 +18,76 @@
               />
             </el-form-item>
             <el-form-item class="rw" prop="rw">
-              <el-input v-model="polling.rw" placeholder="Semua RW" type="text" name="rw" :disabled="polling.kel_id === null" />
+              <el-input v-model="polling.rw" :placeholder="$t('label.area-rw')" type="text" name="rw" :disabled="polling.kel_id === null" />
             </el-form-item>
           </el-form>
         </div>
       </el-col>
       <el-col :sm="24" :md="14" :lg="14" :xl="12">
-        <p class="warn-content">Data Polling</p>
+        <p class="warn-content">{{ $t('label.polling-data') }}</p>
         <div class="polling-message">
           <el-form ref="polling" :model="polling" :rules="rules" :label-width="device === 'desktop' ? '150px' : null" label-position="left" :status-icon="true" :disabled="isEdit === true && checkStatus !== 0">
-            <el-form-item label="Nama Polling" prop="name">
-              <el-input v-model="polling.name" type="text" name="title-polling" placeholder="Nama Polling" />
+
+            <el-form-item :label="$t('label.polling-name')" prop="name">
+              <el-input v-model="polling.name" type="text" name="title-polling" :placeholder="$t('label.polling-name')" />
             </el-form-item>
-            <el-form-item label="Kategori" prop="category_id">
+
+            <el-form-item :label="$t('label.category')" prop="category_id">
               <InputCategory v-model="polling.category_id" name="category_id" category-type="polling" prop="category" style="width: 100%" />
             </el-form-item>
-            <el-form-item label="Deskripsi" prop="description">
-              <el-input v-model="polling.description" type="textarea" name="description-polling" :rows="4" placeholder="Deskripsi" />
-            </el-form-item>
-            <el-form-item label="Pengantar" prop="excerpt">
-              <el-input v-model="polling.excerpt" type="textarea" name="excerpt-polling" :rows="4" placeholder="Pengantar" />
-            </el-form-item>
-            <el-form-item label="Dimulai dari" prop="" class="w-100">
-              <el-date-picker v-model="start_date" type="date" name="start_date" :editable="false" :clearable="false" format="dd-MM-yyyy" placeholder="Pilih tanggal" />
-            </el-form-item>
-            <el-form-item label="Sampai" prop="" class="w-100">
-              <el-date-picker v-model="end_date" type="date" name="end_date" :editable="false" :clearable="false" format="dd-MM-yyyy" placeholder="Pilih tanggal" />
+
+            <el-form-item :label="$t('label.polling-description')" prop="description">
+              <el-input v-model="polling.description" type="textarea" name="description-polling" :rows="4" :placeholder="$t('label.polling-description')" />
             </el-form-item>
 
-            <el-form-item label="Pertanyaan" prop="question">
-              <el-input v-model="polling.question" type="text" name="question" placeholder="Pertanyaan" />
+            <el-form-item :label="$t('label.polling-excerpt')" prop="excerpt">
+              <el-input v-model="polling.excerpt" type="textarea" name="excerpt-polling" :rows="4" :placeholder="$t('label.polling-excerpt')" />
             </el-form-item>
 
-            <el-form-item v-if="!isEdit" label="Tipe Pertanyaan" prop="question_type">
-              <el-radio-group v-model="question_type" name="answer">
-                <el-radio label="yesNo" @change="selectAnswer('yes')">Ya / Tidak</el-radio>
-                <el-radio label="multiple" @change="selectAnswer('multiple')">Multiple</el-radio>
-                <el-radio label="custome" @change="selectAnswer('custome')">Custom</el-radio>
+            <el-form-item :label="$t('label.push-notification')">
+              <el-radio-group v-model="polling.is_push_notification" name="notification">
+                <el-radio-button :label="true">{{ $t('label.true') }}</el-radio-button>
+                <el-radio-button :label="false">{{ $t('label.false') }}</el-radio-button>
               </el-radio-group>
             </el-form-item>
 
-            <div v-if="question_type === 'custome'">
+            <el-form-item :label="$t('label.polling-start-date')" prop="" class="w-100">
+              <el-date-picker v-model="start_date" type="date" name="start_date" :editable="false" :clearable="false" format="dd-MM-yyyy" :placeholder="$t('label.polling-select-date')" />
+            </el-form-item>
+            <el-form-item :label="$t('label.polling-end-date')" prop="" class="w-100">
+              <el-date-picker v-model="end_date" type="date" name="end_date" :editable="false" :clearable="false" format="dd-MM-yyyy" :placeholder="$t('label.polling-select-date')" />
+            </el-form-item>
+
+            <el-form-item :label="$t('label.polling-question')" prop="question">
+              <el-input v-model="polling.question" type="text" name="question" :placeholder="$t('label.polling-question')" />
+            </el-form-item>
+
+            <el-form-item v-if="!isEdit" :label="$t('label.polling-question-type')" prop="question_type">
+              <el-radio-group v-model="question_type" name="answer">
+                <el-radio label="yesNo" @change="selectAnswer('yes')">{{ $t('label.polling-yes-no') }}</el-radio>
+                <el-radio label="multiple" @change="selectAnswer('multiple')">{{ $t('label.polling-multiple') }}</el-radio>
+                <el-radio label="custom" @change="selectAnswer('custom')">{{ $t('label.polling-customize') }}</el-radio>
+              </el-radio-group>
+            </el-form-item>
+
+            <div v-if="question_type === 'custom'">
               <el-form-item
                 v-for="(answer) in polling.answers"
                 :key="answer.id"
                 :rules="{
-                  required: true, message: 'Jawaban harus diisi', trigger: 'blur'
+                  required: true, message: this.$t('label.polling-answer-required'), trigger: 'blur'
                 }"
               >
                 <el-row>
                   <el-col :sm="18" :md="18" :lg="20" :xl="20">
-                    <el-input v-model="answer.body" type="text" name="answer-option" placeholder="Jawaban" />
+                    <el-input v-model="answer.body" type="text" name="answer-option" :placeholder="$t('label.polling-answer')" />
                   </el-col>
                   <el-col :sm="4" :md="4" :lg="4" :xl="4">
                     <el-button type="danger" class="answer" size="mini" icon="el-icon-delete" style="margin-top:3px" @click.prevent="removeAnswer(answer)" />
                   </el-col>
                 </el-row>
               </el-form-item>
-              <el-button type="success" class="add-answer" size="mini" icon="el-icon-circle-plus" @click="addAnswer">Jawaban Lain</el-button>
+              <el-button type="success" class="add-answer" size="mini" icon="el-icon-circle-plus" @click="addAnswer">{{ $t('label.polling-answer-add') }}</el-button>
             </div>
 
             <el-form-item class="polling-button ml-min-40">
@@ -90,9 +102,9 @@
   </div>
 </template>
 <script>
-import InputCategory from '@/components/InputCategory'
-import InputSelectArea from '@/components/InputSelectArea'
 import { create, fetchRecord, update } from '@/api/polling'
+import InputSelectArea from '@/components/InputSelectArea'
+import InputCategory from '@/components/InputCategory'
 import { containsWhitespace } from '@/utils/validate'
 import { mapGetters } from 'vuex'
 
@@ -113,35 +125,35 @@ export default {
   data() {
     const question_type = (rule, value, callback) => {
       if (this.question_type === null) {
-        callback(new Error('Tipe pertanyaan harus diisi'))
+        callback(new Error(this.$t('label.polling-question-type-required')))
       }
       callback()
     }
 
     const whitespaceName = (rule, value, callback) => {
       if (containsWhitespace(value) === true) {
-        callback(new Error('Nama polling yang diisi tidak valid'))
+        callback(new Error(this.$t('label.polling-name-invalid')))
       }
       callback()
     }
 
     const whitespaceDescription = (rule, value, callback) => {
       if (containsWhitespace(value) === true) {
-        callback(new Error('Deskripsi yang diisi tidak valid'))
+        callback(new Error(this.$t('label.polling-description-invalid')))
       }
       callback()
     }
 
     const whitespaceExcerpt = (rule, value, callback) => {
       if (containsWhitespace(value) === true) {
-        callback(new Error('Pengantar yang diisi tidak valid'))
+        callback(new Error(this.$t('label.polling-excerpt-invalid')))
       }
       callback()
     }
 
     const whitespaceQuestion = (rule, value, callback) => {
       if (containsWhitespace(value) === true) {
-        callback(new Error('Pertanyaan yang diisi tidak valid'))
+        callback(new Error(this.$t('label.polling-answer-invalid')))
       }
       callback()
     }
@@ -168,6 +180,7 @@ export default {
         category_id: null,
         description: null,
         excerpt: null,
+        is_push_notification: true,
         answers: [{
           id: 1,
           body: null
@@ -184,17 +197,17 @@ export default {
         name: [
           {
             required: true,
-            message: 'Nama polling harus diisi',
+            message: this.$t('label.polling-name-required'),
             trigger: 'blur'
           },
           {
             min: 10,
-            message: 'Nama polling minimal 10 karakter',
+            message: this.$t('label.polling-name-min'),
             trigger: 'blur'
           },
           {
             max: 100,
-            message: 'Nama polling maksimal 100 karakter',
+            message: this.$t('label.polling-name-max'),
             trigger: 'blur'
           },
           {
@@ -205,17 +218,17 @@ export default {
         question: [
           {
             required: true,
-            message: 'Pertanyaan harus diisi',
+            message: this.$t('label.polling-question-required'),
             trigger: 'blur'
           },
           {
             min: 10,
-            message: 'Pertanyaan minimal 10 karakter',
+            message: this.$t('label.polling-question-min'),
             trigger: 'blur'
           },
           {
             max: 100,
-            message: 'Pertanyaan maksimal 100 karakter',
+            message: this.$t('label.polling-question-max'),
             trigger: 'blur'
           },
           {
@@ -224,12 +237,12 @@ export default {
           }
         ],
         category_id: [
-          { required: true, message: 'Kategori harus diisi.', trigger: 'change' }
+          { required: true, message: this.$t('message.category'), trigger: 'change' }
         ],
         description: [
           {
             required: true,
-            message: 'Deskripsi harus diisi',
+            message: this.$t('label.polling-description-required'),
             trigger: 'blur'
           },
           {
@@ -240,7 +253,7 @@ export default {
         excerpt: [
           {
             required: true,
-            message: 'Pengantar harus diisi',
+            message: this.$t('label.polling-excerpt-required'),
             trigger: 'blur'
           },
           {
@@ -257,17 +270,17 @@ export default {
         rw: [
           {
             pattern: /^[0-9]+$/,
-            message: 'RW harus menggunakan angka',
+            message: this.$t('label.polling-rw-number'),
             trigger: 'blur'
           },
           {
             max: 3,
-            message: 'RW harus 3 angka, contoh 001',
+            message: this.$t('label.polling-rw-count'),
             trigger: 'blur'
           },
           {
             min: 3,
-            message: 'RW harus 3 angka, contoh 001',
+            message: this.$t('label.polling-rw-count'),
             trigger: 'blur'
           }
         ]
@@ -443,24 +456,24 @@ export default {
       if (label === 'yes') {
         this.polling.answers = [{
           id: 1,
-          body: 'Ya'
+          body: this.$t('label.true')
         },
         {
           id: 2,
-          body: 'Tidak'
+          body: this.$t('label.false')
         }]
       } else if (label === 'multiple') {
         this.polling.answers = [{
           id: 1,
-          body: 'Baik'
+          body: this.$t('label.good')
         },
         {
           id: 2,
-          body: 'Cukup'
+          body: this.$t('label.enough')
         },
         {
           id: 3,
-          body: 'Kurang'
+          body: this.$t('label.less')
         }]
       } else {
         this.polling.answers = [{
@@ -488,7 +501,7 @@ export default {
         }
       }
 
-      await this.$confirm(`Apakah anda yakin akan mengirimkan polling : ${this.polling.name} ?`, 'Konfirmasi', {
+      await this.$confirm(this.$t('label.polling-confirm') + ` : ${this.polling.name} ?`, this.$t('message.title'), {
         confirmButtonText: this.$t('common.confirm'),
         cancelButtonText: this.$t('common.cancel'),
         type: 'success'

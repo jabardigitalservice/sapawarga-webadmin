@@ -13,12 +13,12 @@
       <el-col :xs="24" :sm="16" :lg="19">
 
         <el-form ref="news" :model="news" :rules="rules" :status-icon="true" :label-width="device==='desktop'?'160px':null" class="form-news">
-          <el-form-item label="Judul Berita" prop="title">
-            <el-input v-model="news.title" type="text" placeholder="Judul Berita" />
+          <el-form-item :label="$t('news.news-title')" prop="title">
+            <el-input v-model="news.title" type="text" :placeholder="$t('news.news-title')" />
           </el-form-item>
 
-          <el-form-item label="Sumber" prop="channel_id" :label-width="device==='desktop'?'160px':null">
-            <el-select v-model="news.channel_id" placeholder="Pilih Sumber">
+          <el-form-item :label="$t('label.source')" prop="channel_id" :label-width="device==='desktop'?'160px':null">
+            <el-select v-model="news.channel_id" :placeholder="$t('label.select-source')">
               <el-option
                 v-for="item in options"
                 :key="item.id"
@@ -28,8 +28,8 @@
             </el-select>
           </el-form-item>
 
-          <el-form-item label="Target" prop="kabkota_id">
-            <el-select v-model="news.kabkota_id" :disabled="checkStaff" placeholder="Pilih Target">
+          <el-form-item :label="$t('label.target')" prop="kabkota_id">
+            <el-select v-model="news.kabkota_id" :disabled="checkStaff" :placeholder="$t('label.select-target')">
               <el-option
                 v-for="item in area"
                 :key="item.id"
@@ -39,19 +39,19 @@
             </el-select>
           </el-form-item>
 
-          <el-form-item label="Tanggal Berita" prop="source_date">
+          <el-form-item :label="$t('news.news-date')" prop="source_date">
             <el-date-picker
               v-model="news.source_date"
               type="date"
               :editable="false"
               :clearable="false"
               format="dd-MM-yyyy"
-              placeholder="Pilih Tanggal"
+              :placeholder="$t('news.news-select-date')"
             />
           </el-form-item>
 
-          <el-form-item v-if="isEdit" label="Status" prop="status">
-            <el-select v-model="news.status" placeholder="Pilih status">
+          <el-form-item v-if="isEdit" :label="$t('label.status')" prop="status">
+            <el-select v-model="news.status" :placeholder="$t('label.status-select')">
               <el-option
                 v-for="item in statusOptions"
                 :key="item.value"
@@ -61,11 +61,18 @@
             </el-select>
           </el-form-item>
 
-          <el-form-item label="URL Berita" prop="source_url">
-            <el-input v-model="news.source_url" type="text" placeholder="http://form.google.com" />
+          <el-form-item :label="$t('news.news-url')" prop="source_url">
+            <el-input v-model="news.source_url" type="text" :placeholder="$t('news.news-url-sample')" />
           </el-form-item>
 
-          <el-form-item label="Konten Berita" prop="content">
+          <el-form-item :label="$t('label.push-notification')">
+            <el-radio-group v-model="news.is_push_notification" name="notification">
+              <el-radio-button :label="true">{{ $t('label.true') }}</el-radio-button>
+              <el-radio-button :label="false">{{ $t('label.false') }}</el-radio-button>
+            </el-radio-group>
+          </el-form-item>
+
+          <el-form-item :label="$t('label.news-content')" prop="content">
             <div>
               <tinymce v-model="news.content" :height="300" />
             </div>
@@ -91,12 +98,13 @@
 import AttachmentPhotoUpload from '@/components/AttachmentPhotoUpload'
 import { containsWhitespace, validUrl } from '@/utils/validate'
 import { create, update, newsChannelList } from '@/api/news'
-import { requestArea } from '@/api/staff'
+import { RolesUser } from '@/utils/constantVariable'
 import checkPermission from '@/utils/permission'
-import newsApi from '@/api/news'
 import Tinymce from '@/components/Tinymce'
-import moment from 'moment'
+import { requestArea } from '@/api/staff'
 import { mapGetters } from 'vuex'
+import newsApi from '@/api/news'
+import moment from 'moment'
 
 export default {
   components: { Tinymce, AttachmentPhotoUpload },
@@ -109,21 +117,21 @@ export default {
   data() {
     const validatorTitleWhitespace = (rule, value, callback) => {
       if (containsWhitespace(value) === true) {
-        callback(new Error('Judul Berita yang diisi tidak valid'))
+        callback(new Error(this.$t('news.news-title-invalid')))
       }
       callback()
     }
 
     const validatorTitleWhitespaceContent = (rule, value, callback) => {
       if (containsWhitespace(value) === true) {
-        callback(new Error('Konten Berita yang diisi tidak valid'))
+        callback(new Error(this.$t('news.news-content-invalid')))
       }
       callback()
     }
 
     const validatorUrl = (rule, value, callback) => {
       if (validUrl(value) === false) {
-        callback(new Error('URL tidak valid'))
+        callback(new Error(this.$t('errors.url-not-valid')))
       }
 
       callback()
@@ -131,6 +139,7 @@ export default {
 
     return {
       loading: false,
+      RolesUser,
       news: {
         title: null,
         channel_id: null,
@@ -140,9 +149,8 @@ export default {
         cover_path: null,
         cover_path_url: null,
         status: null,
-        featured: null,
-        seq: null,
-        kabkota_id: null
+        kabkota_id: null,
+        is_push_notification: true
       },
       checkStaff: false,
       area: null,
@@ -151,32 +159,24 @@ export default {
       },
       options: null,
       statusOptions: [
-        { value: 10, label: 'Aktif' },
-        { value: 0, label: 'Tidak aktif' }
-      ],
-      featuredOptions: [
-        { value: 1, label: 'Berita Utama 1' },
-        { value: 2, label: 'Berita Utama 2' },
-        { value: 3, label: 'Berita Utama 3' },
-        { value: 4, label: 'Berita Utama 4' },
-        { value: 5, label: 'Berita Utama 5' },
-        { value: 999, label: 'List' }
+        { value: 10, label: this.$t('label.active') },
+        { value: 0, label: this.$t('label.inactive') }
       ],
       rules: {
         title: [
           {
             required: true,
-            message: 'Judul Berita harus diisi',
+            message: this.$t('news.news-title-required'),
             trigger: 'blur'
           },
           {
             min: 10,
-            message: 'Judul Berita minimal 10 karakter',
+            message: this.$t('news.news-title-min'),
             trigger: 'blur'
           },
           {
             max: 100,
-            message: 'Judul Berita maksimal 100 karakter',
+            message: this.$t('news.news-title-max'),
             trigger: 'blur'
           },
           {
@@ -187,21 +187,21 @@ export default {
         channel_id: [
           {
             required: true,
-            message: 'Sumber Berita harus diisi',
+            message: this.$t('news.news-source-required'),
             trigger: 'change'
           }
         ],
         source_date: [
           {
             required: true,
-            message: 'Tanggal harus diisi',
+            message: this.$t('news.news-date-required'),
             trigger: 'change'
           }
         ],
         source_url: [
           {
             required: true,
-            message: 'URL Berita harus diisi',
+            message: this.$t('news.news-url-required'),
             trigger: 'blur'
           },
           {
@@ -212,7 +212,7 @@ export default {
         content: [
           {
             required: true,
-            message: 'Konten Berita harus diisi',
+            message: this.$t('news.news-content-required'),
             trigger: 'blur'
           },
           {
@@ -223,19 +223,16 @@ export default {
         status: [
           {
             required: true,
-            message: 'Status Berita harus diisi',
-            trigger: 'blur'
-          }
-        ],
-        featured: [
-          {
-            required: true,
-            message: 'Prioritas Berita harus diisi',
+            message: this.$t('news.news-status-required'),
             trigger: 'blur'
           }
         ],
         kabkota_id: [
-          { required: true, message: 'Target harus diisi', trigger: 'change' }
+          {
+            required: true,
+            message: this.$t('news.news-target-required'),
+            trigger: 'change'
+          }
         ]
       }
     }
@@ -260,7 +257,7 @@ export default {
 
       this.getArea()
 
-      if (checkPermission(['staffKabkota'])) {
+      if (checkPermission([this.RolesUser.STAFFKABKOTA])) {
         this.news.kabkota_id = authUser.kabkota_id
         this.checkStaff = true
       }
@@ -268,7 +265,7 @@ export default {
     getArea() {
       requestArea().then(response => {
         this.area = response.data.items
-        this.area.unshift({ id: 1, name: 'JAWA BARAT' })
+        this.area.unshift({ id: 1, name: this.$t('label.area-jabar') })
       })
     },
     fetchData(id) {
@@ -313,11 +310,7 @@ export default {
 
         if (this.isEdit) {
           const id = this.$route.params && this.$route.params.id
-          if (data.seq !== 999) {
-            data.featured = true
-          } else {
-            data.featured = false
-          }
+
           await update(id, data)
 
           this.$message.success(this.$t('crud.update-success'))
@@ -325,8 +318,7 @@ export default {
           this.$router.push('/news/index')
         } else {
           data.status = 0
-          data.featured = false
-          data.seq = 999
+
           await create(data)
 
           this.$message.success(this.$t('crud.create-success'))

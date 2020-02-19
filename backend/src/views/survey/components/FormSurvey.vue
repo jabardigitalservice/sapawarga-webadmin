@@ -76,6 +76,13 @@
             />
           </el-form-item>
 
+          <el-form-item :label="$t('label.push-notification')">
+            <el-radio-group v-model="form.is_push_notification" name="notification">
+              <el-radio-button :label="true">{{ $t('label.true') }}</el-radio-button>
+              <el-radio-button :label="false">{{ $t('label.false') }}</el-radio-button>
+            </el-radio-group>
+          </el-form-item>
+
           <el-form-item :label="$t('label.survey-link')" prop="external_url">
             <el-input v-model="form.external_url" type="text" :placeholder="$t('label.survey-link-sample')" />
           </el-form-item>
@@ -119,7 +126,9 @@ const defaultForm = {
   kabkota_id: null,
   kec_id: null,
   kel_id: null,
-  rw: null
+  rw: null,
+  is_push_notification: true
+
 }
 
 export default {
