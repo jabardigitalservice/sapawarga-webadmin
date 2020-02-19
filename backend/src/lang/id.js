@@ -253,7 +253,15 @@ export default {
     'users-last-access': 'Akses Terakhir',
     'users-telp': 'Telp',
     'users-status': 'Status',
-    'users-actions': 'Actions'
+    'users-actions': 'Actions',
+    'users-phone': 'Nomor Telepon',
+    'users-last-update': 'Update Terakhir',
+    'users-last-activities': 'Aktifitas Terakhir',
+    'users-option-profile': 'Pilih Kelengkapan Profil',
+    'users-profile-complete': 'Lengkap',
+    'users-profile-incomplete': 'Tidak Lengkap',
+    'users-filter-hide': 'Sembunyikan Filter',
+    'users-filter-add': 'Tambah Filter'
 
   },
   popup: {
