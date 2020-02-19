@@ -152,7 +152,7 @@ export default {
     }
 
     const validatorUrl = (rule, value, callback) => {
-      if (value !== null && !validUrl(value)) {
+      if (value !== "" && !validUrl(value)) {
         callback(new Error('URL tidak valid'))
       }
 
