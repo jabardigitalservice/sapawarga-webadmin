@@ -138,7 +138,7 @@ export default {
         limit: 10
       },
       tableDataStatistik: [],
-      tableDataStatistikTotal: [{ title: this.$t('news.news-category-all'), count: 0 }]
+      tableDataStatistikTotal: []
     }
   },
 
@@ -192,7 +192,12 @@ export default {
       fetchStatistic().then(response => {
         this.tableDataStatistik = response.data.items
         const totalChannels = this.tableDataStatistik.reduce((a, b) => a + parseInt(b.count), 0)
-        this.tableDataStatistikTotal[0].count = totalChannels
+        this.tableDataStatistikTotal = [
+          {
+            title: this.$t('news.news-category-all'),
+            count: totalChannels
+          }
+        ]
         this.listLoading = false
       })
     },
