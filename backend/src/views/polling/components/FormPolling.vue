@@ -74,9 +74,6 @@
               <el-form-item
                 v-for="(answer) in polling.answers"
                 :key="answer.id"
-                :rules="{
-                  required: true, message: this.$t('label.polling-answer-required'), trigger: 'blur'
-                }"
               >
                 <el-row>
                   <el-col :sm="18" :md="18" :lg="20" :xl="20">
