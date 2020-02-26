@@ -77,6 +77,7 @@ export default {
         PUBLISHED: 10
       },
       listQuery: {
+        name: null,
         search: null,
         sort_by: 'created_at',
         sort_order: 'descending',

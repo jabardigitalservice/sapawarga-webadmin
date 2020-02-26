@@ -2,9 +2,14 @@
   <el-card class="box-card" style="margin-bottom: 10px">
     <el-form>
       <el-row :gutter="10">
-        <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="12">
+        <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="6">
           <el-form-item style="margin-bottom: 0">
-            <el-input v-model="listQuery.search" placeholder="Nama Kegiatan" />
+            <el-input v-model="listQuery.search" :placeholder="$t('label.post-title')" />
+          </el-form-item>
+        </el-col>
+        <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="6">
+          <el-form-item style="margin-bottom: 0">
+            <el-input v-model="listQuery.name" :placeholder="$t('label.post-name')" />
           </el-form-item>
         </el-col>
         <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="6">
@@ -13,11 +18,11 @@
               v-model="listQuery.status"
               clearable
               filterable
-              placeholder="Pilih Status"
+              :placeholder="$t('label.status-select')"
               style="width: 100%"
             >
-              <el-option value="10" label="Aktif" />
-              <el-option value="0" label="Tidak Aktif" />
+              <el-option value="10" :label="$t('label.active')" />
+              <el-option value="0" :label="$t('label.inactive')" />
             </el-select>
           </el-form-item>
         </el-col>
