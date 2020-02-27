@@ -8,9 +8,11 @@
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%" @sort-change="changeSort">
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
 
-          <el-table-column prop="text" sortable="custom" :label="$t('label.post-title')" min-width="300" />
+          <el-table-column prop="text" sortable="custom" :label="$t('label.post-title')" min-width="250" />
 
-          <el-table-column prop="status" sortable="custom" class-name="status-col" :label="$t('label.status')" width="150px">
+          <el-table-column prop="user.name" sortable="custom" :label="$t('label.post-name')" min-width="200" />
+
+          <el-table-column prop="status" sortable="custom" class-name="status-col" :label="$t('label.status')" min-width="150">
             <template slot-scope="{row}">
               <el-tag :type="row.status | statusFilter">
                 {{ row.status_label }}
@@ -18,12 +20,12 @@
             </template>
           </el-table-column>
 
-          <el-table-column prop="likes_count" sortable="custom" align="center" :label="$t('label.post-like')" width="150" />
+          <el-table-column prop="likes_count" sortable="custom" align="center" :label="$t('label.post-like')" min-width="150" />
 
-          <el-table-column align="center" :label="$t('label.actions')" width="200px">
+          <el-table-column align="center" :label="$t('label.actions')" min-width="200">
             <template slot-scope="scope">
               <router-link :to="'/post/detail/'+scope.row.id">
-                <el-tooltip content="Detail Kegiatan" placement="top">
+                <el-tooltip :content="$t('label.post-detail')" placement="top">
                   <el-button type="primary" icon="el-icon-view" size="small" />
                 </el-tooltip>
               </router-link>
@@ -78,7 +80,7 @@ export default {
       },
       listQuery: {
         name: null,
-        search: null,
+        text: null,
         sort_by: 'created_at',
         sort_order: 'descending',
         page: 1,
