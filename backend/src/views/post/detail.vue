@@ -8,9 +8,10 @@
           <div slot="header" class="clearfix">
             <span>{{ $t('label.image') }}</span>
           </div>
-          <el-carousel indicator-position="outside" :autoplay="false" trigger="click" height="250px">
-            <el-carousel-item v-for="item in 5" :key="item">
-              <h3>{{ item }}</h3>
+          <el-carousel indicator-position="outside" :autoplay="false" trigger="click">
+            <el-carousel-item v-for="(item, index) in imageArray" :key="index">
+              <img v-if="imageArray === null" :src="imageNone" alt="" width="350px">
+              <img v-else :src="item.gambar" alt="">
             </el-carousel-item>
           </el-carousel>
         </el-card>
@@ -52,7 +53,15 @@ export default {
       tableDataDescription: [],
       tableImageAttachment: [],
       image: null,
-      imageNone: require('@/assets/none.png')
+      imageNone: require('@/assets/none.png'),
+      imageArray: [
+        {
+          gambar: require('@/assets/none.png')
+        },
+        {
+          gambar: require('@/assets/user.png')
+        }
+      ]
     }
   },
   async created() {
@@ -146,4 +155,5 @@ export default {
 	float: right;
 	margin: 10px 5px 100px 5px;
 }
+
 </style>
