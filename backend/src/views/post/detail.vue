@@ -3,7 +3,19 @@
     <p class="warn-content"><a href="#">{{ $t('label.post-detail') }}</a></p>
 
     <el-row>
-      <el-col :sm="24">
+      <el-col :sm="24" :md="9">
+        <el-card :body-style="{ padding: '15px'}" class="post-image">
+          <div slot="header" class="clearfix">
+            <span>{{ $t('label.image') }}</span>
+          </div>
+          <el-carousel indicator-position="outside" :autoplay="false" trigger="click" height="250px">
+            <el-carousel-item v-for="item in 5" :key="item">
+              <h3>{{ item }}</h3>
+            </el-carousel-item>
+          </el-carousel>
+        </el-card>
+      </el-col>
+      <el-col :sm="24" :md="15">
         <el-card>
           <div slot="header" class="clearfix">
             <span>{{ $t('label.post-data') }}</span>
