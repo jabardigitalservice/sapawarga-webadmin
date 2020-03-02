@@ -8,10 +8,11 @@
           <div slot="header" class="clearfix">
             <span>{{ $t('label.image') }}</span>
           </div>
+
           <el-carousel indicator-position="outside" :autoplay="false" trigger="click">
-            <el-carousel-item v-for="(item, index) in imageArray" :key="index">
-              <img v-if="imageArray === null" :src="imageNone" alt="" width="350px">
-              <img v-else :src="item.gambar" alt="">
+            <img v-if="imageArray.length < 1" :src="imageNone" alt="" width="350px">
+            <el-carousel-item v-for="(item, index) in imageArray" v-else :key="index">
+              <img :src="item.gambar" alt="">
             </el-carousel-item>
           </el-carousel>
         </el-card>
