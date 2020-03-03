@@ -72,13 +72,17 @@ export default {
   methods: {
     getDetail(id) {
       fetchRecord(id).then(response => {
-        const { user, status_label, created_at, text, image_path_full } = response.data
+        const { user, status_label, created_at, text, tags } = response.data
         this.status = response.data.status
         this.image = response.data.image_path_full
         this.tableDataRecord = [
           {
             title: this.$t('label.post-detail-name'),
             content: user.name
+          },
+          {
+            title: this.$t('label.post-tag'),
+            content: tags || '-'
           },
           {
             title: this.$t('label.post-detail-area'),
