@@ -2,17 +2,22 @@
   <el-card class="box-card" style="margin-bottom: 10px">
     <el-form>
       <el-row :gutter="10">
-        <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="6">
+        <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="5">
           <el-form-item style="margin-bottom: 0">
             <el-input v-model="listQuery.text" :placeholder="$t('label.post-title')" />
           </el-form-item>
         </el-col>
-        <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="6">
+        <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="5">
           <el-form-item style="margin-bottom: 0">
             <el-input v-model="listQuery.name" :placeholder="$t('label.post-name')" />
           </el-form-item>
         </el-col>
-        <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="6">
+        <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="5">
+          <el-form-item style="margin-bottom: 0">
+            <InputCategory v-model="listQuery.tags" name="category_id" category-type="user_post" :title="$t('label.post-tag')" prop="category" style="width:100%" />
+          </el-form-item>
+        </el-col>
+        <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="5">
           <el-form-item style="margin-bottom: 0">
             <el-select
               v-model="listQuery.status"
@@ -26,7 +31,7 @@
             </el-select>
           </el-form-item>
         </el-col>
-        <el-col :xs="24" :sm="6" :md="6">
+        <el-col :xs="24" :sm="6" :md="4">
           <el-button type="primary" size="small" @click="submitSearch">
             {{ $t('crud.search') }}
           </el-button>
@@ -40,11 +45,10 @@
 </template>
 
 <script>
+import InputCategory from '@/components/InputCategory'
 
 export default {
-  components: {
-
-  },
+  components: { InputCategory },
   props: {
     listQuery: {
       type: Object,
