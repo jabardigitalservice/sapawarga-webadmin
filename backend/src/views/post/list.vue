@@ -12,6 +12,12 @@
 
           <el-table-column prop="user.name" sortable="custom" :label="$t('label.post-name')" min-width="200" />
 
+          <el-table-column prop="tags" sortable="custom" :label="$t('label.post-tag')" align="center" min-width="200">
+            <template slot-scope="{row}">
+              {{ row.tags || '-' }}
+            </template>
+          </el-table-column>
+
           <el-table-column prop="status" sortable="custom" class-name="status-col" :label="$t('label.status')" min-width="150">
             <template slot-scope="{row}">
               <el-tag :type="row.status | statusFilter">
@@ -81,6 +87,7 @@ export default {
       listQuery: {
         name: null,
         text: null,
+        tags: null,
         sort_by: 'created_at',
         sort_order: 'descending',
         page: 1,
