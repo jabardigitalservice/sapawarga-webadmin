@@ -4,7 +4,7 @@
       v-for="item in options"
       :key="item.value"
       :label="item.label"
-      :value="item.value"
+      :value="postCategory ? item.label : item.value"
     />
   </el-select>
 </template>
@@ -26,6 +26,12 @@ export default {
     title: {
       type: String,
       default: 'Pilih Kategori',
+      required: false
+    },
+
+    postCategory: {
+      type: Boolean,
+      default: false,
       required: false
     }
   },
