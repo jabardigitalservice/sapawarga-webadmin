@@ -9,10 +9,11 @@
             <span>{{ $t('label.image') }}</span>
           </div>
 
-          <el-carousel indicator-position="outside" :autoplay="false" trigger="click">
-            <img v-if="imageArray.length < 1" :src="imageNone" alt="" width="350px">
-            <el-carousel-item v-for="(item, index) in imageArray" v-else :key="index">
-              <img :src="item.gambar" alt="">
+          <img v-if="!imageArray" :src="imageNone" class="multiple-images">
+
+          <el-carousel v-else indicator-position="outside" :autoplay="false" trigger="click">
+            <el-carousel-item v-for="(item, index) in imageArray" :key="index">
+              <img :src="item.url" class="multiple-images">
             </el-carousel-item>
           </el-carousel>
         </el-card>
@@ -23,8 +24,6 @@
             <span>{{ $t('label.post-data') }}</span>
           </div>
           <detail-data :table-content-data="tableDataRecord" />
-
-          <detail-data :table-content-data="tableImageAttachment" :input-image="image || imageNone" />
 
           <detail-data :table-content-data="tableDataDescription" />
         </el-card>
@@ -50,19 +49,11 @@ export default {
     return {
       id: null,
       status: null,
+      imageArray: null,
       tableDataRecord: [],
       tableDataDescription: [],
       tableImageAttachment: [],
-      image: null,
-      imageNone: require('@/assets/none.png'),
-      imageArray: [
-        {
-          gambar: require('@/assets/none.png')
-        },
-        {
-          gambar: require('@/assets/user.png')
-        }
-      ]
+      imageNone: require('@/assets/none.png')
     }
   },
   async created() {
@@ -74,7 +65,7 @@ export default {
       fetchRecord(id).then(response => {
         const { user, status_label, created_at, text, tags } = response.data
         this.status = response.data.status
-        this.image = response.data.image_path_full
+        this.imageArray = response.data.images
         this.tableDataRecord = [
           {
             title: this.$t('label.post-detail-name'),
@@ -95,13 +86,6 @@ export default {
           {
             title: this.$t('label.created_at'),
             content: parsingDatetime(created_at)
-          }
-        ]
-
-        this.tableImageAttachment = [
-          {
-            title: this.$t('label.image'),
-            content: image_path_full
           }
         ]
 
@@ -160,5 +144,11 @@ export default {
 	float: right;
 	margin: 10px 5px 100px 5px;
 }
-
+.multiple-images {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border-radius: 7px;
+  margin: auto;
+}
 </style>
