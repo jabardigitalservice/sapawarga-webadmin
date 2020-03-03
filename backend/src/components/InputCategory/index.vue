@@ -1,5 +1,5 @@
 <template>
-  <el-select v-model="selected" clearable placeholder="Pilih Kategori" name="category_id" @change="$emit('input', $event)">
+  <el-select v-model="selected" clearable :placeholder="title" name="category_id" @change="$emit('input', $event)">
     <el-option
       v-for="item in options"
       :key="item.value"
@@ -21,6 +21,12 @@ export default {
     categoryType: {
       type: String,
       required: true
+    },
+
+    title: {
+      type: String,
+      default: 'Pilih Kategori',
+      required: false
     }
   },
   data() {
