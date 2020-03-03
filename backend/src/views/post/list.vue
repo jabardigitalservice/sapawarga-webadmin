@@ -26,7 +26,7 @@
             </template>
           </el-table-column>
 
-          <el-table-column prop="likes_count" sortable="custom" align="center" :label="$t('label.post-like')" min-width="150" />
+          <el-table-column prop="likes_count" sortable="custom" align="center" :label="$t('label.post-like')" min-width="110" />
 
           <el-table-column align="center" :label="$t('label.actions')" min-width="200">
             <template slot-scope="scope">
