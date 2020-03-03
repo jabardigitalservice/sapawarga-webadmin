@@ -691,6 +691,7 @@ export default {
     'post-name': 'Nama Pengguna',
     'post-detail-reject': 'Tolak',
     'post-title': 'Nama Kegiatan',
+    'post-tag-select': 'Pilih Label',
     'post-detail': 'Detail Kegiatan',
     'post-tooltip-active': 'Aktifkan',
     'post-detail-accept': 'Tampilkan',
