@@ -12,7 +12,7 @@
 
           <el-table-column prop="user.name" sortable="custom" :label="$t('label.post-name')" min-width="200" />
 
-          <el-table-column prop="tags" sortable="custom" :label="$t('label.post-tag')" align="center" min-width="200">
+          <el-table-column prop="tags" sortable="custom" :label="$t('label.post-tag')" align="center" min-width="150">
             <template slot-scope="{row}">
               {{ row.tags || '-' }}
             </template>
