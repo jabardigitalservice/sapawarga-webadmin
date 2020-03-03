@@ -14,7 +14,7 @@
         </el-col>
         <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="5">
           <el-form-item style="margin-bottom: 0">
-            <InputCategory v-model="listQuery.tags" name="category_id" category-type="user_post" :title="$t('label.post-tag')" prop="category" style="width:100%" />
+            <InputCategory v-model="listQuery.tags" name="category_id" category-type="user_post" :title="$t('label.post-tag-select')" :post-category="true" prop="category" style="width:100%" />
           </el-form-item>
         </el-col>
         <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="5">
