@@ -239,6 +239,10 @@ code {
   font-family:'Open Sans', Arial, sans-serif;
 }
 
+.post-image {
+  margin-right: 10px;
+}
+
 // news important public
 .news-important-public {
   margin-bottom: 50px;
@@ -365,6 +369,10 @@ code {
     .text {
       margin: 0 25px;
     }
+  }
+
+  .post-image {
+    margin-bottom: 10px;
   }
 
 }

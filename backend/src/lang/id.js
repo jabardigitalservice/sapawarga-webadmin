@@ -604,6 +604,7 @@ export default {
     'select-source': 'Pilih Sumber',
     'select-target': 'Pilih Target',
     'title-broadcast': 'Judul Pesan',
+    'category-select': 'Pilih Kategori',
     'push-notification': 'Kirim Notifikasi',
     'scheduled_datetime': 'Tanggal dan Waktu',
 
@@ -683,12 +684,14 @@ export default {
     'broadcast-news': 'Berita',
     'broadcast-newsImportant': 'Info penting',
 
+    'post-tag': 'Label',
     'post-like': 'Likes',
     'post-detail-name': 'Nama',
     'post-data': 'Data Kegiatan',
     'post-name': 'Nama Pengguna',
     'post-detail-reject': 'Tolak',
     'post-title': 'Nama Kegiatan',
+    'post-tag-select': 'Pilih Label',
     'post-detail': 'Detail Kegiatan',
     'post-tooltip-active': 'Aktifkan',
     'post-detail-accept': 'Tampilkan',
