@@ -36,7 +36,8 @@ export const PopupFeature = Object.freeze({
   SURVEY: 'survey',
   POLLING: 'polling',
   NEWS: 'news',
-  NEWS_IMPORTANT: 'news-important'
+  NEWS_IMPORTANT: 'news-important',
+  GAMIFICATION: 'gamification'
 })
 
 export const RolesUser = Object.freeze({

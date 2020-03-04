@@ -34,13 +34,14 @@
                 <el-option :label="$t('popup.popup-polling')" value="polling" />
                 <el-option :label="$t('popup.popup-news')" value="news" />
                 <el-option :label="$t('popup.popup-newsImportant')" value="news-important" />
+                <el-option :label="$t('popup.popup-gamification')" value="gamification" />
               </el-select>
-              <span v-if="popup.internal_object_type !== null">
+              <span v-if="popup.internal_object_type !== null && popup.internal_object_type !== PopupFeature.GAMIFICATION">
                 <el-button type="success" @click="dialog(popup.internal_object_type)">{{ $t('popup.popup-selection') }}</el-button>
               </span>
             </el-form-item>
 
-            <el-form-item v-if="popup.type === $t('label.internal')" :label="titleFitur" prop="internal_object_name">
+            <el-form-item v-if="popup.type === $t('label.internal') && popup.internal_object_type !== PopupFeature.GAMIFICATION" :label="titleFitur" prop="internal_object_name">
               <el-input v-model="popup.internal_object_name" disabled type="text" name="internal_object_name" />
             </el-form-item>
           </div>
@@ -135,6 +136,7 @@ export default {
     }
 
     return {
+      PopupFeature,
       loading: false,
       popup: {
         title: null,
@@ -147,8 +149,7 @@ export default {
         internal_object_id: null,
         internal_object_name: null,
         start_date: moment().format('YYYY-MM-DD HH:mm:ss'),
-        end_date: moment().add(1, 'days').format('YYYY-MM-DD HH:mm:ss'),
-        description: null
+        end_date: moment().add(1, 'days').format('YYYY-MM-DD HH:mm:ss')
       },
       dialogName: null,
       showDialog: false,
