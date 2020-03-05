@@ -55,7 +55,7 @@ export default {
         this.longitude = longitude
         const textPhoneMsg = (phone_numbers) ? phone_numbers.map(e => e.type + ': ' + e.phone_number).join(', ') : '-'
         let wilayah = null
-        if (kabkota){
+        if (kabkota) {
           wilayah = [kabkota, kecamatan, kelurahan].filter(e => e.name !== null).map(e => e.name).join(', ')
         }
         this.tableData = [
