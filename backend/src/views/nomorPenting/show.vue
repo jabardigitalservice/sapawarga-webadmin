@@ -54,7 +54,10 @@ export default {
         this.latitude = latitude
         this.longitude = longitude
         const textPhoneMsg = (phone_numbers) ? phone_numbers.map(e => e.type + ': ' + e.phone_number).join(', ') : '-'
-        const wilayah = [kabkota, kecamatan, kelurahan].filter(e => e.name !== null).map(e => e.name).join(', ')
+        let wilayah = null
+        if (kabkota) {
+          wilayah = [kabkota, kecamatan, kelurahan].filter(e => e.name !== null).map(e => e.name).join(', ')
+        }
         this.tableData = [
           {
             title: 'Nama Instansi',
