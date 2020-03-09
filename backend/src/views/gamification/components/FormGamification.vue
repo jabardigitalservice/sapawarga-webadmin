@@ -108,7 +108,7 @@
             <el-col :xs="24" :sm="12" :lg="12">
               <el-form-item :label="$t('label.gamification-badge-logo')">
                 <AttachmentFileUpload
-                  type="banner_photo"
+                  type="badge_photo"
                   :type-file="typeFile"
                   :limit-file="1"
                   :file-path="filepath"
