@@ -28,8 +28,8 @@
             </el-form-item>
           </div>
           <div v-else>
-            <el-form-item :label="$t('popup.popup-fitur')" prop="internal_object_type">
-              <el-select v-model="popup.internal_object_type" :placeholder="$t('popup.popup-title')" name="fitur">
+            <el-form-item :label="$t('popup.popup-feature')" prop="internal_object_type">
+              <el-select v-model="popup.internal_object_type" :placeholder="$t('popup.popup-feature-select')" name="feature">
                 <el-option :label="$t('popup.popup-survey')" value="survey" />
                 <el-option :label="$t('popup.popup-polling')" value="polling" />
                 <el-option :label="$t('popup.popup-news')" value="news" />
