@@ -280,7 +280,7 @@ export default {
         }
       }
       if (this.popup.type === PopupCategory.INTERNAL) {
-        this.$refs.popup.model.link_url = ''
+        this.$refs.popup.model.link_url = null
       } else if (this.popup.type === PopupCategory.EXTERNAL) {
         this.$refs.popup.model.internal_object_type = null
         this.$refs.popup.model.internal_object_name = null
@@ -296,19 +296,19 @@ export default {
       if (this.popup.internal_object_type === PopupFeature.SURVEY) {
         this.titleFitur = this.$t('label.survey-title')
         this.titlePopup = this.$t('label.survey-list')
-        this.popup.internal_object_name = ' '
+        this.popup.internal_object_name = null
       } else if (this.popup.internal_object_type === PopupFeature.POLLING) {
         this.titleFitur = this.$t('label.polling-title')
         this.titlePopup = this.$t('label.polling-list')
-        this.popup.internal_object_name = ' '
+        this.popup.internal_object_name = null
       } else if (this.popup.internal_object_type === PopupFeature.NEWS) {
         this.titleFitur = this.$t('news.news-title')
         this.titlePopup = this.$t('news.news-list')
-        this.popup.internal_object_name = ' '
+        this.popup.internal_object_name = null
       } else {
         this.titleFitur = this.$t('label.newsImportant-title')
         this.titlePopup = this.$t('label.newsImportant-list')
-        this.popup.internal_object_name = ' '
+        this.popup.internal_object_name = null
       }
     }
   },
