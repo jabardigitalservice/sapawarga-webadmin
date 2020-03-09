@@ -201,15 +201,15 @@ export default {
         internal_object_type: [
           {
             required: true,
-            message: this.$t('errors.popup-fitur-not-null'),
-            trigger: 'change'
+            message: this.$t('errors.popup-feature-not-null'),
+            trigger: 'blur'
           }
         ],
         internal_object_name: [
           {
             required: true,
             message: this.$t('errors.popup-type-name-not-null'),
-            trigger: 'change'
+            trigger: 'blur'
           }
         ],
         start_date: [
@@ -358,11 +358,8 @@ export default {
     },
     async submitForm() {
       const valid = await this.$refs.popup.validate()
-      if (this.popup.internal_object_name === ' ') {
-        this.popup.internal_object_name = null
-        if (!valid) {
-          return
-        }
+
+      if (!valid) {
         return
       }
 
@@ -372,6 +369,9 @@ export default {
         Object.assign(data, this.popup)
         if (data.type === PopupCategory.INTERNAL) {
           data.link_url = null
+        } else if (data.type === PopupCategory.INTERNAL && data.internal_object_type === PopupFeature.GAMIFICATION) {
+          data.internal_object_id = null
+          data.internal_object_name = null
         } else if (data.type === PopupCategory.EXTERNAL) {
           data.internal_object_type = null
           data.internal_object_id = null
