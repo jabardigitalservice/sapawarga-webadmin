@@ -268,7 +268,7 @@ export default {
   popup: {
     'popup-news': 'Berita',
     'popup-link': 'Tautan',
-    'popup-fitur': 'Fitur',
+    'popup-feature': 'Fitur',
     'popup-status': 'Status',
     'popup-survey': 'Survei',
     'popup-actions': 'Actions',
@@ -281,8 +281,9 @@ export default {
     'popup-external': 'Eksternal',
     'popup-url-pop-up': 'URL Pop Up',
     'popup-end-date': 'Tanggal Akhir',
-    'popup-title-fitur': 'Judul Fitur',
     'popup-start-date': 'Tanggal Mulai',
+    'popup-title-feature': 'Judul Fitur',
+    'popup-feature-select': 'Pilih Fitur',
     'popup-newsImportant': 'Info penting',
     'popup-time-publish': 'Waktu Publikasi',
     'popup-choose-category': 'Pilih Kategori',
@@ -373,7 +374,7 @@ export default {
 
     'map-load-error': 'Gagal memuat map',
     'broadcast-datetime': 'Jadwal yang dipilih telah lewat',
-    'popup-fitur-not-null': 'Fitur Pop Up harus diisi.',
+    'popup-feature-not-null': 'Fitur Pop Up harus diisi.',
     'popup-start-date-not-null': 'Tanggal Mulai harus diisi.',
     'popup-end-date-not-null': 'Tanggal Berakhir harus diisi.',
     'popup-description-not-null': 'Deskripsi harus diisi.',
