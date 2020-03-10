@@ -749,8 +749,10 @@ export default {
 
     'gamification-fitur-news': 'Berita',
     'gamification-fitur-user_post': 'Kegiatan RW',
-    'gamification-event-news_view_detail': 'Melihat berita',
-    'gamification-event-user_post_create': 'Membuat kegiatan RW',
+    'gamification-fitur-news_important': 'Info Penting',
+    'gamification-event-news_view_detail': 'Melihat Berita',
+    'gamification-event-user_post_create': 'Membuat Kegiatan RW',
+    'gamification-event-news_important_view_detail': 'Melihat Info Penting',
 
     'login': 'Masuk',
     'login-forgot-password': 'Lupa kata sandi? Hubungi',

@@ -3,7 +3,7 @@
     <el-row v-for="(element, index) in tableContentData" :key="index" :gutter="10">
       <el-col :xs="24" :sm="6">{{ element.title }} {{ device==='mobile'?':':'' }}</el-col>
       <el-col :xs="24" :sm="18">
-        <div v-if="inputImage"><img :src="inputImage" alt=""></div>
+        <div v-if="inputImage"><img :src="inputImage" alt="" :style="width"></div>
         <div v-else-if="inputList">
           <ul v-for="(data, arrayIndex) in element.content" :key="arrayIndex">
             <li><a :href="data.file_url" target="_blank" class="link-news-important">{{ data.name }}</a><br></li>
@@ -36,6 +36,11 @@ export default {
     inputList: {
       type: Array,
       default: null
+    },
+    width: {
+      type: String,
+      default: null,
+      require: false
     }
   },
   computed: {
