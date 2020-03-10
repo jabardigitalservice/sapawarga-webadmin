@@ -23,7 +23,7 @@
 
           <el-table-column prop="title" sortable="custom" :label="$t('label.gamification-title-mision')" />
 
-          <el-table-column prop="status" sortable="custom" :label="$t('label.status')">
+          <el-table-column prop="status" sortable="custom" align="center" :label="$t('label.status')">
             <template slot-scope="{row}">
               <el-tag :type="row.status | statusFilter">
                 {{ row.status_label }}
@@ -31,13 +31,13 @@
             </template>
           </el-table-column>
 
-          <el-table-column prop="start_date" sortable="custom" :label="$t('label.start-date')">
+          <el-table-column prop="start_date" sortable="custom" align="center" :label="$t('label.start-date')">
             <template slot-scope="{row}">
               {{ row.start_date | moment('D MMMM YYYY') }}
             </template>
           </el-table-column>
 
-          <el-table-column prop="end_date" sortable="custom" :label="$t('label.end-date')">
+          <el-table-column prop="end_date" sortable="custom" align="center" :label="$t('label.end-date')">
             <template slot-scope="{row}">
               {{ row.end_date | moment('D MMMM YYYY') }}
             </template>
