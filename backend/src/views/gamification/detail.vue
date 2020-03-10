@@ -7,7 +7,7 @@
             <span>{{ $t('label.gamification-detail') }}</span>
           </div>
           <detail-data :table-content-data="tableDataNews" />
-          <detail-data :table-content-data="tableImageAttachment" :input-image="image || imageNone" />
+          <detail-data :table-content-data="tableImageAttachment" :input-image="image || imageNone" :width="'width:50px'" />
           <detail-data :table-content-data="tableDataDescription" />
         </el-card>
         <el-card>
