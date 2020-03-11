@@ -19,24 +19,15 @@
 
           <el-table-column prop="name" sortable="custom" label="Nama Instansi" />
 
-          <el-table-column label="Call Center" width="150px" class-name="status-col">
-            <template slot-scope="{row}">
-              <el-tag :type="row | callCenterFilterTag">
-                {{ row | callCenterFilterLabel }}
-              </el-tag>
-            </template>
-          </el-table-column>
+          <el-table-column prop="category.name" sortable="custom" align="center" label="Kategori" />
 
-          <el-table-column prop="category.name" sortable="custom" label="Kategori" />
-
-          <el-table-column prop="phone_numbers" label="Nomor Telepon">
+          <el-table-column prop="phone_numbers" align="center" label="Nomor Telepon">
             <template slot-scope="{row}">
               <div v-html="showPhoneNumbers(row.phone_numbers)" />
             </template>
           </el-table-column>
 
           <el-table-column prop="address" label="Alamat" />
-          <el-table-column prop="seq" sortable="custom" width="120" align="right" label="Sequence" />
 
           <el-table-column prop="status" sortable="custom" class-name="status-col" label="Status" width="150px">
             <template slot-scope="{row}">
@@ -46,26 +37,29 @@
             </template>
           </el-table-column>
 
-          <el-table-column align="center" label="Actions" width="250px">
+          <el-table-column align="center" label="Actions" width="225">
             <template slot-scope="scope">
+
               <router-link :to="'/nomor-penting/show/'+scope.row.id">
-                <el-button type="white" size="mini">
-                  View
-                </el-button>
-              </router-link>
-              <router-link v-if="!isDisabledButton" :to="(!isDisabledButton) ? '/nomor-penting/edit/'+scope.row.id : ''">
-                {{ /* untuk disabled bisa menggunakan function, seperti :disabled="checkDisabledButton()" */ }}
-                <el-button :disabled="isDisabledButton" type="white" size="mini">
-                  Edit
-                </el-button>
+                <el-tooltip :content="$t('label.newsImportant-tooltip-detail')" placement="top">
+                  <el-button type="primary" icon="el-icon-view" size="small" />
+                </el-tooltip>
               </router-link>
 
-              <el-button v-if="scope.row.status === 10 && !isDisabledButton" :disabled="isDisabledButton" type="danger" size="mini" @click="deactivateRecord(scope.row.id)">
-                Deactivate
-              </el-button>
-              <el-button v-if="scope.row.status === 0 && !isDisabledButton" :disabled="isDisabledButton" type="success" size="mini" @click="activateRecord(scope.row.id)">
-                Activate
-              </el-button>
+              <router-link v-if="!isDisabledButton" :to="(!isDisabledButton) ? '/nomor-penting/edit/'+scope.row.id : ''">
+                {{ /* untuk disabled bisa menggunakan function, seperti :disabled="checkDisabledButton()" */ }}
+                <el-tooltip :content="$t('label.newsImportant-tooltip-edit')" placement="top">
+                  <el-button type="warning" icon="el-icon-edit" size="small" :disabled="isDisabledButton" />
+                </el-tooltip>
+              </router-link>
+
+              <el-tooltip :content="$t('label.newsImportant-tooltip-nonactive')" placement="top">
+                <el-button v-if="scope.row.status === 10 && !isDisabledButton" :disabled="isDisabledButton" type="danger" icon="el-icon-circle-close" size="small" @click="deactivateRecord(scope.row.id)" />
+              </el-tooltip>
+
+              <el-tooltip :content="$t('label.newsImportant-tooltip-active')" placement="top">
+                <el-button v-if="scope.row.status === 0 && !isDisabledButton" :disabled="isDisabledButton" type="success" icon="el-icon-circle-check" size="small" @click="activateRecord(scope.row.id)" />
+              </el-tooltip>
 
             </template>
           </el-table-column>
@@ -95,18 +89,6 @@ export default {
         '-1': 'danger'
       }
       return statusMap[status]
-    },
-
-    callCenterFilterTag(row) {
-      const isCallCenter = row.kabkota_id === null && row.kec_id === null && row.kel_id === null
-
-      return isCallCenter ? 'success' : 'info'
-    },
-
-    callCenterFilterLabel(row) {
-      const isCallCenter = row.kabkota_id === null && row.kec_id === null && row.kel_id === null
-
-      return isCallCenter ? 'Ya' : 'Tidak'
     }
   },
   props: {
