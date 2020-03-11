@@ -2,9 +2,9 @@ import Layout from '@/layout'
 
 const dashboardRouter = {
   name: 'dashboard',
-  path: '',
+  path: 'dahboard',
   component: Layout,
-  redirect: 'dashboard',
+  redirect: '/',
   meta: {
     icon: 'home',
     roles: ['admin', 'staffProv', 'staffKabkota', 'pimpinan']
@@ -12,7 +12,7 @@ const dashboardRouter = {
   active: false,
   children: [
     {
-      path: 'dashboard',
+      path: '/dashboard',
       component: () => import('@/views/dashboard/index'),
       name: 'dashboard',
       meta: {
