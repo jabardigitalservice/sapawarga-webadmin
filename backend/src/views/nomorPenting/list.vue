@@ -14,22 +14,22 @@
 
         <ListFilter :list-query.sync="listQuery" @submit-search="getList" @reset-search="resetFilter" />
 
-        <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%" @sort-change="changeSort">
+        <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row @sort-change="changeSort">
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
 
-          <el-table-column prop="name" sortable="custom" label="Nama Instansi" />
+          <el-table-column prop="name" sortable="custom" min-width="150px" label="Nama Instansi" />
 
-          <el-table-column prop="category.name" sortable="custom" align="center" label="Kategori" />
+          <el-table-column prop="category.name" sortable="custom" align="center" width="150px" label="Kategori" />
 
-          <el-table-column prop="phone_numbers" align="center" label="Nomor Telepon">
+          <el-table-column prop="phone_numbers" align="center" width="150px" label="Nomor Telepon">
             <template slot-scope="{row}">
               <div v-html="showPhoneNumbers(row.phone_numbers)" />
             </template>
           </el-table-column>
 
-          <el-table-column prop="address" label="Alamat" />
+          <el-table-column prop="address" width="150px" label="Alamat" />
 
-          <el-table-column prop="status" sortable="custom" class-name="status-col" label="Status" width="150px">
+          <el-table-column prop="status" sortable="custom" class-name="status-col" width="150px" label="Status">
             <template slot-scope="{row}">
               <el-tag :type="row.status | statusFilter">
                 {{ row.status_label }}
@@ -41,23 +41,23 @@
             <template slot-scope="scope">
 
               <router-link :to="'/nomor-penting/show/'+scope.row.id">
-                <el-tooltip :content="$t('label.newsImportant-tooltip-detail')" placement="top">
+                <el-tooltip :content="$t('label.phone-book-tooltip-detail')" placement="top">
                   <el-button type="primary" icon="el-icon-view" size="small" />
                 </el-tooltip>
               </router-link>
 
               <router-link v-if="!isDisabledButton" :to="(!isDisabledButton) ? '/nomor-penting/edit/'+scope.row.id : ''">
                 {{ /* untuk disabled bisa menggunakan function, seperti :disabled="checkDisabledButton()" */ }}
-                <el-tooltip :content="$t('label.newsImportant-tooltip-edit')" placement="top">
+                <el-tooltip :content="$t('label.phone-book-tooltip-edit')" placement="top">
                   <el-button type="warning" icon="el-icon-edit" size="small" :disabled="isDisabledButton" />
                 </el-tooltip>
               </router-link>
 
-              <el-tooltip :content="$t('label.newsImportant-tooltip-nonactive')" placement="top">
+              <el-tooltip :content="$t('label.phone-book-tooltip-activate')" placement="top">
                 <el-button v-if="scope.row.status === 10 && !isDisabledButton" :disabled="isDisabledButton" type="danger" icon="el-icon-circle-close" size="small" @click="deactivateRecord(scope.row.id)" />
               </el-tooltip>
 
-              <el-tooltip :content="$t('label.newsImportant-tooltip-active')" placement="top">
+              <el-tooltip :content="$t('label.phone-book-tooltip-inactivate')" placement="top">
                 <el-button v-if="scope.row.status === 0 && !isDisabledButton" :disabled="isDisabledButton" type="success" icon="el-icon-circle-check" size="small" @click="activateRecord(scope.row.id)" />
               </el-tooltip>
 
