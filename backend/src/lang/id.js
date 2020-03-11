@@ -837,7 +837,12 @@ export default {
 
     'polling-rw-number': 'RW harus menggunakan angka',
     'polling-rw-count': 'RW harus 3 angka, contoh 001',
-    'polling-excerpt-required': 'Pengantar harus diisi'
+    'polling-excerpt-required': 'Pengantar harus diisi',
+
+    'phone-book-tooltip-edit': 'Edit Nomor penting',
+    'phone-book-tooltip-detail': 'Detail Nomor penting',
+    'phone-book-tooltip-activate': 'Aktifkan Nomor penting',
+    'phone-book-tooltip-inactivate': 'Nonaktifkan Nomor penting'
 
   },
   news: {

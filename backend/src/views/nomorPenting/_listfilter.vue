@@ -1,18 +1,18 @@
 <template>
   <el-card class="box-card" style="margin-bottom: 10px">
     <el-form>
-      <el-row :gutter="10" type="flex">
-        <el-col :span="4">
+      <el-row :gutter="10">
+        <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="4">
           <el-form-item style="margin-bottom: 0">
             <el-input v-model="listQuery.name" placeholder="Nama Instansi" />
           </el-form-item>
         </el-col>
-        <el-col :span="4">
+        <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="4">
           <el-form-item style="margin-bottom: 0">
             <el-input v-model="listQuery.phone" placeholder="Nomor Telepon" />
           </el-form-item>
         </el-col>
-        <el-col :span="4">
+        <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="4">
           <el-form-item style="margin-bottom: 0">
             <el-select
               v-model="listQuery.status"
@@ -26,7 +26,7 @@
             </el-select>
           </el-form-item>
         </el-col>
-        <el-col :span="8">
+        <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="8">
           <input-filter-area
             :parent-id="filterAreaParentId"
             :kabkota-id="listQuery.kabkota_id"
@@ -37,7 +37,7 @@
             @changeKelurahan="changeKelurahan"
           />
         </el-col>
-        <el-col :span="4">
+        <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="4">
           <el-button type="primary" size="small" @click="submitSearch">
             Cari
           </el-button>
