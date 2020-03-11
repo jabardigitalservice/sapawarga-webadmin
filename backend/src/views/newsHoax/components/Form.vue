@@ -3,7 +3,7 @@
     <el-row :gutter="20">
       <el-col :xs="24" :sm="8" :lg="5">
         <AttachmentPhotoUpload
-          type="news_photo"
+          type="news_hoax_photo"
           :initial-url="news.cover_path_url"
           :list-information="[this.$t('label.maximum-dimension-image')]"
           style="margin-bottom: 25px"
