@@ -28,19 +28,20 @@
             </el-form-item>
           </div>
           <div v-else>
-            <el-form-item :label="$t('popup.popup-fitur')" prop="internal_object_type">
-              <el-select v-model="popup.internal_object_type" :placeholder="$t('popup.popup-title')" name="fitur">
+            <el-form-item :label="$t('popup.popup-feature')" prop="internal_object_type">
+              <el-select v-model="popup.internal_object_type" :placeholder="$t('popup.popup-feature-select')" name="feature">
                 <el-option :label="$t('popup.popup-survey')" value="survey" />
                 <el-option :label="$t('popup.popup-polling')" value="polling" />
                 <el-option :label="$t('popup.popup-news')" value="news" />
                 <el-option :label="$t('popup.popup-newsImportant')" value="news-important" />
+                <el-option :label="$t('popup.popup-gamification')" value="gamification" />
               </el-select>
-              <span v-if="popup.internal_object_type !== null">
+              <span v-if="popup.internal_object_type !== null && popup.internal_object_type !== PopupFeature.GAMIFICATION">
                 <el-button type="success" @click="dialog(popup.internal_object_type)">{{ $t('popup.popup-selection') }}</el-button>
               </span>
             </el-form-item>
 
-            <el-form-item v-if="popup.type === $t('label.internal')" :label="titleFitur" prop="internal_object_name">
+            <el-form-item v-if="popup.type === $t('label.internal') && popup.internal_object_type !== PopupFeature.GAMIFICATION" :label="titleFitur" prop="internal_object_name">
               <el-input v-model="popup.internal_object_name" disabled type="text" name="internal_object_name" />
             </el-form-item>
           </div>
@@ -135,6 +136,7 @@ export default {
     }
 
     return {
+      PopupFeature,
       loading: false,
       popup: {
         title: null,
@@ -147,8 +149,7 @@ export default {
         internal_object_id: null,
         internal_object_name: null,
         start_date: moment().format('YYYY-MM-DD HH:mm:ss'),
-        end_date: moment().add(1, 'days').format('YYYY-MM-DD HH:mm:ss'),
-        description: null
+        end_date: moment().add(1, 'days').format('YYYY-MM-DD HH:mm:ss')
       },
       dialogName: null,
       showDialog: false,
@@ -200,15 +201,15 @@ export default {
         internal_object_type: [
           {
             required: true,
-            message: this.$t('errors.popup-fitur-not-null'),
-            trigger: 'change'
+            message: this.$t('errors.popup-feature-not-null'),
+            trigger: 'blur'
           }
         ],
         internal_object_name: [
           {
             required: true,
             message: this.$t('errors.popup-type-name-not-null'),
-            trigger: 'change'
+            trigger: 'blur'
           }
         ],
         start_date: [
@@ -279,7 +280,7 @@ export default {
         }
       }
       if (this.popup.type === PopupCategory.INTERNAL) {
-        this.$refs.popup.model.link_url = ''
+        this.$refs.popup.model.link_url = null
       } else if (this.popup.type === PopupCategory.EXTERNAL) {
         this.$refs.popup.model.internal_object_type = null
         this.$refs.popup.model.internal_object_name = null
@@ -295,19 +296,19 @@ export default {
       if (this.popup.internal_object_type === PopupFeature.SURVEY) {
         this.titleFitur = this.$t('label.survey-title')
         this.titlePopup = this.$t('label.survey-list')
-        this.popup.internal_object_name = ' '
+        this.popup.internal_object_name = null
       } else if (this.popup.internal_object_type === PopupFeature.POLLING) {
         this.titleFitur = this.$t('label.polling-title')
         this.titlePopup = this.$t('label.polling-list')
-        this.popup.internal_object_name = ' '
+        this.popup.internal_object_name = null
       } else if (this.popup.internal_object_type === PopupFeature.NEWS) {
         this.titleFitur = this.$t('news.news-title')
         this.titlePopup = this.$t('news.news-list')
-        this.popup.internal_object_name = ' '
+        this.popup.internal_object_name = null
       } else {
         this.titleFitur = this.$t('label.newsImportant-title')
         this.titlePopup = this.$t('label.newsImportant-list')
-        this.popup.internal_object_name = ' '
+        this.popup.internal_object_name = null
       }
     }
   },
@@ -357,11 +358,8 @@ export default {
     },
     async submitForm() {
       const valid = await this.$refs.popup.validate()
-      if (this.popup.internal_object_name === ' ') {
-        this.popup.internal_object_name = null
-        if (!valid) {
-          return
-        }
+
+      if (!valid) {
         return
       }
 
@@ -371,6 +369,9 @@ export default {
         Object.assign(data, this.popup)
         if (data.type === PopupCategory.INTERNAL) {
           data.link_url = null
+        } else if (data.type === PopupCategory.INTERNAL && data.internal_object_type === PopupFeature.GAMIFICATION) {
+          data.internal_object_id = null
+          data.internal_object_name = null
         } else if (data.type === PopupCategory.EXTERNAL) {
           data.internal_object_type = null
           data.internal_object_id = null

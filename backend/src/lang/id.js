@@ -266,31 +266,32 @@ export default {
 
   },
   popup: {
-    'popup-title': 'Judul Pop Up',
-    'popup-title-data': 'Data Pop-Up Informasi',
-    'popup-category': 'Kategori',
-    'popup-start-date': 'Tanggal Mulai',
-    'popup-end-date': 'Tanggal Akhir',
-    'popup-actions': 'Actions',
-    'popup-external': 'Eksternal',
-    'popup-internal': 'Internal',
-    'popup-link': 'Tautan',
-    'popup-url-pop-up': 'URL Pop Up',
-    'popup-fitur': 'Fitur',
-    'popup-status': 'Status',
-    'popup-title-fitur': 'Judul Fitur',
-    'popup-choose-category': 'Pilih Kategori',
-    'popup-survey': 'Survei',
-    'popup-polling': 'Polling',
     'popup-news': 'Berita',
-    'popup-newsImportant': 'Info penting',
+    'popup-link': 'Tautan',
+    'popup-feature': 'Fitur',
+    'popup-status': 'Status',
+    'popup-survey': 'Survei',
+    'popup-actions': 'Actions',
+    'popup-polling': 'Polling',
     'popup-selection': 'Pilihan',
+    'popup-category': 'Kategori',
+    'popup-gamification': 'Misi',
+    'popup-internal': 'Internal',
+    'popup-title': 'Judul Pop Up',
+    'popup-external': 'Eksternal',
+    'popup-url-pop-up': 'URL Pop Up',
+    'popup-end-date': 'Tanggal Akhir',
+    'popup-start-date': 'Tanggal Mulai',
+    'popup-title-feature': 'Judul Fitur',
+    'popup-feature-select': 'Pilih Fitur',
+    'popup-newsImportant': 'Info penting',
     'popup-time-publish': 'Waktu Publikasi',
-    'popup-add-new': 'Tambah Pop-Up Informasi Baru',
-    'popup-tooltip-detail': 'Detail Pop-Up Informasi',
+    'popup-choose-category': 'Pilih Kategori',
+    'popup-title-data': 'Data Pop-Up Informasi',
     'popup-tooltip-edit': 'Edit Pop-Up Informasi',
-    'popup-tooltip-delete': 'Hapus Pop-Up Informasi'
-
+    'popup-add-new': 'Tambah Pop-Up Informasi Baru',
+    'popup-tooltip-delete': 'Hapus Pop-Up Informasi',
+    'popup-tooltip-detail': 'Detail Pop-Up Informasi'
   },
   errors: {
     'internal-server-error': 'Telah terjadi kesalahan sistem, silahkan muat ulang halaman ini.',
@@ -373,7 +374,7 @@ export default {
 
     'map-load-error': 'Gagal memuat map',
     'broadcast-datetime': 'Jadwal yang dipilih telah lewat',
-    'popup-fitur-not-null': 'Fitur Pop Up harus diisi.',
+    'popup-feature-not-null': 'Fitur Pop Up harus diisi.',
     'popup-start-date-not-null': 'Tanggal Mulai harus diisi.',
     'popup-end-date-not-null': 'Tanggal Berakhir harus diisi.',
     'popup-description-not-null': 'Deskripsi harus diisi.',
@@ -604,6 +605,7 @@ export default {
     'select-source': 'Pilih Sumber',
     'select-target': 'Pilih Target',
     'title-broadcast': 'Judul Pesan',
+    'category-select': 'Pilih Kategori',
     'push-notification': 'Kirim Notifikasi',
     'scheduled_datetime': 'Tanggal dan Waktu',
 
@@ -683,12 +685,14 @@ export default {
     'broadcast-news': 'Berita',
     'broadcast-newsImportant': 'Info penting',
 
+    'post-tag': 'Label',
     'post-like': 'Likes',
     'post-detail-name': 'Nama',
     'post-data': 'Data Kegiatan',
     'post-name': 'Nama Pengguna',
     'post-detail-reject': 'Tolak',
     'post-title': 'Nama Kegiatan',
+    'post-tag-select': 'Pilih Label',
     'post-detail': 'Detail Kegiatan',
     'post-tooltip-active': 'Aktifkan',
     'post-detail-accept': 'Tampilkan',
@@ -833,7 +837,12 @@ export default {
 
     'polling-rw-number': 'RW harus menggunakan angka',
     'polling-rw-count': 'RW harus 3 angka, contoh 001',
-    'polling-excerpt-required': 'Pengantar harus diisi'
+    'polling-excerpt-required': 'Pengantar harus diisi',
+
+    'phone-book-tooltip-edit': 'Edit Nomor penting',
+    'phone-book-tooltip-detail': 'Detail Nomor penting',
+    'phone-book-tooltip-activate': 'Aktifkan Nomor penting',
+    'phone-book-tooltip-inactivate': 'Nonaktifkan Nomor penting'
 
   },
   news: {

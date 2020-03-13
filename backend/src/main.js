@@ -7,7 +7,7 @@ import VueMoment from 'vue-moment'
 import VueTheMask from 'vue-the-mask'
 import InfiniteScroll from 'vue-infinite-scroll'
 import L from 'leaflet'
-
+import VueAnalytics from 'vue-analytics'
 import Cookies from 'js-cookie'
 
 import 'normalize.css/normalize.css' // A modern alternative to CSS resets
@@ -69,6 +69,11 @@ Vue.use(VueMoment, {
 Vue.use(VueTheMask)
 Vue.use(InfiniteScroll)
 Vue.use(L)
+
+// analytic
+Vue.use(VueAnalytics, {
+  id: process.env.VUE_APP_ANALYTICS_ID
+})
 
 // register global utility filters.
 Object.keys(filters).forEach(key => {
