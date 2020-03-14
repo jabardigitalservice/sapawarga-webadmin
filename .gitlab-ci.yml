@@ -21,12 +21,12 @@ versioning:
       - version
 
 code_quality:
-  image: docker:19.03.5
+  image: docker:stable
   stage: code_quality
   only:
     - branches
   services:
-    - docker:19.03.5-dind
+    - docker:stable-dind
   variables:
     DOCKER_DRIVER: overlay2
   dependencies:
@@ -53,7 +53,7 @@ build_image:
   only:
     - branches
   services:
-    - docker:19.03.5-dind
+    - docker:dind
   variables:
     DOCKER_DRIVER: overlay2
   dependencies:
@@ -74,12 +74,12 @@ build_image:
 
 
 test_webadmin:
-  image: docker:19.03.5
+  image: docker:stable
   stage: test
   only:
     - branches
   services:
-    - docker:19.03.5-dind
+    - docker:dind
   dependencies:
     - versioning
   before_script:
@@ -113,7 +113,7 @@ release_all:
   image: tiangolo/docker-with-compose
   stage: release
   services:
-    - docker:19.03.5-dind
+    - docker:dind
   only:
     - develop
     - master
@@ -135,7 +135,7 @@ release_all:
     - docker push registry.gitlab.com/jdsteam/sapa-warga/sapawarga-webadmin:${VERSION}
 
 deploy_staging:
-  image: docker:19.03.5
+  image: docker:stable
   stage: deploy_staging
   only:
     - develop
