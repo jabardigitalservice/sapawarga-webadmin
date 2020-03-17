@@ -38,7 +38,11 @@
             </template>
           </el-table-column>
           <el-table-column prop="category.name" align="center" :label="$t('label.category')" sortable="custom" />
-          <el-table-column prop="source_date" align="center" :label="$t('label.date')" sortable="custom" />
+          <el-table-column prop="created_at" align="center" :label="$t('label.date')" sortable="custom">
+            <template slot-scope="{row}">
+              {{ row.created_at | moment('D MMM YYYY') }}
+            </template>
+          </el-table-column>
 
           <el-table-column align="center" :label="$t('label.actions')" min-width="130">
             <template slot-scope="scope">
