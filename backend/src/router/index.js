@@ -17,6 +17,7 @@ import pollingsurveyMenuRouter from './modules/polling-survey-menu'
 import notifikasiuserMenuRouter from './modules/notification-user-menu'
 import configurationMenuRouter from './modules/configuration-menu'
 import broadcastRouter from './modules/broadcast'
+import beneficiariesRouter from './modules/beneficiaries'
 
 /* Router Modules for Leader */
 import aspirationLeaderMenuRouter from './modules/LeaderMenu/aspiration-leader-menu'
@@ -161,6 +162,7 @@ export const asyncRoutes = [
   configurationMenuRouter,
   releaseManagementRouter,
   gamificationRouter,
+  beneficiariesRouter,
   { path: '*', redirect: '/404', active: false, hidden: true }
 ]
 
