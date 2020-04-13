@@ -40,7 +40,7 @@
           <el-table-column prop="status_verification" class-name="status-col" sortable="custom" :label="$t('label.beneficiaries-status')" min-width="150px">
             <template slot-scope="{row}">
               <el-tag :type="row.status_verification | statusFilter">
-                {{ row.status_label }}
+                {{ row.status_verification_label }}
               </el-tag>
             </template>
           </el-table-column>
