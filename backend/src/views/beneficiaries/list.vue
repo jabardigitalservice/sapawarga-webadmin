@@ -19,7 +19,7 @@
 
           <el-table-column prop="name" sortable="custom" :label="$t('label.beneficiaries-name')" min-width="200px" />
 
-          <el-table-column prop="nik" sortable="custom" :label="$t('label.beneficiaries-nik')" min-width="125px" />
+          <el-table-column prop="nik" sortable="custom" :label="$t('label.beneficiaries-nik')" min-width="175px" />
 
           <el-table-column prop="rw" sortable="custom" align="center" :label="$t('label.beneficiaries-rw')" min-width="70px" />
 
@@ -140,17 +140,17 @@ export default {
       return ((this.listQuery.page - 1) * this.listQuery.limit) + (index + 1)
     },
 
-    formatCurrency(angka, prefix) {
-      if (angka) {
-        const number_string = angka.toString()
+    formatCurrency(value, prefix) {
+      if (value) {
+        const number_string = value.toString()
         const split = number_string.split(',')
-        const sisa = split[0].length % 3
-        let rupiah = split[0].substr(0, sisa)
-        const ribuan = split[0].substr(sisa).match(/\d{3}/gi)
+        const modulo = split[0].length % 3
+        let rupiah = split[0].substr(0, modulo)
+        const thousand = split[0].substr(modulo).match(/\d{3}/gi)
 
-        if (ribuan) {
-          const separator = sisa ? '.' : ''
-          rupiah += separator + ribuan.join('.')
+        if (thousand) {
+          const separator = modulo ? '.' : ''
+          rupiah += separator + thousand.join('.')
         }
 
         rupiah = split[1] !== undefined ? rupiah + ',' + split[1] : rupiah
