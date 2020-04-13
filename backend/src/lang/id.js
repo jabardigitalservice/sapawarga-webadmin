@@ -121,6 +121,12 @@ export default {
     'gamification-detail': 'Detail Misi',
     'gamification-edit': 'Edit Misi',
 
+    'beneficiaries-manage': 'Bantuan Sosial',
+    'beneficiaries-list': 'Daftar Bansos',
+    'beneficiaries-create': 'Tambah Bansos',
+    'beneficiaries-detail': 'Detail Bansos',
+    'beneficiaries-edit': 'Edit Bansos',
+
     'information': 'Informasi',
     'aspiration': 'Aspirasi',
     'questionnaire': 'Kuesioner',
@@ -842,8 +848,20 @@ export default {
     'phone-book-tooltip-edit': 'Edit Nomor penting',
     'phone-book-tooltip-detail': 'Detail Nomor penting',
     'phone-book-tooltip-activate': 'Aktifkan Nomor penting',
-    'phone-book-tooltip-inactivate': 'Nonaktifkan Nomor penting'
+    'phone-book-tooltip-inactivate': 'Nonaktifkan Nomor penting',
 
+    'beneficiaries-name': 'Nama Lengkap',
+    'beneficiaries-status': 'Status',
+    'beneficiaries-nik': 'NIK',
+    'beneficiaries-rt': 'RT',
+    'beneficiaries-rw': 'RW',
+    'beneficiaries-income-before': 'Penghasilan Sebelum Covid',
+    'beneficiaries-income-after': 'Penghasilan Sesudah Covid',
+    'beneficiaries-verivication': 'Verifikasi Bansos',
+    'beneficiaries-edit': 'Edit Bansos',
+    'beneficiaries-reject': 'Ditolak',
+    'beneficiaries-verified': 'Terverifikasi',
+    'beneficiaries-unverified': 'Belum Terverifikasi'
   },
   news: {
     'news-url': 'URL Berita',
