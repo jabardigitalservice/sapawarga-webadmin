@@ -111,8 +111,8 @@ export default {
         kabkota_id: null,
         kec_id: null,
         kel_id: null,
-        rw: null,
-        rt: null
+        rw_like: null,
+        rt_like: null
       }
     }
   },
