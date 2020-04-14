@@ -146,6 +146,8 @@ export default {
     'draft': 'Simpan sebagai Draft',
     'search': 'Cari',
     'reset': 'Reset',
+    'next': 'Ya (Lanjutkan)',
+    'change': 'Tidak (Ubah Data)',
 
     'save-create': 'Simpan',
     'save-update': 'Simpan Perubahan',
