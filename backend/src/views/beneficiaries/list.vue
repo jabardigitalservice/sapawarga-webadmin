@@ -2,15 +2,15 @@
   <div class="app-container">
     <el-row>
       <el-col :lg="24">
-        <el-row style="margin: 10px 0px">
+        <!-- <el-row style="margin: 10px 0px">
           <el-col :span="12">
-            <!-- <router-link :to="{ path: '/beneficiaries/create' }">
+            <router-link :to="{ path: '/beneficiaries/create' }">
               <el-button type="primary" size="small" icon="el-icon-plus">
                 {{ $t('route.beneficiaries-create') }}
               </el-button>
-            </router-link> -->
+            </router-link>
           </el-col>
-        </el-row>
+        </el-row> -->
 
         <ListFilter :list-query.sync="listQuery" @submit-search="getList" @reset-search="resetFilter" />
 
@@ -111,8 +111,8 @@ export default {
         kabkota_id: null,
         kec_id: null,
         kel_id: null,
-        rw: null,
-        rt: null
+        rw_like: null,
+        rt_like: null
       }
     }
   },
