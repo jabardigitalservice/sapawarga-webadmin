@@ -94,11 +94,6 @@ export default {
       }
     }
   },
-  watch: {
-    preview: function(val) {
-      console.log(val)
-    }
-  },
   async created() {
     const id = await this.$route.params && this.$route.params.id
     await this.getDetail(id)

@@ -6,7 +6,6 @@
     <el-form
       ref="beneficiaries"
       :model="beneficiaries"
-      :rules="rules"
       :status-icon="true"
       label-width="250px"
       label-position="top"
