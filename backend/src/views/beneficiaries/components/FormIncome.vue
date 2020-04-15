@@ -109,7 +109,6 @@ export default {
     },
     getJob() {
       fetchListJob().then(response => {
-        console.log(response.data.items)
         this.jobList = response.data.items.job_field
         this.jobStatusList = response.data.items.job_status
       })
