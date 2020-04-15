@@ -19,6 +19,7 @@
           class="inline-block"
           :kabkota-id="beneficiaries.domicile_kabkota_bps_id"
           :style="{width: '300%'}"
+          :open="disableField"
           @changeKabkota="beneficiaries.domicile_kabkota_bps_id = $event"          
         />
       </el-form-item>
@@ -27,6 +28,7 @@
           class="inline-block"
           :kec-id="beneficiaries.domicile_kec_bps_id"
           :style="{width: '300%'}"
+          :open="disableField"
           @changeKecamatan="beneficiaries.domicile_kec_bps_id = $event"        
         />
       </el-form-item>
@@ -35,21 +37,22 @@
           class="inline-block"
           :kel-id="beneficiaries.domicile_kel_bps_id"
           :style="{width: '300%'}"
+          :open="disableField"
           @changeKelurahan="beneficiaries.domicile_kel_bps_id = $event"        
         />
       </el-form-item>
       <el-form-item label="RW" prop="domicile_rw">
-        <el-input v-model="beneficiaries.domicile_rw" type="number" placeholder="RW" />
+        <el-input v-model="beneficiaries.domicile_rw" type="number" placeholder="RW" :disabled="disableField" />
       </el-form-item>
       <el-form-item label="RT" prop="domicile_rt">
-        <el-input v-model="beneficiaries.domicile_rt" type="number" placeholder="RT" />
+        <el-input v-model="beneficiaries.domicile_rt" type="number" placeholder="RT" :disabled="disableField" />
       </el-form-item>
       <el-form-item label="Nama Jalan" prop="domicile_address">
-        <el-input v-model="beneficiaries.domicile_address" placeholder="Alamat" />
+        <el-input v-model="beneficiaries.domicile_address" placeholder="Alamat" :disabled="disableField" />
       </el-form-item>
       <el-form-item class="ml-min-40 form-button">
         <span>Apakah data sudah benar?</span>
-        <el-button class="button-action" type="primary" plain>{{ $t('crud.change') }}</el-button>
+        <el-button class="button-action" type="primary" @click="open" plain>{{ $t('crud.change') }}</el-button>
         <el-button class="button-action" type="primary" @click="next"> {{ $t('crud.next') }}</el-button>
       </el-form-item>
     </el-form>
@@ -73,6 +76,7 @@ export default {
   },
   data() {
     return {
+      disableField: true,
       rules: {
         domicile_address: [
           {
@@ -127,8 +131,11 @@ export default {
         return
       }
       this.$emit('nextStep', 1)
+    },
+    open() {
+      this.disableField = false
     }
-  },
+  }
 }
 </script>
 <style lang="scss" scoped>

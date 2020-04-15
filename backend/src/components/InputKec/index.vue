@@ -9,6 +9,7 @@
           placeholder="Semua Kecamatan"
           name="kecamatan"
           style="width: 100%"
+          :disabled="open"
           @change="changeSelection($event, 'changeKecamatan')"
         >
           <el-option
@@ -48,6 +49,10 @@ export default {
     kelId: {
       type: Number,
       default: null
+    },
+    open: {
+      type: Boolean,
+      default: false
     }
   },
 

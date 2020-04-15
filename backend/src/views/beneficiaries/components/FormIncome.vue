@@ -12,7 +12,7 @@
       label-position="left"
     >
       <el-form-item label="Pekerjaan" prop="job_type_id">
-        <el-select v-model="beneficiaries.job_type_id" style="width:100%">
+        <el-select v-model="beneficiaries.job_type_id" style="width:100%" :disabled="disableField">
           <el-option
             v-for="item in jobList"
             :key="item.id"
@@ -21,7 +21,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="Status Kedudukan dalam Pekerjaan" prop="job_status_id">
-        <el-select v-model="beneficiaries.job_status_id" style="width:100%">
+        <el-select v-model="beneficiaries.job_status_id" style="width:100%" :disabled="disableField">
           <el-option
             v-for="item in jobStatusList"
             :key="item.id"
@@ -30,17 +30,17 @@
         </el-select>
       </el-form-item>
       <el-form-item label="Jumlah Anggota Keluarga" prop="total_family_members">
-        <el-input v-model="beneficiaries.total_family_members" type="number"  placeholder="Jumlah anggota keluarga" />
+        <el-input v-model="beneficiaries.total_family_members" type="number" placeholder="Jumlah anggota keluarga" :disabled="disableField" />
       </el-form-item>
       <el-form-item label="Penghasilan Sebelum COVID-19" prop="income_before">
-        <el-input v-model="beneficiaries.income_before" type="number" placeholder="Kab/Penghasilan sebelum COVID-19" />
+        <el-input v-model="beneficiaries.income_before" type="number" placeholder="Kab/Penghasilan sebelum COVID-19" :disabled="disableField" />
       </el-form-item>
       <el-form-item label="Penghasilan Sesudah COVID-19" prop="income_after">
-        <el-input v-model="beneficiaries.income_after" type="number" placeholder="Penghasilan sesudah COVID-19" />
+        <el-input v-model="beneficiaries.income_after" type="number" placeholder="Penghasilan sesudah COVID-19" :disabled="disableField" />
       </el-form-item>
       <el-form-item class="ml-min-40 form-button">
         <span>Apakah data sudah benar?</span>
-        <el-button class="button-action" type="primary" plain>{{ $t('crud.change') }}</el-button>
+        <el-button class="button-action" type="primary" @click="open" plain>{{ $t('crud.change') }}</el-button>
         <el-button class="button-action" type="primary" @click="next"> {{ $t('crud.next') }}</el-button>
       </el-form-item>
     </el-form>
@@ -57,6 +57,7 @@ export default {
   },
   data() {
     return {
+      disableField: true,
       jobList: null,
       jobStatusList: null,
       familyCount: [1, 2, 3, 4, 5, 6, 7, 'Lainnya'
@@ -111,6 +112,9 @@ export default {
         return
       }
       this.$emit('nextStep', 1)
+    },
+    open() {
+      this.disableField = false
     },
     getJob() {
       fetchListJob().then(response => {

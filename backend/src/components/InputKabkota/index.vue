@@ -9,6 +9,7 @@
           placeholder="Semua Kabupaten/Kota"
           name="kabkota"
           style="width: 100%"
+          :disabled="open"
           @change="changeSelection($event, 'changeKabkota')"
         >
           <el-option
@@ -39,6 +40,10 @@ export default {
     kabkotaId: {
       type: Number,
       default: null
+    },
+    open: {
+      type: Boolean,
+      default: false
     }
   },
 
