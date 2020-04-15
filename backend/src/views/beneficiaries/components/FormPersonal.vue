@@ -18,20 +18,35 @@
       <el-form-item label="Nama" prop="name">
         <el-input v-model="beneficiaries.name" placeholder="Nama Lengkap" />
       </el-form-item>
-      <el-form-item label="Kota/Kabupaten" prop="kabkota">
-        <el-input v-model="beneficiaries.kabkota" placeholder="Kab/Kota" />
+      <el-form-item label="Kabupaten/Kota" prop="kabkota" class="block">
+        <InputKabkota
+          class="inline-block"
+          :kabkota-id="beneficiaries.kabkota_id"
+          :style="{width: '300%'}"
+          @changeKabkota="beneficiaries.kabkota_id = $event"          
+        />
       </el-form-item>
-      <el-form-item label="Kecamatan" prop="kecamatan">
-        <el-input v-model="beneficiaries.kecamatan" placeholder="Kecamatan" />
+      <el-form-item label="Kecamatan" prop="kec" class="block">
+        <InputKec
+          class="inline-block"
+          :kec-id="beneficiaries.kec_id"
+          :style="{width: '300%'}"
+          @changeKecamatan="beneficiaries.kec_id = $event"        
+        />
       </el-form-item>
-      <el-form-item label="Kelurahan" prop="Kelurahan">
-        <el-input v-model="beneficiaries.kelurahan" placeholder="Kelurahan" />
+      <el-form-item label="Kelurahan" prop="kel" class="block">
+        <InputKel
+          class="inline-block"
+          :kel-id="beneficiaries.kel_id"
+          :style="{width: '300%'}"
+          @changeKelurahan="beneficiaries.kel_id = $event"        
+        />
       </el-form-item>
       <el-form-item label="RW" prop="rw">
-        <el-input v-model="beneficiaries.rw" placeholder="RW" />
+        <el-input v-model="beneficiaries.rw" type="number" placeholder="RW" />
       </el-form-item>
       <el-form-item label="RT" prop="rt">
-        <el-input v-model="beneficiaries.rt" placeholder="RT" />
+        <el-input v-model="beneficiaries.rt" type="number" placeholder="RT" />
       </el-form-item>
       <el-form-item class="ml-min-40 form-button">
         <span>Apakah data sudah benar?</span>
@@ -42,7 +57,16 @@
   </div>
 </template>
 <script>
+import InputKabkota from '@/components/InputKabkota'
+import InputKec from '@/components/InputKec'
+import InputKel from '@/components/InputKel'
+
 export default {
+  components: {
+    InputKabkota,
+    InputKec,
+    InputKel
+  },
   props: {
     beneficiaries: {
       type: Object,
@@ -58,6 +82,48 @@ export default {
             message: 'Nama harus diisi',
             trigger: 'blur'
           }
+        ],
+        nik: [
+          {
+            required: true,
+            message: 'NIK harus diisi',
+            trigger: 'blur'
+          }
+        ],
+        kabkota: [
+          {
+            required: true,
+            message: 'Kabupaten/Kota harus diisi',
+            trigger: 'blur'
+          }
+        ],
+        kec: [
+          {
+            required: true,
+            message: 'Kecamatan harus diisi',
+            trigger: 'blur'
+          }
+        ],
+        kel: [
+          {
+            required: true,
+            message: 'Kelurahan harus diisi',
+            trigger: 'blur'
+          }
+        ],
+        rw: [
+          {
+            required: true,
+            message: 'RW harus diisi',
+            trigger: 'blur'
+          }
+        ],
+        rt: [
+          {
+            required: true,
+            message: 'RT harus diisi',
+            trigger: 'blur'
+          }
         ]
       }
     }
@@ -66,14 +132,14 @@ export default {
     next() {
       this.$emit('nextStep', 1)
     }
-  },
+  }
 }
 </script>
 <style lang="scss" scoped>
   .caution {
     font-size: 14px;
     padding: 5px 0;
-    margin: 0px 5px;
+    margin: 0px;
   }
   .warning {
     margin-bottom: 35px;

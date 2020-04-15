@@ -1,8 +1,7 @@
 <template>
   <div class="components-container">
     <div class="warning">
-      <p class="caution">Masukan NIK dari calon penerima bantuan sosial yang terdaftar di DISDUKCAPIL Provinsi Jawa Barat.</p>
-      <p class="caution">Maka sistem akan otomatis mendapatkan data diri pemilik NIK tersebut.</p>
+      <p class="caution">Masukan informasi mengenai jumlah anggota keluarga dan penghasilan sebelum dan sesudah COVID-19.</p>
     </div>
     <el-form
       ref="beneficiaries"
@@ -12,20 +11,32 @@
       label-width="300px"
       label-position="left"
     >
-      <el-form-item label="Pekerjaan" prop="nik">
-        <el-input v-model="beneficiaries.nik" placeholder="NIK" />
+      <el-form-item label="Pekerjaan" prop="job_type_id">
+        <el-select v-model="beneficiaries.job_type_id" style="width:100%">
+          <el-option
+            v-for="item in jobList"
+            :key="item.id"
+            :label="item.title"
+            :value="item.id" />
+        </el-select>
       </el-form-item>
-      <el-form-item label="Status Kedudukan dalam Pekerjaan" prop="name">
-        <el-input v-model="beneficiaries.name" placeholder="Nama Lengkap" />
+      <el-form-item label="Status Kedudukan dalam Pekerjaan" prop="job_status_id">
+        <el-select v-model="beneficiaries.job_status_id" style="width:100%">
+          <el-option
+            v-for="item in jobStatusList"
+            :key="item.id"
+            :label="item.title"
+            :value="item.id" />
+        </el-select>
       </el-form-item>
-      <el-form-item label="Jumlah Anggota Keluarga" prop="provinsi">
-        <el-input v-model="beneficiaries.provinsi" placeholder="Provinsi" />
+      <el-form-item label="Jumlah Anggota Keluarga" prop="total_family_members">
+        <el-input v-model="beneficiaries.total_family_members" type="number"  placeholder="Jumlah anggota keluarga" />
       </el-form-item>
-      <el-form-item label="Penghasilan Sebelum COVID-19" prop="kabkota">
-        <el-input v-model="beneficiaries.kabkota" placeholder="Kab/Kota" />
+      <el-form-item label="Penghasilan Sebelum COVID-19" prop="income_before">
+        <el-input v-model="beneficiaries.income_before" type="number" placeholder="Kab/Penghasilan sebelum COVID-19" />
       </el-form-item>
-      <el-form-item label="Penghasilan Sesudah COVID-19" prop="kecamatan">
-        <el-input v-model="beneficiaries.kecamatan" placeholder="Kecamatan" />
+      <el-form-item label="Penghasilan Sesudah COVID-19" prop="income_after">
+        <el-input v-model="beneficiaries.income_after" type="number" placeholder="Penghasilan sesudah COVID-19" />
       </el-form-item>
       <el-form-item class="ml-min-40 form-button">
         <span>Apakah data sudah benar?</span>
@@ -36,6 +47,7 @@
   </div>
 </template>
 <script>
+import { fetchListJob } from '@/api/beneficiaries'
 export default {
   props: {
     beneficiaries: {
@@ -45,29 +57,71 @@ export default {
   },
   data() {
     return {
+      jobList: null,
+      jobStatusList: null,
+      familyCount: [1, 2, 3, 4, 5, 6, 7, 'Lainnya'
+      ],
       rules: {
-        name: [
+        job_type_id: [
           {
             required: true,
-            message: 'Nama harus diisi',
+            message: 'Pekerjaan harus diisi',
+            trigger: 'blur'
+          }
+        ],
+        job_status_id: [
+          {
+            required: true,
+            message: 'Status Pekerjaan harus diisi',
+            trigger: 'blur'
+          }
+        ],
+        total_family_members: [
+          {
+            required: true,
+            message: 'Jumlah anggota keluarga harus diisi',
+            trigger: 'blur'
+          }
+        ],
+        income_after: [
+          {
+            required: true,
+            message: 'Penghasilan harus diisi',
+            trigger: 'blur'
+          }
+        ],
+        income_before: [
+          {
+            required: true,
+            message: 'Penghasilan harus diisi',
             trigger: 'blur'
           }
         ]
       }
     }
   },
+  created() {
+    this.getJob()
+  },
   methods: {
     next() {
       this.$emit('nextStep', 1)
+    },
+    getJob() {
+      fetchListJob().then(response => {
+        console.log(response.data.items)
+        this.jobList = response.data.items.job_field
+        this.jobStatusList = response.data.items.job_status
+      })
     }
-  },
+  }
 }
 </script>
 <style lang="scss" scoped>
   .caution {
     font-size: 14px;
     padding: 5px 0;
-    margin: 0px 5px;
+    margin: 0px;
   }
   .warning {
     margin-bottom: 35px;

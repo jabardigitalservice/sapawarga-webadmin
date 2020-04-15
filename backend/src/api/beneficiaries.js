@@ -8,6 +8,14 @@ export function fetchList(query) {
   })
 }
 
+export function fetchListJob(query) {
+  return request({
+    url: '/dinsos-job-types',
+    method: 'get',
+    params: query
+  })
+}
+
 export function fetchRecord(id) {
   return request({
     url: `/beneficiaries/${id}`,

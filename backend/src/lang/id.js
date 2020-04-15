@@ -126,6 +126,7 @@ export default {
     'beneficiaries-create': 'Tambah Bansos',
     'beneficiaries-detail': 'Detail Bansos',
     'beneficiaries-edit': 'Edit Bansos',
+    'beneficiaries-preview': 'Ringkasan',
 
     'information': 'Informasi',
     'aspiration': 'Aspirasi',
