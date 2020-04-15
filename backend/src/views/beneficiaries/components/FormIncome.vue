@@ -104,7 +104,12 @@ export default {
     this.getJob()
   },
   methods: {
-    next() {
+    async next() {
+      const valid = await this.$refs.beneficiaries.validate()
+
+      if (!valid) {
+        return
+      }
       this.$emit('nextStep', 1)
     },
     getJob() {

@@ -14,7 +14,7 @@
       <!-- <el-form-item label="Provinsi" prop="nik">
         <el-input v-model="beneficiaries.nik" placeholder="NIK" />
       </el-form-item> -->
-      <el-form-item label="Kabupaten/Kota" prop="wilayah" class="block">
+      <el-form-item label="Kabupaten/Kota" prop="domicile_kabkota_bps_id" class="block">
         <InputKabkota
           class="inline-block"
           :kabkota-id="beneficiaries.domicile_kabkota_bps_id"
@@ -22,7 +22,7 @@
           @changeKabkota="beneficiaries.domicile_kabkota_bps_id = $event"          
         />
       </el-form-item>
-      <el-form-item label="Kecamatan" prop="wilayah" class="block">
+      <el-form-item label="Kecamatan" prop="domicile_kec_bps_id" class="block">
         <InputKec
           class="inline-block"
           :kec-id="beneficiaries.domicile_kec_bps_id"
@@ -30,7 +30,7 @@
           @changeKecamatan="beneficiaries.domicile_kec_bps_id = $event"        
         />
       </el-form-item>
-      <el-form-item label="Kelurahan" prop="wilayah" class="block">
+      <el-form-item label="Kelurahan/Desa" prop="domicile_kel_bps_id" class="block">
         <InputKel
           class="inline-block"
           :kel-id="beneficiaries.domicile_kel_bps_id"
@@ -38,13 +38,13 @@
           @changeKelurahan="beneficiaries.domicile_kel_bps_id = $event"        
         />
       </el-form-item>
-      <el-form-item label="RW" prop="rw">
+      <el-form-item label="RW" prop="domicile_rw">
         <el-input v-model="beneficiaries.domicile_rw" type="number" placeholder="RW" />
       </el-form-item>
-      <el-form-item label="RT" prop="rt">
+      <el-form-item label="RT" prop="domicile_rt">
         <el-input v-model="beneficiaries.domicile_rt" type="number" placeholder="RT" />
       </el-form-item>
-      <el-form-item label="Nama Jalan" prop="rt">
+      <el-form-item label="Nama Jalan" prop="domicile_address">
         <el-input v-model="beneficiaries.domicile_address" placeholder="Alamat" />
       </el-form-item>
       <el-form-item class="ml-min-40 form-button">
@@ -74,10 +74,45 @@ export default {
   data() {
     return {
       rules: {
-        name: [
+        domicile_address: [
           {
             required: true,
-            message: 'Nama harus diisi',
+            message: 'Alamat harus diisi',
+            trigger: 'blur'
+          }
+        ],
+        domicile_rt: [
+          {
+            required: true,
+            message: 'RT harus diisi',
+            trigger: 'blur'
+          }
+        ],
+        domicile_rw: [
+          {
+            required: true,
+            message: 'RW harus diisi',
+            trigger: 'blur'
+          }
+        ],
+        domicile_kel_bps_id: [
+          {
+            required: true,
+            message: 'Kelurahan/Desa harus diisi',
+            trigger: 'blur'
+          }
+        ],
+        domicile_kec_bps_id: [
+          {
+            required: true,
+            message: 'Kecamatan harus diisi',
+            trigger: 'blur'
+          }
+        ],
+        domicile_kabkota_bps_id: [
+          {
+            required: true,
+            message: 'Kabupaten/Kota harus diisi',
             trigger: 'blur'
           }
         ]
@@ -85,7 +120,12 @@ export default {
     }
   },
   methods: {
-    next() {
+    async next() {
+      const valid = await this.$refs.beneficiaries.validate()
+
+      if (!valid) {
+        return
+      }
       this.$emit('nextStep', 1)
     }
   },
