@@ -62,12 +62,15 @@ export default {
   methods: {
     async next() {
       this.$emit('nextStep', true)
+      console.log(this.beneficiaries)
     },
     photoUploadedKtp(path, url) {
       this.beneficiaries.image_ktp_url = path
+      this.$emit('getImageKtp', path)
     },
     photoUploadedKk(path, url) {
       this.beneficiaries.image_kk_url = path
+      this.$emit('getImageKk', path)
     }
   }
 }

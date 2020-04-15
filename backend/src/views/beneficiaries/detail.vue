@@ -32,7 +32,7 @@
         </el-row>
         <el-row v-if="active === 4" :gutter="20">
           <el-col :sm="24" :md="24" :lg="24" :xl="24">
-            <FormUpload :beneficiaries.sync="beneficiaries" @nextStep="onClickNextChild" />
+            <FormUpload :beneficiaries.sync="beneficiaries" @nextStep="onClickNextChild" @getImageKtp="onClickImageKtp" @getImageKk="onClickImageKk" />
           </el-col>
         </el-row>
       </el-form>
@@ -116,6 +116,12 @@ export default {
         this.preview = false
         this.active = 1
       }
+    },
+    onClickImageKtp(value) {
+      this.beneficiaries.image_ktp_url = value
+    },
+    onClickImageKk(value) {
+      this.beneficiaries.image_kk_url = value
     }
   }
 }
