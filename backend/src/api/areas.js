@@ -7,7 +7,7 @@ export function getKabkotaList(isAll) {
     params: {
       parent_id: 1,
       depth: 2,
-      all: isAll
+      all: true
     }
   })
 }

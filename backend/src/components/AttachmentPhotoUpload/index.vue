@@ -13,7 +13,7 @@
 
       <el-button name="button-image-upload" type="primary" style="width: 100%;" @click="launchFilePicker">Pilih Foto</el-button>
 
-      <p><small><strong>{{ $t('label.notes') }}</strong></small></p>
+      <p v-if="listInformation.length > 1"><small><strong>{{ $t('label.notes') }}</strong></small></p>
       <p v-for="(item, index) in listInformation" :key="index">
         <small>{{ item }}</small>
       </p>

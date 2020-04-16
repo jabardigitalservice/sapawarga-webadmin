@@ -22,7 +22,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="Kabupaten/Kota" prop="domicile_kabkota_bps_id" class="block">
-        <el-select v-model="beneficiaries.domicile_kabkota_bps_id" filterable clearable style="width:100%" :disabled="disableField">
+        <el-select v-model="beneficiaries.domicile_kabkota_bps_id" filterable style="width:100%" :disabled="disableField">
           <el-option
             v-for="item in kabkotaList"
             :key="item.id"
@@ -32,7 +32,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="Kecamatan" prop="domicile_kec_bps_id" class="block">
-        <el-select v-model="beneficiaries.domicile_kec_bps_id" filterable clearable style="width:100%" :disabled="disableField">
+        <el-select v-model="beneficiaries.domicile_kec_bps_id" filterable style="width:100%" :disabled="disableField">
           <el-option
             v-for="item in kecList"
             :key="item.id"
@@ -42,7 +42,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="Kelurahan/Desa" prop="domicile_kel_bps_id" class="block">
-        <el-select v-model="beneficiaries.domicile_kel_bps_id" filterable clearable style="width:100%" :disabled="disableField">
+        <el-select v-model="beneficiaries.domicile_kel_bps_id" filterable style="width:100%" :disabled="disableField">
           <el-option
             v-for="item in kelList"
             :key="item.id"
@@ -155,7 +155,6 @@ export default {
     this.getArea()
     this.getKecamatan(this.beneficiaries.domicile_kabkota_bps_id)
     this.getKelurahan(this.beneficiaries.domicile_kec_bps_id)
-    this.kabkotaUpdate = this.beneficiaries.domicile_kabkota_bps_id
   },
   methods: {
     async next() {

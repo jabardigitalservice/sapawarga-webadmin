@@ -18,7 +18,6 @@
                 <AttachmentPhotoUpload
                   type="user_post_photo"
                   :initial-url="beneficiaries.image_ktp_url"
-                  :list-information="[this.$t('label.maximum-dimension-image'), this.$t('label.maximum-size-image')]"
                   style="margin-bottom: 25px"
                   @onUpload="photoUploadedKtp"
                 />
@@ -32,7 +31,6 @@
               <AttachmentPhotoUpload
                 type="user_post_photo"
                 :initial-url="beneficiaries.image_kk_url"
-                :list-information="[this.$t('label.maximum-dimension-image'), this.$t('label.maximum-size-image')]"
                 style="margin-bottom: 25px"
                 @onUpload="photoUploadedKk"
               />

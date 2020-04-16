@@ -19,31 +19,34 @@
         <el-input v-model="beneficiaries.name" placeholder="Nama Lengkap" :disabled="disableField" />
       </el-form-item>
       <el-form-item label="Kabupaten/Kota" prop="kabkota_id" class="block">
-        <InputKabkota
-          class="inline-block"
-          :kabkota-id="beneficiaries.kabkota_id"
-          :style="{width: '300%'}"
-          :open="disableField"
-          @changeKabkota="beneficiaries.kabkota_id = $event"
-        />
+        <el-select v-model="beneficiaries.kabkota_bps_id" filterable style="width:100%" :disabled="disableField">
+          <el-option
+            v-for="item in kabkotaList"
+            :key="item.id"
+            :label="item.name"
+            :value="item.code_bps"
+          />
+        </el-select>
       </el-form-item>
       <el-form-item label="Kecamatan" prop="kec_id" class="block">
-        <InputKec
-          class="inline-block"
-          :kec-id="beneficiaries.kec_id"
-          :style="{width: '300%'}"
-          :open="disableField"
-          @changeKecamatan="beneficiaries.kec_id = $event"
-        />
+        <el-select v-model="beneficiaries.kec_bps_id" filterable style="width:100%" :disabled="disableField">
+          <el-option
+            v-for="item in kecList"
+            :key="item.id"
+            :label="item.name"
+            :value="item.code_bps"
+          />
+        </el-select>
       </el-form-item>
       <el-form-item label="Kelurahan" prop="kel_id" class="block">
-        <InputKel
-          class="inline-block"
-          :kel-id="beneficiaries.kel_id"
-          :style="{width: '300%'}"
-          :open="disableField"
-          @changeKelurahan="beneficiaries.kel_id = $event"
-        />
+        <el-select v-model="beneficiaries.kel_bps_id" filterable style="width:100%" :disabled="disableField">
+          <el-option
+            v-for="item in kelList"
+            :key="item.id"
+            :label="item.name"
+            :value="item.code_bps"
+          />
+        </el-select>
       </el-form-item>
       <el-form-item label="RW" prop="rw">
         <el-input v-model="beneficiaries.rw" type="number" placeholder="RW" :disabled="disableField" />
@@ -63,6 +66,7 @@
 import InputKabkota from '@/components/InputKabkota'
 import InputKec from '@/components/InputKec'
 import InputKel from '@/components/InputKel'
+import { getKecamatanBpsList, getKecamatanList, getKelurahanList, getKelurahanBpsList, getKabkotaList } from '@/api/areas'
 
 export default {
   components: {
@@ -79,6 +83,9 @@ export default {
   data() {
     return {
       disableField: true,
+      kabkotaList: null,
+      kecList: null,
+      kelList: null,
       rules: {
         name: [
           {
@@ -132,6 +139,30 @@ export default {
       }
     }
   },
+  watch: {
+    'beneficiaries.kabkota_id'(value1, value2) {
+      if (value1 !== value2) {
+        if (value2 !== null) {
+          this.beneficiaries.kec_id = null
+          this.beneficiaries.kel_id = null
+        }
+      }
+      this.getKecamatan(value1)
+    },
+    'beneficiaries.kec_id'(value1, value2) {
+      if (value1 !== value2) {
+        if (value2 !== null) {
+          this.beneficiaries.kel_id = null
+        }
+      }
+      this.getKelurahan(value1)
+    }
+  },
+  mounted() {
+    this.getArea()
+    this.getKecamatan(this.beneficiaries.kabkota_id)
+    this.getKelurahan(this.beneficiaries.kec_id)
+  },
   methods: {
     async next() {
       const valid = await this.$refs.beneficiaries.validate()
@@ -143,6 +174,21 @@ export default {
     },
     openField() {
       this.disableField = false
+    },
+    getArea() {
+      getKabkotaList().then(response => {
+        this.kabkotaList = response.data.items
+      })
+    },
+    getKecamatan(value) {
+      getKecamatanList(value).then(response => {
+        this.kecList = response.data.items
+      })
+    },
+    getKelurahan(value) {
+      getKelurahanList(value).then(response => {
+        this.kelList = response.data.items
+      })
     }
   }
 }
