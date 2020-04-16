@@ -17,7 +17,7 @@
               <div class="image-beneficiaries">
                 <AttachmentPhotoUpload
                   type="user_post_photo"
-                  :initial-url="beneficiaries.image_path_url"
+                  :initial-url="beneficiaries.image_ktp_url"
                   :list-information="[this.$t('label.maximum-dimension-image'), this.$t('label.maximum-size-image')]"
                   style="margin-bottom: 25px"
                   @onUpload="photoUploadedKtp"
@@ -31,7 +31,7 @@
             <div class="image-beneficiaries">
               <AttachmentPhotoUpload
                 type="user_post_photo"
-                :initial-url="beneficiaries.image_path_url"
+                :initial-url="beneficiaries.image_kk_url"
                 :list-information="[this.$t('label.maximum-dimension-image'), this.$t('label.maximum-size-image')]"
                 style="margin-bottom: 25px"
                 @onUpload="photoUploadedKk"
@@ -42,14 +42,29 @@
       </el-row>
       <el-form-item class="ml-min-40 form-button">
         <span>Apakah data sudah benar?</span>
-        <el-button class="button-action" type="primary" plain>{{ $t('crud.change') }}</el-button>
-        <el-button class="button-action" type="primary" @click="next"> {{ $t('crud.next') }}</el-button>
+        <el-button class="button-action" type="primary" plain @click="next">{{ $t('crud.change') }}</el-button>
+        <el-button class="button-action" type="primary" @click="dialogVisible = true"> {{ $t('crud.next') }}</el-button>
       </el-form-item>
     </el-form>
+    <el-dialog
+      title="Peringatan"
+      :visible.sync="dialogVisible"
+      width="30%"
+      center
+    >
+      <p>Periksa kebenaran data calon penerima bantuan.</p>
+      <p>Data yang sudah diverifikasi tidak dapat diubah lagi statusnya.</p>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="next">Cek Ulang</el-button>
+        <el-button type="success" @click="updateData(statusVerified)">Verifikasi</el-button>
+        <el-button type="danger" @click="updateData(statusRejected)">Tolak</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 <script>
 import AttachmentPhotoUpload from '@/components/AttachmentPhotoUpload'
+import { update } from '@/api/beneficiaries'
 
 export default {
   components: { AttachmentPhotoUpload },
@@ -59,15 +74,38 @@ export default {
       default: null
     }
   },
+  data() {
+    return {
+      dialogVisible: false,
+      statusVerified: 3,
+      statusRejected: 2
+    }
+  },
   methods: {
-    async next() {
-      this.$emit('nextStep', true)
+    next() {
+      this.dialogVisible = true
+      this.$emit('nextStep', 1)
+    },
+    async updateData(value) {
+      const id = await this.$route.params && this.$route.params.id
+      if (value === this.statusVerified) {
+        this.beneficiaries.status_verification = value
+      } else {
+        this.beneficiaries.status_verification = value
+      }
+      delete this.beneficiaries.nik
+      await update(id, this.beneficiaries)
+      this.dialogVisible = false
+      this.$message.info('Status berhasil diubah')
+      this.$router.push('/beneficiaries/index')
     },
     photoUploadedKtp(path, url) {
-      this.beneficiaries.image_ktp_url = path
+      this.beneficiaries.image_ktp_url = url
+      this.$emit('getImageKtp', path)
     },
     photoUploadedKk(path, url) {
-      this.beneficiaries.image_kk_url = path
+      this.beneficiaries.image_kk_url = url
+      this.$emit('getImageKk', path)
     }
   }
 }

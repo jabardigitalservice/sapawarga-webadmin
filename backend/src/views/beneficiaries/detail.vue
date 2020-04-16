@@ -32,7 +32,7 @@
         </el-row>
         <el-row v-if="active === 4" :gutter="20">
           <el-col :sm="24" :md="24" :lg="24" :xl="24">
-            <FormUpload :beneficiaries.sync="beneficiaries" @nextStep="onClickNextChild" />
+            <FormUpload :beneficiaries.sync="beneficiaries" @nextStep="onClickNextChild" @getImageKtp="onClickImageKtp" @getImageKk="onClickImageKk" />
           </el-col>
         </el-row>
       </el-form>
@@ -76,8 +76,10 @@ export default {
         kelurahan: null,
         rw: null,
         rt: null,
-        image_ktp_url: null,
+        image_ktp: null,
+        image_kk: null,
         image_path_url: null,
+        image_ktp_url: null,
         image_kk_url: null,
         kabkota_id: null,
         kec_id: null,
@@ -108,14 +110,14 @@ export default {
       if (this.active++ > 3) this.preview = true
     },
     onClickNextChild(value) {
-      if (value !== true) {
-        this.active = this.active + value
-      } else if (value === true) {
-        this.preview = value
-      } else if (value === false) {
-        this.preview = false
-        this.active = 1
-      }
+      this.active = this.active + value
+      if (this.active > 4) this.active = 1
+    },
+    onClickImageKtp(value) {
+      this.beneficiaries.image_ktp = value
+    },
+    onClickImageKk(value) {
+      this.beneficiaries.image_kk = value
     }
   }
 }
