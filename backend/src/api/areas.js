@@ -12,6 +12,18 @@ export function getKabkotaList(isAll) {
   })
 }
 
+export function getKecamatanBpsList(parentId, isAll) {
+  return request({
+    url: 'areas',
+    method: 'get',
+    params: {
+      code_bps_parent: parentId,
+      depth: 3,
+      all: isAll
+    }
+  })
+}
+
 export function getKecamatanList(parentId, isAll) {
   return request({
     url: 'areas',
@@ -19,6 +31,18 @@ export function getKecamatanList(parentId, isAll) {
     params: {
       parent_id: parentId,
       depth: 3,
+      all: isAll
+    }
+  })
+}
+
+export function getKelurahanBpsList(parentId, isAll) {
+  return request({
+    url: 'areas',
+    method: 'get',
+    params: {
+      code_bps_parent: parentId,
+      depth: 4,
       all: isAll
     }
   })

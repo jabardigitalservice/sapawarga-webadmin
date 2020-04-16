@@ -11,35 +11,45 @@
       label-width="150px"
       label-position="left"
     >
-      <!-- <el-form-item label="Provinsi" prop="nik">
-        <el-input v-model="beneficiaries.nik" placeholder="NIK" />
-      </el-form-item> -->
+      <el-form-item label="Provinsi" prop="nik">
+        <el-select v-model="beneficiaries.domicile_province_bps_id" style="width:100%" :disabled="disableField">
+          <el-option
+            v-for="item in proviceList"
+            :key="item.code_bps"
+            :label="item.name"
+            :value="item.code_bps"
+          />
+        </el-select>
+      </el-form-item>
       <el-form-item label="Kabupaten/Kota" prop="domicile_kabkota_bps_id" class="block">
-        <InputKabkota
-          class="inline-block"
-          :kabkota-id="beneficiaries.domicile_kabkota_bps_id"
-          :style="{width: '300%'}"
-          :open="disableField"
-          @changeKabkota="beneficiaries.domicile_kabkota_bps_id = $event"          
-        />
+        <el-select v-model="beneficiaries.domicile_kabkota_bps_id" filterable clearable style="width:100%" :disabled="disableField">
+          <el-option
+            v-for="item in kabkotaList"
+            :key="item.id"
+            :label="item.name"
+            :value="item.code_bps"
+          />
+        </el-select>
       </el-form-item>
       <el-form-item label="Kecamatan" prop="domicile_kec_bps_id" class="block">
-        <InputKec
-          class="inline-block"
-          :kec-id="beneficiaries.domicile_kec_bps_id"
-          :style="{width: '300%'}"
-          :open="disableField"
-          @changeKecamatan="beneficiaries.domicile_kec_bps_id = $event"        
-        />
+        <el-select v-model="beneficiaries.domicile_kec_bps_id" filterable clearable style="width:100%" :disabled="disableField">
+          <el-option
+            v-for="item in kecList"
+            :key="item.id"
+            :label="item.name"
+            :value="item.code_bps"
+          />
+        </el-select>
       </el-form-item>
       <el-form-item label="Kelurahan/Desa" prop="domicile_kel_bps_id" class="block">
-        <InputKel
-          class="inline-block"
-          :kel-id="beneficiaries.domicile_kel_bps_id"
-          :style="{width: '300%'}"
-          :open="disableField"
-          @changeKelurahan="beneficiaries.domicile_kel_bps_id = $event"        
-        />
+        <el-select v-model="beneficiaries.domicile_kel_bps_id" filterable clearable style="width:100%" :disabled="disableField">
+          <el-option
+            v-for="item in kelList"
+            :key="item.id"
+            :label="item.name"
+            :value="item.code_bps"
+          />
+        </el-select>
       </el-form-item>
       <el-form-item label="RW" prop="domicile_rw">
         <el-input v-model="beneficiaries.domicile_rw" type="number" placeholder="RW" :disabled="disableField" />
@@ -59,15 +69,8 @@
   </div>
 </template>
 <script>
-import InputKabkota from '@/components/InputKabkota'
-import InputKec from '@/components/InputKec'
-import InputKel from '@/components/InputKel'
+import { getKecamatanBpsList, getKelurahanBpsList, getKabkotaList } from '@/api/areas'
 export default {
-  components: {
-    InputKabkota,
-    InputKec,
-    InputKel
-  },
   props: {
     beneficiaries: {
       type: Object,
@@ -77,6 +80,16 @@ export default {
   data() {
     return {
       disableField: true,
+      kabkotaUpdate: null,
+      proviceList: [
+        {
+          name: 'JAWA BARAT',
+          code_bps: '32'
+        }
+      ],
+      kabkotaList: null,
+      kecList: null,
+      kelList: null,
       rules: {
         domicile_address: [
           {
@@ -123,6 +136,27 @@ export default {
       }
     }
   },
+  watch: {
+    'beneficiaries.domicile_kabkota_bps_id'(value1, value2) {
+      if (value1 !== value2) {
+        this.beneficiaries.domicile_kec_bps_id = null
+        this.beneficiaries.domicile_kel_bps_id = null
+      }
+      this.getKecamatan(value1)
+    },
+    'beneficiaries.domicile_kec_bps_id'(value1, value2) {
+      if (value1 !== value2) {
+        this.beneficiaries.domicile_kel_bps_id = null
+      }
+      this.getKelurahan(value1)
+    }
+  },
+  mounted() {
+    this.getArea()
+    this.getKecamatan(this.beneficiaries.domicile_kabkota_bps_id)
+    this.getKelurahan(this.beneficiaries.domicile_kec_bps_id)
+    this.kabkotaUpdate = this.beneficiaries.domicile_kabkota_bps_id
+  },
   methods: {
     async next() {
       const valid = await this.$refs.beneficiaries.validate()
@@ -134,6 +168,21 @@ export default {
     },
     open() {
       this.disableField = false
+    },
+    getArea() {
+      getKabkotaList().then(response => {
+        this.kabkotaList = response.data.items
+      })
+    },
+    getKecamatan(value) {
+      getKecamatanBpsList(value).then(response => {
+        this.kecList = response.data.items
+      })
+    },
+    getKelurahan(value) {
+      getKelurahanBpsList(value).then(response => {
+        this.kelList = response.data.items
+      })
     }
   }
 }
