@@ -57,7 +57,6 @@
           <p class="content">{{ beneficiaries.income_after }}</p>
         </div>
       </el-col>
-      </el-col>
       <el-col :sm="24" :md="8" :lg="8">
         <p class="preview-title">Domisili Saat Ini</p>
         <div class="preview-content">
@@ -133,7 +132,6 @@ export default {
   },
   methods: {
     async update(value) {
-      console.log(value)
       if (value === 'reject') {
         this.beneficiaries.status_verification = 2
       } else {

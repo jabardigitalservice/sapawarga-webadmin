@@ -62,7 +62,7 @@
       </el-form-item>
       <el-form-item class="ml-min-40 form-button">
         <span>Apakah data sudah benar?</span>
-        <el-button class="button-action" type="primary" @click="open" plain>{{ $t('crud.change') }}</el-button>
+        <el-button class="button-action" type="primary" plain @click="open">{{ $t('crud.change') }}</el-button>
         <el-button class="button-action" type="primary" @click="next"> {{ $t('crud.next') }}</el-button>
       </el-form-item>
     </el-form>

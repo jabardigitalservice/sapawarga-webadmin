@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-export function getKabkotaList(isAll) {
+export function getKabkotaList() {
   return request({
     url: 'areas',
     method: 'get',
@@ -12,26 +12,26 @@ export function getKabkotaList(isAll) {
   })
 }
 
-export function getKecamatanBpsList(parentId, isAll) {
+export function getKecamatanBpsList(parentId) {
   return request({
     url: 'areas',
     method: 'get',
     params: {
       code_bps_parent: parentId,
       depth: 3,
-      all: isAll
+      all: true
     }
   })
 }
 
-export function getKecamatanList(parentId, isAll) {
+export function getKecamatanList(parentId) {
   return request({
     url: 'areas',
     method: 'get',
     params: {
       parent_id: parentId,
       depth: 3,
-      all: isAll
+      all: true
     }
   })
 }

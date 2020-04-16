@@ -19,32 +19,32 @@
         <el-input v-model="beneficiaries.name" placeholder="Nama Lengkap" :disabled="disableField" />
       </el-form-item>
       <el-form-item label="Kabupaten/Kota" prop="kabkota_id" class="block">
-        <el-select v-model="beneficiaries.kabkota_bps_id" filterable style="width:100%" :disabled="disableField">
+        <el-select v-model="beneficiaries.kabkota" value-key="code_bps" filterable style="width:100%" :disabled="disableField">
           <el-option
             v-for="item in kabkotaList"
-            :key="item.id"
+            :key="item.code_bps"
             :label="item.name"
-            :value="item.code_bps"
+            :value="item"
           />
         </el-select>
       </el-form-item>
       <el-form-item label="Kecamatan" prop="kec_id" class="block">
-        <el-select v-model="beneficiaries.kec_bps_id" filterable style="width:100%" :disabled="disableField">
+        <el-select v-model="beneficiaries.kecamatan" value-key="code_bps" filterable style="width:100%" :disabled="disableField">
           <el-option
             v-for="item in kecList"
             :key="item.id"
             :label="item.name"
-            :value="item.code_bps"
+            :value="item"
           />
         </el-select>
       </el-form-item>
       <el-form-item label="Kelurahan" prop="kel_id" class="block">
-        <el-select v-model="beneficiaries.kel_bps_id" filterable style="width:100%" :disabled="disableField">
+        <el-select v-model="beneficiaries.kelurahan" value-key="code_bps" filterable style="width:100%" :disabled="disableField">
           <el-option
             v-for="item in kelList"
             :key="item.id"
             :label="item.name"
-            :value="item.code_bps"
+            :value="item"
           />
         </el-select>
       </el-form-item>
@@ -56,24 +56,16 @@
       </el-form-item>
       <el-form-item class="ml-min-40 form-button">
         <span>Apakah data sudah benar?</span>
-        <el-button class="button-action" type="primary" @click="openField" plain>{{ $t('crud.change') }}</el-button>
+        <el-button class="button-action" type="primary" plain @click="openField">{{ $t('crud.change') }}</el-button>
         <el-button class="button-action" type="primary" @click="next"> {{ $t('crud.next') }}</el-button>
       </el-form-item>
     </el-form>
   </div>
 </template>
 <script>
-import InputKabkota from '@/components/InputKabkota'
-import InputKec from '@/components/InputKec'
-import InputKel from '@/components/InputKel'
-import { getKecamatanBpsList, getKecamatanList, getKelurahanList, getKelurahanBpsList, getKabkotaList } from '@/api/areas'
+import { getKecamatanList, getKelurahanList, getKabkotaList } from '@/api/areas'
 
 export default {
-  components: {
-    InputKabkota,
-    InputKec,
-    InputKel
-  },
   props: {
     beneficiaries: {
       type: Object,
@@ -140,22 +132,35 @@ export default {
     }
   },
   watch: {
-    'beneficiaries.kabkota_id'(value1, value2) {
+    'beneficiaries.kabkota'(value1, value2) {
       if (value1 !== value2) {
         if (value2 !== null) {
-          this.beneficiaries.kec_id = null
-          this.beneficiaries.kel_id = null
+          this.beneficiaries.kecamatan = null
+          this.beneficiaries.kelurahan = null
+          this.beneficiaries.kabkota_id = value1.id
+          this.beneficiaries.kabkota_bps_id = value1.code_bps
+          this.getKecamatan(value1.id)
         }
       }
-      this.getKecamatan(value1)
     },
-    'beneficiaries.kec_id'(value1, value2) {
+    'beneficiaries.kecamatan'(value1, value2) {
       if (value1 !== value2) {
         if (value2 !== null) {
-          this.beneficiaries.kel_id = null
+          this.beneficiaries.kelurahan = null
+        } else if (value1 !== null) {
+          this.getKelurahan(value1.id)
+          this.beneficiaries.kec_id = value1.id
+          this.beneficiaries.kec_bps_id = value1.code_bps
         }
       }
-      this.getKelurahan(value1)
+    },
+    'beneficiaries.kelurahan'(value1, value2) {
+      if (value1 !== value2) {
+        if (value1 !== null) {
+          this.beneficiaries.kel_id = value1.id
+          this.beneficiaries.kel_bps_id = value1.code_bps
+        }
+      }
     }
   },
   mounted() {

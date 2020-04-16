@@ -53,7 +53,7 @@ import FormDomicile from './components/FormDomicile'
 import FormIncome from './components/FormIncome'
 import FormUpload from './components/FormUpload'
 import Preview from './components/Preview'
-import { fetchRecord, update } from '@/api/beneficiaries'
+import { fetchRecord } from '@/api/beneficiaries'
 
 export default {
   components: {
