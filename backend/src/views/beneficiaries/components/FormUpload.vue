@@ -38,9 +38,9 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-form-item class="ml-min-40 form-button">
+      <el-form-item class="ml-min-40 form-button position">
         <span v-if="!isCreate">Apakah data sudah benar?</span>
-        <el-button v-if="!isCreate" class="button-action" type="primary" plain @click="next">{{ $t('crud.change') }}</el-button>
+        <!-- <el-button v-if="!isCreate" class="button-action" type="primary" plain @click="next">{{ $t('crud.change') }}</el-button> -->
         <el-button class="button-action" type="primary" @click="dialogVisible = true"> {{ $t('crud.next') }}</el-button>
       </el-form-item>
     </el-form>
@@ -58,7 +58,6 @@
         <el-button type="success" @click="updateData(statusVerified)">{{ $t('crud.verified') }}</el-button>
       </span>
     </el-dialog>
-    {{ isCreate }}
   </div>
 </template>
 <script>
@@ -132,7 +131,7 @@ export default {
     margin: 0 5px;
   }
   .form-button {
-    margin-top: 50px;
+    padding-top: 50px;
   }
   .image-beneficiaries {
     width: 100%;

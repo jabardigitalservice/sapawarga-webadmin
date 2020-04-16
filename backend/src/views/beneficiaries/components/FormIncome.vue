@@ -11,7 +11,7 @@
       label-width="300px"
       label-position="left"
     >
-      <el-form-item label="Pekerjaan" prop="job_type_id">
+      <el-form-item v-if="isCreate" label="Pekerjaan" prop="job_type_id">
         <el-select v-model="beneficiaries.job_type_id" style="width:100%" :disabled="disableField">
           <el-option
             v-for="item in jobList"
@@ -35,13 +35,13 @@
         <el-input v-model="beneficiaries.total_family_members" type="number" placeholder="Jumlah anggota keluarga" :disabled="disableField" />
       </el-form-item>
       <el-form-item label="Penghasilan Sebelum COVID-19" prop="income_before">
-        <el-input v-model="beneficiaries.income_before" type="number" placeholder="Kab/Penghasilan sebelum COVID-19" :disabled="disableField" />
+        <el-input v-model="beneficiaries.income_before" type="number" placeholder="Penghasilan sebelum COVID-19" :disabled="disableField" />
       </el-form-item>
       <el-form-item label="Penghasilan Sesudah COVID-19" prop="income_after">
         <el-input v-model="beneficiaries.income_after" type="number" placeholder="Penghasilan sesudah COVID-19" :disabled="disableField" />
       </el-form-item>
       <el-form-item class="ml-min-40 form-button">
-        <span v-if="!isCreate">Apakah data sudah benar?</span>
+        <div v-if="!isCreate">Apakah informasi penghasilan ini sudah sesuai?</div>
         <el-button v-if="!isCreate" class="button-action" type="primary" plain @click="open">{{ $t('crud.change') }}</el-button>
         <el-button class="button-action" type="primary" @click="next"> {{ $t('crud.next') }}</el-button>
       </el-form-item>

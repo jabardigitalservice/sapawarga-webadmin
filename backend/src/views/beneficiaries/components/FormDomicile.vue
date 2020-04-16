@@ -11,7 +11,7 @@
       label-width="150px"
       label-position="left"
     >
-      <el-form-item label="Provinsi" prop="nik">
+      <el-form-item label="Provinsi" prop="domicile_province_bps_id">
         <el-select v-model="beneficiaries.domicile_province_bps_id" style="width:100%" :disabled="disableField">
           <el-option
             v-for="item in proviceList"
@@ -139,6 +139,13 @@ export default {
             message: 'Kabupaten/Kota harus diisi',
             trigger: 'blur'
           }
+        ],
+        domicile_province_bps_id: [
+          {
+            required: true,
+            message: 'Provinsi harus diisi',
+            trigger: 'blur'
+          }
         ]
       }
     }
@@ -147,12 +154,12 @@ export default {
     'beneficiaries.domicile_kabkota_bps_id'(value1, value2) {
       if (this.isCreate) {
         if (value1 !== value2) {
+          console.log('ada perubahan disini')
           this.beneficiaries.domicile_kec_bps_id = null
           this.beneficiaries.domicile_kel_bps_id = null
           this.getKecamatan(value1)
         }
       }
-
       if (value1 !== value2) {
         if (value2 !== null) {
           this.beneficiaries.domicile_kec_bps_id = null
@@ -161,10 +168,15 @@ export default {
         }
       }
     },
+
     'beneficiaries.domicile_kec_bps_id'(value1, value2) {
+      console.log('kecamatan berubah')
+      console.log(value2)
+      console.log(value1)
       if (this.isCreate) {
         if (value1 !== value2) {
           this.beneficiaries.domicile_kel_bps_id = null
+          this.beneficiaries.domicile_kec_bps_id = value1
           this.getKelurahan(value1)
         }
       }
@@ -178,13 +190,13 @@ export default {
       }
     },
     'beneficiaries.domicile_kel_bps_id'(value) {
-      console.log(value)
+      this.beneficiaries.domicile_kel_bps_id = value
     }
   },
   mounted() {
     this.getArea()
-    this.getKecamatan(this.beneficiaries.domicile_kabkota_bps_id)
-    this.getKelurahan(this.beneficiaries.domicile_kec_bps_id)
+    if (this.beneficiaries.domicile_kabkota_bps_id !== null) this.getKecamatan(this.beneficiaries.domicile_kabkota_bps_id)
+    if (this.beneficiaries.domicile_kec_bps_id !== null) this.getKelurahan(this.beneficiaries.domicile_kec_bps_id)
   },
   methods: {
     async next() {
