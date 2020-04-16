@@ -61,8 +61,8 @@
         <el-input v-model="beneficiaries.domicile_address" placeholder="Alamat" :disabled="disableField" />
       </el-form-item>
       <el-form-item class="ml-min-40 form-button">
-        <span>Apakah data sudah benar?</span>
-        <el-button class="button-action" type="primary" plain @click="open">{{ $t('crud.change') }}</el-button>
+        <span v-if="!isCreate">Apakah data sudah benar?</span>
+        <el-button v-if="!isCreate" class="button-action" type="primary" plain @click="open">{{ $t('crud.change') }}</el-button>
         <el-button class="button-action" type="primary" @click="next"> {{ $t('crud.next') }}</el-button>
       </el-form-item>
     </el-form>
@@ -75,11 +75,18 @@ export default {
     beneficiaries: {
       type: Object,
       default: null
+    },
+    disableField: {
+      type: Boolean,
+      default: true
+    },
+    isCreate: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
     return {
-      disableField: true,
       kabkotaUpdate: null,
       proviceList: [
         {
@@ -138,17 +145,40 @@ export default {
   },
   watch: {
     'beneficiaries.domicile_kabkota_bps_id'(value1, value2) {
-      if (value1 !== value2) {
-        this.beneficiaries.domicile_kec_bps_id = null
-        this.beneficiaries.domicile_kel_bps_id = null
+      if (this.isCreate) {
+        if (value1 !== value2) {
+          this.beneficiaries.domicile_kec_bps_id = null
+          this.beneficiaries.domicile_kel_bps_id = null
+          this.getKecamatan(value1)
+        }
       }
-      this.getKecamatan(value1)
+
+      if (value1 !== value2) {
+        if (value2 !== null) {
+          this.beneficiaries.domicile_kec_bps_id = null
+          this.beneficiaries.domicile_kel_bps_id = null
+          this.getKecamatan(value1)
+        }
+      }
     },
     'beneficiaries.domicile_kec_bps_id'(value1, value2) {
-      if (value1 !== value2) {
-        this.beneficiaries.domicile_kel_bps_id = null
+      if (this.isCreate) {
+        if (value1 !== value2) {
+          this.beneficiaries.domicile_kel_bps_id = null
+          this.getKelurahan(value1)
+        }
       }
-      this.getKelurahan(value1)
+
+      if (value1 !== value2) {
+        if (value2 !== null) {
+          this.beneficiaries.domicile_kel_bps_id = null
+        } else if (value1 !== null) {
+          this.getKelurahan(value1)
+        }
+      }
+    },
+    'beneficiaries.domicile_kel_bps_id'(value) {
+      console.log(value)
     }
   },
   mounted() {

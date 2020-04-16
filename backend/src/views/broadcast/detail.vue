@@ -60,8 +60,8 @@ export default {
   },
 
   created() {
-    this.id = this.$route.params && this.$route.params.id
-    this.getDetail()
+    // this.id = this.$route.params && this.$route.params.id
+    // this.getDetail()
   },
 
   methods: {

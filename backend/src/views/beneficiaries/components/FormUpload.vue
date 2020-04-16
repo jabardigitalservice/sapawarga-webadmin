@@ -39,15 +39,14 @@
         </el-col>
       </el-row>
       <el-form-item class="ml-min-40 form-button">
-        <span>Apakah data sudah benar?</span>
-        <el-button class="button-action" type="primary" plain @click="next">{{ $t('crud.change') }}</el-button>
+        <span v-if="!isCreate">Apakah data sudah benar?</span>
+        <el-button v-if="!isCreate" class="button-action" type="primary" plain @click="next">{{ $t('crud.change') }}</el-button>
         <el-button class="button-action" type="primary" @click="dialogVisible = true"> {{ $t('crud.next') }}</el-button>
       </el-form-item>
     </el-form>
     <el-dialog
       title="Konfirmasi"
       :visible.sync="dialogVisible"
-      width="30%"
       center
     >
       <p>Data yang sudah dimasukan tidak dapat diubah lagi.</p>
@@ -59,11 +58,12 @@
         <el-button type="success" @click="updateData(statusVerified)">{{ $t('crud.verified') }}</el-button>
       </span>
     </el-dialog>
+    {{ isCreate }}
   </div>
 </template>
 <script>
 import AttachmentPhotoUpload from '@/components/AttachmentPhotoUpload'
-import { update } from '@/api/beneficiaries'
+import { update, create } from '@/api/beneficiaries'
 
 export default {
   components: { AttachmentPhotoUpload },
@@ -71,6 +71,10 @@ export default {
     beneficiaries: {
       type: Object,
       default: null
+    },
+    isCreate: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -92,8 +96,14 @@ export default {
       } else {
         this.beneficiaries.status_verification = value
       }
-      delete this.beneficiaries.nik
-      await update(id, this.beneficiaries)
+
+      if (this.isCreate) {
+        this.beneficiaries.status = 10
+        await create(this.beneficiaries)
+      } else {
+        delete this.beneficiaries.nik
+        await update(id, this.beneficiaries)
+      }
       this.dialogVisible = false
       this.$message.info('Status berhasil diubah')
       this.$router.push('/beneficiaries/index')

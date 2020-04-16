@@ -13,7 +13,7 @@
       label-position="left"
     >
       <el-form-item label="NIK" prop="nik">
-        <el-input v-model="beneficiaries.nik" placeholder="NIK" :disabled="disableField" />
+        <el-input v-model="beneficiaries.nik" type="number" placeholder="NIK" :disabled="disableField" />
       </el-form-item>
       <el-form-item label="Nama" prop="name">
         <el-input v-model="beneficiaries.name" placeholder="Nama Lengkap" :disabled="disableField" />
@@ -55,8 +55,8 @@
         <el-input v-model="beneficiaries.rt" type="number" placeholder="RT" :disabled="disableField" />
       </el-form-item>
       <el-form-item class="ml-min-40 form-button">
-        <span>Apakah data sudah benar?</span>
-        <el-button class="button-action" type="primary" plain @click="openField">{{ $t('crud.change') }}</el-button>
+        <span v-if="!isCreate">Apakah data sudah benar?</span>
+        <el-button v-if="!isCreate" class="button-action" type="primary" plain @click="openField">{{ $t('crud.change') }}</el-button>
         <el-button class="button-action" type="primary" @click="next"> {{ $t('crud.next') }}</el-button>
       </el-form-item>
     </el-form>
@@ -70,11 +70,18 @@ export default {
     beneficiaries: {
       type: Object,
       default: null
+    },
+    disableField: {
+      type: Boolean,
+      default: true
+    },
+    isCreate: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
     return {
-      disableField: true,
       kabkotaList: null,
       kecList: null,
       kelList: null,
@@ -133,6 +140,16 @@ export default {
   },
   watch: {
     'beneficiaries.kabkota'(value1, value2) {
+      if (this.isCreate) {
+        if (value1 !== value2) {
+          this.beneficiaries.kecamatan = null
+          this.beneficiaries.kelurahan = null
+          this.beneficiaries.kabkota_id = value1.id
+          this.beneficiaries.kabkota_bps_id = value1.code_bps
+          this.getKecamatan(value1.id)
+        }
+      }
+
       if (value1 !== value2) {
         if (value2 !== null) {
           this.beneficiaries.kecamatan = null
@@ -144,6 +161,15 @@ export default {
       }
     },
     'beneficiaries.kecamatan'(value1, value2) {
+      if (this.isCreate) {
+        if (value1 !== value2) {
+          this.beneficiaries.kelurahan = null
+          this.getKelurahan(value1.id)
+          this.beneficiaries.kec_id = value1.id
+          this.beneficiaries.kec_bps_id = value1.code_bps
+        }
+      }
+
       if (value1 !== value2) {
         if (value2 !== null) {
           this.beneficiaries.kelurahan = null
@@ -155,6 +181,13 @@ export default {
       }
     },
     'beneficiaries.kelurahan'(value1, value2) {
+      if (this.isCreate) {
+        if (value1 !== value2) {
+          this.beneficiaries.kel_id = value1.id
+          this.beneficiaries.kel_bps_id = value1.code_bps
+        }
+      }
+
       if (value1 !== value2) {
         if (value1 !== null) {
           this.beneficiaries.kel_id = value1.id
@@ -165,8 +198,8 @@ export default {
   },
   mounted() {
     this.getArea()
-    this.getKecamatan(this.beneficiaries.kabkota_id)
-    this.getKelurahan(this.beneficiaries.kec_id)
+    if (this.beneficiaries.kabkota_id !== null) this.getKecamatan(this.beneficiaries.kabkota_id)
+    if (!this.beneficiaries.kec_id !== null) this.getKelurahan(this.beneficiaries.kec_id)
   },
   methods: {
     async next() {

@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-row>
       <el-col :lg="24">
-        <!-- <el-row style="margin: 10px 0px">
+        <el-row style="margin: 10px 0px">
           <el-col :span="12">
             <router-link :to="{ path: '/beneficiaries/create' }">
               <el-button type="primary" size="small" icon="el-icon-plus">
@@ -10,7 +10,7 @@
               </el-button>
             </router-link>
           </el-col>
-        </el-row> -->
+        </el-row>
 
         <ListFilter :list-query.sync="listQuery" @submit-search="getList" @reset-search="resetFilter" />
 

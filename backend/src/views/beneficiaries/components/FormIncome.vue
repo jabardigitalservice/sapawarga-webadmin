@@ -41,8 +41,8 @@
         <el-input v-model="beneficiaries.income_after" type="number" placeholder="Penghasilan sesudah COVID-19" :disabled="disableField" />
       </el-form-item>
       <el-form-item class="ml-min-40 form-button">
-        <span>Apakah data sudah benar?</span>
-        <el-button class="button-action" type="primary" plain @click="open">{{ $t('crud.change') }}</el-button>
+        <span v-if="!isCreate">Apakah data sudah benar?</span>
+        <el-button v-if="!isCreate" class="button-action" type="primary" plain @click="open">{{ $t('crud.change') }}</el-button>
         <el-button class="button-action" type="primary" @click="next"> {{ $t('crud.next') }}</el-button>
       </el-form-item>
     </el-form>
@@ -55,11 +55,18 @@ export default {
     beneficiaries: {
       type: Object,
       default: null
+    },
+    disableField: {
+      type: Boolean,
+      default: true
+    },
+    isCreate: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
     return {
-      disableField: true,
       jobList: null,
       jobStatusList: null,
       familyCount: [1, 2, 3, 4, 5, 6, 7, 'Lainnya'
