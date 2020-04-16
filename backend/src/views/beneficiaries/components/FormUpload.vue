@@ -47,17 +47,18 @@
       </el-form-item>
     </el-form>
     <el-dialog
-      title="Peringatan"
+      title="Konfirmasi"
       :visible.sync="dialogVisible"
       width="30%"
       center
     >
-      <p>Periksa kebenaran data calon penerima bantuan.</p>
-      <p>Data yang sudah diverifikasi tidak dapat diubah lagi statusnya.</p>
+      <p>Data yang sudah dimasukan tidak dapat diubah lagi.</p>
+      <p>Apakah yakin untuk memproses data ini?</p>
+      <p>Klik Cek Ulang apabila Anda ingin melakukan pengecekan.</p>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="next">Cek Ulang</el-button>
-        <el-button type="success" @click="updateData(statusVerified)">Verifikasi</el-button>
-        <el-button type="danger" @click="updateData(statusRejected)">Tolak</el-button>
+        <el-button @click="next">{{ $t('crud.recheck') }}</el-button>
+        <el-button type="danger" @click="updateData(statusRejected)">{{ $t('crud.reject') }}</el-button>
+        <el-button type="success" @click="updateData(statusVerified)">{{ $t('crud.verified') }}</el-button>
       </span>
     </el-dialog>
   </div>

@@ -149,6 +149,8 @@ export default {
     'reset': 'Reset',
     'next': 'Ya (Lanjutkan)',
     'change': 'Tidak (Ubah Data)',
+    'verified': 'Verifikasi',
+    'recheck': 'Cek Ulang',
 
     'save-create': 'Simpan',
     'save-update': 'Simpan Perubahan',
