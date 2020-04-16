@@ -2,15 +2,15 @@
   <div class="app-container">
     <el-row>
       <el-col :lg="24">
-        <el-row style="margin: 10px 0px">
+        <!-- <el-row style="margin: 10px 0px">
           <el-col :span="12">
-            <!-- <router-link :to="{ path: '/beneficiaries/create' }">
+            <router-link :to="{ path: '/beneficiaries/create' }">
               <el-button type="primary" size="small" icon="el-icon-plus">
                 {{ $t('route.beneficiaries-create') }}
               </el-button>
-            </router-link> -->
+            </router-link>
           </el-col>
-        </el-row>
+        </el-row> -->
 
         <ListFilter :list-query.sync="listQuery" @submit-search="getList" @reset-search="resetFilter" />
 
@@ -49,7 +49,7 @@
             <template slot-scope="scope">
               <router-link :to="'/beneficiaries/detail/'+scope.row.id">
                 <el-tooltip :content="$t('label.beneficiaries-verivication')" placement="top">
-                  <el-button type="success" icon="el-icon-circle-check" size="small">{{ $t('label.beneficiaries-verivication') }}</el-button>
+                  <el-button type="success" icon="el-icon-circle-check" size="small" :disabled="scope.row.status_verification !== 1">{{ $t('label.beneficiaries-verivication') }}</el-button>
                 </el-tooltip>
               </router-link>
               <!-- <router-link :to="scope.row.status === 0 ? '/beneficiaries/edit/' +scope.row.id : ''">

@@ -126,6 +126,7 @@ export default {
     'beneficiaries-create': 'Tambah Bansos',
     'beneficiaries-detail': 'Detail Bansos',
     'beneficiaries-edit': 'Edit Bansos',
+    'beneficiaries-preview': 'Ringkasan',
 
     'information': 'Informasi',
     'aspiration': 'Aspirasi',
@@ -146,6 +147,10 @@ export default {
     'draft': 'Simpan sebagai Draft',
     'search': 'Cari',
     'reset': 'Reset',
+    'next': 'Ya (Lanjutkan)',
+    'change': 'Tidak (Ubah Data)',
+    'verified': 'Verifikasi',
+    'recheck': 'Cek Ulang',
 
     'save-create': 'Simpan',
     'save-update': 'Simpan Perubahan',
