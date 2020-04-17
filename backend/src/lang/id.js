@@ -352,6 +352,7 @@ export default {
     'rw-must-be-filled': 'RW harus diisi',
     'rw-only-use-number': 'RW harus menggunakan angka',
     'rw-must-be-at-least-3-number': 'RW harus 3 angka',
+    'rw-start-number': 'RT/RW tidak boleh diawali angka 0',
 
     'rt-must-be-filled': 'RT harus diisi',
     'rt-only-use-number': 'RT harus menggunakan angka',

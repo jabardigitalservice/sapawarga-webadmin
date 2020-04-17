@@ -101,6 +101,15 @@ export default {
     }
   },
   data() {
+    const checkStartNumber = (rule, value, callback) => {
+      const phoneStringFormat = value.toString()
+      const checkStringPhone = phoneStringFormat.startsWith('0')
+      if (checkStringPhone) {
+        callback(new Error(this.$t('errors.rw-start-number')))
+      } else {
+        callback()
+      }
+    }
     return {
       jobList: null,
       kabkotaList: null,
@@ -118,6 +127,16 @@ export default {
           {
             required: true,
             message: 'NIK harus diisi',
+            trigger: 'blur'
+          },
+          {
+            max: 16,
+            message: 'NIK harus 16 karakter',
+            trigger: 'blur'
+          },
+          {
+            min: 16,
+            message: 'NIK harus 16 karakter',
             trigger: 'blur'
           }
         ],
@@ -147,12 +166,20 @@ export default {
             required: true,
             message: 'RW harus diisi',
             trigger: 'blur'
+          },
+          {
+            validator: checkStartNumber,
+            trigger: 'blur'
           }
         ],
         rt: [
           {
             required: true,
             message: 'RT harus diisi',
+            trigger: 'blur'
+          },
+          {
+            validator: checkStartNumber,
             trigger: 'blur'
           }
         ],
