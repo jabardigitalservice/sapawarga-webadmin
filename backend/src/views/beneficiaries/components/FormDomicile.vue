@@ -12,7 +12,7 @@
       label-position="left"
     >
       <el-form-item label="Provinsi" prop="domicile_province_bps_id">
-        <el-select v-model="beneficiaries.domicile_province_bps_id" style="width:100%" :disabled="disableField">
+        <el-select v-model="beneficiaries.domicile_province_bps_id" style="width:100%" :disabled="disableFieldArea">
           <el-option
             v-for="item in proviceList"
             :key="item.code_bps"
@@ -22,7 +22,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="Kabupaten/Kota" prop="domicile_kabkota_name" class="block">
-        <el-select v-model="beneficiaries.domicile_kabkota_name" value-key="code_bps" filterable style="width:100%" :disabled="disableField">
+        <el-select v-model="beneficiaries.domicile_kabkota_name" value-key="code_bps" filterable style="width:100%" :disabled="disableFieldArea">
           <el-option
             v-for="item in kabkotaList"
             :key="item.id"
@@ -32,7 +32,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="Kecamatan" prop="domicile_kec_name" class="block">
-        <el-select v-model="beneficiaries.domicile_kec_name" value-key="code_bps" filterable style="width:100%" :disabled="disableField">
+        <el-select v-model="beneficiaries.domicile_kec_name" value-key="code_bps" filterable style="width:100%" :disabled="disableFieldArea">
           <el-option
             v-for="item in kecList"
             :key="item.id"
@@ -42,7 +42,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="Kelurahan/Desa" prop="domicile_kel_name" class="block">
-        <el-select v-model="beneficiaries.domicile_kel_name" value-key="code_bps" filterable style="width:100%" :disabled="disableField">
+        <el-select v-model="beneficiaries.domicile_kel_name" value-key="code_bps" filterable style="width:100%" :disabled="disableFieldArea">
           <el-option
             v-for="item in kelList"
             :key="item.id"
@@ -70,6 +70,8 @@
 </template>
 <script>
 import { getKecamatanBpsList, getKelurahanBpsList, getKabkotaList } from '@/api/areas'
+import checkPermission from '@/utils/permission'
+
 export default {
   props: {
     beneficiaries: {
@@ -96,6 +98,7 @@ export default {
       }
     }
     return {
+      disableFieldArea: false,
       kabkotaUpdate: null,
       proviceList: [
         {
@@ -206,10 +209,25 @@ export default {
   },
   mounted() {
     this.getArea()
+    this.init()
     this.getKecamatan(this.beneficiaries.domicile_kabkota_bps_id)
     this.getKelurahan(this.beneficiaries.domicile_kec_bps_id)
   },
   methods: {
+    checkPermission,
+    init() {
+      const authUser = this.$store.state.user
+      if (checkPermission(['staffKel'])) {
+        this.disableFieldArea = true
+        this.beneficiaries.domicile_province_bps_id = '32'
+        this.beneficiaries.domicile_kel_name = authUser.kelurahan
+        this.beneficiaries.domicile_kec_name = authUser.kecamatan
+        this.beneficiaries.domicile_kabkota_name = authUser.kabkota
+        this.beneficiaries.domicile_kabkota_bps_id = authUser.kabkota.code_bps
+        this.beneficiaries.domicile_kec_bps_id = authUser.kecamatan.code_bps
+        this.beneficiaries.domicile_kel_bps_id = authUser.kelurahan.code_bps
+      }
+    },
     async next() {
       const valid = await this.$refs.beneficiaries.validate()
 
