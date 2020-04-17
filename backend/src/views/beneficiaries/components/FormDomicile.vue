@@ -21,33 +21,33 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="Kabupaten/Kota" prop="domicile_kabkota_bps_id" class="block">
-        <el-select v-model="beneficiaries.domicile_kabkota_bps_id" filterable style="width:100%" :disabled="disableField">
+      <el-form-item label="Kabupaten/Kota" prop="domicile_kabkota_name" class="block">
+        <el-select v-model="beneficiaries.domicile_kabkota_name" value-key="code_bps" filterable style="width:100%" :disabled="disableField">
           <el-option
             v-for="item in kabkotaList"
             :key="item.id"
             :label="item.name"
-            :value="item.code_bps"
+            :value="item"
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="Kecamatan" prop="domicile_kec_bps_id" class="block">
-        <el-select v-model="beneficiaries.domicile_kec_bps_id" filterable style="width:100%" :disabled="disableField">
+      <el-form-item label="Kecamatan" prop="domicile_kec_name" class="block">
+        <el-select v-model="beneficiaries.domicile_kec_name" value-key="code_bps" filterable style="width:100%" :disabled="disableField">
           <el-option
             v-for="item in kecList"
             :key="item.id"
             :label="item.name"
-            :value="item.code_bps"
+            :value="item"
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="Kelurahan/Desa" prop="domicile_kel_bps_id" class="block">
-        <el-select v-model="beneficiaries.domicile_kel_bps_id" filterable style="width:100%" :disabled="disableField">
+      <el-form-item label="Kelurahan/Desa" prop="domicile_kel_name" class="block">
+        <el-select v-model="beneficiaries.domicile_kel_name" value-key="code_bps" filterable style="width:100%" :disabled="disableField">
           <el-option
             v-for="item in kelList"
             :key="item.id"
             :label="item.name"
-            :value="item.code_bps"
+            :value="item"
           />
         </el-select>
       </el-form-item>
@@ -119,84 +119,78 @@ export default {
             trigger: 'blur'
           }
         ],
-        domicile_kel_bps_id: [
+        domicile_kel_name: [
           {
             required: true,
             message: 'Kelurahan/Desa harus diisi',
-            trigger: 'blur'
+            trigger: 'change'
           }
         ],
-        domicile_kec_bps_id: [
+        domicile_kec_name: [
           {
             required: true,
             message: 'Kecamatan harus diisi',
-            trigger: 'blur'
+            trigger: 'change'
           }
         ],
-        domicile_kabkota_bps_id: [
+        domicile_kabkota_name: [
           {
             required: true,
             message: 'Kabupaten/Kota harus diisi',
-            trigger: 'blur'
+            trigger: 'change'
           }
         ],
         domicile_province_bps_id: [
           {
             required: true,
             message: 'Provinsi harus diisi',
-            trigger: 'blur'
+            trigger: 'change'
           }
         ]
       }
     }
   },
   watch: {
-    'beneficiaries.domicile_kabkota_bps_id'(value1, value2) {
+    'beneficiaries.domicile_kabkota_name'(value1, value2) {
       if (this.isCreate) {
         if (value1 !== value2) {
-          console.log('ada perubahan disini')
-          this.beneficiaries.domicile_kec_bps_id = null
-          this.beneficiaries.domicile_kel_bps_id = null
-          this.getKecamatan(value1)
+          if (value2 !== null) {
+            this.beneficiaries.domicile_kec_name = null
+            this.beneficiaries.domicile_kel_name = null
+          } else if (value1 !== null) {
+            this.beneficiaries.domicile_kabkota_bps_id = value1.code_bps
+            this.getKecamatan(this.beneficiaries.domicile_kabkota_bps_id)
+          }
         }
       }
-      if (value1 !== value2) {
-        if (value2 !== null) {
-          this.beneficiaries.domicile_kec_bps_id = null
-          this.beneficiaries.domicile_kel_bps_id = null
-          this.getKecamatan(value1)
+    },
+    'beneficiaries.domicile_kec_name'(value1, value2) {
+      if (this.isCreate) {
+        if (value1 !== value2) {
+          if (value2 !== null) {
+            this.beneficiaries.domicile_kel_name = null
+          } else if (value1 !== null) {
+            this.beneficiaries.domicile_kec_bps_id = value1.code_bps
+            this.getKelurahan(this.beneficiaries.domicile_kec_bps_id)
+          }
         }
       }
     },
 
-    'beneficiaries.domicile_kec_bps_id'(value1, value2) {
-      console.log('kecamatan berubah')
-      console.log(value2)
-      console.log(value1)
+    'beneficiaries.domicile_kel_name'(value1, value2) {
       if (this.isCreate) {
         if (value1 !== value2) {
-          this.beneficiaries.domicile_kel_bps_id = null
-          this.beneficiaries.domicile_kec_bps_id = value1
-          this.getKelurahan(value1)
+          if (value1 !== null) {
+            this.beneficiaries.domicile_kel_bps_id = value1.code_bps
+          }
         }
       }
-
-      if (value1 !== value2) {
-        if (value2 !== null) {
-          this.beneficiaries.domicile_kel_bps_id = null
-        } else if (value1 !== null) {
-          this.getKelurahan(value1)
-        }
-      }
-    },
-    'beneficiaries.domicile_kel_bps_id'(value) {
-      this.beneficiaries.domicile_kel_bps_id = value
     }
   },
   mounted() {
     this.getArea()
-    if (this.beneficiaries.domicile_kabkota_bps_id !== null) this.getKecamatan(this.beneficiaries.domicile_kabkota_bps_id)
-    if (this.beneficiaries.domicile_kec_bps_id !== null) this.getKelurahan(this.beneficiaries.domicile_kec_bps_id)
+    this.getKecamatan(this.beneficiaries.domicile_kabkota_bps_id)
+    this.getKelurahan(this.beneficiaries.domicile_kec_bps_id)
   },
   methods: {
     async next() {

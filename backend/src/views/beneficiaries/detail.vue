@@ -116,6 +116,9 @@ export default {
         domicile_kabkota_bps_id: null,
         domicile_kec_id: null,
         domicile_kel_id: null,
+        domicile_kabkota_name: null,
+        domicile_kec_name: null,
+        domicile_kel_name: null,
         domicile_rt: null,
         domicile_rw: null,
         domicile_address: null

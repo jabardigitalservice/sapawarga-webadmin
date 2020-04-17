@@ -119,21 +119,21 @@ export default {
           {
             required: true,
             message: 'Kabupaten/Kota harus diisi',
-            trigger: 'blur'
+            trigger: 'change'
           }
         ],
         kecamatan: [
           {
             required: true,
             message: 'Kecamatan harus diisi',
-            trigger: 'blur'
+            trigger: 'change'
           }
         ],
         kelurahan: [
           {
             required: true,
             message: 'Kelurahan harus diisi',
-            trigger: 'blur'
+            trigger: 'change'
           }
         ],
         rw: [
