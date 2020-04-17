@@ -151,6 +151,7 @@ export default {
     'change': 'Tidak (Ubah Data)',
     'verified': 'Verifikasi',
     'recheck': 'Cek Ulang',
+    'not-valid': 'Tidak',
 
     'save-create': 'Simpan',
     'save-update': 'Simpan Perubahan',
@@ -442,6 +443,7 @@ export default {
   message: {
     'confirmation-approve': 'Apakah Anda yakin akan memberikan persetujuan untuk usulan ini?',
     'confirmation-reject': 'Apakah Anda yakin akan menolak usulan ini?',
+    'confirmation-reject-data': 'Apakah Anda yakin akan menolak data ini?',
     'confirmation-send-message': 'Apakah Anda yakin akan mengirimkan pesan: ',
     'confirmation-delete-file-message': 'Apakah Anda yakin menghapus file {0} ?.',
     'title-approve': 'Konfirmasi Persetujuan',

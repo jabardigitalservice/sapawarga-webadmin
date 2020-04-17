@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-row>
       <el-col :lg="24">
-        <!-- <el-row style="margin: 10px 0px">
+        <el-row style="margin: 10px 0px">
           <el-col :span="12">
             <router-link :to="{ path: '/beneficiaries/create' }">
               <el-button type="primary" size="small" icon="el-icon-plus">
@@ -10,7 +10,7 @@
               </el-button>
             </router-link>
           </el-col>
-        </el-row> -->
+        </el-row>
 
         <ListFilter :list-query.sync="listQuery" @submit-search="getList" @reset-search="resetFilter" />
 
@@ -21,9 +21,9 @@
 
           <el-table-column prop="nik" sortable="custom" :label="$t('label.beneficiaries-nik')" min-width="175px" />
 
-          <el-table-column prop="rw" sortable="custom" align="center" :label="$t('label.beneficiaries-rw')" min-width="70px" />
+          <el-table-column prop="domicile_rw" sortable="custom" align="center" :label="$t('label.beneficiaries-rw')" min-width="70px" />
 
-          <el-table-column prop="rt" sortable="custom" align="center" :label="$t('label.beneficiaries-rt')" min-width="70px" />
+          <el-table-column prop="domicile_rt" sortable="custom" align="center" :label="$t('label.beneficiaries-rt')" min-width="70px" />
 
           <el-table-column prop="income_before" sortable="custom" :label="$t('label.beneficiaries-income-before')" min-width="180px">
             <template slot-scope="{row}">

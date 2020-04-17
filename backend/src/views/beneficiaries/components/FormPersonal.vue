@@ -1,8 +1,8 @@
 <template>
   <div class="components-container">
     <div class="warning">
-      <p class="caution">Masukan NIK dari calon penerima bantuan sosial yang terdaftar di DISDUKCAPIL Provinsi Jawa Barat.</p>
-      <p class="caution">Maka sistem akan otomatis mendapatkan data diri pemilik NIK tersebut.</p>
+      <p v-if="isCreate" class="caution">Masukan NIK atau Nomor KTP warga yang akan didaftarkan sebagai calon penerima bantuan sosial terdampak covid di Desa/Kelurahan Anda.</p>
+      <p v-else class="caution">Berikut adalah data calon penerima bantuan yang ada di wilayah Desa/Kelurahan <span v-if="beneficiaries.domicile_kel_name !== null">{{ beneficiaries.domicile_kel_name.name }}</span> Kec. <span v-if="beneficiaries.domicile_kec_name !== null">{{ beneficiaries.domicile_kec_name.name }}</span> Kota/Kabupaten <span v-if="beneficiaries.domicile_kabkota_name !== null">{{ beneficiaries.domicile_kabkota_name.name }}</span> </p>
     </div>
     <el-form
       ref="beneficiaries"
@@ -13,12 +13,12 @@
       label-position="left"
     >
       <el-form-item label="NIK" prop="nik">
-        <el-input v-model="beneficiaries.nik" placeholder="NIK" :disabled="disableField" />
+        <el-input v-model="beneficiaries.nik" type="number" placeholder="NIK" :disabled="disableField" />
       </el-form-item>
       <el-form-item label="Nama" prop="name">
         <el-input v-model="beneficiaries.name" placeholder="Nama Lengkap" :disabled="disableField" />
       </el-form-item>
-      <el-form-item label="Kabupaten/Kota" prop="kabkota_id" class="block">
+      <el-form-item v-if="isCreate" label="Kabupaten/Kota" prop="kabkota" class="block">
         <el-select v-model="beneficiaries.kabkota" value-key="code_bps" filterable style="width:100%" :disabled="disableField">
           <el-option
             v-for="item in kabkotaList"
@@ -28,7 +28,7 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="Kecamatan" prop="kec_id" class="block">
+      <el-form-item v-if="isCreate" label="Kecamatan" prop="kecamatan" class="block">
         <el-select v-model="beneficiaries.kecamatan" value-key="code_bps" filterable style="width:100%" :disabled="disableField">
           <el-option
             v-for="item in kecList"
@@ -38,7 +38,7 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="Kelurahan" prop="kel_id" class="block">
+      <el-form-item v-if="isCreate" label="Kelurahan" prop="kelurahan" class="block">
         <el-select v-model="beneficiaries.kelurahan" value-key="code_bps" filterable style="width:100%" :disabled="disableField">
           <el-option
             v-for="item in kelList"
@@ -48,15 +48,34 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="RW" prop="rw">
+      <el-form-item v-if="!isCreate" label="Alamat" prop="domicile_address">
+        <el-input v-model="beneficiaries.domicile_address" placeholder="Alamat" :disabled="disableField" />
+      </el-form-item>
+      <el-form-item v-if="!isCreate" label="RW" prop="domicile_rw">
+        <el-input v-model="beneficiaries.domicile_rw" type="number" placeholder="RW" :disabled="disableField" />
+      </el-form-item>
+      <el-form-item v-if="!isCreate" label="RT" prop="domicile_rt">
+        <el-input v-model="beneficiaries.domicile_rt" type="number" placeholder="RT" :disabled="disableField" />
+      </el-form-item>
+      <el-form-item v-if="isCreate" label="RW" prop="rw">
         <el-input v-model="beneficiaries.rw" type="number" placeholder="RW" :disabled="disableField" />
       </el-form-item>
-      <el-form-item label="RT" prop="rt">
+      <el-form-item v-if="isCreate" label="RT" prop="rt">
         <el-input v-model="beneficiaries.rt" type="number" placeholder="RT" :disabled="disableField" />
       </el-form-item>
+      <el-form-item v-if="!isCreate" label="Pekerjaan" prop="job_type_id">
+        <el-select v-model="beneficiaries.job_type_id" style="width:100%" :disabled="disableField">
+          <el-option
+            v-for="item in jobList"
+            :key="item.id"
+            :label="item.title"
+            :value="item.id"
+          />
+        </el-select>
+      </el-form-item>
       <el-form-item class="ml-min-40 form-button">
-        <span>Apakah data sudah benar?</span>
-        <el-button class="button-action" type="primary" plain @click="openField">{{ $t('crud.change') }}</el-button>
+        <div v-if="!isCreate">Apakah benar informasi calon penerima bantuan ini berdomisili di desa Anda?</div>
+        <el-button v-if="!isCreate" class="button-action" type="primary" plain @click="rejectData">{{ $t('crud.not-valid') }}</el-button>
         <el-button class="button-action" type="primary" @click="next"> {{ $t('crud.next') }}</el-button>
       </el-form-item>
     </el-form>
@@ -64,17 +83,26 @@
 </template>
 <script>
 import { getKecamatanList, getKelurahanList, getKabkotaList } from '@/api/areas'
+import { fetchListJob, update } from '@/api/beneficiaries'
 
 export default {
   props: {
     beneficiaries: {
       type: Object,
       default: null
+    },
+    disableField: {
+      type: Boolean,
+      default: true
+    },
+    isCreate: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
     return {
-      disableField: true,
+      jobList: null,
       kabkotaList: null,
       kecList: null,
       kelList: null,
@@ -93,25 +121,25 @@ export default {
             trigger: 'blur'
           }
         ],
-        kabkota_id: [
+        kabkota: [
           {
             required: true,
             message: 'Kabupaten/Kota harus diisi',
-            trigger: 'blur'
+            trigger: 'change'
           }
         ],
-        kec_id: [
+        kecamatan: [
           {
             required: true,
             message: 'Kecamatan harus diisi',
-            trigger: 'blur'
+            trigger: 'change'
           }
         ],
-        kel_id: [
+        kelurahan: [
           {
             required: true,
             message: 'Kelurahan harus diisi',
-            trigger: 'blur'
+            trigger: 'change'
           }
         ],
         rw: [
@@ -127,12 +155,50 @@ export default {
             message: 'RT harus diisi',
             trigger: 'blur'
           }
+        ],
+        domicile_address: [
+          {
+            required: true,
+            message: 'Alamat harus diisi',
+            trigger: 'blur'
+          }
+        ],
+        job_type_id: [
+          {
+            required: true,
+            message: 'Pekerjaan harus diisi',
+            trigger: 'blur'
+          }
+        ],
+        domicile_rw: [
+          {
+            required: true,
+            message: 'RW harus diisi',
+            trigger: 'blur'
+          }
+        ],
+        domicile_rt: [
+          {
+            required: true,
+            message: 'RT harus diisi',
+            trigger: 'blur'
+          }
         ]
       }
     }
   },
   watch: {
     'beneficiaries.kabkota'(value1, value2) {
+      if (this.isCreate) {
+        if (value1 !== value2) {
+          this.beneficiaries.kecamatan = null
+          this.beneficiaries.kelurahan = null
+          this.beneficiaries.kabkota_id = value1.id
+          this.beneficiaries.kabkota_bps_id = value1.code_bps
+          this.getKecamatan(value1.id)
+        }
+      }
+
       if (value1 !== value2) {
         if (value2 !== null) {
           this.beneficiaries.kecamatan = null
@@ -144,6 +210,15 @@ export default {
       }
     },
     'beneficiaries.kecamatan'(value1, value2) {
+      if (this.isCreate) {
+        if (value1 !== value2) {
+          this.beneficiaries.kelurahan = null
+          this.getKelurahan(value1.id)
+          this.beneficiaries.kec_id = value1.id
+          this.beneficiaries.kec_bps_id = value1.code_bps
+        }
+      }
+
       if (value1 !== value2) {
         if (value2 !== null) {
           this.beneficiaries.kelurahan = null
@@ -155,6 +230,13 @@ export default {
       }
     },
     'beneficiaries.kelurahan'(value1, value2) {
+      if (this.isCreate) {
+        if (value1 !== value2) {
+          this.beneficiaries.kel_id = value1.id
+          this.beneficiaries.kel_bps_id = value1.code_bps
+        }
+      }
+
       if (value1 !== value2) {
         if (value1 !== null) {
           this.beneficiaries.kel_id = value1.id
@@ -163,10 +245,11 @@ export default {
       }
     }
   },
-  mounted() {
+  async mounted() {
     this.getArea()
-    this.getKecamatan(this.beneficiaries.kabkota_id)
-    this.getKelurahan(this.beneficiaries.kec_id)
+    this.getJob()
+    if (this.beneficiaries.kabkota_id !== null) this.getKecamatan(this.beneficiaries.kabkota_id)
+    if (this.beneficiaries.kec_id !== null) this.getKelurahan(this.beneficiaries.kec_id)
   },
   methods: {
     async next() {
@@ -177,8 +260,23 @@ export default {
       }
       this.$emit('nextStep', 1)
     },
-    openField() {
-      this.disableField = false
+    async rejectData() {
+      const id = await this.$route.params && this.$route.params.id
+      await this.$confirm(this.$t('message.confirmation-reject-data'), 'Peringatan', {
+        confirmButtonText: this.$t('common.confirm'),
+        cancelButtonText: this.$t('common.cancel'),
+        type: 'warning'
+      })
+      delete this.beneficiaries.nik
+      this.beneficiaries.status_verification = 2
+      await update(id, this.beneficiaries)
+      this.$message.info('Status berhasil diubah')
+      this.$router.push('/beneficiaries/index')
+    },
+    getJob() {
+      fetchListJob().then(response => {
+        this.jobList = response.data.items.job_field
+      })
     },
     getArea() {
       getKabkotaList().then(response => {
@@ -200,9 +298,10 @@ export default {
 </script>
 <style lang="scss" scoped>
   .caution {
-    font-size: 14px;
-    padding: 5px 0;
-    margin: 0px;
+    font-size: 15px;
+    padding: 10px 0;
+    margin: 10px 0;
+    line-height: 150%;
   }
   .warning {
     margin-bottom: 35px;

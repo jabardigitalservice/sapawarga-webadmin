@@ -1,10 +1,11 @@
 <template>
   <div class="app-container">
     <el-card v-if="preview === false" class="box-card">
-      <span class="header title">Tambah Calon Penerima Bantuan</span>
+      <span v-if="isCreate" class="header title">Tambah Calon Penerima Bantuan</span>
+      <span v-else class="header title">Verifikasi Calon Penerima Bantuan</span>
       <el-steps class="steps" :active="active" process-status="wait" finish-status="success" align-center>
         <el-step title="Informasi Penerima Bantuan" />
-        <el-step title="Domisili Saat Ini" />
+        <el-step v-if="isCreate" title="Domisili Saat Ini" />
         <el-step title="Informasi Penghasilan" />
         <el-step title="Upload Dokumen Pendukung" />
       </el-steps>
@@ -15,28 +16,46 @@
         label-position="left"
         :status-icon="true"
       >
-        <el-row v-if="active === 1" :gutter="20">
-          <el-col :sm="24" :md="17" :lg="17" :xl="17">
-            <FormPersonal :beneficiaries.sync="beneficiaries" @nextStep="onClickNextChild" />
-          </el-col>
-        </el-row>
-        <el-row v-if="active === 3" :gutter="20">
-          <el-col :sm="24" :md="20" :lg="20" :xl="20">
-            <FormIncome :beneficiaries.sync="beneficiaries" @nextStep="onClickNextChild" />
-          </el-col>
-        </el-row>
-        <el-row v-if="active === 2" :gutter="20">
-          <el-col :sm="24" :md="17" :lg="17" :xl="17">
-            <FormDomicile :beneficiaries.sync="beneficiaries" @nextStep="onClickNextChild" />
-          </el-col>
-        </el-row>
-        <el-row v-if="active === 4" :gutter="20">
-          <el-col :sm="24" :md="24" :lg="24" :xl="24">
-            <FormUpload :beneficiaries.sync="beneficiaries" @nextStep="onClickNextChild" @getImageKtp="onClickImageKtp" @getImageKk="onClickImageKk" />
-          </el-col>
-        </el-row>
+        <div v-if="isCreate">
+          <el-row v-if="active === 1" :gutter="20">
+            <el-col :sm="24" :md="17" :lg="17" :xl="17">
+              <FormPersonal :beneficiaries.sync="beneficiaries" :is-create="isCreate" :disable-field="!isCreate" @nextStep="onClickNextChild" />
+            </el-col>
+          </el-row>
+          <el-row v-if="active === 3" :gutter="20">
+            <el-col :sm="24" :md="20" :lg="20" :xl="20">
+              <FormIncome :beneficiaries.sync="beneficiaries" :is-create="isCreate" @nextStep="onClickNextChild" />
+            </el-col>
+          </el-row>
+          <el-row v-if="active === 2" :gutter="20">
+            <el-col :sm="24" :md="17" :lg="17" :xl="17">
+              <FormDomicile :beneficiaries.sync="beneficiaries" :is-create="isCreate" :disable-field="!isCreate" @nextStep="onClickNextChild" />
+            </el-col>
+          </el-row>
+          <el-row v-if="active === 4" :gutter="20">
+            <el-col :sm="24" :md="24" :lg="24" :xl="24">
+              <FormUpload :beneficiaries.sync="beneficiaries" :is-create="isCreate" :disable-field="!isCreate" @nextStep="onClickNextChild" @getImageKtp="onClickImageKtp" @getImageKk="onClickImageKk" />
+            </el-col>
+          </el-row>
+        </div>
+        <div v-else>
+          <el-row v-if="active === 1" :gutter="20">
+            <el-col :sm="24" :md="17" :lg="17" :xl="17">
+              <FormPersonal :beneficiaries.sync="beneficiaries" :is-create="isCreate" :disable-field="!isCreate" @nextStep="onClickNextChild" />
+            </el-col>
+          </el-row>
+          <el-row v-if="active === 2" :gutter="20">
+            <el-col :sm="24" :md="20" :lg="20" :xl="20">
+              <FormIncome :beneficiaries.sync="beneficiaries" :is-create="isCreate" :disable-field="!isCreate" @nextStep="onClickNextChild" />
+            </el-col>
+          </el-row>
+          <el-row v-if="active === 3" :gutter="20">
+            <el-col :sm="24" :md="24" :lg="24" :xl="24">
+              <FormUpload :beneficiaries.sync="beneficiaries" :is-create="isCreate" :disable-field="!isCreate" @nextStep="onClickNextChild" @getImageKtp="onClickImageKtp" @getImageKk="onClickImageKk" />
+            </el-col>
+          </el-row>
+        </div>
       </el-form>
-      <!-- <el-button style="margin-top: 12px;" @click="next">Next step</el-button> -->
     </el-card>
     <el-card v-if="preview" class="box-card">
       <div slot="header" class="clearfix">
@@ -62,6 +81,12 @@ export default {
     FormDomicile,
     FormUpload,
     Preview
+  },
+  props: {
+    isCreate: {
+      type: Boolean,
+      default: false
+    }
   },
   data() {
     return {
@@ -91,6 +116,9 @@ export default {
         domicile_kabkota_bps_id: null,
         domicile_kec_id: null,
         domicile_kel_id: null,
+        domicile_kabkota_name: null,
+        domicile_kec_name: null,
+        domicile_kel_name: null,
         domicile_rt: null,
         domicile_rw: null,
         domicile_address: null
@@ -100,8 +128,10 @@ export default {
     }
   },
   async created() {
-    const id = await this.$route.params && this.$route.params.id
-    await this.getDetail(id)
+    if (!this.isCreate) {
+      const id = await this.$route.params && this.$route.params.id
+      await this.getDetail(id)
+    }
   },
   methods: {
     getDetail(id) {
@@ -114,7 +144,11 @@ export default {
     },
     onClickNextChild(value) {
       this.active = this.active + value
-      if (this.active > 4) this.active = 1
+      if (this.isCreate) {
+        if (this.active > 4) this.active = 1
+      } else {
+        if (this.active > 3) this.active = 1
+      }
     },
     onClickImageKtp(value) {
       this.beneficiaries.image_ktp = value

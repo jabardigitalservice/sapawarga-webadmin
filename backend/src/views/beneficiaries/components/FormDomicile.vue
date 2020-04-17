@@ -11,7 +11,7 @@
       label-width="150px"
       label-position="left"
     >
-      <el-form-item label="Provinsi" prop="nik">
+      <el-form-item label="Provinsi" prop="domicile_province_bps_id">
         <el-select v-model="beneficiaries.domicile_province_bps_id" style="width:100%" :disabled="disableField">
           <el-option
             v-for="item in proviceList"
@@ -21,33 +21,33 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="Kabupaten/Kota" prop="domicile_kabkota_bps_id" class="block">
-        <el-select v-model="beneficiaries.domicile_kabkota_bps_id" filterable style="width:100%" :disabled="disableField">
+      <el-form-item label="Kabupaten/Kota" prop="domicile_kabkota_name" class="block">
+        <el-select v-model="beneficiaries.domicile_kabkota_name" value-key="code_bps" filterable style="width:100%" :disabled="disableField">
           <el-option
             v-for="item in kabkotaList"
             :key="item.id"
             :label="item.name"
-            :value="item.code_bps"
+            :value="item"
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="Kecamatan" prop="domicile_kec_bps_id" class="block">
-        <el-select v-model="beneficiaries.domicile_kec_bps_id" filterable style="width:100%" :disabled="disableField">
+      <el-form-item label="Kecamatan" prop="domicile_kec_name" class="block">
+        <el-select v-model="beneficiaries.domicile_kec_name" value-key="code_bps" filterable style="width:100%" :disabled="disableField">
           <el-option
             v-for="item in kecList"
             :key="item.id"
             :label="item.name"
-            :value="item.code_bps"
+            :value="item"
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="Kelurahan/Desa" prop="domicile_kel_bps_id" class="block">
-        <el-select v-model="beneficiaries.domicile_kel_bps_id" filterable style="width:100%" :disabled="disableField">
+      <el-form-item label="Kelurahan/Desa" prop="domicile_kel_name" class="block">
+        <el-select v-model="beneficiaries.domicile_kel_name" value-key="code_bps" filterable style="width:100%" :disabled="disableField">
           <el-option
             v-for="item in kelList"
             :key="item.id"
             :label="item.name"
-            :value="item.code_bps"
+            :value="item"
           />
         </el-select>
       </el-form-item>
@@ -61,8 +61,8 @@
         <el-input v-model="beneficiaries.domicile_address" placeholder="Alamat" :disabled="disableField" />
       </el-form-item>
       <el-form-item class="ml-min-40 form-button">
-        <span>Apakah data sudah benar?</span>
-        <el-button class="button-action" type="primary" plain @click="open">{{ $t('crud.change') }}</el-button>
+        <span v-if="!isCreate">Apakah data sudah benar?</span>
+        <el-button v-if="!isCreate" class="button-action" type="primary" plain @click="open">{{ $t('crud.change') }}</el-button>
         <el-button class="button-action" type="primary" @click="next"> {{ $t('crud.next') }}</el-button>
       </el-form-item>
     </el-form>
@@ -75,11 +75,18 @@ export default {
     beneficiaries: {
       type: Object,
       default: null
+    },
+    disableField: {
+      type: Boolean,
+      default: true
+    },
+    isCreate: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
     return {
-      disableField: true,
       kabkotaUpdate: null,
       proviceList: [
         {
@@ -112,43 +119,72 @@ export default {
             trigger: 'blur'
           }
         ],
-        domicile_kel_bps_id: [
+        domicile_kel_name: [
           {
             required: true,
             message: 'Kelurahan/Desa harus diisi',
-            trigger: 'blur'
+            trigger: 'change'
           }
         ],
-        domicile_kec_bps_id: [
+        domicile_kec_name: [
           {
             required: true,
             message: 'Kecamatan harus diisi',
-            trigger: 'blur'
+            trigger: 'change'
           }
         ],
-        domicile_kabkota_bps_id: [
+        domicile_kabkota_name: [
           {
             required: true,
             message: 'Kabupaten/Kota harus diisi',
-            trigger: 'blur'
+            trigger: 'change'
+          }
+        ],
+        domicile_province_bps_id: [
+          {
+            required: true,
+            message: 'Provinsi harus diisi',
+            trigger: 'change'
           }
         ]
       }
     }
   },
   watch: {
-    'beneficiaries.domicile_kabkota_bps_id'(value1, value2) {
-      if (value1 !== value2) {
-        this.beneficiaries.domicile_kec_bps_id = null
-        this.beneficiaries.domicile_kel_bps_id = null
+    'beneficiaries.domicile_kabkota_name'(value1, value2) {
+      if (this.isCreate) {
+        if (value1 !== value2) {
+          if (value2 !== null) {
+            this.beneficiaries.domicile_kec_name = null
+            this.beneficiaries.domicile_kel_name = null
+          } else if (value1 !== null) {
+            this.beneficiaries.domicile_kabkota_bps_id = value1.code_bps
+            this.getKecamatan(this.beneficiaries.domicile_kabkota_bps_id)
+          }
+        }
       }
-      this.getKecamatan(value1)
     },
-    'beneficiaries.domicile_kec_bps_id'(value1, value2) {
-      if (value1 !== value2) {
-        this.beneficiaries.domicile_kel_bps_id = null
+    'beneficiaries.domicile_kec_name'(value1, value2) {
+      if (this.isCreate) {
+        if (value1 !== value2) {
+          if (value2 !== null) {
+            this.beneficiaries.domicile_kel_name = null
+          } else if (value1 !== null) {
+            this.beneficiaries.domicile_kec_bps_id = value1.code_bps
+            this.getKelurahan(this.beneficiaries.domicile_kec_bps_id)
+          }
+        }
       }
-      this.getKelurahan(value1)
+    },
+
+    'beneficiaries.domicile_kel_name'(value1, value2) {
+      if (this.isCreate) {
+        if (value1 !== value2) {
+          if (value1 !== null) {
+            this.beneficiaries.domicile_kel_bps_id = value1.code_bps
+          }
+        }
+      }
     }
   },
   mounted() {
