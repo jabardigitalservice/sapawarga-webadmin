@@ -1,8 +1,8 @@
 <template>
   <div class="components-container">
     <div class="warning">
-      <p class="caution">Masukan NIK dari calon penerima bantuan sosial yang terdaftar di DISDUKCAPIL Provinsi Jawa Barat.</p>
-      <p class="caution">Maka sistem akan otomatis mendapatkan data diri pemilik NIK tersebut.</p>
+      <p v-if="isCreate" class="caution">Masukan NIK atau Nomor KTP warga yang akan didaftarkan sebagai calon penerima bantuan sosial terdampak covid di Desa/Kelurahan Anda.</p>
+      <p v-else class="caution">Berikut adalah data calon penerima bantuan yang ada di wilayah Desa/Kelurahan <span v-if="beneficiaries.domicile_kel_name !== null">{{ beneficiaries.domicile_kel_name.name }}</span> Kec. <span v-if="beneficiaries.domicile_kec_name !== null">{{ beneficiaries.domicile_kec_name.name }}</span> Kota/Kabupaten <span v-if="beneficiaries.domicile_kabkota_name !== null">{{ beneficiaries.domicile_kabkota_name.name }}</span> </p>
     </div>
     <el-form
       ref="beneficiaries"
@@ -298,9 +298,10 @@ export default {
 </script>
 <style lang="scss" scoped>
   .caution {
-    font-size: 14px;
-    padding: 5px 0;
-    margin: 0px;
+    font-size: 15px;
+    padding: 10px 0;
+    margin: 10px 0;
+    line-height: 150%;
   }
   .warning {
     margin-bottom: 35px;
