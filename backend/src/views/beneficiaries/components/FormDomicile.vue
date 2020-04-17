@@ -86,6 +86,15 @@ export default {
     }
   },
   data() {
+    const checkStartNumber = (rule, value, callback) => {
+      const phoneStringFormat = value.toString()
+      const checkStringPhone = phoneStringFormat.startsWith('0')
+      if (checkStringPhone) {
+        callback(new Error(this.$t('errors.rw-start-number')))
+      } else {
+        callback()
+      }
+    }
     return {
       kabkotaUpdate: null,
       proviceList: [
@@ -110,12 +119,20 @@ export default {
             required: true,
             message: 'RT harus diisi',
             trigger: 'blur'
+          },
+          {
+            validator: checkStartNumber,
+            trigger: 'blur'
           }
         ],
         domicile_rw: [
           {
             required: true,
             message: 'RW harus diisi',
+            trigger: 'blur'
+          },
+          {
+            validator: checkStartNumber,
             trigger: 'blur'
           }
         ],
