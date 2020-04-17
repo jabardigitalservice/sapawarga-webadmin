@@ -164,7 +164,7 @@ export default {
           {
             required: true,
             message: 'Provinsi harus diisi',
-            trigger: 'change'
+            trigger: 'blur'
           }
         ]
       }

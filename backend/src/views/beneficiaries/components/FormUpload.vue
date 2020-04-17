@@ -95,17 +95,22 @@ export default {
       } else {
         this.beneficiaries.status_verification = value
       }
-
-      if (this.isCreate) {
-        this.beneficiaries.status = 10
-        await create(this.beneficiaries)
-      } else {
-        delete this.beneficiaries.nik
-        await update(id, this.beneficiaries)
+      try {
+        if (this.isCreate) {
+          this.beneficiaries.status = 10
+          await create(this.beneficiaries)
+        } else {
+          delete this.beneficiaries.nik
+          await update(id, this.beneficiaries)
+        }
+        this.dialogVisible = false
+        this.$message.info('Status berhasil diubah')
+        this.$router.push('/beneficiaries/index')
+      } catch (error) {
+        const message = error.response.data.data[0].message
+        const success = error.response.data.success
+        if (!success) this.$message.error(message)
       }
-      this.dialogVisible = false
-      this.$message.info('Status berhasil diubah')
-      this.$router.push('/beneficiaries/index')
     },
     photoUploadedKtp(path, url) {
       this.beneficiaries.image_ktp_url = url
