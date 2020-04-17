@@ -47,7 +47,7 @@
 
           <el-table-column align="center" :label="$t('label.actions')" width="200px">
             <template slot-scope="scope">
-              <router-link :to="'/beneficiaries/detail/'+scope.row.id">
+              <router-link :to="scope.row.status_verification === 1 ? '/beneficiaries/detail/'+scope.row.id : ''">
                 <el-tooltip :content="$t('label.beneficiaries-verivication')" placement="top">
                   <el-button type="success" icon="el-icon-circle-check" size="small" :disabled="scope.row.status_verification !== 1">{{ $t('label.beneficiaries-verivication') }}</el-button>
                 </el-tooltip>
