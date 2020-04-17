@@ -13,7 +13,7 @@
       label-position="left"
     >
       <el-form-item label="NIK" prop="nik">
-        <el-input v-model="beneficiaries.nik" type="number" placeholder="NIK" :disabled="disableField" />
+        <el-input v-model="beneficiaries.nik" type="number" placeholder="NIK" :disabled="disableField" @change="getNik" />
       </el-form-item>
       <el-form-item label="Nama" prop="name">
         <el-input v-model="beneficiaries.name" placeholder="Nama Lengkap" :disabled="disableField" />
@@ -83,7 +83,7 @@
 </template>
 <script>
 import { getKecamatanList, getKelurahanList, getKabkotaList } from '@/api/areas'
-import { fetchListJob, update } from '@/api/beneficiaries'
+import { fetchListJob, update, fetchNik } from '@/api/beneficiaries'
 
 export default {
   props: {
@@ -318,6 +318,11 @@ export default {
     getKelurahan(value) {
       getKelurahanList(value).then(response => {
         this.kelList = response.data.items
+      })
+    },
+    getNik(item) {
+      fetchNik(item).then(response => {
+        console.log(response.data)
       })
     }
   }
