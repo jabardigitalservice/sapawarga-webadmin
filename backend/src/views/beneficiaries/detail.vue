@@ -24,7 +24,7 @@
           </el-row>
           <el-row v-if="active === 3" :gutter="20">
             <el-col :sm="24" :md="20" :lg="20" :xl="20">
-              <FormIncome :beneficiaries.sync="beneficiaries" :is-create="isCreate" :disable-field="!isCreate" @nextStep="onClickNextChild" />
+              <FormIncome :beneficiaries.sync="beneficiaries" :is-create="isCreate" @nextStep="onClickNextChild" />
             </el-col>
           </el-row>
           <el-row v-if="active === 2" :gutter="20">

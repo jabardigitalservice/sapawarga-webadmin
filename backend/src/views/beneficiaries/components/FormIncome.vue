@@ -12,7 +12,7 @@
       label-position="left"
     >
       <el-form-item v-if="isCreate" label="Pekerjaan" prop="job_type_id">
-        <el-select v-model="beneficiaries.job_type_id" style="width:100%" :disabled="disableField">
+        <el-select v-model="beneficiaries.job_type_id" style="width:100%">
           <el-option
             v-for="item in jobList"
             :key="item.id"
@@ -56,10 +56,6 @@ export default {
       type: Object,
       default: null
     },
-    disableField: {
-      type: Boolean,
-      default: true
-    },
     isCreate: {
       type: Boolean,
       default: false
@@ -67,6 +63,7 @@ export default {
   },
   data() {
     return {
+      disableField: true,
       jobList: null,
       jobStatusList: null,
       familyCount: [1, 2, 3, 4, 5, 6, 7, 'Lainnya'
@@ -111,6 +108,7 @@ export default {
     }
   },
   created() {
+    if (this.isCreate) this.disableField = false
     this.getJob()
   },
   methods: {
