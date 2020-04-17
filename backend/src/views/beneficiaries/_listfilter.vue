@@ -40,12 +40,12 @@
         </el-col>
         <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="2">
           <el-form-item style="margin-bottom: 0">
-            <el-input v-model="listQuery.rw_like" placeholder="RW" :disabled="listQuery.kel_id === null && !roles" />
+            <el-input v-model="listQuery.domicile_rw_like" placeholder="RW" :disabled="listQuery.kel_id === null && !roles" />
           </el-form-item>
         </el-col>
         <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="2">
           <el-form-item style="margin-bottom: 0">
-            <el-input v-model="listQuery.rt_like" placeholder="RT" :disabled="listQuery.kel_id === null && !roles" />
+            <el-input v-model="listQuery.domicile_rt_like" placeholder="RT" :disabled="listQuery.kel_id === null && !roles" />
           </el-form-item>
         </el-col>
         <el-col :xs="24" :sm="24" :md="4">
