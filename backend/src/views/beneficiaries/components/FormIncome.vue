@@ -1,7 +1,7 @@
 <template>
   <div class="components-container">
     <div class="warning">
-      <p class="caution">Masukan informasi mengenai jumlah anggota keluarga dan penghasilan sebelum dan sesudah COVID-19.</p>
+      <p v-if="isCreate" class="caution">Masukan informasi mengenai jumlah anggota keluarga dan penghasilan sebelum dan sesudah COVID-19.</p>
     </div>
     <el-form
       ref="beneficiaries"

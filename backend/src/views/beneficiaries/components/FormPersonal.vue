@@ -51,10 +51,16 @@
       <el-form-item v-if="!isCreate" label="Alamat" prop="domicile_address">
         <el-input v-model="beneficiaries.domicile_address" placeholder="Alamat" :disabled="disableField" />
       </el-form-item>
-      <el-form-item label="RW" prop="rw">
+      <el-form-item v-if="!isCreate" label="RW" prop="domicile_rw">
+        <el-input v-model="beneficiaries.domicile_rw" type="number" placeholder="RW" :disabled="disableField" />
+      </el-form-item>
+      <el-form-item v-if="!isCreate" label="RT" prop="domicile_rt">
+        <el-input v-model="beneficiaries.domicile_rt" type="number" placeholder="RT" :disabled="disableField" />
+      </el-form-item>
+      <el-form-item v-if="isCreate" label="RW" prop="rw">
         <el-input v-model="beneficiaries.rw" type="number" placeholder="RW" :disabled="disableField" />
       </el-form-item>
-      <el-form-item label="RT" prop="rt">
+      <el-form-item v-if="isCreate" label="RT" prop="rt">
         <el-input v-model="beneficiaries.rt" type="number" placeholder="RT" :disabled="disableField" />
       </el-form-item>
       <el-form-item v-if="!isCreate" label="Pekerjaan" prop="job_type_id">
@@ -161,6 +167,20 @@ export default {
           {
             required: true,
             message: 'Pekerjaan harus diisi',
+            trigger: 'blur'
+          }
+        ],
+        domicile_rw: [
+          {
+            required: true,
+            message: 'RW harus diisi',
+            trigger: 'blur'
+          }
+        ],
+        domicile_rt: [
+          {
+            required: true,
+            message: 'RT harus diisi',
             trigger: 'blur'
           }
         ]
