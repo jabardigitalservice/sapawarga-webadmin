@@ -6,6 +6,7 @@
     </div>
     <el-form
       ref="beneficiaries"
+      v-loading="loading"
       :model="beneficiaries"
       :rules="rules"
       :status-icon="true"
@@ -77,13 +78,12 @@
         <div v-if="!isCreate">Apakah benar informasi calon penerima bantuan ini berdomisili di desa Anda?</div>
         <el-button v-if="!isCreate" class="button-action" type="primary" plain @click="rejectData">{{ $t('crud.not-valid') }}</el-button>
         <el-button class="button-action" type="primary" @click="next"> {{ $t('crud.next') }}</el-button>
-        <el-button class="button-action" type="primary" @click="toManual">Isi manual</el-button>
       </el-form-item>
     </el-form>
   </div>
 </template>
 <script>
-import { getKecamatanList, getKecamatanBpsList, getKelurahanBpsList, getKelurahanList, getKabkotaList } from '@/api/areas'
+import {getKecamatanBpsList, getKelurahanBpsList, getKabkotaList } from '@/api/areas'
 import { fetchListJob, update, fetchNik } from '@/api/beneficiaries'
 
 export default {
@@ -108,6 +108,7 @@ export default {
       }
     }
     return {
+      loading: false,
       isAutomatedNik: true,
       staticAutomated: true,
       disableField: false,
@@ -252,10 +253,6 @@ export default {
     if (this.beneficiaries.kec_id !== null) this.getKelurahan(this.beneficiaries.kec_bps_id)
   },
   methods: {
-    toManual() {
-      this.staticAutomated = false
-      this.isAutomatedNik = false
-    },
     async next() {
       const valid = await this.$refs.beneficiaries.validate()
 
@@ -298,15 +295,18 @@ export default {
       })
     },
     getNik(item) {
+      this.loading = true
       fetchNik(item).then(response => {
         Object.assign(this.beneficiaries, response.data)
         this.getKecamatan(this.beneficiaries.kabkota_bps_id)
         this.getKelurahan(this.beneficiaries.kec_bps_id)
         this.isAutomatedNik = false
         this.disableField = true
+        this.loading = false
       }).catch(err => {
         console.log(err)
         this.isAutomatedNik = true
+        this.loading = false
       })
     }
   }

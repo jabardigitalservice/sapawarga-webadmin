@@ -103,7 +103,7 @@ export default {
       proviceList: [
         {
           name: 'JAWA BARAT',
-          code_bps: '32'
+          code_bps: 32
         }
       ],
       kabkotaList: null,
@@ -162,9 +162,9 @@ export default {
         ],
         domicile_province_bps_id: [
           {
-            required: true,
+            required: false,
             message: 'Provinsi harus diisi',
-            trigger: 'blur'
+            trigger: 'input'
           }
         ]
       }
@@ -219,7 +219,7 @@ export default {
       const authUser = this.$store.state.user
       if (checkPermission(['staffKel'])) {
         this.disableFieldArea = true
-        this.beneficiaries.domicile_province_bps_id = '32'
+        this.beneficiaries.domicile_province_bps_id = 32
         this.beneficiaries.domicile_kel_name = authUser.kelurahan
         this.beneficiaries.domicile_kec_name = authUser.kecamatan
         this.beneficiaries.domicile_kabkota_name = authUser.kabkota
