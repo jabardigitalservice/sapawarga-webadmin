@@ -32,7 +32,7 @@
         <el-select v-model="beneficiaries.kecamatan" value-key="code_bps" filterable style="width:100%" :disabled="disableField">
           <el-option
             v-for="item in kecList"
-            :key="item.id"
+            :key="item.code_bps"
             :label="item.name"
             :value="item"
           />
@@ -42,7 +42,7 @@
         <el-select v-model="beneficiaries.kelurahan" value-key="code_bps" filterable style="width:100%" :disabled="disableField">
           <el-option
             v-for="item in kelList"
-            :key="item.id"
+            :key="item.code_bps"
             :label="item.name"
             :value="item"
           />
@@ -82,7 +82,7 @@
   </div>
 </template>
 <script>
-import { getKecamatanList, getKelurahanList, getKabkotaList } from '@/api/areas'
+import { getKecamatanList, getKecamatanBpsList, getKelurahanBpsList, getKelurahanList, getKabkotaList } from '@/api/areas'
 import { fetchListJob, update, fetchNik } from '@/api/beneficiaries'
 
 export default {
@@ -215,68 +215,71 @@ export default {
     }
   },
   watch: {
-    'beneficiaries.kabkota'(value1, value2) {
-      if (this.isCreate) {
-        if (value1 !== value2) {
-          this.beneficiaries.kecamatan = null
-          this.beneficiaries.kelurahan = null
-          this.beneficiaries.kabkota_id = value1.id
-          this.beneficiaries.kabkota_bps_id = value1.code_bps
-          this.getKecamatan(value1.id)
-        }
-      }
+    // 'beneficiaries.kabkota'(value1, value2) {
+    //   console.log('ini jalan')
+    //   if (this.isCreate) {
+    //     if (value1 !== value2) {
+    //       this.beneficiaries.kecamatan = null
+    //       this.beneficiaries.kelurahan = null
+    //       this.beneficiaries.kabkota_id = value1.id
+    //       this.beneficiaries.kabkota_bps_id = value1.code_bps
+    //       this.getKecamatan(value1.code_bps)
+    //       console.log('ini jalan kok')
+    //     }
+    //   }
 
-      if (value1 !== value2) {
-        if (value2 !== null) {
-          this.beneficiaries.kecamatan = null
-          this.beneficiaries.kelurahan = null
-          this.beneficiaries.kabkota_id = value1.id
-          this.beneficiaries.kabkota_bps_id = value1.code_bps
-          this.getKecamatan(value1.id)
-        }
-      }
-    },
+    //   if (value1 !== value2) {
+    //     if (value2 !== null) {
+    //       this.beneficiaries.kecamatan = null
+    //       this.beneficiaries.kelurahan = null
+    //       this.beneficiaries.kabkota_id = value1.id
+    //       this.beneficiaries.kabkota_bps_id = value1.code_bps
+    //       this.getKecamatan(value1.code_bps)
+    //     }
+    //   }
+    // },
     'beneficiaries.kecamatan'(value1, value2) {
-      if (this.isCreate) {
-        if (value1 !== value2) {
-          this.beneficiaries.kelurahan = null
-          this.getKelurahan(value1.id)
-          this.beneficiaries.kec_id = value1.id
-          this.beneficiaries.kec_bps_id = value1.code_bps
-        }
-      }
+      // if (this.isCreate) {
+      //   if (value1 !== value2) {
+      //     this.beneficiaries.kelurahan = null
+      //     // this.getKelurahan(value1.code_bps)
+      //     this.beneficiaries.kec_id = value1.id
+      //     this.beneficiaries.kec_bps_id = value1.code_bps
+      //   }
+      // }
 
-      if (value1 !== value2) {
-        if (value2 !== null) {
-          this.beneficiaries.kelurahan = null
-        } else if (value1 !== null) {
-          this.getKelurahan(value1.id)
-          this.beneficiaries.kec_id = value1.id
-          this.beneficiaries.kec_bps_id = value1.code_bps
-        }
-      }
+      // if (value1 !== value2) {
+      //   if (value2 !== null) {
+      //     this.beneficiaries.kelurahan = null
+      //   } else if (value1 !== null) {
+      //     this.getKelurahan(value1.code_bps)
+      //     this.beneficiaries.kec_id = value1.id
+      //     this.beneficiaries.kec_bps_id = value1.code_bps
+      //   }
+      // }
     },
     'beneficiaries.kelurahan'(value1, value2) {
-      if (this.isCreate) {
-        if (value1 !== value2) {
-          this.beneficiaries.kel_id = value1.id
-          this.beneficiaries.kel_bps_id = value1.code_bps
-        }
-      }
+      // if (this.isCreate) {
+      //   if (value1 !== value2) {
+      //     this.beneficiaries.kel_id = value1.id
+      //     this.beneficiaries.kel_bps_id = value1.code_bps
+      //   }
+      // }
 
-      if (value1 !== value2) {
-        if (value1 !== null) {
-          this.beneficiaries.kel_id = value1.id
-          this.beneficiaries.kel_bps_id = value1.code_bps
-        }
-      }
+      // if (value1 !== value2) {
+      //   if (value1 !== null) {
+      //     this.beneficiaries.kel_id = value1.id
+      //     this.beneficiaries.kel_bps_id = value1.code_bps
+      //   }
+      // }
     }
   },
   async mounted() {
+    // this.getNik()
     this.getArea()
     this.getJob()
-    if (this.beneficiaries.kabkota_id !== null) this.getKecamatan(this.beneficiaries.kabkota_id)
-    if (this.beneficiaries.kec_id !== null) this.getKelurahan(this.beneficiaries.kec_id)
+    if (this.beneficiaries.kabkota_id !== null) this.getKecamatan(this.beneficiaries.kabkota_bps_id)
+    if (this.beneficiaries.kec_id !== null) this.getKelurahan(this.beneficiaries.kec_bps_id)
   },
   methods: {
     async next() {
@@ -311,19 +314,55 @@ export default {
       })
     },
     getKecamatan(value) {
-      getKecamatanList(value).then(response => {
+      getKecamatanBpsList(value).then(response => {
         this.kecList = response.data.items
       })
     },
     getKelurahan(value) {
-      getKelurahanList(value).then(response => {
+      getKelurahanBpsList(value).then(response => {
         this.kelList = response.data.items
       })
     },
     getNik(item) {
       fetchNik(item).then(response => {
         console.log(response.data)
+        Object.assign(this.beneficiaries, response.data)
+        this.getKecamatan(this.beneficiaries.kabkota_bps_id)
+        this.getKelurahan(this.beneficiaries.kec_bps_id)
       })
+      this.dummy = {
+        nik: '3212340101900001',
+        no_kk: '3212345678901234',
+        name: 'Nama',
+        province_bps_id: 32,
+        kabkota_bps_id: '3275',
+        kec_bps_id: '3275030',
+        kel_bps_id: '3275030004',
+        province: {
+          code_bps: '32',
+          name: ''
+        },
+        kabkota: {
+          code_bps: '3275',
+          name: 'KOTA BEKASI'
+        },
+        kecamatan: {
+          code_bps: '3275030',
+          name: 'BANTARGEBANG'
+        },
+        kelurahan: {
+          code_bps: '3275030004',
+          name: 'BANTARGEBANG'
+        },
+        rt: '1',
+        rw: '1',
+        address: 'BANTAR GEBANG UTARA'
+      }
+      // this.beneficiaries = this.dummy
+      // Object.assign(this.beneficiaries, this.dummy)
+      this.getKecamatan(this.beneficiaries.kabkota_bps_id)
+      this.getKelurahan(this.beneficiaries.kec_bps_id)
+      // console.log(this.beneficiaries)
     }
   }
 }
