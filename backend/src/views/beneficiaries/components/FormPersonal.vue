@@ -13,7 +13,7 @@
       label-position="left"
     >
       <el-form-item label="NIK" prop="nik">
-        <el-input v-model="beneficiaries.nik" type="number" placeholder="NIK" :disabled="disableField" @change="getNik" />
+        <el-input v-model="beneficiaries.nik" type="number" placeholder="NIK" :disabled="disableField" @input="getNik" />
       </el-form-item>
       <el-form-item v-if="!isAutomatedNik" label="Nama" prop="name">
         <el-input v-model="beneficiaries.name" placeholder="Nama Lengkap" :disabled="disableField" />
@@ -92,10 +92,6 @@ export default {
       type: Object,
       default: null
     },
-    disableField: {
-      type: Boolean,
-      default: true
-    },
     isCreate: {
       type: Boolean,
       default: false
@@ -114,6 +110,7 @@ export default {
     return {
       isAutomatedNik: true,
       staticAutomated: true,
+      disableField: false,
       jobList: null,
       kabkotaList: null,
       kecList: null,
@@ -145,21 +142,21 @@ export default {
         ],
         kabkota: [
           {
-            required: true,
+            required: false,
             message: 'Kabupaten/Kota harus diisi',
             trigger: 'change'
           }
         ],
         kecamatan: [
           {
-            required: true,
+            required: false,
             message: 'Kecamatan harus diisi',
             trigger: 'change'
           }
         ],
         kelurahan: [
           {
-            required: true,
+            required: false,
             message: 'Kelurahan harus diisi',
             trigger: 'change'
           }
@@ -219,7 +216,6 @@ export default {
   },
   watch: {
     'beneficiaries.kabkota'(value1, value2) {
-      console.log('ini jalan')
       if (this.isCreate && !this.staticAutomated) {
         if (value1 !== value2) {
           this.beneficiaries.kecamatan = null
@@ -227,7 +223,6 @@ export default {
           this.beneficiaries.kabkota_id = value1.id
           this.beneficiaries.kabkota_bps_id = value1.code_bps
           this.getKecamatan(value1.code_bps)
-          console.log('ini jalan kok')
         }
       }
     },
@@ -251,7 +246,6 @@ export default {
     }
   },
   async mounted() {
-    // this.getNik()
     this.getArea()
     this.getJob()
     if (this.beneficiaries.kabkota_id !== null) this.getKecamatan(this.beneficiaries.kabkota_bps_id)
@@ -309,7 +303,7 @@ export default {
         this.getKecamatan(this.beneficiaries.kabkota_bps_id)
         this.getKelurahan(this.beneficiaries.kec_bps_id)
         this.isAutomatedNik = false
-        // this.disableField = true
+        this.disableField = true
       }).catch(err => {
         console.log(err)
         this.isAutomatedNik = true
