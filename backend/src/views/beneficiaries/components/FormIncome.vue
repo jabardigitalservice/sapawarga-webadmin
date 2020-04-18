@@ -44,7 +44,6 @@
       <el-form-item v-if="beneficiaries.temporaryFamilyOptions === 'Lainnya'" prop="total_family_members">
         <el-input v-model="beneficiaries.total_family_members" type="number" placeholder="Jumlah anggota keluarga" :disabled="disableField" />
       </el-form-item>
-      {{ beneficiaries.total_family_members }}
       <el-form-item label="Penghasilan Sebelum COVID-19" prop="beforeTemporary">
         <el-input v-if="visible === true" v-model="beforeTemporary" placeholder="Penghasilan sebelum COVID-19" :disabled="disableField" @blur="onBlurNumber">
           <template slot="append">Perbulan</template>
