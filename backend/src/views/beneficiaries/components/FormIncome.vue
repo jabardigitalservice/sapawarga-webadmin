@@ -32,13 +32,27 @@
         </el-select>
       </el-form-item>
       <el-form-item label="Jumlah Anggota Keluarga" prop="total_family_members">
+        <el-select v-model="temporaryFamilyOptions" style="width:100%" :disabled="disableField">
+          <el-option
+            v-for="item in familyCount"
+            :key="item"
+            :label="item"
+            :value="item"
+          />
+        </el-select>
+      </el-form-item>
+      <el-form-item v-if="temporaryFamilyOptions === 'Lainnya'" prop="total_family_members">
         <el-input v-model="beneficiaries.total_family_members" type="number" placeholder="Jumlah anggota keluarga" :disabled="disableField" />
       </el-form-item>
       <el-form-item label="Penghasilan Sebelum COVID-19" prop="income_before">
-        <el-input v-model="beneficiaries.income_before" type="number" placeholder="Penghasilan sebelum COVID-19" :disabled="disableField" />
+        <el-input v-model="beneficiaries.income_before" type="number" :precision="3" placeholder="Penghasilan sebelum COVID-19" :disabled="disableField">
+          <template slot="append">Perbulan</template>
+        </el-input>
       </el-form-item>
       <el-form-item label="Penghasilan Sesudah COVID-19" prop="income_after">
-        <el-input v-model="beneficiaries.income_after" type="number" placeholder="Penghasilan sesudah COVID-19" :disabled="disableField" />
+        <el-input v-model="beneficiaries.income_after" type="number" placeholder="Penghasilan sesudah COVID-19" :disabled="disableField">
+          <template slot="append">Perbulan</template>
+        </el-input>
       </el-form-item>
       <el-form-item class="ml-min-40 form-button">
         <div v-if="!isCreate">Apakah informasi penghasilan ini sudah sesuai?</div>
@@ -68,6 +82,7 @@ export default {
       jobStatusList: null,
       familyCount: [1, 2, 3, 4, 5, 6, 7, 'Lainnya'
       ],
+      temporaryFamilyOptions: null,
       rules: {
         job_type_id: [
           {
@@ -107,6 +122,16 @@ export default {
       }
     }
   },
+  watch: {
+    'beneficiaries.income_before'(value) {
+      this.formatCurrency(value, 'Rp. ')
+    },
+    'temporaryFamilyOptions'(value) {
+      if (value !== 'Lainnya') {
+        this.beneficiaries.total_family_members = value
+      }
+    }
+  },
   created() {
     if (this.isCreate) this.disableField = false
     this.getJob()
@@ -128,7 +153,26 @@ export default {
         this.jobList = response.data.items.job_field
         this.jobStatusList = response.data.items.job_status
       })
-    }
+    },
+    formatCurrency(value, prefix) {
+      if (value) {
+        const number_string = value.toString()
+        const split = number_string.split(',')
+        const modulo = split[0].length % 3
+        let rupiah = split[0].substr(0, modulo)
+        const thousand = split[0].substr(modulo).match(/\d{3}/gi)
+
+        if (thousand) {
+          const separator = modulo ? '.' : ''
+          rupiah += separator + thousand.join('.')
+        }
+
+        rupiah = split[1] !== undefined ? rupiah + ',' + split[1] : rupiah
+        return prefix === undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '')
+      } else {
+        return 'Rp. 0'
+      }
+    },
   }
 }
 </script>
