@@ -247,6 +247,10 @@ export default {
     }
   },
   async mounted() {
+    if (this.isCreate === false) {
+      this.isAutomatedNik = false
+      this.disableField = true
+    }
     this.getArea()
     this.getJob()
     if (this.beneficiaries.kabkota_id !== null) this.getKecamatan(this.beneficiaries.kabkota_bps_id)
