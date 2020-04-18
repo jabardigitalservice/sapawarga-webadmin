@@ -147,7 +147,7 @@ export default {
     'draft': 'Simpan sebagai Draft',
     'search': 'Cari',
     'reset': 'Reset',
-    'next': 'Ya (Lanjutkan)',
+    'next': 'Lanjutkan',
     'change': 'Tidak (Ubah Data)',
     'verified': 'Verifikasi',
     'recheck': 'Cek Ulang',

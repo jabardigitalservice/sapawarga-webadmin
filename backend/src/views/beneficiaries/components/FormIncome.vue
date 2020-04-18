@@ -12,7 +12,7 @@
       label-position="left"
     >
       <el-form-item v-if="isCreate" label="Pekerjaan" prop="job_type_id">
-        <el-select v-model="beneficiaries.job_type_id" style="width:100%">
+        <el-select v-model="beneficiaries.job_type_id" filterable style="width:100%">
           <el-option
             v-for="item in jobList"
             :key="item.id"
@@ -22,7 +22,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="Status Kedudukan dalam Pekerjaan" prop="job_status_id">
-        <el-select v-model="beneficiaries.job_status_id" style="width:100%" :disabled="disableField">
+        <el-select v-model="beneficiaries.job_status_id" filterable style="width:100%" :disabled="disableField">
           <el-option
             v-for="item in jobStatusList"
             :key="item.id"
@@ -73,14 +73,14 @@ export default {
           {
             required: true,
             message: 'Pekerjaan harus diisi',
-            trigger: 'blur'
+            trigger: 'change'
           }
         ],
         job_status_id: [
           {
             required: true,
             message: 'Status Pekerjaan harus diisi',
-            trigger: 'blur'
+            trigger: 'change'
           }
         ],
         total_family_members: [

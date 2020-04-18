@@ -16,6 +16,13 @@ export function fetchListJob(query) {
   })
 }
 
+export function fetchNik(id) {
+  return request({
+    url: `/beneficiaries/nik/${id}`,
+    method: 'get'
+  })
+}
+
 export function fetchRecord(id) {
   return request({
     url: `/beneficiaries/${id}`,
