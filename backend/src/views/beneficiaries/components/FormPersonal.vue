@@ -83,7 +83,7 @@
   </div>
 </template>
 <script>
-import {getKecamatanBpsList, getKelurahanBpsList, getKabkotaList } from '@/api/areas'
+import { getKecamatanBpsList, getKelurahanBpsList, getKabkotaList } from '@/api/areas'
 import { fetchListJob, update, fetchNik } from '@/api/beneficiaries'
 
 export default {
