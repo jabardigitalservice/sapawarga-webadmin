@@ -121,7 +121,9 @@ export default {
         domicile_kel_name: null,
         domicile_rt: null,
         domicile_rw: null,
-        domicile_address: null
+        domicile_address: null,
+        temporaryFamilyOptions: null,
+        total_family_members: null
       },
       rules: {
       }
