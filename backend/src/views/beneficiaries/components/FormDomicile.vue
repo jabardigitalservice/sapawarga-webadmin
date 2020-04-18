@@ -57,7 +57,7 @@
       <el-form-item label="RT" prop="domicile_rt">
         <el-input v-model="beneficiaries.domicile_rt" type="number" placeholder="RT" :disabled="disableField" />
       </el-form-item>
-      <el-form-item label="Nama Jalan" prop="domicile_address">
+      <el-form-item label="Alamat" prop="domicile_address">
         <el-input v-model="beneficiaries.domicile_address" placeholder="Alamat" :disabled="disableField" />
       </el-form-item>
       <el-form-item class="ml-min-40 form-button">
