@@ -44,16 +44,24 @@
       <el-form-item v-if="temporaryFamilyOptions === 'Lainnya'" prop="total_family_members">
         <el-input v-model="beneficiaries.total_family_members" type="number" placeholder="Jumlah anggota keluarga" :disabled="disableField" />
       </el-form-item>
-      <el-form-item label="Penghasilan Sebelum COVID-19" prop="income_before">
-        <el-input v-model="beneficiaries.income_before" type="number" :precision="3" placeholder="Penghasilan sebelum COVID-19" :disabled="disableField">
+      <el-form-item label="Penghasilan Sebelum COVID-19" prop="beforeTemporary">
+        <el-input v-if="visible === true" v-model="beforeTemporary" placeholder="Penghasilan sebelum COVID-19" :disabled="disableField" @blur="onBlurNumber">
+          <template slot="append">Perbulan</template>
+        </el-input>
+        <el-input v-if="visible === false" v-model="beforeTemporary" placeholder="Penghasilan sebelum COVID-19" :disabled="disableField" @focus="onFocusText">
           <template slot="append">Perbulan</template>
         </el-input>
       </el-form-item>
-      <el-form-item label="Penghasilan Sesudah COVID-19" prop="income_after">
-        <el-input v-model="beneficiaries.income_after" type="number" placeholder="Penghasilan sesudah COVID-19" :disabled="disableField">
+      {{ beneficiaries.income_before }}
+      <el-form-item label="Penghasilan Sesudah COVID-19" prop="afterTemporary">
+        <el-input v-if="visible === true" v-model="afterTemporary" placeholder="Penghasilan sesudah COVID-19" :disabled="disableField" @blur="onBlurNumberAfter">
+          <template slot="append">Perbulan</template>
+        </el-input>
+        <el-input v-if="visible === false" v-model="afterTemporary" placeholder="Penghasilan sesudah COVID-19" :disabled="disableField" @focus="onFocusTextAfter">
           <template slot="append">Perbulan</template>
         </el-input>
       </el-form-item>
+      {{ beneficiaries.income_after }}
       <el-form-item class="ml-min-40 form-button">
         <div v-if="!isCreate">Apakah informasi penghasilan ini sudah sesuai?</div>
         <el-button v-if="!isCreate" class="button-action" type="primary" plain @click="open">{{ $t('crud.change') }}</el-button>
@@ -78,6 +86,9 @@ export default {
   data() {
     return {
       disableField: true,
+      beforeTemporary: null,
+      afterTemporary: null,
+      visible: true,
       jobList: null,
       jobStatusList: null,
       familyCount: [1, 2, 3, 4, 5, 6, 7, 'Lainnya'
@@ -105,17 +116,27 @@ export default {
             trigger: 'blur'
           }
         ],
-        income_after: [
+        afterTemporary: [
           {
             required: true,
             message: 'Penghasilan harus diisi',
             trigger: 'blur'
+          },
+          {
+            pattern: /^[a-z0-9_.]+$/,
+            message: 'Penghasilan harus berupa angka',
+            trigger: 'blur'
           }
         ],
-        income_before: [
+        beforeTemporary: [
           {
             required: true,
             message: 'Penghasilan harus diisi',
+            trigger: 'blur'
+          },
+          {
+            pattern: /^[a-z0-9_.]+$/,
+            message: 'Penghasilan harus berupa angka',
             trigger: 'blur'
           }
         ]
@@ -123,9 +144,6 @@ export default {
     }
   },
   watch: {
-    'beneficiaries.income_before'(value) {
-      this.formatCurrency(value, 'Rp. ')
-    },
     'temporaryFamilyOptions'(value) {
       if (value !== 'Lainnya') {
         this.beneficiaries.total_family_members = value
@@ -173,6 +191,31 @@ export default {
         return 'Rp. 0'
       }
     },
+    onBlurNumber() {
+      this.visible = false
+      this.beneficiaries.income_before = this.beforeTemporary
+      this.beforeTemporary = this.thousandSeparator(this.beforeTemporary)
+    },
+    onFocusText() {
+      this.visible = true
+      this.beforeTemporary = this.beneficiaries.income_before
+    },
+    onBlurNumberAfter() {
+      this.visible = false
+      this.beneficiaries.income_after = this.afterTemporary
+      this.afterTemporary = this.thousandSeparator(this.afterTemporary)
+    },
+    onFocusTextAfter() {
+      this.visible = true
+      this.afterTemporary = this.beneficiaries.income_after
+    },
+    thousandSeparator(amount) {
+      if (amount !== '' || amount !== undefined || amount !== 0 || amount !== '0' || amount !== null) {
+        return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.').replace(',', '.')
+      } else {
+        return amount
+      }
+    }
   }
 }
 </script>
