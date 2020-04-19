@@ -170,6 +170,7 @@ export default {
         return
       } else if (isNaN(this.beneficiaries.income_after)) {
         this.$message.error('Penghasilan sesudah covid harus angka')
+        console.log('tes')
         return
       }
 
