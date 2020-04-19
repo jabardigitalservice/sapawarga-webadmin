@@ -31,14 +31,34 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="Jumlah Anggota Keluarga" prop="total_family_members">
+      <el-form-item label="Jumlah Anggota Keluarga" prop="temporaryFamilyOptions">
+        <el-select v-model="beneficiaries.temporaryFamilyOptions" style="width:100%" :disabled="disableField">
+          <el-option
+            v-for="item in familyCount"
+            :key="item"
+            :label="item"
+            :value="item"
+          />
+        </el-select>
+      </el-form-item>
+      <el-form-item v-if="beneficiaries.temporaryFamilyOptions === 'Lainnya'" prop="total_family_members">
         <el-input v-model="beneficiaries.total_family_members" type="number" placeholder="Jumlah anggota keluarga" :disabled="disableField" />
       </el-form-item>
-      <el-form-item label="Penghasilan Sebelum COVID-19" prop="income_before">
-        <el-input v-model="beneficiaries.income_before" type="number" placeholder="Penghasilan sebelum COVID-19" :disabled="disableField" />
+      <el-form-item label="Penghasilan Sebelum COVID-19" prop="beforeTemporary">
+        <el-input v-if="visible === true" v-model="beforeTemporary" placeholder="Penghasilan sebelum COVID-19" :disabled="disableField" @blur="onBlurNumber">
+          <template slot="append">Perbulan</template>
+        </el-input>
+        <el-input v-if="visible === false" v-model="beforeTemporary" placeholder="Penghasilan sebelum COVID-19" :disabled="disableField" @focus="onFocusText">
+          <template slot="append">Perbulan</template>
+        </el-input>
       </el-form-item>
-      <el-form-item label="Penghasilan Sesudah COVID-19" prop="income_after">
-        <el-input v-model="beneficiaries.income_after" type="number" placeholder="Penghasilan sesudah COVID-19" :disabled="disableField" />
+      <el-form-item label="Penghasilan Sesudah COVID-19" prop="afterTemporary">
+        <el-input v-if="visible === true" v-model="afterTemporary" placeholder="Penghasilan sesudah COVID-19" :disabled="disableField" @blur="onBlurNumberAfter">
+          <template slot="append">Perbulan</template>
+        </el-input>
+        <el-input v-if="visible === false" v-model="afterTemporary" placeholder="Penghasilan sesudah COVID-19" :disabled="disableField" @focus="onFocusTextAfter">
+          <template slot="append">Perbulan</template>
+        </el-input>
       </el-form-item>
       <el-form-item class="ml-min-40 form-button">
         <div v-if="!isCreate">Apakah informasi penghasilan ini sudah sesuai?</div>
@@ -64,10 +84,14 @@ export default {
   data() {
     return {
       disableField: true,
+      beforeTemporary: null,
+      afterTemporary: null,
+      visible: true,
       jobList: null,
       jobStatusList: null,
       familyCount: [1, 2, 3, 4, 5, 6, 7, 'Lainnya'
       ],
+      temporaryFamilyOptions: null,
       rules: {
         job_type_id: [
           {
@@ -90,18 +114,32 @@ export default {
             trigger: 'blur'
           }
         ],
-        income_after: [
+        temporaryFamilyOptions: [
           {
             required: true,
+            message: 'Jumlah anggota keluarga harus diisi',
+            trigger: 'change'
+          }
+        ],
+        afterTemporary: [
+          {
+            required: false,
             message: 'Penghasilan harus diisi',
             trigger: 'blur'
           }
         ],
-        income_before: [
+        beforeTemporary: [
           {
-            required: true,
+            required: false,
             message: 'Penghasilan harus diisi',
             trigger: 'blur'
+          }
+        ],
+        errorBeforeTemporary: [
+          {
+            required: true,
+            message: 'Penghasilan sebeluum covid harus diisi',
+            trigger: 'change'
           }
         ]
       }
@@ -118,6 +156,27 @@ export default {
       if (!valid) {
         return
       }
+
+      if (this.beneficiaries.income_before === undefined || this.beneficiaries.income_before === null || this.beneficiaries.income_before === '') {
+        this.$message.error('Penghasilan sebelum covid harus diisi')
+        return
+      } else if (isNaN(this.beneficiaries.income_before)) {
+        this.$message.error('Penghasilan sebelum covid harus angka')
+        return
+      }
+
+      if (this.beneficiaries.income_after === undefined || this.beneficiaries.income_after === null || this.beneficiaries.income_after === '') {
+        this.$message.error('Penghasilan sesudah covid harus diisi')
+        return
+      } else if (isNaN(this.beneficiaries.income_after)) {
+        this.$message.error('Penghasilan sesudah covid harus angka')
+        return
+      }
+
+      if (this.beneficiaries.temporaryFamilyOptions !== 'Lainnya') {
+        this.beneficiaries.total_family_members = this.beneficiaries.temporaryFamilyOptions
+      }
+
       this.$emit('nextStep', 1)
     },
     open() {
@@ -128,6 +187,31 @@ export default {
         this.jobList = response.data.items.job_field
         this.jobStatusList = response.data.items.job_status
       })
+    },
+    onBlurNumber() {
+      this.visible = false
+      this.beneficiaries.income_before = this.beforeTemporary
+      this.beforeTemporary = this.thousandSeparator(this.beforeTemporary)
+    },
+    onFocusText() {
+      this.visible = true
+      this.beforeTemporary = this.beneficiaries.income_before
+    },
+    onBlurNumberAfter() {
+      this.visible = false
+      this.beneficiaries.income_after = this.afterTemporary
+      this.afterTemporary = this.thousandSeparator(this.afterTemporary)
+    },
+    onFocusTextAfter() {
+      this.visible = true
+      this.afterTemporary = this.beneficiaries.income_after
+    },
+    thousandSeparator(amount) {
+      if (amount !== '' || amount !== undefined || amount !== 0 || amount !== '0' || amount !== null) {
+        return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+      } else {
+        return amount
+      }
     }
   }
 }

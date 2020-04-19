@@ -84,7 +84,7 @@
 </template>
 <script>
 import { getKecamatanBpsList, getKelurahanBpsList, getKabkotaList } from '@/api/areas'
-import { fetchListJob, update, fetchNik } from '@/api/beneficiaries'
+import { fetchListJob, update, fetchNik, checkNik } from '@/api/beneficiaries'
 
 export default {
   props: {
@@ -247,6 +247,10 @@ export default {
     }
   },
   async mounted() {
+    if (this.isCreate === false) {
+      this.isAutomatedNik = false
+      this.disableField = true
+    }
     this.getArea()
     this.getJob()
     if (this.beneficiaries.kabkota_id !== null) this.getKecamatan(this.beneficiaries.kabkota_bps_id)
@@ -259,7 +263,15 @@ export default {
       if (!valid) {
         return
       }
-      this.$emit('nextStep', 1)
+
+      checkNik(this.beneficiaries.nik).then(response => {
+        if (response.data === true) {
+          this.$message.error('NIK ' + this.beneficiaries.nik + ' sudah terdaftar')
+          this.$router.go(0)
+        } else {
+          this.$emit('nextStep', 1)
+        }
+      })
     },
     async rejectData() {
       const id = await this.$route.params && this.$route.params.id

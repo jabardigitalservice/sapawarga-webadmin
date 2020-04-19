@@ -23,6 +23,13 @@ export function fetchNik(id) {
   })
 }
 
+export function checkNik(id) {
+  return request({
+    url: `/beneficiaries/check-exist-nik/${id}`,
+    method: 'get'
+  })
+}
+
 export function fetchRecord(id) {
   return request({
     url: `/beneficiaries/${id}`,
