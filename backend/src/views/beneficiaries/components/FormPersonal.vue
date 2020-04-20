@@ -74,7 +74,7 @@
 </template>
 <script>
 import { getKecamatanBpsList, getKelurahanBpsList, getKabkotaList } from '@/api/areas'
-import { fetchListJob, update, fetchNik, checkNik } from '@/api/beneficiaries'
+import { update, fetchNik, checkNik } from '@/api/beneficiaries'
 
 export default {
   props: {
