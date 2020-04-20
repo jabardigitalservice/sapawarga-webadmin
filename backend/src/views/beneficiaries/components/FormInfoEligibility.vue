@@ -11,13 +11,13 @@
       <el-form-item label="Status ekonomi warga yang bersangkutan">
         <div>
           <el-radio-group v-model="radio_check">
-            <el-radio label="0" style="line-height: 25px; font-weight: bold;">Miskin Baru  <br> <span style="margin-left: 25px; font-weight: normal;">Penjelasan miskin baru adalah orang miskin terdampak langsung COVID 19</span></el-radio>
+            <el-radio label="0" class="label-check">Miskin Baru  <br> <span class="desc-label">Penjelasan miskin baru adalah orang miskin terdampak langsung COVID 19</span></el-radio>
           </el-radio-group>
         </div>
 
         <div style="margin-top: 10px;">
           <el-radio-group v-model="radio_check">
-            <el-radio label="1" style="line-height: 25px; font-weight: bold;">Miskin Lama  <br> <span style="margin-left: 25px; font-weight: normal;">Penjelasan miskin lama adalah orang yang sebelum COVID 19 sudah masuk dalam status miskin</span></el-radio>
+            <el-radio label="1" class="label-check">Miskin Lama  <br> <span class="desc-label">Penjelasan miskin lama adalah orang yang sebelum COVID 19 sudah masuk dalam status miskin</span></el-radio>
           </el-radio-group>
         </div>
       </el-form-item>
@@ -28,15 +28,6 @@
 <script>
 export default {
   data() {
-    const checkRadio = (rule, value, callback) => {
-      const phoneStringFormat = value.toString()
-      const checkStringPhone = phoneStringFormat.startsWith('0')
-      if (checkStringPhone) {
-        callback(new Error(this.$t('errors.rw-start-number')))
-      } else {
-        callback()
-      }
-    }
     return {
       text_area: '',
       radio_check: '0',
@@ -53,10 +44,6 @@ export default {
             required: true,
             message: 'RT harus diisi',
             trigger: 'blur'
-          },
-          {
-            validator: checkRadio,
-            trigger: 'blur'
           }
         ]
       }
@@ -65,6 +52,12 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
+.label-check {
+  line-height: 25px; font-weight: bold;
+}
+.desc-label {
+  margin-left: 25px; font-weight: normal;
+}
 
 </style>
