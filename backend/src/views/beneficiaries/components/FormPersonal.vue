@@ -285,6 +285,7 @@ export default {
             this.loading = false
           }).catch(err => {
             console.log(err)
+            this.$message.error('Maaf NIK tidak ditemukan di Disdukcapil')
             this.isAutomatedNik = true
             this.loading = false
           })
