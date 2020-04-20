@@ -121,6 +121,13 @@ export default {
     'gamification-detail': 'Detail Misi',
     'gamification-edit': 'Edit Misi',
 
+    'beneficiaries-manage': 'Bantuan Sosial',
+    'beneficiaries-list': 'Daftar Bansos',
+    'beneficiaries-create': 'Tambah Bansos',
+    'beneficiaries-detail': 'Detail Bansos',
+    'beneficiaries-edit': 'Edit Bansos',
+    'beneficiaries-preview': 'Ringkasan',
+
     'information': 'Informasi',
     'aspiration': 'Aspirasi',
     'questionnaire': 'Kuesioner',
@@ -140,6 +147,12 @@ export default {
     'draft': 'Simpan sebagai Draft',
     'search': 'Cari',
     'reset': 'Reset',
+    'next': 'Lanjutkan',
+    'change': 'Tidak (Ubah Data)',
+    'verified': 'Verifikasi',
+    'recheck': 'Cek Ulang',
+    'not-valid': 'Tidak',
+    'serach-nik': 'Input NIK',
 
     'save-create': 'Simpan',
     'save-update': 'Simpan Perubahan',
@@ -340,6 +353,7 @@ export default {
     'rw-must-be-filled': 'RW harus diisi',
     'rw-only-use-number': 'RW harus menggunakan angka',
     'rw-must-be-at-least-3-number': 'RW harus 3 angka',
+    'rw-start-number': 'RT/RW tidak boleh diawali angka 0',
 
     'rt-must-be-filled': 'RT harus diisi',
     'rt-only-use-number': 'RT harus menggunakan angka',
@@ -431,6 +445,8 @@ export default {
   message: {
     'confirmation-approve': 'Apakah Anda yakin akan memberikan persetujuan untuk usulan ini?',
     'confirmation-reject': 'Apakah Anda yakin akan menolak usulan ini?',
+    'confirmation-reject-data': 'Apakah Anda yakin akan menolak data ini?',
+    'confirmation-reject-data-bansos': 'Data yang tidak sesuai domisili akan otomatis ditolak oleh sistem dan tidak akan diproses pengajuannya. Apakah anda yakin untuk menolak data ini?',
     'confirmation-send-message': 'Apakah Anda yakin akan mengirimkan pesan: ',
     'confirmation-delete-file-message': 'Apakah Anda yakin menghapus file {0} ?.',
     'title-approve': 'Konfirmasi Persetujuan',
@@ -842,8 +858,20 @@ export default {
     'phone-book-tooltip-edit': 'Edit Nomor penting',
     'phone-book-tooltip-detail': 'Detail Nomor penting',
     'phone-book-tooltip-activate': 'Aktifkan Nomor penting',
-    'phone-book-tooltip-inactivate': 'Nonaktifkan Nomor penting'
+    'phone-book-tooltip-inactivate': 'Nonaktifkan Nomor penting',
 
+    'beneficiaries-name': 'Nama Lengkap',
+    'beneficiaries-status': 'Status',
+    'beneficiaries-nik': 'NIK',
+    'beneficiaries-rt': 'RT',
+    'beneficiaries-rw': 'RW',
+    'beneficiaries-income-before': 'Penghasilan Sebelum Covid',
+    'beneficiaries-income-after': 'Penghasilan Sesudah Covid',
+    'beneficiaries-verivication': 'Verifikasi Bansos',
+    'beneficiaries-edit': 'Edit Bansos',
+    'beneficiaries-reject': 'Ditolak',
+    'beneficiaries-verified': 'Terverifikasi',
+    'beneficiaries-unverified': 'Belum Terverifikasi'
   },
   news: {
     'news-url': 'URL Berita',

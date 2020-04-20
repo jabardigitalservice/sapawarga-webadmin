@@ -129,9 +129,9 @@ const actions = {
           }
 
           const { kel_id, kec_id, kabkota_id, kabkota, kecamatan, kelurahan } = data
-          const kabkotaName = !kabkota ? null : kabkota.name
-          const kecamatanName = !kecamatan ? null : kecamatan.name
-          const kelurahanName = !kelurahan ? null : kelurahan.name
+          const kabkotaName = !kabkota ? null : kabkota
+          const kecamatanName = !kecamatan ? null : kecamatan
+          const kelurahanName = !kelurahan ? null : kelurahan
 
           commit('SET_AREA', {
             kel_id: kel_id,
