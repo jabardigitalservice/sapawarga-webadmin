@@ -54,7 +54,7 @@
       <p>Klik Cek Ulang apabila Anda ingin melakukan pengecekan.</p>
       <span slot="footer" class="dialog-footer">
         <el-button @click="next">{{ $t('crud.recheck') }}</el-button>
-        <el-button type="danger" @click="updateData(statusRejected)">{{ $t('crud.reject') }}</el-button>
+        <el-button v-if="!isCreate" type="danger" @click="updateData(statusRejected)">{{ $t('crud.reject') }}</el-button>
         <el-button type="success" @click="updateData(statusVerified)">{{ $t('crud.verified') }}</el-button>
       </span>
     </el-dialog>
