@@ -186,10 +186,10 @@ export default {
       this.afterTemporary = this.beneficiaries.income_after
     },
     thousandSeparator(amount) {
-      if (amount !== '' || amount !== undefined || amount !== 0 || amount !== '0' || amount !== null) {
-        return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
-      } else {
+      if (amount === null || amount === '' || amount === undefined || amount === 0 || amount === '0') {
         return amount
+      } else {
+        return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
       }
     }
   }

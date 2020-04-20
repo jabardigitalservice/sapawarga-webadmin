@@ -14,7 +14,10 @@
       label-position="left"
     >
       <el-form-item label="NIK" prop="nik">
-        <el-input v-model="beneficiaries.nik" type="number" placeholder="NIK" :disabled="disableField" @input="getNik" />
+        <el-input v-model="beneficiaries.nik" type="number" placeholder="NIK" :disabled="disableField" />
+      </el-form-item>
+      <el-form-item v-if="isAutomatedNik" class="button-search-nik">
+        <el-button class="button-action" type="primary" @click="getNik(beneficiaries.nik)">{{ this.$t('crud.serach-nik') }}</el-button>
       </el-form-item>
       <el-form-item v-if="!isAutomatedNik" label="Nama" prop="name">
         <el-input v-model="beneficiaries.name" placeholder="Nama Lengkap" :disabled="disableField" />
@@ -67,7 +70,7 @@
       <el-form-item class="ml-min-40 form-button">
         <div v-if="!isCreate">Apakah benar informasi calon penerima bantuan ini berdomisili di desa Anda?</div>
         <el-button v-if="!isCreate" class="button-action" type="primary" plain @click="rejectData">{{ $t('crud.not-valid') }}</el-button>
-        <el-button class="button-action" type="primary" @click="next"> {{ $t('crud.next') }}</el-button>
+        <el-button v-if="!isAutomatedNik" class="button-action" type="primary" @click="next"> {{ $t('crud.next') }}</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -118,16 +121,6 @@ export default {
             required: true,
             message: 'NIK harus diisi',
             trigger: 'blur'
-          },
-          {
-            max: 16,
-            message: 'NIK harus 16 karakter',
-            trigger: 'blur'
-          },
-          {
-            min: 16,
-            message: 'NIK harus 16 karakter',
-            trigger: 'blur'
           }
         ],
         kabkota: [
@@ -153,7 +146,7 @@ export default {
         ],
         rw: [
           {
-            required: true,
+            required: false,
             message: 'RW harus diisi',
             trigger: 'blur'
           },
@@ -164,7 +157,7 @@ export default {
         ],
         rt: [
           {
-            required: true,
+            required: false,
             message: 'RT harus diisi',
             trigger: 'blur'
           },
@@ -245,18 +238,7 @@ export default {
         return
       }
 
-      if (this.isCreate) {
-        checkNik(this.beneficiaries.nik).then(response => {
-          if (response.data === true) {
-            this.$message.error('NIK ' + this.beneficiaries.nik + ' sudah terdaftar')
-            this.$router.go(0)
-          } else {
-            this.$emit('nextStep', 1)
-          }
-        })
-      } else {
-        this.$emit('nextStep', 1)
-      }
+      this.$emit('nextStep', 1)
     },
     async rejectData() {
       const id = await this.$route.params && this.$route.params.id
@@ -288,17 +270,25 @@ export default {
     },
     getNik(item) {
       this.loading = true
-      fetchNik(item).then(response => {
-        Object.assign(this.beneficiaries, response.data)
-        this.getKecamatan(this.beneficiaries.kabkota_bps_id)
-        this.getKelurahan(this.beneficiaries.kec_bps_id)
-        this.isAutomatedNik = false
-        this.disableField = true
-        this.loading = false
-      }).catch(err => {
-        console.log(err)
-        this.isAutomatedNik = true
-        this.loading = false
+      checkNik(this.beneficiaries.nik).then(response => {
+        if (response.data === true) {
+          this.$message.error('NIK ' + this.beneficiaries.nik + ' sudah terdaftar')
+          this.beneficiaries.nik = null
+          this.loading = false
+        } else {
+          fetchNik(item).then(response => {
+            Object.assign(this.beneficiaries, response.data)
+            this.getKecamatan(this.beneficiaries.kabkota_bps_id)
+            this.getKelurahan(this.beneficiaries.kec_bps_id)
+            this.isAutomatedNik = false
+            this.disableField = true
+            this.loading = false
+          }).catch(err => {
+            console.log(err)
+            this.isAutomatedNik = true
+            this.loading = false
+          })
+        }
       })
     }
   }
@@ -319,5 +309,9 @@ export default {
   }
   .form-button {
     margin-top: 50px;
+  }
+  .button-search-nik {
+    display: block;
+    float: right;
   }
 </style>
