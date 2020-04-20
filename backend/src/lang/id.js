@@ -446,6 +446,7 @@ export default {
     'confirmation-approve': 'Apakah Anda yakin akan memberikan persetujuan untuk usulan ini?',
     'confirmation-reject': 'Apakah Anda yakin akan menolak usulan ini?',
     'confirmation-reject-data': 'Apakah Anda yakin akan menolak data ini?',
+    'confirmation-reject-data-bansos': 'Data yang tidak sesuai domisili akan otomatis ditolak oleh sistem dan tidak akan diproses pengajuannya. Apakah anda yakin untuk menolak data ini?',
     'confirmation-send-message': 'Apakah Anda yakin akan mengirimkan pesan: ',
     'confirmation-delete-file-message': 'Apakah Anda yakin menghapus file {0} ?.',
     'title-approve': 'Konfirmasi Persetujuan',
