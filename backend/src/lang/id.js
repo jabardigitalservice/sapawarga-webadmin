@@ -152,6 +152,7 @@ export default {
     'verified': 'Verifikasi',
     'recheck': 'Cek Ulang',
     'not-valid': 'Tidak',
+    'serach-nik': 'Input NIK',
 
     'save-create': 'Simpan',
     'save-update': 'Simpan Perubahan',

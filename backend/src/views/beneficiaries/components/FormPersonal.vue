@@ -14,7 +14,10 @@
       label-position="left"
     >
       <el-form-item label="NIK" prop="nik">
-        <el-input v-model="beneficiaries.nik" type="number" placeholder="NIK" :disabled="disableField" @input="getNik" />
+        <el-input v-model="beneficiaries.nik" type="number" placeholder="NIK" :disabled="disableField" />
+      </el-form-item>
+      <el-form-item v-if="isAutomatedNik" class="button-search-nik">
+        <el-button class="button-action" type="primary" @click="getNik(beneficiaries.nik)">{{ this.$t('crud.serach-nik') }}</el-button>
       </el-form-item>
       <el-form-item v-if="!isAutomatedNik" label="Nama" prop="name">
         <el-input v-model="beneficiaries.name" placeholder="Nama Lengkap" :disabled="disableField" />
@@ -64,27 +67,17 @@
       <el-form-item v-if="!isAutomatedNik && isCreate" label="RT" prop="rt">
         <el-input v-model="beneficiaries.rt" type="number" placeholder="RT" :disabled="disableField" />
       </el-form-item>
-      <el-form-item v-if="!isAutomatedNik && !isCreate" label="Pekerjaan" prop="job_type_id">
-        <el-select v-model="beneficiaries.job_type_id" style="width:100%" :disabled="disableField">
-          <el-option
-            v-for="item in jobList"
-            :key="item.id"
-            :label="item.title"
-            :value="item.id"
-          />
-        </el-select>
-      </el-form-item>
       <el-form-item class="ml-min-40 form-button">
         <div v-if="!isCreate">Apakah benar informasi calon penerima bantuan ini berdomisili di desa Anda?</div>
         <el-button v-if="!isCreate" class="button-action" type="primary" plain @click="rejectData">{{ $t('crud.not-valid') }}</el-button>
-        <el-button class="button-action" type="primary" @click="next"> {{ $t('crud.next') }}</el-button>
+        <el-button v-if="!isAutomatedNik" class="button-action" type="primary" @click="next"> {{ $t('crud.next') }}</el-button>
       </el-form-item>
     </el-form>
   </div>
 </template>
 <script>
 import { getKecamatanBpsList, getKelurahanBpsList, getKabkotaList } from '@/api/areas'
-import { fetchListJob, update, fetchNik, checkNik } from '@/api/beneficiaries'
+import { update, fetchNik, checkNik } from '@/api/beneficiaries'
 
 export default {
   props: {
@@ -112,7 +105,6 @@ export default {
       isAutomatedNik: true,
       staticAutomated: true,
       disableField: false,
-      jobList: null,
       kabkotaList: null,
       kecList: null,
       kelList: null,
@@ -128,16 +120,6 @@ export default {
           {
             required: true,
             message: 'NIK harus diisi',
-            trigger: 'blur'
-          },
-          {
-            max: 16,
-            message: 'NIK harus 16 karakter',
-            trigger: 'blur'
-          },
-          {
-            min: 16,
-            message: 'NIK harus 16 karakter',
             trigger: 'blur'
           }
         ],
@@ -164,7 +146,7 @@ export default {
         ],
         rw: [
           {
-            required: true,
+            required: false,
             message: 'RW harus diisi',
             trigger: 'blur'
           },
@@ -175,7 +157,7 @@ export default {
         ],
         rt: [
           {
-            required: true,
+            required: false,
             message: 'RT harus diisi',
             trigger: 'blur'
           },
@@ -191,23 +173,16 @@ export default {
             trigger: 'blur'
           }
         ],
-        job_type_id: [
-          {
-            required: true,
-            message: 'Pekerjaan harus diisi',
-            trigger: 'blur'
-          }
-        ],
         domicile_rw: [
           {
-            required: true,
+            required: false,
             message: 'RW harus diisi',
             trigger: 'blur'
           }
         ],
         domicile_rt: [
           {
-            required: true,
+            required: false,
             message: 'RT harus diisi',
             trigger: 'blur'
           }
@@ -252,7 +227,6 @@ export default {
       this.disableField = true
     }
     this.getArea()
-    this.getJob()
     if (this.beneficiaries.kabkota_id !== null) this.getKecamatan(this.beneficiaries.kabkota_bps_id)
     if (this.beneficiaries.kec_id !== null) this.getKelurahan(this.beneficiaries.kec_bps_id)
   },
@@ -264,14 +238,7 @@ export default {
         return
       }
 
-      checkNik(this.beneficiaries.nik).then(response => {
-        if (response.data === true) {
-          this.$message.error('NIK ' + this.beneficiaries.nik + ' sudah terdaftar')
-          this.$router.go(0)
-        } else {
-          this.$emit('nextStep', 1)
-        }
-      })
+      this.$emit('nextStep', 1)
     },
     async rejectData() {
       const id = await this.$route.params && this.$route.params.id
@@ -285,11 +252,6 @@ export default {
       await update(id, this.beneficiaries)
       this.$message.info('Status berhasil diubah')
       this.$router.push('/beneficiaries/index')
-    },
-    getJob() {
-      fetchListJob().then(response => {
-        this.jobList = response.data.items.job_field
-      })
     },
     getArea() {
       getKabkotaList().then(response => {
@@ -308,17 +270,26 @@ export default {
     },
     getNik(item) {
       this.loading = true
-      fetchNik(item).then(response => {
-        Object.assign(this.beneficiaries, response.data)
-        this.getKecamatan(this.beneficiaries.kabkota_bps_id)
-        this.getKelurahan(this.beneficiaries.kec_bps_id)
-        this.isAutomatedNik = false
-        this.disableField = true
-        this.loading = false
-      }).catch(err => {
-        console.log(err)
-        this.isAutomatedNik = true
-        this.loading = false
+      checkNik(this.beneficiaries.nik).then(response => {
+        if (response.data === true) {
+          this.$message.error('NIK ' + this.beneficiaries.nik + ' sudah terdaftar')
+          this.beneficiaries.nik = null
+          this.loading = false
+        } else {
+          fetchNik(item).then(response => {
+            Object.assign(this.beneficiaries, response.data)
+            this.getKecamatan(this.beneficiaries.kabkota_bps_id)
+            this.getKelurahan(this.beneficiaries.kec_bps_id)
+            this.isAutomatedNik = false
+            this.disableField = true
+            this.loading = false
+          }).catch(err => {
+            console.log(err)
+            this.$message.error('Maaf NIK tidak ditemukan di Disdukcapil')
+            this.isAutomatedNik = true
+            this.loading = false
+          })
+        }
       })
     }
   }
@@ -339,5 +310,9 @@ export default {
   }
   .form-button {
     margin-top: 50px;
+  }
+  .button-search-nik {
+    display: block;
+    float: right;
   }
 </style>

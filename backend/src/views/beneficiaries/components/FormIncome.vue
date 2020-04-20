@@ -11,8 +11,8 @@
       label-width="300px"
       label-position="left"
     >
-      <el-form-item v-if="isCreate" label="Pekerjaan" prop="job_type_id">
-        <el-select v-model="beneficiaries.job_type_id" filterable style="width:100%">
+      <el-form-item label="Pekerjaan" prop="job_type_id">
+        <el-select v-model="beneficiaries.job_type_id" filterable style="width:100%" :disabled="disableField">
           <el-option
             v-for="item in jobList"
             :key="item.id"
@@ -120,27 +120,6 @@ export default {
             message: 'Jumlah anggota keluarga harus diisi',
             trigger: 'change'
           }
-        ],
-        afterTemporary: [
-          {
-            required: false,
-            message: 'Penghasilan harus diisi',
-            trigger: 'blur'
-          }
-        ],
-        beforeTemporary: [
-          {
-            required: false,
-            message: 'Penghasilan harus diisi',
-            trigger: 'blur'
-          }
-        ],
-        errorBeforeTemporary: [
-          {
-            required: true,
-            message: 'Penghasilan sebeluum covid harus diisi',
-            trigger: 'change'
-          }
         ]
       }
     }
@@ -207,10 +186,10 @@ export default {
       this.afterTemporary = this.beneficiaries.income_after
     },
     thousandSeparator(amount) {
-      if (amount !== '' || amount !== undefined || amount !== 0 || amount !== '0' || amount !== null) {
-        return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
-      } else {
+      if (amount === null || amount === '' || amount === undefined || amount === 0 || amount === '0') {
         return amount
+      } else {
+        return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
       }
     }
   }
