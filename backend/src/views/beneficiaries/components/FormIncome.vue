@@ -11,8 +11,8 @@
       label-width="300px"
       label-position="left"
     >
-      <el-form-item v-if="isCreate" label="Pekerjaan" prop="job_type_id">
-        <el-select v-model="beneficiaries.job_type_id" filterable style="width:100%">
+      <el-form-item label="Pekerjaan" prop="job_type_id">
+        <el-select v-model="beneficiaries.job_type_id" filterable style="width:100%" :disabled="disableField">
           <el-option
             v-for="item in jobList"
             :key="item.id"
@@ -118,27 +118,6 @@ export default {
           {
             required: true,
             message: 'Jumlah anggota keluarga harus diisi',
-            trigger: 'change'
-          }
-        ],
-        afterTemporary: [
-          {
-            required: false,
-            message: 'Penghasilan harus diisi',
-            trigger: 'blur'
-          }
-        ],
-        beforeTemporary: [
-          {
-            required: false,
-            message: 'Penghasilan harus diisi',
-            trigger: 'blur'
-          }
-        ],
-        errorBeforeTemporary: [
-          {
-            required: true,
-            message: 'Penghasilan sebeluum covid harus diisi',
             trigger: 'change'
           }
         ]

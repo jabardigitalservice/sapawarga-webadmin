@@ -64,16 +64,6 @@
       <el-form-item v-if="!isAutomatedNik && isCreate" label="RT" prop="rt">
         <el-input v-model="beneficiaries.rt" type="number" placeholder="RT" :disabled="disableField" />
       </el-form-item>
-      <el-form-item v-if="!isAutomatedNik && !isCreate" label="Pekerjaan" prop="job_type_id">
-        <el-select v-model="beneficiaries.job_type_id" style="width:100%" :disabled="disableField">
-          <el-option
-            v-for="item in jobList"
-            :key="item.id"
-            :label="item.title"
-            :value="item.id"
-          />
-        </el-select>
-      </el-form-item>
       <el-form-item class="ml-min-40 form-button">
         <div v-if="!isCreate">Apakah benar informasi calon penerima bantuan ini berdomisili di desa Anda?</div>
         <el-button v-if="!isCreate" class="button-action" type="primary" plain @click="rejectData">{{ $t('crud.not-valid') }}</el-button>
@@ -112,7 +102,6 @@ export default {
       isAutomatedNik: true,
       staticAutomated: true,
       disableField: false,
-      jobList: null,
       kabkotaList: null,
       kecList: null,
       kelList: null,
@@ -191,23 +180,16 @@ export default {
             trigger: 'blur'
           }
         ],
-        job_type_id: [
-          {
-            required: true,
-            message: 'Pekerjaan harus diisi',
-            trigger: 'blur'
-          }
-        ],
         domicile_rw: [
           {
-            required: true,
+            required: false,
             message: 'RW harus diisi',
             trigger: 'blur'
           }
         ],
         domicile_rt: [
           {
-            required: true,
+            required: false,
             message: 'RT harus diisi',
             trigger: 'blur'
           }
@@ -252,7 +234,6 @@ export default {
       this.disableField = true
     }
     this.getArea()
-    this.getJob()
     if (this.beneficiaries.kabkota_id !== null) this.getKecamatan(this.beneficiaries.kabkota_bps_id)
     if (this.beneficiaries.kec_id !== null) this.getKelurahan(this.beneficiaries.kec_bps_id)
   },
@@ -264,14 +245,18 @@ export default {
         return
       }
 
-      checkNik(this.beneficiaries.nik).then(response => {
-        if (response.data === true) {
-          this.$message.error('NIK ' + this.beneficiaries.nik + ' sudah terdaftar')
-          this.$router.go(0)
-        } else {
-          this.$emit('nextStep', 1)
-        }
-      })
+      if (this.isCreate) {
+        checkNik(this.beneficiaries.nik).then(response => {
+          if (response.data === true) {
+            this.$message.error('NIK ' + this.beneficiaries.nik + ' sudah terdaftar')
+            this.$router.go(0)
+          } else {
+            this.$emit('nextStep', 1)
+          }
+        })
+      } else {
+        this.$emit('nextStep', 1)
+      }
     },
     async rejectData() {
       const id = await this.$route.params && this.$route.params.id
@@ -285,11 +270,6 @@ export default {
       await update(id, this.beneficiaries)
       this.$message.info('Status berhasil diubah')
       this.$router.push('/beneficiaries/index')
-    },
-    getJob() {
-      fetchListJob().then(response => {
-        this.jobList = response.data.items.job_field
-      })
     },
     getArea() {
       getKabkotaList().then(response => {
