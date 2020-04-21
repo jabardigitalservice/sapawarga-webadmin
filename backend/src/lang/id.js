@@ -153,6 +153,7 @@ export default {
     'recheck': 'Cek Ulang',
     'not-valid': 'Tidak',
     'serach-nik': 'Input NIK',
+    'next-reject': 'Ya (Tolak)',
 
     'save-create': 'Simpan',
     'save-update': 'Simpan Perubahan',
@@ -227,7 +228,8 @@ export default {
   common: {
     confirm: 'Ya',
     save: 'Simpan',
-    cancel: 'Batal'
+    cancel: 'Batal',
+    send: 'Kirim'
   },
   dashboard: {
     'dashboard-aspiration': 'Usulan',
