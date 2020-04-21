@@ -6,7 +6,7 @@
       <el-steps class="steps" :active="active" process-status="wait" finish-status="success" align-center>
         <el-step title="Informasi Penerima Bantuan" />
         <el-step v-if="isCreate" title="Domisili Saat Ini" />
-        <el-step v-if="isCreate" title="Informasi Kelayakan" />
+        <el-step title="Informasi Kelayakan" />
         <el-step title="Informasi Penghasilan" />
         <el-step title="Upload Dokumen Pendukung" />
       </el-steps>
@@ -30,7 +30,7 @@
           </el-row>
           <el-row v-if="active === 3" :gutter="20">
             <el-col :sm="24" :md="17" :lg="17" :xl="17">
-              <FormInfoEligibility />
+              <FormInfoEligibility :beneficiaries.sync="beneficiaries" :is-create="isCreate" @nextStep="onClickNextChild" />
             </el-col>
           </el-row>
           <el-row v-if="active === 2" :gutter="20">
@@ -47,20 +47,20 @@
         <div v-else>
           <el-row v-if="active === 1" :gutter="20">
             <el-col :sm="24" :md="17" :lg="17" :xl="17">
-              <FormInfoEligibility />
-            </el-col>
-          </el-row>
-          <el-row v-if="active === 2" :gutter="20">
-            <el-col :sm="24" :md="17" :lg="17" :xl="17">
               <FormPersonal :beneficiaries.sync="beneficiaries" :is-create="isCreate" :disable-field="!isCreate" @nextStep="onClickNextChild" />
             </el-col>
           </el-row>
           <el-row v-if="active === 2" :gutter="20">
+            <el-col :sm="24" :md="17" :lg="17" :xl="17">
+              <FormInfoEligibility :beneficiaries.sync="beneficiaries" :is-create="isCreate" @nextStep="onClickNextChild" />
+            </el-col>
+          </el-row>
+          <el-row v-if="active === 3" :gutter="20">
             <el-col :sm="24" :md="20" :lg="20" :xl="20">
               <FormIncome :beneficiaries.sync="beneficiaries" :is-create="isCreate" :disable-field="!isCreate" @nextStep="onClickNextChild" />
             </el-col>
           </el-row>
-          <el-row v-if="active === 3" :gutter="20">
+          <el-row v-if="active === 4" :gutter="20">
             <el-col :sm="24" :md="24" :lg="24" :xl="24">
               <FormUpload :beneficiaries.sync="beneficiaries" :is-create="isCreate" :disable-field="!isCreate" @nextStep="onClickNextChild" @getImageKtp="onClickImageKtp" @getImageKk="onClickImageKk" />
             </el-col>
@@ -136,7 +136,11 @@ export default {
         domicile_rw: null,
         domicile_address: null,
         temporaryFamilyOptions: null,
-        total_family_members: null
+        total_family_members: null,
+        is_need_help: 1,
+        is_poor_new: null,
+        notes_approved: null,
+        notes_rejected: null
       },
       rules: {
       }
@@ -160,9 +164,9 @@ export default {
     onClickNextChild(value) {
       this.active = this.active + value
       if (this.isCreate) {
-        if (this.active > 4) this.active = 1
+        if (this.active > 5) this.active = 1
       } else {
-        if (this.active > 3) this.active = 1
+        if (this.active > 4) this.active = 1
       }
     },
     onClickImageKtp(value) {
