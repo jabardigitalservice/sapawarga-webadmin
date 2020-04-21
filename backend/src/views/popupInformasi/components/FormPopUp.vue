@@ -91,7 +91,7 @@
 
 <script>
 import AttachmentPhotoUpload from '@/components/AttachmentPhotoUpload'
-import { validUrl, isContainHtmlTags } from '@/utils/validate'
+import { isContainHtmlTags } from '@/utils/validate'
 import { create, fetchRecord, update } from '@/api/popupInformasi'
 import { PopupCategory, PopupFeature } from '@/utils/constantVariable'
 import Feature from '@/views/banner/components/dialog/feature'
@@ -111,13 +111,13 @@ export default {
     }
   },
   data() {
-    const validatorUrl = (rule, value, callback) => {
-      if (validUrl(value) === false) {
-        callback(new Error(this.$t('errors.url-not-valid')))
-      }
+    // const validatorUrl = (rule, value, callback) => {
+    //   if (validUrl(value) === false) {
+    //     callback(new Error(this.$t('errors.url-not-valid')))
+    //   }
 
-      callback()
-    }
+    //   callback()
+    // }
 
     const validatorHTMLTitle = (rule, value, callback) => {
       if (isContainHtmlTags(value) === true) {
@@ -192,11 +192,11 @@ export default {
             required: true,
             message: this.$t('errors.popup-url-not-null'),
             trigger: 'blur'
-          },
-          {
-            validator: validatorUrl,
-            trigger: 'blur'
           }
+          // {
+          //   validator: validatorUrl,
+          //   trigger: 'blur'
+          // }
         ],
         internal_object_type: [
           {

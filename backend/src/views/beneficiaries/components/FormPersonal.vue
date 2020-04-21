@@ -242,7 +242,7 @@ export default {
     },
     async rejectData() {
       const id = await this.$route.params && this.$route.params.id
-      await this.$confirm(this.$t('message.confirmation-reject-data'), 'Peringatan', {
+      await this.$confirm(this.$t('message.confirmation-reject-data-bansos'), 'Peringatan', {
         confirmButtonText: this.$t('common.confirm'),
         cancelButtonText: this.$t('common.cancel'),
         type: 'warning'
@@ -285,7 +285,7 @@ export default {
             this.loading = false
           }).catch(err => {
             console.log(err)
-            this.$message.error('Maaf NIK tidak ditemukan di Disdukcapil')
+            this.$message.error('NIK tidak terdaftar di Disdukcapil.')
             this.isAutomatedNik = true
             this.loading = false
           })

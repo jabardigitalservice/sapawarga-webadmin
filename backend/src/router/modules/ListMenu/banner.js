@@ -19,7 +19,7 @@ const bannerRouter = [
     }
   },
   {
-    path: 'edit/:id',
+    path: '/banner/edit/:id',
     component: () => import('@/views/banner/edit'),
     name: '/banner/banner-edit',
     hidden: true,
