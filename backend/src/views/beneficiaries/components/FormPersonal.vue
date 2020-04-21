@@ -240,13 +240,23 @@ export default {
 
       this.$emit('nextStep', 1)
     },
+    validateInput(input) {
+      if (_.isEmpty(input)) {
+        return 'Catatan harus diisi.'
+      }
+
+      return true
+    },
     async rejectData() {
       const id = await this.$route.params && this.$route.params.id
-      await this.$confirm(this.$t('message.confirmation-reject-data-bansos'), 'Peringatan', {
-        confirmButtonText: this.$t('common.confirm'),
+      const prompt = await this.$prompt('Berikan alasan penolakan', 'Tolak penerima bantuan untuk warga ini?', {
+        confirmButtonText: this.$t('common.send'),
         cancelButtonText: this.$t('common.cancel'),
-        type: 'warning'
+        inputPlaceholder: 'Tuliskan catatan disini',
+        inputValidator: this.validateInput
       })
+
+      this.beneficiaries.notes_rejected = prompt.value
       delete this.beneficiaries.nik
       this.beneficiaries.status_verification = 2
       await update(id, this.beneficiaries)
