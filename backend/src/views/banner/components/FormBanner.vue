@@ -65,7 +65,7 @@
 import AttachmentPhotoUpload from '@/components/AttachmentPhotoUpload'
 import { PopupCategory, PopupFeature } from '@/utils/constantVariable'
 import { create, fetchRecord, update } from '@/api/banner'
-import { validUrl } from '@/utils/validate'
+// import { validUrl } from '@/utils/validate'
 import Feature from './dialog/feature'
 import { mapGetters } from 'vuex'
 
@@ -81,13 +81,13 @@ export default {
     }
   },
   data() {
-    const validatorUrl = (rule, value, callback) => {
-      if (validUrl(value) === false) {
-        callback(new Error(this.$t('errors.url-not-valid')))
-      }
+    // const validatorUrl = (rule, value, callback) => {
+    //   if (validUrl(value) === false) {
+    //     callback(new Error(this.$t('errors.url-not-valid')))
+    //   }
 
-      callback()
-    }
+    //   callback()
+    // }
 
     return {
       loading: false,
