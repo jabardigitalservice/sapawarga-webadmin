@@ -99,13 +99,6 @@ export default {
     }
   },
   methods: {
-    validateInput(input) {
-      if (_.isEmpty(input)) {
-        return 'Catatan harus diisi.'
-      }
-
-      return true
-    },
     async next() {
       const valid = await this.$refs.beneficiaries.validate()
 

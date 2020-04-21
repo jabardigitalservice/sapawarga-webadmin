@@ -240,6 +240,13 @@ export default {
 
       this.$emit('nextStep', 1)
     },
+    validateInput(input) {
+      if (_.isEmpty(input)) {
+        return 'Catatan harus diisi.'
+      }
+
+      return true
+    },
     async rejectData() {
       const id = await this.$route.params && this.$route.params.id
       const prompt = await this.$prompt('Berikan alasan penolakan', 'Tolak penerima bantuan untuk warga ini?', {

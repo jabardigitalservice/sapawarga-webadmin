@@ -88,12 +88,26 @@ export default {
       this.dialogVisible = true
       this.$emit('nextStep', 1)
     },
+    validateInput(input) {
+      if (_.isEmpty(input)) {
+        return 'Catatan harus diisi.'
+      }
+
+      return true
+    },
     async updateData(value) {
       const id = await this.$route.params && this.$route.params.id
       if (value === this.statusVerified) {
         this.beneficiaries.status_verification = value
       } else {
         this.beneficiaries.status_verification = value
+        const prompt = await this.$prompt('Berikan alasan penolakan', 'Tolak penerima bantuan untuk warga ini?', {
+          confirmButtonText: this.$t('common.send'),
+          cancelButtonText: this.$t('common.cancel'),
+          inputPlaceholder: 'Tuliskan catatan disini',
+          inputValidator: this.validateInput
+        })
+        this.beneficiaries.notes_rejected = prompt.value
       }
       try {
         if (this.isCreate) {
