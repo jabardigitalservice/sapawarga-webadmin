@@ -137,11 +137,11 @@ export default {
             required: true,
             message: this.$t('message.banner-url-required'),
             trigger: 'blur'
-          },
-          {
-            validator: validatorUrl,
-            trigger: 'blur'
           }
+          // {
+          //   validator: validatorUrl,
+          //   trigger: 'blur'
+          // }
         ],
         status: [
           {

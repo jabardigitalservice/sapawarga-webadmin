@@ -192,11 +192,11 @@ export default {
             required: true,
             message: this.$t('errors.popup-url-not-null'),
             trigger: 'blur'
-          },
-          {
-            validator: validatorUrl,
-            trigger: 'blur'
           }
+          // {
+          //   validator: validatorUrl,
+          //   trigger: 'blur'
+          // }
         ],
         internal_object_type: [
           {
