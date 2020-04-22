@@ -13,7 +13,7 @@
         </el-row>
 
         <!-- show statistics -->
-        <Statistics />
+        <Statistics :is-loading="isLoadingSummary" :summery="dataSummary" />
 
         <ListFilter :list-query.sync="listQuery" @submit-search="getList" @reset-search="resetFilter" />
 
@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import { fetchList } from '@/api/beneficiaries'
+import { fetchSummary, fetchList } from '@/api/beneficiaries'
 import Pagination from '@/components/Pagination'
 import Statistics from './components/Statistics'
 import ListFilter from './_listfilter'
@@ -98,6 +98,8 @@ export default {
     return {
       list: null,
       total: 0,
+      isLoadingSummary: true,
+      dataSummary: null,
       listLoading: true,
       status: {
         DRAFT: 0,
@@ -123,9 +125,18 @@ export default {
 
   created() {
     this.getList()
+    this.getSummary()
   },
 
   methods: {
+    // get summary statistics
+    getSummary() {
+      this.isLoadingSummary = true
+      fetchSummary().then(response => {
+        this.dataSummary = response.data
+        this.isLoadingSummary = false
+      })
+    },
     getList() {
       this.listLoading = true
       fetchList(this.listQuery).then(response => {
