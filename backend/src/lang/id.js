@@ -881,7 +881,9 @@ export default {
     'beneficiaries-domicile-kecamatan': 'Kecamatan',
     'beneficiaries-domicile-kelurahan': 'Kelurahan',
     'beneficiaries-total-family': 'Jumlah Anggota Keluarga',
-    'beneficiaries-job': 'Pekerjaan'
+    'beneficiaries-job': 'Pekerjaan',
+    'beneficiaries-image-ktp': 'Foto KTP',
+    'beneficiaries-image-kk': 'Foto Kepala Keluarga'
   },
   news: {
     'news-url': 'URL Berita',
