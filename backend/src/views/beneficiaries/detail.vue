@@ -1,191 +1,145 @@
 <template>
   <div class="app-container">
-    <el-card v-if="preview === false" class="box-card">
-      <span v-if="isCreate" class="header title">Tambah Calon Penerima Bantuan</span>
-      <span v-else class="header title">Verifikasi Calon Penerima Bantuan</span>
-      <el-steps class="steps" :active="active" process-status="wait" finish-status="success" align-center>
-        <el-step title="Informasi Penerima Bantuan" />
-        <el-step v-if="isCreate" title="Domisili Saat Ini" />
-        <el-step title="Informasi Kelayakan" />
-        <el-step title="Informasi Penghasilan" />
-        <el-step title="Upload Dokumen Pendukung" />
-      </el-steps>
-      <el-form
-        ref="beneficiaries"
-        :model="beneficiaries"
-        label-width="150px"
-        label-position="left"
-        :status-icon="true"
-      >
-        <div v-if="isCreate">
-          <el-row v-if="active === 1" :gutter="20">
-            <el-col :sm="24" :md="17" :lg="17" :xl="17">
-              <FormPersonal :beneficiaries.sync="beneficiaries" :is-create="isCreate" :disable-field="!isCreate" @nextStep="onClickNextChild" />
+    <el-row :gutter="10">
+      <el-col>
+        <el-card>
+          <div slot="header" class="clearfix header">
+            <span>{{ $t('label.beneficiaries-detail-bansos') }}</span>
+          </div>
+          <el-table stripe :data="tableDataBeneficiaries" :show-header="false" style="width: 100%">
+            <el-table-column prop="title" width="300" />
+            <el-table-column prop="content" />
+            <el-table-column prop="content">
+              <template slot-scope="{row}">
+                <div v-if="row.income_before" class="name-wrapper">
+                  {{ formatCurrency(row.income_before, 'Rp. ') }}
+                </div>
+              </template>
+            </el-table-column>
+          </el-table>
+          <el-row>
+            <el-col :sm="24" :md="12" :lg="12">
+              <div class="image-display">
+                <p class="label">{{ $t('label.beneficiaries-image-ktp') }}</p>
+                <img :src="imageKtp || imageNone" alt="" width="350px" height="230px">
+              </div>
+            </el-col>
+            <el-col :sm="24" :md="12" :lg="12">
+              <div class="image-display">
+                <p class="label">{{ $t('label.beneficiaries-image-kk') }}</p>
+                <img :src="imageKk || imageNone" alt="" width="350px" height="230px">
+              </div>
             </el-col>
           </el-row>
-          <el-row v-if="active === 4" :gutter="20">
-            <el-col :sm="24" :md="20" :lg="20" :xl="20">
-              <FormIncome :beneficiaries.sync="beneficiaries" :is-create="isCreate" @nextStep="onClickNextChild" />
-            </el-col>
-          </el-row>
-          <el-row v-if="active === 3" :gutter="20">
-            <el-col :sm="24" :md="17" :lg="17" :xl="17">
-              <FormInfoEligibility :beneficiaries.sync="beneficiaries" :is-create="isCreate" @nextStep="onClickNextChild" />
-            </el-col>
-          </el-row>
-          <el-row v-if="active === 2" :gutter="20">
-            <el-col :sm="24" :md="17" :lg="17" :xl="17">
-              <FormDomicile :beneficiaries.sync="beneficiaries" :is-create="isCreate" :disable-field="!isCreate" @nextStep="onClickNextChild" />
-            </el-col>
-          </el-row>
-          <el-row v-if="active === 5" :gutter="20">
-            <el-col :sm="24" :md="24" :lg="24" :xl="24">
-              <FormUpload :beneficiaries.sync="beneficiaries" :is-create="isCreate" :disable-field="!isCreate" @nextStep="onClickNextChild" @getImageKtp="onClickImageKtp" @getImageKk="onClickImageKk" />
-            </el-col>
-          </el-row>
-        </div>
-        <div v-else>
-          <el-row v-if="active === 1" :gutter="20">
-            <el-col :sm="24" :md="17" :lg="17" :xl="17">
-              <FormPersonal :beneficiaries.sync="beneficiaries" :is-create="isCreate" :disable-field="!isCreate" @nextStep="onClickNextChild" />
-            </el-col>
-          </el-row>
-          <el-row v-if="active === 2" :gutter="20">
-            <el-col :sm="24" :md="17" :lg="17" :xl="17">
-              <FormInfoEligibility :beneficiaries.sync="beneficiaries" :is-create="isCreate" @nextStep="onClickNextChild" />
-            </el-col>
-          </el-row>
-          <el-row v-if="active === 3" :gutter="20">
-            <el-col :sm="24" :md="20" :lg="20" :xl="20">
-              <FormIncome :beneficiaries.sync="beneficiaries" :is-create="isCreate" :disable-field="!isCreate" @nextStep="onClickNextChild" />
-            </el-col>
-          </el-row>
-          <el-row v-if="active === 4" :gutter="20">
-            <el-col :sm="24" :md="24" :lg="24" :xl="24">
-              <FormUpload :beneficiaries.sync="beneficiaries" :is-create="isCreate" :disable-field="!isCreate" @nextStep="onClickNextChild" @getImageKtp="onClickImageKtp" @getImageKk="onClickImageKk" />
-            </el-col>
-          </el-row>
-        </div>
-      </el-form>
-    </el-card>
-    <el-card v-if="preview" class="box-card">
-      <div slot="header" class="clearfix">
-        <span class="header">Ringkasan Calon Penerima Bantuan</span>
-      </div>
-      <Preview :beneficiaries.sync="beneficiaries" @nextStep="onClickNextChild" />
-    </el-card>
+        </el-card>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
 <script>
-import FormPersonal from './components/FormPersonal'
-import FormInfoEligibility from './components/FormInfoEligibility'
-import FormDomicile from './components/FormDomicile'
-import FormIncome from './components/FormIncome'
-import FormUpload from './components/FormUpload'
-import Preview from './components/Preview'
 import { fetchRecord } from '@/api/beneficiaries'
-
 export default {
   components: {
-    FormPersonal,
-    FormIncome,
-    FormDomicile,
-    FormUpload,
-    Preview,
-    FormInfoEligibility
-  },
-  props: {
-    isCreate: {
-      type: Boolean,
-      default: false
-    }
   },
   data() {
     return {
-      active: 1,
-      preview: false,
-      beneficiaries: {
-        nik: null,
-        name: null,
-        provinsi: null,
-        kabkota: null,
-        kecamatan: null,
-        kelurahan: null,
-        rw: null,
-        rt: null,
-        image_ktp: null,
-        image_kk: null,
-        image_path_url: null,
-        image_ktp_url: null,
-        image_kk_url: null,
-        kabkota_id: null,
-        kec_id: null,
-        kel_id: null,
-        kabkota_bps_id: null,
-        kec_bps_id: null,
-        kel_bps_id: null,
-        domicile_province_id: null,
-        domicile_kabkota_bps_id: null,
-        domicile_kec_id: null,
-        domicile_kel_id: null,
-        domicile_kabkota_name: null,
-        domicile_kec_name: null,
-        domicile_kel_name: null,
-        domicile_rt: null,
-        domicile_rw: null,
-        domicile_address: null,
-        temporaryFamilyOptions: null,
-        total_family_members: null,
-        is_need_help: 1,
-        is_poor_new: null,
-        notes_approved: null,
-        notes_rejected: null
-      },
-      rules: {
-      }
+      tableDataBeneficiaries: [],
+      imageNone: require('@/assets/none.png'),
+      imageKtp: null,
+      imageKk: null
     }
   },
-  async created() {
-    if (!this.isCreate) {
-      const id = await this.$route.params && this.$route.params.id
-      await this.getDetail(id)
-    }
+  created() {
+    const id = this.$route.params && this.$route.params.id
+    this.getDetail(id)
   },
   methods: {
-    getDetail(id) {
-      fetchRecord(id).then(response => {
-        this.beneficiaries = response.data
-      })
-    },
-    async next() {
-      if (this.active++ > 3) this.preview = true
-    },
-    onClickNextChild(value) {
-      this.active = this.active + value
-      if (this.isCreate) {
-        if (this.active > 5) this.active = 1
+    formatCurrency(value, prefix) {
+      if (value) {
+        const number_string = value.toString()
+        const split = number_string.split(',')
+        const modulo = split[0].length % 3
+        let rupiah = split[0].substr(0, modulo)
+        const thousand = split[0].substr(modulo).match(/\d{3}/gi)
+
+        if (thousand) {
+          const separator = modulo ? '.' : ''
+          rupiah += separator + thousand.join('.')
+        }
+
+        rupiah = split[1] !== undefined ? rupiah + ',' + split[1] : rupiah
+        return prefix === undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '')
       } else {
-        if (this.active > 4) this.active = 1
+        return 'Rp. 0'
       }
     },
-    onClickImageKtp(value) {
-      this.beneficiaries.image_ktp = value
-    },
-    onClickImageKk(value) {
-      this.beneficiaries.image_kk = value
+    getDetail(id) {
+      fetchRecord(id).then(response => {
+        const { nik, name, image_ktp_url, image_kk_url, status_verification, domicile_kabkota_name, domicile_kec_name, domicile_kel_name, domicile_rt, domicile_rw, total_family_members, job_type_name, income_before, status_verification_label } = response.data
+        this.imageKtp = image_ktp_url
+        this.imageKk = image_kk_url
+        this.tableDataBeneficiaries = [
+          {
+            title: this.$t('label.beneficiaries-nik'),
+            content: nik
+          },
+          {
+            title: this.$t('label.beneficiaries-name'),
+            content: name
+          },
+          {
+            title: this.$t('label.beneficiaries-domicile-kabkota'),
+            content: domicile_kabkota_name ? domicile_kabkota_name.name : '-'
+          },
+          {
+            title: this.$t('label.beneficiaries-domicile-kecamatan'),
+            content: domicile_kec_name ? domicile_kec_name.name : '-'
+          },
+          {
+            title: this.$t('label.beneficiaries-domicile-kelurahan'),
+            content: domicile_kel_name ? domicile_kel_name.name : '-'
+          },
+          {
+            title: this.$t('label.beneficiaries-rw'),
+            content: domicile_rw || '-'
+          },
+          {
+            title: this.$t('label.beneficiaries-rt'),
+            content: domicile_rt || '-'
+          },
+          {
+            title: this.$t('label.beneficiaries-total-family'),
+            content: total_family_members || '-'
+          },
+          {
+            title: this.$t('label.beneficiaries-job'),
+            content: job_type_name ? job_type_name.title : '-'
+          },
+          {
+            title: this.$t('label.beneficiaries-income-before'),
+            content: income_before ? this.formatCurrency(income_before, 'Rp. ') : '-'
+          },
+          {
+            title: this.$t('label.beneficiaries-status'),
+            content: (status_verification === 1 ? <el-tag type='warning'>{status_verification_label}</el-tag> : status_verification === 2 ? <el-tag type='danger'>{status_verification_label}</el-tag> : <el-tag type='success'>{status_verification_label}</el-tag>)
+          }
+        ]
+      })
     }
   }
 }
 </script>
 <style lang="scss" scoped>
-  .header {
-    font-size: 18px;
-    font-weight: bold;
-  }
-  .steps {
-    background-color: #F8F8F9;
-    margin: 35px -20px !important;
-    padding: 10px 0;
-  }
+.label {
+  font: 0.9em Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+  color: #606266;
+  font-weight: bold;
+}
+.image-display {
+  margin-left: 10px;
+}
+.header {
+  font-weight: bold;
+}
 </style>

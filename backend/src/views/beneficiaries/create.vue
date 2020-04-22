@@ -1,11 +1,11 @@
 <template>
-  <detail :is-create="true" />
+  <verification :is-create="true" />
 </template>
 <script>
-import detail from './detail'
+import verification from './verification'
 
 export default {
   name: 'CreateForm',
-  components: { detail }
+  components: { verification }
 }
 </script>
