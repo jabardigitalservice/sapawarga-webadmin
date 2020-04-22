@@ -12,6 +12,9 @@
           </el-col>
         </el-row>
 
+        <!-- show statistics -->
+        <Statistics />
+
         <ListFilter :list-query.sync="listQuery" @submit-search="getList" @reset-search="resetFilter" />
 
         <el-table v-loading="listLoading" :data="list" border stripe highlight-current-row style="width: 100%" @sort-change="changeSort">
@@ -70,10 +73,11 @@
 <script>
 import { fetchList } from '@/api/beneficiaries'
 import Pagination from '@/components/Pagination'
+import Statistics from './components/Statistics'
 import ListFilter from './_listfilter'
 
 export default {
-  components: { Pagination, ListFilter },
+  components: { Pagination, Statistics, ListFilter },
   filters: {
     statusFilter(status) {
       const statusMap = {
