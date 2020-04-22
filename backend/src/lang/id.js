@@ -127,6 +127,7 @@ export default {
     'beneficiaries-detail': 'Detail Bansos',
     'beneficiaries-edit': 'Edit Bansos',
     'beneficiaries-preview': 'Ringkasan',
+    'beneficiaries-verification': 'Verifikasi Bansos',
 
     'information': 'Informasi',
     'aspiration': 'Aspirasi',
@@ -871,9 +872,16 @@ export default {
     'beneficiaries-income-after': 'Penghasilan Sesudah Covid',
     'beneficiaries-verivication': 'Verifikasi Bansos',
     'beneficiaries-edit': 'Edit Bansos',
+    'beneficiaries-detail': 'Detail Bansos',
     'beneficiaries-reject': 'Ditolak',
     'beneficiaries-verified': 'Terverifikasi',
-    'beneficiaries-unverified': 'Belum Terverifikasi'
+    'beneficiaries-unverified': 'Belum Terverifikasi',
+    'beneficiaries-detail-bansos': 'Detail Calon Penerima Bantuan',
+    'beneficiaries-domicile-kabkota': 'Kota/Kabupaten',
+    'beneficiaries-domicile-kecamatan': 'Kecamatan',
+    'beneficiaries-domicile-kelurahan': 'Kelurahan',
+    'beneficiaries-total-family': 'Jumlah Anggota Keluarga',
+    'beneficiaries-job': 'Pekerjaan'
   },
   news: {
     'news-url': 'URL Berita',
