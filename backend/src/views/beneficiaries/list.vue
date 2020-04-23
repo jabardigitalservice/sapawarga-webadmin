@@ -135,9 +135,9 @@ export default {
     // get summary statistics
     getSummary() {
       const querySummary = {
-        domicile_kabkota_bps_id: this.user.kabkota_id,
-        domicile_kec_bps_id: this.user.kec_id,
-        domicile_kel_bps_id: this.user.kel_id
+        domicile_kabkota_bps_id: this.user.kabkota.code_bps,
+        domicile_kec_bps_id: this.user.kecamatan.code_bps,
+        domicile_kel_bps_id: this.user.kelurahan.code_bps
       }
 
       this.isLoadingSummary = true
