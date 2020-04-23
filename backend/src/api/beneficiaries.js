@@ -1,9 +1,10 @@
 import request from '@/utils/request'
 
-export function fetchSummary() {
+export function fetchSummary(query) {
   return request({
     url: '/pub/beneficiaries/summary',
-    method: 'get'
+    method: 'get',
+    params: query
   })
 }
 

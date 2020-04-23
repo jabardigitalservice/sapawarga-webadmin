@@ -10,7 +10,7 @@
           element-loading-spinner="el-icon-loading"
         />
         <!-- show data -->
-        <div v-if="!isLoading" class="stat-count">{{ summery.APPROVED ? formatNumber(summery.APPROVED) : '-' }}</div>
+        <div v-if="!isLoading" class="stat-count color-sw-green">{{ summery.APPROVED ? formatNumber(summery.APPROVED) : '-' }}</div>
       </div>
     </el-col>
     <el-col :xs="20" :sm="10" :md="6" :lg="6" :xl="6">
@@ -23,7 +23,7 @@
           element-loading-spinner="el-icon-loading"
         />
         <!-- show data -->
-        <div v-if="!isLoading" class="stat-count">{{ summery.PENDING ? formatNumber(summery.PENDING) : '-' }}</div>
+        <div v-if="!isLoading" class="stat-count color-sw-orange">{{ summery.PENDING ? formatNumber(summery.PENDING) : '-' }}</div>
       </div>
     </el-col>
     <el-col :xs="20" :sm="10" :md="6" :lg="6" :xl="6">
@@ -36,7 +36,7 @@
           element-loading-spinner="el-icon-loading"
         />
         <!-- show data -->
-        <div v-if="!isLoading" class="stat-count">{{ summery.REJECT ? formatNumber(summery.REJECT) : '-' }}</div>
+        <div v-if="!isLoading" class="stat-count color-sw-red">{{ summery.REJECT ? formatNumber(summery.REJECT) : '-' }}</div>
       </div>
     </el-col>
     <el-col :xs="20" :sm="10" :md="6" :lg="6" :xl="6">
@@ -49,10 +49,9 @@
           element-loading-spinner="el-icon-loading"
         />
         <!-- show data -->
-        <div v-if="!isLoading" class="stat-count">2555</div>
+        <div v-if="!isLoading" class="stat-count color-sw-blue">{{ getTotalBenefeciaries ? formatNumber(getTotalBenefeciaries) : '-' }}</div>
       </div>
     </el-col>
-    <div> {{ summery }} </div>
   </el-row>
 </template>
 
@@ -67,6 +66,14 @@ export default {
     isLoading: {
       type: Boolean,
       default: false
+    }
+  },
+  computed: {
+    getTotalBenefeciaries() {
+      const approved = parseInt(this.summery.APPROVED)
+      const pending = parseInt(this.summery.PENDING)
+      const reject = parseInt(this.summery.REJECT)
+      return approved + pending + reject
     }
   },
   methods: {
@@ -97,10 +104,22 @@ export default {
 .stat-title {
   margin-bottom: 13px;
   font-weight: bold;
+  font-size: 15px;
 }
 .stat-count {
-  color: #27AE60;
   font-size: 28px;
   font-weight: bolder;
+}
+.color-sw-green {
+  color: #27AE60;
+}
+.color-sw-orange {
+  color: #F2994A;
+}
+.color-sw-red {
+  color: #EB5757;
+}
+.color-sw-blue {
+  color: #2D9CDB;
 }
 </style>

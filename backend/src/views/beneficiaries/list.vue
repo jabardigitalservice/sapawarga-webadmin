@@ -75,6 +75,7 @@ import { fetchSummary, fetchList } from '@/api/beneficiaries'
 import Pagination from '@/components/Pagination'
 import Statistics from './components/Statistics'
 import ListFilter from './_listfilter'
+import { mapGetters } from 'vuex'
 
 export default {
   components: { Pagination, Statistics, ListFilter },
@@ -122,7 +123,9 @@ export default {
       }
     }
   },
-
+  computed: {
+    ...mapGetters(['user'])
+  },
   created() {
     this.getList()
     this.getSummary()
@@ -131,8 +134,14 @@ export default {
   methods: {
     // get summary statistics
     getSummary() {
+      const querySummary = {
+        domicile_kabkota_bps_id: this.user.kabkota_id,
+        domicile_kec_bps_id: this.user.kec_id,
+        domicile_kel_bps_id: this.user.kel_id
+      }
+
       this.isLoadingSummary = true
-      fetchSummary().then(response => {
+      fetchSummary(querySummary).then(response => {
         this.dataSummary = response.data
         this.isLoadingSummary = false
       })
