@@ -65,7 +65,7 @@ const beneficiariesRouter = {
     {
       name: 'beneficiaries-pkh',
       path: '/beneficiaries/pkh/index',
-      component: () => import('@/views/beneficiaries/list-pkh'),
+      component: () => import('@/views/beneficiaries/main-pkh'),
       meta: {
         title: 'beneficiaries-pkh-menu',
         roles: ['admin', 'staffKabkota', 'staffKec', 'staffKel']
