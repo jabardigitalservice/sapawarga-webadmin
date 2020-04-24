@@ -31,7 +31,7 @@
 
           <el-table-column align="center" :label="$t('label.actions')" width="200px">
             <template slot-scope="scope">
-              <router-link :to="'/beneficiaries/detail/' + scope.row.id">
+              <router-link :to="'/beneficiaries/pkh/detail/' + scope.row.id">
                 <el-tooltip :content="$t('label.beneficiaries-detail')" placement="top">
                   <el-button type="primary" icon="el-icon-view" size="small" />
                 </el-tooltip>

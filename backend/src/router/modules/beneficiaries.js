@@ -70,6 +70,16 @@ const beneficiariesRouter = {
         title: 'beneficiaries-pkh-menu',
         roles: ['admin', 'staffKabkota', 'staffKec', 'staffKel']
       }
+    },
+    {
+      name: 'beneficiaries-pkh-detail',
+      path: '/beneficiaries/pkh/detail/:id',
+      component: () => import('@/views/beneficiaries/detail-pkh'),
+      hidden: true,
+      meta: {
+        title: 'beneficiaries-detail',
+        roles: ['admin', 'staffKabkota', 'staffKec', 'staffKel']
+      }
     }
   ]
 }
