@@ -72,7 +72,8 @@ Vue.use(L)
 
 // analytic
 Vue.use(VueAnalytics, {
-  id: process.env.VUE_APP_ANALYTICS_ID
+  id: process.env.VUE_APP_ANALYTICS_ID,
+  router
 })
 
 // register global utility filters.
