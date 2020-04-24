@@ -15,8 +15,18 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item v-if="!beneficiaries.is_need_help" label="Berikan keterangan kenapa warga tersebut tidak perlu dibantu?" prop="notes_rejected">
+        <el-radio-group v-model="rejected" class="radio-reject">
+          <el-radio class="label-check" label="meninggal">Meninggal</el-radio>
+          <el-radio class="label-check" label="pindah">Pindah</el-radio>
+          <el-radio class="label-check" label="orang mampu">Orang mampu</el-radio>
+          <el-radio class="label-check" label="sudah menerima bantuan lain">Sudah menerima program lain</el-radio>
+          <el-radio class="label-check" label="lainnya">Lainnya</el-radio>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item v-if="!beneficiaries.is_need_help && rejected === 'lainnya'" prop="notes_rejected">
         <el-input v-model="beneficiaries.notes_rejected" type="textarea" rows="4" />
       </el-form-item>
+      {{ beneficiaries.notes_rejected }}
       <el-form-item v-if="beneficiaries.is_need_help" label="Berikan keterangan kenapa warga tersebut perlu dibantu?" prop="notes_approved">
         <el-input v-model="beneficiaries.notes_approved" type="textarea" rows="4" />
       </el-form-item>
@@ -61,6 +71,7 @@ export default {
   },
   data() {
     return {
+      rejected: null,
       rules: {
         is_need_help: [
           {
@@ -85,12 +96,26 @@ export default {
         ],
         notes_rejected: [
           {
-            required: true,
+            required: false,
             message: 'Alasan harus diisi',
             trigger: 'blur'
           }
         ]
       }
+    }
+  },
+  watch: {
+    rejected(value1, value2) {
+      // console.log(value2)
+      // console.log(value1)
+      // if (value1 !== 'lainnya') {
+      //   this.beneficiaries.notes_rejected = value1
+      //   if (value2 !== value1) {
+      //     this.beneficiaries.notes_rejected = null
+      //   }
+      // } else {
+      //   return this.beneficiaries.notes_rejected
+      // }
     }
   },
   created() {
@@ -105,6 +130,7 @@ export default {
       if (!valid) {
         return
       }
+
       this.$emit('nextStep', 1)
     },
     async reject() {
@@ -113,6 +139,10 @@ export default {
       if (!valid) {
         return
       }
+      if (this.rejected !== 'lainnya') {
+        this.beneficiaries.notes_rejected = this.rejected
+      }
+      console.log(this.beneficiaries.notes_rejected)
 
       const id = await this.$route.params && this.$route.params.id
       await this.$confirm(this.$t('message.confirmation-reject-data'), 'Peringatan', {
@@ -147,5 +177,8 @@ export default {
 }
 .note-reject-text {
   line-height: 25px;
+}
+.radio-reject {
+  display: block;
 }
 </style>

@@ -50,16 +50,16 @@
 
           <el-table-column align="center" :label="$t('label.actions')" width="200px">
             <template slot-scope="scope">
-              <router-link :to="scope.row.status_verification === 1 ? '/beneficiaries/detail/'+scope.row.id : ''">
-                <el-tooltip :content="$t('label.beneficiaries-verivication')" placement="top">
-                  <el-button type="success" icon="el-icon-circle-check" size="small" :disabled="scope.row.status_verification !== 1">{{ $t('label.beneficiaries-verivication') }}</el-button>
+              <router-link :to="scope.row.status === 0 ? '/beneficiaries/detail/' +scope.row.id : ''">
+                <el-tooltip :content="$t('label.beneficiaries-detail')" placement="top">
+                  <el-button type="primary" icon="el-icon-view" size="small" />
                 </el-tooltip>
               </router-link>
-              <!-- <router-link :to="scope.row.status === 0 ? '/beneficiaries/edit/' +scope.row.id : ''">
-                <el-tooltip :content="$t('label.beneficiaries-edit')" placement="top">
-                  <el-button type="warning" icon="el-icon-edit" size="small" />
+              <router-link :to="scope.row.status_verification === 1 ? '/beneficiaries/verification/'+scope.row.id : ''">
+                <el-tooltip :content="$t('label.beneficiaries-verivication')" placement="top">
+                  <el-button type="success" icon="el-icon-circle-check" size="small" :disabled="scope.row.status_verification !== 1" />
                 </el-tooltip>
-              </router-link> -->
+              </router-link>
             </template>
           </el-table-column>
         </el-table>
@@ -134,7 +134,6 @@ export default {
   methods: {
     // get summary statistics
     getSummary() {
-      console.log(this.user)
       const querySummary = {
         domicile_kabkota_bps_id: this.user.kabkota ? this.user.kabkota.code_bps : null,
         domicile_kec_bps_id: this.user.kecamatan ? this.user.kecamatan.code_bps : null,
