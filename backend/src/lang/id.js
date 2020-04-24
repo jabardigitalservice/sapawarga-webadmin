@@ -128,6 +128,9 @@ export default {
     'beneficiaries-edit': 'Edit Bansos',
     'beneficiaries-preview': 'Ringkasan',
     'beneficiaries-verification': 'Verifikasi Bansos',
+    'beneficiaries-social': 'Sosial',
+    'beneficiaries-pkh-menu': 'Alokasi Bantuan',
+    'beneficiaries-pkh': 'Penerima Bantuan PKH',
 
     'information': 'Informasi',
     'aspiration': 'Aspirasi',
@@ -754,7 +757,7 @@ export default {
 
     'errorpage-oops': 'OOPS!',
     'errorpage-headline': 'Anda tidak dapat memasuki halaman ini......',
-    'errorpage-message': 'Harap periksa apakah URL yang Anda masukkan benar. Klik tombol di bawah untuk kembali ke beranda atau mengirim laporan kesalahan.',
+    'errorpage-message': 'Harap periksa apakah URL yang Anda masukan benar. Klik tombol di bawah untuk kembali ke beranda atau mengirim laporan kesalahan.',
     'errorpage-back': 'Kembali ke beranda',
 
     'gamification-title-fitur': 'Fitur',
@@ -866,6 +869,7 @@ export default {
     'beneficiaries-name': 'Nama Lengkap',
     'beneficiaries-status': 'Status',
     'beneficiaries-nik': 'NIK',
+    'beneficiaries-no-kk': 'No KK',
     'beneficiaries-rt': 'RT',
     'beneficiaries-rw': 'RW',
     'beneficiaries-income-before': 'Penghasilan Sebelum Covid',

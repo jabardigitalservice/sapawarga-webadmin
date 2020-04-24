@@ -17,7 +17,7 @@ const beneficiariesRouter = {
       path: '/beneficiaries/index',
       component: () => import('@/views/beneficiaries/list'),
       meta: {
-        title: 'beneficiaries-manage',
+        title: 'beneficiaries-verification',
         roles: ['admin', 'staffKel']
       }
     },
@@ -60,6 +60,15 @@ const beneficiariesRouter = {
       meta: {
         title: 'beneficiaries-verification',
         roles: ['admin', 'staffKel']
+      }
+    },
+    {
+      name: 'beneficiaries-pkh',
+      path: '/beneficiaries/pkh/index',
+      component: () => import('@/views/beneficiaries/list-pkh'),
+      meta: {
+        title: 'beneficiaries-pkh-menu',
+        roles: ['admin', 'staffKabkota', 'staffKec', 'staffKel']
       }
     }
   ]
