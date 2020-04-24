@@ -134,7 +134,6 @@ export default {
   methods: {
     // get summary statistics
     getSummary() {
-      console.log(this.user)
       const querySummary = {
         domicile_kabkota_bps_id: this.user.kabkota ? this.user.kabkota.code_bps : null,
         domicile_kec_bps_id: this.user.kecamatan ? this.user.kecamatan.code_bps : null,
