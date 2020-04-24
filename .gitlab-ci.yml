@@ -68,6 +68,7 @@ build_image:
     - sed -i "s/%SENTRY_DSN_API%/${SENTRY_DSN_API}/g" .env
     - sed -i "s/%GOOGLE_MAPS_WEB_API_KEY%/${GOOGLE_MAPS_WEB_API_KEY}/g" .env
     - sed -i "s/%VUE_APP_PHONE%/${VUE_APP_PHONE}/g" .env
+    - sed -i "s/%VUE_APP_ANALYTICS_ID%/${VUE_APP_ANALYTICS_ID}/g" .env
     - docker-compose build
     - docker images
     - docker-compose push
@@ -94,7 +95,7 @@ test_webadmin:
     - sed -i "s/%SENTRY_DSN_API%/${SENTRY_DSN_API}/g" .env
     - sed -i "s/%GOOGLE_MAPS_WEB_API_KEY%/${GOOGLE_MAPS_WEB_API_KEY}/g" .env
     - sed -i "s/%VUE_APP_PHONE%/${VUE_APP_PHONE}/g" .env
-   # - cat .env
+    - sed -i "s/%VUE_APP_ANALYTICS_ID%/${VUE_APP_ANALYTICS_ID}/g" .env
     - docker-compose pull
     - docker images
     - COMPOSE_HTTP_TIMEOUT=500 docker-compose up -d
@@ -130,6 +131,7 @@ release_all:
     - sed -i "s/%SENTRY_DSN_API%/${SENTRY_DSN_API}/g" .env
     - sed -i "s/%GOOGLE_MAPS_WEB_API_KEY%/${GOOGLE_MAPS_WEB_API_KEY}/g" .env
     - sed -i "s/%VUE_APP_PHONE%/${VUE_APP_PHONE}/g" .env
+    - sed -i "s/%VUE_APP_ANALYTICS_ID%/${VUE_APP_ANALYTICS_ID}/g" .env
     - docker-compose pull
     - docker images
     - docker push registry.gitlab.com/jdsteam/sapa-warga/sapawarga-webadmin:${VERSION}
@@ -185,6 +187,7 @@ deploy_staging_eks:
     - sed -i "s/%APP_ERROR_ENVIRONMENT%/${APP_ERROR_ENVIRONMENT}/g" kubernetes/webadmin-variables.yaml
     - sed -i "s/%VERSION%/${VERSION}/g" kubernetes/webadmin-deployment.yaml
     - sed -i "s/%VUE_APP_PHONE%/${VUE_APP_PHONE}/g" kubernetes/webadmin-variables.yaml
+    - sed -i "s/%VUE_APP_ANALYTICS_ID%/${VUE_APP_ANALYTICS_ID}/g" kubernetes/webadmin-variables.yaml
 
     #- cat kubernetes/webadmin-variables.yaml
     - kubectl create --dry-run --validate -f kubernetes/webadmin-variables.yaml
@@ -222,6 +225,8 @@ deploy_prod_eks:
     - sed -i "s/%APP_ERROR_ENVIRONMENT%/${APP_ERROR_ENVIRONMENT}/g" kubernetes/webadmin-variables.yaml
     - sed -i "s/%VERSION%/${VERSION}/g" kubernetes/webadmin-deployment.yaml
     - sed -i "s/%VUE_APP_PHONE%/${VUE_APP_PHONE}/g" kubernetes/webadmin-variables.yaml
+    - sed -i "s/%VUE_APP_ANALYTICS_ID%/${VUE_APP_ANALYTICS_ID}/g" kubernetes/webadmin-variables.yaml
+
     - kubectl create --dry-run --validate -f kubernetes/webadmin-variables.yaml
         -f kubernetes/webadmin-deployment.yaml
         -f kubernetes/webadmin-service.yaml
