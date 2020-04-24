@@ -890,7 +890,13 @@ export default {
     'beneficiaries-total-family': 'Jumlah Anggota Keluarga',
     'beneficiaries-job': 'Pekerjaan',
     'beneficiaries-image-ktp': 'Foto KTP',
-    'beneficiaries-image-kk': 'Foto Kepala Keluarga'
+    'beneficiaries-image-kk': 'Foto Kepala Keluarga',
+    'beneficiaries-pkh-search': 'Cari Penerima',
+    'beneficiaries-pkh-detail': 'Lihat Detail',
+    'beneficiaries-pkh': 'Bantuan PKH',
+    'beneficiaries-total-pkh': 'Total Calon Penerima Bantuan di Kota Bandung',
+    'beneficiaries-available-pkh': 'Total Bantuan yang Tersedia',
+    'beneficiaries-allocated-pkh': 'Total Bantuan yang Telah dialokasikan'
   },
   news: {
     'news-url': 'URL Berita',

@@ -31,7 +31,7 @@ export default {
   methods: {
     getDetail(id) {
       fetchRecordGetPKH(id).then(response => {
-        const { nik, name, no_kk, id_bdt, domicile_address, jenis_bantuan, image_ktp_url, image_kk_url, status_verification, domicile_kabkota_name, domicile_kec_name, domicile_kel_name, domicile_rt, domicile_rw, total_family_members, job_type_name, income_before, status_verification_label } = response.data
+        const { nik, name, no_kk, id_bdt, domicile_address, jenis_bantuan, domicile_kabkota_name, domicile_kec_name, domicile_kel_name, domicile_rt, domicile_rw } = response.data
         this.tableDataBeneficiaries = [
           {
             title: this.$t('label.beneficiaries-name'),

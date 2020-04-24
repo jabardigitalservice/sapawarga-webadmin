@@ -1,154 +1,234 @@
 <template>
   <div class="app-container">
+    <el-row :gutter="40" class="panel-group">
+      <el-col :xs="12" :sm="12" :lg="8" class="card-panel-col">
+        <div class="card-panel-success">
+          <el-row>
+            <el-col :span="15">
+              <div class="card-panel-text">
+                {{ $t('label.beneficiaries-total-pkh') }}
+              </div>
+            </el-col>
+            <el-col :span="9">
+              <div class="card-panel-num">
+                {{ summaryBeneficiariesPkh.total }}
+              </div>
+            </el-col>
+          </el-row>
+        </div>
+      </el-col>
+      <el-col :xs="12" :sm="12" :lg="8" class="card-panel-col">
+        <div class="card-panel-warning">
+          <el-row>
+            <el-col :span="12">
+              <div class="card-panel-text">
+                {{ $t('label.beneficiaries-available-pkh') }}
+              </div>
+            </el-col>
+            <el-col :span="12">
+              <div class="card-panel-num">
+                {{ summaryBeneficiariesPkh.available }}
+              </div>
+            </el-col>
+          </el-row>
+        </div>
+      </el-col>
+      <el-col :xs="12" :sm="12" :lg="8" class="card-panel-col">
+        <div class="card-panel-primary">
+          <el-row>
+            <el-col :span="12">
+              <div class="card-panel-text">
+                {{ $t('label.beneficiaries-allocated-pkh') }}
+              </div>
+            </el-col>
+            <el-col :span="12">
+              <div class="card-panel-num">
+                {{ summaryBeneficiariesPkh.allocated }}
+              </div>
+            </el-col>
+          </el-row>
+        </div>
+      </el-col>
+    </el-row>
+    <div class="card-panel-text">
+      <b>Total Bantuan yang Dialokasikan tanggal 25 April 2020</b>
+    </div>
     <el-row>
-      <el-col :lg="24">
-        <el-row style="margin: 10px 0px">
-          <el-col :span="12">
-            <router-link :to="{ path: '/beneficiaries/create' }">
-              <el-button type="primary" size="small" icon="el-icon-plus">
-                {{ $t('route.beneficiaries-create') }}
-              </el-button>
-            </router-link>
-          </el-col>
-        </el-row>
-
-        <ListFilter :list-query.sync="listQuery" @submit-search="getList" @reset-search="resetFilter" />
-
-        <el-table v-loading="listLoading" :data="list" border stripe highlight-current-row style="width: 100%" @sort-change="changeSort">
-          <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
-
-          <el-table-column prop="name" sortable="custom" :label="$t('label.beneficiaries-name')" min-width="200px" />
-
-          <el-table-column prop="nik" sortable="custom" :label="$t('label.beneficiaries-nik')" min-width="175px" />
-
-          <el-table-column prop="no_kk" sortable="custom" align="center" :label="$t('label.beneficiaries-no-kk')" min-width="150px" />
-
-          <el-table-column prop="address" sortable="custom" align="center" :label="$t('label.address')" min-width="180px" />
-
-          <el-table-column prop="kecamatan.name" sortable="custom" :label="$t('label.area-kec')" min-width="180px" />
-
-          <el-table-column prop="kelurahan.name" sortable="custom" :label="$t('label.area-kel')" min-width="180px" />
-
-          <el-table-column align="center" :label="$t('label.actions')" width="200px">
-            <template slot-scope="scope">
-              <router-link :to="'/beneficiaries/detail/' + scope.row.id">
-                <el-tooltip :content="$t('label.beneficiaries-detail')" placement="top">
-                  <el-button type="primary" icon="el-icon-view" size="small" />
-                </el-tooltip>
-              </router-link>
-            </template>
-          </el-table-column>
-        </el-table>
-
-        <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
+      <el-col :span="12">
+        <h2 style="text-align:left">1900</h2>
+      </el-col>
+      <el-col :span="12">
+        <h2 style="text-align:right">2010</h2>
+      </el-col>
+    </el-row>
+    <el-progress :text-inside="true" :stroke-width="20" :percentage="80" status="success" />
+    <br>
+    <el-row :gutter="12">
+      <el-col :span="6">
+        <p>{{ $t('label.name') }}</p>
+        <el-input v-model="input" />
+      </el-col>
+      <el-col :span="6">
+        <p>{{ $t('label.beneficiaries-nik') }}</p>
+        <el-input v-model="input" />
+      </el-col>
+      <el-col :span="6">
+        <p>{{ $t('label.beneficiaries-no-kk') }}</p>
+        <el-input v-model="input" />
+      </el-col>
+      <el-col :span="6">
+        <p>&nbsp;</p>
+        <el-button type="primary" icon="el-icon-search" size="small" style="width:100%;">{{ $t('label.beneficiaries-pkh-search') }}</el-button>
+      </el-col>
+    </el-row>
+    <br>
+    <el-row :gutter="12">
+      <el-col :span="12">
+        <el-card shadow="never" style="margin-bottom: 10px">
+          <el-row>
+            <el-col :span="9">{{ $t('label.beneficiaries-pkh') }}</el-col>
+            <el-col :span="9">201 Orang</el-col>
+            <el-col :span="6"><el-button type="primary" size="mini" style="width:100%">{{ $t('label.beneficiaries-pkh-detail') }}</el-button></el-col>
+          </el-row>
+        </el-card>
+        <el-card shadow="never" style="margin-bottom: 10px">
+          <el-row>
+            <el-col :span="9">{{ $t('label.beneficiaries-pkh') }}</el-col>
+            <el-col :span="9">201 Orang</el-col>
+            <el-col :span="6"><el-button type="primary" size="mini" style="width:100%">{{ $t('label.beneficiaries-pkh-detail') }}</el-button></el-col>
+          </el-row>
+        </el-card>
+        <el-card shadow="never" style="margin-bottom: 10px">
+          <el-row>
+            <el-col :span="9">{{ $t('label.beneficiaries-pkh') }}</el-col>
+            <el-col :span="9">201 Orang</el-col>
+            <el-col :span="6"><el-button type="primary" size="mini" style="width:100%">{{ $t('label.beneficiaries-pkh-detail') }}</el-button></el-col>
+          </el-row>
+        </el-card>
+        <el-card shadow="never" style="margin-bottom: 10px">
+          <el-row>
+            <el-col :span="9">{{ $t('label.beneficiaries-pkh') }}</el-col>
+            <el-col :span="9">201 Orang</el-col>
+            <el-col :span="6"><el-button type="primary" size="mini" style="width:100%">{{ $t('label.beneficiaries-pkh-detail') }}</el-button></el-col>
+          </el-row>
+        </el-card>
+      </el-col>
+      <el-col :span="12">
+        <el-card shadow="never" style="margin-bottom: 10px">
+          <el-row>
+            <el-col :span="9">{{ $t('label.beneficiaries-pkh') }}</el-col>
+            <el-col :span="9">201 Orang</el-col>
+            <el-col :span="6"><el-button type="primary" size="mini" style="width:100%">{{ $t('label.beneficiaries-pkh-detail') }}</el-button></el-col>
+          </el-row>
+        </el-card>
+        <el-card shadow="never" style="margin-bottom: 10px">
+          <el-row>
+            <el-col :span="9">{{ $t('label.beneficiaries-pkh') }}</el-col>
+            <el-col :span="9">201 Orang</el-col>
+            <el-col :span="6"><el-button type="primary" size="mini" style="width:100%">{{ $t('label.beneficiaries-pkh-detail') }}</el-button></el-col>
+          </el-row>
+        </el-card>
+        <el-card shadow="never" style="margin-bottom: 10px">
+          <el-row>
+            <el-col :span="9">{{ $t('label.beneficiaries-pkh') }}</el-col>
+            <el-col :span="9">201 Orang</el-col>
+            <el-col :span="6"><el-button type="primary" size="mini" style="width:100%">{{ $t('label.beneficiaries-pkh-detail') }}</el-button></el-col>
+          </el-row>
+        </el-card>
+        <el-card shadow="never" style="margin-bottom: 10px">
+          <el-row>
+            <el-col :span="9">{{ $t('label.beneficiaries-pkh') }}</el-col>
+            <el-col :span="9">201 Orang</el-col>
+            <el-col :span="6"><el-button type="primary" size="mini" style="width:100%">{{ $t('label.beneficiaries-pkh-detail') }}</el-button></el-col>
+          </el-row>
+        </el-card>
       </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
-import { fetchListGetPKH } from '@/api/beneficiaries'
-import Pagination from '@/components/Pagination'
-import ListFilter from './_listfilter'
-import { mapGetters } from 'vuex'
-
 export default {
-  components: { Pagination, ListFilter },
-  filters: {
-    statusFilter(status) {
-      const statusMap = {
-        '3': 'success',
-        '2': 'danger',
-        '1': 'warning'
-      }
-      return statusMap[status]
-    }
-  },
-  props: {
-    roleId: {
-      type: String,
-      default: null
-    }
-  },
   data() {
     return {
-      list: null,
-      total: 0,
-      listLoading: true,
-      status: {
-        DRAFT: 0,
-        SCHEDULED: 5,
-        PUBLISHED: 10
-      },
-      listQuery: {
-        sort_by: 'name',
-        sort_order: 'ascending',
-        page: 1,
-        limit: 10,
-        nik: null,
-        no_kk: null,
-        domicile_address: null,
-        name: null,
-        status_verification: null,
-        kabkota_id: null,
-        kec_id: null,
-        kel_id: null,
-        domicile_rw_like: null,
-        domicile_rt_like: null
+      input: '',
+      summaryBeneficiariesPkh: {
+        total: 2010,
+        available: 2010,
+        allocated: 1900
       }
-    }
-  },
-  computed: {
-    ...mapGetters(['user'])
-  },
-  created() {
-    this.getList()
-  },
-
-  methods: {
-    getList() {
-      this.listLoading = true
-      fetchListGetPKH(this.listQuery).then(response => {
-        this.list = response.data.items
-        this.total = response.data._meta.totalCount
-        this.listLoading = false
-      })
-    },
-
-    resetFilter() {
-      Object.assign(this.$data.listQuery, this.$options.data().listQuery)
-      this.getList()
-    },
-
-    getTableRowNumbering(index) {
-      return ((this.listQuery.page - 1) * this.listQuery.limit) + (index + 1)
-    },
-
-    formatCurrency(value, prefix) {
-      if (value) {
-        const number_string = value.toString()
-        const split = number_string.split(',')
-        const modulo = split[0].length % 3
-        let rupiah = split[0].substr(0, modulo)
-        const thousand = split[0].substr(modulo).match(/\d{3}/gi)
-
-        if (thousand) {
-          const separator = modulo ? '.' : ''
-          rupiah += separator + thousand.join('.')
-        }
-
-        rupiah = split[1] !== undefined ? rupiah + ',' + split[1] : rupiah
-        return prefix === undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '')
-      } else {
-        return 'Rp. 0'
-      }
-    },
-
-    changeSort(e) {
-      this.listQuery.sort_by = e.prop
-      this.listQuery.sort_order = e.order
-      this.getList()
     }
   }
 }
 </script>
+
+<style rel="stylesheet/scss" lang="scss" scoped>
+.panel-group {
+  margin-top: 18px;
+  .card-panel-col {
+    margin-bottom: 32px;
+  }
+  .card-panel-success {
+    height: 108px;
+    cursor: pointer;
+    font-size: 12px;
+    position: relative;
+    overflow: hidden;
+    color: #666;
+    background: #fff;
+    box-shadow: 4px 4px 40px rgba(0, 0, 0, 0.05);
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #bee7cf;
+    border: 1px solid #87b49a;
+  }
+  .card-panel-warning {
+    height: 108px;
+    cursor: pointer;
+    font-size: 12px;
+    position: relative;
+    overflow: hidden;
+    color: #666;
+    background: #fff;
+    box-shadow: 4px 4px 40px rgba(0, 0, 0, 0.05);
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #fce0b4;
+    border: 1px solid #dbba82;
+  }
+  .card-panel-primary {
+    height: 108px;
+    cursor: pointer;
+    font-size: 12px;
+    position: relative;
+    overflow: hidden;
+    color: #666;
+    background: #fff;
+    box-shadow: 4px 4px 40px rgba(0, 0, 0, 0.05);
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #b4d4f2;
+    border: 1px solid #6e8cb8;
+  }
+  .card-panel-text {
+    line-height: 18px;
+    color: rgba(0, 0, 0, 0.45);
+    font-size: 14px;
+    font-weight: bold;
+    margin-top:20px;
+    margin-bottom:20px;
+  }
+  .card-panel-num {
+    line-height: 18px;
+    color: rgba(0, 0, 0, 0.45);
+    font-size: 30px;
+    font-weight: bold;
+    margin-top:30px;
+    margin-bottom:20px;
+    text-align:center;
+  }
+  .el-card {
+    margin-bottom: 10px !important;
+  }
+}
+</style>
