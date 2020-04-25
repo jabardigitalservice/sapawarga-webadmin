@@ -14,8 +14,8 @@
           <el-radio class="label-check" :label="0">Tidak Perlu Dibantu</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item v-if="!beneficiaries.is_need_help" label="Berikan keterangan kenapa warga tersebut tidak perlu dibantu?" prop="notes_rejected">
-        <el-radio-group v-model="rejected" class="radio-reject">
+      <el-form-item v-if="!beneficiaries.is_need_help" label="Berikan keterangan kenapa warga tersebut tidak perlu dibantu?" prop="rejected">
+        <el-radio-group v-model="beneficiaries.rejected" class="radio-reject">
           <el-radio class="label-check" label="meninggal">Meninggal</el-radio>
           <el-radio class="label-check" label="pindah">Pindah</el-radio>
           <el-radio class="label-check" label="orang mampu">Orang mampu</el-radio>
@@ -23,7 +23,7 @@
           <el-radio class="label-check" label="lainnya">Lainnya</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item v-if="!beneficiaries.is_need_help && rejected === 'lainnya'" prop="notes_rejected">
+      <el-form-item v-if="!beneficiaries.is_need_help && beneficiaries.rejected === 'lainnya'" prop="notes_rejected">
         <el-input v-model="beneficiaries.notes_rejected" type="textarea" rows="4" />
       </el-form-item>
       <el-form-item v-if="beneficiaries.is_need_help" label="Berikan keterangan kenapa warga tersebut perlu dibantu?" prop="notes_approved">
@@ -70,7 +70,6 @@ export default {
   },
   data() {
     return {
-      rejected: null,
       rules: {
         is_need_help: [
           {
@@ -95,7 +94,14 @@ export default {
         ],
         notes_rejected: [
           {
-            required: false,
+            required: true,
+            message: 'Alasan harus diisi',
+            trigger: 'blur'
+          }
+        ],
+        rejected: [
+          {
+            required: true,
             message: 'Alasan harus diisi',
             trigger: 'blur'
           }
@@ -124,7 +130,7 @@ export default {
       if (!valid) {
         return
       }
-      if (this.rejected !== 'lainnya') {
+      if (this.beneficiaries.rejected !== 'lainnya') {
         this.beneficiaries.notes_rejected = this.rejected
       }
 

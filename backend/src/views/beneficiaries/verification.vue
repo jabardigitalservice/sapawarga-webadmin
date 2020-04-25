@@ -140,7 +140,8 @@ export default {
         is_need_help: 1,
         is_poor_new: null,
         notes_approved: null,
-        notes_rejected: null
+        notes_rejected: null,
+        rejected: null
       },
       rules: {
       }
