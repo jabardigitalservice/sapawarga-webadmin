@@ -14,7 +14,16 @@
           <el-radio class="label-check" :label="0">Tidak Perlu Dibantu</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item v-if="!beneficiaries.is_need_help" label="Berikan keterangan kenapa warga tersebut tidak perlu dibantu?" prop="notes_rejected">
+      <el-form-item v-if="!beneficiaries.is_need_help" label="Berikan keterangan kenapa warga tersebut tidak perlu dibantu?" prop="rejected">
+        <el-radio-group v-model="beneficiaries.rejected" class="radio-reject">
+          <el-radio class="label-check" label="meninggal">Meninggal</el-radio>
+          <el-radio class="label-check" label="pindah">Pindah</el-radio>
+          <el-radio class="label-check" label="orang mampu">Orang mampu</el-radio>
+          <el-radio class="label-check" label="sudah menerima bantuan lain">Sudah menerima program lain</el-radio>
+          <el-radio class="label-check" label="lainnya">Lainnya</el-radio>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item v-if="!beneficiaries.is_need_help && beneficiaries.rejected === 'lainnya'" prop="notes_rejected">
         <el-input v-model="beneficiaries.notes_rejected" type="textarea" rows="4" />
       </el-form-item>
       <el-form-item v-if="beneficiaries.is_need_help" label="Berikan keterangan kenapa warga tersebut perlu dibantu?" prop="notes_approved">
@@ -89,6 +98,13 @@ export default {
             message: 'Alasan harus diisi',
             trigger: 'blur'
           }
+        ],
+        rejected: [
+          {
+            required: true,
+            message: 'Alasan harus diisi',
+            trigger: 'blur'
+          }
         ]
       }
     }
@@ -105,6 +121,7 @@ export default {
       if (!valid) {
         return
       }
+
       this.$emit('nextStep', 1)
     },
     async reject() {
@@ -112,6 +129,9 @@ export default {
 
       if (!valid) {
         return
+      }
+      if (this.beneficiaries.rejected !== 'lainnya') {
+        this.beneficiaries.notes_rejected = this.rejected
       }
 
       const id = await this.$route.params && this.$route.params.id
@@ -134,6 +154,7 @@ export default {
 .label-check {
   line-height: 25px;
   font-weight: bold;
+  display: block;
 }
 .desc-label {
   margin-left: 25px;
@@ -147,5 +168,8 @@ export default {
 }
 .note-reject-text {
   line-height: 25px;
+}
+.radio-reject {
+  display: block;
 }
 </style>
