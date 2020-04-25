@@ -26,7 +26,6 @@
       <el-form-item v-if="!beneficiaries.is_need_help && rejected === 'lainnya'" prop="notes_rejected">
         <el-input v-model="beneficiaries.notes_rejected" type="textarea" rows="4" />
       </el-form-item>
-      {{ beneficiaries.notes_rejected }}
       <el-form-item v-if="beneficiaries.is_need_help" label="Berikan keterangan kenapa warga tersebut perlu dibantu?" prop="notes_approved">
         <el-input v-model="beneficiaries.notes_approved" type="textarea" rows="4" />
       </el-form-item>
@@ -104,20 +103,6 @@ export default {
       }
     }
   },
-  watch: {
-    rejected(value1, value2) {
-      // console.log(value2)
-      // console.log(value1)
-      // if (value1 !== 'lainnya') {
-      //   this.beneficiaries.notes_rejected = value1
-      //   if (value2 !== value1) {
-      //     this.beneficiaries.notes_rejected = null
-      //   }
-      // } else {
-      //   return this.beneficiaries.notes_rejected
-      // }
-    }
-  },
   created() {
     if (!this.isCreate) {
       this.beneficiaries.is_need_help = 1
@@ -142,7 +127,6 @@ export default {
       if (this.rejected !== 'lainnya') {
         this.beneficiaries.notes_rejected = this.rejected
       }
-      console.log(this.beneficiaries.notes_rejected)
 
       const id = await this.$route.params && this.$route.params.id
       await this.$confirm(this.$t('message.confirmation-reject-data'), 'Peringatan', {
@@ -164,6 +148,7 @@ export default {
 .label-check {
   line-height: 25px;
   font-weight: bold;
+  display: block;
 }
 .desc-label {
   margin-left: 25px;
