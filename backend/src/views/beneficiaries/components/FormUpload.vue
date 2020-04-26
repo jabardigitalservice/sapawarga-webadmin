@@ -11,7 +11,7 @@
       label-position="top"
     >
       <el-row>
-        <el-col :xs="24" :sm="24" :md="12" :lg="12">
+        <el-col>
           <div>
             <el-form-item class="position" label="Foto KTP" prop="nik">
               <div class="image-beneficiaries">
@@ -25,7 +25,7 @@
             </el-form-item>
           </div>
         </el-col>
-        <el-col :xs="24" :sm="24" :md="12" :lg="12">
+        <!-- <el-col :xs="24" :sm="24" :md="12" :lg="12">
           <el-form-item class="position" label="Foto Kepala Keluarga" prop="nik">
             <div class="image-beneficiaries">
               <AttachmentPhotoUpload
@@ -36,7 +36,7 @@
               />
             </div>
           </el-form-item>
-        </el-col>
+        </el-col> -->
       </el-row>
       <el-form-item class="ml-min-40 form-button position">
         <span v-if="!isCreate">Apakah data sudah benar?</span>
@@ -153,7 +153,7 @@ export default {
     padding-top: 50px;
   }
   .image-beneficiaries {
-    width: 100%;
+    width: 60%;
   }
   .position {
     width: 50%;
