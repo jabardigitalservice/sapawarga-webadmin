@@ -275,15 +275,11 @@ export default {
         return
       }
 
-      checkNik(this.beneficiaries.nik).then(response => {
-        if (response.data === true) {
-          this.$message.error('NIK ' + this.beneficiaries.nik + ' sudah terdaftar')
-          this.$refs.beneficiaries.resetFields()
-          return
-        } else {
-          this.$emit('nextStep', 1)
-        }
-      })
+      if (this.isCreate) {
+        this.checkNikSapawarga()
+      } else {
+        this.$emit('nextStep', 1)
+      }
     },
     validateInput(input) {
       if (_.isEmpty(input)) {
@@ -327,9 +323,10 @@ export default {
       checkNik(this.beneficiaries.nik).then(response => {
         if (response.data === true) {
           this.$message.error('NIK ' + this.beneficiaries.nik + ' sudah terdaftar')
-          this.beneficiaries.nik = null
-          this.beneficiaries.name = null
+          this.$refs.beneficiaries.resetFields()
           return
+        } else {
+          this.$emit('nextStep', 1)
         }
       })
     },
