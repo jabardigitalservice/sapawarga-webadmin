@@ -15,13 +15,6 @@ spec:
           ports:
             - containerPort: 80
           imagePullPolicy: IfNotPresent
-          resources:
-            requests:
-              cpu: "0.25"
-              memory : "256Mi"
-            limits:
-              cpu: "1"
-              memory: "1024Mi"
           env:
             - name: VUE_APP_NODE_ENV
               valueFrom:
