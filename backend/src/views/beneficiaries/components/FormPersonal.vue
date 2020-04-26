@@ -14,7 +14,7 @@
       label-position="left"
     >
       <el-form-item label="NIK" prop="nik">
-        <el-input v-model="beneficiaries.nik" type="number" placeholder="NIK" :disabled="disableField" @change="checkNikSapawarga" />
+        <el-input v-model="beneficiaries.nik" type="number" placeholder="NIK" :disabled="disableField" />
       </el-form-item>
       <!-- <el-form-item v-if="isAutomatedNik" class="button-search-nik">
         <el-button class="button-action" type="primary" @click="getNik(beneficiaries.nik)">{{ this.$t('crud.serach-nik') }}</el-button>
@@ -22,7 +22,7 @@
       <el-form-item label="Nama" prop="name">
         <el-input v-model="beneficiaries.name" placeholder="Nama Lengkap" :disabled="disableField" />
       </el-form-item>
-      <el-form-item v-if="isCreate" label="Provinsi" prop="province_bps_id">
+      <el-form-item v-if="isAutomatedNik && isCreate" label="Provinsi" prop="province_bps_id">
         <el-select v-model="beneficiaries.province_bps_id" style="width:100%" :disabled="disableField">
           <el-option
             v-for="item in proviceList"
@@ -32,7 +32,7 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item v-if="isCreate" label="Kabupaten/Kota" prop="kabkota" class="block">
+      <el-form-item v-if="isAutomatedNik && isCreate" label="Kabupaten/Kota" prop="kabkota" class="block">
         <el-select v-model="beneficiaries.kabkota" value-key="code_bps" filterable style="width:100%" :disabled="disableField">
           <el-option
             v-for="item in kabkotaList"
@@ -42,7 +42,7 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item v-if="isCreate" label="Kecamatan" prop="kecamatan" class="block">
+      <el-form-item v-if="isAutomatedNik && isCreate" label="Kecamatan" prop="kecamatan" class="block">
         <el-select v-model="beneficiaries.kecamatan" value-key="code_bps" filterable style="width:100%" :disabled="disableField">
           <el-option
             v-for="item in kecList"
@@ -52,7 +52,7 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item v-if="isCreate" label="Kelurahan" prop="kelurahan" class="block">
+      <el-form-item v-if="isAutomatedNik && isCreate" label="Kelurahan" prop="kelurahan" class="block">
         <el-select v-model="beneficiaries.kelurahan" value-key="code_bps" filterable style="width:100%" :disabled="disableField">
           <el-option
             v-for="item in kelList"
@@ -71,13 +71,13 @@
       <el-form-item v-if="!isCreate" label="RT" prop="domicile_rt">
         <el-input v-model="beneficiaries.domicile_rt" type="number" placeholder="RT" :disabled="disableField" />
       </el-form-item>
-      <el-form-item v-if="isCreate" label="Alamat" prop="address">
+      <el-form-item v-if="isAutomatedNik && isCreate" label="Alamat" prop="address">
         <el-input v-model="beneficiaries.address" placeholder="Alamat" :disabled="disableField" />
       </el-form-item>
-      <el-form-item v-if="isCreate" label="RW" prop="rw">
+      <el-form-item v-if="isAutomatedNik && isCreate" label="RW" prop="rw">
         <el-input v-model="beneficiaries.rw" type="number" placeholder="RW" :disabled="disableField" />
       </el-form-item>
-      <el-form-item v-if="isCreate" label="RT" prop="rt">
+      <el-form-item v-if="isAutomatedNik && isCreate" label="RT" prop="rt">
         <el-input v-model="beneficiaries.rt" type="number" placeholder="RT" :disabled="disableField" />
       </el-form-item>
       <el-form-item class="ml-min-40 form-button">
@@ -260,9 +260,9 @@ export default {
   },
   async mounted() {
     if (this.isCreate === false) {
-      this.isAutomatedNik = false
       this.disableField = true
     }
+    this.isAutomatedNik = false
     this.getArea()
     if (this.beneficiaries.kabkota_id !== null) this.getKecamatan(this.beneficiaries.kabkota_bps_id)
     if (this.beneficiaries.kec_id !== null) this.getKelurahan(this.beneficiaries.kec_bps_id)
@@ -275,7 +275,15 @@ export default {
         return
       }
 
-      this.$emit('nextStep', 1)
+      checkNik(this.beneficiaries.nik).then(response => {
+        if (response.data === true) {
+          this.$message.error('NIK ' + this.beneficiaries.nik + ' sudah terdaftar')
+          this.$refs.beneficiaries.resetFields()
+          return
+        } else {
+          this.$emit('nextStep', 1)
+        }
+      })
     },
     validateInput(input) {
       if (_.isEmpty(input)) {
@@ -320,6 +328,8 @@ export default {
         if (response.data === true) {
           this.$message.error('NIK ' + this.beneficiaries.nik + ' sudah terdaftar')
           this.beneficiaries.nik = null
+          this.beneficiaries.name = null
+          return
         }
       })
     },
