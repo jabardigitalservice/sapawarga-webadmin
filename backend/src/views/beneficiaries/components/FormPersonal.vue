@@ -14,15 +14,25 @@
       label-position="left"
     >
       <el-form-item label="NIK" prop="nik">
-        <el-input v-model="beneficiaries.nik" type="number" placeholder="NIK" :disabled="disableField" />
+        <el-input v-model="beneficiaries.nik" type="number" placeholder="NIK" :disabled="disableField" @change="checkNikSapawarga" />
       </el-form-item>
-      <el-form-item v-if="isAutomatedNik" class="button-search-nik">
+      <!-- <el-form-item v-if="isAutomatedNik" class="button-search-nik">
         <el-button class="button-action" type="primary" @click="getNik(beneficiaries.nik)">{{ this.$t('crud.serach-nik') }}</el-button>
-      </el-form-item>
-      <el-form-item v-if="!isAutomatedNik" label="Nama" prop="name">
+      </el-form-item> -->
+      <el-form-item label="Nama" prop="name">
         <el-input v-model="beneficiaries.name" placeholder="Nama Lengkap" :disabled="disableField" />
       </el-form-item>
-      <el-form-item v-if="!isAutomatedNik && isCreate" label="Kabupaten/Kota" prop="kabkota" class="block">
+      <el-form-item v-if="isCreate" label="Provinsi" prop="province_bps_id">
+        <el-select v-model="beneficiaries.province_bps_id" style="width:100%" :disabled="disableField">
+          <el-option
+            v-for="item in proviceList"
+            :key="item.code_bps"
+            :label="item.name"
+            :value="item.code_bps"
+          />
+        </el-select>
+      </el-form-item>
+      <el-form-item v-if="isCreate" label="Kabupaten/Kota" prop="kabkota" class="block">
         <el-select v-model="beneficiaries.kabkota" value-key="code_bps" filterable style="width:100%" :disabled="disableField">
           <el-option
             v-for="item in kabkotaList"
@@ -32,7 +42,7 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item v-if=" !isAutomatedNik && isCreate" label="Kecamatan" prop="kecamatan" class="block">
+      <el-form-item v-if="isCreate" label="Kecamatan" prop="kecamatan" class="block">
         <el-select v-model="beneficiaries.kecamatan" value-key="code_bps" filterable style="width:100%" :disabled="disableField">
           <el-option
             v-for="item in kecList"
@@ -42,7 +52,7 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item v-if="!isAutomatedNik && isCreate" label="Kelurahan" prop="kelurahan" class="block">
+      <el-form-item v-if="isCreate" label="Kelurahan" prop="kelurahan" class="block">
         <el-select v-model="beneficiaries.kelurahan" value-key="code_bps" filterable style="width:100%" :disabled="disableField">
           <el-option
             v-for="item in kelList"
@@ -52,25 +62,28 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item v-if="!isAutomatedNik && !isCreate" label="Alamat" prop="domicile_address">
+      <el-form-item v-if="!isCreate" label="Alamat" prop="domicile_address">
         <el-input v-model="beneficiaries.domicile_address" placeholder="Alamat" :disabled="disableField" />
       </el-form-item>
-      <el-form-item v-if="!isAutomatedNik && !isCreate" label="RW" prop="domicile_rw">
+      <el-form-item v-if="!isCreate" label="RW" prop="domicile_rw">
         <el-input v-model="beneficiaries.domicile_rw" type="number" placeholder="RW" :disabled="disableField" />
       </el-form-item>
-      <el-form-item v-if="!isAutomatedNik && !isCreate" label="RT" prop="domicile_rt">
+      <el-form-item v-if="!isCreate" label="RT" prop="domicile_rt">
         <el-input v-model="beneficiaries.domicile_rt" type="number" placeholder="RT" :disabled="disableField" />
       </el-form-item>
-      <el-form-item v-if="!isAutomatedNik && isCreate" label="RW" prop="rw">
+      <el-form-item v-if="isCreate" label="Alamat" prop="address">
+        <el-input v-model="beneficiaries.address" placeholder="Alamat" :disabled="disableField" />
+      </el-form-item>
+      <el-form-item v-if="isCreate" label="RW" prop="rw">
         <el-input v-model="beneficiaries.rw" type="number" placeholder="RW" :disabled="disableField" />
       </el-form-item>
-      <el-form-item v-if="!isAutomatedNik && isCreate" label="RT" prop="rt">
+      <el-form-item v-if="isCreate" label="RT" prop="rt">
         <el-input v-model="beneficiaries.rt" type="number" placeholder="RT" :disabled="disableField" />
       </el-form-item>
       <el-form-item class="ml-min-40 form-button">
         <div v-if="!isCreate">Apakah benar informasi calon penerima bantuan ini berdomisili di desa Anda?</div>
         <el-button v-if="!isCreate" class="button-action" type="primary" plain @click="rejectData">{{ $t('crud.not-valid') }}</el-button>
-        <el-button v-if="!isAutomatedNik" class="button-action" type="primary" @click="next"> {{ $t('crud.next') }}</el-button>
+        <el-button class="button-action" type="primary" @click="next"> {{ $t('crud.next') }}</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -108,6 +121,12 @@ export default {
       kabkotaList: null,
       kecList: null,
       kelList: null,
+      proviceList: [
+        {
+          name: 'JAWA BARAT',
+          code_bps: 32
+        }
+      ],
       rules: {
         name: [
           {
@@ -121,32 +140,49 @@ export default {
             required: true,
             message: 'NIK harus diisi',
             trigger: 'blur'
+          },
+          {
+            min: 16,
+            message: 'NIK harus 16 karakter',
+            trigger: 'blur'
+          },
+          {
+            max: 16,
+            message: 'NIK harus 16 karakter',
+            trigger: 'blur'
+          }
+        ],
+        province_bps_id: [
+          {
+            required: true,
+            message: 'Provinsi harus diisi',
+            trigger: 'change'
           }
         ],
         kabkota: [
           {
-            required: false,
+            required: true,
             message: 'Kabupaten/Kota harus diisi',
             trigger: 'change'
           }
         ],
         kecamatan: [
           {
-            required: false,
+            required: true,
             message: 'Kecamatan harus diisi',
             trigger: 'change'
           }
         ],
         kelurahan: [
           {
-            required: false,
+            required: true,
             message: 'Kelurahan harus diisi',
             trigger: 'change'
           }
         ],
         rw: [
           {
-            required: false,
+            required: true,
             message: 'RW harus diisi',
             trigger: 'blur'
           },
@@ -157,12 +193,19 @@ export default {
         ],
         rt: [
           {
-            required: false,
+            required: true,
             message: 'RT harus diisi',
             trigger: 'blur'
           },
           {
             validator: checkStartNumber,
+            trigger: 'blur'
+          }
+        ],
+        address: [
+          {
+            required: true,
+            message: 'Alamat harus diisi',
             trigger: 'blur'
           }
         ],
@@ -192,32 +235,26 @@ export default {
   },
   watch: {
     'beneficiaries.kabkota'(value1, value2) {
-      if (this.isCreate && !this.staticAutomated) {
-        if (value1 !== value2) {
-          this.beneficiaries.kecamatan = null
-          this.beneficiaries.kelurahan = null
-          this.beneficiaries.kabkota_id = value1.id
-          this.beneficiaries.kabkota_bps_id = value1.code_bps
-          this.getKecamatan(value1.code_bps)
-        }
+      if (this.isCreate) {
+        this.beneficiaries.kecamatan = null
+        this.beneficiaries.kelurahan = null
+        this.beneficiaries.kabkota_id = value1.id
+        this.beneficiaries.kabkota_bps_id = value1.code_bps
+        this.getKecamatan(value1.code_bps)
       }
     },
     'beneficiaries.kecamatan'(value1, value2) {
-      if (this.isCreate && !this.staticAutomated) {
-        if (value1 !== value2) {
-          this.beneficiaries.kelurahan = null
-          this.getKelurahan(value1.code_bps)
-          this.beneficiaries.kec_id = value1.id
-          this.beneficiaries.kec_bps_id = value1.code_bps
-        }
+      if (this.isCreate) {
+        this.beneficiaries.kelurahan = null
+        this.getKelurahan(value1.code_bps)
+        this.beneficiaries.kec_id = value1.id
+        this.beneficiaries.kec_bps_id = value1.code_bps
       }
     },
     'beneficiaries.kelurahan'(value1, value2) {
-      if (this.isCreate && !this.staticAutomated) {
-        if (value1 !== value2) {
-          this.beneficiaries.kel_id = value1.id
-          this.beneficiaries.kel_bps_id = value1.code_bps
-        }
+      if (this.isCreate) {
+        this.beneficiaries.kel_id = value1.id
+        this.beneficiaries.kel_bps_id = value1.code_bps
       }
     }
   },
@@ -276,6 +313,14 @@ export default {
     getKelurahan(value) {
       getKelurahanBpsList(value).then(response => {
         this.kelList = response.data.items
+      })
+    },
+    checkNikSapawarga() {
+      checkNik(this.beneficiaries.nik).then(response => {
+        if (response.data === true) {
+          this.$message.error('NIK ' + this.beneficiaries.nik + ' sudah terdaftar')
+          this.beneficiaries.nik = null
+        }
       })
     },
     getNik(item) {
