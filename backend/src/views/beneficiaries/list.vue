@@ -50,7 +50,7 @@
 
           <el-table-column align="center" :label="$t('label.actions')" width="200px">
             <template slot-scope="scope">
-              <router-link :to="scope.row.status === 0 ? '/beneficiaries/detail/' +scope.row.id : ''">
+              <router-link :to="'/beneficiaries/detail/' +scope.row.id">
                 <el-tooltip :content="$t('label.beneficiaries-detail')" placement="top">
                   <el-button type="primary" icon="el-icon-view" size="small" />
                 </el-tooltip>
