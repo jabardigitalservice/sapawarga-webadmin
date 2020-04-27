@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <admin-headline-news></admin-headline-news>
+    <admin-headline-news />
     <p class="warn-content">Profile Admin</p>
     <el-row :gutter="10">
       <el-col class="col-left" :xs="24" :sm="24" :md="24" :lg="7" :xl="7">

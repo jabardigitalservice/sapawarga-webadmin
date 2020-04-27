@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-row id="headline-news" v-if="user.roles_active.id === 'staffKabkota'">
+    <el-row v-if="user.roles_active.id === 'staffKabkota'" id="headline-news">
       <el-card class="box-card">
         <div slot="header">
           <span>Informasi Terbaru</span>
