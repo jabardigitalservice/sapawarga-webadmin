@@ -1,5 +1,13 @@
 import request from '@/utils/request'
 
+export function fetchSummary(query) {
+  return request({
+    url: '/pub/beneficiaries/summary',
+    method: 'get',
+    params: query
+  })
+}
+
 export function fetchList(query) {
   return request({
     url: '/beneficiaries',

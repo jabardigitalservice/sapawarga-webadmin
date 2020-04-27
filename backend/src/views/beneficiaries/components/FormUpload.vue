@@ -11,7 +11,7 @@
       label-position="top"
     >
       <el-row>
-        <el-col :xs="24" :sm="24" :md="12" :lg="12">
+        <el-col>
           <div>
             <el-form-item class="position" label="Foto KTP" prop="nik">
               <div class="image-beneficiaries">
@@ -25,7 +25,7 @@
             </el-form-item>
           </div>
         </el-col>
-        <el-col :xs="24" :sm="24" :md="12" :lg="12">
+        <!-- <el-col :xs="24" :sm="24" :md="12" :lg="12">
           <el-form-item class="position" label="Foto Kepala Keluarga" prop="nik">
             <div class="image-beneficiaries">
               <AttachmentPhotoUpload
@@ -36,7 +36,7 @@
               />
             </div>
           </el-form-item>
-        </el-col>
+        </el-col> -->
       </el-row>
       <el-form-item class="ml-min-40 form-button position">
         <span v-if="!isCreate">Apakah data sudah benar?</span>
@@ -88,12 +88,26 @@ export default {
       this.dialogVisible = true
       this.$emit('nextStep', 1)
     },
+    validateInput(input) {
+      if (_.isEmpty(input)) {
+        return 'Catatan harus diisi.'
+      }
+
+      return true
+    },
     async updateData(value) {
       const id = await this.$route.params && this.$route.params.id
       if (value === this.statusVerified) {
         this.beneficiaries.status_verification = value
       } else {
         this.beneficiaries.status_verification = value
+        const prompt = await this.$prompt('Berikan alasan penolakan', 'Tolak penerima bantuan untuk warga ini?', {
+          confirmButtonText: this.$t('common.send'),
+          cancelButtonText: this.$t('common.cancel'),
+          inputPlaceholder: 'Tuliskan catatan disini',
+          inputValidator: this.validateInput
+        })
+        this.beneficiaries.notes_rejected = prompt.value
       }
       try {
         if (this.isCreate) {
@@ -139,7 +153,7 @@ export default {
     padding-top: 50px;
   }
   .image-beneficiaries {
-    width: 100%;
+    width: 60%;
   }
   .position {
     width: 50%;

@@ -51,6 +51,16 @@ const beneficiariesRouter = {
         title: 'beneficiaries-detail',
         roles: ['admin', 'staffKel']
       }
+    },
+    {
+      name: 'beneficiaries-verification',
+      path: '/beneficiaries/verification/:id',
+      component: () => import('@/views/beneficiaries/verification'),
+      hidden: true,
+      meta: {
+        title: 'beneficiaries-verification',
+        roles: ['admin', 'staffKel']
+      }
     }
   ]
 }

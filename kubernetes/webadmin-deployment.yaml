@@ -4,7 +4,6 @@ metadata:
   name: sapawarga-webadmin
   namespace: sapawarga
 spec:
-  replicas: 1
   template:
     metadata:
       labels:
@@ -15,42 +14,42 @@ spec:
           image: registry.gitlab.com/jdsteam/sapa-warga/sapawarga-webadmin:%VERSION%
           ports:
             - containerPort: 80
+          imagePullPolicy: IfNotPresent
           env:
             - name: VUE_APP_NODE_ENV
               valueFrom:
                 configMapKeyRef:
                   name: sapawarga-webadmin-config-env
                   key: VUE_APP_NODE_ENV
-
             - name: VUE_APP_BASE_API
               valueFrom:
                 configMapKeyRef:
                   name: sapawarga-webadmin-config-env
                   key: VUE_APP_BASE_API
-
             - name: VUE_APP_VERSION
               valueFrom:
                 configMapKeyRef:
                   name: sapawarga-webadmin-config-env
                   key: VUE_APP_VERSION
-
             - name: VUE_SENTRY_DSN_API
               valueFrom:
                 configMapKeyRef:
                   name: sapawarga-webadmin-config-env
                   key: VUE_SENTRY_DSN_API
-
             - name: VUE_APP_ERROR_ENVIRONMENT
               valueFrom:
                 configMapKeyRef:
                   name: sapawarga-webadmin-config-env
                   key: VUE_APP_ERROR_ENVIRONMENT
-
             - name: VUE_APP_PHONE
               valueFrom:
                 configMapKeyRef:
                   name: sapawarga-webadmin-config-env
                   key: VUE_APP_PHONE
-                  
+            - name: VUE_APP_ANALYTICS_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: sapawarga-webadmin-config-env
+                  key: VUE_APP_ANALYTICS_ID
       imagePullSecrets:
         - name: regcred

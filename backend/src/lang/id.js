@@ -127,6 +127,7 @@ export default {
     'beneficiaries-detail': 'Detail Bansos',
     'beneficiaries-edit': 'Edit Bansos',
     'beneficiaries-preview': 'Ringkasan',
+    'beneficiaries-verification': 'Verifikasi Bansos',
 
     'information': 'Informasi',
     'aspiration': 'Aspirasi',
@@ -153,6 +154,7 @@ export default {
     'recheck': 'Cek Ulang',
     'not-valid': 'Tidak',
     'serach-nik': 'Input NIK',
+    'next-reject': 'Ya (Tolak)',
 
     'save-create': 'Simpan',
     'save-update': 'Simpan Perubahan',
@@ -227,7 +229,8 @@ export default {
   common: {
     confirm: 'Ya',
     save: 'Simpan',
-    cancel: 'Batal'
+    cancel: 'Batal',
+    send: 'Kirim'
   },
   dashboard: {
     'dashboard-aspiration': 'Usulan',
@@ -869,9 +872,18 @@ export default {
     'beneficiaries-income-after': 'Penghasilan Sesudah Covid',
     'beneficiaries-verivication': 'Verifikasi Bansos',
     'beneficiaries-edit': 'Edit Bansos',
+    'beneficiaries-detail': 'Detail Bansos',
     'beneficiaries-reject': 'Ditolak',
     'beneficiaries-verified': 'Terverifikasi',
-    'beneficiaries-unverified': 'Belum Terverifikasi'
+    'beneficiaries-unverified': 'Belum Terverifikasi',
+    'beneficiaries-detail-bansos': 'Detail Calon Penerima Bantuan',
+    'beneficiaries-domicile-kabkota': 'Kota/Kabupaten',
+    'beneficiaries-domicile-kecamatan': 'Kecamatan',
+    'beneficiaries-domicile-kelurahan': 'Kelurahan',
+    'beneficiaries-total-family': 'Jumlah Anggota Keluarga',
+    'beneficiaries-job': 'Pekerjaan',
+    'beneficiaries-image-ktp': 'Foto KTP',
+    'beneficiaries-image-kk': 'Foto Kepala Keluarga'
   },
   news: {
     'news-url': 'URL Berita',

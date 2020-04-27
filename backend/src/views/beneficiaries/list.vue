@@ -12,6 +12,9 @@
           </el-col>
         </el-row>
 
+        <!-- show statistics -->
+        <Statistics :is-loading="isLoadingSummary" :summery="dataSummary" />
+
         <ListFilter :list-query.sync="listQuery" @submit-search="getList" @reset-search="resetFilter" />
 
         <el-table v-loading="listLoading" :data="list" border stripe highlight-current-row style="width: 100%" @sort-change="changeSort">
@@ -47,16 +50,16 @@
 
           <el-table-column align="center" :label="$t('label.actions')" width="200px">
             <template slot-scope="scope">
-              <router-link :to="scope.row.status_verification === 1 ? '/beneficiaries/detail/'+scope.row.id : ''">
-                <el-tooltip :content="$t('label.beneficiaries-verivication')" placement="top">
-                  <el-button type="success" icon="el-icon-circle-check" size="small" :disabled="scope.row.status_verification !== 1">{{ $t('label.beneficiaries-verivication') }}</el-button>
+              <router-link :to="'/beneficiaries/detail/' +scope.row.id">
+                <el-tooltip :content="$t('label.beneficiaries-detail')" placement="top">
+                  <el-button type="primary" icon="el-icon-view" size="small" />
                 </el-tooltip>
               </router-link>
-              <!-- <router-link :to="scope.row.status === 0 ? '/beneficiaries/edit/' +scope.row.id : ''">
-                <el-tooltip :content="$t('label.beneficiaries-edit')" placement="top">
-                  <el-button type="warning" icon="el-icon-edit" size="small" />
+              <router-link :to="scope.row.status_verification === 1 ? '/beneficiaries/verification/'+scope.row.id : ''">
+                <el-tooltip :content="$t('label.beneficiaries-verivication')" placement="top">
+                  <el-button type="success" icon="el-icon-circle-check" size="small" :disabled="scope.row.status_verification !== 1" />
                 </el-tooltip>
-              </router-link> -->
+              </router-link>
             </template>
           </el-table-column>
         </el-table>
@@ -68,12 +71,14 @@
 </template>
 
 <script>
-import { fetchList } from '@/api/beneficiaries'
+import { fetchSummary, fetchList } from '@/api/beneficiaries'
 import Pagination from '@/components/Pagination'
+import Statistics from './components/Statistics'
 import ListFilter from './_listfilter'
+import { mapGetters } from 'vuex'
 
 export default {
-  components: { Pagination, ListFilter },
+  components: { Pagination, Statistics, ListFilter },
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -94,6 +99,8 @@ export default {
     return {
       list: null,
       total: 0,
+      isLoadingSummary: true,
+      dataSummary: null,
       listLoading: true,
       status: {
         DRAFT: 0,
@@ -116,12 +123,29 @@ export default {
       }
     }
   },
-
+  computed: {
+    ...mapGetters(['user'])
+  },
   created() {
     this.getList()
+    this.getSummary()
   },
 
   methods: {
+    // get summary statistics
+    getSummary() {
+      const querySummary = {
+        domicile_kabkota_bps_id: this.user.kabkota ? this.user.kabkota.code_bps : null,
+        domicile_kec_bps_id: this.user.kecamatan ? this.user.kecamatan.code_bps : null,
+        domicile_kel_bps_id: this.user.kelurahan ? this.user.kelurahan.code_bps : null
+      }
+
+      this.isLoadingSummary = true
+      fetchSummary(querySummary).then(response => {
+        this.dataSummary = response.data
+        this.isLoadingSummary = false
+      })
+    },
     getList() {
       this.listLoading = true
       fetchList(this.listQuery).then(response => {
