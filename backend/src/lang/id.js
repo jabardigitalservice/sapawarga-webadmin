@@ -166,6 +166,7 @@ export default {
     'save-popup': 'Tambah Pop Up',
     'save-newsImportant': 'Tambah Info Penting',
     'save-gamification': 'Tambah Gamification',
+    'save-verified': 'Simpan dan Verifikasi',
 
     'back-to-list': 'Kembali ke Daftar',
     'send-polling': 'Publikasikan Polling',

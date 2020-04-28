@@ -77,7 +77,7 @@
           Ya, Saya setuju
         </el-checkbox>
         <div>
-          <el-button class="confirmation-button" type="success" :disabled="!checked" @click="updateData(statusVerified)">Simpan dan Verifikasi</el-button>
+          <el-button class="confirmation-button" type="success" :disabled="!checked" @click="updateData(statusVerified)">{{ $t('crud.save-verified') }}</el-button>
         </div>
       </el-dialog>
     </el-dialog>
