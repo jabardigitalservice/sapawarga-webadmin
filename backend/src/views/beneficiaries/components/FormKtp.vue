@@ -46,31 +46,31 @@ export default {
           {
             required: true,
             message: 'Pilih salah satu',
-            trigger: 'blur'
+            trigger: 'input'
           }
         ],
         notes_nik_empty: [
           {
             required: true,
             message: 'Alasan harus diisi',
-            trigger: 'blur'
+            trigger: 'input'
           }
         ],
         nik: [
           {
             required: true,
             message: 'NIK harus diisi',
-            trigger: 'blur'
+            trigger: 'input'
           },
           {
             min: 16,
             message: 'NIK harus 16 karakter',
-            trigger: 'blur'
+            trigger: 'input'
           },
           {
             max: 16,
             message: 'NIK harus 16 karakter',
-            trigger: 'blur'
+            trigger: 'input'
           }
         ]
       }
