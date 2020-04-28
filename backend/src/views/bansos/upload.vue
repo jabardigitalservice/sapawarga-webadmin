@@ -15,31 +15,31 @@
     </el-row>
     <el-row>
       <el-col :span="24">
-        <router-link to="/bansos/upload">
+        <router-link to="/bansos/upload-form?type=1">
           <el-card class="box-card">
             <p>Bantuan Sosial Provinsi</p>
           </el-card>
         </router-link>
 
-        <router-link to="/bansos/upload">
+        <router-link to="/bansos/upload-form?type=2">
           <el-card class="box-card">
             <p>Bantuan Sosial Kota / Kabupaten</p>
           </el-card>
         </router-link>
 
-        <router-link to="/bansos/upload">
+        <router-link to="/bansos/upload-form?type=3">
           <el-card class="box-card">
             <p>Dana Desa</p>
           </el-card>
         </router-link>
 
-        <router-link to="/bansos/upload">
+        <router-link to="/bansos/upload-form?type=4">
           <el-card class="box-card">
             <p>Bantuan Sosial Presiden Sembako (Bodebek)</p>
           </el-card>
         </router-link>
 
-        <router-link to="/bansos/upload">
+        <router-link to="/bansos/upload-form?type=5">
           <el-card class="box-card">
             <p>Bantuan Sosial Tunai Kemensos</p>
           </el-card>

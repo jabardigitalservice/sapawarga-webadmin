@@ -29,6 +29,15 @@ const bansosMenuRouter = {
         title: 'bansos-upload',
         roles: ['admin', 'staffProv', 'staffKabkota']
       }
+    },
+    {
+      name: 'bansos-upload-form',
+      path: '/bansos/upload-form',
+      component: () => import('@/views/bansos/upload_form'),
+      hidden: true,
+      meta: {
+        roles: ['admin', 'staffProv', 'staffKabkota']
+      }
     }
   ]
 }
