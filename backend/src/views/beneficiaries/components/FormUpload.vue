@@ -143,7 +143,7 @@ export default {
           this.beneficiaries.status = 10
           await create(this.beneficiaries)
         } else {
-          delete this.beneficiaries.nik
+          if (this.beneficiaries.is_nik_valid === 1) delete this.beneficiaries.nik
           await update(id, this.beneficiaries)
         }
         this.dialogVisible = false
