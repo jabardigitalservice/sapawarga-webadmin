@@ -13,7 +13,10 @@
       label-width="150px"
       label-position="left"
     >
-      <el-form-item label="NIK" prop="nik">
+      <el-form-item v-if="isCreate" label="NIK" prop="nik">
+        <el-input v-model="beneficiaries.nik" type="number" placeholder="NIK" :disabled="disableField" />
+      </el-form-item>
+      <el-form-item v-if="!isCreate" label="NIK">
         <el-input v-model="beneficiaries.nik" type="number" placeholder="NIK" :disabled="disableField" />
       </el-form-item>
       <!-- <el-form-item v-if="isAutomatedNik" class="button-search-nik">
@@ -82,7 +85,7 @@
       </el-form-item>
       <el-form-item class="ml-min-40 form-button">
         <div v-if="!isCreate">Apakah benar informasi calon penerima bantuan ini berdomisili di desa Anda?</div>
-        <el-button v-if="!isCreate" class="button-action" type="primary" plain @click="rejectData">{{ $t('crud.not-valid') }}</el-button>
+        <el-button v-if="!isCreate" class="button-action" type="danger" @click="rejectData">{{ $t('crud.not-valid') }}</el-button>
         <el-button class="button-action" type="primary" @click="next"> {{ $t('crud.next') }}</el-button>
       </el-form-item>
     </el-form>
