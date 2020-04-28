@@ -129,11 +129,15 @@ export default {
     'beneficiaries-preview': 'Ringkasan',
     'beneficiaries-verification': 'Verifikasi Bansos',
 
+    'bansos-download': 'Unduh Dokumen',
+    'bansos-upload': 'Unggah Dokumen',
+
     'information': 'Informasi',
     'aspiration': 'Aspirasi',
     'questionnaire': 'Kuesioner',
     'notification-user': 'Notifikasi Pengguna',
-    'configuration-menu': 'Konfigurasi'
+    'configuration-menu': 'Konfigurasi',
+    'bansos-menu': 'Bantuan Sosial'
   },
   crud: {
     'list-empty': 'Belum ada data.',

@@ -18,6 +18,7 @@ import notifikasiuserMenuRouter from './modules/notification-user-menu'
 import configurationMenuRouter from './modules/configuration-menu'
 import broadcastRouter from './modules/broadcast'
 import beneficiariesRouter from './modules/beneficiaries'
+import bansosMenuRouter from './modules/bansos-menu'
 
 /* Router Modules for Leader */
 import aspirationLeaderMenuRouter from './modules/LeaderMenu/aspiration-leader-menu'
@@ -153,6 +154,7 @@ export const constantRoutes = [
  */
 export const asyncRoutes = [
   dashboardRouter,
+  bansosMenuRouter,
   informationMenuRouter,
   pollingsurveyMenuRouter,
   aspirationMenuRouter,
