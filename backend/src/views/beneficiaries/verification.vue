@@ -3,10 +3,22 @@
     <el-card v-if="preview === false" class="box-card">
       <span v-if="isCreate" class="header title">Tambah Calon Penerima Bantuan</span>
       <span v-else class="header title">Verifikasi Calon Penerima Bantuan</span>
-      <el-steps class="steps" :active="active" process-status="wait" finish-status="success" align-center>
+      <el-steps v-if="!isCreate && beneficiaries.is_nik_valid === 0" class="steps" :active="active" process-status="wait" finish-status="success" align-center>
         <el-step title="Informasi Penerima Bantuan" />
-        <el-step v-if="beneficiaries.is_nik_valid === 0" title="Informasi Identitas" />
-        <el-step v-if="isCreate" title="Domisili Saat Ini" />
+        <el-step title="Informasi Identitas" />
+        <el-step title="Informasi Kelayakan" />
+        <el-step title="Informasi Penghasilan" />
+        <el-step title="Upload Dokumen Pendukung" />
+      </el-steps>
+      <el-steps v-else-if="!isCreate && beneficiaries.is_nik_valid === 1" class="steps" :active="active" process-status="wait" finish-status="success" align-center>
+        <el-step title="Informasi Penerima Bantuan" />
+        <el-step title="Informasi Kelayakan" />
+        <el-step title="Informasi Penghasilan" />
+        <el-step title="Upload Dokumen Pendukung" />
+      </el-steps>
+      <el-steps v-else-if="isCreate" class="steps" :active="active" process-status="wait" finish-status="success" align-center>
+        <el-step title="Informasi Penerima Bantuan" />
+        <el-step title="Domisili Saat Ini" />
         <el-step title="Informasi Kelayakan" />
         <el-step title="Informasi Penghasilan" />
         <el-step title="Upload Dokumen Pendukung" />
@@ -174,7 +186,7 @@ export default {
         notes_approved: null,
         notes_rejected: null,
         rejected: null,
-        is_have_ktp: null
+        notes_nik_empty: null
       },
       rules: {
       }
