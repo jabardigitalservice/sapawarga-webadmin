@@ -11,12 +11,13 @@
               <el-collapse-item title="Upload Data Alokasi Bantuan Kota Bandung" name="1">
                 <p>Upload File</p>
                 <el-upload
-                  class="upload-demo"
                   ref="upload"
+                  class="upload-demo"
                   :headers="{ Authorization: `Bearer ${ getToken() }` }"
                   :data="{ type: 1, kabkota_id: user.kabkota_id }"
                   :action="`${url}bansos/upload`"
-                  :auto-upload="false">
+                  :auto-upload="false"
+                >
                   <el-button slot="trigger" size="small" type="primary">select file</el-button>
                   <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">upload to server</el-button>
                 </el-upload>
@@ -40,16 +41,16 @@ import { getToken } from '@/utils/auth'
 import { mapGetters } from 'vuex'
 
 export default {
+  data() {
+    return {
+      url: process.env.VUE_APP_BASE_API
+    }
+  },
+
   computed: {
     ...mapGetters([
       'user'
     ])
-  },
-
-  data() {
-    return {
-      url: process.env.VUE_APP_BASE_API,
-    }
   },
 
   methods: {
