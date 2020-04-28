@@ -62,7 +62,7 @@
       </el-form-item>
       <el-form-item class="ml-min-40 form-button">
         <div v-if="!isCreate">Apakah informasi penghasilan ini sudah sesuai?</div>
-        <el-button v-if="!isCreate" class="button-action" type="primary" plain @click="open">{{ $t('crud.change') }}</el-button>
+        <el-button v-if="!isCreate" class="button-action" type="info" @click="open">{{ $t('crud.change') }}</el-button>
         <el-button class="button-action" type="primary" @click="next"> {{ $t('crud.next') }}</el-button>
       </el-form-item>
     </el-form>
