@@ -15,15 +15,14 @@
           <el-radio class="label-check" :label="0">Tidak punya</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item v-if="beneficiaries.is_have_ktp" label="Masukan NIK/Nomor KTP" prop="nik">
+      <el-form-item v-if="beneficiaries.is_have_ktp === 1" label="Masukan NIK/Nomor KTP" prop="nik">
         <el-input v-model="beneficiaries.nik" type="number" />
       </el-form-item>
-      <el-form-item v-if="!beneficiaries.is_have_ktp" label="Alasan tidak punya NIK/Nomor KTP" prop="notes">
-        <el-input v-model="beneficiaries.notes" type="textarea" rows="3" />
+      <el-form-item v-if="beneficiaries.is_have_ktp === 0" label="Alasan tidak punya NIK/Nomor KTP" prop="notes_nik_empty">
+        <el-input v-model="beneficiaries.notes_nik_empty" type="textarea" rows="3" />
       </el-form-item>
       <el-form-item class="ml-min-40 form-button">
-        <el-button v-if="beneficiaries.is_have_ktp" class="button-action" type="primary" @click="next"> {{ $t('crud.next') }}</el-button>
-        <el-button v-else class="button-action" type="primary"> {{ $t('crud.next') }}</el-button>
+        <el-button class="button-action" type="primary" @click="next"> {{ $t('crud.next') }}</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -50,28 +49,46 @@ export default {
             trigger: 'blur'
           }
         ],
-        notes: [
+        notes_nik_empty: [
           {
             required: true,
-            message: 'Pilih salah satu',
+            message: 'Alasan harus diisi',
             trigger: 'blur'
           }
         ],
         nik: [
           {
             required: true,
-            message: 'Pilih salah satu',
+            message: 'NIK harus diisi',
+            trigger: 'blur'
+          },
+          {
+            min: 16,
+            message: 'NIK harus 16 karakter',
+            trigger: 'blur'
+          },
+          {
+            max: 16,
+            message: 'NIK harus 16 karakter',
             trigger: 'blur'
           }
         ]
       }
     }
   },
-  mounted() {
-    this.beneficiaries.is_have_ktp = 1
+  created() {
+    // this.beneficiaries.is_have_ktp = null
   },
   methods: {
-    next() {}
+    async next() {
+      const valid = await this.$refs.beneficiaries.validate()
+
+      if (!valid) {
+        return
+      }
+
+      this.$emit('nextStep', 1)
+    }
   }
 }
 </script>
