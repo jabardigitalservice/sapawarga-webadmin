@@ -89,3 +89,27 @@
   font-size: 14px;
   line-height: 65px;
 }
+
+.el-card.green {
+  .el-card__header {
+    background-color: #67C23A;
+    color: #ffffff;
+    font-weight: bold;
+  }
+}
+
+.el-card.body-nopadding {
+  .el-card__body {
+    padding: 0;
+
+    .card-description {
+      background-color: #FDF6EC;
+      padding: 20px;
+
+      p {
+        margin: 0;
+        margin-bottom: 5px;
+      }
+    }
+  }
+}
