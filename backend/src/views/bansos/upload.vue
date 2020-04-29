@@ -29,7 +29,7 @@
 
         <router-link to="/bansos/upload-form?type=3">
           <el-card class="box-card">
-            <p>Dana Desa</p>
+            <p>Bantuan Dana Desa</p>
           </el-card>
         </router-link>
 
@@ -57,21 +57,22 @@
             <el-table
               :data="tableData"
               border
-              style="width: 100%">
+              style="width: 100%"
+            >
               <el-table-column
                 prop="date"
                 label="Tanggal Upload"
-                width="180">
-              </el-table-column>
+                width="180"
+              />
               <el-table-column
                 prop="name"
                 label="Jenis Pintu Bantuan"
-                width="250">
-              </el-table-column>
+                width="250"
+              />
               <el-table-column
                 prop="target"
-                label="Target Upload">
-              </el-table-column>
+                label="Target Upload"
+              />
             </el-table>
           </div>
         </el-card>

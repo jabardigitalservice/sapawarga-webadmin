@@ -14,7 +14,7 @@
         <el-card class="box-card">
           <div class="text item">
             <el-collapse v-model="activeName" accordion>
-              <el-collapse-item :title="`Upload Data Alokasi Bantuan ${user.kabkota.name}`" name="1">
+              <el-collapse-item :title="`Upload Data Alokasi ${ getTitle() } untuk ${user.kabkota.name}`" name="1">
                 <el-upload
                   ref="upload"
                   class="upload-demo"
@@ -28,7 +28,7 @@
                   <el-button style="margin-left: 10px;" type="success" @click="submitUpload">Kirim</el-button>
                 </el-upload>
               </el-collapse-item>
-              <el-collapse-item title="Upload Data Alokasi Bantuan Per Kecamatan" name="2">
+              <el-collapse-item :title="`Upload Data Alokasi ${ getTitle() } Per Kecamatan`" name="2">
                 <el-upload
                   ref="upload2"
                   class="upload-demo"
@@ -79,7 +79,7 @@ export default {
         case '2':
           return 'Bantuan Sosial Kota/Kabupaten'
         case '3':
-          return 'Dana Desa'
+          return 'Bantuan Dana Desa'
         case '4':
           return 'Bantuan Sosial Presiden Sembako (Bodebek)'
         case '5':
