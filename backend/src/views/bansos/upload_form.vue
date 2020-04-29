@@ -14,7 +14,7 @@
         <el-card class="box-card">
           <div class="text item">
             <el-collapse v-model="activeName" accordion>
-              <el-collapse-item :title="`Upload Data Alokasi ${ getTitle() } untuk ${user.kabkota.name}`" name="1">
+              <el-collapse-item :title="`Alokasi ${ getTitle() } untuk ${user.kabkota.name}`" name="1">
                 <el-upload
                   ref="upload"
                   class="upload-demo"
@@ -28,7 +28,7 @@
                   <el-button style="margin-left: 10px;" type="success" @click="submitUpload">Kirim</el-button>
                 </el-upload>
               </el-collapse-item>
-              <el-collapse-item :title="`Upload Data Alokasi ${ getTitle() } Per Kecamatan`" name="2">
+              <el-collapse-item :title="`Alokasi ${ getTitle() } Per Kecamatan`" name="2">
                 <el-upload
                   ref="upload2"
                   class="upload-demo"
