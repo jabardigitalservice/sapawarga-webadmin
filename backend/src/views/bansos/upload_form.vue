@@ -30,17 +30,21 @@
                 </el-upload>
               </el-collapse-item>
               <el-collapse-item :title="`Alokasi ${ getTitle() } Per Kecamatan`" name="2">
+                <div style="margin: 20px 0">
+                  <input-kecamatan @changeKecamatan="changeKecamatan" />
+                </div>
                 <el-upload
-                  ref="upload2"
+                  ref="uploadKecamatan"
                   class="upload-demo"
                   :multiple="false"
                   :headers="{ Authorization: `Bearer ${ getToken() }` }"
-                  :data="{ type: type, kabkota_id: user.kabkota_id, kec_id: null }"
+                  :data="{ type: type, kabkota_id: user.kabkota_id, kec_id: kecId }"
                   :action="`${url}bansos/upload`"
                   :auto-upload="false"
+                  :on-success="onSuccess"
                 >
                   <el-button slot="trigger" type="primary">Pilih Dokumen</el-button>
-                  <el-button style="margin-left: 10px;" type="success" @click="submitUpload">Kirim</el-button>
+                  <el-button style="margin-left: 10px;" type="success" @click="submitUploadKecamatan">Kirim</el-button>
                 </el-upload>
               </el-collapse-item>
             </el-collapse>
@@ -54,13 +58,17 @@
 <script>
 import { getToken } from '@/utils/auth'
 import { mapGetters } from 'vuex'
+import InputKecamatan from '@/components/InputKec'
 
 export default {
+  components: { InputKecamatan },
+
   data() {
     return {
       type: this.$route.query.type,
       activeName: '1',
-      url: process.env.VUE_APP_BASE_API
+      url: process.env.VUE_APP_BASE_API,
+      kecId: null
     }
   },
 
@@ -92,6 +100,15 @@ export default {
 
     submitUpload() {
       this.$refs.upload.submit()
+    },
+
+    submitUploadKecamatan() {
+      this.$refs.uploadKecamatan.submit()
+    },
+
+    changeKecamatan(value) {
+      console.log(value)
+      this.kecId = value
     },
 
     onSuccess(response, file, fileList) {
