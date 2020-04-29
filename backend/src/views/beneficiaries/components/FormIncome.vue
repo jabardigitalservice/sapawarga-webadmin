@@ -126,6 +126,7 @@ export default {
   },
   created() {
     if (this.isCreate) this.disableField = false
+    if (!this.isCreate) this.beneficiaries.temporaryFamilyOptions = this.beneficiaries.total_family_members
     if (this.beneficiaries.income_before !== null) this.beforeTemporary = this.thousandSeparator(this.beneficiaries.income_before)
     if (this.beneficiaries.income_after !== null) this.afterTemporary = this.thousandSeparator(this.beneficiaries.income_after)
     this.getJob()
