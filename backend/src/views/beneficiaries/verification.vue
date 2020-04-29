@@ -3,9 +3,22 @@
     <el-card v-if="preview === false" class="box-card">
       <span v-if="isCreate" class="header title">Tambah Calon Penerima Bantuan</span>
       <span v-else class="header title">Verifikasi Calon Penerima Bantuan</span>
-      <el-steps class="steps" :active="active" process-status="wait" finish-status="success" align-center>
+      <el-steps v-if="!isCreate && beneficiaries.is_nik_valid === 0" class="steps" :active="active" process-status="wait" finish-status="success" align-center>
         <el-step title="Informasi Penerima Bantuan" />
-        <el-step v-if="isCreate" title="Domisili Saat Ini" />
+        <el-step title="Informasi Identitas" />
+        <el-step title="Informasi Kelayakan" />
+        <el-step title="Informasi Penghasilan" />
+        <el-step title="Upload Dokumen Pendukung" />
+      </el-steps>
+      <el-steps v-else-if="!isCreate && beneficiaries.is_nik_valid === 1" class="steps" :active="active" process-status="wait" finish-status="success" align-center>
+        <el-step title="Informasi Penerima Bantuan" />
+        <el-step title="Informasi Kelayakan" />
+        <el-step title="Informasi Penghasilan" />
+        <el-step title="Upload Dokumen Pendukung" />
+      </el-steps>
+      <el-steps v-else-if="isCreate" class="steps" :active="active" process-status="wait" finish-status="success" align-center>
+        <el-step title="Informasi Penerima Bantuan" />
+        <el-step title="Domisili Saat Ini" />
         <el-step title="Informasi Kelayakan" />
         <el-step title="Informasi Penghasilan" />
         <el-step title="Upload Dokumen Pendukung" />
@@ -44,7 +57,7 @@
             </el-col>
           </el-row>
         </div>
-        <div v-else>
+        <div v-else-if="!isCreate && beneficiaries.is_nik_valid === 1">
           <el-row v-if="active === 1" :gutter="20">
             <el-col :sm="24" :md="17" :lg="17" :xl="17">
               <FormPersonal :beneficiaries.sync="beneficiaries" :is-create="isCreate" :disable-field="!isCreate" @nextStep="onClickNextChild" />
@@ -66,6 +79,33 @@
             </el-col>
           </el-row>
         </div>
+        <div v-else-if="!isCreate && beneficiaries.is_nik_valid === 0">
+          <el-row v-if="active === 1" :gutter="20">
+            <el-col :sm="24" :md="17" :lg="17" :xl="17">
+              <FormPersonal :beneficiaries.sync="beneficiaries" :is-create="isCreate" :disable-field="!isCreate" @nextStep="onClickNextChild" />
+            </el-col>
+          </el-row>
+          <el-row v-if="active === 2" :gutter="20">
+            <el-col :sm="24" :md="17" :lg="17" :xl="17">
+              <FormKtp :beneficiaries.sync="beneficiaries" :is-create="isCreate" :disable-field="!isCreate" @nextStep="onClickNextChild" />
+            </el-col>
+          </el-row>
+          <el-row v-if="active === 3" :gutter="20">
+            <el-col :sm="24" :md="17" :lg="17" :xl="17">
+              <FormInfoEligibility :beneficiaries.sync="beneficiaries" :is-create="isCreate" @nextStep="onClickNextChild" />
+            </el-col>
+          </el-row>
+          <el-row v-if="active === 4" :gutter="20">
+            <el-col :sm="24" :md="20" :lg="20" :xl="20">
+              <FormIncome :beneficiaries.sync="beneficiaries" :is-create="isCreate" :disable-field="!isCreate" @nextStep="onClickNextChild" />
+            </el-col>
+          </el-row>
+          <el-row v-if="active === 5" :gutter="20">
+            <el-col :sm="24" :md="24" :lg="24" :xl="24">
+              <FormUpload :beneficiaries.sync="beneficiaries" :is-create="isCreate" :disable-field="!isCreate" @nextStep="onClickNextChild" @getImageKtp="onClickImageKtp" @getImageKk="onClickImageKk" />
+            </el-col>
+          </el-row>
+        </div>
       </el-form>
     </el-card>
     <el-card v-if="preview" class="box-card">
@@ -79,6 +119,7 @@
 
 <script>
 import FormPersonal from './components/FormPersonal'
+import FormKtp from './components/FormKtp'
 import FormInfoEligibility from './components/FormInfoEligibility'
 import FormDomicile from './components/FormDomicile'
 import FormIncome from './components/FormIncome'
@@ -93,6 +134,7 @@ export default {
     FormDomicile,
     FormUpload,
     Preview,
+    FormKtp,
     FormInfoEligibility
   },
   props: {
@@ -143,7 +185,8 @@ export default {
         is_poor_new: null,
         notes_approved: null,
         notes_rejected: null,
-        rejected: null
+        rejected: null,
+        notes_nik_empty: null
       },
       rules: {
       }
@@ -166,7 +209,7 @@ export default {
     },
     onClickNextChild(value) {
       this.active = this.active + value
-      if (this.isCreate) {
+      if (this.isCreate || (!this.isCreate && this.beneficiaries.is_nik_valid === 0)) {
         if (this.active > 5) this.active = 1
       } else {
         if (this.active > 4) this.active = 1

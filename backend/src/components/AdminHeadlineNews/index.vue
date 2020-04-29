@@ -2,18 +2,8 @@
   <div>
     <el-row v-if="user.roles_active.id === 'staffKabkota'">
       <a :href="link" target="_blank">
-        <img src="https://firebasestorage.googleapis.com/v0/b/sapawarga-staging.appspot.com/o/admin-banner-01.png?alt=media&token=3ad9f723-a397-48c4-9c8e-41e6cfbf5d6c" width="100%" />
+        <img src="https://firebasestorage.googleapis.com/v0/b/sapawarga-staging.appspot.com/o/admin-banner-01.png?alt=media&token=3ad9f723-a397-48c4-9c8e-41e6cfbf5d6c" width="100%">
       </a>
-    </el-row>
-    <el-row v-if="user.roles_active.id === 'staffKabkota'" id="headline-news">
-      <el-card class="box-card">
-        <div slot="header">
-          <span>Informasi Terbaru</span>
-        </div>
-        <div class="text item">
-          <strong>Senin, 27 April 2020</strong> Unduh dokumen BNBA Penerima Bantuan Sosial Non DTKS untuk Kabupaten/Kota <a :href="link" target="_blank" style="text-decoration: underline">di sini</a>.
-        </div>
-      </el-card>
     </el-row>
   </div>
 </template>

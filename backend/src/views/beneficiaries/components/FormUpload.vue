@@ -13,7 +13,7 @@
       <el-row>
         <el-col>
           <div>
-            <el-form-item class="position" label="Foto KTP" prop="nik">
+            <el-form-item class="position" label="Foto KTP/Copy KTP/KK" prop="nik">
               <div class="image-beneficiaries">
                 <AttachmentPhotoUpload
                   type="user_post_photo"
@@ -48,6 +48,7 @@
       title="Konfirmasi"
       :visible.sync="dialogVisible"
       center
+      width="40%"
     >
       <p>Data yang sudah dimasukan tidak dapat diubah lagi.</p>
       <p>Apakah yakin untuk memproses data ini?</p>
@@ -55,8 +56,31 @@
       <span slot="footer" class="dialog-footer">
         <el-button @click="next">{{ $t('crud.recheck') }}</el-button>
         <el-button v-if="!isCreate" type="danger" @click="updateData(statusRejected)">{{ $t('crud.reject') }}</el-button>
-        <el-button type="success" @click="updateData(statusVerified)">{{ $t('crud.verified') }}</el-button>
+        <el-button type="success" @click="getConfirmation">{{ $t('crud.verified') }}</el-button>
       </span>
+
+      <el-dialog
+        width="30%"
+        title="Pernyataan"
+        :visible.sync="confirmation"
+        append-to-body
+        center
+      >
+        <p class="confirmation-text">
+          Dengan ini saya menyatakan benar bahwa warga ini adalah warga
+          <span v-if="beneficiaries.domicile_rw"> RW {{ beneficiaries.domicile_rw }}</span>
+          <span> Kelurahan/Desa {{ beneficiaries.domicile_kel_name.name }},</span>
+          <span> Kecamatan {{ beneficiaries.domicile_kec_name.name }},</span>
+          <span> Kota/Kabupaten {{ beneficiaries.domicile_kabkota_name.name }}</span>
+          dan warga ini adalah warga yang membutuhkan serta layak dibantu.
+        </p>
+        <el-checkbox v-model="checked">
+          Ya, Saya setuju
+        </el-checkbox>
+        <div>
+          <el-button class="confirmation-button" type="success" :disabled="!checked" @click="updateData(statusVerified)">{{ $t('crud.save-verified') }}</el-button>
+        </div>
+      </el-dialog>
     </el-dialog>
   </div>
 </template>
@@ -79,11 +103,17 @@ export default {
   data() {
     return {
       dialogVisible: false,
+      confirmation: false,
+      checked: false,
       statusVerified: 3,
       statusRejected: 2
     }
   },
   methods: {
+    getConfirmation() {
+      this.dialogVisible = false
+      this.confirmation = true
+    },
     next() {
       this.dialogVisible = true
       this.$emit('nextStep', 1)
@@ -114,7 +144,7 @@ export default {
           this.beneficiaries.status = 10
           await create(this.beneficiaries)
         } else {
-          delete this.beneficiaries.nik
+          if (this.beneficiaries.is_nik_valid === 1) delete this.beneficiaries.nik
           await update(id, this.beneficiaries)
         }
         this.dialogVisible = false
@@ -159,5 +189,14 @@ export default {
     width: 50%;
     display: block;
     margin: auto;
+  }
+  .confirmation-text {
+    margin-top: -20px;
+    line-height: 25px;
+  }
+  .confirmation-button {
+    display: block;
+    margin: auto;
+    margin-top: 20px;
   }
 </style>

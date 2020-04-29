@@ -140,7 +140,7 @@ export default {
         cancelButtonText: this.$t('common.cancel'),
         type: 'warning'
       })
-      delete this.beneficiaries.nik
+      if (this.beneficiaries.is_nik_valid === 1) delete this.beneficiaries.nik
       this.beneficiaries.status_verification = 2
       await update(id, this.beneficiaries)
       this.$message.info('Status berhasil diubah')
