@@ -1,11 +1,13 @@
 <template>
   <div class="app-container">
-    <div>Download</div>
+    <admin-headline-news />
   </div>
 </template>
 
 <script>
+import AdminHeadlineNews from '@/components/AdminHeadlineNews'
+
 export default {
-  //
+  components: { AdminHeadlineNews }
 }
 </script>
