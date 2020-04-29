@@ -45,46 +45,46 @@
           </div>
         </el-col>
       </el-row>
-      <upload-form-subdistrict v-if="isSubdistrictComponent"/>
-      <upload-form-city v-if="isCityComponent"/>
-      <upload-form-village v-if="isVillageComponent"/>
+      <upload-form-subdistrict v-if="isSubdistrictComponent" />
+      <upload-form-city v-if="isCityComponent" />
+      <upload-form-village v-if="isVillageComponent" />
     </el-card>
   </div>
 </template>
 
 <script>
-import UploadFormSubdistrict from './components/UploadFormSubdistrict';
-import UploadFormCity from './components/UploadFormCity';
-import UploadFormVillage from './components/UploadFormVillage';
+import UploadFormSubdistrict from './components/UploadFormSubdistrict'
+import UploadFormCity from './components/UploadFormCity'
+import UploadFormVillage from './components/UploadFormVillage'
 
 export default {
-  components: { 
+  components: {
     UploadFormSubdistrict,
-    UploadFormCity, 
-    UploadFormVillage, 
+    UploadFormCity,
+    UploadFormVillage
   },
   data() {
     return {
       isCityComponent: false,
       isSubdistrictComponent: false,
-      isVillageComponent: false,
-    };
+      isVillageComponent: false
+    }
   },
   methods: {
     switchComponent(component) {
-      if(component === 'uploadFormCity') {
+      if (component === 'uploadFormCity') {
         this.isCityComponent = true
         this.isSubdistrictComponent = false
         this.isVillageComponent = false
       }
 
-      if(component === 'uploadFormSubdistrict') {
+      if (component === 'uploadFormSubdistrict') {
         this.isSubdistrictComponent = true
         this.isCityComponent = false
         this.isVillageComponent = false
       }
 
-      if(component === 'uploadFormVillage') {
+      if (component === 'uploadFormVillage') {
         this.isSubdistrictComponent = false
         this.isCityComponent = false
         this.isVillageComponent = true
@@ -93,7 +93,6 @@ export default {
   }
 }
 </script>
-
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 .panel-group {

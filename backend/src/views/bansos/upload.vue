@@ -37,7 +37,7 @@
         <el-table-column prop="status_upload" sortable="custom" :label="$t('label.beneficiaries-upload-status')" />
         <el-table-column prop="tanggal_upload" sortable="custom" :label="$t('label.beneficiaries-upload-date')" />
         <el-table-column align="center" :label="$t('label.actions')" width="200">
-          <template slot-scope="scope">
+          <template>
             <router-link :to="'#'">
               <el-tooltip :content="$t('label.beneficiaries-upload-view')" placement="top">
                 <el-button type="primary" icon="el-icon-view" size="mini" />
@@ -62,7 +62,7 @@ export default {
       total: 0,
       listQuery: {
         page: 1,
-        limit: 10,
+        limit: 10
       }
     }
   },
@@ -80,7 +80,7 @@ export default {
     },
     getTableRowNumbering(index) {
       return ((this.listQuery.page - 1) * this.listQuery.limit) + (index + 1)
-    },
+    }
   }
 }
 </script>

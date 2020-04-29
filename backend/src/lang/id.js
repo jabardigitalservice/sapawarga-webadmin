@@ -901,7 +901,7 @@ export default {
     'beneficiaries-upload-city': 'Upload Data Alokasi Bantuan Kota Bandung',
     'beneficiaries-upload-subdistrict': 'Upload Data Alokasi Bantuan Per Kecamatan',
     'beneficiaries-upload-village': 'Upload Data Alokasi Bantuan Per Desa',
-    'beneficiaries-upload-again': 'Upload Lagi',
+    'beneficiaries-upload-again': 'Upload Lagi'
   },
   news: {
     'news-url': 'URL Berita',

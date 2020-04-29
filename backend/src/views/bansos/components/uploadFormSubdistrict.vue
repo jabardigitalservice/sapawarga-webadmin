@@ -8,9 +8,9 @@
       </el-col>
     </el-row>
     <br>
-    <el-row :gutter="40" v-for="(data, index) in uploadFormSubdistrictList" :key="data.id">
+    <el-row v-for="(data, index) in uploadFormSubdistrictList" :key="data.id" :gutter="40">
       <el-col :span="1">
-        <el-button type="text" style="color:#f56c6c" @click="handleDeleteForm(index)"><i class="el-icon-delete"></i></el-button>
+        <el-button type="text" style="color:#f56c6c" @click="handleDeleteForm(index)"><i class="el-icon-delete" /></el-button>
       </el-col>
       <el-col :span="12">
         <el-select v-model="value" :placeholder="$t('label.choose-area-kec')" style="width:100%">
@@ -18,8 +18,8 @@
             v-for="item in options"
             :key="item.value"
             :label="item.label"
-            :value="item.value">
-          </el-option>
+            :value="item.value"
+          />
         </el-select>
       </el-col>
       <el-col :span="11">
@@ -29,13 +29,13 @@
           :multiple="false"
           :limit="1"
         >
-          <div class="el-upload__text"><i class="el-icon-upload"></i><em> Add File </em>or drop files here</div>
+          <div class="el-upload__text"><i class="el-icon-upload" /><em> Add File </em>or drop files here</div>
         </el-upload>
       </el-col>
     </el-row>
     <el-row :gutter="40">
       <el-col :span="24" style="text-align:right">
-        <el-button type="text" @click="handleAddFrom">{{ $t('label.beneficiaries-upload-again') }} <i class="el-icon-plus"></i></el-button>
+        <el-button type="text" @click="handleAddFrom">{{ $t('label.beneficiaries-upload-again') }} <i class="el-icon-plus" /></el-button>
       </el-col>
     </el-row>
   </div>
@@ -58,7 +58,7 @@ export default {
       uploadFormSubdistrictList: []
     }
   },
-  created () {
+  created() {
     this.handleAddFrom()
   },
   methods: {
