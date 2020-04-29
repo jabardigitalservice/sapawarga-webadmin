@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-card class="box-card" :body-style="{ background: '#fce0b4' }">
+    <el-card class="box-card" :body-style="{ background: '#fff8e6' }">
       <div slot="header">
         <span>{{ $t('label.beneficiaries-upload') }}</span>
       </div>
