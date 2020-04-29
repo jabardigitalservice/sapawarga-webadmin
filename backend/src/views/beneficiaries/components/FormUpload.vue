@@ -13,7 +13,7 @@
       <el-row>
         <el-col>
           <div>
-            <el-form-item class="position" label="Foto KTP" prop="nik">
+            <el-form-item class="position" label="Foto KTP/Copy KTP/KK" prop="nik">
               <div class="image-beneficiaries">
                 <AttachmentPhotoUpload
                   type="user_post_photo"
@@ -72,6 +72,7 @@
           <span> Kelurahan/Desa {{ beneficiaries.domicile_kel_name.name }},</span>
           <span> Kecamatan {{ beneficiaries.domicile_kec_name.name }},</span>
           <span> Kota/Kabupaten {{ beneficiaries.domicile_kabkota_name.name }}</span>
+          dan warga ini adalah warga yang membutuhkan serta layak dibantu.
         </p>
         <el-checkbox v-model="checked">
           Ya, Saya setuju
