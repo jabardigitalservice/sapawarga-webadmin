@@ -115,9 +115,9 @@ export default {
         page: 1,
         limit: 10,
         status_verification: null,
-        kabkota_id: null,
-        kec_id: null,
-        kel_id: null,
+        domicile_kabkota_bps_id: null,
+        domicile_kec_bps_id: null,
+        domicile_kel_bps_id: null,
         domicile_rw_like: null,
         domicile_rt_like: null
       }

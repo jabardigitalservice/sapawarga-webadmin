@@ -28,11 +28,11 @@
           </el-form-item>
         </el-col>
         <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="7">
-          <input-filter-area
+          <input-filter-area-bps
             :parent-id="filterAreaParentId"
-            :kabkota-id="listQuery.kabkota_id"
-            :kec-id="listQuery.kec_id"
-            :kel-id="listQuery.kel_id"
+            :kabkota-id="listQuery.domicile_kabkota_bps_id"
+            :kec-id="listQuery.domicile_kec_bps_id"
+            :kel-id="listQuery.domicile_kel_bps_id"
             @changeKabkota="changeKabkota"
             @changeKecamatan="changeKecamatan"
             @changeKelurahan="changeKelurahan"
@@ -62,12 +62,12 @@
 </template>
 
 <script>
-import InputFilterArea from '@/components/InputFilterArea'
+import InputFilterAreaBps from '@/components/InputFilterAreaBps'
 
 import checkPermission from '@/utils/permission'
 
 export default {
-  components: { InputFilterArea },
+  components: { InputFilterAreaBps },
 
   props: {
     listQuery: {
@@ -87,11 +87,11 @@ export default {
       const authUser = this.$store.state.user
 
       if (checkPermission(['staffKabkota'])) {
-        return parseInt(authUser.kabkota_id)
+        return parseInt(authUser.kabkota.code_bps)
       }
 
       if (checkPermission(['staffKec'])) {
-        return parseInt(authUser.kec_id)
+        return parseInt(authUser.kecamatan.code_bps)
       }
 
       return null
@@ -110,15 +110,15 @@ export default {
     },
 
     changeKabkota(id) {
-      this.listQuery.kabkota_id = id
+      this.listQuery.domicile_kabkota_bps_id = id
     },
 
     changeKecamatan(id) {
-      this.listQuery.kec_id = id
+      this.listQuery.domicile_kec_bps_id = id
     },
 
     changeKelurahan(id) {
-      this.listQuery.kel_id = id
+      this.listQuery.domicile_kel_bps_id = id
     }
   }
 }
