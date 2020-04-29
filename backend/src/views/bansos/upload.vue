@@ -54,7 +54,25 @@
             <span>Daftar Riwayat Upload Data KRTS Non DTKS</span>
           </div>
           <div class="text item">
-            Lorem ipsum.
+            <el-table
+              :data="tableData"
+              border
+              style="width: 100%">
+              <el-table-column
+                prop="date"
+                label="Tanggal Upload"
+                width="180">
+              </el-table-column>
+              <el-table-column
+                prop="name"
+                label="Jenis Pintu Bantuan"
+                width="250">
+              </el-table-column>
+              <el-table-column
+                prop="target"
+                label="Target Upload">
+              </el-table-column>
+            </el-table>
           </div>
         </el-card>
       </el-col>
@@ -64,6 +82,26 @@
 
 <script>
 export default {
-  //
+  data() {
+    return {
+      tableData: [{
+        date: '2020-04-03 18:00:00',
+        name: 'Bantuan Sosial Provinsi',
+        target: 'KOTA BANDUNG'
+      }, {
+        date: '2020-04-03 18:00:00',
+        name: 'Bantuan Sosial Provinsi',
+        target: 'KOTA BANDUNG'
+      }, {
+        date: '2020-04-03 18:00:00',
+        name: 'Bantuan Sosial Provinsi',
+        target: 'KOTA BANDUNG'
+      }, {
+        date: '2020-04-03 18:00:00',
+        name: 'Bantuan Sosial Provinsi',
+        target: 'KOTA BANDUNG'
+      }]
+    }
+  }
 }
 </script>
