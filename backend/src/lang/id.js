@@ -897,7 +897,11 @@ export default {
     'beneficiaries-upload-date': 'Tanggal Upload',
     'beneficiaries-upload-view': 'Lihat',
     'beneficiaries-upload-option': 'Pilih pintu bantuan untuk upload KRTS',
-    'beneficiaries-upload-info': 'Sebelum melakukan upload Data KRTD Non DTKS, diharapkan data dipecah berdasarkan alokasi sesuai pintu bantuan. Untuk melakukan upload data, pilih pintu bantuan yang akan di upload.'
+    'beneficiaries-upload-info': 'Sebelum melakukan upload Data KRTD Non DTKS, diharapkan data dipecah berdasarkan alokasi sesuai pintu bantuan. Untuk melakukan upload data, pilih pintu bantuan yang akan di upload.',
+    'beneficiaries-upload-city': 'Upload Data Alokasi Bantuan Kota Bandung',
+    'beneficiaries-upload-subdistrict': 'Upload Data Alokasi Bantuan Per Kecamatan',
+    'beneficiaries-upload-village': 'Upload Data Alokasi Bantuan Per Desa',
+    'beneficiaries-upload-again': 'Upload Lagi',
   },
   news: {
     'news-url': 'URL Berita',

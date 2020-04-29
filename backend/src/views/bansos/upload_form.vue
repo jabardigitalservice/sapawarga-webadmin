@@ -16,7 +16,7 @@
             <el-row>
               <el-col :span="24">
                 <div class="card-panel-text">
-                  Upload Data Alokasi Bantuan Kota Bandung
+                  {{ $t('label.beneficiaries-upload-city') }}
                 </div>
               </el-col>
             </el-row>
@@ -27,7 +27,7 @@
             <el-row>
               <el-col :span="24">
                 <div class="card-panel-text">
-                  Upload Data Alokasi Bantuan Per Kecamatan
+                  {{ $t('label.beneficiaries-upload-subdistrict') }}
                 </div>
               </el-col>
             </el-row>
@@ -38,7 +38,7 @@
             <el-row>
               <el-col :span="24">
                 <div class="card-panel-text">
-                  Upload Data Alokasi Bantuan Per Desa
+                  {{ $t('label.beneficiaries-upload-village') }}
                 </div>
               </el-col>
             </el-row>
@@ -53,9 +53,9 @@
 </template>
 
 <script>
-import UploadFormSubdistrict from './components/uploadFormSubdistrict';
-import UploadFormCity from './components/uploadFormCity';
-import UploadFormVillage from './components/uploadFormVillage';
+import UploadFormSubdistrict from './components/UploadFormSubdistrict';
+import UploadFormCity from './components/UploadFormCity';
+import UploadFormVillage from './components/UploadFormVillage';
 
 export default {
   components: { 
@@ -66,20 +66,28 @@ export default {
   data() {
     return {
       isCityComponent: false,
-      isSubdistrictComponent: true,
+      isSubdistrictComponent: false,
       isVillageComponent: false,
     };
   },
   methods: {
     switchComponent(component) {
       if(component === 'uploadFormCity') {
-        this.isCityComponent = true,
+        this.isCityComponent = true
         this.isSubdistrictComponent = false
+        this.isVillageComponent = false
       }
 
       if(component === 'uploadFormSubdistrict') {
-        this.isSubdistrictComponent = true,
+        this.isSubdistrictComponent = true
         this.isCityComponent = false
+        this.isVillageComponent = false
+      }
+
+      if(component === 'uploadFormVillage') {
+        this.isSubdistrictComponent = false
+        this.isCityComponent = false
+        this.isVillageComponent = true
       }
     }
   }

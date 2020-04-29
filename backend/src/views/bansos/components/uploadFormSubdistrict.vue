@@ -3,17 +3,17 @@
     <el-row>
       <el-col :span="24">
         <span class="head-title">
-          <b>Kecamatan</b>
+          <b>{{ $t('label.area-kec') }}</b>
         </span>
       </el-col>
     </el-row>
     <br>
     <el-row :gutter="40" v-for="(data, index) in uploadFormSubdistrictList" :key="data.id">
       <el-col :span="1">
-        <el-button type="text" @click="handleAddFrom"><i class="el-icon-delete"></i></el-button>
+        <el-button type="text" style="color:#f56c6c" @click="handleDeleteForm(index)"><i class="el-icon-delete"></i></el-button>
       </el-col>
       <el-col :span="12">
-        <el-select v-model="value" placeholder="Select" style="width:100%">
+        <el-select v-model="value" :placeholder="$t('label.choose-area-kec')" style="width:100%">
           <el-option
             v-for="item in options"
             :key="item.value"
@@ -27,6 +27,7 @@
           drag
           action="https://jsonplaceholder.typicode.com/posts/"
           :multiple="false"
+          :limit="1"
         >
           <div class="el-upload__text"><i class="el-icon-upload"></i><em> Add File </em>or drop files here</div>
         </el-upload>
@@ -34,7 +35,7 @@
     </el-row>
     <el-row :gutter="40">
       <el-col :span="24" style="text-align:right">
-        <el-button type="text" @click="handleAddFrom">Upload Lagi <i class="el-icon-plus"></i></el-button>
+        <el-button type="text" @click="handleAddFrom">{{ $t('label.beneficiaries-upload-again') }} <i class="el-icon-plus"></i></el-button>
       </el-col>
     </el-row>
   </div>
@@ -46,14 +47,13 @@ export default {
   data() {
     return {
       options: [{
-        value: 'Option1',
-        label: 'Option1'
+        value: 'antapani',
+        label: 'Antapani'
       }, {
-        value: 'Option2',
-        label: 'Option2'
+        value: 'andir',
+        label: 'Andir'
       }],
       value: '',
-
       idUploadFormSubdistrict: 0,
       uploadFormSubdistrictList: []
     }
@@ -67,6 +67,9 @@ export default {
       this.uploadFormSubdistrictList.push({
         id: this.idUploadFormSubdistrict
       })
+    },
+    handleDeleteForm(index) {
+      this.uploadFormSubdistrictList.splice(index, 1)
     }
   }
 }
