@@ -23,6 +23,7 @@
                   :data="{ type: type, kabkota_id: user.kabkota_id }"
                   :action="`${url}bansos/upload`"
                   :auto-upload="false"
+                  :on-success="onSuccess"
                 >
                   <el-button slot="trigger" type="primary">Pilih Dokumen</el-button>
                   <el-button style="margin-left: 10px;" type="success" @click="submitUpload">Kirim</el-button>
@@ -91,6 +92,12 @@ export default {
 
     submitUpload() {
       this.$refs.upload.submit()
+    },
+
+    onSuccess(response, file, fileList) {
+      this.$message.success('Dokumen berhasil dikirim.')
+
+      this.$router.push('/bansos/upload')
     }
   }
 }
