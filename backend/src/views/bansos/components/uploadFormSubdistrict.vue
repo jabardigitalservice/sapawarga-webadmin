@@ -13,7 +13,7 @@
         <el-button type="text" style="color:#f56c6c" @click="handleDeleteForm(index)"><i class="el-icon-delete" /></el-button>
       </el-col>
       <el-col :span="12">
-        <el-select v-model="value" :placeholder="$t('label.choose-area-kec')" style="width:100%">
+        <el-select v-model="data.value" :placeholder="$t('label.choose-area-kec')" style="width:100%">
           <el-option
             v-for="item in options"
             :key="item.value"
