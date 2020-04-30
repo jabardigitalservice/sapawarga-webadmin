@@ -4,11 +4,9 @@
       <el-col :lg="24">
         <el-row style="margin: 10px 0px">
           <el-col :span="12">
-            <router-link :to="{ path: '/beneficiaries/create' }">
-              <el-button type="primary" size="small" icon="el-icon-plus">
-                {{ $t('route.beneficiaries-create') }}
-              </el-button>
-            </router-link>
+            <el-button type="primary" size="small" icon="el-icon-plus" @click="accessBlock('create')">
+              {{ $t('route.beneficiaries-create') }}
+            </el-button>
           </el-col>
         </el-row>
 
@@ -22,7 +20,7 @@
 
           <el-table-column prop="name" sortable="custom" :label="$t('label.beneficiaries-name')" min-width="200px" />
 
-          <el-table-column prop="nik" sortable="custom" :label="$t('label.beneficiaries-nik')" min-width="175px" >
+          <el-table-column prop="nik" sortable="custom" :label="$t('label.beneficiaries-nik')" min-width="175px">
             <template slot-scope="{row}">
               {{ row.nik }}
               <div v-if="row.is_nik_valid === 0" slot="reference" class="name-wrapper">
@@ -62,17 +60,29 @@
                   <el-button type="primary" icon="el-icon-view" size="small" />
                 </el-tooltip>
               </router-link>
-              <router-link :to="scope.row.status_verification === 1 ? '/beneficiaries/verification/'+scope.row.id : ''">
-                <el-tooltip :content="$t('label.beneficiaries-verivication')" placement="top">
-                  <el-button type="success" icon="el-icon-circle-check" size="small" :disabled="scope.row.status_verification !== 1" />
-                </el-tooltip>
-              </router-link>
+              <el-tooltip :content="$t('label.beneficiaries-verivication')" placement="top">
+                <el-button type="success" icon="el-icon-circle-check" size="small" :disabled="scope.row.status_verification !== 1" @click="accessBlock('verification/' + scope.row.id)" />
+              </el-tooltip>
             </template>
           </el-table-column>
         </el-table>
 
         <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
       </el-col>
+      <el-dialog
+        :visible.sync="dialogVisible"
+        width="50%"
+        center
+      >
+        <span slot="title" class="dialog-title">Sampurasun, Wargi Jabar!</span>
+        <p class="dialog-content">Sehubungan dengan berakhirnya proses verifikasi dan validasi bansos Non DTKS Sapawarga pada periode pertama di bulan April, atas permintaan Pemerintah Kabupaten Sumedang melalui sekretaris Daerah, maka fitur verifikasi dan validasi bansos Non DTKS Sapawarga akan kami <b>tutup sementara.</b> Fitur akan kami buka kembali menjelang proses verifikasi dan validasi bansos Non DTKS Sapawarga pada periode kedua bulan Mei. Tanggal pembukaan kembali fitur akan kami umumkan segera.
+        </p>
+        <p class="dialog-content">Terima kasih telah saling membantu wargi Jabar yang membutuhkan dengan melakukan proses verifikasi dan validasi menggunakan aplikasi Sapawarga.</p>
+        <p>Tim Sapawarga</p>
+        <span slot="footer" class="dialog-footer">
+          <el-button type="success" @click="dialogVisible = false">Tutup</el-button>
+        </span>
+      </el-dialog>
     </el-row>
   </div>
 </template>
@@ -106,6 +116,7 @@ export default {
     return {
       list: null,
       total: 0,
+      dialogVisible: false,
       isLoadingSummary: true,
       dataSummary: null,
       listLoading: true,
@@ -139,6 +150,13 @@ export default {
   },
 
   methods: {
+    accessBlock(value) {
+      if (this.user.kabkota.code_bps === '3211') {
+        this.dialogVisible = true
+      } else {
+        this.$router.push('/beneficiaries/' + value)
+      }
+    },
     // get summary statistics
     getSummary() {
       const querySummary = {
@@ -199,3 +217,16 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+  .dialog-title {
+    font-weight: bold;
+    text-align: left;
+    font-size: 22px;
+    float: left;
+    padding: 10px;
+  }
+  .dialog-content {
+    font-size: 16px;
+    line-height: 25px;
+  }
+</style>
