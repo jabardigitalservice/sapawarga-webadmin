@@ -47,10 +47,9 @@ export default {
       }],
       value: ''
     }
-  },
+  }
 }
 </script>
-
 
 <style>
 .el-row {
