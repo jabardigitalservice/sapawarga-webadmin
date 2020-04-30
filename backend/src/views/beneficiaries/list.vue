@@ -110,7 +110,7 @@ export default {
       listQuery: {
         nik: null,
         name: null,
-        sort_by: 'name',
+        sort_by: 'nik',
         sort_order: 'ascending',
         page: 1,
         limit: 10,
