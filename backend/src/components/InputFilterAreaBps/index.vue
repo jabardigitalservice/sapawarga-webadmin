@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row :gutter="10">
-      <el-col v-if="enableKabkota" :span="8">
+      <el-col v-if="enableKabkota" :span="colsWidht">
         <el-select
           v-model="kabkota_selected"
           clearable
@@ -19,7 +19,7 @@
         </el-select>
       </el-col>
 
-      <el-col v-if="enableKecamatan" :span="8">
+      <el-col v-if="enableKecamatan" :span="colsWidht">
         <el-select
           v-model="kecamatan_selected"
           :disabled="enableKabkota === true && (kabkota_selected === '' || kabkota_selected === null)"
@@ -38,7 +38,7 @@
         </el-select>
       </el-col>
 
-      <el-col v-if="enableKelurahan" :span="8">
+      <el-col v-if="enableKelurahan" :span="colsWidht">
         <el-select
           v-model="kelurahan_selected"
           :disabled="enableKecamatan === true && (kecamatan_selected === '' || kecamatan_selected === null)"
@@ -102,7 +102,8 @@ export default {
       kelurahan_selected: null,
       kabkota_options: [],
       kecamatan_options: [],
-      kelurahan_options: []
+      kelurahan_options: [],
+      colsWidht: 8
     }
   },
 
@@ -156,6 +157,11 @@ export default {
   },
 
   mounted() {
+    if (checkPermission([this.RolesUser.STAFFKABKOTA])) {
+      this.colsWidht = 12
+    } else if (checkPermission([this.RolesUser.STAFFKEC])) {
+      this.colsWidht = 24
+    }
     this.init()
   },
 
