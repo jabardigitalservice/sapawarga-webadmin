@@ -4,83 +4,70 @@
       <el-col :span="24">
         <el-card class="box-card green body-nopadding">
           <div slot="header">
-            <span>Upload Data KRTS Non DTKS: {{ getTitle() }}</span>
+            <span>{{ `${ $t('label.beneficiaries-upload') } : ${ getTitle() }` }}</span>
           </div>
           <div class="text item card-description">
-            <p><strong>Pilih salah satu antara Kota/Kabupaten atau Kecamatan</strong></p>
-            <p>Sebelum melakukan upload file excel diharap memilih lokasi upload yang dituju.</p>
-          </div>
-        </el-card>
-        <el-card class="box-card">
-          <div class="text item">
-            <el-collapse v-model="activeName" accordion>
-              <el-collapse-item :title="`Alokasi ${ getTitle() } untuk ${user.kabkota.name}`" name="1">
-                <el-upload
-                  ref="upload"
-                  class="upload-demo"
-                  :multiple="false"
-                  :headers="{ Authorization: `Bearer ${ getToken() }` }"
-                  :data="{ type: type, kabkota_id: user.kabkota_id }"
-                  :action="`${url}bansos/upload`"
-                  :auto-upload="false"
-                  :on-success="onSuccess"
-                >
-                  <el-button slot="trigger" type="primary">Pilih Dokumen</el-button>
-                  <el-button style="margin-left: 10px;" type="success" @click="submitUpload">Kirim</el-button>
-                </el-upload>
-              </el-collapse-item>
-              <el-collapse-item :title="`Alokasi ${ getTitle() } Per Kecamatan`" name="2">
-                <div style="margin: 20px 0">
-                  <input-kecamatan @changeKecamatan="changeKecamatan" />
-                </div>
-                <el-upload
-                  ref="uploadKecamatan"
-                  class="upload-demo"
-                  :multiple="false"
-                  :headers="{ Authorization: `Bearer ${ getToken() }` }"
-                  :data="{ type: type, kabkota_id: user.kabkota_id, kec_id: kecId }"
-                  :action="`${url}bansos/upload`"
-                  :auto-upload="false"
-                  :on-success="onSuccess"
-                >
-                  <el-button slot="trigger" type="primary">Pilih Dokumen</el-button>
-                  <el-button style="margin-left: 10px;" type="success" @click="submitUploadKecamatan">Kirim</el-button>
-                </el-upload>
-              </el-collapse-item>
-            </el-collapse>
+            <p><strong><i class="el-icon-info" /> {{ $t('label.beneficiaries-upload-option') }}</strong></p>
+            <p>{{ $t('label.beneficiaries-upload-info') }}</p>
           </div>
         </el-card>
       </el-col>
     </el-row>
+    <el-card class="box-card">
+      <el-row :gutter="40" class="panel-group">
+        <el-col :xs="12" :sm="12" :lg="12" class="card-panel-col">
+          <div class="card-panel-default" @click="switchComponent('uploadFormCity')">
+            <el-row>
+              <el-col :span="24">
+                <div class="card-panel-text">
+                  {{ `Alokasi ${ getTitle() } untuk ${user.kabkota.name}` }}
+                </div>
+              </el-col>
+            </el-row>
+          </div>
+        </el-col>
+        <el-col :xs="12" :sm="12" :lg="12" class="card-panel-col">
+          <div class="card-panel-default" @click="switchComponent('uploadFormSubdistrict')">
+            <el-row>
+              <el-col :span="24">
+                <div class="card-panel-text">
+                  {{ `Alokasi ${ getTitle() } Per Kecamatan` }}
+                </div>
+              </el-col>
+            </el-row>
+          </div>
+        </el-col>
+      </el-row>
+      <form-upload-sub-district v-if="isSubdistrictComponent" />
+      <form-upload-city v-if="isCityComponent" />
+    </el-card>
   </div>
 </template>
 
 <script>
-import { getToken } from '@/utils/auth'
 import { mapGetters } from 'vuex'
-import InputKecamatan from '@/components/InputKec'
+
+import FormUploadSubDistrict from './components/FormUploadSubDistrict'
+import FormUploadCity from './components/FormUploadCity'
 
 export default {
-  components: { InputKecamatan },
-
+  components: {
+    FormUploadSubDistrict,
+    FormUploadCity
+  },
   data() {
     return {
       type: this.$route.query.type,
-      activeName: '1',
-      url: process.env.VUE_APP_BASE_API,
-      kecId: null
+      isCityComponent: false,
+      isSubdistrictComponent: false
     }
   },
-
   computed: {
     ...mapGetters([
       'user'
     ])
   },
-
   methods: {
-    getToken,
-
     getTitle() {
       switch (this.type) {
         case '1':
@@ -97,25 +84,58 @@ export default {
           return 'N/A'
       }
     },
+    switchComponent(component) {
+      if (component === 'uploadFormCity') {
+        this.isCityComponent = true
+        this.isSubdistrictComponent = false
+      }
 
-    submitUpload() {
-      this.$refs.upload.submit()
-    },
+      if (component === 'uploadFormSubdistrict') {
+        this.isSubdistrictComponent = true
+        this.isCityComponent = false
+      }
 
-    submitUploadKecamatan() {
-      this.$refs.uploadKecamatan.submit()
-    },
-
-    changeKecamatan(value) {
-      console.log(value)
-      this.kecId = value
-    },
-
-    onSuccess(response, file, fileList) {
-      this.$message.success('Dokumen berhasil dikirim.')
-
-      this.$router.push('/bansos/upload')
+      if (component === 'uploadFormVillage') {
+        this.isSubdistrictComponent = false
+        this.isCityComponent = false
+      }
     }
   }
 }
 </script>
+
+<style rel="stylesheet/scss" lang="scss" scoped>
+.panel-group {
+  margin-top: 18px;
+  text-align: center;
+  .card-panel-col {
+    margin-bottom: 32px;
+  }
+  .card-panel-default {
+    height: 80px;
+    cursor: pointer;
+    font-size: 12px;
+    position: relative;
+    overflow: hidden;
+    color: #666;
+    background: #fff;
+    box-shadow: 4px 4px 40px rgba(0, 0, 0, 0.05);
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #f4f4f5;
+    border: 1px solid #e9e9eb;
+
+  }
+  .card-panel-text {
+    line-height: 18px;
+    color: rgba(0, 0, 0, 0.45);
+    font-size: 14px;
+    font-weight: bold;
+    margin-top:10px;
+    margin-bottom:10px;
+  }
+  .el-card {
+    margin-bottom: 10px !important;
+  }
+}
+</style>

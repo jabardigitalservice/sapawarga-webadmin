@@ -4,11 +4,11 @@
       <el-col :span="24">
         <el-card class="box-card green body-nopadding">
           <div slot="header">
-            <span>Upload Data KRTS Non DTKS</span>
+            <span>{{ $t('label.beneficiaries-upload') }}</span>
           </div>
           <div class="text item card-description">
-            <p><strong>Pilih pintu bantuan untuk upload KRTS</strong></p>
-            <p>Sebelum melakukan upload Data KRTD Non DTKS, diharapkan data dipecah berdasarkan alokasi sesuai pintu bantuan. Untuk melakukan upload data, pilih pintu bantuan yang akan di upload.</p>
+            <p><strong><i class="el-icon-info" /> {{ $t('label.beneficiaries-upload-option') }}</strong></p>
+            <p>{{ $t('label.beneficiaries-upload-info') }}</p>
           </div>
         </el-card>
       </el-col>
@@ -46,34 +46,29 @@
         </router-link>
       </el-col>
     </el-row>
-
     <el-row style="margin-top: 50px">
       <el-col :span="24">
         <el-card class="box-card green">
           <div slot="header">
-            <span>Daftar Riwayat Upload Data KRTS Non DTKS</span>
+            <span>{{ $t('label.beneficiaries-upload-history') }}</span>
           </div>
           <div class="text item">
-            <el-table
-              :data="tableData"
-              border
-              style="width: 100%"
-            >
-              <el-table-column
-                prop="date"
-                label="Tanggal Upload"
-                width="180"
-              />
-              <el-table-column
-                prop="name"
-                label="Jenis Pintu Bantuan"
-                width="250"
-              />
-              <el-table-column
-                prop="target"
-                label="Target Upload"
-              />
+            <el-table v-loading="listLoading" :data="list" stripe fit highlight-current-row style="width: 100%">
+              <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
+              <el-table-column prop="pintu_bantuan" sortable="custom" :label="$t('label.beneficiaries')" />
+              <el-table-column prop="status_upload" sortable="custom" :label="$t('label.beneficiaries-upload-status')" />
+              <el-table-column prop="tanggal_upload" sortable="custom" :label="$t('label.beneficiaries-upload-date')" />
+              <el-table-column align="center" :label="$t('label.actions')" width="200">
+                <template>
+                  <router-link :to="'#'">
+                    <el-tooltip :content="$t('label.beneficiaries-upload-view')" placement="top">
+                      <el-button type="primary" icon="el-icon-view" size="mini" />
+                    </el-tooltip>
+                  </router-link>
+                </template>
+              </el-table-column>
             </el-table>
+            <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
           </div>
         </el-card>
       </el-col>
@@ -82,27 +77,42 @@
 </template>
 
 <script>
+import Pagination from '@/components/Pagination'
 export default {
+  components: { Pagination },
   data() {
     return {
-      tableData: [{
-        date: '2020-04-03 18:00:00',
-        name: 'Bantuan Sosial Provinsi',
-        target: 'KOTA BANDUNG'
-      }, {
-        date: '2020-04-03 18:00:00',
-        name: 'Bantuan Sosial Provinsi',
-        target: 'KOTA BANDUNG'
-      }, {
-        date: '2020-04-03 18:00:00',
-        name: 'Bantuan Sosial Provinsi',
-        target: 'KOTA BANDUNG'
-      }, {
-        date: '2020-04-03 18:00:00',
-        name: 'Bantuan Sosial Provinsi',
-        target: 'KOTA BANDUNG'
-      }]
+      list: null,
+      listLoading: true,
+      total: 0,
+      listQuery: {
+        page: 1,
+        limit: 10
+      }
+    }
+  },
+  created() {
+    this.getList()
+  },
+  methods: {
+    getList() {
+      this.listLoading = true
+      this.list = [
+        { pintu_bantuan: 'Bantuan Sosial Provinsi', status_upload: 'KAB BANDUNG', tanggal_upload: '29 April 2020' },
+        { pintu_bantuan: 'Bantuan Sosial Kota / Kabupaten', status_upload: 'KAB BANDUNG BARAT', tanggal_upload: '29 April 2020' }
+      ]
+      this.listLoading = false
+    },
+    getTableRowNumbering(index) {
+      return ((this.listQuery.page - 1) * this.listQuery.limit) + (index + 1)
     }
   }
 }
 </script>
+
+<style rel="stylesheet/scss" lang="scss" scoped>
+.img-bansos {
+  width: 100%;
+  margin-top:10px;
+}
+</style>
