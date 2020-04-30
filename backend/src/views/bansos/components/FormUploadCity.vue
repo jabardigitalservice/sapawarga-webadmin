@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container">
+  <div v-loading="loading" class="app-container">
     <el-row>
       <el-col :span="24">
         <span class="head-title">
@@ -22,7 +22,7 @@
         </el-upload>
       </el-col>
       <el-col :span="12">
-        <el-button type="primary" @click="submitUpload">Upload<i class="el-icon-upload el-icon-right"></i></el-button>
+        <el-button type="primary" @click="submitUpload">Upload<i class="el-icon-upload el-icon-right" /></el-button>
       </el-col>
     </el-row>
   </div>
@@ -37,6 +37,7 @@ export default {
   name: 'FormUploadCity',
   data() {
     return {
+      loading: false,
       file: null
     }
   },
@@ -47,27 +48,35 @@ export default {
   },
   methods: {
     async submitUpload() {
-      try{
-        const formData = new FormData();
-        formData.append('type', this.$route.query.type);
-        formData.append('kabkota_id', this.user.kabkota_id);
-        formData.append('file', this.file);
-        
-        await uploadBansos(formData)
+      try {
+        this.loading = true
 
+        const formData = new FormData()
+        formData.append('type', this.$route.query.type)
+        formData.append('kabkota_id', this.user.kabkota_id)
+        formData.append('file', this.file)
+        await uploadBansos(formData)
         Swal.fire({
           text: 'Dokumen berhasil dikirim',
-          icon: "success",
-          button: "OK",
+          icon: 'success',
+          button: 'OK'
         }).then((action) => {
           if (action) {
             this.$router.push('/bansos/upload')
-          } 
+          }
         })
 
+        this.loading = false
       } catch (err) {
-        console.log(err)
-        return err;
+        this.loading = false
+        if (err.response.status === 422) {
+          Swal.fire({
+            text: err.response.data.data.file[0],
+            icon: 'error',
+            button: 'OK'
+          })
+        }
+        return err
       }
     },
     handleChangeFile(file) {

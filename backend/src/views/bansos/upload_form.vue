@@ -57,7 +57,6 @@
 </template>
 
 <script>
-import { getToken } from '@/utils/auth'
 import { mapGetters } from 'vuex'
 
 import FormUploadSubDistrict from './components/FormUploadSubDistrict'
