@@ -114,20 +114,6 @@
       </div>
       <Preview :beneficiaries.sync="beneficiaries" @nextStep="onClickNextChild" />
     </el-card>
-    <el-dialog
-      :visible.sync="dialogVisible"
-      width="50%"
-      center
-    >
-      <span slot="title" class="dialog-title">Sampurasun, Wargi Jabar!</span>
-      <p class="dialog-content">Sehubungan dengan berakhirnya proses verifikasi dan validasi bansos Non DTKS Sapawarga pada periode pertama di bulan April, atas permintaan Pemerintah Kabupaten Sumedang melalui sekretaris Daerah, maka fitur verifikasi dan validasi bansos Non DTKS Sapawarga akan kami <b>tutup sementara.</b> Fitur akan kami buka kembali menjelang proses verifikasi dan validasi bansos Non DTKS Sapawarga pada periode kedua bulan Mei. Tanggal pembukaan kembali fitur akan kami umumkan segera.
-      </p>
-      <p class="dialog-content">Terima kasih telah saling membantu wargi Jabar yang membutuhkan dengan melakukan proses verifikasi dan validasi menggunakan aplikasi Sapawarga.</p>
-      <p>Tim Sapawarga</p>
-      <span slot="footer" class="dialog-footer">
-        <el-button type="success" @click="accessBlock">Tutup</el-button>
-      </span>
-    </el-dialog>
   </div>
 </template>
 
@@ -212,19 +198,12 @@ export default {
     ...mapGetters(['user'])
   },
   async created() {
-    if (this.user.kabkota.code_bps === '3211') {
-      this.dialogVisible = true
-    }
     if (!this.isCreate) {
       const id = await this.$route.params && this.$route.params.id
       await this.getDetail(id)
     }
   },
   methods: {
-    accessBlock() {
-      this.dialogVisible = false
-      this.$router.push('/beneficiaries/index')
-    },
     getDetail(id) {
       fetchRecord(id).then(response => {
         this.beneficiaries = response.data
@@ -259,16 +238,5 @@ export default {
     background-color: #F8F8F9;
     margin: 35px -20px !important;
     padding: 10px 0;
-  }
-  .dialog-title {
-    font-weight: bold;
-    text-align: left;
-    font-size: 22px;
-    float: left;
-    padding: 10px;
-  }
-  .dialog-content {
-    font-size: 16px;
-    line-height: 25px;
   }
 </style>
