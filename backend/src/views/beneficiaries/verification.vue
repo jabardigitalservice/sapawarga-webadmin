@@ -189,8 +189,6 @@ export default {
         notes_rejected: null,
         rejected: null,
         notes_nik_empty: null
-      },
-      rules: {
       }
     }
   },
