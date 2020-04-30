@@ -22,7 +22,14 @@
 
           <el-table-column prop="name" sortable="custom" :label="$t('label.beneficiaries-name')" min-width="200px" />
 
-          <el-table-column prop="nik" sortable="custom" :label="$t('label.beneficiaries-nik')" min-width="175px" />
+          <el-table-column prop="nik" sortable="custom" :label="$t('label.beneficiaries-nik')" min-width="175px" >
+            <template slot-scope="{row}">
+              {{ row.nik }}
+              <div v-if="row.is_nik_valid === 0" slot="reference" class="name-wrapper">
+                <el-tag size="medium" type="danger">Format NIK tidak sesuai</el-tag>
+              </div>
+            </template>
+          </el-table-column>
 
           <el-table-column prop="domicile_rw" sortable="custom" align="center" :label="$t('label.beneficiaries-rw')" min-width="70px" />
 
