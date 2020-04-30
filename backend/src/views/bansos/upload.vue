@@ -1,53 +1,78 @@
 <template>
   <div class="app-container">
-    <el-card class="box-card" :body-style="{ background: '#fff8e6' }">
-      <div slot="header">
-        <span>{{ $t('label.beneficiaries-upload') }}</span>
-      </div>
-      <div class="text item">
-        <p><strong><i class="el-icon-info" /> {{ $t('label.beneficiaries-upload-option') }}</strong></p>
-        <p>{{ $t('label.beneficiaries-upload-info') }}</p>
-      </div>
-    </el-card>
-    <el-card class="box-card">
-      <router-link to="/bansos/upload-form?type=1">
-        <img src="@/assets/bansos-provinsi.svg" class="img-bansos">
-      </router-link>
-      <router-link to="/bansos/upload-form?type=2">
-        <img src="@/assets/bansos-kabupaten.svg" class="img-bansos">
-      </router-link>
-      <router-link to="/bansos/upload-form?type=3">
-        <img src="@/assets/bansos-desa.svg" class="img-bansos">
-      </router-link>
-      <router-link to="/bansos/upload-form?type=4">
-        <img src="@/assets/bansos-presiden.svg" class="img-bansos">
-      </router-link>
-      <router-link to="/bansos/upload-form?type=5">
-        <img src="@/assets/bansos-kemensos.svg" class="img-bansos">
-      </router-link>
-    </el-card>
-    <br>
-    <el-card class="box-card">
-      <div slot="header" class="clearfix">
-        <span>{{ $t('label.beneficiaries-upload-history') }}</span>
-      </div>
-      <el-table v-loading="listLoading" :data="list" stripe fit highlight-current-row style="width: 100%">
-        <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
-        <el-table-column prop="pintu_bantuan" sortable="custom" :label="$t('label.beneficiaries')" />
-        <el-table-column prop="status_upload" sortable="custom" :label="$t('label.beneficiaries-upload-status')" />
-        <el-table-column prop="tanggal_upload" sortable="custom" :label="$t('label.beneficiaries-upload-date')" />
-        <el-table-column align="center" :label="$t('label.actions')" width="200">
-          <template>
-            <router-link :to="'#'">
-              <el-tooltip :content="$t('label.beneficiaries-upload-view')" placement="top">
-                <el-button type="primary" icon="el-icon-view" size="mini" />
-              </el-tooltip>
-            </router-link>
-          </template>
-        </el-table-column>
-      </el-table>
-      <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
-    </el-card>
+    <el-row>
+      <el-col :span="24">
+        <el-card class="box-card green body-nopadding">
+          <div slot="header">
+            <span>{{ $t('label.beneficiaries-upload') }}</span>
+          </div>
+          <div class="text item card-description">
+            <p><strong><i class="el-icon-info" /> {{ $t('label.beneficiaries-upload-option') }}</strong></p>
+            <p>{{ $t('label.beneficiaries-upload-info') }}</p>
+          </div>
+        </el-card>
+      </el-col>
+    </el-row>
+    <el-row>
+      <el-col :span="24">
+        <router-link to="/bansos/upload-form?type=1">
+          <el-card class="box-card">
+            <p style="margin:0; font-weight: bold"><img src="@/assets/bansos-type.png" style="vertical-align: middle; margin-right: 15px">Bantuan Sosial Provinsi</p>
+          </el-card>
+        </router-link>
+
+        <router-link to="/bansos/upload-form?type=2">
+          <el-card class="box-card">
+            <p style="margin:0; font-weight: bold"><img src="@/assets/bansos-type.png" style="vertical-align: middle; margin-right: 15px">Bantuan Sosial Kota / Kabupaten</p>
+          </el-card>
+        </router-link>
+
+        <router-link to="/bansos/upload-form?type=3">
+          <el-card class="box-card">
+            <p style="margin:0; font-weight: bold"><img src="@/assets/bansos-type.png" style="vertical-align: middle; margin-right: 15px">Bantuan Dana Desa</p>
+          </el-card>
+        </router-link>
+
+        <router-link to="/bansos/upload-form?type=4">
+          <el-card class="box-card">
+            <p style="margin:0; font-weight: bold"><img src="@/assets/bansos-type.png" style="vertical-align: middle; margin-right: 15px">Bantuan Sosial Presiden Sembako (Bodebek)</p>
+          </el-card>
+        </router-link>
+
+        <router-link to="/bansos/upload-form?type=5">
+          <el-card class="box-card">
+            <p style="margin:0; font-weight: bold"><img src="@/assets/bansos-type.png" style="vertical-align: middle; margin-right: 15px">Bantuan Sosial Tunai Kemensos</p>
+          </el-card>
+        </router-link>
+      </el-col>
+    </el-row>
+    <el-row style="margin-top: 50px">
+      <el-col :span="24">
+        <el-card class="box-card green">
+          <div slot="header">
+            <span>{{ $t('label.beneficiaries-upload-history') }}</span>
+          </div>
+          <div class="text item">
+            <el-table v-loading="listLoading" :data="list" stripe fit highlight-current-row style="width: 100%">
+              <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
+              <el-table-column prop="pintu_bantuan" sortable="custom" :label="$t('label.beneficiaries')" />
+              <el-table-column prop="status_upload" sortable="custom" :label="$t('label.beneficiaries-upload-status')" />
+              <el-table-column prop="tanggal_upload" sortable="custom" :label="$t('label.beneficiaries-upload-date')" />
+              <el-table-column align="center" :label="$t('label.actions')" width="200">
+                <template>
+                  <router-link :to="'#'">
+                    <el-tooltip :content="$t('label.beneficiaries-upload-view')" placement="top">
+                      <el-button type="primary" icon="el-icon-view" size="mini" />
+                    </el-tooltip>
+                  </router-link>
+                </template>
+              </el-table-column>
+            </el-table>
+            <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
+          </div>
+        </el-card>
+      </el-col>
+    </el-row>
   </div>
 </template>
 

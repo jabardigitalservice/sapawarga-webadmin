@@ -1,14 +1,18 @@
 <template>
   <div class="app-container">
-    <el-card class="box-card" :body-style="{ background: '#fff8e6' }">
-      <div slot="header">
-        <span>{{ $t('label.beneficiaries-upload') }}</span>
-      </div>
-      <div class="text item">
-        <p><strong><i class="el-icon-info" /> {{ $t('label.beneficiaries-upload-option') }}</strong></p>
-        <p>{{ $t('label.beneficiaries-upload-info') }}</p>
-      </div>
-    </el-card>
+    <el-row>
+      <el-col :span="24">
+        <el-card class="box-card green body-nopadding">
+          <div slot="header">
+            <span>{{ $t('label.beneficiaries-upload') }}</span>
+          </div>
+          <div class="text item card-description">
+            <p><strong><i class="el-icon-info" /> {{ $t('label.beneficiaries-upload-option') }}</strong></p>
+            <p>{{ $t('label.beneficiaries-upload-info') }}</p>
+          </div>
+        </el-card>
+      </el-col>
+    </el-row>
     <el-card class="box-card">
       <el-row :gutter="40" class="panel-group">
         <el-col :xs="12" :sm="12" :lg="8" class="card-panel-col">
