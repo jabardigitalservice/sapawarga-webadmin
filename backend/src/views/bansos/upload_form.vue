@@ -49,23 +49,23 @@
           </div>
         </el-col>
       </el-row>
-      <upload-form-subdistrict v-if="isSubdistrictComponent" />
-      <upload-form-city v-if="isCityComponent" />
-      <upload-form-village v-if="isVillageComponent" />
+      <form-upload-sub-district v-if="isSubdistrictComponent" />
+      <form-upload-city v-if="isCityComponent" />
+      <form-upload-village v-if="isVillageComponent" />
     </el-card>
   </div>
 </template>
 
 <script>
-import UploadFormSubdistrict from './components/UploadFormSubdistrict'
-import UploadFormCity from './components/UploadFormCity'
-import UploadFormVillage from './components/UploadFormVillage'
+import FormUploadSubDistrict from './components/FormUploadSubDistrict'
+import FormUploadCity from './components/FormUploadCity'
+import FormUploadVillage from './components/FormUploadVillage'
 
 export default {
   components: {
-    UploadFormSubdistrict,
-    UploadFormCity,
-    UploadFormVillage
+    FormUploadSubDistrict,
+    FormUploadCity,
+    FormUploadVillage
   },
   data() {
     return {

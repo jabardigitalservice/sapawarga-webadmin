@@ -3,17 +3,17 @@
     <el-row>
       <el-col :span="24">
         <span class="head-title">
-          <b>{{ $t('label.area-kec') }}</b>
+          <b>{{ $t('label.area-kel') }}</b>
         </span>
       </el-col>
     </el-row>
     <br>
-    <el-row v-for="(data, index) in uploadFormSubdistrictList" :key="data.id" :gutter="40">
+    <el-row v-for="(data, index) in uploadFormVillageList" :key="data.id" :gutter="40">
       <el-col :span="1">
         <el-button type="text" style="color:#f56c6c" @click="handleDeleteForm(index)"><i class="el-icon-delete" /></el-button>
       </el-col>
       <el-col :span="12">
-        <el-select v-model="data.value" :placeholder="$t('label.choose-area-kec')" style="width:100%">
+        <el-select v-model="data.value" :placeholder="$t('label.choose-area-kel')" style="width:100%">
           <el-option
             v-for="item in options"
             :key="item.value"
@@ -43,19 +43,19 @@
 
 <script>
 export default {
-  name: 'UploadFormSubdistrict',
+  name: 'FormUploadVillage',
   data() {
     return {
       options: [{
-        value: 'antapani',
-        label: 'Antapani'
+        value: 'mekarsari',
+        label: 'Mekarsari'
       }, {
-        value: 'andir',
-        label: 'Andir'
+        value: 'sabandar',
+        label: 'Sabandar'
       }],
       value: '',
-      idUploadFormSubdistrict: 0,
-      uploadFormSubdistrictList: []
+      idUploadFormVillage: 0,
+      uploadFormVillageList: []
     }
   },
   created() {
@@ -63,13 +63,13 @@ export default {
   },
   methods: {
     handleAddFrom() {
-      this.idUploadFormSubdistrict = this.idUploadFormSubdistrict + 1
-      this.uploadFormSubdistrictList.push({
-        id: this.idUploadFormSubdistrict
+      this.idUploadFormVillage = this.idUploadFormVillage + 1
+      this.uploadFormVillageList.push({
+        id: this.idUploadFormVillage
       })
     },
     handleDeleteForm(index) {
-      this.uploadFormSubdistrictList.splice(index, 1)
+      this.uploadFormVillageList.splice(index, 1)
     }
   }
 }

@@ -35,7 +35,7 @@
 
 <script>
 export default {
-  name: 'UploadFormCity',
+  name: 'FormUploadCity',
   data() {
     return {
       options: [{
