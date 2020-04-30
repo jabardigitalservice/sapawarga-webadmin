@@ -9,7 +9,7 @@ import i18n from '@/lang'
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API, // api 的 base_url
   withCredentials: false, // 跨域请求时发送 cookies
-  timeout: 10000 // request timeout
+  timeout: 30000 // request timeout
 })
 
 // request interceptor
