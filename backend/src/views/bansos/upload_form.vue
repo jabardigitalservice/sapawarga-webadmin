@@ -15,7 +15,7 @@
     </el-row>
     <el-card class="box-card">
       <el-row :gutter="40" class="panel-group">
-        <el-col :xs="12" :sm="12" :lg="8" class="card-panel-col">
+        <el-col :xs="12" :sm="12" :lg="12" class="card-panel-col">
           <div class="card-panel-default" @click="switchComponent('uploadFormCity')">
             <el-row>
               <el-col :span="24">
@@ -26,7 +26,7 @@
             </el-row>
           </div>
         </el-col>
-        <el-col :xs="12" :sm="12" :lg="8" class="card-panel-col">
+        <el-col :xs="12" :sm="12" :lg="12" class="card-panel-col">
           <div class="card-panel-default" @click="switchComponent('uploadFormSubdistrict')">
             <el-row>
               <el-col :span="24">
@@ -37,21 +37,9 @@
             </el-row>
           </div>
         </el-col>
-        <el-col :xs="12" :sm="12" :lg="8" class="card-panel-col">
-          <div class="card-panel-default" @click="switchComponent('uploadFormVillage')">
-            <el-row>
-              <el-col :span="24">
-                <div class="card-panel-text">
-                  {{ $t('label.beneficiaries-upload-village') }}
-                </div>
-              </el-col>
-            </el-row>
-          </div>
-        </el-col>
       </el-row>
       <form-upload-sub-district v-if="isSubdistrictComponent" />
       <form-upload-city v-if="isCityComponent" />
-      <form-upload-village v-if="isVillageComponent" />
     </el-card>
   </div>
 </template>
@@ -61,20 +49,17 @@ import { mapGetters } from 'vuex'
 
 import FormUploadSubDistrict from './components/FormUploadSubDistrict'
 import FormUploadCity from './components/FormUploadCity'
-import FormUploadVillage from './components/FormUploadVillage'
 
 export default {
   components: {
     FormUploadSubDistrict,
-    FormUploadCity,
-    FormUploadVillage
+    FormUploadCity
   },
   data() {
     return {
       type: this.$route.query.type,
       isCityComponent: false,
-      isSubdistrictComponent: false,
-      isVillageComponent: false
+      isSubdistrictComponent: false
     }
   },
   computed: {
@@ -103,19 +88,16 @@ export default {
       if (component === 'uploadFormCity') {
         this.isCityComponent = true
         this.isSubdistrictComponent = false
-        this.isVillageComponent = false
       }
 
       if (component === 'uploadFormSubdistrict') {
         this.isSubdistrictComponent = true
         this.isCityComponent = false
-        this.isVillageComponent = false
       }
 
       if (component === 'uploadFormVillage') {
         this.isSubdistrictComponent = false
         this.isCityComponent = false
-        this.isVillageComponent = false
       }
     }
   }
