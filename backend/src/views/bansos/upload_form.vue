@@ -4,7 +4,7 @@
       <el-col :span="24">
         <el-card class="box-card green body-nopadding">
           <div slot="header">
-            <span>{{ $t('label.beneficiaries-upload') }}</span>
+            <span>{{ `${ $t('label.beneficiaries-upload') } : ${ getTitle() }` }}</span>
           </div>
           <div class="text item card-description">
             <p><strong><i class="el-icon-info" /> {{ $t('label.beneficiaries-upload-option') }}</strong></p>
@@ -20,7 +20,7 @@
             <el-row>
               <el-col :span="24">
                 <div class="card-panel-text">
-                  {{ $t('label.beneficiaries-upload-city') }}
+                  {{ `Alokasi ${ getTitle() } untuk ${user.kabkota.name}` }}
                 </div>
               </el-col>
             </el-row>
@@ -31,7 +31,7 @@
             <el-row>
               <el-col :span="24">
                 <div class="card-panel-text">
-                  {{ $t('label.beneficiaries-upload-subdistrict') }}
+                  {{ `Alokasi ${ getTitle() } Per Kecamatan` }}
                 </div>
               </el-col>
             </el-row>
@@ -57,6 +57,9 @@
 </template>
 
 <script>
+import { getToken } from '@/utils/auth'
+import { mapGetters } from 'vuex'
+
 import FormUploadSubDistrict from './components/FormUploadSubDistrict'
 import FormUploadCity from './components/FormUploadCity'
 import FormUploadVillage from './components/FormUploadVillage'
@@ -69,12 +72,34 @@ export default {
   },
   data() {
     return {
+      type: this.$route.query.type,
       isCityComponent: false,
       isSubdistrictComponent: false,
       isVillageComponent: false
     }
   },
+  computed: {
+    ...mapGetters([
+      'user'
+    ])
+  },
   methods: {
+    getTitle() {
+      switch (this.type) {
+        case '1':
+          return 'Bantuan Sosial Provinsi'
+        case '2':
+          return 'Bantuan Sosial Kota/Kabupaten'
+        case '3':
+          return 'Bantuan Dana Desa'
+        case '4':
+          return 'Bantuan Sosial Presiden Sembako (Bodebek)'
+        case '5':
+          return 'Bantuan Sosial Tunai Kemensos'
+        default:
+          return 'N/A'
+      }
+    },
     switchComponent(component) {
       if (component === 'uploadFormCity') {
         this.isCityComponent = true
@@ -91,7 +116,7 @@ export default {
       if (component === 'uploadFormVillage') {
         this.isSubdistrictComponent = false
         this.isCityComponent = false
-        this.isVillageComponent = true
+        this.isVillageComponent = false
       }
     }
   }

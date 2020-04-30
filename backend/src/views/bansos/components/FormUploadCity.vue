@@ -10,42 +10,68 @@
     <br>
     <el-row :gutter="40">
       <el-col :span="12">
-        <el-select v-model="value" :placeholder="$t('label.choose-area-kabkota')" style="width:100%">
-          <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          />
-        </el-select>
-      </el-col>
-      <el-col :span="12">
         <el-upload
           drag
-          action="https://jsonplaceholder.typicode.com/posts/"
           :multiple="false"
           :limit="1"
+          action=""
+          :auto-upload="false"
+          :on-change="handleChangeFile"
         >
           <div class="el-upload__text"><i class="el-icon-upload" /><em> Add File </em>or drop files here</div>
         </el-upload>
+      </el-col>
+      <el-col :span="12">
+        <el-button type="primary" @click="submitUpload">Upload<i class="el-icon-upload el-icon-right"></i></el-button>
       </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
+import { uploadBansos } from '@/api/bansos'
+import { mapGetters } from 'vuex'
+import Swal from 'sweetalert2'
+
 export default {
   name: 'FormUploadCity',
   data() {
     return {
-      options: [{
-        value: 'cianjur',
-        label: 'KAB. CIANJUR'
-      }, {
-        value: 'cirebon',
-        label: 'KAB. CIREBON'
-      }],
-      value: ''
+      file: null
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'user'
+    ])
+  },
+  methods: {
+    async submitUpload() {
+      try{
+        const formData = new FormData();
+        formData.append('type', this.$route.query.type);
+        formData.append('kabkota_id', this.user.kabkota_id);
+        formData.append('file', this.file);
+        
+        await uploadBansos(formData)
+
+        Swal.fire({
+          text: 'Dokumen berhasil dikirim',
+          icon: "success",
+          button: "OK",
+        }).then((action) => {
+          if (action) {
+            this.$router.push('/bansos/upload')
+          } 
+        })
+
+      } catch (err) {
+        console.log(err)
+        return err;
+      }
+    },
+    handleChangeFile(file) {
+      this.file = file.raw
     }
   }
 }
