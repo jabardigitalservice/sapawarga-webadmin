@@ -161,6 +161,8 @@ export default {
       this.colsWidht = 12
     } else if (checkPermission([this.RolesUser.STAFFKEC])) {
       this.colsWidht = 24
+    } else if (checkPermission([this.RolesUser.STAFFKEL])) {
+      this.colsWidht = 0
     }
     this.init()
   },
