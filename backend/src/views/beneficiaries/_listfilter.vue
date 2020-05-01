@@ -27,7 +27,7 @@
             </el-select>
           </el-form-item>
         </el-col>
-        <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="7">
+        <el-col v-if="!roles" :xs="{span:24, tag:'mb-10'}" :sm="24" :md="7">
           <input-filter-area-bps
             :parent-id="filterAreaParentId"
             :kabkota-id="listQuery.domicile_kabkota_bps_id"
