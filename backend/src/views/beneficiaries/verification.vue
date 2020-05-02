@@ -126,6 +126,7 @@ import FormIncome from './components/FormIncome'
 import FormUpload from './components/FormUpload'
 import Preview from './components/Preview'
 import { fetchRecord } from '@/api/beneficiaries'
+import { mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -147,6 +148,7 @@ export default {
     return {
       active: 1,
       preview: false,
+      dialogVisible: false,
       beneficiaries: {
         nik: null,
         name: null,
@@ -187,10 +189,11 @@ export default {
         notes_rejected: null,
         rejected: null,
         notes_nik_empty: null
-      },
-      rules: {
       }
     }
+  },
+  computed: {
+    ...mapGetters(['user'])
   },
   async created() {
     if (!this.isCreate) {

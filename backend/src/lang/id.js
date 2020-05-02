@@ -888,7 +888,16 @@ export default {
     'beneficiaries-total-family': 'Jumlah Anggota Keluarga',
     'beneficiaries-job': 'Pekerjaan',
     'beneficiaries-image-ktp': 'Foto KTP',
-    'beneficiaries-image-kk': 'Foto Kepala Keluarga'
+    'beneficiaries-image-kk': 'Foto Kepala Keluarga',
+
+    'beneficiaries-upload': 'Upload Data KRTS Non DTKS',
+    'beneficiaries-upload-history': 'Daftar Riwayat Upload Data KRTS Non DTKS',
+    'beneficiaries': 'Pintu Bantuan',
+    'beneficiaries-upload-status': 'Status Upload',
+    'beneficiaries-upload-date': 'Tanggal Upload',
+    'beneficiaries-upload-view': 'Lihat',
+    'beneficiaries-upload-option': 'Pilih pintu bantuan untuk upload KRTS',
+    'beneficiaries-upload-info': 'Sebelum melakukan upload Data KRTD Non DTKS, diharapkan data dipecah berdasarkan alokasi sesuai pintu bantuan. Untuk melakukan upload data, pilih pintu bantuan yang akan di upload.'
   },
   news: {
     'news-url': 'URL Berita',
