@@ -7,11 +7,21 @@ const bansosMenuRouter = {
   redirect: 'noredirect',
   meta: {
     title: 'bansos-menu',
-    roles: ['admin', 'staffProv', 'staffKabkota'],
-    icon: 'news'
+    roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel'],
+    icon: 'example'
   },
   active: false,
   children: [
+    {
+      name: 'beneficiaries-manage',
+      path: '/beneficiaries/index',
+      component: () => import('@/views/beneficiaries/list'),
+      hidden: false,
+      meta: {
+        title: 'beneficiaries-manage',
+        roles: ['admin', 'staffKel', 'staffKabkota', 'staffKec']
+      }
+    },
     {
       name: 'bansos-download',
       path: '/bansos/download',
@@ -37,6 +47,47 @@ const bansosMenuRouter = {
       hidden: true,
       meta: {
         roles: ['admin', 'staffProv', 'staffKabkota']
+      }
+    },
+    {
+      name: 'beneficiaries-create',
+      path: '/beneficiaries/create',
+      component: () => import('@/views/beneficiaries/create'),
+      hidden: true,
+      meta: {
+        title: 'beneficiaries-create',
+        roles: ['admin', 'staffKel']
+      }
+    },
+    {
+      path: '/beneficiaries/edit/:id(\\d+)',
+      component: () => import('@/views/beneficiaries/edit'),
+      name: 'beneficiaries-edit',
+      hidden: true,
+      meta: {
+        title: 'beneficiaries-edit',
+        noCache: true,
+        roles: ['admin', 'staffKel']
+      }
+    },
+    {
+      name: 'beneficiaries-detail',
+      path: '/beneficiaries/detail/:id',
+      component: () => import('@/views/beneficiaries/detail'),
+      hidden: true,
+      meta: {
+        title: 'beneficiaries-detail',
+        roles: ['admin', 'staffKel']
+      }
+    },
+    {
+      name: 'beneficiaries-verification',
+      path: '/beneficiaries/verification/:id',
+      component: () => import('@/views/beneficiaries/verification'),
+      hidden: true,
+      meta: {
+        title: 'beneficiaries-verification',
+        roles: ['admin', 'staffKel']
       }
     }
   ]
