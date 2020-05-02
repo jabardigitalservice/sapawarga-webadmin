@@ -19,7 +19,7 @@ const bansosMenuRouter = {
       hidden: false,
       meta: {
         title: 'beneficiaries-manage',
-        roles: ['admin', 'staffKel', 'staffKabkota', 'staffKec']
+        roles: ['admin', 'staffKel']
       }
     },
     {
