@@ -73,7 +73,7 @@ const bansosMenuRouter = {
     {
       name: 'beneficiaries-detail',
       path: '/beneficiaries/detail/:id',
-      component: () => import('@/views/beneficiaries/detail'),
+      component: () => import('@/views/beneficiaries/components/Preview'),
       hidden: true,
       meta: {
         title: 'beneficiaries-detail',
