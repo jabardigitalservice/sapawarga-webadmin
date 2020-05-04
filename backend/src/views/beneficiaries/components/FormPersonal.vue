@@ -10,20 +10,26 @@
       :model="beneficiaries"
       :rules="rules"
       :status-icon="true"
-      label-width="150px"
+      label-width="250px"
       label-position="left"
     >
-      <el-form-item v-if="isCreate" label="NIK" prop="nik">
+      <el-form-item v-if="isCreate" label="Apakah warga ini memiliki NIK/Nomor KTP?" prop="is_have_ktp">
+        <el-radio-group v-model="beneficiaries.is_have_ktp">
+          <el-radio class="label-check" :label="1">Ya</el-radio>
+          <el-radio class="label-check" :label="0">Tidak punya</el-radio>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item v-if="isCreate && beneficiaries.is_have_ktp === 1" label="NIK" prop="nik">
         <el-input v-model="beneficiaries.nik" type="number" placeholder="NIK" :disabled="disableField" />
       </el-form-item>
       <el-form-item v-if="!isCreate" label="NIK">
         <el-input v-model="beneficiaries.nik" type="number" placeholder="NIK" :disabled="disableField" />
       </el-form-item>
-      <!-- <el-form-item v-if="isAutomatedNik" class="button-search-nik">
-        <el-button class="button-action" type="primary" @click="getNik(beneficiaries.nik)">{{ this.$t('crud.serach-nik') }}</el-button>
-      </el-form-item> -->
-      <el-form-item label="Nama" prop="name">
+      <el-form-item label="Nama Lengkap" prop="name">
         <el-input v-model="beneficiaries.name" placeholder="Nama Lengkap" :disabled="disableField" />
+      </el-form-item>
+      <el-form-item v-if="isCreate && beneficiaries.is_have_ktp === 0" label="Alasan tidak punya NIK/Nomor KTP" prop="notes_nik_empty">
+        <el-input v-model="beneficiaries.notes_nik_empty" type="textarea" rows="3" placeholder="Alasan tidak punya KTP" />
       </el-form-item>
       <el-form-item v-if="isAutomatedNik && isCreate" label="Provinsi" prop="province_bps_id">
         <el-select v-model="beneficiaries.province_bps_id" style="width:100%" :disabled="disableField">
@@ -135,24 +141,24 @@ export default {
           {
             required: true,
             message: 'Nama harus diisi',
-            trigger: 'blur'
+            trigger: 'input'
           }
         ],
         nik: [
           {
             required: true,
             message: 'NIK harus diisi',
-            trigger: 'blur'
+            trigger: 'input'
           },
           {
             min: 16,
             message: 'NIK harus 16 karakter',
-            trigger: 'blur'
+            trigger: 'input'
           },
           {
             max: 16,
             message: 'NIK harus 16 karakter',
-            trigger: 'blur'
+            trigger: 'input'
           }
         ],
         province_bps_id: [
@@ -232,6 +238,13 @@ export default {
             message: 'RT harus diisi',
             trigger: 'blur'
           }
+        ],
+        notes_nik_empty: [
+          {
+            required: true,
+            message: 'Alasan harus diisi',
+            trigger: 'input'
+          }
         ]
       }
     }
@@ -278,7 +291,7 @@ export default {
         return
       }
 
-      if (this.isCreate) {
+      if (this.isCreate && this.beneficiaries.is_have_ktp === 1) {
         this.checkNikSapawarga()
       } else {
         this.$emit('nextStep', 1)

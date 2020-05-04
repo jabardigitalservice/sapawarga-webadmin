@@ -188,7 +188,8 @@ export default {
         notes_approved: null,
         notes_rejected: null,
         rejected: null,
-        notes_nik_empty: null
+        notes_nik_empty: null,
+        is_have_ktp: 1
       }
     }
   },

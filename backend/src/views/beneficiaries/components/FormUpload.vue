@@ -1,7 +1,12 @@
 <template>
   <div class="components-container">
     <div class="warning">
-      <p class="caution">Upload beberapa dokumen pendukung untuk kelengkapan proses validasi penerima bantuan.</p>
+      <el-row>
+        <el-col :xs="24" :sm="24" :md="13" :lg="13">
+          <p v-if="isCreate && beneficiaries.is_have_ktp === 0" class="caution">Untuk memastikan kesesuaian data calon penerima bantuan, dimohon untuk meng-upload foto surat pernyataan yang menyatakan bahwa benar warga tersebut berdomisili di Desa Anda.</p>
+          <p v-else class="caution">Upload beberapa dokumen pendukung untuk kelengkapan proses validasi penerima bantuan.</p>
+        </el-col>
+      </el-row>
     </div>
     <el-form
       ref="beneficiaries"
@@ -13,7 +18,7 @@
       <el-row>
         <el-col>
           <div>
-            <el-form-item class="position" label="Foto KTP/Copy KTP/KK" prop="nik">
+            <el-form-item class="position" :label="label" prop="nik">
               <div class="image-beneficiaries">
                 <AttachmentPhotoUpload
                   type="user_post_photo"
@@ -106,8 +111,12 @@ export default {
       confirmation: false,
       checked: false,
       statusVerified: 3,
-      statusRejected: 2
+      statusRejected: 2,
+      label: 'Foto KTP/Copy KTP/KK'
     }
+  },
+  created() {
+    if (this.beneficiaries.is_have_ktp === 0) this.label = 'Upload Surat Pernyataan'
   },
   methods: {
     getConfirmation() {
@@ -172,6 +181,7 @@ export default {
     font-size: 14px;
     padding: 5px 0;
     margin: 0px;
+    line-height: 25px;
   }
   .warning {
     margin-bottom: 35px;
