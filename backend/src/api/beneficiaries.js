@@ -8,6 +8,22 @@ export function fetchSummary(query) {
   })
 }
 
+export function fetchDashboardSummary(query) {
+  return request({
+    url: '/pub/beneficiaries/dashboard-summary',
+    method: 'get',
+    params: query
+  })
+}
+
+export function fetchDashboardList(query) {
+  return request({
+    url: '/pub/beneficiaries/dashboard-list',
+    method: 'get',
+    params: query
+  })
+}
+
 export function fetchList(query) {
   return request({
     url: '/beneficiaries',
