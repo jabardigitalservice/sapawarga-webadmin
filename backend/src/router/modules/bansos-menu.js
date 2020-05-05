@@ -13,6 +13,15 @@ const bansosMenuRouter = {
   active: false,
   children: [
     {
+      name: 'beneficiaries-dashboard',
+      path: '/beneficiaries/dashboard',
+      component: () => import('@/views/beneficiaries/dashboard'),
+      meta: {
+        title: 'dashboard',
+        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']
+      }
+    },
+    {
       name: 'beneficiaries-manage',
       path: '/beneficiaries/index',
       component: () => import('@/views/beneficiaries/list'),
