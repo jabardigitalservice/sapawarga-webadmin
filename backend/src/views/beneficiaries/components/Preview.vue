@@ -46,7 +46,7 @@
           </div>
           <div class="preview-content">
             <p>Status Kedudukan dalam Pekerjaan</p>
-            <p class="content">{{ beneficiaries.job_status_id ? beneficiaries.job_status_name : '-' }}</p>
+            <p class="content">{{ beneficiaries.job_status_id ? beneficiaries.job_status_name.title : '-' }}</p>
           </div>
           <div class="preview-content">
             <p>Jumlah Anggota Keluarga</p>
