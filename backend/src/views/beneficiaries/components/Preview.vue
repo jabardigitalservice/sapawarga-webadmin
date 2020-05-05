@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>Ringkasan Calon Penerima Bantuan</span>
+        <span><b>Ringkasan Calon Penerima Bantuan</b></span>
       </div>
       <el-row v-if="beneficiaries">
         <el-col :sm="24" :md="8" :lg="8">
@@ -107,9 +107,10 @@
         </el-col>
       </el-row>
       <div class="form-button">
-        <el-button class="button-action" @click="back">Ubah</el-button>
+        <el-button type="info" class="button-action" @click="back">Kembali</el-button>
+        <!-- <el-button class="button-action" @click="back">Ubah</el-button>
         <el-button class="button-action" type="danger" @click="update('reject')">Tolak</el-button>
-        <el-button class="button-action" type="success" @click="update('varification')">Verifikasi</el-button>
+        <el-button class="button-action" type="success" @click="update('varification')">Verifikasi</el-button> -->
       </div>
     </el-card>
   </div>
@@ -155,7 +156,8 @@ export default {
       this.$router.push('/beneficiaries/index')
     },
     back() {
-      this.$emit('nextStep', false)
+      // this.$emit('nextStep', false)
+      this.$router.push('/beneficiaries/index')
     }
   }
 }
