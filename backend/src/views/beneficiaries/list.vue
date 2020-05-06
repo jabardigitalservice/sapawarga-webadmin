@@ -74,11 +74,16 @@
         width="50%"
         center
       >
-        <span slot="title" class="dialog-title">Sampurasun, Wargi Jabar!</span>
-        <p class="dialog-content">Sehubungan dengan berakhirnya proses verifikasi dan validasi bansos Non DTKS Sapawarga pada periode pertama di bulan April, atas permintaan Pemerintah Kabupaten Sumedang melalui sekretaris Daerah, maka fitur verifikasi dan validasi bansos Non DTKS Sapawarga akan kami <b>tutup sementara.</b> Fitur akan kami buka kembali menjelang proses verifikasi dan validasi bansos Non DTKS Sapawarga pada periode kedua bulan Mei. Tanggal pembukaan kembali fitur akan kami umumkan segera.
+        <span slot="title" class="dialog-title">Pengumuman Peningkatan Kemudahan Pengguna Fitur Verval Sapawarga</span>
+        <p class="dialog-content">Tanggal Pengumuman: 5 Mei 2020</p>
+        <p class="dialog-content">Assalamualaikum wr. wb.</p>
+        <p class="dialog-content">Sampurasun, Pemerintah Desa/Kelurahan, Ketua RW, PLD, PSM, dan Karang Taruna!</p>
+        <p class="dialog-content">Terima kasih telah berpartisipasi dalam proses verifikasi dan validasi (verval) data penerima bansos melalui aplikasi Sapawarga pada PERIODE 1. Saat ini, proses pengalokasian bantuan sosial sedang berjalan.</p>
+        <p class="dialog-content">Sehubungan dengan upaya meningkatkan kemudahan penggunaan aplikasi Sapawarga untuk RW dan Pemerintah Desa/Kelurahan (Pemdes/Kel), untuk sementara fitur Verval akan kami tutup selama 5 HARI yakni mulai hari Rabu (6 Mei 2020) pukul 12.00 hingga hari Senin (11 Mei 2020) pukul 12.00.
         </p>
-        <p class="dialog-content">Terima kasih telah saling membantu wargi Jabar yang membutuhkan dengan melakukan proses verifikasi dan validasi menggunakan aplikasi Sapawarga.</p>
-        <p>Tim Sapawarga</p>
+        <p class="dialog-content">Untuk info lebih lengkap dapat dilihat pada informasi berikut:</p>
+        <p class="link"><a href="https://sapawarga.jabarprov.go.id/#/info-penting?id=91" style="color:blue">https://sapawarga.jabarprov.go.id/#/info-penting?id=91</a></p>
+        <p class="footer">Tim Sapawarga</p>
         <span slot="footer" class="dialog-footer">
           <el-button type="success" @click="dialogVisible = false">Tutup</el-button>
         </span>
@@ -225,5 +230,11 @@ export default {
   .dialog-content {
     font-size: 16px;
     line-height: 25px;
+  }
+  .link {
+    color: blue !important;
+  }
+  .footer {
+    padding-top: 10px;
   }
 </style>
