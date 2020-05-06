@@ -17,31 +17,31 @@
       <el-col :span="24">
         <router-link to="/bansos/upload-form?type=1">
           <el-card class="box-card">
-            <p style="margin:0; font-weight: bold"><img src="@/assets/bansos-type.png" style="vertical-align: middle; margin-right: 15px">Bantuan Sosial Provinsi</p>
+            <p style="margin:0; font-weight: bold"><img src="@/assets/bansos-type.png" style="vertical-align: middle; margin-right: 15px">{{ $t('label.beneficiaries-province') }}</p>
           </el-card>
         </router-link>
 
         <router-link to="/bansos/upload-form?type=2">
           <el-card class="box-card">
-            <p style="margin:0; font-weight: bold"><img src="@/assets/bansos-type.png" style="vertical-align: middle; margin-right: 15px">Bantuan Sosial Kota / Kabupaten</p>
+            <p style="margin:0; font-weight: bold"><img src="@/assets/bansos-type.png" style="vertical-align: middle; margin-right: 15px">{{ $t('label.beneficiaries-city') }}</p>
           </el-card>
         </router-link>
 
         <router-link to="/bansos/upload-form?type=3">
           <el-card class="box-card">
-            <p style="margin:0; font-weight: bold"><img src="@/assets/bansos-type.png" style="vertical-align: middle; margin-right: 15px">Bantuan Dana Desa</p>
+            <p style="margin:0; font-weight: bold"><img src="@/assets/bansos-type.png" style="vertical-align: middle; margin-right: 15px">{{ $t('label.beneficiaries-village-fund') }}</p>
           </el-card>
         </router-link>
 
         <router-link to="/bansos/upload-form?type=4">
           <el-card class="box-card">
-            <p style="margin:0; font-weight: bold"><img src="@/assets/bansos-type.png" style="vertical-align: middle; margin-right: 15px">Bantuan Sosial Presiden Sembako (Bodebek)</p>
+            <p style="margin:0; font-weight: bold"><img src="@/assets/bansos-type.png" style="vertical-align: middle; margin-right: 15px">{{ $t('label.beneficiaries-president') }}</p>
           </el-card>
         </router-link>
 
         <router-link to="/bansos/upload-form?type=5">
           <el-card class="box-card">
-            <p style="margin:0; font-weight: bold"><img src="@/assets/bansos-type.png" style="vertical-align: middle; margin-right: 15px">Bantuan Sosial Tunai Kemensos</p>
+            <p style="margin:0; font-weight: bold"><img src="@/assets/bansos-type.png" style="vertical-align: middle; margin-right: 15px">{{ $t('label.beneficiaries-kemensos') }}</p>
           </el-card>
         </router-link>
       </el-col>
@@ -87,6 +87,8 @@
 <script>
 import { uploadBansosList } from '@/api/bansos'
 import Pagination from '@/components/Pagination'
+import i18n from '@/lang'
+
 export default {
   components: { Pagination },
   data() {
@@ -126,17 +128,17 @@ export default {
       const type = typeId.toString()
       switch (type) {
         case '1':
-          return 'Bantuan Sosial Provinsi'
+          return i18n.t('label.beneficiaries-province')
         case '2':
-          return 'Bantuan Sosial Kota/Kabupaten'
+          return i18n.t('label.beneficiaries-city')
         case '3':
-          return 'Bantuan Dana Desa'
+          return i18n.t('label.beneficiaries-village-fund')
         case '4':
-          return 'Bantuan Sosial Presiden Sembako (Bodebek)'
+          return i18n.t('label.beneficiaries-president')
         case '5':
-          return 'Bantuan Sosial Tunai Kemensos'
+          return i18n.t('label.beneficiaries-kemensos')
         default:
-          return 'N/A'
+          return i18n.t('label.beneficiaries-not-available')
       }
     }
   }

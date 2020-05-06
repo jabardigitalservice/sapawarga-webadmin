@@ -49,6 +49,7 @@ import { mapGetters } from 'vuex'
 
 import FormUploadSubDistrict from './components/FormUploadSubDistrict'
 import FormUploadCity from './components/FormUploadCity'
+import i18n from '@/lang'
 
 export default {
   components: {
@@ -71,17 +72,17 @@ export default {
     getTitle() {
       switch (this.type) {
         case '1':
-          return 'Bantuan Sosial Provinsi'
+          return i18n.t('label.beneficiaries-province')
         case '2':
-          return 'Bantuan Sosial Kota/Kabupaten'
+          return i18n.t('label.beneficiaries-city')
         case '3':
-          return 'Bantuan Dana Desa'
+          return i18n.t('label.beneficiaries-village-fund')
         case '4':
-          return 'Bantuan Sosial Presiden Sembako (Bodebek)'
+          return i18n.t('label.beneficiaries-president')
         case '5':
-          return 'Bantuan Sosial Tunai Kemensos'
+          return i18n.t('label.beneficiaries-kemensos')
         default:
-          return 'N/A'
+          return i18n.t('label.beneficiaries-not-available')
       }
     },
     switchComponent(component) {
