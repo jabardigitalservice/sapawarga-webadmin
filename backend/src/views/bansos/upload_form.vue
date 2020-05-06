@@ -71,17 +71,17 @@ export default {
     getTitle() {
       switch (this.type) {
         case '1':
-          return 'Bantuan Sosial Provinsi'
+          return this.$t('label.beneficiaries-province')
         case '2':
-          return 'Bantuan Sosial Kota/Kabupaten'
+          return this.$t('label.beneficiaries-city')
         case '3':
-          return 'Bantuan Dana Desa'
+          return this.$t('label.beneficiaries-village-fund')
         case '4':
-          return 'Bantuan Sosial Presiden Sembako (Bodebek)'
+          return this.$t('label.beneficiaries-president')
         case '5':
-          return 'Bantuan Sosial Tunai Kemensos'
+          return this.$t('label.beneficiaries-kemensos')
         default:
-          return 'N/A'
+          return this.$t('label.beneficiaries-not-available')
       }
     },
     switchComponent(component) {

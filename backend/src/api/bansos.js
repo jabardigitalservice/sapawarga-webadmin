@@ -7,3 +7,11 @@ export function uploadBansos(data) {
     data
   })
 }
+
+export function uploadBansosList(query) {
+  return request({
+    url: '/bansos/upload',
+    method: 'get',
+    params: query
+  })
+}
