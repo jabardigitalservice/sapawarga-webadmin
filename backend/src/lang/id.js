@@ -893,7 +893,7 @@ export default {
     'beneficiaries-upload': 'Upload Data KRTS Non DTKS',
     'beneficiaries-upload-history': 'Daftar Riwayat Upload Data KRTS Non DTKS',
     'beneficiaries': 'Pintu Bantuan',
-    'beneficiaries-upload-status': 'Status Upload',
+    'beneficiaries-upload-target': 'Target Upload',
     'beneficiaries-upload-date': 'Tanggal Upload',
     'beneficiaries-upload-view': 'Lihat',
     'beneficiaries-upload-option': 'Pilih pintu bantuan untuk upload KRTS',
