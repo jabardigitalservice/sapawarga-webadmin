@@ -151,15 +151,8 @@ export default {
 
   methods: {
     accessBlock(value) {
-      if (this.user.kabkota !== null) {
-        if (this.user.kabkota.code_bps === '3211') {
-          this.dialogVisible = true
-        } else {
-          this.$router.push('/beneficiaries/' + value)
-        }
-      } else {
-        this.$router.push('/beneficiaries/' + value)
-      }
+      this.dialogVisible = true
+      //   this.$router.push('/beneficiaries/' + value)
     },
     // get summary statistics
     getSummary() {
