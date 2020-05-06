@@ -1,8 +1,8 @@
 <template>
-  <el-row :gutter="20">
-    <el-col :xs="20" :sm="10" :md="6" :lg="6" :xl="6">
+  <el-row :gutter="24">
+    <el-col :xs="24" :sm="8" :md="4" :lg="4" :xl="4">
       <div class="grid-content">
-        <div class="stat-title">TERVERIFIKASI</div>
+        <div class="stat-title">APPROVAL KAB/KOTA</div>
         <!-- show loading -->
         <div
           v-loading="isLoading"
@@ -10,10 +10,36 @@
           element-loading-spinner="el-icon-loading"
         />
         <!-- show data -->
-        <div v-if="!isLoading" class="stat-count color-sw-green">{{ getApproved ? formatNumber(getApproved) : '-' }}</div>
+        <div v-if="!isLoading" class="stat-count color-sw-green">{{ summery.approved_kabkota ? formatNumber(summery.approved_kabkota) : '-' }}</div>
       </div>
     </el-col>
-    <el-col :xs="20" :sm="10" :md="6" :lg="6" :xl="6">
+    <el-col :xs="24" :sm="8" :md="4" :lg="4" :xl="4">
+      <div class="grid-content">
+        <div class="stat-title">APPROVAL KEC</div>
+        <!-- show loading -->
+        <div
+          v-loading="isLoading"
+          class="icon-loading"
+          element-loading-spinner="el-icon-loading"
+        />
+        <!-- show data -->
+        <div v-if="!isLoading" class="stat-count color-sw-green">{{ summery.approved_kec ? formatNumber(summery.approved_kec) : '-' }}</div>
+      </div>
+    </el-col>
+    <el-col :xs="24" :sm="8" :md="4" :lg="4" :xl="4">
+      <div class="grid-content">
+        <div class="stat-title">TERVERIFIKASI KEL/DESA/RW</div>
+        <!-- show loading -->
+        <div
+          v-loading="isLoading"
+          class="icon-loading"
+          element-loading-spinner="el-icon-loading"
+        />
+        <!-- show data -->
+        <div v-if="!isLoading" class="stat-count color-sw-green">{{ summery.approved ? formatNumber(summery.approved) : '-' }}</div>
+      </div>
+    </el-col>
+    <el-col :xs="24" :sm="8" :md="4" :lg="4" :xl="4">
       <div class="grid-content">
         <div class="stat-title shadow">BELUM TERVERIFIKASI</div>
         <!-- show loading -->
@@ -23,10 +49,10 @@
           element-loading-spinner="el-icon-loading"
         />
         <!-- show data -->
-        <div v-if="!isLoading" class="stat-count color-sw-orange">{{ getPending ? formatNumber(getPending) : '-' }}</div>
+        <div v-if="!isLoading" class="stat-count color-sw-orange">{{ summery.pending ? formatNumber(summery.pending) : '-' }}</div>
       </div>
     </el-col>
-    <el-col :xs="20" :sm="10" :md="6" :lg="6" :xl="6">
+    <el-col :xs="24" :sm="8" :md="4" :lg="4" :xl="4">
       <div class="grid-content">
         <div class="stat-title">DITOLAK</div>
         <!-- show loading -->
@@ -39,7 +65,7 @@
         <div v-if="!isLoading" class="stat-count color-sw-red">{{ getReject ? formatNumber(getReject) : '-' }}</div>
       </div>
     </el-col>
-    <el-col :xs="20" :sm="10" :md="6" :lg="6" :xl="6">
+    <el-col :xs="24" :sm="8" :md="4" :lg="4" :xl="4">
       <div class="grid-content">
         <div class="stat-title">SEMUA DATA PENERIMA BANTUAN</div>
         <!-- show loading -->
