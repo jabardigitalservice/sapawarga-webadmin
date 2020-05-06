@@ -49,7 +49,6 @@ import { mapGetters } from 'vuex'
 
 import FormUploadSubDistrict from './components/FormUploadSubDistrict'
 import FormUploadCity from './components/FormUploadCity'
-import i18n from '@/lang'
 
 export default {
   components: {
@@ -72,17 +71,17 @@ export default {
     getTitle() {
       switch (this.type) {
         case '1':
-          return i18n.t('label.beneficiaries-province')
+          return this.$t('label.beneficiaries-province')
         case '2':
-          return i18n.t('label.beneficiaries-city')
+          return this.$t('label.beneficiaries-city')
         case '3':
-          return i18n.t('label.beneficiaries-village-fund')
+          return this.$t('label.beneficiaries-village-fund')
         case '4':
-          return i18n.t('label.beneficiaries-president')
+          return this.$t('label.beneficiaries-president')
         case '5':
-          return i18n.t('label.beneficiaries-kemensos')
+          return this.$t('label.beneficiaries-kemensos')
         default:
-          return i18n.t('label.beneficiaries-not-available')
+          return this.$t('label.beneficiaries-not-available')
       }
     },
     switchComponent(component) {
