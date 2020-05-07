@@ -26,7 +26,7 @@ import store from './store'
 import router from './router'
 import './registerServiceWorker'
 
-import './registerServiceWorker' // init PWA / register Service Worker
+// import './registerServiceWorker' // init PWA / register Service Worker
 
 import i18n from './lang' // Internationalization
 import './icons' // icon
