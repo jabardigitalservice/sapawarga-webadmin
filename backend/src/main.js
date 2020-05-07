@@ -24,7 +24,6 @@ Object.defineProperty(Vue.prototype, '_', { value: _ })
 import App from './App'
 import store from './store'
 import router from './router'
-import './registerServiceWorker'
 
 // import './registerServiceWorker' // init PWA / register Service Worker
 
