@@ -1,81 +1,94 @@
 <template>
   <el-row :gutter="24">
-    <el-col :xs="24" :sm="8" :md="4" :lg="4" :xl="4">
+    <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
       <div class="grid-content">
-        <div class="stat-title">APPROVAL KAB/KOTA</div>
+        <div class="stat-title">PKH</div>
         <!-- show loading -->
         <div
           v-loading="isLoading"
-          class="icon-loading"
+          class="icon-loading stat-count"
           element-loading-spinner="el-icon-loading"
         />
         <!-- show data -->
-        <div v-if="!isLoading" class="stat-count color-sw-green">{{ summery.approved_kabkota ? formatNumber(summery.approved_kabkota) : '-' }}</div>
+        <div v-if="!isLoading" class="stat-count color-sw-green">{{ summery.pkh ? formatNumber(summery.pkh) : '-' }}</div>
       </div>
     </el-col>
-    <el-col :xs="24" :sm="8" :md="4" :lg="4" :xl="4">
+    <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
       <div class="grid-content">
-        <div class="stat-title">APPROVAL KEC</div>
+        <div class="stat-title">BPNT</div>
         <!-- show loading -->
         <div
           v-loading="isLoading"
-          class="icon-loading"
+          class="icon-loading stat-count"
           element-loading-spinner="el-icon-loading"
         />
         <!-- show data -->
-        <div v-if="!isLoading" class="stat-count color-sw-green">{{ summery.approved_kec ? formatNumber(summery.approved_kec) : '-' }}</div>
+        <div v-if="!isLoading" class="stat-count color-sw-green">{{ summery.bpnt ? formatNumber(summery.bpnt) : '-' }}</div>
       </div>
     </el-col>
-    <el-col :xs="24" :sm="8" :md="4" :lg="4" :xl="4">
+    <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
       <div class="grid-content">
-        <div class="stat-title">TERVERIFIKASI KEL/DESA/RW</div>
+        <div class="stat-title">BPNT Perluasan</div>
         <!-- show loading -->
         <div
           v-loading="isLoading"
-          class="icon-loading"
+          class="icon-loading stat-count"
           element-loading-spinner="el-icon-loading"
         />
         <!-- show data -->
-        <div v-if="!isLoading" class="stat-count color-sw-green">{{ summery.approved ? formatNumber(summery.approved) : '-' }}</div>
+        <div v-if="!isLoading" class="stat-count color-sw-green">{{ summery.bpnt_perluasan ? formatNumber(summery.bpnt_perluasan) : '-' }}</div>
       </div>
     </el-col>
-    <el-col :xs="24" :sm="8" :md="4" :lg="4" :xl="4">
+    <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
       <div class="grid-content">
-        <div class="stat-title shadow">BELUM TERVERIFIKASI</div>
+        <div class="stat-title">Bansos Tunai (Kemensos)</div>
         <!-- show loading -->
         <div
           v-loading="isLoading"
-          class="icon-loading"
+          class="icon-loading stat-count"
           element-loading-spinner="el-icon-loading"
         />
         <!-- show data -->
-        <div v-if="!isLoading" class="stat-count color-sw-orange">{{ summery.pending ? formatNumber(summery.pending) : '-' }}</div>
+        <div v-if="!isLoading" class="stat-count color-sw-green">{{ summery.bansos_tunai_kemensos ? formatNumber(summery.bansos_tunai_kemensos) : '-' }}</div>
       </div>
     </el-col>
-    <el-col :xs="24" :sm="8" :md="4" :lg="4" :xl="4">
+    <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
       <div class="grid-content">
-        <div class="stat-title">DITOLAK</div>
+        <div class="stat-title">Bansos Presiden Sembako (BODEBEK)</div>
         <!-- show loading -->
         <div
           v-loading="isLoading"
-          class="icon-loading"
+          class="icon-loading stat-count"
           element-loading-spinner="el-icon-loading"
         />
         <!-- show data -->
-        <div v-if="!isLoading" class="stat-count color-sw-red">{{ getReject ? formatNumber(getReject) : '-' }}</div>
+        <div v-if="!isLoading" class="stat-count color-sw-green">{{ summery.bansos_presiden_sembako_bodebek ? formatNumber(summery.bansos_presiden_sembako_bodebek) : '-' }}</div>
       </div>
     </el-col>
-    <el-col :xs="24" :sm="8" :md="4" :lg="4" :xl="4">
+    <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
       <div class="grid-content">
-        <div class="stat-title">SEMUA DATA PENERIMA BANTUAN</div>
+        <div class="stat-title">Bansos Provinsi</div>
         <!-- show loading -->
         <div
           v-loading="isLoading"
-          class="icon-loading"
+          class="icon-loading stat-count"
           element-loading-spinner="el-icon-loading"
         />
         <!-- show data -->
-        <div v-if="!isLoading" class="stat-count color-sw-blue">{{ getTotalBenefeciaries ? formatNumber(getTotalBenefeciaries) : '-' }}</div>
+        <div v-if="!isLoading" class="stat-count color-sw-green">{{ summery.bansos_provinsi ? formatNumber(summery.bansos_provinsi) : '-' }}</div>
+      </div>
+    </el-col>
+    <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
+      <div class="grid-content">
+        <div class="stat-title">Dana Desa</div>
+        <!-- show loading -->
+        <div
+          v-loading="isLoading"
+          class="icon-loading stat-count"
+          element-loading-spinner="el-icon-loading"
+        />
+        <!-- show data -->
+        <div v-if="!isLoading" class="stat-count color-sw-green">{{ summery.dana_desa ? formatNumber(summery.dana_desa) : '-' }}</div>
       </div>
     </el-col>
   </el-row>
@@ -158,10 +171,12 @@ export default {
 .stat-title {
   margin-bottom: 13px;
   font-weight: bold;
-  font-size: 15px;
+  font-size: 18px;
+  width: 60%;
 }
 .stat-count {
-  font-size: 28px;
+  width: 60%;
+  font-size: 16px;
   font-weight: bolder;
 }
 .color-sw-green {

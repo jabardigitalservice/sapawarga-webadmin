@@ -32,6 +32,26 @@ const bansosMenuRouter = {
       }
     },
     {
+      name: 'beneficiaries-manage-bnba',
+      path: '/beneficiaries/manage-bnba',
+      component: () => import('@/views/beneficiaries/list-bnba'),
+      hidden: false,
+      meta: {
+        title: 'beneficiaries-manage-bnba',
+        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']
+      }
+    },
+    {
+      name: 'beneficiaries-detail-bnba',
+      path: '/beneficiaries/detail-bnba/:id',
+      component: () => import('@/views/beneficiaries/detail-bnba'),
+      hidden: true,
+      meta: {
+        title: 'beneficiaries-detail',
+        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']
+      }
+    },
+    {
       name: 'bansos-download',
       path: '/bansos/download',
       component: () => import('@/views/bansos/download'),
