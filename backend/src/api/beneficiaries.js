@@ -24,6 +24,22 @@ export function fetchDashboardList(query) {
   })
 }
 
+export function fetchBnbaTahapSatuSummary(query) {
+  return request({
+    url: '/beneficiaries-bnba-tahap-satu/summary',
+    method: 'get',
+    params: query
+  })
+}
+
+export function fetchBnbaTahapSatuList(query) {
+  return request({
+    url: '/beneficiaries-bnba-tahap-satu',
+    method: 'get',
+    params: query
+  })
+}
+
 export function fetchList(query) {
   return request({
     url: '/beneficiaries',
@@ -57,6 +73,13 @@ export function checkNik(id) {
 export function fetchRecord(id) {
   return request({
     url: `/beneficiaries/${id}`,
+    method: 'get'
+  })
+}
+
+export function fetchRecordBnba(id) {
+  return request({
+    url: `/beneficiaries-bnba-tahap-satu/${id}`,
     method: 'get'
   })
 }
