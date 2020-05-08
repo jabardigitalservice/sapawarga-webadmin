@@ -894,11 +894,17 @@ export default {
     'beneficiaries-upload': 'Upload Data KRTS Non DTKS',
     'beneficiaries-upload-history': 'Daftar Riwayat Upload Data KRTS Non DTKS',
     'beneficiaries': 'Pintu Bantuan',
-    'beneficiaries-upload-status': 'Status Upload',
+    'beneficiaries-upload-target': 'Target Upload',
     'beneficiaries-upload-date': 'Tanggal Upload',
     'beneficiaries-upload-view': 'Lihat',
     'beneficiaries-upload-option': 'Pilih pintu bantuan untuk upload KRTS',
-    'beneficiaries-upload-info': 'Sebelum melakukan upload Data KRTD Non DTKS, diharapkan data dipecah berdasarkan alokasi sesuai pintu bantuan. Untuk melakukan upload data, pilih pintu bantuan yang akan di upload.'
+    'beneficiaries-upload-info': 'Sebelum melakukan upload Data KRTD Non DTKS, diharapkan data dipecah berdasarkan alokasi sesuai pintu bantuan. Untuk melakukan upload data, pilih pintu bantuan yang akan di upload.',
+    'beneficiaries-province': 'Bantuan Sosial Provinsi',
+    'beneficiaries-city': 'Bantuan Sosial Kota/Kabupaten',
+    'beneficiaries-village-fund': 'Bantuan Dana Desa',
+    'beneficiaries-president': 'Bantuan Sosial Presiden Sembako (Bodebek)',
+    'beneficiaries-kemensos': 'Bantuan Sosial Tunai Kemensos',
+    'beneficiaries-not-available': 'N/A'
   },
   news: {
     'news-url': 'URL Berita',

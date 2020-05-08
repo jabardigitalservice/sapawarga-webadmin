@@ -17,31 +17,31 @@
       <el-col :span="24">
         <router-link to="/bansos/upload-form?type=1">
           <el-card class="box-card">
-            <p style="margin:0; font-weight: bold"><img src="@/assets/bansos-type.png" style="vertical-align: middle; margin-right: 15px">Bantuan Sosial Provinsi</p>
+            <p style="margin:0; font-weight: bold"><img src="@/assets/bansos-type.png" style="vertical-align: middle; margin-right: 15px">{{ $t('label.beneficiaries-province') }}</p>
           </el-card>
         </router-link>
 
         <router-link to="/bansos/upload-form?type=2">
           <el-card class="box-card">
-            <p style="margin:0; font-weight: bold"><img src="@/assets/bansos-type.png" style="vertical-align: middle; margin-right: 15px">Bantuan Sosial Kota / Kabupaten</p>
+            <p style="margin:0; font-weight: bold"><img src="@/assets/bansos-type.png" style="vertical-align: middle; margin-right: 15px">{{ $t('label.beneficiaries-city') }}</p>
           </el-card>
         </router-link>
 
         <router-link to="/bansos/upload-form?type=3">
           <el-card class="box-card">
-            <p style="margin:0; font-weight: bold"><img src="@/assets/bansos-type.png" style="vertical-align: middle; margin-right: 15px">Bantuan Dana Desa</p>
+            <p style="margin:0; font-weight: bold"><img src="@/assets/bansos-type.png" style="vertical-align: middle; margin-right: 15px">{{ $t('label.beneficiaries-village-fund') }}</p>
           </el-card>
         </router-link>
 
         <router-link to="/bansos/upload-form?type=4">
           <el-card class="box-card">
-            <p style="margin:0; font-weight: bold"><img src="@/assets/bansos-type.png" style="vertical-align: middle; margin-right: 15px">Bantuan Sosial Presiden Sembako (Bodebek)</p>
+            <p style="margin:0; font-weight: bold"><img src="@/assets/bansos-type.png" style="vertical-align: middle; margin-right: 15px">{{ $t('label.beneficiaries-president') }}</p>
           </el-card>
         </router-link>
 
         <router-link to="/bansos/upload-form?type=5">
           <el-card class="box-card">
-            <p style="margin:0; font-weight: bold"><img src="@/assets/bansos-type.png" style="vertical-align: middle; margin-right: 15px">Bantuan Sosial Tunai Kemensos</p>
+            <p style="margin:0; font-weight: bold"><img src="@/assets/bansos-type.png" style="vertical-align: middle; margin-right: 15px">{{ $t('label.beneficiaries-kemensos') }}</p>
           </el-card>
         </router-link>
       </el-col>
@@ -53,11 +53,19 @@
             <span>{{ $t('label.beneficiaries-upload-history') }}</span>
           </div>
           <div class="text item">
-            <el-table v-loading="listLoading" :data="list" stripe fit highlight-current-row style="width: 100%">
+            <el-table v-loading="loading" :data="list" border stripe fit highlight-current-row style="width: 100%">
               <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
-              <el-table-column prop="pintu_bantuan" sortable="custom" :label="$t('label.beneficiaries')" />
-              <el-table-column prop="status_upload" sortable="custom" :label="$t('label.beneficiaries-upload-status')" />
-              <el-table-column prop="tanggal_upload" sortable="custom" :label="$t('label.beneficiaries-upload-date')" />
+              <el-table-column prop="bansos_type" sortable="custom" :label="$t('label.beneficiaries')">
+                <template slot-scope="{row}">
+                  {{ row.bansos_type }}
+                </template>
+              </el-table-column>
+              <el-table-column prop="target_upload" sortable="custom" :label="$t('label.beneficiaries-upload-target')" />
+              <el-table-column prop="created_at" sortable="custom" :label="$t('label.beneficiaries-upload-date')">
+                <template slot-scope="{row}">
+                  {{ row.created_at | moment('D MMMM YYYY') }}
+                </template>
+              </el-table-column>
               <el-table-column align="center" :label="$t('label.actions')" width="200">
                 <template>
                   <router-link :to="'#'">
@@ -77,13 +85,15 @@
 </template>
 
 <script>
+import { uploadBansosList } from '@/api/bansos'
 import Pagination from '@/components/Pagination'
+
 export default {
   components: { Pagination },
   data() {
     return {
       list: null,
-      listLoading: true,
+      loading: true,
       total: 0,
       listQuery: {
         page: 1,
@@ -95,16 +105,40 @@ export default {
     this.getList()
   },
   methods: {
-    getList() {
-      this.listLoading = true
-      this.list = [
-        { pintu_bantuan: 'Bantuan Sosial Provinsi', status_upload: 'KAB BANDUNG', tanggal_upload: '29 April 2020' },
-        { pintu_bantuan: 'Bantuan Sosial Kota / Kabupaten', status_upload: 'KAB BANDUNG BARAT', tanggal_upload: '29 April 2020' }
-      ]
-      this.listLoading = false
+    async getList() {
+      this.loading = true
+      const response = await uploadBansosList(this.listQuery)
+      const data = []
+      response.data.map(value => {
+        data.push({
+          'bansos_type': this.getTitle(value.bansos_type),
+          'target_upload': value.kabkota_name,
+          'created_at': value.created_at,
+          'id': value.id
+        })
+      })
+      this.list = data
+      this.loading = false
     },
     getTableRowNumbering(index) {
       return ((this.listQuery.page - 1) * this.listQuery.limit) + (index + 1)
+    },
+    getTitle(typeId) {
+      const type = typeId.toString()
+      switch (type) {
+        case '1':
+          return this.$t('label.beneficiaries-province')
+        case '2':
+          return this.$t('label.beneficiaries-city')
+        case '3':
+          return this.$t('label.beneficiaries-village-fund')
+        case '4':
+          return this.$t('label.beneficiaries-president')
+        case '5':
+          return this.$t('label.beneficiaries-kemensos')
+        default:
+          return this.$t('label.beneficiaries-not-available')
+      }
     }
   }
 }
