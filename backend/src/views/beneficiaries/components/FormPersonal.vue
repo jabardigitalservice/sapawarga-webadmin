@@ -110,6 +110,10 @@ export default {
     isCreate: {
       type: Boolean,
       default: false
+    },
+    isEdit: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -275,8 +279,10 @@ export default {
     }
   },
   async mounted() {
-    if (this.isCreate === false) {
+    if (this.isCreate === false && this.isEdit === false) {
       this.disableField = true
+    } else if (this.isEdit === true) {
+      this.disableField = false
     }
     this.isAutomatedNik = false
     this.getArea()

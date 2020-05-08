@@ -62,7 +62,6 @@
       </el-form-item>
       <el-form-item class="ml-min-40 form-button">
         <div v-if="!isCreate">Apakah informasi penghasilan ini sudah sesuai?</div>
-        <el-button v-if="!isCreate" class="button-action" type="info" @click="open">{{ $t('crud.change') }}</el-button>
         <el-button class="button-action" type="primary" @click="next"> {{ $t('crud.next') }}</el-button>
       </el-form-item>
     </el-form>
@@ -83,7 +82,7 @@ export default {
   },
   data() {
     return {
-      disableField: true,
+      disableField: false,
       beforeTemporary: null,
       afterTemporary: null,
       visible: true,
@@ -125,7 +124,6 @@ export default {
     }
   },
   created() {
-    if (this.isCreate) this.disableField = false
     if (!this.isCreate && this.beneficiaries.total_family_members !== null && this.beneficiaries.total_family_members !== 0) this.beneficiaries.temporaryFamilyOptions = this.beneficiaries.total_family_members
     if (this.beneficiaries.income_before !== null) this.beforeTemporary = this.thousandSeparator(this.beneficiaries.income_before)
     if (this.beneficiaries.income_after !== null) this.afterTemporary = this.thousandSeparator(this.beneficiaries.income_after)

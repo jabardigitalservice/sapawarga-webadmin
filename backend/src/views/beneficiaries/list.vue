@@ -60,7 +60,10 @@
                   <el-button type="primary" icon="el-icon-view" size="small" />
                 </el-tooltip>
               </router-link>
-              <el-tooltip :content="$t('label.beneficiaries-verivication')" placement="top">
+              <el-tooltip v-if="scope.row.status_verification !== 1" :content="$t('label.beneficiaries-edit')" placement="top">
+                <el-button type="warning" icon="el-icon-edit" size="small" @click="accessBlock('edit/' + scope.row.id)" />
+              </el-tooltip>
+              <el-tooltip v-else :content="$t('label.beneficiaries-verivication')" placement="top">
                 <el-button type="success" icon="el-icon-circle-check" size="small" :disabled="scope.row.status_verification !== 1" @click="accessBlock('verification/' + scope.row.id)" />
               </el-tooltip>
             </template>
@@ -156,8 +159,8 @@ export default {
 
   methods: {
     accessBlock(value) {
-      this.dialogVisible = true
-      //   this.$router.push('/beneficiaries/' + value)
+      // this.dialogVisible = true
+      this.$router.push('/beneficiaries/' + value)
     },
     // get summary statistics
     getSummary() {
