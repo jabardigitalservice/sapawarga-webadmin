@@ -63,16 +63,16 @@
               <el-table-column prop="target_upload" sortable="custom" :label="$t('label.beneficiaries-upload-target')" />
               <el-table-column prop="created_at" sortable="custom" :label="$t('label.beneficiaries-upload-date')">
                 <template slot-scope="{row}">
-                  {{ row.created_at | moment('D MMMM YYYY') }}
+                  {{ row.created_at | moment('D MMMM YYYY H:mm:ss') }}
                 </template>
               </el-table-column>
               <el-table-column align="center" :label="$t('label.actions')" width="200">
-                <template>
-                  <router-link :to="'#'">
-                    <el-tooltip :content="$t('label.beneficiaries-upload-view')" placement="top">
-                      <el-button type="primary" icon="el-icon-view" size="mini" />
+                <template slot-scope="{row}">
+                  <a :href="row.file_url">
+                    <el-tooltip :content="$t('label.beneficiaries-file-download')" placement="top">
+                      <el-button type="primary" icon="el-icon-download" size="mini" />
                     </el-tooltip>
-                  </router-link>
+                  </a>
                 </template>
               </el-table-column>
             </el-table>
@@ -114,6 +114,7 @@ export default {
           'bansos_type': this.getTitle(value.bansos_type),
           'target_upload': value.kabkota_name,
           'created_at': value.created_at,
+          'file_url': value.file_url,
           'id': value.id
         })
       })
