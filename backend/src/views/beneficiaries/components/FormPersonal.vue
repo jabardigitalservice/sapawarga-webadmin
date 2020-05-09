@@ -299,7 +299,11 @@ export default {
 
       if (this.isCreate && this.beneficiaries.is_have_ktp === 1) {
         this.checkNikSapawarga()
+      } else if (this.isEdit && this.beneficiaries.nik !== null) {
+        console.log(this.beneficiaries.nik)
+        this.$emit('nextStep', 2)
       } else {
+        console.log(this.beneficiaries.nik)
         this.$emit('nextStep', 1)
       }
     },
