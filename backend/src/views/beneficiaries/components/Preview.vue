@@ -108,6 +108,8 @@
       </el-row>
       <div class="form-button">
         <el-button type="info" class="button-action" @click="back">Kembali</el-button>
+        <el-button v-if="beneficiaries.status_verification !== 1" type="primary" class="button-action" @click="updateForm('edit/' + beneficiaries.id)">Update Data</el-button>
+        <el-button v-else type="success" class="button-action" @click="updateForm('verification/' + beneficiaries.id)">Verifikasi Data</el-button>
         <!-- <el-button class="button-action" @click="back">Ubah</el-button>
         <el-button class="button-action" type="danger" @click="update('reject')">Tolak</el-button>
         <el-button class="button-action" type="success" @click="update('varification')">Verifikasi</el-button> -->
@@ -138,6 +140,9 @@ export default {
     this.getDetail(id)
   },
   methods: {
+    updateForm(value) {
+      this.$router.push('/beneficiaries/' + value)
+    },
     getDetail(id) {
       fetchRecord(id).then(response => {
         this.beneficiaries = response.data

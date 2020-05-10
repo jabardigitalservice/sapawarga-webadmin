@@ -17,14 +17,24 @@
               <span style="cursor: pointer; color: blue" @click="openDetail(row.code_bps, row.rw, row.name)">{{ row.name }}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="data.approved" sortable="custom" :label="$t('label.beneficiaries-verified')" min-width="180px">
+          <el-table-column prop="data.approved" sortable="custom" :label="'Approval Kab/Kota'" min-width="180px">
             <template slot-scope="{row}">
-              {{ formatThousands(getApproved(row.data)) }}
+              {{ formatThousands(row.data.approved_kabkota) }}
+            </template>
+          </el-table-column>
+          <el-table-column prop="data.approved" sortable="custom" :label="'Approval Kec'" min-width="180px">
+            <template slot-scope="{row}">
+              {{ formatThousands(row.data.approved_kec) }}
+            </template>
+          </el-table-column>
+          <el-table-column prop="data.approved" sortable="custom" :label="'Terverifikasi Kel/Desa/RW'" min-width="180px">
+            <template slot-scope="{row}">
+              {{ formatThousands(row.data.approved) }}
             </template>
           </el-table-column>
           <el-table-column prop="data.pending" sortable="custom" :label="$t('label.beneficiaries-unverified')" min-width="180px">
             <template slot-scope="{row}">
-              {{ formatThousands(getPending(row.data)) }}
+              {{ formatThousands(row.data.pending) }}
             </template>
           </el-table-column>
           <el-table-column prop="data.reject" sortable="custom" :label="$t('label.beneficiaries-reject')" min-width="180px">

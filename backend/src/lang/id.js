@@ -122,6 +122,7 @@ export default {
     'gamification-edit': 'Edit Misi',
 
     'beneficiaries-manage': 'Bantuan Sosial',
+    'beneficiaries-manage-bnba': 'Daftar BNBA',
     'beneficiaries-list': 'Daftar Bansos',
     'beneficiaries-create': 'Tambah Bansos',
     'beneficiaries-detail': 'Detail Bansos',
@@ -896,6 +897,7 @@ export default {
     'beneficiaries-upload-target': 'Target Upload',
     'beneficiaries-upload-date': 'Tanggal Upload',
     'beneficiaries-upload-view': 'Lihat',
+    'beneficiaries-file-download': 'Download',
     'beneficiaries-upload-option': 'Pilih pintu bantuan untuk upload KRTS',
     'beneficiaries-upload-info': 'Sebelum melakukan upload Data KRTD Non DTKS, diharapkan data dipecah berdasarkan alokasi sesuai pintu bantuan. Untuk melakukan upload data, pilih pintu bantuan yang akan di upload.',
     'beneficiaries-province': 'Bantuan Sosial Provinsi',
