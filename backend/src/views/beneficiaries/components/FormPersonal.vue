@@ -128,6 +128,7 @@ export default {
     }
     return {
       loading: false,
+      isNikChange: false,
       isAutomatedNik: true,
       staticAutomated: true,
       disableField: false,
@@ -254,6 +255,9 @@ export default {
     }
   },
   watch: {
+    'beneficiaries.nik'(value1, value2) {
+      if (value1) this.isNikChange = true
+    },
     'beneficiaries.kabkota'(value1, value2) {
       if (this.isCreate) {
         this.beneficiaries.kecamatan = null
@@ -299,14 +303,45 @@ export default {
 
       if (this.isCreate && this.beneficiaries.is_have_ktp === 1) {
         this.checkNikSapawarga()
-      } else if (this.isEdit && this.beneficiaries.nik !== null) {
-        console.log(this.beneficiaries.nik)
-        this.$emit('nextStep', 2)
+      } else if (this.isEdit && this.beneficiaries.is_nik_valid === 0) {
+        if (this.isEdit && this.isNikChange) {
+          if (this.beneficiaries.nik && this.beneficiaries.nik.length < 16) {
+            this.$message.error('NIK harus 16 karakter')
+            return
+          }
+          checkNik(this.beneficiaries.nik).then(response => {
+            if (response.data === true) {
+              this.$message.error('NIK ' + this.beneficiaries.nik + ' sudah terdaftar')
+              return
+            } else {
+              this.$emit('nextStep', 2)
+            }
+          })
+        } else {
+          this.$emit('nextStep', 1)
+        }
+      } else if (this.isEdit && this.beneficiaries.is_nik_valid === 1) {
+        if (this.isEdit && this.isNikChange) {
+          if (this.beneficiaries.nik && this.beneficiaries.nik.length < 16) {
+            this.$message.error('NIK harus 16 karakter')
+            return
+          }
+          checkNik(this.beneficiaries.nik).then(response => {
+            if (response.data === true) {
+              this.$message.error('NIK ' + this.beneficiaries.nik + ' sudah terdaftar')
+              return
+            } else {
+              this.$emit('nextStep', 1)
+            }
+          })
+        } else {
+          this.$emit('nextStep', 1)
+        }
       } else {
-        console.log(this.beneficiaries.nik)
         this.$emit('nextStep', 1)
       }
     },
+
     validateInput(input) {
       if (_.isEmpty(input)) {
         return 'Catatan harus diisi.'
