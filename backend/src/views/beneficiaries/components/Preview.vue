@@ -2,9 +2,12 @@
   <div class="app-container">
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span><b>Ringkasan Calon Penerima Bantuan</b></span>
+        <span><b>Detail Calon Penerima Bantuan</b></span>
       </div>
       <el-row v-if="beneficiaries">
+        <p v-if="beneficiaries.status_verification === 3" class="warn-content">Status: {{ beneficiaries.status_verification_label }}</p>
+        <p v-else-if="beneficiaries.status_verification === 2" class="warn-content-danger">Status: {{ beneficiaries.status_verification_label }}</p>
+        <p v-else-if="beneficiaries.status_verification === 1" class="warn-content-warning">Status: {{ beneficiaries.status_verification_label }}</p>
         <el-col :sm="24" :md="8" :lg="8">
           <div>
             <p class="preview-title">Informasi Penerima Bantuan</p>
@@ -186,5 +189,27 @@ export default {
   }
   .button-action {
     margin: 0 5px;
+  }
+  .warn-content-danger {
+    background: #fef0f0;
+    border-radius: 2px;
+    padding: 16px;
+    padding: 1rem;
+    line-height: 1.6rem;
+    word-spacing: .05rem;
+    margin-bottom: 25px;
+    color: #f56c6c;
+    font-weight: 600;
+  }
+  .warn-content-warning {
+    background: #fdf6ec;
+    border-radius: 2px;
+    padding: 16px;
+    padding: 1rem;
+    line-height: 1.6rem;
+    word-spacing: .05rem;
+    margin-bottom: 25px;
+    color: #e6a23c;
+    font-weight: 600;
   }
 </style>
