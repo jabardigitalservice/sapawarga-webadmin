@@ -14,7 +14,7 @@
           <el-radio class="label-check" :label="0">Tidak Perlu Dibantu</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item v-if="!beneficiaries.is_need_help" label="Berikan keterangan kenapa warga tersebut tidak perlu dibantu?" prop="rejected">
+      <el-form-item v-if="!beneficiaries.is_need_help" label="Berikan keterangan kenapa warga tersebut tidak perlu dibantu?" prop="notes_rejected">
         <el-radio-group v-model="beneficiaries.notes_rejected" class="radio-reject">
           <el-radio class="label-check" label="meninggal">Meninggal</el-radio>
           <el-radio class="label-check" label="pindah">Pindah</el-radio>
@@ -23,7 +23,7 @@
           <el-radio class="label-check" label="lainnya">Lainnya</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item v-if="!beneficiaries.is_need_help && beneficiaries.notes_rejected === 'lainnya'" prop="notes_rejected">
+      <el-form-item v-if="!beneficiaries.is_need_help && beneficiaries.notes_rejected === 'lainnya'" prop="rejected">
         <el-input v-model="beneficiaries.rejected" type="textarea" rows="4" />
       </el-form-item>
       <el-form-item v-if="beneficiaries.is_need_help" label="Berikan keterangan kenapa warga tersebut perlu dibantu?" prop="notes_approved">
