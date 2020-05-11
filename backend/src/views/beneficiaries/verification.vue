@@ -188,7 +188,7 @@ export default {
         domicile_address: null,
         temporaryFamilyOptions: null,
         total_family_members: null,
-        is_need_help: 1,
+        is_need_help: null,
         is_poor_new: null,
         notes_approved: null,
         notes_rejected: null,
