@@ -74,8 +74,11 @@
       <el-form-item v-if="!isCreate" label="Alamat" prop="domicile_address">
         <el-input v-model="beneficiaries.domicile_address" placeholder="Alamat" :disabled="disableField" />
       </el-form-item>
-      <el-form-item v-if="!isCreate" label="RW" prop="domicile_rw">
+      <el-form-item v-if="!isCreate && !isEdit" label="RW">
         <el-input v-model="beneficiaries.domicile_rw" type="number" placeholder="RW" :disabled="disableField" />
+      </el-form-item>
+      <el-form-item v-if="isEdit" label="RW" prop="domicile_rw">
+        <el-input v-model="beneficiaries.domicile_rw" type="number" placeholder="RW" />
       </el-form-item>
       <el-form-item v-if="!isCreate" label="RT" prop="domicile_rt">
         <el-input v-model="beneficiaries.domicile_rt" type="number" placeholder="RT" :disabled="disableField" />
@@ -232,7 +235,7 @@ export default {
         ],
         domicile_rw: [
           {
-            required: false,
+            required: true,
             message: 'RW harus diisi',
             trigger: 'blur'
           }
