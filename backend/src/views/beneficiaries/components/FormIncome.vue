@@ -31,8 +31,8 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="Jumlah Anggota Keluarga" prop="temporaryFamilyOptions">
-        <el-select v-model="beneficiaries.temporaryFamilyOptions" style="width:100%" :disabled="disableField">
+      <el-form-item label="Jumlah Anggota Keluarga" prop="total_family_members">
+        <el-select v-model="beneficiaries.total_family_members" style="width:100%" :disabled="disableField">
           <el-option
             v-for="item in familyCount"
             :key="item"
@@ -41,8 +41,8 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item v-if="beneficiaries.temporaryFamilyOptions === 'Lainnya'" prop="total_family_members">
-        <el-input v-model="beneficiaries.total_family_members" type="number" placeholder="Jumlah anggota keluarga" :disabled="disableField" />
+      <el-form-item v-if="beneficiaries.total_family_members === 'Lainnya'" prop="temporaryFamilyOptions">
+        <el-input v-model="beneficiaries.temporaryFamilyOptions" type="number" placeholder="Jumlah anggota keluarga" :disabled="disableField" />
       </el-form-item>
       <el-form-item label="Penghasilan Sebelum COVID-19" prop="beforeTemporary">
         <el-input v-if="visible === true" v-model="beforeTemporary" placeholder="Penghasilan sebelum COVID-19" :disabled="disableField" @blur="onBlurNumber">
@@ -88,8 +88,7 @@ export default {
       visible: true,
       jobList: null,
       jobStatusList: null,
-      familyCount: [1, 2, 3, 4, 5, 6, 7, 'Lainnya'
-      ],
+      familyCount: [1, 2, 3, 4, 5, 6, 7, 'Lainnya'],
       temporaryFamilyOptions: null,
       rules: {
         job_type_id: [
@@ -124,7 +123,10 @@ export default {
     }
   },
   created() {
-    if (!this.isCreate && this.beneficiaries.total_family_members !== null && this.beneficiaries.total_family_members !== 0) this.beneficiaries.temporaryFamilyOptions = this.beneficiaries.total_family_members
+    if (!this.isCreate && this.beneficiaries.total_family_members > 7) {
+      this.beneficiaries.temporaryFamilyOptions = this.beneficiaries.total_family_members
+      this.beneficiaries.total_family_members = 'Lainnya'
+    }
     if (this.beneficiaries.income_before !== null) this.beforeTemporary = this.thousandSeparator(this.beneficiaries.income_before)
     if (this.beneficiaries.income_after !== null) this.afterTemporary = this.thousandSeparator(this.beneficiaries.income_after)
     this.getJob()
@@ -153,7 +155,7 @@ export default {
         return
       }
 
-      if (this.beneficiaries.temporaryFamilyOptions !== 'Lainnya') {
+      if (this.beneficiaries.total_family_members === 'Lainnya') {
         this.beneficiaries.total_family_members = this.beneficiaries.temporaryFamilyOptions
       }
 
