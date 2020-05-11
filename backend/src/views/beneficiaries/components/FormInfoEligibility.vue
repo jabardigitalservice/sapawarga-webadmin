@@ -15,7 +15,7 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item v-if="!beneficiaries.is_need_help" label="Berikan keterangan kenapa warga tersebut tidak perlu dibantu?" prop="rejected">
-        <el-radio-group v-model="beneficiaries.rejected" class="radio-reject">
+        <el-radio-group v-model="beneficiaries.notes_rejected" class="radio-reject">
           <el-radio class="label-check" label="meninggal">Meninggal</el-radio>
           <el-radio class="label-check" label="pindah">Pindah</el-radio>
           <el-radio class="label-check" label="orang mampu">Orang mampu</el-radio>
@@ -23,8 +23,8 @@
           <el-radio class="label-check" label="lainnya">Lainnya</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item v-if="!beneficiaries.is_need_help && beneficiaries.rejected === 'lainnya'" prop="notes_rejected">
-        <el-input v-model="beneficiaries.notes_rejected" type="textarea" rows="4" />
+      <el-form-item v-if="!beneficiaries.is_need_help && beneficiaries.notes_rejected === 'lainnya'" prop="notes_rejected">
+        <el-input v-model="beneficiaries.rejected" type="textarea" rows="4" />
       </el-form-item>
       <el-form-item v-if="beneficiaries.is_need_help" label="Berikan keterangan kenapa warga tersebut perlu dibantu?" prop="notes_approved">
         <el-input v-model="beneficiaries.notes_approved" type="textarea" rows="4" />
@@ -125,7 +125,7 @@ export default {
       if (!valid) {
         return
       }
-      if (this.beneficiaries.rejected !== 'lainnya') {
+      if (this.beneficiaries.notes_rejected === 'lainnya') {
         this.beneficiaries.notes_rejected = this.beneficiaries.rejected
       }
 
