@@ -109,11 +109,6 @@ export default {
       }
     }
   },
-  created() {
-    if (!this.isCreate) {
-      this.beneficiaries.is_need_help = 1
-    }
-  },
   methods: {
     async next() {
       const valid = await this.$refs.beneficiaries.validate()
@@ -131,7 +126,7 @@ export default {
         return
       }
       if (this.beneficiaries.rejected !== 'lainnya') {
-        this.beneficiaries.notes_rejected = this.rejected
+        this.beneficiaries.notes_rejected = this.beneficiaries.rejected
       }
 
       const id = await this.$route.params && this.$route.params.id
