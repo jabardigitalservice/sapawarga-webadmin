@@ -23,7 +23,7 @@
         </el-upload>
       </el-col>
       <el-col :span="12">
-        <el-button type="primary" @click="submitUpload">Upload<i class="el-icon-upload el-icon-right" /></el-button>
+        <el-button type="primary" @click="submitUpload">{{ $t('label.beneficiaries-upload-file') }}<i class="el-icon-upload el-icon-right" /></el-button>
       </el-col>
     </el-row>
   </div>

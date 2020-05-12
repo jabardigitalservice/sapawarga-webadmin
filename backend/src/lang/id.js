@@ -903,7 +903,10 @@ export default {
     'beneficiaries-dtks-option': 'Pilihan DTKS',
     'beneficiaries-nondtks-option': 'Pilihan Non DTKS',
     'beneficiaries-upload-success': 'Dokumen berhasil dikirim',
-    'beneficiaries-add-file': 'Tambah File'
+    'beneficiaries-add-file': 'Tambah File',
+    'beneficiaries-upload-file': 'Upload',
+    'beneficiaries-subdistrict-upload': 'Upload Data Alokasi Bantuan Per Kecamatan',
+    'beneficiaries-city-upload': 'Upload Data Alokasi Bantuan Kota/Kabupaten'
 
   },
   news: {
