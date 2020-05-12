@@ -121,7 +121,7 @@ export default {
         data.push({
           'bansos_type': this.getTitle(value.bansos_type),
           'target_upload': value.kabkota_name,
-          'status_upload': '', //To do : get data from api
+          'status_upload': '', // To do : get data from api
           'created_at': value.created_at,
           'file_url': value.file_url,
           'id': value.id

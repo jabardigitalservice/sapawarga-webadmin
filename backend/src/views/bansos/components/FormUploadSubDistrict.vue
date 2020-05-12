@@ -33,14 +33,13 @@
 import { uploadBansos } from '@/api/bansos'
 import { mapGetters } from 'vuex'
 import Swal from 'sweetalert2'
-import { getKecamatanList } from '@/api/areas'
 
 export default {
   name: 'FormUploadSubDistrict',
   data() {
     return {
       loading: false,
-      file: null,
+      file: null
     }
   },
   computed: {
