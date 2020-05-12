@@ -362,7 +362,6 @@ export default {
       })
 
       this.beneficiaries.notes_rejected = prompt.value
-      delete this.beneficiaries.nik
       this.beneficiaries.status_verification = 2
       await update(id, this.beneficiaries)
       this.$message.info('Status berhasil diubah')
