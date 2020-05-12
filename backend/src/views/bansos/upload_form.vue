@@ -20,7 +20,7 @@
             <el-row>
               <el-col :span="24">
                 <div class="card-panel-text">
-                  {{ `Alokasi ${ beneficiariesType } untuk ${user.kabkota.name}` }}
+                  {{ `Upload Data Alokasi Bantuan untuk ${user.kabkota.name}` }}
                 </div>
               </el-col>
             </el-row>
@@ -31,7 +31,7 @@
             <el-row>
               <el-col :span="24">
                 <div class="card-panel-text">
-                  {{ `Alokasi ${ beneficiariesType } Per Kecamatan` }}
+                  {{ `Upload Data Alokasi Bantuan Per Kecamatan` }}
                 </div>
               </el-col>
             </el-row>
