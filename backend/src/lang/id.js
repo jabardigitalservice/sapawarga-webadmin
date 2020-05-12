@@ -890,21 +890,18 @@ export default {
     'beneficiaries-image-ktp': 'Foto KTP',
     'beneficiaries-image-kk': 'Foto Kepala Keluarga',
 
-    'beneficiaries-upload': 'Upload Data KRTS Non DTKS',
+    'beneficiaries-upload': 'Upload Data BNBA',
     'beneficiaries-upload-history': 'Daftar Riwayat Upload Data KRTS Non DTKS',
     'beneficiaries': 'Pintu Bantuan',
     'beneficiaries-upload-target': 'Target Upload',
     'beneficiaries-upload-date': 'Tanggal Upload',
     'beneficiaries-upload-view': 'Lihat',
     'beneficiaries-file-download': 'Download',
-    'beneficiaries-upload-option': 'Pilih pintu bantuan untuk upload KRTS',
-    'beneficiaries-upload-info': 'Sebelum melakukan upload Data KRTD Non DTKS, diharapkan data dipecah berdasarkan alokasi sesuai pintu bantuan. Untuk melakukan upload data, pilih pintu bantuan yang akan di upload.',
-    'beneficiaries-province': 'Bantuan Sosial Provinsi',
-    'beneficiaries-city': 'Bantuan Sosial Kota/Kabupaten',
-    'beneficiaries-village-fund': 'Bantuan Dana Desa',
-    'beneficiaries-president': 'Bantuan Sosial Presiden Sembako (Bodebek)',
-    'beneficiaries-kemensos': 'Bantuan Sosial Tunai Kemensos',
-    'beneficiaries-not-available': 'N/A'
+    'beneficiaries-upload-option': 'Pilih pintu bantuan untuk upload data BNBA',
+    'beneficiaries-upload-info': 'Sebelum meng-upload data BNBA DTKS dan non-DTKS, mohon pilah data berdasarkan alokasi sesuai pintu bantuan. Untuk Upload data, tekan salah satu tombol di bawah sesuai alokasi pintu bantuan yang akan diupload.',
+    'beneficiaries-dtks-option': 'Pilihan DTKS',
+    'beneficiaries-nondtks-option': 'Pilihan Non DTKS'
+
   },
   news: {
     'news-url': 'URL Berita',

@@ -13,37 +13,38 @@
         </el-card>
       </el-col>
     </el-row>
-    <el-row>
-      <el-col :span="24">
-        <router-link to="/bansos/upload-form?type=1">
-          <el-card class="box-card">
-            <p style="margin:0; font-weight: bold"><img src="@/assets/bansos-type.png" style="vertical-align: middle; margin-right: 15px">{{ $t('label.beneficiaries-province') }}</p>
-          </el-card>
-        </router-link>
-
-        <router-link to="/bansos/upload-form?type=2">
-          <el-card class="box-card">
-            <p style="margin:0; font-weight: bold"><img src="@/assets/bansos-type.png" style="vertical-align: middle; margin-right: 15px">{{ $t('label.beneficiaries-city') }}</p>
-          </el-card>
-        </router-link>
-
-        <router-link to="/bansos/upload-form?type=3">
-          <el-card class="box-card">
-            <p style="margin:0; font-weight: bold"><img src="@/assets/bansos-type.png" style="vertical-align: middle; margin-right: 15px">{{ $t('label.beneficiaries-village-fund') }}</p>
-          </el-card>
-        </router-link>
-
-        <router-link to="/bansos/upload-form?type=4">
-          <el-card class="box-card">
-            <p style="margin:0; font-weight: bold"><img src="@/assets/bansos-type.png" style="vertical-align: middle; margin-right: 15px">{{ $t('label.beneficiaries-president') }}</p>
-          </el-card>
-        </router-link>
-
-        <router-link to="/bansos/upload-form?type=5">
-          <el-card class="box-card">
-            <p style="margin:0; font-weight: bold"><img src="@/assets/bansos-type.png" style="vertical-align: middle; margin-right: 15px">{{ $t('label.beneficiaries-kemensos') }}</p>
-          </el-card>
-        </router-link>
+    <el-row :gutter="30">
+      <el-col :span="12">
+        <el-card class="box-card body-nopadding">
+          <div slot="header">
+            <strong><span>{{ $t('label.beneficiaries-dtks-option') }}</span></strong>
+          </div>
+        </el-card>
+        <template v-for="(beneficiariesType, index) in beneficiariesTypeList">
+          <router-link v-if="beneficiariesType.type == 'dtks'" :key="index" :to="`/bansos/upload-form?type=${ beneficiariesType.id }`">
+            <el-card class="box-card">
+              <p style="margin:0; font-weight: bold">
+                <img src="@/assets/bansos-type.png" style="vertical-align: middle; margin-right: 15px">{{ beneficiariesType.name }}
+              </p>
+            </el-card>
+          </router-link>
+        </template>
+      </el-col>
+      <el-col :span="12">
+        <el-card class="box-card body-nopadding">
+          <div slot="header">
+            <strong><span>{{ $t('label.beneficiaries-nondtks-option') }}</span></strong>
+          </div>
+        </el-card>
+        <template v-for="(beneficiariesType, index) in beneficiariesTypeList">
+          <router-link v-if="beneficiariesType.type == 'non_dtks'" :key="index" :to="`/bansos/upload-form?type=${ beneficiariesType.id }`">
+            <el-card class="box-card">
+              <p style="margin:0; font-weight: bold">
+                <img src="@/assets/bansos-type.png" style="vertical-align: middle; margin-right: 15px">{{ beneficiariesType.name }}
+              </p>
+            </el-card>
+          </router-link>
+        </template>
       </el-col>
     </el-row>
     <el-row style="margin-top: 50px">
@@ -87,6 +88,7 @@
 <script>
 import { uploadBansosList } from '@/api/bansos'
 import Pagination from '@/components/Pagination'
+import BeneficiariesType from './statics/beneficiariesType'
 
 export default {
   components: { Pagination },
@@ -98,13 +100,19 @@ export default {
       listQuery: {
         page: 1,
         limit: 10
-      }
+      },
+      beneficiariesTypeList: null
     }
   },
   created() {
     this.getList()
+    this.getBeneficiariesTypeList()
   },
   methods: {
+    async getBeneficiariesTypeList() {
+      const beneficiariesType = new BeneficiariesType()
+      this.beneficiariesTypeList = await beneficiariesType.getAll()
+    },
     async getList() {
       this.loading = true
       const response = await uploadBansosList(this.listQuery)
@@ -125,21 +133,9 @@ export default {
       return ((this.listQuery.page - 1) * this.listQuery.limit) + (index + 1)
     },
     getTitle(typeId) {
-      const type = typeId.toString()
-      switch (type) {
-        case '1':
-          return this.$t('label.beneficiaries-province')
-        case '2':
-          return this.$t('label.beneficiaries-city')
-        case '3':
-          return this.$t('label.beneficiaries-village-fund')
-        case '4':
-          return this.$t('label.beneficiaries-president')
-        case '5':
-          return this.$t('label.beneficiaries-kemensos')
-        default:
-          return this.$t('label.beneficiaries-not-available')
-      }
+      const beneficiariesType = new BeneficiariesType()
+      const response = beneficiariesType.getAll(typeId)
+      return response.name
     }
   }
 }

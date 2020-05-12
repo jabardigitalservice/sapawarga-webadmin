@@ -4,7 +4,7 @@
       <el-col :span="24">
         <el-card class="box-card green body-nopadding">
           <div slot="header">
-            <span>{{ `${ $t('label.beneficiaries-upload') } : ${ getTitle() }` }}</span>
+            <span>{{ `${ $t('label.beneficiaries-upload') } : ${ beneficiariesType }` }}</span>
           </div>
           <div class="text item card-description">
             <p><strong><i class="el-icon-info" /> {{ $t('label.beneficiaries-upload-option') }}</strong></p>
@@ -20,7 +20,7 @@
             <el-row>
               <el-col :span="24">
                 <div class="card-panel-text">
-                  {{ `Alokasi ${ getTitle() } untuk ${user.kabkota.name}` }}
+                  {{ `Alokasi ${ beneficiariesType } untuk ${user.kabkota.name}` }}
                 </div>
               </el-col>
             </el-row>
@@ -31,7 +31,7 @@
             <el-row>
               <el-col :span="24">
                 <div class="card-panel-text">
-                  {{ `Alokasi ${ getTitle() } Per Kecamatan` }}
+                  {{ `Alokasi ${ beneficiariesType } Per Kecamatan` }}
                 </div>
               </el-col>
             </el-row>
@@ -49,6 +49,7 @@ import { mapGetters } from 'vuex'
 
 import FormUploadSubDistrict from './components/FormUploadSubDistrict'
 import FormUploadCity from './components/FormUploadCity'
+import BeneficiariesType from './statics/beneficiariesType'
 
 export default {
   components: {
@@ -59,7 +60,8 @@ export default {
     return {
       type: this.$route.query.type,
       isCityComponent: false,
-      isSubdistrictComponent: false
+      isSubdistrictComponent: false,
+      beneficiariesType: null
     }
   },
   computed: {
@@ -67,22 +69,14 @@ export default {
       'user'
     ])
   },
+  created() {
+    this.getTitle()
+  },
   methods: {
-    getTitle() {
-      switch (this.type) {
-        case '1':
-          return this.$t('label.beneficiaries-province')
-        case '2':
-          return this.$t('label.beneficiaries-city')
-        case '3':
-          return this.$t('label.beneficiaries-village-fund')
-        case '4':
-          return this.$t('label.beneficiaries-president')
-        case '5':
-          return this.$t('label.beneficiaries-kemensos')
-        default:
-          return this.$t('label.beneficiaries-not-available')
-      }
+    async getTitle() {
+      const beneficiariesType = new BeneficiariesType()
+      const response = await beneficiariesType.getAll(this.type)
+      this.beneficiariesType = response.name
     },
     switchComponent(component) {
       if (component === 'uploadFormCity') {
