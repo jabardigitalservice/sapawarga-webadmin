@@ -61,7 +61,7 @@
                   {{ row.bansos_type }}
                 </template>
               </el-table-column>
-              <el-table-column prop="target_upload" sortable="custom" :label="$t('label.beneficiaries-upload-target')" />
+              <el-table-column prop="status_upload" sortable="custom" :label="$t('label.beneficiaries-upload-status')" />
               <el-table-column prop="created_at" sortable="custom" :label="$t('label.beneficiaries-upload-date')">
                 <template slot-scope="{row}">
                   {{ row.created_at | moment('D MMMM YYYY H:mm:ss') }}
@@ -121,6 +121,7 @@ export default {
         data.push({
           'bansos_type': this.getTitle(value.bansos_type),
           'target_upload': value.kabkota_name,
+          'status_upload': '', //To do : get data from api
           'created_at': value.created_at,
           'file_url': value.file_url,
           'id': value.id

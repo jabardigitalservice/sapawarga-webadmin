@@ -891,9 +891,10 @@ export default {
     'beneficiaries-image-kk': 'Foto Kepala Keluarga',
 
     'beneficiaries-upload': 'Upload Data BNBA',
-    'beneficiaries-upload-history': 'Daftar Riwayat Upload Data KRTS Non DTKS',
+    'beneficiaries-upload-history': 'Daftar Riwayat Upload Data BNBA',
     'beneficiaries': 'Pintu Bantuan',
     'beneficiaries-upload-target': 'Target Upload',
+    'beneficiaries-upload-status': 'Status',
     'beneficiaries-upload-date': 'Tanggal Upload',
     'beneficiaries-upload-view': 'Lihat',
     'beneficiaries-file-download': 'Download',
