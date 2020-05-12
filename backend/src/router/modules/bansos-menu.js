@@ -18,7 +18,7 @@ const bansosMenuRouter = {
       component: () => import('@/views/beneficiaries/dashboard'),
       meta: {
         title: 'dashboard',
-        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']
+        roles: ['admin', 'staffProv']
       }
     },
     {
@@ -38,7 +38,7 @@ const bansosMenuRouter = {
       hidden: false,
       meta: {
         title: 'beneficiaries-manage-bnba',
-        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']
+        roles: ['admin', 'staffProv']
       }
     },
     {
@@ -48,7 +48,7 @@ const bansosMenuRouter = {
       hidden: true,
       meta: {
         title: 'beneficiaries-detail',
-        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']
+        roles: ['admin', 'staffProv']
       }
     },
     {
