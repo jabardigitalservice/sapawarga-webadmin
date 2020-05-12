@@ -123,7 +123,7 @@ export default {
 
     'beneficiaries-manage': 'Bantuan Sosial',
     'beneficiaries-manage-bnba': 'Daftar BNBA',
-    'beneficiaries-list': 'Daftar Bansos',
+    'beneficiaries-list': 'Verifikasi Data Bansos',
     'beneficiaries-create': 'Tambah Bansos',
     'beneficiaries-detail': 'Detail Bansos',
     'beneficiaries-edit': 'Edit Bansos',

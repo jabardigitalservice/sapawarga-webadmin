@@ -27,7 +27,7 @@ const bansosMenuRouter = {
       component: () => import('@/views/beneficiaries/list'),
       hidden: false,
       meta: {
-        title: 'beneficiaries-manage',
+        title: 'beneficiaries-list',
         roles: ['admin', 'staffKel']
       }
     },
