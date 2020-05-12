@@ -76,9 +76,6 @@ export default {
       }
     }
   },
-  created() {
-    if (this.beneficiaries.notes_nik_empty !== null) this.beneficiaries.is_have_ktp = 0
-  },
   methods: {
     async next() {
       const valid = await this.$refs.beneficiaries.validate()
