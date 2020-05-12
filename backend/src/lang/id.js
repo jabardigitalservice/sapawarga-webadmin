@@ -901,7 +901,9 @@ export default {
     'beneficiaries-upload-option': 'Pilih pintu bantuan untuk upload data BNBA',
     'beneficiaries-upload-info': 'Sebelum meng-upload data BNBA DTKS dan non-DTKS, mohon pilah data berdasarkan alokasi sesuai pintu bantuan. Untuk Upload data, tekan salah satu tombol di bawah sesuai alokasi pintu bantuan yang akan diupload.',
     'beneficiaries-dtks-option': 'Pilihan DTKS',
-    'beneficiaries-nondtks-option': 'Pilihan Non DTKS'
+    'beneficiaries-nondtks-option': 'Pilihan Non DTKS',
+    'beneficiaries-upload-success': 'Dokumen berhasil dikirim',
+    'beneficiaries-add-file': 'Tambah File'
 
   },
   news: {
