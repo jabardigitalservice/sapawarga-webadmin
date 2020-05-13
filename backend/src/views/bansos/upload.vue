@@ -24,7 +24,7 @@
           <router-link v-if="beneficiariesType.type == 'dtks'" :key="index" :to="`/bansos/upload-form?type=${ beneficiariesType.id }`">
             <el-card class="box-card">
               <p style="margin:0; font-weight: bold">
-                <img src="@/assets/bansos-type.png" style="vertical-align: middle; margin-right: 15px">{{ beneficiariesType.name }}
+                <img src="@/assets/bansos-type.png" style="vertical-align: middle; margin-right: 15px">{{ `${ beneficiariesType.type.toUpperCase().replace('_', ' ') } - ${ beneficiariesType.name }` }}
               </p>
             </el-card>
           </router-link>
@@ -40,7 +40,7 @@
           <router-link v-if="beneficiariesType.type == 'non_dtks'" :key="index" :to="`/bansos/upload-form?type=${ beneficiariesType.id }`">
             <el-card class="box-card">
               <p style="margin:0; font-weight: bold">
-                <img src="@/assets/bansos-type.png" style="vertical-align: middle; margin-right: 15px">{{ beneficiariesType.name }}
+                <img src="@/assets/bansos-type.png" style="vertical-align: middle; margin-right: 15px">{{ `${beneficiariesType.type.toUpperCase().replace('_', ' ') } - ${ beneficiariesType.name }` }}
               </p>
             </el-card>
           </router-link>
@@ -136,7 +136,7 @@ export default {
     getTitle(typeId) {
       const beneficiariesType = new BeneficiariesType()
       const response = beneficiariesType.getAll(typeId)
-      return response.name
+      return `${response.type.toUpperCase().replace('_', ' ')} - ${response.name}`
     }
   }
 }

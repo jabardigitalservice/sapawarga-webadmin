@@ -76,7 +76,7 @@ export default {
     async getTitle() {
       const beneficiariesType = new BeneficiariesType()
       const response = await beneficiariesType.getAll(this.type)
-      this.beneficiariesType = response.name
+      this.beneficiariesType = `${response.type.toUpperCase().replace('_', ' ')} - ${response.name}`
     },
     switchComponent(component) {
       if (component === 'uploadFormCity') {

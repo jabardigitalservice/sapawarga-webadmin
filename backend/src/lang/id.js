@@ -906,7 +906,15 @@ export default {
     'beneficiaries-add-file': 'Tambah File',
     'beneficiaries-upload-file': 'Upload',
     'beneficiaries-subdistrict-upload': 'Upload Data Alokasi Bantuan Per Kecamatan',
-    'beneficiaries-city-upload': 'Upload Data Alokasi Bantuan Kota/Kabupaten'
+    'beneficiaries-city-upload': 'Upload Data Alokasi Bantuan Kota/Kabupaten',
+    'beneficiaries-pkh': 'PKH',
+    'beneficiaries-bpnt-basicfood': 'BPNT (Program Sembako)',
+    'beneficiaries-bpnt-expansion': 'BPNT Perluasan',
+    'beneficiaries-kemensos': 'Bansos Tunai Kemensos',
+    'beneficiaries-president': 'Bansos Presiden Sembako',
+    'beneficiaries-province': 'Bansos Provinsi',
+    'beneficiaries-village-fund': 'Bansos Dana Desa',
+    'beneficiaries-city': 'Bansos Kota/Kabupaten'
 
   },
   news: {
