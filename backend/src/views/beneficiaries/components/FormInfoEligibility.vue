@@ -14,8 +14,8 @@
           <el-radio class="label-check" :label="0">Tidak Perlu Dibantu</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item v-if="!beneficiaries.is_need_help" label="Berikan keterangan kenapa warga tersebut tidak perlu dibantu?" prop="rejected">
-        <el-radio-group v-model="beneficiaries.rejected" class="radio-reject">
+      <el-form-item v-if="!beneficiaries.is_need_help" label="Berikan keterangan kenapa warga tersebut tidak perlu dibantu?" prop="notes_rejected">
+        <el-radio-group v-model="beneficiaries.notes_rejected" class="radio-reject">
           <el-radio class="label-check" label="meninggal">Meninggal</el-radio>
           <el-radio class="label-check" label="pindah">Pindah</el-radio>
           <el-radio class="label-check" label="orang mampu">Orang mampu</el-radio>
@@ -23,8 +23,8 @@
           <el-radio class="label-check" label="lainnya">Lainnya</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item v-if="!beneficiaries.is_need_help && beneficiaries.rejected === 'lainnya'" prop="notes_rejected">
-        <el-input v-model="beneficiaries.notes_rejected" type="textarea" rows="4" />
+      <el-form-item v-if="!beneficiaries.is_need_help && beneficiaries.notes_rejected === 'lainnya'" prop="rejected">
+        <el-input v-model="beneficiaries.rejected" type="textarea" rows="4" />
       </el-form-item>
       <el-form-item v-if="beneficiaries.is_need_help" label="Berikan keterangan kenapa warga tersebut perlu dibantu?" prop="notes_approved">
         <el-input v-model="beneficiaries.notes_approved" type="textarea" rows="4" />
@@ -111,7 +111,7 @@ export default {
   },
   created() {
     if (!this.isCreate) {
-      this.beneficiaries.is_need_help = 1
+      if (this.beneficiaries.status_verification === 2) this.beneficiaries.is_need_help = 0
     }
   },
   methods: {
@@ -130,8 +130,8 @@ export default {
       if (!valid) {
         return
       }
-      if (this.beneficiaries.rejected !== 'lainnya') {
-        this.beneficiaries.notes_rejected = this.rejected
+      if (this.beneficiaries.notes_rejected === 'lainnya') {
+        this.beneficiaries.notes_rejected = this.beneficiaries.rejected
       }
 
       const id = await this.$route.params && this.$route.params.id
@@ -140,7 +140,6 @@ export default {
         cancelButtonText: this.$t('common.cancel'),
         type: 'warning'
       })
-      if (this.beneficiaries.is_nik_valid === 1) delete this.beneficiaries.nik
       this.beneficiaries.status_verification = 2
       await update(id, this.beneficiaries)
       this.$message.info('Status berhasil diubah')

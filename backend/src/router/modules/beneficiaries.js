@@ -7,7 +7,7 @@ const beneficiariesRouter = {
   redirect: '/',
   meta: {
     title: 'beneficiaries-manage',
-    roles: ['admin', 'staffKel'],
+    roles: ['admin', 'staffKel', 'staffKabkota', 'staffKec'],
     icon: 'example'
   },
   active: false,
@@ -18,7 +18,7 @@ const beneficiariesRouter = {
       component: () => import('@/views/beneficiaries/list'),
       meta: {
         title: 'beneficiaries-manage',
-        roles: ['admin', 'staffKel']
+        roles: ['admin', 'staffKel', 'staffKabkota', 'staffKec']
       }
     },
     {

@@ -2,6 +2,7 @@
   <div class="app-container">
     <el-card v-if="preview === false" class="box-card">
       <span v-if="isCreate" class="header title">Tambah Calon Penerima Bantuan</span>
+      <span v-else-if="isEdit" class="header title">Edit Data Calon Penerima Bantuan</span>
       <span v-else class="header title">Verifikasi Calon Penerima Bantuan</span>
       <el-steps v-if="!isCreate && beneficiaries.is_nik_valid === 0" class="steps" :active="active" process-status="wait" finish-status="success" align-center>
         <el-step title="Informasi Penerima Bantuan" />
@@ -60,7 +61,7 @@
         <div v-else-if="!isCreate && beneficiaries.is_nik_valid === 1">
           <el-row v-if="active === 1" :gutter="20">
             <el-col :sm="24" :md="17" :lg="17" :xl="17">
-              <FormPersonal :beneficiaries.sync="beneficiaries" :is-create="isCreate" :disable-field="!isCreate" @nextStep="onClickNextChild" />
+              <FormPersonal :beneficiaries.sync="beneficiaries" :is-edit="isEdit" :is-create="isCreate" :disable-field="!isCreate" @nextStep="onClickNextChild" />
             </el-col>
           </el-row>
           <el-row v-if="active === 2" :gutter="20">
@@ -82,12 +83,12 @@
         <div v-else-if="!isCreate && beneficiaries.is_nik_valid === 0">
           <el-row v-if="active === 1" :gutter="20">
             <el-col :sm="24" :md="17" :lg="17" :xl="17">
-              <FormPersonal :beneficiaries.sync="beneficiaries" :is-create="isCreate" :disable-field="!isCreate" @nextStep="onClickNextChild" />
+              <FormPersonal :beneficiaries.sync="beneficiaries" :is-edit="isEdit" :is-create="isCreate" :disable-field="!isCreate" @nextStep="onClickNextChild" />
             </el-col>
           </el-row>
           <el-row v-if="active === 2" :gutter="20">
             <el-col :sm="24" :md="17" :lg="17" :xl="17">
-              <FormKtp :beneficiaries.sync="beneficiaries" :is-create="isCreate" :disable-field="!isCreate" @nextStep="onClickNextChild" />
+              <FormKtp :beneficiaries.sync="beneficiaries" :is-edit="isEdit" :is-create="isCreate" :disable-field="!isCreate" @nextStep="onClickNextChild" />
             </el-col>
           </el-row>
           <el-row v-if="active === 3" :gutter="20">
@@ -126,6 +127,7 @@ import FormIncome from './components/FormIncome'
 import FormUpload from './components/FormUpload'
 import Preview from './components/Preview'
 import { fetchRecord } from '@/api/beneficiaries'
+import { mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -141,12 +143,17 @@ export default {
     isCreate: {
       type: Boolean,
       default: false
+    },
+    isEdit: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
     return {
       active: 1,
       preview: false,
+      dialogVisible: false,
       beneficiaries: {
         nik: null,
         name: null,
@@ -186,11 +193,13 @@ export default {
         notes_approved: null,
         notes_rejected: null,
         rejected: null,
-        notes_nik_empty: null
-      },
-      rules: {
+        notes_nik_empty: null,
+        is_have_ktp: 1
       }
     }
+  },
+  computed: {
+    ...mapGetters(['user'])
   },
   async created() {
     if (!this.isCreate) {

@@ -122,7 +122,8 @@ export default {
     'gamification-edit': 'Edit Misi',
 
     'beneficiaries-manage': 'Bantuan Sosial',
-    'beneficiaries-list': 'Daftar Bansos',
+    'beneficiaries-manage-bnba': 'Daftar BNBA',
+    'beneficiaries-list': 'Verifikasi Data Bansos',
     'beneficiaries-create': 'Tambah Bansos',
     'beneficiaries-detail': 'Detail Bansos',
     'beneficiaries-edit': 'Edit Bansos',
