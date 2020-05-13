@@ -104,31 +104,31 @@ export default {
       ]
       this.tableData2Beneficiaries = [
         {
-          title: 'NIK Valid',
+          title: this.$t('label.beneficiaries-is_nik_valid'),
           content: row.is_nik_valid
         },
         {
-          title: 'Alamat Lengkap',
+          title: this.$t('label.beneficiaries-is_alamat_lengkap'),
           content: row.is_alamat_lengkap
         },
         {
-          title: 'Manual',
+          title: this.$t('label.beneficiaries-is_manual'),
           content: row.is_manual
         },
         {
-          title: 'Dari Sapawarga',
+          title: this.$t('label.beneficiaries-is_sapawarga'),
           content: row.is_sapawarga
         },
         {
-          title: 'Dari Pikobar',
+          title: this.$t('label.beneficiaries-is_pikobar'),
           content: row.is_pikobar
         },
         {
-          title: 'Sudah Clean',
+          title: this.$t('label.beneficiaries-is_super_clean'),
           content: row.is_super_clean
         },
         {
-          title: 'Data Sisa',
+          title: this.$t('label.beneficiaries-is_data_sisa'),
           content: row.is_data_sisa
         }
       ]
@@ -163,7 +163,8 @@ export default {
         '4': 'Bansos Tunai (Kemensos)',
         '5': 'Bansos Presiden Sembako (BODEBEK)',
         '6': 'Bansos Provinsi',
-        '7': 'Dana Desa'
+        '7': 'Dana Desa',
+        '8': 'Bansos Kabupaten/Kota'
       }
       return statusMap[status]
     },

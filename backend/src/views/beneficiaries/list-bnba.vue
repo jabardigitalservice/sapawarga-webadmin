@@ -108,7 +108,8 @@ export default {
         '4': 'Bansos Tunai (Kemensos)',
         '5': 'Bansos Presiden Sembako (BODEBEK)',
         '6': 'Bansos Provinsi',
-        '7': 'Dana Desa'
+        '7': 'Dana Desa',
+        '8': 'Bansos Kabupaten/Kota'
       }
       return statusMap[status]
     }

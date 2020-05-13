@@ -895,6 +895,14 @@ export default {
     'beneficiaries-image-ktp': 'Foto KTP',
     'beneficiaries-image-kk': 'Foto Kepala Keluarga',
 
+    'beneficiaries-is_nik_valid': 'NIK Valid',
+    'beneficiaries-is_alamat_lengkap': 'Alamat Lengkap',
+    'beneficiaries-is_manual': 'Manual',
+    'beneficiaries-is_sapawarga': 'Dari Sapawarga',
+    'beneficiaries-is_pikobar': 'Dari Pikobar',
+    'beneficiaries-is_super_clean': 'Sudah Clean',
+    'beneficiaries-is_data_sisa': 'Data Sisa',
+
     'beneficiaries-upload': 'Upload Data KRTS Non DTKS',
     'beneficiaries-upload-history': 'Daftar Riwayat Upload Data KRTS Non DTKS',
     'beneficiaries': 'Pintu Bantuan',
