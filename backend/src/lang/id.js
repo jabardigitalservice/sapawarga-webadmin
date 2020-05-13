@@ -646,6 +646,7 @@ export default {
     'status-select': 'Pilih Status',
 
     'roles-admin': 'Admin',
+    'roles-administrator': 'Administrator',
     'roles-admin-saber-hoax': 'Admin Saber Hoax',
     'roles-admin-leader': 'Pimpinan',
     'roles-admin-opd': 'Admin OPD',
@@ -656,6 +657,10 @@ export default {
     'roles-admin-rw': 'RW',
     'roles-trainer': 'Pelatih',
     'roles-public': 'Publik',
+    'roles-staff-kel': 'Staf Desa/Kelurahan',
+    'roles-staff-kec': 'Staf Kecamatan',
+    'roles-staff-kabkota': 'Staf Kabupaten/Kota',
+    'roles-staff-province': 'Staf Provinsi',
 
     'popular-category': 'Kategori Populer',
     'link-logo-news-channels-manage': 'Tautan Logo Sumber Berita',

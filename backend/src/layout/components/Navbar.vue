@@ -17,11 +17,10 @@
       <div class="right-menu-item">
         <div>
           <div style="font-size: 10pt; display: block; line-height: 1.3em; padding: 8px">
-            <strong>{{ name }}</strong><br>{{ _.get(user, 'roles_active.label') }}
+            <div><strong style="float:right">{{ name }}</strong><br></div>{{ costume(_.get(user, 'roles_active.label')) }}
           </div>
         </div>
       </div>
-
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
           <img :src="avatar" class="user-avatar">
@@ -83,6 +82,19 @@ export default {
     async logout() {
       await this.$store.dispatch('user/logout')
       this.$router.push(`/login`)
+    },
+    costume(value) {
+      if (value === this.$t('label.roles-staff-kel')) {
+        return this.$t('label.roles-admin') + ' ' + this.user.kabkota.name + ' ' + this.$t('label.area-kec') + ' ' + this.user.kecamatan.name + ' ' + this.$t('label.area-kel') + ' ' + this.user.kelurahan.name
+      } else if (value === this.$t('label.roles-staff-kec')) {
+        return this.$t('label.roles-admin') + ' ' + this.user.kabkota.name + ' ' + this.$t('label.area-kec') + ' ' + this.user.kecamatan.name
+      } else if (value === this.$t('label.roles-staff-kabkota')) {
+        return this.$t('label.roles-admin') + ' ' + this.user.kabkota.name
+      } else if (value === this.$t('label.roles-staff-province')) {
+        return this.$t('label.roles-admin-province')
+      } else {
+        return this.$t('label.roles-administrator')
+      }
     }
   }
 }
