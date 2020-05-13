@@ -58,16 +58,16 @@ export default {
           content: row.nik
         },
         {
-          title: 'Jenis Bantuan',
-          content: this.tipeBansosFilter(row.id_tipe_bansos)
-        },
-        {
-          title: 'Nama Kepala Keluarga',
+          title: this.$t('label.beneficiaries-familyhead-name'),
           content: row.nama_krt
         },
         {
-          title: 'Profesi',
+          title: this.$t('label.beneficiaries-job'),
           content: row.lapangan_usaha_type ? row.lapangan_usaha_type.title : '-'
+        },
+        {
+          title: this.$t('label.beneficiaries'),
+          content: this.tipeBansosFilter(row.id_tipe_bansos)
         },
         {
           title: this.$t('label.beneficiaries-domicile-kabkota'),

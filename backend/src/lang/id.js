@@ -870,6 +870,7 @@ export default {
     'phone-book-tooltip-inactivate': 'Nonaktifkan Nomor penting',
 
     'beneficiaries-name': 'Nama Lengkap',
+    'beneficiaries-familyhead-name': 'Nama Kepala Keluarga',
     'beneficiaries-status': 'Status',
     'beneficiaries-nik': 'NIK',
     'beneficiaries-rt': 'RT',
@@ -880,6 +881,9 @@ export default {
     'beneficiaries-edit': 'Edit Bansos',
     'beneficiaries-detail': 'Detail Bansos',
     'beneficiaries-reject': 'Ditolak',
+    'beneficiaries-verified-kabkota': 'Terverifikasi Kab/Kota',
+    'beneficiaries-verified-kec': 'Terverifikasi Kec',
+    'beneficiaries-verified-keldesrw': 'Terverifikasi Kel/Desa/RW',
     'beneficiaries-verified': 'Terverifikasi',
     'beneficiaries-unverified': 'Belum Terverifikasi',
     'beneficiaries-detail-bansos': 'Detail Calon Penerima Bantuan',

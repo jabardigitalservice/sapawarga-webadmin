@@ -17,7 +17,7 @@
               <span style="cursor: pointer; color: blue" @click="openDetail(row.code_bps, row.rw, row.name)">{{ row.name }}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="data.approved_kabkota" align="right" sortable="custom" :label="'Approval Kab/Kota'" min-width="180px">
+          <el-table-column prop="data.approved_kabkota" align="right" sortable="custom" :label="$t('label.beneficiaries-verified-kabkota')" min-width="180px">
             <template slot-scope="{row}">
               <span v-if="row.data.approved_kabkota" style="float: left">
                 ({{ formatNumber(percentage(row.data.approved_kabkota, getTotalBenefeciaries(row.data))) }}%)
@@ -25,7 +25,7 @@
               {{ formatThousands(row.data.approved_kabkota) }}
             </template>
           </el-table-column>
-          <el-table-column prop="data.approved_kec" align="right" sortable="custom" :label="'Approval Kec'" min-width="180px">
+          <el-table-column prop="data.approved_kec" align="right" sortable="custom" :label="$t('label.beneficiaries-verified-kec')" min-width="180px">
             <template slot-scope="{row}">
               <span v-if="row.data.approved_kec" style="float: left">
                 ({{ formatNumber(percentage(row.data.approved_kec, getTotalBenefeciaries(row.data))) }}%)
@@ -33,7 +33,7 @@
               {{ formatThousands(row.data.approved_kec) }}
             </template>
           </el-table-column>
-          <el-table-column prop="data.approved" align="right" sortable="custom" :label="'Terverifikasi Kel/Desa/RW'" min-width="180px">
+          <el-table-column prop="data.approved" align="right" sortable="custom" :label="$t('label.beneficiaries-verified-keldesrw')" min-width="180px">
             <template slot-scope="{row}">
               <span v-if="row.data.approved" style="float: left">
                 ({{ formatNumber(percentage(row.data.approved, getTotalBenefeciaries(row.data))) }}%)

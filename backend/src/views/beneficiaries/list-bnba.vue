@@ -10,7 +10,7 @@
         <el-table v-loading="listLoading" :data="list" border stripe highlight-current-row style="width: 100%" @sort-change="changeSort">
           <el-table-column type="index" width="50" align="right" :index="getTableRowNumbering" />
 
-          <el-table-column prop="nama_krt" sortable="custom" :label="'Nama Kepala Keluarga'" min-width="200px">
+          <el-table-column prop="nama_krt" sortable="custom" :label="$t('label.beneficiaries-familyhead-name')" min-width="200px">
             <template slot-scope="{row}">
               <a @click="selectedRow = row">
                 {{ row.nama_krt }}
@@ -26,7 +26,7 @@
             </template>
           </el-table-column>
 
-          <el-table-column prop="lapangan_usaha" sortable="custom" :label="'Profesi'" min-width="150px">
+          <el-table-column prop="lapangan_usaha" sortable="custom" :label="$t('label.beneficiaries-job')" min-width="150px">
             <template slot-scope="{row}">
               {{ row.lapangan_usaha_type ? row.lapangan_usaha_type.title : '-' }}
             </template>
@@ -52,9 +52,9 @@
             </template>
           </el-table-column>
 
-          <el-table-column prop="nama_kab" sortable="custom" align="center" :label="'Kabupaten/Kota'" min-width="175px" />
-          <el-table-column prop="nama_kec" sortable="custom" align="center" :label="'Kecamatan'" min-width="175px" />
-          <el-table-column prop="nama_kel" sortable="custom" align="center" :label="'Kelurahan'" min-width="175px" />
+          <el-table-column prop="nama_kab" sortable="custom" align="center" :label="$t('label.beneficiaries-domicile-kabkota')" min-width="175px" />
+          <el-table-column prop="nama_kec" sortable="custom" align="center" :label="$t('label.beneficiaries-domicile-kecamatan')" min-width="175px" />
+          <el-table-column prop="nama_kel" sortable="custom" align="center" :label="$t('label.beneficiaries-domicile-kelurahan')" min-width="175px" />
           <el-table-column prop="rw" sortable="custom" align="center" :label="$t('label.beneficiaries-rw')" min-width="70px" />
 
           <el-table-column prop="rt" sortable="custom" align="center" :label="$t('label.beneficiaries-rt')" min-width="70px" />
