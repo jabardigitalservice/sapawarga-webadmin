@@ -11,6 +11,7 @@
         />
         <!-- show data -->
         <div v-if="!isLoading" class="stat-count color-sw-green">{{ summery.approved_kabkota ? formatNumber(summery.approved_kabkota) : '-' }}</div>
+        <div v-if="!isLoading" class="stat-count color-sw-green">{{ formatNumber(percentage(summery.approved_kabkota)) }} %</div>
       </div>
     </el-col>
     <el-col :xs="24" :sm="8" :md="4" :lg="4" :xl="4">
@@ -24,6 +25,7 @@
         />
         <!-- show data -->
         <div v-if="!isLoading" class="stat-count color-sw-green">{{ summery.approved_kec ? formatNumber(summery.approved_kec) : '-' }}</div>
+        <div v-if="!isLoading" class="stat-count color-sw-green">{{ formatNumber(percentage(summery.approved_kec)) }} %</div>
       </div>
     </el-col>
     <el-col :xs="24" :sm="8" :md="4" :lg="4" :xl="4">
@@ -37,6 +39,7 @@
         />
         <!-- show data -->
         <div v-if="!isLoading" class="stat-count color-sw-green">{{ summery.approved ? formatNumber(summery.approved) : '-' }}</div>
+        <div v-if="!isLoading" class="stat-count color-sw-green">{{ formatNumber(percentage(summery.approved)) }} %</div>
       </div>
     </el-col>
     <el-col :xs="24" :sm="8" :md="4" :lg="4" :xl="4">
@@ -50,6 +53,7 @@
         />
         <!-- show data -->
         <div v-if="!isLoading" class="stat-count color-sw-orange">{{ summery.pending ? formatNumber(summery.pending) : '-' }}</div>
+        <div v-if="!isLoading" class="stat-count color-sw-orange">{{ formatNumber(percentage(summery.pending)) }} %</div>
       </div>
     </el-col>
     <el-col :xs="24" :sm="8" :md="4" :lg="4" :xl="4">
@@ -63,6 +67,7 @@
         />
         <!-- show data -->
         <div v-if="!isLoading" class="stat-count color-sw-red">{{ getReject ? formatNumber(getReject) : '-' }}</div>
+        <div v-if="!isLoading" class="stat-count color-sw-red">{{ formatNumber(percentage(getReject)) }} %</div>
       </div>
     </el-col>
     <el-col :xs="24" :sm="8" :md="4" :lg="4" :xl="4">
@@ -131,6 +136,12 @@ export default {
     }
   },
   methods: {
+    percentage(val) {
+      if (this.getTotalBenefeciaries) {
+        return val / this.getTotalBenefeciaries * 100
+      }
+      return 0
+    },
     formatNumber
   }
 }

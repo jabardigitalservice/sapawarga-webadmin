@@ -8,10 +8,15 @@
         <ListFilterBnba :list-query.sync="listQuery" @submit-search="getList" @reset-search="resetFilter" />
 
         <el-table v-loading="listLoading" :data="list" border stripe highlight-current-row style="width: 100%" @sort-change="changeSort">
-          <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
+          <el-table-column type="index" width="50" align="right" :index="getTableRowNumbering" />
 
-          <el-table-column prop="nama_krt" sortable="custom" :label="'Nama Kepala Keluarga'" min-width="200px" />
-
+          <el-table-column prop="nama_krt" sortable="custom" :label="'Nama Kepala Keluarga'" min-width="200px">
+            <template slot-scope="{row}">
+              <a @click="selectedRow = row">
+                {{ row.nama_krt }}
+              </a>
+            </template>
+          </el-table-column>
           <el-table-column prop="nik" sortable="custom" :label="$t('label.beneficiaries-nik')" min-width="175px">
             <template slot-scope="{row}">
               {{ row.nik }}
@@ -21,28 +26,23 @@
             </template>
           </el-table-column>
 
-          <el-table-column v-if="isFilterProv" prop="nama_kab" sortable="custom" align="center" :label="'Kabupaten/Kota'" min-width="175px" />
-          <el-table-column v-if="isFilterKab" prop="nama_kec" sortable="custom" align="center" :label="'Kecamatan'" min-width="175px" />
-          <el-table-column v-if="isFilterKec" prop="nama_kel" sortable="custom" align="center" :label="'Kelurahan'" min-width="175px" />
-          <el-table-column v-if="isFilterKel" prop="rw" sortable="custom" align="center" :label="$t('label.beneficiaries-rw')" min-width="70px" />
-
-          <el-table-column v-if="isFilterKel" prop="rt" sortable="custom" align="center" :label="$t('label.beneficiaries-rt')" min-width="70px" />
-
           <el-table-column prop="lapangan_usaha" sortable="custom" :label="'Profesi'" min-width="150px">
             <template slot-scope="{row}">
               {{ row.lapangan_usaha_type ? row.lapangan_usaha_type.title : '-' }}
             </template>
           </el-table-column>
 
-          <el-table-column prop="penghasilan_sebelum_covid19" sortable="custom" :label="$t('label.beneficiaries-income-before')" min-width="180px">
+          <el-table-column prop="penghasilan_sebelum_covid19" align="right" sortable="custom" :label="$t('label.beneficiaries-income-before')" min-width="150px">
             <template slot-scope="{row}">
-              {{ formatCurrency(row.penghasilan_sebelum_covid19, 'Rp.') }}
+              <span style="float: left">Rp.</span>
+              {{ formatCurrency(row.penghasilan_sebelum_covid19) }}
             </template>
           </el-table-column>
 
-          <el-table-column prop="penghasilan_setelah_covid" sortable="custom" :label="$t('label.beneficiaries-income-after')" min-width="180px">
+          <el-table-column prop="penghasilan_setelah_covid" align="right" sortable="custom" :label="$t('label.beneficiaries-income-after')" min-width="150px">
             <template slot-scope="{row}">
-              {{ formatCurrency(row.penghasilan_setelah_covid, 'Rp.') }}
+              <span style="float: left">Rp.</span>
+              {{ formatCurrency(row.penghasilan_setelah_covid) }}
             </template>
           </el-table-column>
 
@@ -52,13 +52,18 @@
             </template>
           </el-table-column>
 
+          <el-table-column prop="nama_kab" sortable="custom" align="center" :label="'Kabupaten/Kota'" min-width="175px" />
+          <el-table-column prop="nama_kec" sortable="custom" align="center" :label="'Kecamatan'" min-width="175px" />
+          <el-table-column prop="nama_kel" sortable="custom" align="center" :label="'Kelurahan'" min-width="175px" />
+          <el-table-column prop="rw" sortable="custom" align="center" :label="$t('label.beneficiaries-rw')" min-width="70px" />
+
+          <el-table-column prop="rt" sortable="custom" align="center" :label="$t('label.beneficiaries-rt')" min-width="70px" />
+
           <el-table-column align="center" :label="$t('label.actions')" width="200px">
-            <template slot-scope="scope">
-              <router-link :to="'/beneficiaries/detail-bnba/' +scope.row.id" target="_blank">
-                <el-tooltip :content="$t('label.beneficiaries-detail')" placement="top">
-                  <el-button type="primary" icon="el-icon-view" size="small" />
-                </el-tooltip>
-              </router-link>
+            <template slot-scope="{row}">
+              <el-tooltip :content="$t('label.beneficiaries-detail')" placement="top">
+                <el-button size="mini" type="primary" icon="el-icon-view" @click="selectedRow = row" />
+              </el-tooltip>
             </template>
           </el-table-column>
         </el-table>
@@ -80,6 +85,7 @@
         </span>
       </el-dialog>
     </el-row>
+    <ModalDetailBnba :rowdata="selectedRow" @close="closeDialog" />
   </div>
 </template>
 
@@ -87,11 +93,12 @@
 import { fetchBnbaTahapSatuSummary, fetchBnbaTahapSatuList } from '@/api/beneficiaries'
 import Pagination from '@/components/Pagination'
 import StatisticsBnba from './components/StatisticsBnba'
+import ModalDetailBnba from './components/ModalDetailBnba'
 import ListFilterBnba from './_listfilterbnba'
 import { mapGetters } from 'vuex'
 
 export default {
-  components: { Pagination, StatisticsBnba, ListFilterBnba },
+  components: { Pagination, StatisticsBnba, ListFilterBnba, ModalDetailBnba },
   filters: {
     tipeBansosFilter(status) {
       const statusMap = {
@@ -120,6 +127,8 @@ export default {
       isLoadingSummary: true,
       dataSummary: null,
       listLoading: true,
+      modalDetailBnbaVisible: false,
+      selectedRow: null,
       status: {
         DRAFT: 0,
         SCHEDULED: 5,
@@ -136,8 +145,8 @@ export default {
         kode_kab: null,
         kode_kec: null,
         kode_kel: null,
-        domicile_rw_like: null,
-        domicile_rt_like: null
+        rw: null,
+        rt: null
       }
     }
   },
@@ -157,10 +166,10 @@ export default {
     }
   },
   created() {
-    this.getList()
     this.listQuery.kode_kab = this.user.kabkota ? this.user.kabkota.code_bps : null
     this.listQuery.kode_kec = this.user.kecamatan ? this.user.kecamatan.code_bps : null
     this.listQuery.kode_kel = this.user.kelurahan ? this.user.kelurahan.code_bps : null
+    this.getList()
   },
 
   methods: {
@@ -195,6 +204,9 @@ export default {
 
     resetFilter() {
       Object.assign(this.$data.listQuery, this.$options.data().listQuery)
+      this.listQuery.kode_kab = this.user.kabkota ? this.user.kabkota.code_bps : null
+      this.listQuery.kode_kec = this.user.kecamatan ? this.user.kecamatan.code_bps : null
+      this.listQuery.kode_kel = this.user.kelurahan ? this.user.kelurahan.code_bps : null
       this.getList()
     },
 
@@ -218,7 +230,7 @@ export default {
         rupiah = split[1] !== undefined ? rupiah + ',' + split[1] : rupiah
         return prefix === undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '')
       } else {
-        return 'Rp. 0'
+        return prefix === undefined ? 0 : 'Rp. 0'
       }
     },
 
@@ -226,6 +238,10 @@ export default {
       this.listQuery.sort_by = e.prop
       this.listQuery.sort_order = e.order
       this.getList()
+    },
+
+    closeDialog() {
+      this.selectedRow = null
     }
   }
 }

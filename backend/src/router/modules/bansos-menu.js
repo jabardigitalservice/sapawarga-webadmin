@@ -42,16 +42,6 @@ const bansosMenuRouter = {
       }
     },
     {
-      name: 'beneficiaries-detail-bnba',
-      path: '/beneficiaries/detail-bnba/:id',
-      component: () => import('@/views/beneficiaries/detail-bnba'),
-      hidden: true,
-      meta: {
-        title: 'beneficiaries-detail',
-        roles: ['admin', 'staffProv']
-      }
-    },
-    {
       name: 'bansos-download',
       path: '/bansos/download',
       component: () => import('@/views/bansos/download'),
