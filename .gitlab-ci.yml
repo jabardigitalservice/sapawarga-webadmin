@@ -24,15 +24,11 @@ code_quality:
   image: docker:stable
   stage: code_quality
   only:
-    - branches
+    - merge_requests
   services:
     - docker:stable-dind
   variables:
     DOCKER_DRIVER: overlay2
-  dependencies:
-    - versioning
-  before_script:
-    - export VERSION=$(cat ./version)
   script:
     - docker run
         --env SOURCE_CODE=$PWD
