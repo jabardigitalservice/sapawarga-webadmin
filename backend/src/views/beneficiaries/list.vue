@@ -237,7 +237,6 @@ export default {
     font-size: 22px;
     float: left;
     padding: 10px;
-    margin-bottom: 20px;
   }
   .dialog-content {
     padding: 0 10px;
