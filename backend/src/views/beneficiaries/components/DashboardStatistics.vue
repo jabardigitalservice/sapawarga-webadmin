@@ -105,31 +105,13 @@ export default {
   },
   computed: {
     getApproved() {
-      if (this.filter.type === 'provinsi' || this.filter.type === 'kabkota') {
-        return this.summery.approved_kabkota
-      }
-      if (this.filter.type === 'kec') {
-        return this.summery.approved_kabkota + this.summery.approved_kec
-      }
-      if (this.filter.type === 'kel') {
-        return this.summery.approved_kabkota + this.summery.approved_kec + this.summery.approved
-      }
-      return this.summery.approved_kabkota + this.summery.approved_kec + this.summery.approved
+      return this.summery.approved_kabkota + this.summery.approved_kec + this.summery.approved_kel + this.summery.approved
     },
     getPending() {
-      if (this.filter.type === 'provinsi' || this.filter.type === 'kabkota') {
-        return this.summery.approved_kec + this.summery.approved + this.summery.pending
-      }
-      if (this.filter.type === 'kec') {
-        return this.summery.approved + this.summery.pending
-      }
-      if (this.filter.type === 'kel') {
-        return this.summery.pending
-      }
       return this.summery.pending
     },
     getReject() {
-      return this.summery.rejected_kabkota + this.summery.rejected_kec + this.summery.rejected
+      return this.summery.rejected_kabkota + this.summery.rejected_kec + this.summery.rejected_kel + this.summery.rejected
     },
     getTotalBenefeciaries() {
       return this.getApproved + this.getPending + this.getReject

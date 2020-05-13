@@ -9,53 +9,23 @@
     </el-row>
     <br>
 
-    <el-form
-      ref="formUploadSubDistrict"
-      :rules="rules"
-      :model="formUploadSubDistrict"
-      label-width="80px"
-      label-position="top"
-    >
-      <el-row :gutter="40">
-        <el-col :span="12">
-          <el-form-item prop="kecamatan_selected">
-            <el-select
-              v-model="formUploadSubDistrict.kecamatan_selected"
-              filterable
-              clearable
-              placeholder="Semua Kecamatan"
-              name="kecamatan"
-              style="width: 100%"
-              @change="changeKecamatan($event)"
-            >
-              <el-option
-                v-for="item in kecamatan_options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              />
-            </el-select>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-upload
-            drag
-            :multiple="false"
-            :limit="1"
-            action=""
-            :auto-upload="false"
-            :on-change="handleChangeFile"
-          >
-            <div class="el-upload__text"><i class="el-icon-upload" /><em> Add File </em>or drop files here</div>
-          </el-upload>
-        </el-col>
-      </el-row>
-      <el-row :gutter="40">
-        <el-col :span="24" style="text-align:right">
-          <el-button type="primary" @click="submitUpload">Upload<i class="el-icon-upload el-icon-right" /></el-button>
-        </el-col>
-      </el-row>
-    </el-form>
+    <el-row :gutter="40">
+      <el-col :span="12">
+        <el-upload
+          drag
+          :multiple="false"
+          :limit="1"
+          action=""
+          :auto-upload="false"
+          :on-change="handleChangeFile"
+        >
+          <div class="el-upload__text"><i class="el-icon-upload" /><em> {{ $t('label.beneficiaries-add-file') }} </em></div>
+        </el-upload>
+      </el-col>
+      <el-col :span="12">
+        <el-button type="primary" @click="submitUpload">{{ $t('label.beneficiaries-upload-file') }}<i class="el-icon-upload el-icon-right" /></el-button>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -63,26 +33,13 @@
 import { uploadBansos } from '@/api/bansos'
 import { mapGetters } from 'vuex'
 import Swal from 'sweetalert2'
-import { getKecamatanList } from '@/api/areas'
 
 export default {
   name: 'FormUploadSubDistrict',
   data() {
     return {
       loading: false,
-      kecId: null,
-      file: null,
-      kecamatan_options: [],
-      formUploadSubDistrict: {},
-      rules: {
-        kecamatan_selected: [
-          {
-            required: true,
-            message: 'Kecamatan tidak boleh kosong!',
-            trigger: 'change'
-          }
-        ]
-      }
+      file: null
     }
   },
   computed: {
@@ -90,33 +47,18 @@ export default {
       'user'
     ])
   },
-  created() {
-    this.getKecamatan()
-  },
   methods: {
-    async getKecamatan() {
-      this.kecamatan_options = []
-      const { data } = await getKecamatanList(this.user.kabkota_id, true)
-      this.kecamatan_options = data.items.map(item => {
-        return {
-          value: item.id,
-          label: item.name
-        }
-      })
-    },
     async submitUpload() {
       try {
-        await this.$refs['formUploadSubDistrict'].validate()
         this.loading = true
         const formData = new FormData()
         formData.append('type', this.$route.query.type)
         formData.append('kabkota_id', this.user.kabkota_id)
-        formData.append('kec_id', this.kecId)
         formData.append('file', this.file)
         await uploadBansos(formData)
 
         Swal.fire({
-          text: 'Dokumen berhasil dikirim',
+          text: this.$t('label.beneficiaries-upload-success'),
           icon: 'success',
           button: 'OK'
         }).then((action) => {
