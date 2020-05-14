@@ -2,6 +2,7 @@
   <div class="app-container">
     <el-row>
       <el-col :lg="24">
+        <DashboardTitle :is-dashboard="true" />
         <!-- show statistics -->
         <DashboardStatistics :is-loading="isLoadingSummary" :summery="dataSummary" :filter="filter" />
 
@@ -86,10 +87,12 @@ import { formatNumber } from '@/utils/formatNumber'
 import { fetchDashboardSummary, fetchDashboardList } from '@/api/beneficiaries'
 import { mapGetters } from 'vuex'
 import DashboardStatistics from './components/DashboardStatistics'
+import DashboardTitle from './components/DashboardTitle'
 
 export default {
   components: {
-    DashboardStatistics
+    DashboardStatistics,
+    DashboardTitle
   },
   filters: {
     statusFilter(status) {
