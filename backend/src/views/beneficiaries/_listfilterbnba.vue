@@ -107,6 +107,7 @@ export default {
 
     submitSearch() {
       this.$emit('submit-search')
+      this.$emit('display-search', this.listQuery)
     },
 
     resetFilter() {
