@@ -6,7 +6,7 @@ WORKDIR /app
 
 # Install git, nginx, nano, bash
 RUN apk update && apk upgrade && \
-	apk add --no-cache git nginx bash nano
+	apk add --no-cache git nginx bash
 
 # Copy all files to app folder
 COPY . /app
