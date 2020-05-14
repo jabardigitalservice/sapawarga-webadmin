@@ -30,7 +30,7 @@
     </el-col>
     <el-col :xs="24" :sm="8" :md="6" :lg="6" :xl="6">
       <div class="grid-content">
-        <div class="stat-title">TERVERIFIKASI KEL/DESA</div>
+        <div class="stat-title">APPROVAL KEL/DESA</div>
         <!-- show loading -->
         <div
           v-loading="isLoading"
