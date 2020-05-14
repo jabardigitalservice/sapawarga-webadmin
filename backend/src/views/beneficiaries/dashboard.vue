@@ -3,10 +3,10 @@
     <el-row>
       <el-col :lg="24">
         <DashboardTitle :is-dashboard="true" />
-        <!-- <div>
-          <el-button type="success" plain class="button-step">Tahap 1</el-button>
-          <el-button type="success" class="button-step">Tahap 2</el-button>
-        </div> -->
+        <div>
+          <el-button type="primary" class="button-step">Tahap 1</el-button>
+          <el-button class="button-step" @click="open">Tahap 2</el-button>
+        </div>
         <!-- <div>
           <el-radio-group v-model="step">
             <el-radio-button type="success" label="Tahap 1" />
@@ -346,6 +346,12 @@ export default {
     },
     getTotalBenefeciaries(data) {
       return this.getApproved(data) + this.getPending(data) + this.getReject(data)
+    },
+    open() {
+      this.$alert(this.$t('label.beneficiaries-dashboard-alert'), {
+        confirmButtonText: 'OK',
+        type: 'warning'
+      })
     }
   }
 }
