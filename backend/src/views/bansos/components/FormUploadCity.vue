@@ -18,11 +18,11 @@
           :auto-upload="false"
           :on-change="handleChangeFile"
         >
-          <div class="el-upload__text"><i class="el-icon-upload" /><em> Add File </em>or drop files here</div>
+          <div class="el-upload__text"><i class="el-icon-upload" /><em> {{ $t('label.beneficiaries-add-file') }} </em></div>
         </el-upload>
       </el-col>
       <el-col :span="12">
-        <el-button type="primary" @click="submitUpload">Upload<i class="el-icon-upload el-icon-right" /></el-button>
+        <el-button type="primary" @click="submitUpload">{{ $t('label.beneficiaries-upload-file') }}<i class="el-icon-upload el-icon-right" /></el-button>
       </el-col>
     </el-row>
   </div>
@@ -57,7 +57,7 @@ export default {
         formData.append('file', this.file)
         await uploadBansos(formData)
         Swal.fire({
-          text: 'Dokumen berhasil dikirim',
+          text: this.$t('label.beneficiaries-upload-success'),
           icon: 'success',
           button: 'OK'
         }).then((action) => {

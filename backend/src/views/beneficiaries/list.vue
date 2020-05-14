@@ -2,6 +2,7 @@
   <div class="app-container">
     <el-row>
       <el-col :lg="24">
+        <DashboardTitle :is-verification="true" />
         <div class="warn-content-warning">
           <p class="title">Pengumuman</p>
           <p>Proses verifikasi dan validasi (verval) data penerima bansos via Sapawarga PERIODE 2 kembali dibuka mulai Senin, 11 Mei 2020! <span class="link" @click="dialogVisible = true">Lihat Info Selengkapnya</span></p>
@@ -89,8 +90,8 @@
         <p class="dialog-content space">3. Pengakomodasian pendaftaran penerima bansos non-KTP.</p>
         <p class="dialog-content space">4. Penyelesaian permasalahan error 422,413,504, dan 408 pada Admin Sapawarga tingkat desa dan aplikasi Sapawarga Ketua RW.</p>
         <p class="dialog-content space">Demikian pengumuman kami, dimohon agar maklum.</p>
-        <p class="dialog-content space">Mari dukung proses verifikasi dan validasi data penerima bantuan sosial melalui Sapawarga untuk pelayanan dan proses pemberian bansos yang lebih baik.</p>
-        <p class="dialog-content space">Hormat kami,</p>
+        <p class="dialog-content space" style="margin-bottom: 30px">Mari dukung proses verifikasi dan validasi data penerima bantuan sosial melalui Sapawarga untuk pelayanan dan proses pemberian bansos yang lebih baik.</p>
+        <p class="dialog-content space" style="margin-bottom: 30px">Hormat kami,</p>
         <p class="dialog-content"><b>Tim Sapawarga,</b></p>
         <p class="dialog-content" style="margin-top:-12px">Pemerintah Provinsi Jawa Barat</p>
         <p class="dialog-content">Hotline (Hanya Whatsapp)</p>
@@ -106,13 +107,14 @@
 
 <script>
 import { fetchSummary, fetchList } from '@/api/beneficiaries'
+import DashboardTitle from './components/DashboardTitle'
 import Pagination from '@/components/Pagination'
 import Statistics from './components/Statistics'
 import ListFilter from './_listfilter'
 import { mapGetters } from 'vuex'
 
 export default {
-  components: { Pagination, Statistics, ListFilter },
+  components: { Pagination, Statistics, ListFilter, DashboardTitle },
   filters: {
     statusFilter(status) {
       const statusMap = {
