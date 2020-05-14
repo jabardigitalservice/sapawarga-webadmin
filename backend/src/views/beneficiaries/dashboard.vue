@@ -65,12 +65,12 @@
               {{ formatThousands(getReject(row.data)) }}
             </template>
           </el-table-column>
-          <el-table-column prop="data.reject" align="right" sortable="custom" :label="$t('label.beneficiaries-newdata')" min-width="180px">
+          <el-table-column prop="data_baru.total" align="right" sortable="custom" :label="$t('label.beneficiaries-newdata')" min-width="180px">
             <template slot-scope="{row}">
-              <span v-if="row.data_baru.total" style="float: left">
+              <span v-if="row.data_baru && row.data_baru.total" style="float: left">
                 ({{ formatNumber(percentage(row.data_baru.total, getTotalBenefeciaries(row.data))) }}%)
               </span>
-              {{ formatThousands(row.data_baru.total) }}
+              {{ row.data_baru ? formatThousands(row.data_baru.total) : '-' }}
             </template>
           </el-table-column>
 
@@ -168,6 +168,13 @@ export default {
             return order === 'ascending' ? -1 : 1
           }
           if (percentage(a.data.approved, getTotalBenefeciaries(a.data)) > percentage(b.data.approved, getTotalBenefeciaries(b.data))) {
+            return order === 'ascending' ? 1 : -1
+          }
+        } else if (prop === 'data_baru.total') {
+          if (a.data_baru && b.data_baru && percentage(a.data_baru.total, getTotalBenefeciaries(a.data)) < percentage(b.data_baru.total, getTotalBenefeciaries(b.data))) {
+            return order === 'ascending' ? -1 : 1
+          }
+          if (a.data_baru && b.data_baru && percentage(a.data_baru.total, getTotalBenefeciaries(a.data)) > percentage(b.data_baru.total, getTotalBenefeciaries(b.data))) {
             return order === 'ascending' ? 1 : -1
           }
         } else if (prop === 'data.pending') {
