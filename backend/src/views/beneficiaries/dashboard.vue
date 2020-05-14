@@ -3,6 +3,16 @@
     <el-row>
       <el-col :lg="24">
         <DashboardTitle :is-dashboard="true" />
+        <!-- <div>
+          <el-button type="success" plain class="button-step">Tahap 1</el-button>
+          <el-button type="success" class="button-step">Tahap 2</el-button>
+        </div> -->
+        <!-- <div>
+          <el-radio-group v-model="step">
+            <el-radio-button type="success" label="Tahap 1" />
+            <el-radio-button type="success" label="Tahap 2" />
+          </el-radio-group>
+        </div> -->
         <!-- show statistics -->
         <DashboardStatistics :is-loading="isLoadingSummary" :summery="dataSummary" :filter="filter" />
 
@@ -18,7 +28,7 @@
               <span style="cursor: pointer; color: blue" @click="openDetail(row.code_bps, row.rw, row.name)">{{ row.name }}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="data.approved_kabkota" align="right" sortable="custom" :label="$t('label.beneficiaries-verified-kabkota')" min-width="180px">
+          <!-- <el-table-column prop="data.approved_kabkota" align="right" sortable="custom" :label="$t('label.beneficiaries-verified-kabkota')" min-width="180px">
             <template slot-scope="{row}">
               <span v-if="row.data.approved_kabkota" style="float: left">
                 ({{ formatNumber(percentage(row.data.approved_kabkota, getTotalBenefeciaries(row.data))) }}%)
@@ -41,7 +51,7 @@
               </span>
               {{ formatThousands(row.data.approved_kel) }}
             </template>
-          </el-table-column>
+          </el-table-column> -->
           <el-table-column prop="data.approved" align="right" sortable="custom" :label="$t('label.beneficiaries-verified-rw')" min-width="180px">
             <template slot-scope="{row}">
               <span v-if="row.data.approved" style="float: left">
@@ -117,6 +127,7 @@ export default {
       isLoadingSummary: true,
       dataSummary: null,
       listLoading: true,
+      step: 'Tahap 2',
       status: {
         DRAFT: 0,
         SCHEDULED: 5,
@@ -128,8 +139,8 @@ export default {
         rw: null
       },
       prevFilter: [],
-      sort_prop: '',
-      sort_order: 'ascending'
+      sort_prop: 'data.approved',
+      sort_order: 'descending'
     }
   },
   computed: {
@@ -339,3 +350,8 @@ export default {
   }
 }
 </script>
+<style lang="scss" scope>
+  .button-step {
+    padding: 13px 40px;
+  }
+</style>
