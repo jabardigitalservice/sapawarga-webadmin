@@ -7,16 +7,11 @@
           <el-button type="primary" class="button-step">Tahap 1</el-button>
           <el-button class="button-step" @click="open">Tahap 2</el-button>
         </div>
-        <!-- <div>
-          <el-radio-group v-model="step">
-            <el-radio-button type="success" label="Tahap 1" />
-            <el-radio-button type="success" label="Tahap 2" />
-          </el-radio-group>
-        </div> -->
+        <!-- {{ user }} -->
         <!-- show statistics -->
         <DashboardStatistics :is-loading="isLoadingSummary" :summery="dataSummary" :filter="filter" />
 
-        <button v-if="prevFilter.length" class="el-button el-button--primary el-button--small" @click="backDetail()">
+        <button v-if="prevFilter.length" class="el-button el-button--primary el-button--small" @click="backDetail(prevFilter)">
           <i class="el-icon-arrow-left" /> Kembali ke Data {{ prevFilter.length-1 ? prevFilter[prevFilter.length-2].name : 'Utama' }}
         </button>
         <h3>Rekap Data {{ prevFilter.length ? prevFilter[prevFilter.length-1].name : '' }}</h3>
@@ -25,7 +20,7 @@
 
           <el-table-column prop="name" sortable="custom" :label="areaLabelByFilter" min-width="200px">
             <template slot-scope="{row}">
-              <span style="cursor: pointer; color: blue" @click="openDetail(row.code_bps, row.rw, row.name)">{{ row.name }}</span>
+              <span style="cursor: pointer; color: blue" @click="openDetail(row.code_bps, row.rw, row.name, row)">{{ row.name }}</span>
             </template>
           </el-table-column>
           <!-- <el-table-column prop="data.approved_kabkota" align="right" sortable="custom" :label="$t('label.beneficiaries-verified-kabkota')" min-width="180px">
@@ -127,7 +122,7 @@ export default {
       isLoadingSummary: true,
       dataSummary: null,
       listLoading: true,
-      step: 'Tahap 2',
+      areaLabelByFilter: null,
       status: {
         DRAFT: 0,
         SCHEDULED: 5,
@@ -145,9 +140,6 @@ export default {
   },
   computed: {
     ...mapGetters(['user']),
-    areaLabelByFilter() {
-      return 'Kabupaten / Kota'
-    },
     sortedList() {
       const prop = this.sort_prop
       const order = this.sort_order
@@ -226,6 +218,13 @@ export default {
     this.resetParams()
     this.getList()
     this.getSummary()
+    if (this.user.roles_active.id === 'staffProv' || this.user.roles_active.id === 'admin') {
+      this.areaLabelByFilter = 'Kabupaten/Kota'
+    } else if (this.user.roles_active.id === 'staffKabkota') {
+      this.areaLabelByFilter = 'Kecamatan'
+    } else if (this.user.roles_active.id === 'staffKec') {
+      this.areaLabelByFilter = 'Kelurahan'
+    }
   },
 
   methods: {
@@ -254,7 +253,7 @@ export default {
         this.filter.code_bps = this.user.kelurahan.code_bps
       }
     },
-    openDetail(code_bps, rw, name) {
+    openDetail(code_bps, rw, name, row) {
       const prevFilter = {
         code_bps: this.filter.code_bps,
         type: this.filter.type,
@@ -265,10 +264,13 @@ export default {
       this.filter.rw = rw
       if (this.filter.type === 'provinsi') {
         this.filter.type = 'kabkota'
+        this.areaLabelByFilter = 'Kecamatan'
       } else if (this.filter.type === 'kabkota') {
         this.filter.type = 'kec'
+        this.areaLabelByFilter = 'Desa/Kelurahan'
       } else if (this.filter.type === 'kec') {
         this.filter.type = 'kel'
+        this.areaLabelByFilter = 'Kel'
       } else if (this.filter.type === 'kel') {
         this.filter.type = 'rw'
       } else {
@@ -278,7 +280,12 @@ export default {
       this.getSummary()
       this.getList()
     },
-    backDetail() {
+    backDetail(value) {
+      if (this.areaLabelByFilter === 'Kecamatan') {
+        this.areaLabelByFilter = 'Kabupaten/Kota'
+      } else if (this.areaLabelByFilter === 'Desa/Kelurahan') {
+        this.areaLabelByFilter = 'Kecamatan'
+      }
       if (this.prevFilter.length) {
         this.filter = this.prevFilter.pop()
         this.getSummary()
