@@ -4,12 +4,12 @@
       <el-row :gutter="10">
         <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="3">
           <el-form-item style="margin-bottom: 0">
-            <el-input v-model="listQuery.nama_krt" placeholder="Nama Lengkap" />
+            <el-input v-model="listQuery.nama_krt" placeholder="Nama Lengkap" @keyup.enter.native="submitSearch()" />
           </el-form-item>
         </el-col>
         <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="3">
           <el-form-item style="margin-bottom: 0">
-            <el-input v-model="listQuery.nik" placeholder="NIK" />
+            <el-input v-model="listQuery.nik" placeholder="NIK" @keyup.enter.native="submitSearch()" />
           </el-form-item>
         </el-col>
         <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="3">
@@ -49,7 +49,7 @@
         </el-col>
         <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="2">
           <el-form-item style="margin-bottom: 0">
-            <el-input v-model="listQuery.rt" placeholder="RT" :disabled="listQuery.kel_id === null && !roles" />
+            <el-input v-model="listQuery.rt" placeholder="RT" :disabled="listQuery.kel_id === null && !roles" @change="submitSearch()" />
           </el-form-item>
         </el-col>
         <el-col :xs="24" :sm="24" :md="4">
@@ -115,14 +115,17 @@ export default {
 
     changeKabkota(id) {
       this.listQuery.kode_kab = id
+      this.submitSearch()
     },
 
     changeKecamatan(id) {
       this.listQuery.kode_kec = id
+      this.submitSearch()
     },
 
     changeKelurahan(id) {
       this.listQuery.kode_kel = id
+      this.submitSearch()
     }
   }
 }
