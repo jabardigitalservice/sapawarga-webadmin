@@ -17,8 +17,8 @@ const bansosMenuRouter = {
       path: '/beneficiaries/dashboard',
       component: () => import('@/views/beneficiaries/dashboard'),
       meta: {
-        title: 'dashboard',
-        roles: ['admin', 'staffProv']
+        title: 'beneficiaries-dashboard-verification',
+        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec']
       }
     },
     {
@@ -38,7 +38,7 @@ const bansosMenuRouter = {
       hidden: false,
       meta: {
         title: 'beneficiaries-manage-bnba',
-        roles: ['admin', 'staffProv']
+        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']
       }
     },
     {
@@ -47,7 +47,7 @@ const bansosMenuRouter = {
       component: () => import('@/views/bansos/download'),
       meta: {
         title: 'bansos-download',
-        roles: ['admin', 'staffProv', 'staffKabkota']
+        roles: ['admin', 'staffKabkota']
       }
     },
     {
@@ -56,7 +56,7 @@ const bansosMenuRouter = {
       component: () => import('@/views/bansos/upload'),
       meta: {
         title: 'bansos-upload',
-        roles: ['admin', 'staffProv', 'staffKabkota']
+        roles: ['admin', 'staffKabkota']
       }
     },
     {
@@ -65,7 +65,7 @@ const bansosMenuRouter = {
       component: () => import('@/views/bansos/upload_form'),
       hidden: true,
       meta: {
-        roles: ['admin', 'staffProv', 'staffKabkota']
+        roles: ['admin', 'staffKabkota']
       }
     },
     {

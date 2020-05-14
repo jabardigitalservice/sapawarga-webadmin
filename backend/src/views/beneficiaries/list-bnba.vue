@@ -2,6 +2,7 @@
   <div class="app-container">
     <el-row>
       <el-col :lg="24">
+        <DashboardTitle :is-bnba="true" />
         <!-- show statistics -->
         <StatisticsBnba :is-loading="isLoadingSummary" :summery="dataSummary" />
 
@@ -95,10 +96,11 @@ import Pagination from '@/components/Pagination'
 import StatisticsBnba from './components/StatisticsBnba'
 import ModalDetailBnba from './components/ModalDetailBnba'
 import ListFilterBnba from './_listfilterbnba'
+import DashboardTitle from './components/DashboardTitle'
 import { mapGetters } from 'vuex'
 
 export default {
-  components: { Pagination, StatisticsBnba, ListFilterBnba, ModalDetailBnba },
+  components: { Pagination, StatisticsBnba, ListFilterBnba, ModalDetailBnba, DashboardTitle },
   filters: {
     tipeBansosFilter(status) {
       const statusMap = {
