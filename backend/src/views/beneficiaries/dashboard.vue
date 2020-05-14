@@ -65,6 +65,14 @@
               {{ formatThousands(getReject(row.data)) }}
             </template>
           </el-table-column>
+          <el-table-column prop="data.reject" align="right" sortable="custom" :label="$t('label.beneficiaries-newdata')" min-width="180px">
+            <template slot-scope="{row}">
+              <span v-if="row.data_baru.total" style="float: left">
+                ({{ formatNumber(percentage(row.data_baru.total, getTotalBenefeciaries(row.data))) }}%)
+              </span>
+              {{ formatThousands(row.data_baru.total) }}
+            </template>
+          </el-table-column>
 
         </el-table>
 
