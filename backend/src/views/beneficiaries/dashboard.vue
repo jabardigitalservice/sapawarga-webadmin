@@ -4,6 +4,38 @@
       <el-col :lg="24">
         <!-- show statistics -->
         <DashboardStatistics :is-loading="isLoadingSummary" :summery="dataSummary" :filter="filter" />
+        <el-card class="box-card" style="margin-bottom: 10px">
+          <el-form>
+            <el-row :gutter="10">
+              <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="3">
+                Filter Data
+              </el-col>
+              <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="12">
+                <input-filter-area-bps
+                  :parent-id="filterAreaParentId"
+                  :kabkota-id="listQuery.kode_kab"
+                  :kec-id="listQuery.kode_kec"
+                  :kel-id="listQuery.kode_kel"
+                  @changeKabkota="changeKabkota"
+                  @changeKecamatan="changeKecamatan"
+                  @changeKelurahan="changeKelurahan"
+                />
+              </el-col>
+              <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="3">
+                <json-excel
+                  class="btn btn-default"
+                  :data="sortedList"
+                  :fields="exportFields"
+                  worksheet="Data"
+                  name="sapawarga-dashboard-bansos.xls">
+                  <button class="el-button el-button--success el-button--small">
+                    <i class="el-icon-download" /> Export Data
+                  </button>
+                </json-excel>
+              </el-col>
+            </el-row>
+          </el-form>
+        </el-card>
 
         <button v-if="prevFilter.length" class="el-button el-button--primary el-button--small" @click="backDetail()">
           <i class="el-icon-arrow-left" /> Kembali ke Data {{ prevFilter.length-1 ? prevFilter[prevFilter.length-2].name : 'Utama' }}
@@ -86,9 +118,14 @@ import { formatNumber } from '@/utils/formatNumber'
 import { fetchDashboardSummary, fetchDashboardList } from '@/api/beneficiaries'
 import { mapGetters } from 'vuex'
 import DashboardStatistics from './components/DashboardStatistics'
+import checkPermission from '@/utils/permission'
+import InputFilterAreaBps from '@/components/InputFilterAreaBps'
+import JsonExcel from 'vue-json-excel'
 
 export default {
   components: {
+    InputFilterAreaBps,
+    JsonExcel,
     DashboardStatistics
   },
   filters: {
@@ -124,15 +161,46 @@ export default {
         code_bps: null,
         rw: null
       },
+      listQuery: {
+        kode_kab: null,
+        kode_kec: null,
+        kode_kel: null
+      },
       prevFilter: [],
       sort_prop: '',
-      sort_order: 'ascending'
+      sort_order: 'ascending',
+      exportFields: {}
     }
   },
   computed: {
     ...mapGetters(['user']),
+    filterAreaParentId() {
+      const authUser = this.$store.state.user
+
+      if (checkPermission(['staffKabkota'])) {
+        return parseInt(authUser.kabkota.code_bps)
+      }
+
+      if (checkPermission(['staffKec'])) {
+        return parseInt(authUser.kecamatan.code_bps)
+      }
+
+      return null
+    },
     areaLabelByFilter() {
-      return 'Kabupaten / Kota'
+      switch (this.filter.type) {
+        case 'provinsi':
+          return this.$t('label.area-kabkota')
+        case 'kabkota':
+          return this.$t('label.area-kec')
+        case 'kec':
+          return this.$t('label.area-kel')
+        case 'kel':
+          return this.$t('label.area-rw')
+        case 'rw':
+          return this.$t('label.area-rt')
+      }
+      return this.$t('label.area')
     },
     sortedList() {
       const prop = this.sort_prop
@@ -215,6 +283,7 @@ export default {
   },
 
   methods: {
+    checkPermission,
     formatNumber,
     percentage(val, denom) {
       if (denom) {
@@ -284,7 +353,66 @@ export default {
       fetchDashboardList(this.filter).then(response => {
         this.list = response.data
         this.listLoading = false
+        this.loadExportFields()
       })
+    },
+
+    loadExportFields() {
+      this.exportFields = {}
+      this.exportFields[this.areaLabelByFilter] = 'name'
+      this.exportFields[this.$t('label.beneficiaries-verified-kabkota')] = 'data.approved_kabkota'
+      this.exportFields['Persentase (1) %'] = {
+        field: 'data',
+        callback: (data) => {
+          return this.percentage(data.approved_kabkota, this.getTotalBenefeciaries(data))
+        }
+      }
+      this.exportFields[this.$t('label.beneficiaries-verified-kec')] = 'data.approved_kec'
+      this.exportFields['Persentase (2) %'] = {
+        field: 'data',
+        callback: (data) => {
+          return this.percentage(data.approved_kec, this.getTotalBenefeciaries(data))
+        }
+      }
+      this.exportFields[this.$t('label.beneficiaries-verified-kel')] = 'data.approved_kel'
+      this.exportFields['Persentase (3) %'] = {
+        field: 'data',
+        callback: (data) => {
+          return this.percentage(data.approved_kel, this.getTotalBenefeciaries(data))
+        }
+      }
+      this.exportFields[this.$t('label.beneficiaries-verified-rw')] = 'data.approved'
+      this.exportFields['Persentase (4) %'] = {
+        field: 'data',
+        callback: (data) => {
+          return this.percentage(data.approved, this.getTotalBenefeciaries(data))
+        }
+      }
+      this.exportFields[this.$t('label.beneficiaries-unverified')] = 'data.pending'
+      this.exportFields['Persentase (5) %'] = {
+        field: 'data',
+        callback: (data) => {
+          return this.percentage(data.pending, this.getTotalBenefeciaries(data))
+        }
+      }
+      this.exportFields[this.$t('label.beneficiaries-reject')] = {
+        field: 'data',
+        callback: (data) => {
+          return this.getReject(data)
+        }
+      }
+      this.exportFields['Persentase (6) %'] = {
+        field: 'data',
+        callback: (data) => {
+          return this.percentage(this.getReject(data), this.getTotalBenefeciaries(data))
+        }
+      }
+      this.exportFields[this.$t('label.beneficiaries-newdata')] = 'data_baru.total'
+      this.exportFields['Persentase (7) %'] = {
+        callback: (row) => {
+          return this.percentage(row.data_baru.total, this.getTotalBenefeciaries(row.data))
+        }
+      }
     },
 
     resetFilter() {
@@ -319,6 +447,33 @@ export default {
     changeSort(e) {
       this.sort_prop = e.prop
       this.sort_order = e.order
+    },
+
+    changeKabkota(id) {
+      this.listQuery.kode_kab = id
+      if (id && id !== '') {
+        this.openDetail(id)
+      } else {
+        this.backDetail()
+      }
+    },
+
+    changeKecamatan(id) {
+      this.listQuery.kode_kec = id
+      if (id && id !== '') {
+        this.openDetail(id)
+      } else {
+        this.backDetail()
+      }
+    },
+
+    changeKelurahan(id) {
+      this.listQuery.kode_kel = id
+      if (id && id !== '') {
+        this.openDetail(id)
+      } else {
+        this.backDetail()
+      }
     },
 
     getApproved(data) {
