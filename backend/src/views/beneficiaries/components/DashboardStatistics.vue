@@ -209,7 +209,7 @@ export default {
   padding: 14px 0;
 }
 .stat-count {
-  font-size: 24px;
+  font-size: 20px;
   font-weight: bolder;
 }
 .color-sw-green {
