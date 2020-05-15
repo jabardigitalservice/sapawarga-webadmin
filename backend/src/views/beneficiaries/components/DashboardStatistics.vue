@@ -81,7 +81,7 @@
         <!-- show data -->
         <span v-if="!isLoading" class="stat-count color-sw-green">{{ summery.approved ? formatNumber(summery.approved) : '-' }}</span>
         <span v-if="!isLoading" class="stat-count color-sw-green" style="float: right">{{ formatNumber(percentage(summery.approved)) }} %</span>
-        <el-progress class="progress" :text-inside="true" color="#F2994A" :stroke-width="18" :percentage="summery && summery.approved ? parseFloat(formatNumber(percentage(summery.approved))) : 0" />
+        <el-progress class="progress" :text-inside="true" color="#27AE60" :stroke-width="18" :percentage="summery && summery.approved ? parseFloat(formatNumber(percentage(summery.approved))) : 0" />
       </div>
     </el-col>
     <el-col :xs="24" :sm="8" :md="6" :lg="5" :xl="5">

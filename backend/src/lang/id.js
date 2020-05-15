@@ -936,7 +936,7 @@ export default {
     'beneficiaries-province': 'Bansos Provinsi',
     'beneficiaries-village-fund': 'Bansos Dana Desa',
     'beneficiaries-city': 'Bansos Kota/Kabupaten',
-    'beneficiaries-statistic-title': 'Statistik Data Calon Penerima Bansos',
+    'beneficiaries-statistic-title': 'Statistik Data Penerima Bantuan Sosial via Sapawarga',
     'beneficiaries-notes-display': 'Halaman ini menampilkan data Calon Penerima Bantuan Sosial di',
     'beneficiaries-note-jabar': 'Provinsi Jawa Barat',
     'beneficiaries-note-kabkota': 'tingkat Kabupaten/Kota',
