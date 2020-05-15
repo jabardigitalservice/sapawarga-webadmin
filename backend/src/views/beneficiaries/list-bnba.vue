@@ -60,7 +60,7 @@
           <!-- <el-table-column prop="nama_kab" sortable="custom" align="center" :label="$t('label.beneficiaries-domicile-kabkota')" min-width="175px" />
           <el-table-column prop="nama_kec" sortable="custom" align="center" :label="$t('label.beneficiaries-domicile-kecamatan')" min-width="175px" />
           <el-table-column prop="nama_kel" sortable="custom" align="center" :label="$t('label.beneficiaries-domicile-kelurahan')" min-width="175px" /> -->
-          
+
           <el-table-column align="center" :label="$t('label.actions')" width="200px">
             <template slot-scope="{row}">
               <el-tooltip :content="$t('label.beneficiaries-detail')" placement="top">
