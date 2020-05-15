@@ -58,6 +58,7 @@ export default {
         await uploadBansos(formData)
 
         Swal.fire({
+          title: this.$t('label.beneficiaries-upload-start'),
           text: this.$t('label.beneficiaries-upload-success'),
           icon: 'success',
           button: 'OK'
