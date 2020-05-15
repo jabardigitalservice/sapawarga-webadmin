@@ -24,15 +24,11 @@ code_quality:
   image: docker:stable
   stage: code_quality
   only:
-    - branches
+    - merge_requests
   services:
     - docker:stable-dind
   variables:
     DOCKER_DRIVER: overlay2
-  dependencies:
-    - versioning
-  before_script:
-    - export VERSION=$(cat ./version)
   script:
     - docker run
         --env SOURCE_CODE=$PWD
@@ -75,7 +71,7 @@ build_image:
 
 
 test_webadmin:
-  image: docker:stable
+  image: docker/compose:latest
   stage: test
   only:
     - branches
@@ -86,8 +82,6 @@ test_webadmin:
   before_script:
     - export VERSION=$(cat ./version)
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    - apk add --no-cache py-pip python-dev libffi-dev openssl-dev gcc libc-dev make
-    - pip install docker-compose
   script:
     - cp .env-template .env
     - sed -i "s/%NODE_ENV%/development/g" .env

@@ -2,11 +2,12 @@
   <div class="app-container">
     <el-row>
       <el-col :lg="24">
+        <DashboardTitle :is-bnba="true" />
         <!-- show statistics -->
         <StatisticsBnba :is-loading="isLoadingSummary" :summery="dataSummary" />
 
-        <ListFilterBnba :list-query.sync="listQuery" @submit-search="getList" @reset-search="resetFilter" />
-
+        <ListFilterBnba :list-query.sync="listQuery" @display-search="displayFilter" @submit-search="getList" @reset-search="resetFilter" />
+        <p v-if="display">DATA BERDASARKAN FILTER <span v-if="listQuery.nik">NIK <b>{{ listQuery.nik }}</b>,</span> <span v-if="listQuery.nama_krt">NAMA <b>{{ listQuery.nama_krt }}</b>,</span> <span v-if="listQuery.id_tipe_bansos">PINTU BANTUAN <b>{{ listQuery.name_tipe_bansos }}</b></span></p>
         <el-table v-loading="listLoading" :data="list" border stripe highlight-current-row style="width: 100%" @sort-change="changeSort">
           <el-table-column type="index" width="50" align="right" :index="getTableRowNumbering" />
 
@@ -95,10 +96,11 @@ import Pagination from '@/components/Pagination'
 import StatisticsBnba from './components/StatisticsBnba'
 import ModalDetailBnba from './components/ModalDetailBnba'
 import ListFilterBnba from './_listfilterbnba'
+import DashboardTitle from './components/DashboardTitle'
 import { mapGetters } from 'vuex'
 
 export default {
-  components: { Pagination, StatisticsBnba, ListFilterBnba, ModalDetailBnba },
+  components: { Pagination, StatisticsBnba, ListFilterBnba, ModalDetailBnba, DashboardTitle },
   filters: {
     tipeBansosFilter(status) {
       const statusMap = {
@@ -122,6 +124,7 @@ export default {
   },
   data() {
     return {
+      display: false,
       list: null,
       total: 0,
       dialogVisible: false,
@@ -143,6 +146,7 @@ export default {
         page: 1,
         limit: 10,
         id_tipe_bansos: null,
+        name_tipe_bansos: null,
         kode_kab: null,
         kode_kec: null,
         kode_kel: null,
@@ -174,16 +178,23 @@ export default {
   },
 
   methods: {
-    accessBlock(value) {
-      if (this.user.kabkota !== null) {
-        if (this.user.kabkota.code_bps === '3211') {
-          this.dialogVisible = true
-        } else {
-          this.$router.push('/beneficiaries/' + value)
-        }
-      } else {
-        this.$router.push('/beneficiaries/' + value)
+    displayFilter(value) {
+      if (value.id_tipe_bansos === '1') {
+        this.listQuery.name_tipe_bansos = 'PKH'
+      } else if (value.id_tipe_bansos === '2') {
+        this.listQuery.name_tipe_bansos = 'BNPT'
+      } else if (value.id_tipe_bansos === '3') {
+        this.listQuery.name_tipe_bansos = 'BPNT Perluasan'
+      } else if (value.id_tipe_bansos === '4') {
+        this.listQuery.name_tipe_bansos = 'Bansos Tunai (Kemensos)'
+      } else if (value.id_tipe_bansos === '5') {
+        this.listQuery.name_tipe_bansos = 'Bansos Presiden Sembako (BODEBEK)'
+      } else if (value.id_tipe_bansos === '6') {
+        this.listQuery.name_tipe_bansos = 'Bansos Provinsi'
+      } else if (value.id_tipe_bansos === '7') {
+        this.listQuery.name_tipe_bansos = 'Dana Desa'
       }
+      this.display = true
     },
     // get summary statistics
     getSummary() {
@@ -204,6 +215,7 @@ export default {
     },
 
     resetFilter() {
+      this.display = false
       Object.assign(this.$data.listQuery, this.$options.data().listQuery)
       this.listQuery.kode_kab = this.user.kabkota ? this.user.kabkota.code_bps : null
       this.listQuery.kode_kec = this.user.kecamatan ? this.user.kecamatan.code_bps : null

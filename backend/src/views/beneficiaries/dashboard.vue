@@ -2,6 +2,12 @@
   <div class="app-container">
     <el-row>
       <el-col :lg="24">
+        <DashboardTitle :is-dashboard="true" />
+        <div>
+          <el-button type="primary" class="button-step">Tahap 1</el-button>
+          <el-button class="button-step" @click="open">Tahap 2</el-button>
+        </div>
+        <!-- {{ user }} -->
         <!-- show statistics -->
         <DashboardStatistics :is-loading="isLoadingSummary" :summery="dataSummary" :filter="filter" />
         <el-card class="box-card" style="margin-bottom: 10px">
@@ -37,7 +43,7 @@
           </el-form>
         </el-card>
 
-        <button v-if="prevFilter.length" class="el-button el-button--primary el-button--small" @click="backDetail()">
+        <button v-if="prevFilter.length" class="el-button el-button--primary el-button--small" @click="backDetail(prevFilter)">
           <i class="el-icon-arrow-left" /> Kembali ke Data {{ prevFilter.length-1 ? prevFilter[prevFilter.length-2].name : 'Utama' }}
         </button>
         <h3>Rekap Data {{ prevFilter.length ? prevFilter[prevFilter.length-1].name : '' }}</h3>
@@ -46,10 +52,10 @@
 
           <el-table-column prop="name" sortable="custom" :label="areaLabelByFilter" min-width="200px">
             <template slot-scope="{row}">
-              <span style="cursor: pointer; color: blue" @click="openDetail(row.code_bps, row.rw, row.name)">{{ row.name }}</span>
+              <span style="cursor: pointer; color: blue" @click="openDetail(row.code_bps, row.rw, row.name, row)">{{ row.name }}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="data.approved_kabkota" align="right" sortable="custom" :label="$t('label.beneficiaries-verified-kabkota')" min-width="180px">
+          <!-- <el-table-column prop="data.approved_kabkota" align="right" sortable="custom" :label="$t('label.beneficiaries-verified-kabkota')" min-width="180px">
             <template slot-scope="{row}">
               <span v-if="row.data.approved_kabkota" style="float: left">
                 ({{ formatNumber(percentage(row.data.approved_kabkota, getTotalBenefeciaries(row.data))) }}%)
@@ -72,7 +78,7 @@
               </span>
               {{ formatThousands(row.data.approved_kel) }}
             </template>
-          </el-table-column>
+          </el-table-column> -->
           <el-table-column prop="data.approved" align="right" sortable="custom" :label="$t('label.beneficiaries-verified-rw')" min-width="180px">
             <template slot-scope="{row}">
               <span v-if="row.data.approved" style="float: left">
@@ -121,12 +127,14 @@ import DashboardStatistics from './components/DashboardStatistics'
 import checkPermission from '@/utils/permission'
 import InputFilterAreaBps from '@/components/InputFilterAreaBps'
 import JsonExcel from 'vue-json-excel'
+import DashboardTitle from './components/DashboardTitle'
 
 export default {
   components: {
     InputFilterAreaBps,
     JsonExcel,
-    DashboardStatistics
+    DashboardStatistics,
+    DashboardTitle
   },
   filters: {
     statusFilter(status) {
@@ -167,9 +175,9 @@ export default {
         kode_kel: null
       },
       prevFilter: [],
-      sort_prop: '',
-      sort_order: 'ascending',
-      exportFields: {}
+      exportFields: {},
+      sort_prop: 'data.approved',
+      sort_order: 'descending'
     }
   },
   computed: {
@@ -309,7 +317,7 @@ export default {
         this.filter.code_bps = this.user.kelurahan.code_bps
       }
     },
-    openDetail(code_bps, rw, name) {
+    openDetail(code_bps, rw, name, row) {
       const prevFilter = {
         code_bps: this.filter.code_bps,
         type: this.filter.type,
@@ -333,7 +341,7 @@ export default {
       this.getSummary()
       this.getList()
     },
-    backDetail() {
+    backDetail(value) {
       if (this.prevFilter.length) {
         this.filter = this.prevFilter.pop()
         this.getSummary()
@@ -487,7 +495,18 @@ export default {
     },
     getTotalBenefeciaries(data) {
       return this.getApproved(data) + this.getPending(data) + this.getReject(data)
+    },
+    open() {
+      this.$alert(this.$t('label.beneficiaries-dashboard-alert'), {
+        confirmButtonText: 'OK',
+        type: 'warning'
+      })
     }
   }
 }
 </script>
+<style lang="scss" scope>
+  .button-step {
+    padding: 13px 40px;
+  }
+</style>

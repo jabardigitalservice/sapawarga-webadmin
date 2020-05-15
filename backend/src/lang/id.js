@@ -129,6 +129,7 @@ export default {
     'beneficiaries-edit': 'Edit Bansos',
     'beneficiaries-preview': 'Ringkasan',
     'beneficiaries-verification': 'Verifikasi Bansos',
+    'beneficiaries-dashboard-verification': 'Dashboard Verifikasi',
 
     'bansos-download': 'Unduh Dokumen',
     'bansos-upload': 'Unggah Dokumen',
@@ -887,9 +888,9 @@ export default {
     'beneficiaries-detail': 'Detail Bansos',
     'beneficiaries-reject': 'Ditolak',
     'beneficiaries-newdata': 'Data Baru',
-    'beneficiaries-verified-kabkota': 'Terverifikasi Kab/Kota',
-    'beneficiaries-verified-kec': 'Terverifikasi Kec',
-    'beneficiaries-verified-kel': 'Terverifikasi Kel/Desa',
+    'beneficiaries-verified-kabkota': 'Approval Kab/Kota',
+    'beneficiaries-verified-kec': 'Approval Kec',
+    'beneficiaries-verified-kel': 'Approval Kel/Desa',
     'beneficiaries-verified-rw': 'Terverifikasi RW',
     'beneficiaries-verified': 'Terverifikasi',
     'beneficiaries-unverified': 'Belum Terverifikasi',
@@ -934,7 +935,21 @@ export default {
     'beneficiaries-president': 'Bansos Presiden Sembako',
     'beneficiaries-province': 'Bansos Provinsi',
     'beneficiaries-village-fund': 'Bansos Dana Desa',
-    'beneficiaries-city': 'Bansos Kota/Kabupaten'
+    'beneficiaries-city': 'Bansos Kota/Kabupaten',
+    'beneficiaries-statistic-title': 'Statistik Data Penerima Bantuan Sosial via Sapawarga',
+    'beneficiaries-notes-display': 'Halaman ini menampilkan data Calon Penerima Bantuan Sosial di',
+    'beneficiaries-note-jabar': 'Provinsi Jawa Barat',
+    'beneficiaries-note-kabkota': 'tingkat Kabupaten/Kota',
+    'beneficiaries-note-kec': 'tingkat Kecamatan',
+    'beneficiaries-note-kel': 'tingkat Desa/Kelurahan',
+    'beneficiaries-note-content': 'Data di bawah ini telah dipisahkan berdasarkan kategori yang telah ditentukan. Untuk melihat detail dari setiap Kategori yang ada, Anda dapat memilih salah satu kategori di bawah ini.',
+    'beneficiaries-note-bnba-title': 'Daftar BNBA Tahap 1',
+    'beneficiaries-notes-display-bnba': 'Halaman ini menampilkan Daftar BNBA penerima bantuan sosial di',
+    'beneficiaries-note-bnba-content': 'Di halaman ini, Anda dapat melihat detail penerima dan melihat total penerima berdasarkan pintu bantuan yang ada.',
+    'beneficiaries-note-verification-title': 'Daftar Verifikasi Data Bantuan Sosial',
+    'beneficiaries-notes-display-verification': 'Halaman ini menampilkan Daftar calon penerima bantuan sosial di',
+    'beneficiaries-note-verification-content': 'Di Halaman ini, Anda dapat melihat daftar warga calon penerima bantuan dan melakukan verifikasi calon penerima bantuan yang ada di Kelurahan Anda.',
+    'beneficiaries-dashboard-alert': 'Proses Verifikasi dan Validasi Data Penerima Bansos PERIODE 2 belum dibuka!'
 
   },
   news: {
