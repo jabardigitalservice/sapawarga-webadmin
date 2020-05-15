@@ -7,7 +7,7 @@
         <StatisticsBnba :is-loading="isLoadingSummary" :summery="dataSummary" />
 
         <ListFilterBnba :list-query.sync="listQuery" @display-search="displayFilter" @submit-search="getList" @reset-search="resetFilter" />
-        <p v-if="display">DATA BERDASARKAN FILTER <span v-if="listQuery.nik">NIK {{ listQuery.nik }},</span> <span v-if="listQuery.nama_krt">NAMA {{ listQuery.nama_krt }},</span> <span v-if="listQuery.id_tipe_bansos">PINTU BANTUAN {{ listQuery.name_tipe_bansos }}</span></p>
+        <p v-if="display">DATA BERDASARKAN FILTER <span v-if="listQuery.nik">NIK <b>{{ listQuery.nik }}</b>,</span> <span v-if="listQuery.nama_krt">NAMA <b>{{ listQuery.nama_krt }}</b>,</span> <span v-if="listQuery.id_tipe_bansos">PINTU BANTUAN <b>{{ listQuery.name_tipe_bansos }}</b></span></p>
         <el-table v-loading="listLoading" :data="list" border stripe highlight-current-row style="width: 100%" @sort-change="changeSort">
           <el-table-column type="index" width="50" align="right" :index="getTableRowNumbering" />
 
