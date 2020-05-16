@@ -27,6 +27,10 @@
             </template>
           </el-table-column>
 
+          <el-table-column prop="rw" sortable="custom" align="center" :label="$t('label.beneficiaries-rw')" min-width="70px" />
+
+          <el-table-column prop="rt" sortable="custom" align="center" :label="$t('label.beneficiaries-rt')" min-width="70px" />
+
           <el-table-column prop="lapangan_usaha" sortable="custom" :label="$t('label.beneficiaries-job')" min-width="150px">
             <template slot-scope="{row}">
               {{ row.lapangan_usaha_type ? row.lapangan_usaha_type.title : '-' }}
@@ -53,12 +57,9 @@
             </template>
           </el-table-column>
 
-          <el-table-column prop="nama_kab" sortable="custom" align="center" :label="$t('label.beneficiaries-domicile-kabkota')" min-width="175px" />
+          <!-- <el-table-column prop="nama_kab" sortable="custom" align="center" :label="$t('label.beneficiaries-domicile-kabkota')" min-width="175px" />
           <el-table-column prop="nama_kec" sortable="custom" align="center" :label="$t('label.beneficiaries-domicile-kecamatan')" min-width="175px" />
-          <el-table-column prop="nama_kel" sortable="custom" align="center" :label="$t('label.beneficiaries-domicile-kelurahan')" min-width="175px" />
-          <el-table-column prop="rw" sortable="custom" align="center" :label="$t('label.beneficiaries-rw')" min-width="70px" />
-
-          <el-table-column prop="rt" sortable="custom" align="center" :label="$t('label.beneficiaries-rt')" min-width="70px" />
+          <el-table-column prop="nama_kel" sortable="custom" align="center" :label="$t('label.beneficiaries-domicile-kelurahan')" min-width="175px" /> -->
 
           <el-table-column align="center" :label="$t('label.actions')" width="200px">
             <template slot-scope="{row}">
