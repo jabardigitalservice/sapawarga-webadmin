@@ -247,10 +247,12 @@ export default {
             return order === 'ascending' ? 1 : -1
           }
         } else if (prop === 'data_baru.total') {
-          if (a.data_baru && b.data_baru && percentage(a.data_baru.total, getTotalBenefeciaries(a.data)) < percentage(b.data_baru.total, getTotalBenefeciaries(b.data))) {
+          var a_data_baru_total = a.data_baru ? a.data_baru.total || 0 : 0
+          var b_data_baru_total = b.data_baru ? b.data_baru.total || 0 : 0
+          if (percentage(a_data_baru_total, getTotalBenefeciaries(a.data)) < percentage(b_data_baru_total, getTotalBenefeciaries(b.data))) {
             return order === 'ascending' ? -1 : 1
           }
-          if (a.data_baru && b.data_baru && percentage(a.data_baru.total, getTotalBenefeciaries(a.data)) > percentage(b.data_baru.total, getTotalBenefeciaries(b.data))) {
+          if (percentage(a_data_baru_total, getTotalBenefeciaries(a.data)) > percentage(b_data_baru_total, getTotalBenefeciaries(b.data))) {
             return order === 'ascending' ? 1 : -1
           }
         } else if (prop === 'data.pending') {
