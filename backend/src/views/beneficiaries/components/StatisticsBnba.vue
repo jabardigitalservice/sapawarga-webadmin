@@ -91,6 +91,19 @@
         <div v-if="!isLoading" class="stat-count color-sw-green">{{ summery.dana_desa ? formatNumber(summery.dana_desa) : '-' }}</div>
       </div>
     </el-col>
+    <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
+      <div class="grid-content">
+        <div class="stat-title">Bansos Kabupaten/Kota</div>
+        <!-- show loading -->
+        <div
+          v-loading="isLoading"
+          class="icon-loading stat-count"
+          element-loading-spinner="el-icon-loading"
+        />
+        <!-- show data -->
+        <div v-if="!isLoading" class="stat-count color-sw-green">{{ summery.bansos_kabkota ? formatNumber(summery.bansos_kabkota) : '-' }}</div>
+      </div>
+    </el-col>
   </el-row>
 </template>
 

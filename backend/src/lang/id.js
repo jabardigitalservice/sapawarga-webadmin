@@ -122,13 +122,14 @@ export default {
     'gamification-edit': 'Edit Misi',
 
     'beneficiaries-manage': 'Bantuan Sosial',
-    'beneficiaries-manage-bnba': 'Daftar BNBA',
+    'beneficiaries-manage-bnba': 'Daftar BNBA Tahap 1',
     'beneficiaries-list': 'Verifikasi Data Bansos',
     'beneficiaries-create': 'Tambah Bansos',
     'beneficiaries-detail': 'Detail Bansos',
     'beneficiaries-edit': 'Edit Bansos',
     'beneficiaries-preview': 'Ringkasan',
     'beneficiaries-verification': 'Verifikasi Bansos',
+    'beneficiaries-dashboard-verification': 'Dashboard Verifikasi',
 
     'bansos-download': 'Unduh Dokumen',
     'bansos-upload': 'Unggah Dokumen',
@@ -646,6 +647,7 @@ export default {
     'status-select': 'Pilih Status',
 
     'roles-admin': 'Admin',
+    'roles-administrator': 'Administrator',
     'roles-admin-saber-hoax': 'Admin Saber Hoax',
     'roles-admin-leader': 'Pimpinan',
     'roles-admin-opd': 'Admin OPD',
@@ -656,6 +658,10 @@ export default {
     'roles-admin-rw': 'RW',
     'roles-trainer': 'Pelatih',
     'roles-public': 'Publik',
+    'roles-staff-kel': 'Staf Desa/Kelurahan',
+    'roles-staff-kec': 'Staf Kecamatan',
+    'roles-staff-kabkota': 'Staf Kabupaten/Kota',
+    'roles-staff-province': 'Staf Provinsi',
 
     'popular-category': 'Kategori Populer',
     'link-logo-news-channels-manage': 'Tautan Logo Sumber Berita',
@@ -870,6 +876,7 @@ export default {
     'phone-book-tooltip-inactivate': 'Nonaktifkan Nomor penting',
 
     'beneficiaries-name': 'Nama Lengkap',
+    'beneficiaries-familyhead-name': 'Nama Kepala Keluarga',
     'beneficiaries-status': 'Status',
     'beneficiaries-nik': 'NIK',
     'beneficiaries-rt': 'RT',
@@ -880,6 +887,11 @@ export default {
     'beneficiaries-edit': 'Edit Bansos',
     'beneficiaries-detail': 'Detail Bansos',
     'beneficiaries-reject': 'Ditolak',
+    'beneficiaries-newdata': 'Data Baru',
+    'beneficiaries-verified-kabkota': 'Approval Kab/Kota',
+    'beneficiaries-verified-kec': 'Approval Kec',
+    'beneficiaries-verified-kel': 'Approval Kel/Desa',
+    'beneficiaries-verified-rw': 'Terverifikasi RW',
     'beneficiaries-verified': 'Terverifikasi',
     'beneficiaries-unverified': 'Belum Terverifikasi',
     'beneficiaries-detail-bansos': 'Detail Calon Penerima Bantuan',
@@ -890,6 +902,14 @@ export default {
     'beneficiaries-job': 'Pekerjaan',
     'beneficiaries-image-ktp': 'Foto KTP',
     'beneficiaries-image-kk': 'Foto Kepala Keluarga',
+
+    'beneficiaries-is_nik_valid': 'NIK Valid',
+    'beneficiaries-is_alamat_lengkap': 'Alamat Lengkap',
+    'beneficiaries-is_manual': 'Manual',
+    'beneficiaries-is_sapawarga': 'Dari Sapawarga',
+    'beneficiaries-is_pikobar': 'Dari Pikobar',
+    'beneficiaries-is_super_clean': 'Sudah Clean',
+    'beneficiaries-is_data_sisa': 'Data Sisa',
 
     'beneficiaries-upload': 'Upload Data BNBA',
     'beneficiaries-upload-history': 'Daftar Riwayat Upload Data BNBA',
@@ -916,7 +936,21 @@ export default {
     'beneficiaries-president': 'Bansos Presiden Sembako',
     'beneficiaries-province': 'Bansos Provinsi',
     'beneficiaries-village-fund': 'Bansos Dana Desa',
-    'beneficiaries-city': 'Bansos Kota/Kabupaten'
+    'beneficiaries-city': 'Bansos Kota/Kabupaten',
+    'beneficiaries-statistic-title': 'Statistik Data Penerima Bantuan Sosial via Sapawarga',
+    'beneficiaries-notes-display': 'Halaman ini menampilkan data Calon Penerima Bantuan Sosial di',
+    'beneficiaries-note-jabar': 'Provinsi Jawa Barat',
+    'beneficiaries-note-kabkota': 'tingkat Kabupaten/Kota',
+    'beneficiaries-note-kec': 'tingkat Kecamatan',
+    'beneficiaries-note-kel': 'tingkat Desa/Kelurahan',
+    'beneficiaries-note-content': 'Data di bawah ini telah dipisahkan berdasarkan kategori yang telah ditentukan. Untuk melihat detail dari setiap Kategori yang ada, Anda dapat memilih salah satu kategori di bawah ini.',
+    'beneficiaries-note-bnba-title': 'Daftar BNBA Tahap 1',
+    'beneficiaries-notes-display-bnba': 'Halaman ini menampilkan Daftar BNBA penerima bantuan sosial di',
+    'beneficiaries-note-bnba-content': 'Di halaman ini, Anda dapat melihat detail penerima dan melihat total penerima berdasarkan pintu bantuan yang ada.',
+    'beneficiaries-note-verification-title': 'Daftar Verifikasi Data Bantuan Sosial',
+    'beneficiaries-notes-display-verification': 'Halaman ini menampilkan Daftar calon penerima bantuan sosial di',
+    'beneficiaries-note-verification-content': 'Di Halaman ini, Anda dapat melihat daftar warga calon penerima bantuan dan melakukan verifikasi calon penerima bantuan yang ada di Kelurahan Anda.',
+    'beneficiaries-dashboard-alert': 'Proses Verifikasi dan Validasi Data Penerima Bansos PERIODE 2 belum dibuka!'
 
   },
   news: {
