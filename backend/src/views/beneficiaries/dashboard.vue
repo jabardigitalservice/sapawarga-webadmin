@@ -27,7 +27,7 @@
                   @changeKelurahan="changeKelurahan"
                 />
               </el-col>
-              <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="3">
+              <el-col :xs="{ span:24, tag:'mb-10' }" :sm="24" :md="3">
                 <json-excel
                   class="btn btn-default"
                   :data="sortedList"

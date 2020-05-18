@@ -230,7 +230,8 @@ export default {
 
     'news-selected': 'Berita sudah dipilih',
     'gamification-send-success': 'Gamification berhasil dibuat',
-    '': 'Batalkan'
+    '': 'Batalkan',
+    'export': 'Export'
 
   },
   common: {
@@ -950,7 +951,16 @@ export default {
     'beneficiaries-note-verification-title': 'Daftar Verifikasi Data Bantuan Sosial',
     'beneficiaries-notes-display-verification': 'Halaman ini menampilkan Daftar calon penerima bantuan sosial di',
     'beneficiaries-note-verification-content': 'Di Halaman ini, Anda dapat melihat daftar warga calon penerima bantuan dan melakukan verifikasi calon penerima bantuan yang ada di Kelurahan Anda.',
-    'beneficiaries-dashboard-alert': 'Proses Verifikasi dan Validasi Data Penerima Bansos PERIODE 2 belum dibuka!'
+    'beneficiaries-dashboard-alert': 'Proses Verifikasi dan Validasi Data Penerima Bansos PERIODE 2 belum dibuka!',
+
+    'beneficiaries-download-search-subdistrict-title': 'Cari Kecamatan',
+    'beneficiaries-download-subdistrict-list-title': 'Data Kecamatan',
+    'beneficiaries-download-search-subdistrict-placeholder': 'Masukkan Nama Kecamatan...',
+    'beneficiaries-download-subdistrict': 'Kecamatan',
+    'beneficiaries-download-verified': 'Terverifikasi',
+    'beneficiaries-download-not-verified': 'Belum Terverifikasi',
+    'beneficiaries-download-rejected': 'Ditolak',
+    'beneficiaries-download-new-proposal': 'Usulan Baru'
 
   },
   news: {
