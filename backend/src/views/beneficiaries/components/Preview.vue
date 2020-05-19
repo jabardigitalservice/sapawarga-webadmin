@@ -76,15 +76,15 @@
           </div>
           <div class="preview-content">
             <p>Kabupaten/Kota</p>
-            <p class="content">{{ beneficiaries.domicile_kabkota_bps_name ? beneficiaries.domicile_kabkota_bps_name : '-' }}</p>
+            <p class="content">{{ beneficiaries.domicile_kabkota_name ? beneficiaries.domicile_kabkota_name.name : '-' }}</p>
           </div>
           <div class="preview-content">
             <p>Kecamatan</p>
-            <p class="content">{{ beneficiaries.domicile_kec_bps_name ? beneficiaries.domicile_kec_bps_name : '-' }}</p>
+            <p class="content">{{ beneficiaries.domicile_kec_name ? beneficiaries.domicile_kec_name.name : '-' }}</p>
           </div>
           <div class="preview-content">
             <p>Kelurahan</p>
-            <p class="content">{{ beneficiaries.domicile_kec_kel_name ? beneficiaries.domicile_kec_kel_name : '-' }}</p>
+            <p class="content">{{ beneficiaries.domicile_kel_name ? beneficiaries.domicile_kel_name.name : '-' }}</p>
           </div>
           <div class="preview-content">
             <p>RW</p>
