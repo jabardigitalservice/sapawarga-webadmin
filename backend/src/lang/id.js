@@ -887,7 +887,7 @@ export default {
     'beneficiaries-edit': 'Edit Bansos',
     'beneficiaries-detail': 'Detail Bansos',
     'beneficiaries-reject': 'Ditolak',
-    'beneficiaries-newdata': 'Data Baru',
+    'beneficiaries-newdata': 'Data Usulan Baru',
     'beneficiaries-verified-kabkota': 'Approval Kab/Kota',
     'beneficiaries-verified-kec': 'Approval Kec',
     'beneficiaries-verified-kel': 'Approval Kel/Desa',
