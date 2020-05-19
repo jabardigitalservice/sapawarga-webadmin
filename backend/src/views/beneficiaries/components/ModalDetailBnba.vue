@@ -1,5 +1,5 @@
 <template>
-  <el-dialog width="75%" :visible="rowdata != null" :close-on-press-escape="false" :show-close="false" :close-on-click-modal="false" @closed="modalClosed">
+  <el-dialog class="dialog" width="75%" :visible="rowdata != null" :close-on-press-escape="false" :show-close="false" :close-on-click-modal="false" @closed="modalClosed">
     <span slot="title" class="dialog-title">{{ $t('label.beneficiaries-bnba-detail-popup-title') }}
       <el-button class="close-button" size="mini" type="default" icon="el-icon-close" @click="closeDialog()" />
     </span>
@@ -83,27 +83,23 @@ export default {
       this.tableData2Beneficiaries = [
         {
           title: this.$t('label.beneficiaries-total-family'),
-          content: row.jumlah_art_tanggungan
+          content: row.jumlah_art_tanggungan || 0
         },
         {
           title: this.$t('label.beneficiaries-job'),
-          content: row.lapangan_usaha_type ? row.lapangan_usaha_type.title : '-'
+          content: row.lapangan_usaha_type ? row.lapangan_usaha_type.title : 'Lainnya'
         },
         {
           title: this.$t('label.beneficiaries-income-before'),
-          content: row.penghasilan_sebelum_covid19 ? this.formatCurrency(row.penghasilan_sebelum_covid19, 'Rp. ') : '-'
+          content: row.penghasilan_sebelum_covid19 ? this.formatCurrency(row.penghasilan_sebelum_covid19, 'Rp. ') : 'Rp. 0'
         },
         {
           title: this.$t('label.beneficiaries-income-after'),
-          content: row.penghasilan_setelah_covid ? this.formatCurrency(row.penghasilan_setelah_covid, 'Rp. ') : '-'
+          content: row.penghasilan_setelah_covid ? this.formatCurrency(row.penghasilan_setelah_covid, 'Rp. ') : 'Rp. 0'
         },
         {
           title: this.$t('label.beneficiaries'),
           content: this.tipeBansosFilter(row.id_tipe_bansos)
-        },
-        {
-          title: 'Status',
-          content: row.status_kedudukan || '-'
         }
       ]
     }
@@ -186,5 +182,9 @@ export default {
     .content {
       font-weight: bold;
     }
+  }
+
+  .dialog {
+    margin: 5vh auto;
   }
 </style>
