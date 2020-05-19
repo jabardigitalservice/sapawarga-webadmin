@@ -950,8 +950,9 @@ export default {
     'beneficiaries-note-verification-title': 'Daftar Verifikasi Data Bantuan Sosial',
     'beneficiaries-notes-display-verification': 'Halaman ini menampilkan Daftar calon penerima bantuan sosial di',
     'beneficiaries-note-verification-content': 'Di Halaman ini, Anda dapat melihat daftar warga calon penerima bantuan dan melakukan verifikasi calon penerima bantuan yang ada di Kelurahan Anda.',
-    'beneficiaries-dashboard-alert': 'Proses Verifikasi dan Validasi Data Penerima Bansos PERIODE 2 belum dibuka!'
-
+    'beneficiaries-dashboard-alert': 'Proses Verifikasi dan Validasi Data Penerima Bansos PERIODE 2 belum dibuka!',
+    'beneficiaries-bnba-detail-popup-title': 'Detail Penerima Bantuan',
+    'beneficiaries-document': 'Dokumen Pendukung'
   },
   news: {
     'news-url': 'URL Berita',
