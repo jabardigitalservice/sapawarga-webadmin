@@ -219,28 +219,28 @@ export default {
       const getTotalBenefeciaries = this.getTotalBenefeciaries
       const percentage = this.percentage
       function compare(a, b) {
-        if (prop === 'data.approved_kabkota') {
-          if (percentage(a.data.approved_kabkota, getTotalBenefeciaries(a.data)) < percentage(b.data.approved_kabkota, getTotalBenefeciaries(b.data))) {
-            return order === 'ascending' ? -1 : 1
-          }
-          if (percentage(a.data.approved_kabkota, getTotalBenefeciaries(a.data)) > percentage(b.data.approved_kabkota, getTotalBenefeciaries(b.data))) {
-            return order === 'ascending' ? 1 : -1
-          }
-        } else if (prop === 'data.approved_kec') {
-          if (percentage(a.data.approved_kec, getTotalBenefeciaries(a.data)) < percentage(b.data.approved_kec, getTotalBenefeciaries(b.data))) {
-            return order === 'ascending' ? -1 : 1
-          }
-          if (percentage(a.data.approved_kec, getTotalBenefeciaries(a.data)) > percentage(b.data.approved_kec, getTotalBenefeciaries(b.data))) {
-            return order === 'ascending' ? 1 : -1
-          }
-        } else if (prop === 'data.approved_kel') {
-          if (percentage(a.data.approved_kel, getTotalBenefeciaries(a.data)) < percentage(b.data.approved_kel, getTotalBenefeciaries(b.data))) {
-            return order === 'ascending' ? -1 : 1
-          }
-          if (percentage(a.data.approved_kel, getTotalBenefeciaries(a.data)) > percentage(b.data.approved_kel, getTotalBenefeciaries(b.data))) {
-            return order === 'ascending' ? 1 : -1
-          }
-        } else if (prop === 'data.approved') {
+        // if (prop === 'data.approved_kabkota') {
+        //   if (percentage(a.data.approved_kabkota, getTotalBenefeciaries(a.data)) < percentage(b.data.approved_kabkota, getTotalBenefeciaries(b.data))) {
+        //     return order === 'ascending' ? -1 : 1
+        //   }
+        //   if (percentage(a.data.approved_kabkota, getTotalBenefeciaries(a.data)) > percentage(b.data.approved_kabkota, getTotalBenefeciaries(b.data))) {
+        //     return order === 'ascending' ? 1 : -1
+        //   }
+        // } else if (prop === 'data.approved_kec') {
+        //   if (percentage(a.data.approved_kec, getTotalBenefeciaries(a.data)) < percentage(b.data.approved_kec, getTotalBenefeciaries(b.data))) {
+        //     return order === 'ascending' ? -1 : 1
+        //   }
+        //   if (percentage(a.data.approved_kec, getTotalBenefeciaries(a.data)) > percentage(b.data.approved_kec, getTotalBenefeciaries(b.data))) {
+        //     return order === 'ascending' ? 1 : -1
+        //   }
+        // } else if (prop === 'data.approved_kel') {
+        //   if (percentage(a.data.approved_kel, getTotalBenefeciaries(a.data)) < percentage(b.data.approved_kel, getTotalBenefeciaries(b.data))) {
+        //     return order === 'ascending' ? -1 : 1
+        //   }
+        //   if (percentage(a.data.approved_kel, getTotalBenefeciaries(a.data)) > percentage(b.data.approved_kel, getTotalBenefeciaries(b.data))) {
+        //     return order === 'ascending' ? 1 : -1
+        //   }
+        if (prop === 'data.approved') {
           if (percentage(a.data.approved, getTotalBenefeciaries(a.data)) < percentage(b.data.approved, getTotalBenefeciaries(b.data))) {
             return order === 'ascending' ? -1 : 1
           }
@@ -369,39 +369,39 @@ export default {
     loadExportFields() {
       this.exportFields = {}
       this.exportFields[this.areaLabelByFilter] = 'name'
-      this.exportFields[this.$t('label.beneficiaries-verified-kabkota')] = 'data.approved_kabkota'
-      this.exportFields['Persentase (1) %'] = {
-        field: 'data',
-        callback: (data) => {
-          return this.percentage(data.approved_kabkota, this.getTotalBenefeciaries(data))
-        }
-      }
-      this.exportFields[this.$t('label.beneficiaries-verified-kec')] = 'data.approved_kec'
-      this.exportFields['Persentase (2) %'] = {
-        field: 'data',
-        callback: (data) => {
-          return this.percentage(data.approved_kec, this.getTotalBenefeciaries(data))
-        }
-      }
-      this.exportFields[this.$t('label.beneficiaries-verified-kel')] = 'data.approved_kel'
-      this.exportFields['Persentase (3) %'] = {
-        field: 'data',
-        callback: (data) => {
-          return this.percentage(data.approved_kel, this.getTotalBenefeciaries(data))
-        }
-      }
+      // this.exportFields[this.$t('label.beneficiaries-verified-kabkota')] = 'data.approved_kabkota'
+      // this.exportFields['Persentase (1) %'] = {
+      //   field: 'data',
+      //   callback: (data) => {
+      //     return this.percentage(data.approved_kabkota, this.getTotalBenefeciaries(data))
+      //   }
+      // }
+      // this.exportFields[this.$t('label.beneficiaries-verified-kec')] = 'data.approved_kec'
+      // this.exportFields['Persentase (2) %'] = {
+      //   field: 'data',
+      //   callback: (data) => {
+      //     return this.percentage(data.approved_kec, this.getTotalBenefeciaries(data))
+      //   }
+      // }
+      // this.exportFields[this.$t('label.beneficiaries-verified-kel')] = 'data.approved_kel'
+      // this.exportFields['Persentase (3) %'] = {
+      //   field: 'data',
+      //   callback: (data) => {
+      //     return this.percentage(data.approved_kel, this.getTotalBenefeciaries(data))
+      //   }
+      // }
       this.exportFields[this.$t('label.beneficiaries-verified-rw')] = 'data.approved'
-      this.exportFields['Persentase (4) %'] = {
+      this.exportFields['Persentase Terverifikasi %'] = {
         field: 'data',
         callback: (data) => {
-          return this.percentage(data.approved, this.getTotalBenefeciaries(data))
+          return this.formatNumber(this.percentage(data.approved, this.getTotalBenefeciaries(data)))
         }
       }
       this.exportFields[this.$t('label.beneficiaries-unverified')] = 'data.pending'
-      this.exportFields['Persentase (5) %'] = {
+      this.exportFields['Persentase Belum Terverifikasi %'] = {
         field: 'data',
         callback: (data) => {
-          return this.percentage(data.pending, this.getTotalBenefeciaries(data))
+          return this.formatNumber(this.percentage(data.pending, this.getTotalBenefeciaries(data)))
         }
       }
       this.exportFields[this.$t('label.beneficiaries-reject')] = {
@@ -410,16 +410,16 @@ export default {
           return this.getReject(data)
         }
       }
-      this.exportFields['Persentase (6) %'] = {
+      this.exportFields['Persentase Ditolak %'] = {
         field: 'data',
         callback: (data) => {
-          return this.percentage(this.getReject(data), this.getTotalBenefeciaries(data))
+          return this.formatNumber(this.percentage(this.getReject(data), this.getTotalBenefeciaries(data)))
         }
       }
       this.exportFields[this.$t('label.beneficiaries-newdata')] = 'data_baru.total'
-      this.exportFields['Persentase (7) %'] = {
+      this.exportFields['Persentase Data Usulan Baru %'] = {
         callback: (row) => {
-          return this.percentage(row.data_baru.total, this.getTotalBenefeciaries(row.data))
+          return this.formatNumber(this.percentage(row.data_baru.total, this.getTotalBenefeciaries(row.data)))
         }
       }
     },
