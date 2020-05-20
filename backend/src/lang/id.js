@@ -902,6 +902,7 @@ export default {
     'beneficiaries-job': 'Pekerjaan',
     'beneficiaries-image-ktp': 'Foto KTP',
     'beneficiaries-image-kk': 'Foto Kepala Keluarga',
+    'beneficiaries-image': 'Foto',
 
     'beneficiaries-is_nik_valid': 'NIK Valid',
     'beneficiaries-is_alamat_lengkap': 'Alamat Lengkap',

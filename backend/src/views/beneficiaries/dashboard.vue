@@ -13,7 +13,7 @@
         <el-card class="box-card" style="margin-bottom: 10px">
           <el-form>
             <el-row :gutter="10">
-              <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="3">
+              <el-col v-if="!roles" :xs="{span:24, tag:'mb-10'}" :sm="24" :md="3">
                 Filter Data
               </el-col>
               <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="12">
@@ -160,6 +160,7 @@ export default {
       isLoadingSummary: true,
       dataSummary: null,
       listLoading: true,
+      roles: checkPermission(['staffKel']),
       status: {
         DRAFT: 0,
         SCHEDULED: 5,

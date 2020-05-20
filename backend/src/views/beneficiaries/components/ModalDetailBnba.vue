@@ -21,7 +21,7 @@
       <p class="preview-title">{{ $t('label.beneficiaries-document') }}</p>
       <el-col :sm="24" :md="12" :lg="12">
         <div class="preview-content">
-          <p>{{ $t('label.beneficiaries-image-ktp') }}</p>
+          <p><b>{{ $t('label.beneficiaries-image') }}</b></p>
           <img :src="imageNone" alt="" width="350px" height="220px">
         </div>
       </el-col>
