@@ -21,7 +21,7 @@
           <el-table-column prop="nik" sortable="custom" :label="$t('label.beneficiaries-nik')" min-width="175px">
             <template slot-scope="{row}">
               {{ row.nik }}
-              <div v-if="row.is_nik_valid === 0" slot="reference" class="name-wrapper">
+              <div v-if="row.nik === null || row.nik === '' || row.nik && row.nik.length !== 16" slot="reference" class="name-wrapper">
                 <el-tag size="medium" type="danger">Format NIK tidak sesuai</el-tag>
               </div>
             </template>

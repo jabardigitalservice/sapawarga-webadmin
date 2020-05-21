@@ -1,36 +1,33 @@
 <template>
-  <el-dialog title="Detail Keluarga Penerima Manfaat" :append-to-body="true" :visible="rowdata != null" :close-on-press-escape="false" :show-close="false" :close-on-click-modal="false" @closed="modalClosed">
-    <el-row v-if="rowdata" :gutter="24">
-      <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-        <el-card>
-          <div slot="header" class="clearfix header">
-            <span>{{ $t('label.beneficiaries-detail-bansos') }}</span>
-            <el-button style="float: right" size="mini" type="default" icon="el-icon-close" @click="closeDialog()" />
-          </div>
-          <el-table stripe :data="tableDataBeneficiaries" :show-header="false" style="width: 100%">
-            <el-table-column prop="title" width="250" />
-            <el-table-column prop="content" />
-          </el-table>
-        </el-card>
+  <el-dialog class="dialog" width="75%" :visible="rowdata != null" :close-on-press-escape="false" :show-close="false" :close-on-click-modal="false" @closed="modalClosed">
+    <span slot="title" class="dialog-title">{{ $t('label.beneficiaries-bnba-detail-popup-title') }}
+      <el-button class="close-button" size="mini" type="default" icon="el-icon-close" @click="closeDialog()" />
+    </span>
+    <el-row v-if="rowdata" class="table" :gutter="24">
+      <el-col class="table" :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
+        <el-table class="table" stripe :data="tableDataBeneficiaries" :show-header="false" :row-style="rowStyle" style="width: 100%">
+          <el-table-column prop="title" width="250" />
+          <el-table-column prop="content" />
+        </el-table>
       </el-col>
-      <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-        <el-card>
-          <div slot="header" class="clearfix header">
-            <span>Status</span>
-          </div>
-          <el-table stripe :data="tableData2Beneficiaries" :show-header="false">
-            <el-table-column prop="title" />
-            <el-table-column prop="content">
-              <template slot-scope="{row}">
-                {{ row.content == 1 ? 'Ya' : '-' }}
-              </template>
-            </el-table-column>
-          </el-table>
-        </el-card>
+      <el-col class="table" :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
+        <el-table class="table" stripe :data="tableData2Beneficiaries" :show-header="false" :row-style="rowStyle">
+          <el-table-column prop="title" />
+          <el-table-column prop="content" />
+        </el-table>
+      </el-col>
+    </el-row>
+    <el-row>
+      <p class="preview-title">{{ $t('label.beneficiaries-document') }}</p>
+      <el-col :sm="24" :md="12" :lg="12">
+        <div class="preview-content">
+          <p><b>{{ $t('label.beneficiaries-image') }}</b></p>
+          <img :src="imageNone" alt="" width="350px" height="220px">
+        </div>
       </el-col>
     </el-row>
     <span slot="footer" class="dialog-footer">
-      <el-button @click="closeDialog">Tutup</el-button>
+      <el-button @click="closeDialog">{{ $t('crud.back') }}</el-button>
     </span>
   </el-dialog>
 </template>
@@ -46,7 +43,8 @@ export default {
   data() {
     return {
       tableDataBeneficiaries: [],
-      tableData2Beneficiaries: []
+      tableData2Beneficiaries: [],
+      imageNone: require('@/assets/none.png')
     }
   },
   watch: {
@@ -58,16 +56,8 @@ export default {
           content: row.nik
         },
         {
-          title: this.$t('label.beneficiaries-familyhead-name'),
+          title: this.$t('label.beneficiaries-name'),
           content: row.nama_krt
-        },
-        {
-          title: this.$t('label.beneficiaries-job'),
-          content: row.lapangan_usaha_type ? row.lapangan_usaha_type.title : '-'
-        },
-        {
-          title: this.$t('label.beneficiaries'),
-          content: this.tipeBansosFilter(row.id_tipe_bansos)
         },
         {
           title: this.$t('label.beneficiaries-domicile-kabkota'),
@@ -88,48 +78,28 @@ export default {
         {
           title: this.$t('label.beneficiaries-rt'),
           content: row.rt || '-'
-        },
-        {
-          title: this.$t('label.beneficiaries-total-family'),
-          content: row.jumlah_art_tanggungan || '-'
-        },
-        {
-          title: this.$t('label.beneficiaries-income-before'),
-          content: row.penghasilan_sebelum_covid19 ? this.formatCurrency(row.penghasilan_sebelum_covid19, 'Rp. ') : '-'
-        },
-        {
-          title: this.$t('label.beneficiaries-income-after'),
-          content: row.penghasilan_setelah_covid ? this.formatCurrency(row.penghasilan_setelah_covid, 'Rp. ') : '-'
         }
       ]
       this.tableData2Beneficiaries = [
         {
-          title: this.$t('label.beneficiaries-is_nik_valid'),
-          content: row.is_nik_valid
+          title: this.$t('label.beneficiaries-total-family'),
+          content: row.jumlah_art_tanggungan || 0
         },
         {
-          title: this.$t('label.beneficiaries-is_alamat_lengkap'),
-          content: row.is_alamat_lengkap
+          title: this.$t('label.beneficiaries-job'),
+          content: row.lapangan_usaha_type ? row.lapangan_usaha_type.title : 'Lainnya'
         },
         {
-          title: this.$t('label.beneficiaries-is_manual'),
-          content: row.is_manual
+          title: this.$t('label.beneficiaries-income-before'),
+          content: row.penghasilan_sebelum_covid19 ? this.formatCurrency(row.penghasilan_sebelum_covid19, 'Rp. ') : 'Rp. 0'
         },
         {
-          title: this.$t('label.beneficiaries-is_sapawarga'),
-          content: row.is_sapawarga
+          title: this.$t('label.beneficiaries-income-after'),
+          content: row.penghasilan_setelah_covid ? this.formatCurrency(row.penghasilan_setelah_covid, 'Rp. ') : 'Rp. 0'
         },
         {
-          title: this.$t('label.beneficiaries-is_pikobar'),
-          content: row.is_pikobar
-        },
-        {
-          title: this.$t('label.beneficiaries-is_super_clean'),
-          content: row.is_super_clean
-        },
-        {
-          title: this.$t('label.beneficiaries-is_data_sisa'),
-          content: row.is_data_sisa
+          title: this.$t('label.beneficiaries'),
+          content: this.tipeBansosFilter(row.id_tipe_bansos)
         }
       ]
     }
@@ -174,7 +144,47 @@ export default {
 
     modalClosed() {
       this.$emit('close')
+    },
+
+    rowStyle() {
+      return 'font-weight: bold '
     }
   }
 }
 </script>
+<style lang="scss" scoped>
+  .dialog-title {
+    font-weight: bold;
+    font-size: 22px;
+  }
+  .table {
+    margin: 0px !important;
+    padding: 0px !important;
+  }
+
+  .close-button {
+    background: transparent;
+    float: right;
+    outline: none;
+    border: none;
+    font-size: 16px;
+  }
+
+  .preview-title {
+    font-weight: bold;
+    font-size: 16px;
+    color: #67C23A;
+  }
+
+  .preview-content {
+     margin-left: 10px;
+    padding-top: 5px;
+    .content {
+      font-weight: bold;
+    }
+  }
+
+  .dialog {
+    margin: 5vh auto;
+  }
+</style>

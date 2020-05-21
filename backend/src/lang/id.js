@@ -889,7 +889,7 @@ export default {
     'beneficiaries-edit': 'Edit Bansos',
     'beneficiaries-detail': 'Detail Bansos',
     'beneficiaries-reject': 'Ditolak',
-    'beneficiaries-newdata': 'Data Baru',
+    'beneficiaries-newdata': 'Data Usulan Baru',
     'beneficiaries-verified-kabkota': 'Approval Kab/Kota',
     'beneficiaries-verified-kec': 'Approval Kec',
     'beneficiaries-verified-kel': 'Approval Kel/Desa',
@@ -904,6 +904,7 @@ export default {
     'beneficiaries-job': 'Pekerjaan',
     'beneficiaries-image-ktp': 'Foto KTP',
     'beneficiaries-image-kk': 'Foto Kepala Keluarga',
+    'beneficiaries-image': 'Foto',
 
     'beneficiaries-is_nik_valid': 'NIK Valid',
     'beneficiaries-is_alamat_lengkap': 'Alamat Lengkap',
@@ -961,8 +962,10 @@ export default {
     'beneficiaries-download-verified': 'Terverifikasi',
     'beneficiaries-download-not-verified': 'Belum Terverifikasi',
     'beneficiaries-download-rejected': 'Ditolak',
-    'beneficiaries-download-new-proposal': 'Usulan Baru'
+    'beneficiaries-download-new-proposal': 'Usulan Baru',
 
+    'beneficiaries-bnba-detail-popup-title': 'Detail Penerima Bantuan',
+    'beneficiaries-document': 'Dokumen Pendukung'
   },
   news: {
     'news-url': 'URL Berita',
