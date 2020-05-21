@@ -33,7 +33,8 @@
                   :data="sortedList"
                   :fields="exportFields"
                   worksheet="Data"
-                  name="sapawarga-dashboard-bansos.xls">
+                  name="sapawarga-dashboard-bansos.xls"
+                >
                   <button class="el-button el-button--success el-button--small">
                     <i class="el-icon-download" /> Export Data
                   </button>

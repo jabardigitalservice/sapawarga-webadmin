@@ -953,9 +953,9 @@ export default {
     'beneficiaries-note-verification-content': 'Di Halaman ini, Anda dapat melihat daftar warga calon penerima bantuan dan melakukan verifikasi calon penerima bantuan yang ada di Kelurahan Anda.',
     'beneficiaries-dashboard-alert': 'Proses Verifikasi dan Validasi Data Penerima Bansos PERIODE 2 belum dibuka!',
 
-    'beneficiaries-download-search-subdistrict-title': 'Cari Kecamatan',
-    'beneficiaries-download-subdistrict-list-title': 'Data Kecamatan',
-    'beneficiaries-download-search-subdistrict-placeholder': 'Masukkan Nama Kecamatan...',
+    'beneficiaries-download-search': 'Cari',
+    'beneficiaries-download-list': 'Data',
+    'beneficiaries-download-search-area': 'Masukkan Nama',
     'beneficiaries-download-subdistrict': 'Kecamatan',
     'beneficiaries-download-verified': 'Terverifikasi',
     'beneficiaries-download-not-verified': 'Belum Terverifikasi',
