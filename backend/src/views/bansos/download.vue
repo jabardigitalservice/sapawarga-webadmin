@@ -23,6 +23,7 @@
                 <span>{{ `${ $t('label.beneficiaries-download-list') } ${ areaLabelByFilter }` }}</span>
               </el-col>
               <el-col :xs="24" :md="3">
+                <!--Todo : action to api export data-->
                 <el-button type="success" plain icon="el-icon-download">{{ $t('crud.export') }}</el-button>
               </el-col>
             </el-row>
