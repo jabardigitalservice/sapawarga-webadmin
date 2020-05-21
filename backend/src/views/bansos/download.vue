@@ -41,7 +41,7 @@
                   <span v-if="row.data.approved" style="float: left">
                     ({{ formatNumber(percentage(row.data.approved, getTotalBenefeciaries(row.data))) }}%)
                   </span>
-                  {{ formatThousands(row.data.approved) }}
+                  {{ row.data.approved | currency }}
                 </template>
               </el-table-column>
               <el-table-column prop="data.pending" align="right" sortable="custom" :label="$t('label.beneficiaries-unverified')" min-width="180px">
@@ -49,7 +49,7 @@
                   <span v-if="row.data.pending" style="float: left">
                     ({{ formatNumber(percentage(row.data.pending, getTotalBenefeciaries(row.data))) }}%)
                   </span>
-                  {{ formatThousands(row.data.pending) }}
+                  {{ row.data.pending | currency }}
                 </template>
               </el-table-column>
               <el-table-column prop="data.reject" align="right" sortable="custom" :label="$t('label.beneficiaries-reject')" min-width="180px">
@@ -57,7 +57,7 @@
                   <span v-if="getReject(row.data)" style="float: left">
                     ({{ formatNumber(percentage(getReject(row.data), getTotalBenefeciaries(row.data))) }}%)
                   </span>
-                  {{ formatThousands(getReject(row.data)) }}
+                  {{ getReject(row.data) | currency }}
                 </template>
               </el-table-column>
               <el-table-column prop="data_baru.total" align="right" sortable="custom" :label="$t('label.beneficiaries-newdata')" min-width="180px">
@@ -65,7 +65,9 @@
                   <span v-if="row.data_baru && row.data_baru.total" style="float: left">
                     ({{ formatNumber(percentage(row.data_baru.total, getTotalBenefeciaries(row.data))) }}%)
                   </span>
-                  {{ row.data_baru ? formatThousands(row.data_baru.total) : '-' }}
+                  <span v-if="row.data_baru">
+                    {{ row.data_baru.total | currency }}
+                  </span>
                 </template>
               </el-table-column>
             </el-table>
@@ -229,10 +231,7 @@ export default {
   methods: {
     formatNumber,
     percentage(val, denom) {
-      if (denom) {
-        return val / denom * 100
-      }
-      return 0
+      return denom ? val / denom * 100 : 0
     },
     resetParams() {
       if (this.user.roles_active.id === 'staffProv' || this.user.roles_active.id === 'admin') {
@@ -267,25 +266,6 @@ export default {
     changeSort(e) {
       this.sort_prop = e.prop
       this.sort_order = e.order
-    },
-    formatThousands(value, prefix) {
-      if (value) {
-        const number_string = value.toString()
-        const split = number_string.split(',')
-        const modulo = split[0].length % 3
-        let rupiah = split[0].substr(0, modulo)
-        const thousand = split[0].substr(modulo).match(/\d{3}/gi)
-
-        if (thousand) {
-          const separator = modulo ? '.' : ''
-          rupiah += separator + thousand.join('.')
-        }
-
-        rupiah = split[1] !== undefined ? rupiah + ',' + split[1] : rupiah
-        return rupiah
-      } else {
-        return '-'
-      }
     },
     changeKabkota(id) {
       this.listQuery.kode_kab = id
