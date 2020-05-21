@@ -445,7 +445,8 @@ export default {
     'description-max-1000-characters': 'Deskripsi maksimal 1000 Karakter.',
     'description-not-valid-characters': 'Deskripsi mengandung karakter yang tidak diizinkan.',
 
-    'max-file-upload': 'Jumlah file tidak boleh lebih dari {0}.'
+    'max-file-upload': 'Jumlah file tidak boleh lebih dari {0}.',
+    'field_only_accepts_xlsx_xls': 'Hanya berkas dengan ekstensi ini yang diperbolehkan: xlsx dan xls.'
 
   },
   navbar: {
