@@ -1,6 +1,6 @@
 <template>
   <el-row :gutter="20">
-    <el-col :xs="20" :sm="10" :md="6" :lg="6" :xl="6">
+    <el-col v-if="!isVerval || (isVerval && listType === 'approved')" :xs="20" :sm="10" :md="6" :lg="6" :xl="6">
       <div class="grid-content">
         <div class="stat-title">TERVERIFIKASI</div>
         <!-- show loading -->
@@ -13,7 +13,7 @@
         <div v-if="!isLoading" class="stat-count color-sw-green">{{ summery.APPROVED ? formatNumber(summery.APPROVED) : '-' }}</div>
       </div>
     </el-col>
-    <el-col :xs="20" :sm="10" :md="6" :lg="6" :xl="6">
+    <el-col v-if="!isVerval || (isVerval && listType === 'pending')" :xs="20" :sm="10" :md="6" :lg="6" :xl="6">
       <div class="grid-content">
         <div class="stat-title shadow">BELUM TERVERIFIKASI</div>
         <!-- show loading -->
@@ -26,7 +26,7 @@
         <div v-if="!isLoading" class="stat-count color-sw-orange">{{ summery.PENDING ? formatNumber(summery.PENDING) : '-' }}</div>
       </div>
     </el-col>
-    <el-col :xs="20" :sm="10" :md="6" :lg="6" :xl="6">
+    <el-col v-if="!isVerval || (isVerval && listType === 'rejected')" :xs="20" :sm="10" :md="6" :lg="6" :xl="6">
       <div class="grid-content">
         <div class="stat-title">DITOLAK</div>
         <!-- show loading -->
@@ -39,7 +39,7 @@
         <div v-if="!isLoading" class="stat-count color-sw-red">{{ summery.REJECT ? formatNumber(summery.REJECT) : '-' }}</div>
       </div>
     </el-col>
-    <el-col :xs="20" :sm="10" :md="6" :lg="6" :xl="6">
+    <el-col v-if="!isVerval || (isVerval && listType === null)" :xs="20" :sm="10" :md="6" :lg="6" :xl="6">
       <div class="grid-content">
         <div class="stat-title">SEMUA DATA PENERIMA BANTUAN</div>
         <!-- show loading -->
@@ -64,6 +64,14 @@ export default {
       default: () => {}
     },
     isLoading: {
+      type: Boolean,
+      default: false
+    },
+    listType: {
+      type: String,
+      default: null
+    },
+    isVerval: {
       type: Boolean,
       default: false
     }

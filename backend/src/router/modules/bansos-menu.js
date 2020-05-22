@@ -108,6 +108,26 @@ const bansosMenuRouter = {
         title: 'beneficiaries-verification',
         roles: ['admin', 'staffKel']
       }
+    },
+    {
+      name: 'beneficiaries-pending',
+      path: '/beneficiaries/pending',
+      component: () => import('@/views/beneficiaries/pending'),
+      hidden: false,
+      meta: {
+        title: 'beneficiaries-pending',
+        roles: ['admin', 'staffKel']
+      }
+    },
+    {
+      name: 'beneficiaries-approved',
+      path: '/beneficiaries/approved',
+      component: () => import('@/views/beneficiaries/approved'),
+      hidden: false,
+      meta: {
+        title: 'beneficiaries-approved',
+        roles: ['admin', 'staffKel']
+      }
     }
   ]
 }

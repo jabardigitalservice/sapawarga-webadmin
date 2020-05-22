@@ -12,7 +12,7 @@
             <el-input v-model="listQuery.nik" placeholder="NIK" />
           </el-form-item>
         </el-col>
-        <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="3">
+        <el-col v-if="!isVerval" :xs="{span:24, tag:'mb-10'}" :sm="24" :md="3">
           <el-form-item style="margin-bottom: 0">
             <el-select
               v-model="listQuery.status_verification"
@@ -73,6 +73,10 @@ export default {
     listQuery: {
       type: Object,
       default: null
+    },
+    isVerval: {
+      type: Boolean,
+      default: false
     }
   },
 

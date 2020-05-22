@@ -130,6 +130,9 @@ export default {
     'beneficiaries-preview': 'Ringkasan',
     'beneficiaries-verification': 'Verifikasi Bansos',
     'beneficiaries-dashboard-verification': 'Dashboard Verifikasi',
+    'beneficiaries-approved': 'Disetujui',
+    'beneficiaries-rejected': 'Ditolak',
+    'beneficiaries-pending': 'Belum Disetujui',
 
     'bansos-download': 'Unduh Dokumen',
     'bansos-upload': 'Unggah Dokumen',
@@ -215,6 +218,7 @@ export default {
     'unpublish-confirm': 'Anda yakin ingin membatalkan usulan ini?',
     'publish-success': 'Usulan berhasil dipublikasikan',
     'unpublish-success': 'Usulan berhasil di batalkan',
+    'approval-confirm': 'Anda yakin akan menyetujui warga ini?',
 
     'delete-confirm': 'Anda yakin ingin menghapus data ini?',
     'delete-success': 'Data berhasil dihapus.',

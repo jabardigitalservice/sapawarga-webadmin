@@ -99,3 +99,24 @@ export function update(id, data) {
     data
   })
 }
+
+export function validateStaffKel(id) {
+  return request({
+    url: `/beneficiaries/approval/${id}`,
+    method: 'post',
+    data: {
+      action: 'APPROVE'
+    }
+  })
+}
+
+export function validateStaffKelBulk(id) {
+  return request({
+    url: `/beneficiaries/bulk-approval`,
+    method: 'post',
+    data: {
+      'action': 'APPROVE',
+      'ids': id
+    }
+  })
+}
