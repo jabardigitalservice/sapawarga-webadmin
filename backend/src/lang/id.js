@@ -219,6 +219,7 @@ export default {
     'publish-success': 'Usulan berhasil dipublikasikan',
     'unpublish-success': 'Usulan berhasil di batalkan',
     'approval-confirm': 'Anda yakin akan menyetujui warga ini?',
+    'approval-success': 'Warga berhasil disetujui',
 
     'delete-confirm': 'Anda yakin ingin menghapus data ini?',
     'delete-success': 'Data berhasil dihapus.',
@@ -891,6 +892,7 @@ export default {
     'beneficiaries-edit': 'Edit Bansos',
     'beneficiaries-detail': 'Detail Bansos',
     'beneficiaries-reject': 'Ditolak',
+    'beneficiaries-validate': 'Setujui Bansos',
     'beneficiaries-newdata': 'Data Usulan Baru',
     'beneficiaries-verified-kabkota': 'Approval Kab/Kota',
     'beneficiaries-verified-kec': 'Approval Kec',

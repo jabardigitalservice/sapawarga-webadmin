@@ -5,13 +5,14 @@
         <DashboardTitle :is-verification="true" />
 
         <!-- show statistics -->
-        <Statistics :is-loading="isLoadingSummary" :is-verval="true" :list-type="listType" :summery="dataSummary" />
+        <Statistics :is-loading="isLoadingSummary" :is-verval="true" :list-type="listType" :summery="dataSummary" :valid="dataValid" />
 
         <ListFilter :list-query.sync="listQuery" :is-verval="true" @submit-search="getList" @reset-search="resetFilter" />
 
         <el-table ref="multipleTable" v-loading="listLoading" :data="list" border stripe highlight-current-row style="width: 100%" @selection-change="handleSelectionChange" @sort-change="changeSort">
-          <!-- <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" /> -->
-          <el-table-column prop="id" type="selection" width="55" align="center" />
+          <el-table-column v-if="listType === 'pending'" type="selection" width="55" align="center" />
+
+          <el-table-column v-else type="index" width="50" align="center" :index="getTableRowNumbering" />
 
           <el-table-column prop="name" sortable="custom" :label="$t('label.beneficiaries-name')" min-width="200px" />
 
@@ -45,15 +46,15 @@
                   <el-button type="primary" icon="el-icon-view" size="small" />
                 </el-tooltip>
               </router-link>
-              <el-tooltip v-if="listType === 'pending'" :content="$t('label.beneficiaries-verivication')" placement="top">
+              <el-tooltip v-if="listType === 'pending'" :content="$t('label.beneficiaries-validate')" placement="top">
                 <el-button type="success" icon="el-icon-circle-check" size="small" @click="validate(scope.row.id)" />
               </el-tooltip>
             </template>
           </el-table-column>
         </el-table>
         <div style="margin-top: 20px">
-          <el-button @click="toggleSelection()">Clear selection</el-button>
-          <el-button @click="multipleValidate()">Validasi</el-button>
+          <!-- <el-button @click="toggleSelection()">Clear selection</el-button> -->
+          <el-button v-if="multipleSelection.length > 0" type="success" style="float: right; margin-right: 50px" @click="multipleValidate()">Setujui</el-button>
         </div>
 
         <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
@@ -95,6 +96,7 @@ export default {
       dialogVisible: false,
       isLoadingSummary: true,
       dataSummary: null,
+      dataValid: 0,
       listLoading: true,
       multipleSelection: [],
       status: {
@@ -127,9 +129,6 @@ export default {
   },
 
   methods: {
-    accessBlock(value) {
-      this.$router.push('/beneficiaries/' + value)
-    },
     // get summary statistics
     getSummary() {
       const querySummary = {
@@ -156,6 +155,9 @@ export default {
       fetchList(this.listQuery).then(response => {
         this.list = response.data.items
         this.total = response.data._meta.totalCount
+        if (this.listType === 'approved') {
+          this.dataValid = this.list.length
+        }
         this.listLoading = false
       })
     },
@@ -172,7 +174,7 @@ export default {
 
         await validateStaffKelBulk(id)
 
-        this.$message.success(this.$t('crud.unpublish-success'))
+        this.$message.success(this.$t('crud.approval-success'))
 
         this.getList()
       } catch (e) {
