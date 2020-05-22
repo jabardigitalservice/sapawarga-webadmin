@@ -230,7 +230,8 @@ export default {
 
     'news-selected': 'Berita sudah dipilih',
     'gamification-send-success': 'Gamification berhasil dibuat',
-    '': 'Batalkan'
+    '': 'Batalkan',
+    'export': 'Export'
 
   },
   common: {
@@ -444,7 +445,8 @@ export default {
     'description-max-1000-characters': 'Deskripsi maksimal 1000 Karakter.',
     'description-not-valid-characters': 'Deskripsi mengandung karakter yang tidak diizinkan.',
 
-    'max-file-upload': 'Jumlah file tidak boleh lebih dari {0}.'
+    'max-file-upload': 'Jumlah file tidak boleh lebih dari {0}.',
+    'field_only_accepts_xlsx_xls': 'Hanya berkas dengan ekstensi ini yang diperbolehkan: xlsx dan xls.'
 
   },
   navbar: {
@@ -952,6 +954,16 @@ export default {
     'beneficiaries-notes-display-verification': 'Halaman ini menampilkan Daftar calon penerima bantuan sosial di',
     'beneficiaries-note-verification-content': 'Di Halaman ini, Anda dapat melihat daftar warga calon penerima bantuan dan melakukan verifikasi calon penerima bantuan yang ada di Kelurahan Anda.',
     'beneficiaries-dashboard-alert': 'Proses Verifikasi dan Validasi Data Penerima Bansos PERIODE 2 belum dibuka!',
+
+    'beneficiaries-download-search': 'Cari',
+    'beneficiaries-download-list': 'Data',
+    'beneficiaries-download-search-area': 'Masukkan Nama',
+    'beneficiaries-download-subdistrict': 'Kecamatan',
+    'beneficiaries-download-verified': 'Terverifikasi',
+    'beneficiaries-download-not-verified': 'Belum Terverifikasi',
+    'beneficiaries-download-rejected': 'Ditolak',
+    'beneficiaries-download-new-proposal': 'Usulan Baru',
+
     'beneficiaries-bnba-detail-popup-title': 'Detail Penerima Bantuan',
     'beneficiaries-document': 'Dokumen Pendukung'
   },

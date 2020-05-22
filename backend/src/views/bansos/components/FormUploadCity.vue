@@ -11,6 +11,7 @@
     <el-row :gutter="40">
       <el-col :span="12">
         <el-upload
+          ref="upload"
           drag
           :multiple="false"
           :limit="1"
@@ -81,7 +82,18 @@ export default {
       }
     },
     handleChangeFile(file) {
-      this.file = file.raw
+      const isXlsx = file.raw.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+      const isXls = file.raw.type === ''
+      if (!isXlsx && !isXls) {
+        Swal.fire({
+          text: this.$t('errors.field_only_accepts_xlsx_xls'),
+          icon: 'error',
+          button: 'OK'
+        })
+        this.$refs.upload.clearFiles()
+      } else {
+        this.file = file.raw
+      }
     }
   }
 }

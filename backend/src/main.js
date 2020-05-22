@@ -39,6 +39,8 @@ import { mockXHR } from '../mock' // simulation data
 import * as Sentry from '@sentry/browser'
 import * as Integrations from '@sentry/integrations'
 
+import VueCurrencyFilter from 'vue-currency-filter'
+
 if (process.env.VUE_APP_NODE_ENV === 'production') {
   Sentry.init({
     environment: process.env.VUE_APP_ERROR_ENVIRONMENT,
@@ -63,6 +65,15 @@ Vue.use(Element, {
 
 Vue.use(VueMoment, {
   moment
+})
+
+Vue.use(VueCurrencyFilter, {
+  symbol: '',
+  thousandsSeparator: '.',
+  fractionCount: 0,
+  fractionSeparator: ',',
+  symbolPosition: 'front',
+  symbolSpacing: true
 })
 
 Vue.use(VueTheMask)
