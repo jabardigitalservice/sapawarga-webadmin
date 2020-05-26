@@ -297,7 +297,7 @@ export default {
       const params = this.selectionQuery.kode_kec ? this.selectionQuery : null
       const response = await exportExcel(params)
       const dateNow = Date.now()
-      const fileName = `Dokumen BNBA Penerima Bansos - ${moment(dateNow).format('D MMMM YYYY H:mm:ss')}.xlsx`
+      const fileName = `${this.$t('label.beneficiaries-download-bnba-document')} - ${moment(dateNow).format('D MMMM YYYY H:mm:ss')}.xlsx`
       FileSaver.saveAs(response, fileName)
     }
   }
