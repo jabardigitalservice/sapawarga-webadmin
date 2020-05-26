@@ -99,3 +99,12 @@ export function update(id, data) {
     data
   })
 }
+
+export function exportExcel(query) {
+  return request({
+    url: `/beneficiaries-bnba/download`,
+    method: 'get',
+    params: query,
+    responseType: 'blob'
+  })
+}

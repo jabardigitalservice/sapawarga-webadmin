@@ -963,6 +963,7 @@ export default {
     'beneficiaries-download-not-verified': 'Belum Terverifikasi',
     'beneficiaries-download-rejected': 'Ditolak',
     'beneficiaries-download-new-proposal': 'Usulan Baru',
+    'beneficiaries-download-bnba-document': 'Dokumen BNBA Penerima Bansos',
 
     'beneficiaries-bnba-detail-popup-title': 'Detail Penerima Bantuan',
     'beneficiaries-document': 'Dokumen Pendukung'
