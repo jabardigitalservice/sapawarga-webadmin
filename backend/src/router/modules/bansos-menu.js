@@ -100,12 +100,42 @@ const bansosMenuRouter = {
       }
     },
     {
+      name: 'beneficiaries-detail',
+      path: '/beneficiaries/detail-verval/:id',
+      component: () => import('@/views/beneficiaries/detailVerval'),
+      hidden: true,
+      meta: {
+        title: 'beneficiaries-detail',
+        roles: ['admin', 'staffKel']
+      }
+    },
+    {
       name: 'beneficiaries-verification',
       path: '/beneficiaries/verification/:id',
       component: () => import('@/views/beneficiaries/verification'),
       hidden: true,
       meta: {
         title: 'beneficiaries-verification',
+        roles: ['admin', 'staffKel']
+      }
+    },
+    {
+      name: 'beneficiaries-pending',
+      path: '/beneficiaries/pending',
+      component: () => import('@/views/beneficiaries/pending'),
+      hidden: false,
+      meta: {
+        title: 'beneficiaries-pending',
+        roles: ['admin', 'staffKel']
+      }
+    },
+    {
+      name: 'beneficiaries-approved',
+      path: '/beneficiaries/approved',
+      component: () => import('@/views/beneficiaries/approved'),
+      hidden: false,
+      meta: {
+        title: 'beneficiaries-approved',
         roles: ['admin', 'staffKel']
       }
     }

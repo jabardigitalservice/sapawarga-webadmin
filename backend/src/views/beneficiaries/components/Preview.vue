@@ -5,9 +5,11 @@
         <span><b>Detail Calon Penerima Bantuan</b></span>
       </div>
       <el-row v-if="beneficiaries">
-        <p v-if="beneficiaries.status_verification === 3" class="warn-content">Status: {{ beneficiaries.status_verification_label }}</p>
-        <p v-else-if="beneficiaries.status_verification === 2" class="warn-content-danger">Status: {{ beneficiaries.status_verification_label }}</p>
-        <p v-else-if="beneficiaries.status_verification === 1" class="warn-content-warning">Status: {{ beneficiaries.status_verification_label }}</p>
+        <div v-if="isVerval === false">
+          <p v-if="beneficiaries.status_verification === 3" class="warn-content">Status: {{ beneficiaries.status_verification_label }}</p>
+          <p v-else-if="beneficiaries.status_verification === 2" class="warn-content-danger">Status: {{ beneficiaries.status_verification_label }}</p>
+          <p v-else-if="beneficiaries.status_verification === 1" class="warn-content-warning">Status: {{ beneficiaries.status_verification_label }}</p>
+        </div>
         <el-col :sm="24" :md="8" :lg="8">
           <div>
             <p class="preview-title">Informasi Penerima Bantuan</p>
@@ -111,36 +113,35 @@
       </el-row>
       <div class="form-button">
         <el-button type="info" class="button-action" @click="back">Kembali</el-button>
-        <el-button v-if="beneficiaries.status_verification !== 1" type="primary" class="button-action" @click="updateForm('edit/' + beneficiaries.id)">Update Data</el-button>
-        <el-button v-else type="success" class="button-action" @click="updateForm('verification/' + beneficiaries.id)">Verifikasi Data</el-button>
-        <!-- <el-button class="button-action" @click="back">Ubah</el-button>
-        <el-button class="button-action" type="danger" @click="update('reject')">Tolak</el-button>
-        <el-button class="button-action" type="success" @click="update('varification')">Verifikasi</el-button> -->
+        <el-button v-if="isVerval === false && beneficiaries.status_verification !== 1" type="primary" class="button-action" @click="updateForm('edit/' + beneficiaries.id)">Update Data</el-button>
+        <el-button v-if="isVerval === false && beneficiaries.status_verification === 1" type="success" class="button-action" @click="updateForm('verification/' + beneficiaries.id)">Verifikasi Data</el-button>
+        <el-button v-if="beneficiaries.status_verification === 3" class="button-action" type="success" @click="validate(beneficiaries.id)">Setujui</el-button>
       </div>
     </el-card>
   </div>
 </template>
 <script>
-import { update, fetchRecord } from '@/api/beneficiaries'
+import { update, fetchRecord, validateStaffKelBulk } from '@/api/beneficiaries'
 
 export default {
-  // props: {
-  //   beneficiaries: {
-  //     type: Object,
-  //     default: null
-  //   }
-  // },
+  props: {
+    isVerval: {
+      type: Boolean,
+      default: false
+    }
+  },
   data() {
     return {
       imageNone: require('@/assets/none.png'),
+      id: null,
       beneficiaries: {
         image_ktp_url: null
       }
     }
   },
   created() {
-    const id = this.$route.params && this.$route.params.id
-    this.getDetail(id)
+    this.id = this.$route.params && this.$route.params.id
+    this.getDetail(this.id)
   },
   methods: {
     updateForm(value) {
@@ -166,6 +167,25 @@ export default {
     back() {
       // this.$emit('nextStep', false)
       this.$router.push('/beneficiaries/index')
+    },
+    async validate(id) {
+      try {
+        await this.$confirm(this.$t('crud.approval-confirm'), 'Warning', {
+          confirmButtonText: this.$t('common.confirm'),
+          cancelButtonText: this.$t('common.cancel'),
+          type: 'warning'
+        })
+
+        this.listLoading = true
+
+        await validateStaffKelBulk(id)
+
+        this.$message.success(this.$t('crud.approval-success'))
+
+        this.$router.push('/beneficiaries/pending')
+      } catch (e) {
+        console.log(e)
+      }
     }
   }
 }

@@ -51,7 +51,7 @@
             </template>
           </el-table-column>
 
-          <el-table-column prop="id_tipe_bansos" class-name="status-col" sortable="custom" :label="'Bantuan'" min-width="150px">
+          <el-table-column prop="id_tipe_bansos" class-name="status-col" sortable="custom" :label="'Bantuan'" min-width="175px">
             <template slot-scope="{row}">
               {{ row.id_tipe_bansos | tipeBansosFilter }}
             </template>
@@ -72,20 +72,6 @@
 
         <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
       </el-col>
-      <el-dialog
-        :visible.sync="dialogVisible"
-        width="50%"
-        center
-      >
-        <span slot="title" class="dialog-title">Sampurasun, Wargi Jabar!</span>
-        <p class="dialog-content">Sehubungan dengan berakhirnya proses verifikasi dan validasi bansos Non DTKS Sapawarga pada periode pertama di bulan April, atas permintaan Pemerintah Kabupaten Sumedang melalui sekretaris Daerah, maka fitur verifikasi dan validasi bansos Non DTKS Sapawarga akan kami <b>tutup sementara.</b> Fitur akan kami buka kembali menjelang proses verifikasi dan validasi bansos Non DTKS Sapawarga pada periode kedua bulan Mei. Tanggal pembukaan kembali fitur akan kami umumkan segera.
-        </p>
-        <p class="dialog-content">Terima kasih telah saling membantu wargi Jabar yang membutuhkan dengan melakukan proses verifikasi dan validasi menggunakan aplikasi Sapawarga.</p>
-        <p>Tim Sapawarga</p>
-        <span slot="footer" class="dialog-footer">
-          <el-button type="success" @click="dialogVisible = false">Tutup</el-button>
-        </span>
-      </el-dialog>
     </el-row>
     <ModalDetailBnba :rowdata="selectedRow" @close="closeDialog" />
   </div>
@@ -94,6 +80,7 @@
 <script>
 import { fetchBnbaTahapSatuSummary, fetchBnbaTahapSatuList } from '@/api/beneficiaries'
 import Pagination from '@/components/Pagination'
+import i18n from '@/lang'
 import StatisticsBnba from './components/StatisticsBnba'
 import ModalDetailBnba from './components/ModalDetailBnba'
 import ListFilterBnba from './_listfilterbnba'
@@ -105,14 +92,14 @@ export default {
   filters: {
     tipeBansosFilter(status) {
       const statusMap = {
-        '1': 'PKH',
-        '2': 'BPNT',
-        '3': 'BPNT Perluasan',
-        '4': 'Bansos Tunai (Kemensos)',
-        '5': 'Bansos Presiden Sembako (BODEBEK)',
-        '6': 'Bansos Provinsi',
-        '7': 'Dana Desa',
-        '8': 'Bansos Kabupaten/Kota'
+        '1': i18n.t('label.beneficiaries-pkh'),
+        '2': i18n.t('label.beneficiaries-bpnt-basicfood'),
+        '3': i18n.t('label.beneficiaries-bpnt-expansion'),
+        '4': i18n.t('label.beneficiaries-kemensos'),
+        '5': i18n.t('label.beneficiaries-president'),
+        '6': i18n.t('label.beneficiaries-province'),
+        '7': i18n.t('label.beneficiaries-village-fund'),
+        '8': i18n.t('label.beneficiaries-city')
       }
       return statusMap[status]
     }
@@ -128,7 +115,6 @@ export default {
       display: false,
       list: null,
       total: 0,
-      dialogVisible: false,
       isLoadingSummary: true,
       dataSummary: null,
       listLoading: true,
@@ -181,19 +167,21 @@ export default {
   methods: {
     displayFilter(value) {
       if (value.id_tipe_bansos === '1') {
-        this.listQuery.name_tipe_bansos = 'PKH'
+        this.listQuery.name_tipe_bansos = this.$t('label.beneficiaries-pkh')
       } else if (value.id_tipe_bansos === '2') {
-        this.listQuery.name_tipe_bansos = 'BNPT'
+        this.listQuery.name_tipe_bansos = this.$t('label.beneficiaries-bpnt-basicfood')
       } else if (value.id_tipe_bansos === '3') {
-        this.listQuery.name_tipe_bansos = 'BPNT Perluasan'
+        this.listQuery.name_tipe_bansos = this.$t('label.beneficiaries-bpnt-expansion')
       } else if (value.id_tipe_bansos === '4') {
-        this.listQuery.name_tipe_bansos = 'Bansos Tunai (Kemensos)'
+        this.listQuery.name_tipe_bansos = this.$t('label.beneficiaries-kemensos')
       } else if (value.id_tipe_bansos === '5') {
-        this.listQuery.name_tipe_bansos = 'Bansos Presiden Sembako (BODEBEK)'
+        this.listQuery.name_tipe_bansos = this.$t('label.beneficiaries-president')
       } else if (value.id_tipe_bansos === '6') {
-        this.listQuery.name_tipe_bansos = 'Bansos Provinsi'
+        this.listQuery.name_tipe_bansos = this.$t('label.beneficiaries-province')
       } else if (value.id_tipe_bansos === '7') {
-        this.listQuery.name_tipe_bansos = 'Dana Desa'
+        this.listQuery.name_tipe_bansos = this.$t('label.beneficiaries-village-fund')
+      } else if (value.id_tipe_bansos === '8') {
+        this.listQuery.name_tipe_bansos = this.$t('label.beneficiaries-city')
       }
       this.display = true
     },
