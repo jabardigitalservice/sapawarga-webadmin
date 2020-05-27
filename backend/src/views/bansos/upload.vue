@@ -69,9 +69,9 @@
               </el-table-column>
               <el-table-column align="center" :label="$t('label.actions')" width="200">
                 <template slot-scope="{row}">
-                  <a :href="row.file_url">
-                    <el-tooltip :content="$t('label.beneficiaries-file-download')" placement="top">
-                      <el-button type="primary" icon="el-icon-download" size="mini" />
+                  <a :href="row.invalid_file_url" v-if="row.status == 20">
+                    <el-tooltip :content="$t('label.beneficiaries-download-invalid-file')" placement="top">
+                      <el-button type="warning" size="mini"><i class="el-icon-download el-icon-right"></i>{{ $t('label.beneficiaries-download-invalid-file') }}</el-button>
                     </el-tooltip>
                   </a>
                 </template>
@@ -123,6 +123,8 @@ export default {
           'target_upload': value.kabkota_name,
           'created_at': value.created_at,
           'file_url': value.file_url,
+          'invalid_file_url': value.invalid_file_url,
+          'status': value.status,
           'notes': value.notes,
           'id': value.id
         })
