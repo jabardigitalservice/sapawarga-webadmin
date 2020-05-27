@@ -2,17 +2,17 @@
   <div class="app-container">
     <el-row>
       <el-col :lg="24">
-        <DashboardTitle :is-verification="true" />
+        <DashboardTitle :list-type="listType" />
 
         <!-- show statistics -->
-        <Statistics :is-loading="isLoadingSummary" :is-verval="true" :list-type="listType" :summery="dataSummary" :valid="dataValid" />
+        <StatisticsVerval :is-loading="isLoadingSummary" :is-verval="true" :list-type="listType" :summery="dataSummary" />
 
         <ListFilter :list-query.sync="listQuery" :is-verval="true" @submit-search="getList" @reset-search="resetFilter" />
 
         <el-table ref="multipleTable" v-loading="listLoading" :data="list" border stripe highlight-current-row style="width: 100%" @selection-change="handleSelectionChange" @sort-change="changeSort">
           <el-table-column v-if="listType === 'pending'" type="selection" width="55" align="center" />
 
-          <el-table-column v-else type="index" width="50" align="center" :index="getTableRowNumbering" />
+          <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
 
           <el-table-column prop="name" sortable="custom" :label="$t('label.beneficiaries-name')" min-width="200px" />
 
@@ -20,7 +20,7 @@
             <template slot-scope="{row}">
               {{ row.nik }}
               <div v-if="row.is_nik_valid === 0" slot="reference" class="name-wrapper">
-                <el-tag size="medium" type="danger">Format NIK tidak sesuai</el-tag>
+                <el-tag size="medium" type="danger">{{ $t('label.beneficiaries-nik-invalid-format') }}</el-tag>
               </div>
             </template>
           </el-table-column>
@@ -41,20 +41,20 @@
 
           <el-table-column align="center" :label="$t('label.actions')" width="200px">
             <template slot-scope="scope">
-              <router-link :to="'/beneficiaries/detail/' +scope.row.id">
+              <router-link :to="'/beneficiaries/detail-verval/' +scope.row.id">
                 <el-tooltip :content="$t('label.beneficiaries-detail')" placement="top">
                   <el-button type="primary" icon="el-icon-view" size="small" />
                 </el-tooltip>
               </router-link>
-              <el-tooltip v-if="listType === 'pending'" :content="$t('label.beneficiaries-validate')" placement="top">
+              <el-tooltip v-if="listType === 'pending' && !multipleSelection.length > 0" :disabled="!multipleSelection.length > 0" :content="$t('label.beneficiaries-validate')" placement="top">
                 <el-button type="success" icon="el-icon-circle-check" size="small" @click="validate(scope.row.id)" />
               </el-tooltip>
             </template>
           </el-table-column>
         </el-table>
         <div style="margin-top: 20px">
-          <!-- <el-button @click="toggleSelection()">Clear selection</el-button> -->
-          <el-button v-if="multipleSelection.length > 0" type="success" style="float: right; margin-right: 50px" @click="multipleValidate()">Setujui</el-button>
+          <el-button v-if="multipleSelection.length === 0" type="success" style="float: right; margin-right: 30px" @click="validateAll()">{{ $t('label.beneficiaries-validate-all') }}</el-button>
+          <el-button v-if="multipleSelection.length > 0" type="success" style="float: right; margin-right: 50px" @click="multipleValidate()">{{ $t('label.beneficiaries-validate-select') }}</el-button>
         </div>
 
         <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
@@ -64,15 +64,15 @@
 </template>
 
 <script>
-import { fetchSummary, fetchList, validateStaffKelBulk } from '@/api/beneficiaries'
+import { fetchSummaryVerval, fetchListVerval, validateStaffKelBulk } from '@/api/beneficiaries'
 import DashboardTitle from './components/DashboardTitle'
 import Pagination from '@/components/Pagination'
-import Statistics from './components/Statistics'
+import StatisticsVerval from './components/StatisticsVerval'
 import ListFilter from './_listfilter'
 import { mapGetters } from 'vuex'
 
 export default {
-  components: { Pagination, Statistics, ListFilter, DashboardTitle },
+  components: { Pagination, StatisticsVerval, ListFilter, DashboardTitle },
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -96,7 +96,6 @@ export default {
       dialogVisible: false,
       isLoadingSummary: true,
       dataSummary: null,
-      dataValid: 0,
       listLoading: true,
       multipleSelection: [],
       status: {
@@ -138,7 +137,7 @@ export default {
       }
 
       this.isLoadingSummary = true
-      fetchSummary(querySummary).then(response => {
+      fetchSummaryVerval(querySummary).then(response => {
         this.dataSummary = response.data
         this.isLoadingSummary = false
       })
@@ -152,12 +151,9 @@ export default {
       } else if (this.listType === 'rejected') {
         this.listQuery.status_verification = 2 || 4
       }
-      fetchList(this.listQuery).then(response => {
+      fetchListVerval(this.listQuery).then(response => {
         this.list = response.data.items
         this.total = response.data._meta.totalCount
-        if (this.listType === 'approved') {
-          this.dataValid = this.list.length
-        }
         this.listLoading = false
       })
     },
@@ -227,6 +223,10 @@ export default {
 
     multipleValidate() {
       this.validate(this.multipleSelection.map(element => (element.id)))
+    },
+
+    validateAll() {
+      this.validate(this.list.map(element => (element.id)))
     }
   }
 }

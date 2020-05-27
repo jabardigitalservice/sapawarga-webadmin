@@ -8,6 +8,14 @@ export function fetchSummary(query) {
   })
 }
 
+export function fetchSummaryVerval(query) {
+  return request({
+    url: '/beneficiaries/approval-dashboard',
+    method: 'get',
+    params: query
+  })
+}
+
 export function fetchDashboardSummary(query) {
   return request({
     url: '/beneficiaries/dashboard-summary',
@@ -43,6 +51,14 @@ export function fetchBnbaTahapSatuList(query) {
 export function fetchList(query) {
   return request({
     url: '/beneficiaries',
+    method: 'get',
+    params: query
+  })
+}
+
+export function fetchListVerval(query) {
+  return request({
+    url: '/beneficiaries/approval',
     method: 'get',
     params: query
   })
