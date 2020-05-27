@@ -1,6 +1,11 @@
 <template>
   <div class="app-container">
-    <admin-headline-news />
+    <el-row v-if="user.roles_active.id === 'staffKabkota'">
+      <el-button type="text" @click="handleExport">
+        <img src="https://firebasestorage.googleapis.com/v0/b/sapawarga-app.appspot.com/o/admin-banner-01.png?alt=media&token=2c606be5-7378-40ca-b147-f19b8b8539ea" width="100%">
+      </el-button>
+    </el-row>
+
     <h3>{{ `${ $t('label.beneficiaries-download-search') } ${ areaLabelByFilter }` }}</h3>
 
     <el-row>
@@ -23,13 +28,13 @@
                 <span>{{ `${ $t('label.beneficiaries-download-list') } ${ areaLabelByFilter }` }}</span>
               </el-col>
               <el-col :xs="24" :md="3">
-                <!--Todo : action to api export data-->
-                <el-button type="success" plain icon="el-icon-download">{{ $t('crud.export') }}</el-button>
+                <el-button type="success" plain icon="el-icon-download" @click="handleExport">{{ $t('crud.export') }}</el-button>
               </el-col>
             </el-row>
           </div>
           <div class="text item">
-            <el-table v-loading="listLoading" :data="sortedList.filter(data => !listQuery.search || data.name.toLowerCase().includes(listQuery.search.toLowerCase()))" border stripe highlight-current-row style="width: 100%" @sort-change="changeSort">
+            <el-table v-loading="listLoading" :data="sortedList.filter(data => !listQuery.search || data.name.toLowerCase().includes(listQuery.search.toLowerCase()))" border stripe highlight-current-row style="width: 100%" @sort-change="changeSort" @selection-change="selectChange">
+              <el-table-column type="selection" align="center" width="55" />
               <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
               <el-table-column prop="name" sortable="custom" :label="areaLabelByFilter" min-width="200px">
                 <template slot-scope="{row}">
@@ -79,22 +84,18 @@
 </template>
 
 <script>
-import AdminHeadlineNews from '@/components/AdminHeadlineNews'
 import { formatNumber } from '@/utils/formatNumber'
-import { fetchDashboardList } from '@/api/beneficiaries'
+import { fetchDashboardList, exportExcel } from '@/api/beneficiaries'
 import { mapGetters } from 'vuex'
 import checkPermission from '@/utils/permission'
+import FileSaver from 'file-saver'
+import moment from 'moment'
 
 export default {
-  components: {
-    AdminHeadlineNews
-  },
   data() {
     return {
       list: null,
       total: 0,
-      isLoadingSummary: true,
-      dataSummary: null,
       listLoading: true,
       status: {
         DRAFT: 0,
@@ -115,7 +116,10 @@ export default {
       prevFilter: [],
       exportFields: {},
       sort_prop: 'data.approved',
-      sort_order: 'descending'
+      sort_order: 'descending',
+      selectionQuery: {
+        kode_kec: null
+      }
     }
   },
   computed: {
@@ -269,11 +273,9 @@ export default {
     },
     changeKabkota(id) {
       this.listQuery.kode_kab = id
-      console.log(id)
     },
     changeKecamatan(id) {
       this.listQuery.kode_kec = id
-      console.log(id)
     },
     getApproved(data) {
       return data.approved_kabkota + data.approved_kec + data.approved_kel + data.approved
@@ -283,6 +285,20 @@ export default {
     },
     getReject(data) {
       return data.rejected_kabkota + data.rejected_kec + data.rejected_kel + data.rejected
+    },
+    selectChange(data) {
+      const result = []
+      data.map(item => {
+        result.push(item.code_bps)
+      })
+      this.selectionQuery.kode_kec = result.join()
+    },
+    async handleExport() {
+      const params = this.selectionQuery.kode_kec ? this.selectionQuery : null
+      const response = await exportExcel(params)
+      const dateNow = Date.now()
+      const fileName = `${this.$t('label.beneficiaries-download-bnba-document')} - ${moment(dateNow).format('D MMMM YYYY H:mm:ss')}.xlsx`
+      FileSaver.saveAs(response, fileName)
     }
   }
 }

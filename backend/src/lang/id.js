@@ -930,7 +930,7 @@ export default {
     'beneficiaries-upload-status': 'Status',
     'beneficiaries-upload-date': 'Tanggal Upload',
     'beneficiaries-upload-view': 'Lihat',
-    'beneficiaries-file-download': 'Download',
+    'beneficiaries-download-invalid-file': 'Unduh Data Gagal',
     'beneficiaries-upload-option': 'Pilih pintu bantuan untuk upload data BNBA',
     'beneficiaries-upload-info': 'Sebelum meng-upload data BNBA DTKS dan non-DTKS, mohon pilah data berdasarkan alokasi sesuai pintu bantuan. Untuk Upload data, tekan salah satu tombol di bawah sesuai alokasi pintu bantuan yang akan diupload.',
     'beneficiaries-dtks-option': 'Pilihan DTKS',
@@ -978,6 +978,7 @@ export default {
     'beneficiaries-download-not-verified': 'Belum Terverifikasi',
     'beneficiaries-download-rejected': 'Ditolak',
     'beneficiaries-download-new-proposal': 'Usulan Baru',
+    'beneficiaries-download-bnba-document': 'Dokumen BNBA Penerima Bansos',
 
     'beneficiaries-bnba-detail-popup-title': 'Detail Penerima Bantuan',
     'beneficiaries-document': 'Dokumen Pendukung'
