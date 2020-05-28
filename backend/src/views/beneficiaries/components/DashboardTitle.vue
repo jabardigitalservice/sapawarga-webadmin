@@ -1,7 +1,6 @@
 <template>
   <div>
     <div v-if="isDashboard">
-      <h2 class="dashboard-title">{{ $t('label.beneficiaries-statistic-title') }}</h2>
       <div class="warn-content-warning">
         <p class="title"><span><i class="el-icon-warning" style="color: rgba(226, 194, 124, 0.938)" /></span><span> {{ $t('label.beneficiaries-notes-display') }} </span> <span v-if="user.roles_active.id === 'staffProv' || user.roles_active.id === 'admin'"> {{ $t('label.beneficiaries-note-jabar') }} </span> <span v-else-if="user.roles_active.id === 'staffKabkota'"> {{ $t('label.beneficiaries-note-kabkota') }} </span> <span v-else-if="user.roles_active.id === 'staffKec'"> {{ $t('label.beneficiaries-note-kec') }} </span><span v-else-if="user.roles_active.id === 'staffKel'"> {{ $t('label.beneficiaries-note-kel') }} </span></p>
         <p class="content"> {{ $t('label.beneficiaries-note-content') }} </p>

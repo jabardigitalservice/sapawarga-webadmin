@@ -2,11 +2,27 @@
   <div class="app-container">
     <el-row>
       <el-col :lg="24">
-        <DashboardTitle :is-dashboard="true" />
         <div>
-          <el-button type="primary" class="button-step">Tahap 1</el-button>
-          <el-button class="button-step" @click="open">Tahap 2</el-button>
+          <DashboardTitle :is-dashboard="true" />
+          <div class="section-filter">
+            <h2 class="dashboard-title">{{ $t('label.beneficiaries-statistic-title') }}</h2>
+
+            <el-select
+              v-model="stageValue"
+              class="stage-option"
+              placeholder="Pilih Tahap"
+              @change="onChangeStage($event)"
+            >
+              <el-option
+                v-for="item in stageOptions"
+                :key="item"
+                :label="`Tampilkan per Tahap: ${item}`"
+                :value="item"
+              />
+            </el-select>
+          </div>
         </div>
+
         <!-- {{ user }} -->
         <!-- show statistics -->
         <DashboardStatistics :is-loading="isLoadingSummary" :summery="dataSummary" :filter="filter" />
@@ -179,7 +195,9 @@ export default {
       prevFilter: [],
       exportFields: {},
       sort_prop: 'data.approved',
-      sort_order: 'descending'
+      sort_order: 'descending',
+      stageValue: 1,
+      stageOptions: [1, 2]
     }
   },
   computed: {
@@ -505,6 +523,12 @@ export default {
         confirmButtonText: 'OK',
         type: 'warning'
       })
+    },
+    onChangeStage(value) {
+      if (value === 2) {
+        this.open()
+        this.stageValue = 1
+      }
     }
   }
 }
@@ -512,5 +536,13 @@ export default {
 <style lang="scss" scope>
   .button-step {
     padding: 13px 40px;
+  }
+  .section-filter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .stage-option > .el-input {
+    font-size: 20px;
   }
 </style>
