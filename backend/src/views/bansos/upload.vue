@@ -56,22 +56,23 @@
           <div class="text item">
             <el-table v-loading="loading" :data="list" border stripe fit highlight-current-row style="width: 100%">
               <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
-              <el-table-column prop="bansos_type" sortable="custom" :label="$t('label.beneficiaries')">
+              <el-table-column prop="bansos_type" sortable="custom" :label="$t('label.beneficiaries')" width="250">
                 <template slot-scope="{row}">
                   {{ row.bansos_type }}
                 </template>
               </el-table-column>
+              <el-table-column prop="file_name" sortable="custom" :label="$t('label.beneficiaries-upload-filename')" />
               <el-table-column prop="notes" sortable="custom" align="center" :label="$t('label.beneficiaries-upload-status')" />
-              <el-table-column prop="created_at" sortable="custom" align="center" :label="$t('label.beneficiaries-upload-date')">
+              <el-table-column prop="created_at" sortable="custom" :label="$t('label.beneficiaries-upload-date')">
                 <template slot-scope="{row}">
                   {{ row.created_at | moment('D MMMM YYYY H:mm:ss') }}
                 </template>
               </el-table-column>
               <el-table-column align="center" :label="$t('label.actions')" width="200">
                 <template slot-scope="{row}">
-                  <a :href="row.invalid_file_url" v-if="row.status == 20">
+                  <a v-if="row.status == 20" :href="row.invalid_file_url">
                     <el-tooltip :content="$t('label.beneficiaries-download-invalid-file')" placement="top">
-                      <el-button type="warning" size="mini"><i class="el-icon-download el-icon-right"></i>{{ $t('label.beneficiaries-download-invalid-file') }}</el-button>
+                      <el-button type="warning" size="mini"><i class="el-icon-download el-icon-right" />{{ $t('label.beneficiaries-download-invalid-file') }}</el-button>
                     </el-tooltip>
                   </a>
                 </template>
@@ -118,6 +119,12 @@ export default {
       const response = await uploadBansosList(this.listQuery)
       const data = []
       response.data.map(value => {
+        let fileName = null
+        if (value.status === '20' || value.status === '21') {
+          fileName = value.invalid_file_name
+        } else {
+          fileName = value.file_name
+        }
         data.push({
           'bansos_type': this.getTitle(value.bansos_type),
           'target_upload': value.kabkota_name,
@@ -126,6 +133,7 @@ export default {
           'invalid_file_url': value.invalid_file_url,
           'status': value.status,
           'notes': value.notes,
+          'file_name': fileName,
           'id': value.id
         })
       })
