@@ -20,7 +20,7 @@
 
         <ListFilter :list-query.sync="listQuery" @submit-search="getList" @reset-search="resetFilter" />
 
-        <el-table v-loading="listLoading" :data="list" border stripe highlight-current-row style="width: 100%" @sort-change="changeSort">
+        <el-table v-loading="listLoading" :data="list" border highlight-current-row style="width: 100%" :row-style="tableRowClassName" @sort-change="changeSort">
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
 
           <el-table-column prop="name" sortable="custom" :label="$t('label.beneficiaries-name')" min-width="200px" />
@@ -58,7 +58,7 @@
             </template>
           </el-table-column>
 
-          <el-table-column align="center" :label="$t('label.actions')" width="200px">
+          <el-table-column align="left" :label="$t('label.actions')" width="200px" :cell-style="marginLeft">
             <template slot-scope="scope">
               <router-link :to="'/beneficiaries/detail/' +scope.row.id">
                 <el-tooltip :content="$t('label.beneficiaries-detail')" placement="top">
@@ -70,6 +70,9 @@
               </el-tooltip>
               <el-tooltip v-else :content="$t('label.beneficiaries-verivication')" placement="top">
                 <el-button type="success" icon="el-icon-circle-check" size="small" :disabled="scope.row.status_verification !== 1" @click="accessBlock('verification/' + scope.row.id)" />
+              </el-tooltip>
+              <el-tooltip v-if="scope.row.status_verification === 1 && scope.row.domicile_rt === '' || scope.row.domicile_rt === null || scope.row.domicile_rw === '' || scope.row.domicile_rw === null || scope.row.domicile_address === '' || scope.row.domicile_address === null || scope.row.name === '' || scope.row.name === null" :content="$t('label.beneficiaries-uncomplete-domicile')" placement="top">
+                <el-button type="info" icon="el-icon-edit-outline" size="small" :disabled="scope.row.status_verification !== 1" @click="accessBlock('verification/' + scope.row.id)" />
               </el-tooltip>
             </template>
           </el-table-column>
@@ -169,6 +172,22 @@ export default {
   },
 
   methods: {
+    tableRowClassName({ row, rowIndex }) {
+      const invalidRt = row.domicile_rt === '' || row.domicile_rt === null
+      const invalidRw = row.domicile_rw === '' || row.domicile_rw === null
+      const invalidName = row.name === '' || row.name === null
+      const invalidAddress = row.domicile_address === '' || row.domicile_address === null
+
+      if (row.status_verification === 1 && invalidRt || invalidRw || invalidName || invalidAddress) {
+        return 'background: #FBE6E5'
+      }
+      return ''
+    },
+
+    marginLeft() {
+      return 'padding-left: 50px'
+    },
+
     accessBlock(value) {
       this.$router.push('/beneficiaries/' + value)
     },

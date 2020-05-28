@@ -914,6 +914,7 @@ export default {
     'beneficiaries-image': 'Foto',
     'beneficiaries-validate-all': 'Setujui Semua',
     'beneficiaries-validate-select': 'Setujui',
+    'beneficiaries-uncomplete-domicile': 'Lengkapi Domisili',
 
     'beneficiaries-is_nik_valid': 'NIK Valid',
     'beneficiaries-is_alamat_lengkap': 'Alamat Lengkap',
