@@ -69,9 +69,9 @@
               </el-table-column>
               <el-table-column align="center" :label="$t('label.actions')" width="200">
                 <template slot-scope="{row}">
-                  <a :href="row.invalid_file_url" v-if="row.status == 20">
+                  <a v-if="row.status == 20" :href="row.invalid_file_url">
                     <el-tooltip :content="$t('label.beneficiaries-download-invalid-file')" placement="top">
-                      <el-button type="warning" size="mini"><i class="el-icon-download el-icon-right"></i>{{ $t('label.beneficiaries-download-invalid-file') }}</el-button>
+                      <el-button type="warning" size="mini"><i class="el-icon-download el-icon-right" />{{ $t('label.beneficiaries-download-invalid-file') }}</el-button>
                     </el-tooltip>
                   </a>
                 </template>

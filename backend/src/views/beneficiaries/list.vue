@@ -72,7 +72,7 @@
                 <el-button type="success" icon="el-icon-circle-check" size="small" :disabled="scope.row.status_verification !== 1" @click="accessBlock('verification/' + scope.row.id)" />
               </el-tooltip>
               <el-tooltip v-if="scope.row.status_verification === 1 && scope.row.domicile_rt === '' || scope.row.domicile_rt === null || scope.row.domicile_rw === '' || scope.row.domicile_rw === null || scope.row.domicile_address === '' || scope.row.domicile_address === null || scope.row.name === '' || scope.row.name === null" :content="$t('label.beneficiaries-uncomplete-domicile')" placement="top">
-                <el-button type="info" icon="el-icon-edit-outline" size="small" :disabled="scope.row.status_verification !== 1" @click="accessBlock('verification/' + scope.row.id)" />
+                <el-button type="info" icon="el-icon-edit-outline" size="small" :disabled="scope.row.status_verification !== 1" @click="updateDomicile(scope.row)" />
               </el-tooltip>
             </template>
           </el-table-column>
@@ -104,6 +104,13 @@
           <el-button type="success" @click="dialogVisible = false">Tutup</el-button>
         </span>
       </el-dialog>
+      <el-dialog
+        :visible.sync="isEditDomicile"
+        width="70%"
+      >
+        <span slot="title" class="dialog-title">Perbaharui Data Domisili Calon Penerima Bantuan</span>
+        <FormPersonal :beneficiaries.sync="beneficiaries" :is-edit-domicile="true" :is-edit="true" :is-create="false" :disable-field="false" @closeDialog="closeDialog" />
+      </el-dialog>
     </el-row>
   </div>
 </template>
@@ -111,13 +118,14 @@
 <script>
 import { fetchSummary, fetchList } from '@/api/beneficiaries'
 import DashboardTitle from './components/DashboardTitle'
+import FormPersonal from './components/FormPersonal'
 import Pagination from '@/components/Pagination'
 import Statistics from './components/Statistics'
 import ListFilter from './_listfilter'
 import { mapGetters } from 'vuex'
 
 export default {
-  components: { Pagination, Statistics, ListFilter, DashboardTitle },
+  components: { Pagination, Statistics, ListFilter, FormPersonal, DashboardTitle },
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -139,9 +147,11 @@ export default {
       list: null,
       total: 0,
       dialogVisible: false,
+      isEditDomicile: false,
       isLoadingSummary: true,
       dataSummary: null,
       listLoading: true,
+      beneficiaries: null,
       status: {
         DRAFT: 0,
         SCHEDULED: 5,
@@ -186,6 +196,15 @@ export default {
 
     marginLeft() {
       return 'padding-left: 50px'
+    },
+
+    updateDomicile(value) {
+      this.isEditDomicile = true
+      this.beneficiaries = value
+    },
+
+    closeDialog(value) {
+      this.isEditDomicile = value
     },
 
     accessBlock(value) {
