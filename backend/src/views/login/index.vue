@@ -59,6 +59,7 @@
 </template>
 
 <script>
+import { urlHotline } from '@/utils/constantVariable'
 
 export default {
   name: 'Login',
@@ -153,7 +154,7 @@ export default {
     },
 
     onClickChat(phone) {
-      const url_link = 'https://wa.me/' + phone.replace(/^0+/, '62')
+      const url_link = urlHotline
       window.open(url_link, '_blank')
     }
 

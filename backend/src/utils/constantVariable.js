@@ -67,3 +67,5 @@ export const rolesWidget = {
   'pimpinan': ['admin', 'staffProv', 'pimpinan'],
   'staffKelOPD': ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel', 'staffOPD']
 }
+
+export const urlHotline = 'https://s.id/HotlineSW'
