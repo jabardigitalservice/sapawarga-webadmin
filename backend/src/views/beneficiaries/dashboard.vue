@@ -25,7 +25,7 @@
 
         <!-- {{ user }} -->
         <!-- show statistics -->
-        <DashboardStatistics :is-loading="isLoadingSummary" :summery="dataSummary" :filter="filter" />
+        <DashboardStatistics :is-loading="isLoadingSummary" :summery="dataSummary" :filter="filter" :stage-active="stageValue" />
         <el-card class="box-card" style="margin-bottom: 10px">
           <el-form>
             <el-row :gutter="10">

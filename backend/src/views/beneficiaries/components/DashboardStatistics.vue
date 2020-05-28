@@ -70,7 +70,7 @@
       <!-- <div v-if="!isLoading" class="total color-sw-blue">{{ getTotalBenefeciaries ? formatNumber(getTotalBenefeciaries) : '-' }}</div> -->
       <!-- </div> -->
       <!-- </el-col> -->
-      <el-col :xs="24" :sm="8" :md="6" :lg="5" :xl="5">
+      <el-col :xs="24" :sm="8" :md="stageActive === 1 ? 6 : 5" :lg="stageActive === 1 ? 6 : 5" :xl="stageActive === 1 ? 6 : 5">
         <div class="grid-content">
           <div class="stat-title pb-20 shadow">Terverifikasi</div>
           <!-- show loading -->
@@ -87,7 +87,7 @@
           <div v-if="!isLoading" class="total color-sw-orange">{{ getTotalBenefeciaries ? `Dari ${formatNumber(getTotalBenefeciaries)} Calon PKM` : '-' }}</div>
         </div>
       </el-col>
-      <el-col :xs="24" :sm="8" :md="6" :lg="5" :xl="5">
+      <el-col :xs="24" :sm="8" :md="stageActive === 1 ? 6 : 5" :lg="stageActive === 1 ? 6 : 5" :xl="stageActive === 1 ? 6 : 5">
         <div class="grid-content">
           <div class="stat-title shadow pb-20">Data Belum Terverifikasi</div>
           <!-- show loading -->
@@ -103,7 +103,7 @@
           <div v-if="!isLoading" class="total color-sw-orange">{{ getTotalBenefeciaries ? `Dari ${formatNumber(getTotalBenefeciaries)} Calon PKM` : '-' }}</div>
         </div>
       </el-col>
-      <el-col :xs="24" :sm="8" :md="6" :lg="5" :xl="5">
+      <el-col :xs="24" :sm="8" :md="stageActive === 1 ? 6 : 5" :lg="stageActive === 1 ? 6 : 5" :xl="stageActive === 1 ? 6 : 5">
         <div class="grid-content">
           <div class="stat-title shadow pb-20">Data Ditolak</div>
           <!-- show loading -->
@@ -119,7 +119,7 @@
           <div v-if="!isLoading" class="total color-sw-orange">{{ getTotalBenefeciaries ? `Dari ${formatNumber(getTotalBenefeciaries)} Calon PKM` : '-' }}</div>
         </div>
       </el-col>
-      <el-col :xs="24" :sm="8" :md="6" :lg="5" :xl="5">
+      <el-col :xs="24" :sm="8" :md="stageActive === 1 ? 6 : 5" :lg="stageActive === 1 ? 6 : 5" :xl="stageActive === 1 ? 6 : 5">
         <div class="grid-content">
           <div class="stat-title shadow pb-20"> Data Usulan Baru</div>
           <!-- show loading -->
@@ -135,7 +135,7 @@
           <div v-if="!isLoading" class="total color-sw-orange">{{ getTotalBenefeciaries ? `Dari ${formatNumber(getTotalBenefeciaries)} Calon PKM` : '-' }}</div>
         </div>
       </el-col>
-      <el-col :xs="24" :sm="8" :md="6" :lg="5" :xl="5">
+      <el-col v-if="stageActive === 2" :xs="24" :sm="8" :md="5" :lg="5" :xl="5">
         <div class="grid-content">
           <div class="stat-title">Calon Penerima Telah Terdaftar Pintu Bantuan</div>
           <!-- show loading -->
@@ -174,6 +174,10 @@ export default {
     isLoading: {
       type: Boolean,
       default: false
+    },
+    stageActive: {
+      type: Number,
+      default: 1
     }
   },
   computed: {
