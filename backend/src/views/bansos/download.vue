@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-row v-if="user.roles_active.id === 'staffKabkota'">
-      <el-button type="text" @click="handleExport">
+      <el-button type="text" @click="exportAll">
         <img src="https://firebasestorage.googleapis.com/v0/b/sapawarga-app.appspot.com/o/admin-banner-01.png?alt=media&token=2c606be5-7378-40ca-b147-f19b8b8539ea" width="100%">
       </el-button>
     </el-row>
@@ -28,7 +28,7 @@
                 <span>{{ `${ $t('label.beneficiaries-download-list') } ${ areaLabelByFilter }` }}</span>
               </el-col>
               <el-col :xs="24" :md="3">
-                <el-button type="success" plain icon="el-icon-download" @click="handleExport">{{ $t('crud.export') }}</el-button>
+                <el-button type="success" plain icon="el-icon-download" @click="exportBySubdistrict">{{ $t('crud.export') }}</el-button>
               </el-col>
             </el-row>
           </div>
@@ -90,6 +90,7 @@ import { mapGetters } from 'vuex'
 import checkPermission from '@/utils/permission'
 import FileSaver from 'file-saver'
 import moment from 'moment'
+import Swal from 'sweetalert2'
 
 export default {
   data() {
@@ -293,12 +294,27 @@ export default {
       })
       this.selectionQuery.kode_kec = result.join()
     },
-    async handleExport() {
-      const params = this.selectionQuery.kode_kec ? this.selectionQuery : null
+    async exportData(params) {
       const response = await exportExcel(params)
       const dateNow = Date.now()
       const fileName = `${this.$t('label.beneficiaries-download-bnba-document')} - ${moment(dateNow).format('D MMMM YYYY H:mm:ss')}.xlsx`
       FileSaver.saveAs(response, fileName)
+    },
+    exportBySubdistrict() {
+      if (this.selectionQuery.kode_kec) {
+        const params = this.selectionQuery
+        this.exportData(params)
+      } else {
+        Swal.fire({
+          text: this.$t('label.beneficiaries-select-subdistrict-alert'),
+          icon: 'warning',
+          button: 'OK'
+        })
+      }
+    },
+    exportAll() {
+      const params = null
+      this.exportData(params)
     }
   }
 }

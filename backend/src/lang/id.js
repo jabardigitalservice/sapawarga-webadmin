@@ -929,6 +929,7 @@ export default {
     'beneficiaries': 'Pintu Bantuan',
     'beneficiaries-upload-target': 'Target Upload',
     'beneficiaries-upload-status': 'Status',
+    'beneficiaries-upload-filename': 'Nama File',
     'beneficiaries-upload-date': 'Tanggal Upload',
     'beneficiaries-upload-view': 'Lihat',
     'beneficiaries-download-invalid-file': 'Unduh Data Gagal',
@@ -980,6 +981,7 @@ export default {
     'beneficiaries-download-rejected': 'Ditolak',
     'beneficiaries-download-new-proposal': 'Usulan Baru',
     'beneficiaries-download-bnba-document': 'Dokumen BNBA Penerima Bansos',
+    'beneficiaries-select-subdistrict-alert': 'Silakan Pilih Kecamatan',
 
     'beneficiaries-bnba-detail-popup-title': 'Detail Penerima Bantuan',
     'beneficiaries-document': 'Dokumen Pendukung'
