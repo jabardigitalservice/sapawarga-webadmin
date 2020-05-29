@@ -119,12 +119,7 @@ export default {
       const response = await uploadBansosList(this.listQuery)
       const data = []
       response.data.map(value => {
-        let fileName = null
-        if (value.status === '20' || value.status === '21') {
-          fileName = value.invalid_file_name
-        } else {
-          fileName = value.file_name
-        }
+        const fileName = (value.status === '20' || value.status === '21') ? value.invalid_file_name : value.file_name
         data.push({
           'bansos_type': this.getTitle(value.bansos_type),
           'target_upload': value.kabkota_name,

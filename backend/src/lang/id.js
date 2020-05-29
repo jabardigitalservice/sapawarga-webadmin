@@ -965,7 +965,7 @@ export default {
     'beneficiaries-download-rejected': 'Ditolak',
     'beneficiaries-download-new-proposal': 'Usulan Baru',
     'beneficiaries-download-bnba-document': 'Dokumen BNBA Penerima Bansos',
-    'beneficiaries-select-subdistrict-alert': 'Silahkan Pilih Kecamatan',
+    'beneficiaries-select-subdistrict-alert': 'Silakan Pilih Kecamatan',
 
     'beneficiaries-bnba-detail-popup-title': 'Detail Penerima Bantuan',
     'beneficiaries-document': 'Dokumen Pendukung'
