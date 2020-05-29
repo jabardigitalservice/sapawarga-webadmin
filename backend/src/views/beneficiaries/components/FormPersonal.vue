@@ -22,7 +22,7 @@
       <el-form-item v-if="isCreate && beneficiaries.is_have_ktp === 1" label="NIK" prop="nik">
         <el-input v-model="beneficiaries.nik" type="number" placeholder="NIK" :disabled="disableField" />
       </el-form-item>
-      <el-form-item v-if="!isCreate" label="NIK">
+      <el-form-item v-if="!isCreate && !isEditDomicile" label="NIK">
         <el-input v-model="beneficiaries.nik" type="number" placeholder="NIK" :disabled="disableField" />
       </el-form-item>
       <el-form-item label="Nama Lengkap" prop="name">
