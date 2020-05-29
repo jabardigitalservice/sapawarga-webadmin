@@ -967,7 +967,7 @@ export default {
     'beneficiaries-notes-display-approved': 'Halaman ini menampilkan data penerima bantuan sosial yang sudah disetujui oleh Desa/Kelurahan',
     'beneficiaries-note-approved-content': 'Data di bawah ini telah dipisahkan berdasarkan kategori data yang sudah disetujui Desa/Kelurahan. Data yang sudah disetujui Desa/Kelurahan merupakan data yang sudah diverifikasi RW dan mendapatkan persetujuan Desa/Kelurahan dan memenuhi kelayakan dalam menerima bantuan sosial.',
     'beneficiaries-note-pending-title': 'Data penerima bantuan sosial yang belum disetujui Desa/Kelurahan',
-    'beneficiaries-notes-display-pending': 'Halaman ini menampilkan data penerima bantuan sosial yang sudah belum disetujui oleh Desa/Kelurahan',
+    'beneficiaries-notes-display-pending': 'Halaman ini menampilkan data penerima bantuan sosial yang belum disetujui oleh Desa/Kelurahan',
     'beneficiaries-note-pending-content': 'Data di bawah ini telah dipisahkan berdasarkan kategori data yang belum disetujui Desa/Kelurahan. Data yang belum disetujui Desa/Kelurahan merupakan data yang sudah diverifikasi RW dan belum mendapatkan persetujuan Desa/Kelurahan untuk memenuhi kelayakan dalam menerima bantuan sosial.',
 
     'beneficiaries-download-search': 'Cari',

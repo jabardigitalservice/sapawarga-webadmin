@@ -165,8 +165,7 @@ export default {
       this.$router.push('/beneficiaries/index')
     },
     back() {
-      // this.$emit('nextStep', false)
-      this.$router.push('/beneficiaries/index')
+      this.$router.go(-1)
     },
     async validate(id) {
       try {

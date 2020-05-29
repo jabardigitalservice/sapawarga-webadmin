@@ -46,13 +46,13 @@
                   <el-button type="primary" icon="el-icon-view" size="small" />
                 </el-tooltip>
               </router-link>
-              <el-tooltip v-if="listType === 'pending' && !multipleSelection.length > 0" :disabled="!multipleSelection.length > 0" :content="$t('label.beneficiaries-validate')" placement="top">
-                <el-button type="success" icon="el-icon-circle-check" size="small" @click="validate(scope.row.id)" />
+              <el-tooltip v-if="listType === 'pending'" :content="$t('label.beneficiaries-validate')" placement="top">
+                <el-button type="success" icon="el-icon-circle-check" size="small" :disabled="multipleSelection.length > 0" @click="validate(scope.row.id)" />
               </el-tooltip>
             </template>
           </el-table-column>
         </el-table>
-        <div style="margin-top: 20px">
+        <div v-if="listType === 'pending'" style="margin-top: 20px">
           <el-button v-if="multipleSelection.length === 0" type="success" style="float: right; margin-right: 30px" @click="validateAll()">{{ $t('label.beneficiaries-validate-all') }}</el-button>
           <el-button v-if="multipleSelection.length > 0" type="success" style="float: right; margin-right: 50px" @click="multipleValidate()">{{ $t('label.beneficiaries-validate-select') }}</el-button>
         </div>
