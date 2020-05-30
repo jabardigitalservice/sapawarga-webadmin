@@ -18,6 +18,7 @@ import notifikasiuserMenuRouter from './modules/notification-user-menu'
 import configurationMenuRouter from './modules/configuration-menu'
 import broadcastRouter from './modules/broadcast'
 import bansosMenuRouter from './modules/bansos-menu'
+import hackathon from './modules/hackathon'
 
 /* Router Modules for Leader */
 import aspirationLeaderMenuRouter from './modules/LeaderMenu/aspiration-leader-menu'
@@ -163,6 +164,7 @@ export const asyncRoutes = [
   configurationMenuRouter,
   releaseManagementRouter,
   gamificationRouter,
+  hackathon,
   { path: '*', redirect: '/404', active: false, hidden: true }
 ]
 
