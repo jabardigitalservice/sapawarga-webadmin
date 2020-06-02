@@ -10,6 +10,9 @@
         <!-- {{ user }} -->
         <!-- show statistics -->
         <DashboardStatistics :is-loading="isLoadingSummary" :summery="dataSummary" :filter="filter" />
+
+        <!-- upload data manual -->
+        <UploadDataManual />
         <el-card class="box-card" style="margin-bottom: 10px">
           <el-form>
             <el-row :gutter="10">
@@ -125,6 +128,7 @@ import { formatNumber } from '@/utils/formatNumber'
 import { fetchDashboardSummary, fetchDashboardList } from '@/api/beneficiaries'
 import { mapGetters } from 'vuex'
 import DashboardStatistics from './components/DashboardStatistics'
+import UploadDataManual from './components/UploadDataManual'
 import checkPermission from '@/utils/permission'
 import InputFilterAreaBps from '@/components/InputFilterAreaBps'
 import JsonExcel from 'vue-json-excel'
@@ -135,6 +139,7 @@ export default {
     InputFilterAreaBps,
     JsonExcel,
     DashboardStatistics,
+    UploadDataManual,
     DashboardTitle
   },
   filters: {
