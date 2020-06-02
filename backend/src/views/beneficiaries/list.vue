@@ -107,9 +107,11 @@
       <el-dialog
         :visible.sync="isEditDomicile"
         width="70%"
+        :close-on-click-modal="false"
+        @close="exitDialog"
       >
         <span slot="title" class="dialog-title">Perbaharui Data Domisili Calon Penerima Bantuan</span>
-        <FormPersonal :beneficiaries.sync="beneficiaries" :is-edit-domicile="true" :is-edit="true" :is-create="false" :disable-field="false" @closeDialog="closeDialog" />
+        <FormPersonal :beneficiaries="beneficiaries" :is-edit-domicile="true" :is-edit="true" :is-create="false" :disable-field="false" @closeDialog="closeDialog" />
       </el-dialog>
     </el-row>
   </div>
@@ -196,6 +198,10 @@ export default {
 
     marginLeft() {
       return 'padding-left: 50px'
+    },
+
+    exitDialog() {
+      this.getList()
     },
 
     updateDomicile(value) {
