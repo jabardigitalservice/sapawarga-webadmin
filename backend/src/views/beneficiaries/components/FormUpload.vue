@@ -61,7 +61,7 @@
       <span slot="footer" class="dialog-footer">
         <el-button @click="next">{{ $t('crud.recheck') }}</el-button>
         <el-button v-if="!isCreate" type="danger" @click="updateData(statusRejected)">{{ $t('crud.reject') }}</el-button>
-        <el-button type="success" @click="getConfirmation">{{ $t('crud.verified') }}</el-button>
+        <el-button type="success" @click="getConfirmation">{{ $t('label.beneficiaries-validate-select') }}</el-button>
       </span>
 
       <el-dialog
@@ -110,7 +110,7 @@ export default {
       dialogVisible: false,
       confirmation: false,
       checked: false,
-      statusVerified: 3,
+      statusVerified: 5,
       statusRejected: 2,
       label: 'Foto KTP/Copy KTP/KK'
     }
