@@ -83,7 +83,7 @@
           Ya, Saya setuju
         </el-checkbox>
         <div>
-          <el-button class="confirmation-button" type="success" :disabled="!checked" @click="updateData(statusVerified)">{{ $t('crud.save-verified') }}</el-button>
+          <el-button class="confirmation-button" type="success" :loading="loading" :disabled="!checked" @click="updateData(statusVerified)">{{ $t('crud.save-verified') }}</el-button>
         </div>
       </el-dialog>
     </el-dialog>
@@ -107,6 +107,7 @@ export default {
   },
   data() {
     return {
+      loading: false,
       dialogVisible: false,
       confirmation: false,
       checked: false,
@@ -135,6 +136,7 @@ export default {
       return true
     },
     async updateData(value) {
+      this.loading = true
       const id = await this.$route.params && this.$route.params.id
       if (value === this.statusVerified) {
         this.beneficiaries.status_verification = value
@@ -163,6 +165,7 @@ export default {
         const success = error.response.data.success
         if (!success) this.$message.error(message)
       }
+      this.loading = false
     },
     photoUploadedKtp(path, url) {
       this.beneficiaries.image_ktp_url = url
