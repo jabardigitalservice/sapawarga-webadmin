@@ -1020,5 +1020,21 @@ export default {
     'news-status-required': 'Status Berita harus diisi',
     'news-content-required': 'Konten Berita harus diisi',
     'news-content-invalid': 'Konten Berita yang diisi tidak valid'
+  },
+  importDataManual: {
+    'title': 'Import manual data calon penerima Bantuan <br> Sosial',
+    'title-guide': 'Panduan Input Data Calon Penerima Bantuan <br> Sosial',
+    'desc-guide': '<ol> <li><b>Download<b /> template file Excel.xlsx untuk melihat format Input Data</b></li> <li>Mengisi kolom dengan data yang benar, kolom berwarna hijau wajib untuk diisi.</li> <li>Save dengan format .xlsx</li> <li>Pilih file Excel.xlsx yang akan diupload</li> <li>klik tombol Upload</li> </ol>',
+    'desc': 'Sekarang Anda dapat melakukan input calon penerima bantuan sosial secara manual, sehingga dapat membantu kami lebih baik lagi untuk memperbaiki perlayanan di Sapawarga',
+    'btn-import': 'IMPORT SEKARANG',
+    'btn-guide': 'LIHAT PANDUAN',
+    'btn-download': 'Unduh Template Excel',
+    'tbl-title': 'Riwayat Import Data Manual',
+    'title-upload': 'Upload Data Input Manual',
+    'desc-upload': 'Untuk upload data input manual harus memakai format Excel (.xls)',
+    'upload-btn': 'IMPORT SEKARANG',
+    'btn-choice': 'Pilih File yang akan diupload',
+    'upload': 'Upload'
+
   }
 }

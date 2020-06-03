@@ -10,16 +10,16 @@
                   <img src="@/assets/upload-data.svg" alt="icon-upload">
                 </div>
               </el-col>
-              <el-col :span="17"><div class="text-24 text-bold pl-1 line-height-29">Import manual data calon penerima Bantuan <br> Sosial</div></el-col>
+              <el-col :span="17"><div class="text-24 text-bold pl-1 line-height-29" v-html="$t('importDataManual.title')" /></el-col>
             </el-row>
 
             <div class="text-14" style="line-height: 150%;">
-              Sekarang Anda dapat melakukan input calon penerima bantuan sosial secara manual, sehingga dapat membantu kami lebih baik lagi untuk memperbaiki perlayanan di Sapawarga
+              {{ $t('importDataManual.desc') }}
             </div>
 
             <el-row class="section-action-upload">
-              <el-button size="medium" class="bg-sw-green text-white text-16 border-radius-8 border-green text-bold p-2 mr-1" @click="openUpload = true">IMPORT SEKARANG</el-button>
-              <el-button size="medium" class="bg-transparant text-white text-16 border-radius-8 border-none text-bold p-2 border-2" @click="openGuide = true">LIHAT PANDUAN</el-button>
+              <el-button size="medium" class="bg-sw-green text-white text-16 border-radius-8 border-green text-bold p-2 mr-1" @click="openUpload = true">{{ $t('importDataManual.btn-import') }}</el-button>
+              <el-button size="medium" class="bg-transparant text-white text-16 border-radius-8 border-none text-bold p-2 border-2" @click="openGuide = true">{{ $t('importDataManual.btn-guide') }}</el-button>
             </el-row>
           </el-card>
         </div>
@@ -33,11 +33,11 @@
             <el-row :gutter="20">
               <el-col :span="12">
                 <div class="text-22 text-bold">
-                  Riwayat Import Data Manual
+                  {{ $t('importDataManual.tbl-title') }}
                 </div>
               </el-col>
               <el-col :span="6" :offset="6" style="text-align:end">
-                <el-button size="medium" class="text-16 border-orange text-orange border-radius-8" @click="downloadSample()">Unduh Template Excel</el-button>
+                <el-button size="medium" class="text-16 border-orange text-orange border-radius-8" @click="downloadSample()"> {{ $t('importDataManual.btn-download') }}</el-button>
               </el-col>
             </el-row>
           </div>
@@ -104,28 +104,20 @@
               <img src="@/assets/upload-data.svg" alt="icon-upload">
             </div>
           </el-col>
-          <el-col :span="17"><div class="text-24 text-bold pl-1 line-height-29">Panduan Input Data Calon Penerima Bantuan <br> Sosial</div></el-col>
+          <el-col :span="17"><div class="text-24 text-bold pl-1 line-height-29" v-html="$t('importDataManual.title-guide')" /></el-col>
         </el-row>
 
-        <div class="text-14" style="line-height: 150%;">
-          <ol>
-            <li><b>Download<b /> template file Excel.xlsx untuk melihat format Input Data</b></li>
-            <li>Mengisi kolom dengan data yang benar, kolom berwarna hijau wajib untuk diisi.</li>
-            <li>Save dengan format .xlsx</li>
-            <li>Pilih file Excel.xlsx yang akan diupload</li>
-            <li>klik tombol Upload</li>
-          </ol>
-        </div>
+        <div class="text-14" style="line-height: 150%;" v-html="$t('importDataManual.desc-guide')" />
 
         <el-row class="section-action-upload" style="text-align:center">
-          <el-button size="medium" class="bg-sw-green text-white text-16 border-radius-8 border-green text-bold p-2" @click="openUpload = true">IMPORT SEKARANG</el-button>
+          <el-button size="medium" class="bg-sw-green text-white text-16 border-radius-8 border-green text-bold p-2" @click="openUpload = true">{{ $t('importDataManual.upload-btn') }}</el-button>
         </el-row>
       </el-card>
     </el-dialog>
 
     <!-- upload file -->
     <el-dialog
-      title="Upload Data Input Manual"
+      :title="$t('importDataManual.title-upload')"
       :visible.sync="openUpload"
       width="30%"
       :show-close="false"
@@ -133,7 +125,7 @@
       custom-class="dialog-guide"
     >
       <div>
-        <div style="color:#828282">Untuk upload data input manual harus memakai format Excel (.xls).</div>
+        <div style="color:#828282">{{ $t('importDataManual.desc-upload') }}</div>
         <el-upload
           ref="importManual"
           style="text-align:center; padding-top: 1rem"
@@ -145,14 +137,14 @@
           :on-change="handleChangeFile"
         >
           <div v-if="!file">
-            <el-button type="primary" icon="el-icon-paperclip" plain style="font-weight: bold; padding: 1rem; padding-left: 2rem; padding-right: 2rem">Pilih File yang akan diupload</el-button>
+            <el-button type="primary" icon="el-icon-paperclip" plain style="font-weight: bold; padding: 1rem; padding-left: 2rem; padding-right: 2rem">{{ $t('importDataManual.btn-choice') }}</el-button>
           </div>
         </el-upload>
       </div>
 
       <span slot="footer" class="dialog-footer-upload">
-        <el-button @click="onCloseUploadDialog">Batal</el-button>
-        <el-button type="primary" @click="openUpload = false">Upload</el-button>
+        <el-button @click="onCloseUploadDialog">{{ $t('crud.cancel') }}</el-button>
+        <el-button type="primary" @click="openUpload = false">{{ $t('importDataManual.upload') }}</el-button>
       </span>
     </el-dialog>
   </div>
