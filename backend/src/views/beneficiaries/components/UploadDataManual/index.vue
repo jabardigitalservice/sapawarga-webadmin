@@ -92,7 +92,12 @@
       custom-class="dialog-guide"
       center
     >
-      <el-card shadow="never" class="section-box-upload" :body-style="{'border-radius': '8px','background-color': '#FF834E', 'color': '#fff' }">
+      <el-card shadow="never" class="section-box-upload" :body-style="{'border-radius': '8px','background-color': '#FF834E', 'color': '#fff', 'position': 'relative' }">
+        <div style="position: absolute; right: 20px; z-index: 2; cursor: pointer" @click="openGuide = false">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6.99974 5.58623L11.9497 0.63623L13.3637 2.05023L8.41374 7.00023L13.3637 11.9502L11.9497 13.3642L6.99974 8.41423L2.04974 13.3642L0.635742 11.9502L5.58574 7.00023L0.635742 2.05023L2.04974 0.63623L6.99974 5.58623Z" fill="white" />
+          </svg>
+        </div>
         <el-row :gutter="20" class="pb-2 box-upload-info">
           <el-col :span="7">
             <div>
@@ -124,6 +129,7 @@
       :visible.sync="openUpload"
       width="30%"
       :show-close="false"
+      :before-close="handleCloseUpload"
       custom-class="dialog-guide"
     >
       <div>
@@ -217,6 +223,11 @@ export default {
     }
   },
   methods: {
+    handleCloseUpload(done) {
+      this.clearUpload()
+      this.file = null
+      done()
+    },
     downloadSample() {
       window.open(UrlDownloadImportData)
     },
@@ -273,7 +284,6 @@ export default {
       this.openUpload = false
     },
     clearUpload() {
-      console.log('masuk')
       this.$refs.importManual.clearFiles()
       this.openUpload = false
     }
