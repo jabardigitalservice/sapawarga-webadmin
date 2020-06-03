@@ -25,6 +25,9 @@
       <el-form-item v-if="!isCreate && !isEditDomicile" label="NIK">
         <el-input v-model="beneficiaries.nik" type="number" placeholder="NIK" :disabled="disableField" />
       </el-form-item>
+      <el-form-item v-if="!isCreate || beneficiaries.is_have_ktp === 1" label="Nomor KK" prop="no_kk">
+        <el-input v-model="beneficiaries.no_kk" type="number" placeholder="Nomor KK" />
+      </el-form-item>
       <el-form-item label="Nama Lengkap" prop="name">
         <el-input v-model="beneficiaries.name" placeholder="Nama Lengkap" :disabled="disableField" />
       </el-form-item>
@@ -177,6 +180,13 @@ export default {
           {
             max: 16,
             message: 'NIK harus 16 karakter',
+            trigger: 'input'
+          }
+        ],
+        no_kk: [
+          {
+            required: true,
+            message: 'Nomor KK harus diisi',
             trigger: 'input'
           }
         ],

@@ -58,7 +58,7 @@
             </template>
           </el-table-column>
 
-          <el-table-column align="left" :label="$t('label.actions')" width="200px" :cell-style="marginLeft">
+          <el-table-column header-align="center" :label="$t('label.actions')" width="200px" :cell-style="marginLeft">
             <template slot-scope="scope">
               <router-link :to="'/beneficiaries/detail/' +scope.row.id">
                 <el-tooltip :content="$t('label.beneficiaries-detail')" placement="top">
@@ -68,7 +68,7 @@
               <el-tooltip v-if="scope.row.status_verification !== 1" :content="$t('label.beneficiaries-edit')" placement="top">
                 <el-button type="warning" icon="el-icon-edit" size="small" @click="accessBlock('edit/' + scope.row.id)" />
               </el-tooltip>
-              <el-tooltip v-else :content="$t('label.beneficiaries-verivication')" placement="top">
+              <el-tooltip v-else :content="$t('label.beneficiaries-validate')" placement="top">
                 <el-button type="success" icon="el-icon-circle-check" size="small" :disabled="scope.row.status_verification !== 1" @click="accessBlock('verification/' + scope.row.id)" />
               </el-tooltip>
               <el-tooltip v-if="scope.row.status_verification === 1 && scope.row.domicile_rt === '' || scope.row.domicile_rt === null || scope.row.domicile_rw === '' || scope.row.domicile_rw === null || scope.row.domicile_address === '' || scope.row.domicile_address === null || scope.row.name === '' || scope.row.name === null" :content="$t('label.beneficiaries-uncomplete-domicile')" placement="top">
