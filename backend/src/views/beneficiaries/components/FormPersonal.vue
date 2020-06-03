@@ -25,7 +25,7 @@
       <el-form-item v-if="!isCreate && !isEditDomicile" label="NIK">
         <el-input v-model="beneficiaries.nik" type="number" placeholder="NIK" :disabled="disableField" />
       </el-form-item>
-      <el-form-item prop="no_kk" label="Nomor KK">
+      <el-form-item v-if="!isCreate || beneficiaries.is_have_ktp === 1" label="Nomor KK" prop="no_kk">
         <el-input v-model="beneficiaries.no_kk" type="number" placeholder="Nomor KK" />
       </el-form-item>
       <el-form-item label="Nama Lengkap" prop="name">
