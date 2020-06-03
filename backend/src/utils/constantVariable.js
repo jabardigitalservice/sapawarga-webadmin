@@ -67,3 +67,5 @@ export const rolesWidget = {
   'pimpinan': ['admin', 'staffProv', 'pimpinan'],
   'staffKelOPD': ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel', 'staffOPD']
 }
+
+export const UrlDownloadImportData = 'https://d30fftvvk7uhqa.cloudfront.net/attachment/Template_Data_Manual.xlsx'

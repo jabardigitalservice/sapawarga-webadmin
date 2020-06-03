@@ -308,6 +308,16 @@ $dark_gray: #889aa4;
   text-decoration: underline;
 }
 
+// import user
+.el-dialog.el-dialog--center.dialog-guide {
+  background: transparent;
+  box-shadow: none
+}
+
+.dialog-guide .el-card__body {
+  border-radius: 0px !important;
+}
+
 @media(max-width:1200px) {
   .title-top-news {
     width: 300px;
