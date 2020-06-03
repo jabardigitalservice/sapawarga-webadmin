@@ -18,6 +18,9 @@
         <!-- show statistics -->
         <Statistics :is-loading="isLoadingSummary" :summery="dataSummary" />
 
+        <!-- upload data manual -->
+        <UploadDataManual v-if="checkPermission([RolesUser.STAFFKEL ])" />
+
         <ListFilter :list-query.sync="listQuery" @submit-search="getList" @reset-search="resetFilter" />
 
         <el-table v-loading="listLoading" :data="list" border highlight-current-row style="width: 100%" :row-style="tableRowClassName" @sort-change="changeSort">
@@ -118,14 +121,17 @@
 <script>
 import { fetchSummary, fetchList } from '@/api/beneficiaries'
 import DashboardTitle from './components/DashboardTitle'
+import { RolesUser } from '@/utils/constantVariable'
+import UploadDataManual from './components/UploadDataManual/index'
 import FormPersonal from './components/FormPersonal'
 import Pagination from '@/components/Pagination'
 import Statistics from './components/Statistics'
 import ListFilter from './_listfilter'
+import checkPermission from '@/utils/permission'
 import { mapGetters } from 'vuex'
 
 export default {
-  components: { Pagination, Statistics, ListFilter, FormPersonal, DashboardTitle },
+  components: { Pagination, Statistics, ListFilter, FormPersonal, DashboardTitle, UploadDataManual },
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -144,6 +150,7 @@ export default {
   },
   data() {
     return {
+      RolesUser,
       list: null,
       total: 0,
       dialogVisible: false,
@@ -182,6 +189,7 @@ export default {
   },
 
   methods: {
+    checkPermission,
     tableRowClassName({ row, rowIndex }) {
       const invalidRt = row.domicile_rt === '' || row.domicile_rt === null
       const invalidRw = row.domicile_rw === '' || row.domicile_rw === null

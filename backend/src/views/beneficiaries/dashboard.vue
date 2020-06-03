@@ -12,7 +12,8 @@
         <DashboardStatistics :is-loading="isLoadingSummary" :summery="dataSummary" :filter="filter" />
 
         <!-- upload data manual -->
-        <UploadDataManual />
+        <UploadDataManual v-if="checkPermission([RolesUser.STAFFKABKOTA, RolesUser.STAFFKEC])" />
+
         <el-card class="box-card" style="margin-bottom: 10px">
           <el-form>
             <el-row :gutter="10">
@@ -120,12 +121,14 @@
 
       </el-col>
     </el-row>
+    {{ roles }}
   </div>
 </template>
 
 <script>
 import { formatNumber } from '@/utils/formatNumber'
 import { fetchDashboardSummary, fetchDashboardList } from '@/api/beneficiaries'
+import { RolesUser } from '@/utils/constantVariable'
 import { mapGetters } from 'vuex'
 import DashboardStatistics from './components/DashboardStatistics'
 import UploadDataManual from './components/UploadDataManual/index'
@@ -160,6 +163,7 @@ export default {
   },
   data() {
     return {
+      RolesUser,
       list: null,
       total: 0,
       isLoadingSummary: true,
