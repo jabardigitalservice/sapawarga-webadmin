@@ -83,7 +83,7 @@
           Ya, Saya setuju
         </el-checkbox>
         <div>
-          <el-button class="confirmation-button" type="success" :loading="loading" :disabled="!checked" @click="updateData(statusVerified)">{{ $t('crud.save-verified') }}</el-button>
+          <el-button class="confirmation-button" type="success" :loading="loading" :disabled="!checked" @click="updateData(statusVerified)">{{ $t('crud.save-approved') }}</el-button>
         </div>
       </el-dialog>
     </el-dialog>
