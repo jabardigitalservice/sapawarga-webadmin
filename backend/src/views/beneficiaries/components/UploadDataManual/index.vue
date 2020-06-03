@@ -275,6 +275,7 @@ export default {
         })
         this.clearUpload()
         this.openUpload = false
+        this.openGuide = false
       } else {
         this.file = file.raw
       }
