@@ -176,6 +176,7 @@ export default {
     'save-newsImportant': 'Tambah Info Penting',
     'save-gamification': 'Tambah Gamification',
     'save-verified': 'Simpan dan Verifikasi',
+    'save-approved': 'Simpan dan Setujui',
 
     'back-to-list': 'Kembali ke Daftar',
     'send-polling': 'Publikasikan Polling',

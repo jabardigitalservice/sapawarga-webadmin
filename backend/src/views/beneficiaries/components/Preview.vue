@@ -19,6 +19,10 @@
             <p class="content">{{ beneficiaries.nik ? beneficiaries.nik : '-' }}</p>
           </div>
           <div class="preview-content">
+            <p>Nomor KK</p>
+            <p class="content">{{ beneficiaries.no_kk ? beneficiaries.no_kk : '-' }}</p>
+          </div>
+          <div class="preview-content">
             <p>Nama</p>
             <p class="content">{{ beneficiaries.name ? beneficiaries.name : '-' }}</p>
           </div>
@@ -68,14 +72,6 @@
         </el-col>
         <el-col :sm="24" :md="8" :lg="8">
           <p class="preview-title">Domisili Saat Ini</p>
-          <div class="preview-content">
-            <p>NIK</p>
-            <p class="content">{{ beneficiaries.nik ? beneficiaries.nik : '-' }}</p>
-          </div>
-          <div class="preview-content">
-            <p>Nama</p>
-            <p class="content">{{ beneficiaries.name ? beneficiaries.name : '-' }}</p>
-          </div>
           <div class="preview-content">
             <p>Kabupaten/Kota</p>
             <p class="content">{{ beneficiaries.domicile_kabkota_name ? beneficiaries.domicile_kabkota_name.name : '-' }}</p>
