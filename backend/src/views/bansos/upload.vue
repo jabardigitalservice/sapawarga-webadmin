@@ -186,9 +186,6 @@ export default {
       const response = await uploadBansosList(this.listQuery)
       const data = []
       response.data.map(value => {
-        const fileName =
-          value.status === '20' ? value.invalid_file_name : value.file_name
-
         const fileUrl =
           value.status === '20'
             ? value.invalid_file_url
@@ -208,7 +205,7 @@ export default {
           file_url: fileUrl,
           status: value.status,
           notes: notes,
-          file_name: fileName,
+          file_name: value.original_filename,
           id: value.id
         })
       })
