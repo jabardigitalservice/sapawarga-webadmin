@@ -10,11 +10,11 @@ class BeneficiariesType {
       { id: 55, type: 'dtks', name: i18n.t('label.beneficiaries-president') },
       { id: 56, type: 'dtks', name: i18n.t('label.beneficiaries-province') },
       { id: 57, type: 'dtks', name: i18n.t('label.beneficiaries-village-fund') },
-      { id: 1, type: 'non_dtks', name: i18n.t('label.beneficiaries-kemensos') },
-      { id: 2, type: 'non_dtks', name: i18n.t('label.beneficiaries-president') },
-      { id: 3, type: 'non_dtks', name: i18n.t('label.beneficiaries-province') },
-      { id: 4, type: 'non_dtks', name: i18n.t('label.beneficiaries-village-fund') },
-      { id: 5, type: 'non_dtks', name: i18n.t('label.beneficiaries-province') }
+      { id: 1, type: 'non_dtks', name: i18n.t('label.beneficiaries-province') },
+      { id: 2, type: 'non_dtks', name: i18n.t('label.beneficiaries-city') },
+      { id: 3, type: 'non_dtks', name: i18n.t('label.beneficiaries-village-fund') },
+      { id: 4, type: 'non_dtks', name: i18n.t('label.beneficiaries-president') },
+      { id: 5, type: 'non_dtks', name: i18n.t('label.beneficiaries-kemensos') }
     ]
 
     let results = null
