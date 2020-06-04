@@ -1,5 +1,5 @@
 <template>
-  <div v-loading.fullscreen.lock="loading" class="app-container">
+  <div v-loading.fullScreen.lock="loading" class="app-container">
     <el-row>
       <el-col :span="24">
         <span class="head-title">

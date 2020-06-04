@@ -931,7 +931,7 @@ export default {
     'beneficiaries-upload-success': 'Data anda sekarang sedang diupload. Proses ini mungkin menghabiskan beberapa waktu hingga semua data berhasil tersimpan. Apabila terjadi gagal upload, kami akan mengirim pesan melalui Sapawarga atau email Anda. Riwayat proses upload Anda juga bisa diakses dimenu Daftar Riwayat Upload.',
     'beneficiaries-add-file': 'Tambah File',
     'beneficiaries-upload-file': 'Upload',
-    'beneficiaries-import-start': 'Import Dimulai',
+    'beneficiaries-import-start': 'Impor Dimulai',
     'beneficiaries-subdistrict-upload': 'Upload Data Alokasi Bantuan Per Kecamatan',
     'beneficiaries-city-upload': 'Upload Data Alokasi Bantuan Kota/Kabupaten',
     'beneficiaries-pkh': 'PKH',

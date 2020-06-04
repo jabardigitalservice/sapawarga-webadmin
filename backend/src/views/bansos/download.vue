@@ -1,5 +1,5 @@
 <template>
-  <div v-loading.fullscreen.lock="fullscreenLoading" class="app-container">
+  <div v-loading.fullScreen.lock="fullScreenLoading" class="app-container">
     <el-row v-if="user.roles_active.id === 'staffKabkota'">
       <el-button type="text" @click="exportAll">
         <img
@@ -154,7 +154,7 @@ import { Loading } from 'element-ui'
 export default {
   data() {
     return {
-      fullscreenLoading: false,
+      fullScreenLoading: false,
       list: null,
       total: 0,
       listLoading: true,
@@ -413,7 +413,7 @@ export default {
     },
     async exportData(params) {
       try {
-        Loading.service({ fullscreen: true })
+        Loading.service({ fullScreen: true })
 
         const response = await exportBansos(params)
         const dateNow = Date.now()
@@ -422,9 +422,9 @@ export default {
         )} - ${moment(dateNow).format('D MMMM YYYY H:mm:ss')}.xlsx`
         await FileSaver.saveAs(response, fileName)
 
-        Loading.service({ fullscreen: true }).close()
+        Loading.service({ fullScreen: true }).close()
       } catch (error) {
-        Loading.service({ fullscreen: true }).close()
+        Loading.service({ fullScreen: true }).close()
       }
     },
     exportBySubdistrict() {
