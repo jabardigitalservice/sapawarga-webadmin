@@ -1,5 +1,5 @@
 <template>
-  <div v-loading="loading" class="app-container">
+  <div v-loading.fullscreen.lock="loading" class="app-container">
     <el-row>
       <el-col :span="24">
         <span class="head-title">
@@ -16,15 +16,21 @@
           drag
           :multiple="false"
           :limit="1"
-          action=""
+          action
           :auto-upload="false"
           :on-change="handleChangeFile"
         >
-          <div class="el-upload__text"><i class="el-icon-upload" /><em> {{ $t('label.beneficiaries-add-file') }} </em></div>
+          <div class="el-upload__text">
+            <i class="el-icon-upload" />
+            <em>{{ $t('label.beneficiaries-add-file') }}</em>
+          </div>
         </el-upload>
       </el-col>
       <el-col :span="12">
-        <el-button type="primary" @click="submitUpload">{{ $t('label.beneficiaries-upload-file') }}<i class="el-icon-upload el-icon-right" /></el-button>
+        <el-button type="primary" @click="submitUpload">
+          {{ $t('label.beneficiaries-upload-file') }}
+          <i class="el-icon-upload el-icon-right" />
+        </el-button>
       </el-col>
     </el-row>
   </div>
@@ -44,9 +50,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
-      'user'
-    ])
+    ...mapGetters(['user'])
   },
   methods: {
     async submitUpload() {
@@ -63,7 +67,7 @@ export default {
           text: this.$t('label.beneficiaries-upload-success'),
           icon: 'success',
           button: 'OK'
-        }).then((action) => {
+        }).then(action => {
           if (action) {
             this.$router.push('/bansos/upload')
           }
@@ -83,7 +87,9 @@ export default {
       }
     },
     handleChangeFile(file) {
-      const isXlsx = file.raw.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+      const isXlsx =
+        file.raw.type ===
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
       const isXls = file.raw.type === ''
       if (!isXlsx && !isXls) {
         Swal.fire({
@@ -108,29 +114,29 @@ export default {
   margin-bottom: 10px;
 }
 .el-upload {
-    display: inline-block;
-    text-align: center;
-    cursor: pointer;
-    outline: none;
-    width: 100%;
+  display: inline-block;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  width: 100%;
 }
 .el-upload-dragger {
-    background-color: #fff;
-    border: 1px dashed #d9d9d9;
-    border-radius: 6px;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    height: 36px !important;
-    text-align: center;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    width: 100% !important;
+  background-color: #fff;
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  height: 36px !important;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  width: 100% !important;
 }
 .el-upload-dragger .el-icon-upload {
-    font-size: 20px;
-    color: #C0C4CC;
-    margin: -10px 0 -10px;
-    line-height: 50px;
+  font-size: 20px;
+  color: #c0c4cc;
+  margin: -10px 0 -10px;
+  line-height: 50px;
 }
 </style>

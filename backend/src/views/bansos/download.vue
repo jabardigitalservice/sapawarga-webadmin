@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container">
+  <div v-loading.fullscreen.lock="fullscreenLoading" class="app-container">
     <el-row v-if="user.roles_active.id === 'staffKabkota'">
       <el-button type="text" @click="exportAll">
         <img
@@ -142,16 +142,19 @@
 
 <script>
 import { formatNumber } from '@/utils/formatNumber'
-import { fetchDashboardList, exportExcel } from '@/api/beneficiaries'
+import { fetchDashboardList } from '@/api/beneficiaries'
+import { exportBansos } from '@/api/bansos'
 import { mapGetters } from 'vuex'
 import checkPermission from '@/utils/permission'
 import FileSaver from 'file-saver'
 import moment from 'moment'
 import Swal from 'sweetalert2'
+import { Loading } from 'element-ui'
 
 export default {
   data() {
     return {
+      fullscreenLoading: false,
       list: null,
       total: 0,
       listLoading: true,
@@ -409,12 +412,20 @@ export default {
       this.selectionQuery.kode_kec = result.join()
     },
     async exportData(params) {
-      const response = await exportExcel(params)
-      const dateNow = Date.now()
-      const fileName = `${this.$t(
-        'label.beneficiaries-download-bnba-document'
-      )} - ${moment(dateNow).format('D MMMM YYYY H:mm:ss')}.xlsx`
-      FileSaver.saveAs(response, fileName)
+      try {
+        Loading.service({ fullscreen: true })
+
+        const response = await exportBansos(params)
+        const dateNow = Date.now()
+        const fileName = `${this.$t(
+          'label.beneficiaries-download-bnba-document'
+        )} - ${moment(dateNow).format('D MMMM YYYY H:mm:ss')}.xlsx`
+        await FileSaver.saveAs(response, fileName)
+
+        Loading.service({ fullscreen: true }).close()
+      } catch (error) {
+        Loading.service({ fullscreen: true }).close()
+      }
     },
     exportBySubdistrict() {
       if (this.selectionQuery.kode_kec) {

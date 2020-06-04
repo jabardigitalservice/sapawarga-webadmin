@@ -86,6 +86,7 @@
               fit
               highlight-current-row
               style="width: 100%"
+              :row-class-name="tableRowClassName"
             >
               <el-table-column
                 type="index"
@@ -120,7 +121,7 @@
                 sortable="custom"
                 :label="$t('label.beneficiaries-upload-date')"
               >
-                <template slot-scope="{row}">{{ row.created_at | moment('D MMMM YYYY H:mm:ss') }}</template>
+                <template slot-scope="{row}">{{ row.created_at | moment('D MMMM YYYY H:mm') }}</template>
               </el-table-column>
               <el-table-column align="center" :label="$t('label.actions')" width="200">
                 <template slot-scope="{row}">
@@ -225,13 +226,14 @@ export default {
       }`
     },
     statusClassName(row) {
-      return row.status === '10'
-        ? 'success-status'
-        : row.status === '20'
-          ? 'danger-status'
-          : row.status === '21'
-            ? 'warning-status'
-            : ''
+      return row.status === '10' ? 'success-status' : ''
+    },
+    tableRowClassName({ row, rowIndex }) {
+      return row.status === '20'
+        ? 'danger-row'
+        : row.status === '21'
+          ? 'warning-row'
+          : ''
     }
   }
 }
@@ -247,11 +249,15 @@ export default {
   color: #67c23a;
 }
 
-.danger-status {
-  color: #f56c6c;
+.el-table .warning-row {
+  background: rgb(250, 236, 216);
 }
 
-.warning-status {
-  color: #e6a23c;
+.el-table .danger-row {
+  background: rgb(253, 226, 226);
+}
+
+.hover-row > td {
+  background-color: initial !important;
 }
 </style>

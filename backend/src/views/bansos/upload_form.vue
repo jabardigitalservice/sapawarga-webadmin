@@ -7,7 +7,12 @@
             <span>{{ `${ $t('label.beneficiaries-upload') } : ${ beneficiariesType }` }}</span>
           </div>
           <div class="text item card-description">
-            <p><strong><i class="el-icon-info" /> {{ $t('label.beneficiaries-upload-option') }}</strong></p>
+            <p>
+              <strong>
+                <i class="el-icon-info" />
+                {{ $t('label.beneficiaries-upload-option') }}
+              </strong>
+            </p>
             <p>{{ $t('label.beneficiaries-upload-info') }}</p>
           </div>
         </el-card>
@@ -19,9 +24,7 @@
           <div class="card-panel-default" @click="switchComponent('uploadFormCity')">
             <el-row>
               <el-col :span="24">
-                <div class="card-panel-text">
-                  {{ $t('label.beneficiaries-city-upload') }}
-                </div>
+                <div class="card-panel-text">{{ $t('label.beneficiaries-city-upload') }}</div>
               </el-col>
             </el-row>
           </div>
@@ -30,16 +33,14 @@
           <div class="card-panel-default" @click="switchComponent('uploadFormSubdistrict')">
             <el-row>
               <el-col :span="24">
-                <div class="card-panel-text">
-                  {{ $t('label.beneficiaries-subdistrict-upload') }}
-                </div>
+                <div class="card-panel-text">{{ $t('label.beneficiaries-subdistrict-upload') }}</div>
               </el-col>
             </el-row>
           </div>
         </el-col>
       </el-row>
-      <form-upload-sub-district v-if="isSubdistrictComponent" />
-      <form-upload-city v-if="isCityComponent" />
+      <form-upload-sub-district v-if="isSubdistrictComponent" v-loading="loading" />
+      <form-upload-city v-if="isCityComponent" v-loading="loading" />
     </el-card>
   </div>
 </template>
@@ -61,13 +62,12 @@ export default {
       type: this.$route.query.type,
       isCityComponent: false,
       isSubdistrictComponent: false,
-      beneficiariesType: null
+      beneficiariesType: null,
+      loading: false
     }
   },
   computed: {
-    ...mapGetters([
-      'user'
-    ])
+    ...mapGetters(['user'])
   },
   created() {
     this.getTitle()
@@ -76,22 +76,27 @@ export default {
     async getTitle() {
       const beneficiariesType = new BeneficiariesType()
       const response = await beneficiariesType.getAll(this.type)
-      this.beneficiariesType = `${response.type.toUpperCase().replace('_', ' ')} - ${response.name}`
+      this.beneficiariesType = `${response.type
+        .toUpperCase()
+        .replace('_', ' ')} - ${response.name}`
     },
     switchComponent(component) {
       if (component === 'uploadFormCity') {
         this.isCityComponent = true
         this.isSubdistrictComponent = false
+        this.loading = true
+        setTimeout(() => {
+          this.loading = false
+        }, 1000)
       }
 
       if (component === 'uploadFormSubdistrict') {
         this.isSubdistrictComponent = true
         this.isCityComponent = false
-      }
-
-      if (component === 'uploadFormVillage') {
-        this.isSubdistrictComponent = false
-        this.isCityComponent = false
+        this.loading = true
+        setTimeout(() => {
+          this.loading = false
+        }, 1000)
       }
     }
   }
@@ -118,15 +123,14 @@ export default {
     padding: 10px;
     background-color: #f4f4f5;
     border: 1px solid #e9e9eb;
-
   }
   .card-panel-text {
     line-height: 18px;
     color: rgba(0, 0, 0, 0.45);
     font-size: 14px;
     font-weight: bold;
-    margin-top:10px;
-    margin-bottom:10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
   }
   .el-card {
     margin-bottom: 10px !important;
