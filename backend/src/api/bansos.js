@@ -15,3 +15,12 @@ export function uploadBansosList(query) {
     params: query
   })
 }
+
+export function exportBansos(query) {
+  return request({
+    url: `/beneficiaries-bnba/download`,
+    method: 'get',
+    params: query,
+    responseType: 'blob'
+  })
+}

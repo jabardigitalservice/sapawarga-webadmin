@@ -452,7 +452,7 @@ export default {
     'description-not-valid-characters': 'Deskripsi mengandung karakter yang tidak diizinkan.',
 
     'max-file-upload': 'Jumlah file tidak boleh lebih dari {0}.',
-    'field_only_accepts_xlsx_xls': 'Hanya berkas dengan ekstensi ini yang diperbolehkan: xlsx dan xls.'
+    'field_only_accepts_xlsx_xls': 'Hanya file dengan ekstensi ini yang diperbolehkan: xlsx dan xls.'
 
   },
   navbar: {
@@ -940,8 +940,10 @@ export default {
     'beneficiaries-nondtks-option': 'Pilihan Non DTKS',
     'beneficiaries-upload-start': 'Proses uploading dimulai',
     'beneficiaries-upload-success': 'Data anda sekarang sedang diupload. Proses ini mungkin menghabiskan beberapa waktu hingga semua data berhasil tersimpan. Apabila terjadi gagal upload, kami akan mengirim pesan melalui Sapawarga atau email Anda. Riwayat proses upload Anda juga bisa diakses dimenu Daftar Riwayat Upload.',
-    'beneficiaries-add-file': 'Tambah File',
+    'beneficiaries-choose-file': 'Pilih File yang akan diupload',
+    'beneficiaries-upload-description': 'Hanya file dengan ekstensi ini yang diperbolehkan: xlsx dan xls.',
     'beneficiaries-upload-file': 'Upload',
+    'beneficiaries-import-start': 'Impor Dimulai',
     'beneficiaries-subdistrict-upload': 'Upload Data Alokasi Bantuan Per Kecamatan',
     'beneficiaries-city-upload': 'Upload Data Alokasi Bantuan Kota/Kabupaten',
     'beneficiaries-pkh': 'PKH',
@@ -966,6 +968,7 @@ export default {
     'beneficiaries-notes-display-verification': 'Halaman ini menampilkan Daftar calon penerima bantuan sosial di',
     'beneficiaries-note-verification-content': 'Di Halaman ini, Anda dapat melihat daftar warga calon penerima bantuan dan melakukan verifikasi calon penerima bantuan yang ada di Kelurahan Anda.',
     'beneficiaries-dashboard-alert': 'Proses Verifikasi dan Validasi Data Penerima Bansos PERIODE 2 belum dibuka!',
+    'beneficiaries-upload-allocation-data': 'Upload Data Alokasi Bantuan',
     'beneficiaries-note-approved-title': 'Data penerima bantuan sosial yang sudah disetujui Desa/Kelurahan',
     'beneficiaries-notes-display-approved': 'Halaman ini menampilkan data penerima bantuan sosial yang sudah disetujui oleh Desa/Kelurahan',
     'beneficiaries-note-approved-content': 'Data di bawah ini telah dipisahkan berdasarkan kategori data yang sudah disetujui Desa/Kelurahan. Data yang sudah disetujui Desa/Kelurahan merupakan data yang sudah diverifikasi RW dan mendapatkan persetujuan Desa/Kelurahan dan memenuhi kelayakan dalam menerima bantuan sosial.',
