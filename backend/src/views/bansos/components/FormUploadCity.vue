@@ -1,32 +1,33 @@
 <template>
   <div v-loading.fullScreen.lock="loading" class="app-container">
-    <el-row>
-      <el-col :span="24">
-        <span class="head-title">
-          <b>{{ $t('label.area-kabkota') }}</b>
-        </span>
-      </el-col>
-    </el-row>
-    <br>
     <el-row :gutter="40">
-      <el-col :span="12">
+      <el-col :span="24">
+        <div class="upload-description">{{ $t('label.beneficiaries-upload-description') }}</div>
         <el-upload
-          ref="upload"
-          drag
-          :multiple="false"
+          ref="importBansos"
+          class="form-upload"
           :limit="1"
+          :before-close="clearUpload"
+          :multiple="false"
           action
           :auto-upload="false"
           :on-change="handleChangeFile"
         >
-          <div class="el-upload__text">
-            <i class="el-icon-upload" />
-            <em>{{ $t('label.beneficiaries-add-file') }}</em>
+          <div v-if="!file">
+            <el-button
+              icon="el-icon-paperclip"
+              plain
+              class="button-upload"
+            >{{ $t('label.beneficiaries-choose-file') }}</el-button>
           </div>
         </el-upload>
       </el-col>
-      <el-col :span="12">
-        <el-button type="primary" @click="submitUpload">
+    </el-row>
+    <br>
+    <el-row :gutter="40">
+      <el-col :span="20">&nbsp;</el-col>
+      <el-col :span="4">
+        <el-button type="primary" style="width:100%" @click="submitUpload">
           {{ $t('label.beneficiaries-upload-file') }}
           <i class="el-icon-upload el-icon-right" />
         </el-button>
@@ -96,10 +97,13 @@ export default {
           icon: 'error',
           button: 'OK'
         })
-        this.$refs.upload.clearFiles()
+        this.clearUpload()
       } else {
         this.file = file.raw
       }
+    },
+    clearUpload() {
+      this.$refs.importBansos.clearFiles()
     }
   }
 }
@@ -134,6 +138,19 @@ export default {
   color: #c0c4cc;
   margin: -10px 0 -10px;
   line-height: 50px;
+}
+.upload-description {
+  color: #828282;
+}
+.form-upload {
+  text-align: center;
+  padding-top: 1rem;
+}
+.button-upload {
+  font-weight: bold;
+  padding: 1rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
 }
 </style>
 

@@ -18,28 +18,10 @@
         </el-card>
       </el-col>
     </el-row>
-    <el-card class="box-card">
-      <el-row :gutter="40" class="panel-group">
-        <el-col :xs="12" :sm="12" :lg="12" class="card-panel-col">
-          <div class="card-panel-default" @click="switchComponent('uploadFormCity')">
-            <el-row>
-              <el-col :span="24">
-                <div class="card-panel-text">{{ $t('label.beneficiaries-city-upload') }}</div>
-              </el-col>
-            </el-row>
-          </div>
-        </el-col>
-        <el-col :xs="12" :sm="12" :lg="12" class="card-panel-col">
-          <div class="card-panel-default" @click="switchComponent('uploadFormSubdistrict')">
-            <el-row>
-              <el-col :span="24">
-                <div class="card-panel-text">{{ $t('label.beneficiaries-subdistrict-upload') }}</div>
-              </el-col>
-            </el-row>
-          </div>
-        </el-col>
-      </el-row>
-      <form-upload-sub-district v-if="isSubdistrictComponent" v-loading="loading" />
+    <el-card class="box-card body-nopadding">
+      <div slot="header">
+        <span>{{ $t('label.beneficiaries-upload-allocation-data') }}</span>
+      </div>
       <form-upload-city v-if="isCityComponent" v-loading="loading" />
     </el-card>
   </div>
@@ -48,20 +30,17 @@
 <script>
 import { mapGetters } from 'vuex'
 
-import FormUploadSubDistrict from './components/FormUploadSubDistrict'
 import FormUploadCity from './components/FormUploadCity'
 import BeneficiariesType from './statics/beneficiariesType'
 
 export default {
   components: {
-    FormUploadSubDistrict,
     FormUploadCity
   },
   data() {
     return {
       type: this.$route.query.type,
-      isCityComponent: false,
-      isSubdistrictComponent: false,
+      isCityComponent: true,
       beneficiariesType: null,
       loading: false
     }
@@ -83,16 +62,6 @@ export default {
     switchComponent(component) {
       if (component === 'uploadFormCity') {
         this.isCityComponent = true
-        this.isSubdistrictComponent = false
-        this.loading = true
-        setTimeout(() => {
-          this.loading = false
-        }, 1000)
-      }
-
-      if (component === 'uploadFormSubdistrict') {
-        this.isSubdistrictComponent = true
-        this.isCityComponent = false
         this.loading = true
         setTimeout(() => {
           this.loading = false
