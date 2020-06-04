@@ -2,7 +2,7 @@
   <el-row :gutter="24">
     <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
       <div class="grid-content">
-        <div class="stat-title">PKH</div>
+        <div class="stat-title">{{ $t('label.beneficiaries-pkh') }}</div>
         <!-- show loading -->
         <div
           v-loading="isLoading"
@@ -15,7 +15,7 @@
     </el-col>
     <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
       <div class="grid-content">
-        <div class="stat-title">BPNT</div>
+        <div class="stat-title">{{ $t('label.beneficiaries-bpnt-basicfood') }}</div>
         <!-- show loading -->
         <div
           v-loading="isLoading"
@@ -28,7 +28,7 @@
     </el-col>
     <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
       <div class="grid-content">
-        <div class="stat-title">BPNT Perluasan</div>
+        <div class="stat-title">{{ $t('label.beneficiaries-bpnt-expansion') }}</div>
         <!-- show loading -->
         <div
           v-loading="isLoading"
@@ -41,7 +41,7 @@
     </el-col>
     <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
       <div class="grid-content">
-        <div class="stat-title">Bansos Tunai (Kemensos)</div>
+        <div class="stat-title">{{ $t('label.beneficiaries-kemensos') }}</div>
         <!-- show loading -->
         <div
           v-loading="isLoading"
@@ -54,7 +54,7 @@
     </el-col>
     <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
       <div class="grid-content">
-        <div class="stat-title">Bansos Presiden Sembako (BODEBEK)</div>
+        <div class="stat-title">{{ $t('label.beneficiaries-president') }}</div>
         <!-- show loading -->
         <div
           v-loading="isLoading"
@@ -67,7 +67,7 @@
     </el-col>
     <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
       <div class="grid-content">
-        <div class="stat-title">Bansos Provinsi</div>
+        <div class="stat-title">{{ $t('label.beneficiaries-province') }}</div>
         <!-- show loading -->
         <div
           v-loading="isLoading"
@@ -80,7 +80,7 @@
     </el-col>
     <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
       <div class="grid-content">
-        <div class="stat-title">Dana Desa</div>
+        <div class="stat-title">{{ $t('label.beneficiaries-village-fund') }}</div>
         <!-- show loading -->
         <div
           v-loading="isLoading"
@@ -93,7 +93,7 @@
     </el-col>
     <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
       <div class="grid-content">
-        <div class="stat-title">Bansos Kabupaten/Kota</div>
+        <div class="stat-title">{{ $t('label.beneficiaries-city') }}</div>
         <!-- show loading -->
         <div
           v-loading="isLoading"
@@ -184,8 +184,8 @@ export default {
 .stat-title {
   margin-bottom: 13px;
   font-weight: bold;
-  font-size: 18px;
-  width: 60%;
+  font-size: 14px;
+  width: 100%;
 }
 .stat-count {
   width: 60%;

@@ -18,9 +18,12 @@
         <!-- show statistics -->
         <Statistics :is-loading="isLoadingSummary" :summery="dataSummary" />
 
+        <!-- upload data manual -->
+        <UploadDataManual v-if="checkPermission([RolesUser.STAFFKEL ])" />
+
         <ListFilter :list-query.sync="listQuery" @submit-search="getList" @reset-search="resetFilter" />
 
-        <el-table v-loading="listLoading" :data="list" border stripe highlight-current-row style="width: 100%" @sort-change="changeSort">
+        <el-table v-loading="listLoading" :data="list" border highlight-current-row style="width: 100%" :row-style="tableRowClassName" @sort-change="changeSort">
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
 
           <el-table-column prop="name" sortable="custom" :label="$t('label.beneficiaries-name')" min-width="200px" />
@@ -58,7 +61,7 @@
             </template>
           </el-table-column>
 
-          <el-table-column align="center" :label="$t('label.actions')" width="200px">
+          <el-table-column header-align="center" :label="$t('label.actions')" width="200px" :cell-style="marginLeft">
             <template slot-scope="scope">
               <router-link :to="'/beneficiaries/detail/' +scope.row.id">
                 <el-tooltip :content="$t('label.beneficiaries-detail')" placement="top">
@@ -68,8 +71,11 @@
               <el-tooltip v-if="scope.row.status_verification !== 1" :content="$t('label.beneficiaries-edit')" placement="top">
                 <el-button type="warning" icon="el-icon-edit" size="small" @click="accessBlock('edit/' + scope.row.id)" />
               </el-tooltip>
-              <el-tooltip v-else :content="$t('label.beneficiaries-verivication')" placement="top">
+              <el-tooltip v-else :content="$t('label.beneficiaries-validate')" placement="top">
                 <el-button type="success" icon="el-icon-circle-check" size="small" :disabled="scope.row.status_verification !== 1" @click="accessBlock('verification/' + scope.row.id)" />
+              </el-tooltip>
+              <el-tooltip v-if="scope.row.status_verification === 1 && scope.row.domicile_rt === '' || scope.row.domicile_rt === null || scope.row.domicile_rw === '' || scope.row.domicile_rw === null || scope.row.domicile_address === '' || scope.row.domicile_address === null || scope.row.name === '' || scope.row.name === null" :content="$t('label.beneficiaries-uncomplete-domicile')" placement="top">
+                <el-button type="info" icon="el-icon-edit-outline" size="small" :disabled="scope.row.status_verification !== 1" @click="updateDomicile(scope.row)" />
               </el-tooltip>
             </template>
           </el-table-column>
@@ -101,6 +107,15 @@
           <el-button type="success" @click="dialogVisible = false">Tutup</el-button>
         </span>
       </el-dialog>
+      <el-dialog
+        :visible.sync="isEditDomicile"
+        width="70%"
+        :close-on-click-modal="false"
+        @close="exitDialog"
+      >
+        <span slot="title" class="dialog-title">Perbaharui Data Domisili Calon Penerima Bantuan</span>
+        <FormPersonal :beneficiaries="beneficiaries" :is-edit-domicile="true" :is-edit="true" :is-create="false" :disable-field="false" @closeDialog="closeDialog" />
+      </el-dialog>
     </el-row>
   </div>
 </template>
@@ -108,13 +123,17 @@
 <script>
 import { fetchSummary, fetchList } from '@/api/beneficiaries'
 import DashboardTitle from './components/DashboardTitle'
+import { RolesUser } from '@/utils/constantVariable'
+import UploadDataManual from './components/UploadDataManual/index'
+import FormPersonal from './components/FormPersonal'
 import Pagination from '@/components/Pagination'
 import Statistics from './components/Statistics'
 import ListFilter from './_listfilter'
+import checkPermission from '@/utils/permission'
 import { mapGetters } from 'vuex'
 
 export default {
-  components: { Pagination, Statistics, ListFilter, DashboardTitle },
+  components: { Pagination, Statistics, ListFilter, FormPersonal, DashboardTitle, UploadDataManual },
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -133,12 +152,15 @@ export default {
   },
   data() {
     return {
+      RolesUser,
       list: null,
       total: 0,
       dialogVisible: false,
+      isEditDomicile: false,
       isLoadingSummary: true,
       dataSummary: null,
       listLoading: true,
+      beneficiaries: null,
       status: {
         DRAFT: 0,
         SCHEDULED: 5,
@@ -169,6 +191,36 @@ export default {
   },
 
   methods: {
+    checkPermission,
+    tableRowClassName({ row, rowIndex }) {
+      const invalidRt = row.domicile_rt === '' || row.domicile_rt === null
+      const invalidRw = row.domicile_rw === '' || row.domicile_rw === null
+      const invalidName = row.name === '' || row.name === null
+      const invalidAddress = row.domicile_address === '' || row.domicile_address === null
+
+      if (row.status_verification === 1 && invalidRt || invalidRw || invalidName || invalidAddress) {
+        return 'background: #FBE6E5'
+      }
+      return ''
+    },
+
+    marginLeft() {
+      return 'padding-left: 50px'
+    },
+
+    exitDialog() {
+      this.getList()
+    },
+
+    updateDomicile(value) {
+      this.isEditDomicile = true
+      this.beneficiaries = value
+    },
+
+    closeDialog(value) {
+      this.isEditDomicile = value
+    },
+
     accessBlock(value) {
       this.$router.push('/beneficiaries/' + value)
     },

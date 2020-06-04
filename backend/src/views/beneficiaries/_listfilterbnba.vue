@@ -21,13 +21,14 @@
               placeholder="Pilih Tipe Bansos"
               style="width: 100%"
             >
-              <el-option value="1" label="PKH" />
-              <el-option value="2" label="BPNT" />
-              <el-option value="3" label="BPNT Perluasan" />
-              <el-option value="4" label="Bansos Tunai (Kemensos)" />
-              <el-option value="5" label="Bansos Presiden Sembako (BODEBEK)" />
-              <el-option value="6" label="Bansos Provinsi" />
-              <el-option value="7" label="Dana Desa" />
+              <el-option value="1" :label="$t('label.beneficiaries-pkh')" />
+              <el-option value="2" :label="$t('label.beneficiaries-bpnt-basicfood')" />
+              <el-option value="3" :label="$t('label.beneficiaries-bpnt-expansion')" />
+              <el-option value="4" :label="$t('label.beneficiaries-kemensos')" />
+              <el-option value="5" :label="$t('label.beneficiaries-president')" />
+              <el-option value="6" :label="$t('label.beneficiaries-province')" />
+              <el-option value="7" :label="$t('label.beneficiaries-village-fund')" />
+              <el-option value="8" :label="$t('label.beneficiaries-city')" />
             </el-select>
           </el-form-item>
         </el-col>

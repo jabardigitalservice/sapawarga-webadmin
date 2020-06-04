@@ -22,8 +22,11 @@
       <el-form-item v-if="isCreate && beneficiaries.is_have_ktp === 1" label="NIK" prop="nik">
         <el-input v-model="beneficiaries.nik" type="number" placeholder="NIK" :disabled="disableField" />
       </el-form-item>
-      <el-form-item v-if="!isCreate" label="NIK">
+      <el-form-item v-if="!isCreate && !isEditDomicile" label="NIK">
         <el-input v-model="beneficiaries.nik" type="number" placeholder="NIK" :disabled="disableField" />
+      </el-form-item>
+      <el-form-item v-if="!isCreate || beneficiaries.is_have_ktp === 1" label="Nomor KK" prop="no_kk">
+        <el-input v-model="beneficiaries.no_kk" type="number" placeholder="Nomor KK" />
       </el-form-item>
       <el-form-item label="Nama Lengkap" prop="name">
         <el-input v-model="beneficiaries.name" placeholder="Nama Lengkap" :disabled="disableField" />
@@ -80,7 +83,10 @@
       <el-form-item v-if="isEdit" label="RW" prop="domicile_rw">
         <el-input v-model="beneficiaries.domicile_rw" type="number" placeholder="RW" />
       </el-form-item>
-      <el-form-item v-if="!isCreate" label="RT" prop="domicile_rt">
+      <el-form-item v-if="isEdit" label="RT" prop="domicile_rt">
+        <el-input v-model="beneficiaries.domicile_rt" type="number" placeholder="RT" :disabled="disableField" />
+      </el-form-item>
+      <el-form-item v-if="!isCreate && !isEdit" label="RT">
         <el-input v-model="beneficiaries.domicile_rt" type="number" placeholder="RT" :disabled="disableField" />
       </el-form-item>
       <el-form-item v-if="isAutomatedNik && isCreate" label="Alamat" prop="address">
@@ -92,7 +98,11 @@
       <el-form-item v-if="isAutomatedNik && isCreate" label="RT" prop="rt">
         <el-input v-model="beneficiaries.rt" type="number" placeholder="RT" :disabled="disableField" />
       </el-form-item>
-      <el-form-item class="ml-min-40 form-button">
+      <el-form-item v-if="isEditDomicile" class="ml-min-40 form-button">
+        <div v-if="!isCreate">Apakah benar informasi calon penerima bantuan ini berdomisili di desa Anda?</div>
+        <el-button class="button-action" type="primary" @click="updateDomicile(beneficiaries.id)"> {{ $t('crud.save-create') }}</el-button>
+      </el-form-item>
+      <el-form-item v-else class="ml-min-40 form-button">
         <div v-if="!isCreate">Apakah benar informasi calon penerima bantuan ini berdomisili di desa Anda?</div>
         <el-button v-if="!isCreate" class="button-action" type="danger" @click="rejectData">{{ $t('crud.not-valid') }}</el-button>
         <el-button class="button-action" type="primary" @click="next"> {{ $t('crud.next') }}</el-button>
@@ -115,6 +125,10 @@ export default {
       default: false
     },
     isEdit: {
+      type: Boolean,
+      default: false
+    },
+    isEditDomicile: {
       type: Boolean,
       default: false
     }
@@ -166,6 +180,13 @@ export default {
           {
             max: 16,
             message: 'NIK harus 16 karakter',
+            trigger: 'input'
+          }
+        ],
+        no_kk: [
+          {
+            required: true,
+            message: 'Nomor KK harus diisi',
             trigger: 'input'
           }
         ],
@@ -238,12 +259,20 @@ export default {
             required: true,
             message: 'RW harus diisi',
             trigger: 'blur'
+          },
+          {
+            validator: checkStartNumber,
+            trigger: 'blur'
           }
         ],
         domicile_rt: [
           {
-            required: false,
+            required: true,
             message: 'RT harus diisi',
+            trigger: 'blur'
+          },
+          {
+            validator: checkStartNumber,
             trigger: 'blur'
           }
         ],
@@ -297,6 +326,21 @@ export default {
     if (this.beneficiaries.kec_id !== null) this.getKelurahan(this.beneficiaries.kec_bps_id)
   },
   methods: {
+    async updateDomicile(id) {
+      const valid = await this.$refs.beneficiaries.validate()
+
+      if (!valid) {
+        return
+      }
+
+      try {
+        await update(id, this.beneficiaries)
+      } catch (error) {
+        console.log(error)
+      }
+
+      this.$emit('closeDialog', false)
+    },
     async next() {
       const valid = await this.$refs.beneficiaries.validate()
 

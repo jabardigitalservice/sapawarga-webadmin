@@ -21,6 +21,20 @@
         <p class="content"> {{ $t('label.beneficiaries-note-verification-content') }} </p>
       </div>
     </div>
+    <div v-if="listType === 'approved'">
+      <h2 class="dashboard-title">{{ $t('label.beneficiaries-note-approved-title') }}</h2>
+      <div class="warn-content-warning">
+        <p class="title"><span><i class="el-icon-warning" style="color: rgba(226, 194, 124, 0.938)" /></span><span> {{ $t('label.beneficiaries-notes-display-approved') }} </span></p>
+        <p class="content"> {{ $t('label.beneficiaries-note-approved-content') }} </p>
+      </div>
+    </div>
+    <div v-if="listType === 'pending'">
+      <h2 class="dashboard-title">{{ $t('label.beneficiaries-note-pending-title') }}</h2>
+      <div class="warn-content-warning">
+        <p class="title"><span><i class="el-icon-warning" style="color: rgba(226, 194, 124, 0.938)" /></span><span> {{ $t('label.beneficiaries-notes-display-pending') }} </span></p>
+        <p class="content"> {{ $t('label.beneficiaries-note-pending-content') }} </p>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -38,6 +52,10 @@ export default {
     isVerification: {
       type: Boolean,
       default: false
+    },
+    listType: {
+      type: String,
+      default: null
     }
   },
   computed: {
