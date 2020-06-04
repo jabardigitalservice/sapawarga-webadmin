@@ -45,6 +45,7 @@
               </el-col>
             </el-row>
           </div>
+
           <el-table
             :data="tableData"
             stripe
@@ -53,37 +54,41 @@
             style="width: 100%"
           >
             <el-table-column
-              prop="no"
+              type="index"
+              align="center"
               label="NO"
-              width="100"
+              :index="getTableRowNumbering"
+              width="50"
             />
             <el-table-column
               prop="namaFile"
+              sortable="true"
               label="NAMA FILE"
             />
             <el-table-column
               prop="status"
+              sortable="true"
               label="STATUS"
               width="100"
             />
             <el-table-column
               prop="date"
+              sortable="true"
               label="WAKTU UPLOAD"
             />
             <el-table-column
               label="AKSI"
-              width="100"
+              width="80"
             >
               <template slot-scope="scope">
                 <el-button
                   size="mini"
                   type="primary"
-                  icon="el-icon-share"
+                  icon="el-icon-view"
                   @click="handleEdit(scope.$index, scope.row)"
                 />
               </template>
             </el-table-column>
-
             <el-button slot="append" type="text" class="btn-load-more">Tampilkan lebih banyak <i class="el-icon-arrow-down" /></el-button>
           </el-table>
         </el-card>
@@ -167,61 +172,20 @@ export default {
       loading: false,
       openGuide: false,
       openUpload: false,
-      tableData: [
-        {
-          no: 1,
-          namaFile: 'Tom',
-          status: 'gagal',
-          date: '2016-05-03',
-          action: 1
-        },
-        {
-          no: 1,
-          namaFile: 'asdasdas  adasdsadas asdadasdas assa dad asdas da',
-          status: 'gagal',
-          date: '2016-05-03',
-          action: 1
-        },
-        {
-          no: 1,
-          namaFile: 'Tom',
-          status: 'gagal',
-          date: '2016-05-03',
-          action: 1
-        },
-        {
-          no: 1,
-          namaFile: 'Tom',
-          status: 'gagal',
-          date: '2016-05-03',
-          action: 1
-        },
-        {
-          no: 1,
-          namaFile: 'Tom',
-          status: 'gagal',
-          date: '2016-05-03',
-          action: 1
-        },
-        {
-          no: 1,
-          namaFile: 'Tom',
-          status: 'gagal',
-          date: '2016-05-03',
-          action: 1
-        },
-        {
-          no: 1,
-          namaFile: 'Tom',
-          status: 'gagal',
-          date: '2016-05-03',
-          action: 1
-        }
-      ],
-      file: null
+      tableData: [],
+      file: null,
+      listQuery: {
+        name: null,
+        date: null,
+        page: 1,
+        limit: 10
+      }
     }
   },
   methods: {
+    getTableRowNumbering(index) {
+      return (index + 1)
+    },
     handleCloseUpload(done) {
       this.clearUpload()
       done()
