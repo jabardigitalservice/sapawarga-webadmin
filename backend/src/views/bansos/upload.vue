@@ -29,7 +29,7 @@
         </el-card>
         <template v-for="(beneficiariesType, index) in beneficiariesTypeList">
           <router-link
-            v-if="beneficiariesType.type == 'dtks'"
+            v-if="beneficiariesType.type === 'dtks'"
             :key="index"
             :to="`/bansos/upload-form?type=${ beneficiariesType.id }`"
           >
@@ -55,7 +55,7 @@
         </el-card>
         <template v-for="(beneficiariesType, index) in beneficiariesTypeList">
           <router-link
-            v-if="beneficiariesType.type == 'non_dtks'"
+            v-if="beneficiariesType.type === 'non_dtks'"
             :key="index"
             :to="`/bansos/upload-form?type=${ beneficiariesType.id }`"
           >
@@ -125,7 +125,7 @@
               </el-table-column>
               <el-table-column align="center" :label="$t('label.actions')" width="200">
                 <template slot-scope="{row}">
-                  <a v-if="row.status == 20 || row.status == 21" :href="row.file_url">
+                  <a v-if="row.status === '20' || row.status === '21'" :href="row.file_url">
                     <el-tooltip
                       :content="$t('label.beneficiaries-download-invalid-file')"
                       placement="top"
