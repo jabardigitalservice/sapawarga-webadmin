@@ -1035,7 +1035,7 @@ export default {
     'btn-download': 'Unduh Template Excel',
     'tbl-title': 'Riwayat Import Data Manual',
     'title-upload': 'Upload Data Input Manual',
-    'desc-upload': 'Untuk upload data input manual harus memakai format Excel (.xls)',
+    'desc-upload': 'Untuk upload data input manual harus memakai format Excel (.xlsx)',
     'upload-btn': 'IMPORT SEKARANG',
     'btn-choice': 'Pilih File yang akan diupload',
     'upload': 'Upload'
