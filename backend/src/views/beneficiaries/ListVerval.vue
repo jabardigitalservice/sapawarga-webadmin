@@ -41,11 +41,9 @@
 
           <el-table-column align="center" :label="$t('label.actions')" width="200px">
             <template slot-scope="scope">
-              <router-link :to="'/beneficiaries/detail-verval/' +scope.row.id">
-                <el-tooltip :content="$t('label.beneficiaries-detail')" placement="top">
-                  <el-button type="primary" icon="el-icon-view" size="small" />
-                </el-tooltip>
-              </router-link>
+              <el-tooltip :content="$t('label.beneficiaries-detail')" placement="top">
+                <el-button type="primary" icon="el-icon-view" size="small" @click="getDetail(scope.row.id)" />
+              </el-tooltip>
               <el-tooltip v-if="listType === 'pending'" :content="$t('label.beneficiaries-validate')" placement="top">
                 <el-button type="success" icon="el-icon-circle-check" size="small" :disabled="multipleSelection.length > 0" @click="validate(scope.row.id)" />
               </el-tooltip>
@@ -60,19 +58,40 @@
         <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
       </el-col>
     </el-row>
+    <el-dialog
+      :visible.sync="isDetail"
+      width="80%"
+      :close-on-click-modal="false"
+      custom-class="dialog-custome"
+      :modal-append-to-body="false"
+      :append-to-body="true"
+      top="5vh"
+      style="margin-bottom: 30px"
+    >
+      <span slot="title" class="dialog-title detail-title" style="margin: 0; padding: 0">Detail Penerima Bantuan</span>
+      <hr class="line-separator">
+      <Preview :id-detail="idDetail" :is-verval="true" @closeDialog="closeDetail" />
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import { fetchSummaryVerval, fetchListVerval, validateStaffKelBulk } from '@/api/beneficiaries'
+import StatisticsVerval from './components/StatisticsVerval'
 import DashboardTitle from './components/DashboardTitle'
 import Pagination from '@/components/Pagination'
-import StatisticsVerval from './components/StatisticsVerval'
+import Preview from './components/Preview'
 import ListFilter from './_listfilter'
 import { mapGetters } from 'vuex'
 
 export default {
-  components: { Pagination, StatisticsVerval, ListFilter, DashboardTitle },
+  components: {
+    StatisticsVerval,
+    DashboardTitle,
+    Pagination,
+    ListFilter,
+    Preview
+  },
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -96,6 +115,8 @@ export default {
       dialogVisible: false,
       isLoadingSummary: true,
       dataSummary: null,
+      isDetail: false,
+      idDetail: null,
       listLoading: true,
       multipleSelection: [],
       status: {
@@ -142,6 +163,15 @@ export default {
         this.isLoadingSummary = false
       })
     },
+    getDetail(value) {
+      this.idDetail = value
+      this.isDetail = true
+    },
+
+    closeDetail() {
+      this.isDetail = false
+    },
+
     getList() {
       this.listLoading = true
       if (this.listType === 'pending') {
@@ -232,6 +262,21 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+  .line-separator {
+    margin: 0 -20px;
+    border: .1px solid #e6ebf5;
+  }
+
+  .dialog-custome {
+    background: transparent;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .detail-title {
+    color: #606266;
+  }
   .dialog-title {
     font-weight: bold;
     text-align: left;

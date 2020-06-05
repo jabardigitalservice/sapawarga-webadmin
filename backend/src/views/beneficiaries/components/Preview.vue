@@ -141,7 +141,7 @@ export default {
     this.getDetail(this.idDetail)
   },
   updated() {
-    this.getDetail(this.idDetail)
+    // this.getDetail(this.idDetail)
   },
   methods: {
     updateForm(value) {
