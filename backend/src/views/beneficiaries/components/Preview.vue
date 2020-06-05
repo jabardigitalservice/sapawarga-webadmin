@@ -8,106 +8,106 @@
       </div>
       <el-col class="side-col" :sm="24" :md="8" :lg="8">
         <div>
-          <p class="preview-title">Informasi Penerima Bantuan</p>
+          <p class="preview-title">{{ $t('label.beneficiaries-info-personal') }}</p>
         </div>
         <div class="preview-content">
-          <p>NIK</p>
+          <p>{{ $t('label.beneficiaries-nik') }}</p>
           <p class="content">{{ beneficiaries.nik ? beneficiaries.nik : '-' }}</p>
         </div>
         <div class="preview-content">
-          <p>Nomor KK</p>
+          <p>{{ $t('label.beneficiaries-kk') }}</p>
           <p class="content">{{ beneficiaries.no_kk ? beneficiaries.no_kk : '-' }}</p>
         </div>
         <div class="preview-content">
-          <p>Nama</p>
+          <p>{{ $t('label.beneficiaries-name') }}</p>
           <p class="content">{{ beneficiaries.name ? beneficiaries.name : '-' }}</p>
         </div>
         <div class="preview-content">
-          <p>Kabupaten/Kota</p>
+          <p>{{ $t('label.beneficiaries-domicile-kabkota') }}</p>
           <p class="content">{{ beneficiaries.kabkota ? beneficiaries.kabkota.name : '-' }}</p>
         </div>
         <div class="preview-content">
-          <p>Kecamatan</p>
+          <p>{{ $t('label.beneficiaries-domicile-kecamatan') }}</p>
           <p class="content">{{ beneficiaries.kecamatan ? beneficiaries.kecamatan.name : '-' }}</p>
         </div>
         <div class="preview-content">
-          <p>Kelurahan</p>
+          <p>{{ $t('label.beneficiaries-domicile-kelurahan') }}</p>
           <p class="content">{{ beneficiaries.kelurahan ? beneficiaries.kelurahan.name : '-' }}</p>
         </div>
         <div class="preview-content">
-          <p>RW</p>
+          <p>{{ $t('label.beneficiaries-rw') }}</p>
           <p class="content">{{ beneficiaries.rw ? beneficiaries.rw : '-' }}</p>
         </div>
         <div class="preview-content">
-          <p>RT</p>
+          <p>{{ $t('label.beneficiaries-rt') }}</p>
           <p class="content">{{ beneficiaries.rt ? beneficiaries.rt : '-' }}</p>
         </div>
       </el-col>
       <el-col :sm="24" :md="8" :lg="8">
-        <p class="preview-title">Informasi Penghasilan</p>
+        <p class="preview-title">{{ $t('label.beneficiaries-info-income') }}</p>
         <div class="preview-content">
-          <p>Pekerjaan</p>
+          <p>{{ $t('label.job') }}</p>
           <p class="content">{{ beneficiaries.job_type_name ? beneficiaries.job_type_name.title : '-' }}</p>
         </div>
         <div class="preview-content">
-          <p>Status Kedudukan dalam Pekerjaan</p>
+          <p>{{ $t('label.beneficiaries-job-status') }}</p>
           <p class="content">{{ beneficiaries.job_status_id ? beneficiaries.job_status_name.title : '-' }}</p>
         </div>
         <div class="preview-content">
-          <p>Jumlah Anggota Keluarga</p>
+          <p>{{ $t('label.beneficiaries-total-family') }}</p>
           <p class="content">{{ beneficiaries.total_family_members ? beneficiaries.total_family_members : '-' }}</p>
         </div>
         <div class="preview-content">
-          <p>Penghasilan Sebelum COVID-19</p>
+          <p>{{ $t('label.beneficiaries-income-before') }}</p>
           <p class="content">{{ beneficiaries.income_before ? formatCurrency(beneficiaries.income_before, 'Rp. ') : '-' }}</p>
         </div>
         <div class="preview-content">
-          <p>Penghasilan Sesudah COVID-19</p>
+          <p>{{ $t('label.beneficiaries-income-after') }}</p>
           <p class="content">{{ beneficiaries.income_after ? formatCurrency(beneficiaries.income_after, 'Rp. ') : '-' }}</p>
         </div>
       </el-col>
       <el-col class="side-col" :sm="24" :md="8" :lg="8">
-        <p class="preview-title">Domisili Saat Ini</p>
+        <p class="preview-title">{{ $t('label.beneficiaries-info-domicile') }}</p>
         <div class="preview-content">
-          <p>Kabupaten/Kota</p>
+          <p>{{ $t('label.beneficiaries-domicile-kabkota') }}</p>
           <p class="content">{{ beneficiaries.domicile_kabkota_name ? beneficiaries.domicile_kabkota_name.name : '-' }}</p>
         </div>
         <div class="preview-content">
-          <p>Kecamatan</p>
+          <p>{{ $t('label.beneficiaries-domicile-kecamatan') }}</p>
           <p class="content">{{ beneficiaries.domicile_kec_name ? beneficiaries.domicile_kec_name.name : '-' }}</p>
         </div>
         <div class="preview-content">
-          <p>Kelurahan</p>
+          <p>{{ $t('label.beneficiaries-domicile-kelurahan') }}</p>
           <p class="content">{{ beneficiaries.domicile_kel_name ? beneficiaries.domicile_kel_name.name : '-' }}</p>
         </div>
         <div class="preview-content">
-          <p>RW</p>
+          <p>{{ $t('label.beneficiaries-rw') }}</p>
           <p class="content">{{ beneficiaries.domicile_rw ? beneficiaries.domicile_rw : '-' }}</p>
         </div>
         <div class="preview-content">
-          <p>RT</p>
+          <p>{{ $t('label.beneficiaries-rt') }}</p>
           <p class="content">{{ beneficiaries.domicile_rt ? beneficiaries.domicile_rt : '-' }}</p>
         </div>
         <div class="preview-content">
-          <p>Alamat</p>
+          <p>{{ $t('label.address') }}</p>
           <p class="content">{{ beneficiaries.domicile_address ? beneficiaries.domicile_address : '-' }}</p>
         </div>
       </el-col>
     </el-row>
     <el-row>
       <el-col class="side-col" :sm="24" :md="12" :lg="12">
-        <p class="preview-title">Dokumen Pendukung</p>
+        <p class="preview-title">{{ $t('label.beneficiaries-document') }}</p>
         <div class="preview-content">
-          <p>Foto KTP</p>
+          <p>{{ $t('label.beneficiaries-image-ktp') }}</p>
           <img :src="beneficiaries.image_ktp_url === null ? imageNone : beneficiaries.image_ktp_url" alt="" width="350px" height="220px">
         </div>
       </el-col>
       <el-col>
         <div class="form-button">
-          <el-button type="info" class="button-action" @click="back">Kembali</el-button>
-          <el-button v-if="isVerval === false && beneficiaries.status_verification !== 1" type="primary" class="button-action" @click="updateForm('edit/' + beneficiaries.id)">Update Data</el-button>
-          <el-button v-if="isVerval === false && beneficiaries.status_verification === 1" type="success" class="button-action" @click="updateForm('verification/' + beneficiaries.id)">Verifikasi Data</el-button>
-          <el-button v-if="beneficiaries.status_verification === 3" class="button-action" type="success" @click="validate(beneficiaries.id)">Setujui</el-button>
+          <el-button type="info" class="button-action" @click="back">{{ $t('crud.back') }}</el-button>
+          <el-button v-if="isVerval === false && beneficiaries.status_verification !== 1" type="primary" class="button-action" @click="updateForm('edit/' + beneficiaries.id)">{{ $t('crud.update-data') }}</el-button>
+          <el-button v-if="isVerval === false && beneficiaries.status_verification === 1" type="success" class="button-action" @click="updateForm('verification/' + beneficiaries.id)">{{ $t('crud.verified') }}</el-button>
+          <el-button v-if="beneficiaries.status_verification === 3" class="button-action" type="success" @click="validate(beneficiaries.id)">{{ $t('label.beneficiaries-validate-select') }}</el-button>
         </div>
       </el-col>
     </el-row>
