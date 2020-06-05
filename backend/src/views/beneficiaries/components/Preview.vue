@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container">
+  <div v-loading="loading" class="app-container">
     <el-row v-if="beneficiaries">
       <div v-if="isVerval === false">
         <p v-if="beneficiaries.status_verification === 3" class="warn-content">Status: {{ beneficiaries.status_verification_label }}</p>
@@ -131,26 +131,34 @@ export default {
     return {
       imageNone: require('@/assets/none.png'),
       id: null,
+      loading: false,
       beneficiaries: {
         image_ktp_url: null
       }
     }
   },
+
+  watch: {
+    idDetail(val1, val2) {
+      this.getDetail(this.idDetail)
+    }
+  },
+
   created() {
     this.id = this.$route.params && this.$route.params.id
     this.getDetail(this.idDetail)
   },
-  updated() {
-    // this.getDetail(this.idDetail)
-  },
+
   methods: {
     updateForm(value) {
       this.$router.push('/beneficiaries/' + value)
     },
     getDetail(id) {
+      this.loading = true
       fetchRecord(id).then(response => {
         this.beneficiaries = response.data
         this.beneficiaries.image_ktp_url = response.data.image_ktp_url
+        this.loading = false
       })
     },
     async update(value) {

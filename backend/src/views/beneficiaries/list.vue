@@ -247,7 +247,6 @@ export default {
     getDetail(value) {
       this.isDetail = true
       this.idDetail = value
-      console.log(this.idDetail)
     },
 
     closeDetail() {
