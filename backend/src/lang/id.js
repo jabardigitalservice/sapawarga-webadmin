@@ -133,6 +133,8 @@ export default {
     'beneficiaries-approved': 'Disetujui',
     'beneficiaries-rejected': 'Ditolak',
     'beneficiaries-pending': 'Belum Disetujui',
+    'benebeneficiaries-complaint': 'Aduan',
+    'benebeneficiaries-complaint-detail': 'Detail Aduan',
 
     'bansos-download': 'Unduh Dokumen',
     'bansos-upload': 'Unggah Dokumen',
@@ -988,7 +990,10 @@ export default {
     'beneficiaries-select-subdistrict-alert': 'Silakan Pilih Kecamatan',
 
     'beneficiaries-bnba-detail-popup-title': 'Detail Penerima Bantuan',
-    'beneficiaries-document': 'Dokumen Pendukung'
+    'beneficiaries-document': 'Dokumen Pendukung',
+    'beneficiaries-complaint-title': 'Daftar Aduan BNBA',
+    'beneficiaries-complaint-total': 'Total Aduan',
+    'beneficiaries-complaint-detail': 'Detail Aduan'
   },
   news: {
     'news-url': 'URL Berita',
