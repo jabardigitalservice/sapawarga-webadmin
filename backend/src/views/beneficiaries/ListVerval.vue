@@ -145,7 +145,6 @@ export default {
     },
     getList() {
       this.listLoading = true
-      // console.log(this.roles)
       if (checkPermission([RolesUser.STAFFKEL])) {
         if (this.listType === 'pending') {
           this.listQuery.status_verification = 3
@@ -193,6 +192,7 @@ export default {
         this.$message.success(this.$t('crud.approval-success'))
 
         this.getList()
+        this.getSummary()
       } catch (e) {
         console.log(e)
       }
