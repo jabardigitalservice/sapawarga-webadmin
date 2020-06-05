@@ -1,6 +1,8 @@
 <template>
   <div>
     <el-row :gutter="20" class="pb-2">
+
+      <!-- section box import data manual -->
       <el-col :span="8" style="position:relative">
         <div>
           <el-card shadow="never" class="section-box-upload" :body-style="{'border-radius': '8px','background-color': '#FF834E', 'color': '#fff' }">
@@ -27,6 +29,8 @@
           <img src="@/assets/bg-upload-manual.png" alt="bg-upload">
         </div>
       </el-col>
+
+      <!-- section table -->
       <el-col :span="16">
         <el-card shadow="never" class="section-box-table border-radius-8" :body-style="{'border-radius': '8px' }">
           <div class="title-table">
@@ -41,6 +45,7 @@
               </el-col>
             </el-row>
           </div>
+
           <el-table
             :data="tableData"
             stripe
@@ -49,36 +54,42 @@
             style="width: 100%"
           >
             <el-table-column
-              prop="no"
+              type="index"
+              align="center"
               label="NO"
-              width="100"
+              :index="getTableRowNumbering"
+              width="50"
             />
             <el-table-column
               prop="namaFile"
+              sortable="true"
               label="NAMA FILE"
             />
             <el-table-column
               prop="status"
+              sortable="true"
               label="STATUS"
               width="100"
             />
             <el-table-column
               prop="date"
+              sortable="true"
               label="WAKTU UPLOAD"
             />
             <el-table-column
               label="AKSI"
-              width="100"
+              width="80"
             >
               <template slot-scope="scope">
                 <el-button
                   size="mini"
                   type="primary"
-                  icon="el-icon-share"
+                  icon="el-icon-view"
                   @click="handleEdit(scope.$index, scope.row)"
                 />
               </template>
             </el-table-column>
+            <el-button slot="append" type="text" class="btn-load-more">Tampilkan lebih banyak <i class="el-icon-arrow-down" /></el-button>
           </el-table>
         </el-card>
       </el-col>
@@ -134,6 +145,7 @@
           :multiple="false"
           action=""
           :auto-upload="false"
+          :on-remove="handleUploadRemove"
           :on-change="handleChangeFile"
         >
           <div v-if="!file">
@@ -143,8 +155,8 @@
       </div>
 
       <span slot="footer" class="dialog-footer-upload">
-        <el-button @click="onCloseUploadDialog">{{ $t('crud.cancel') }}</el-button>
-        <el-button type="primary" @click="openUpload = false">{{ $t('importDataManual.upload') }}</el-button>
+        <el-button class="mr-1" @click="onCloseUploadDialog">{{ $t('crud.cancel') }}</el-button>
+        <el-button type="primary" @click="submitUpload">{{ $t('importDataManual.upload') }}</el-button>
       </span>
     </el-dialog>
   </div>
@@ -160,64 +172,22 @@ export default {
       loading: false,
       openGuide: false,
       openUpload: false,
-      tableData: [
-        {
-          no: 1,
-          namaFile: 'Tom',
-          status: 'gagal',
-          date: '2016-05-03',
-          action: 1
-        },
-        {
-          no: 1,
-          namaFile: 'asdasdas  adasdsadas asdadasdas assa dad asdas da',
-          status: 'gagal',
-          date: '2016-05-03',
-          action: 1
-        },
-        {
-          no: 1,
-          namaFile: 'Tom',
-          status: 'gagal',
-          date: '2016-05-03',
-          action: 1
-        },
-        {
-          no: 1,
-          namaFile: 'Tom',
-          status: 'gagal',
-          date: '2016-05-03',
-          action: 1
-        },
-        {
-          no: 1,
-          namaFile: 'Tom',
-          status: 'gagal',
-          date: '2016-05-03',
-          action: 1
-        },
-        {
-          no: 1,
-          namaFile: 'Tom',
-          status: 'gagal',
-          date: '2016-05-03',
-          action: 1
-        },
-        {
-          no: 1,
-          namaFile: 'Tom',
-          status: 'gagal',
-          date: '2016-05-03',
-          action: 1
-        }
-      ],
-      file: null
+      tableData: [],
+      file: null,
+      listQuery: {
+        name: null,
+        date: null,
+        page: 1,
+        limit: 10
+      }
     }
   },
   methods: {
+    getTableRowNumbering(index) {
+      return (index + 1)
+    },
     handleCloseUpload(done) {
       this.clearUpload()
-      this.file = null
       done()
     },
     downloadSample() {
@@ -227,10 +197,10 @@ export default {
       try {
         this.loading = true
 
-        const formData = new FormData()
-        formData.append('type', this.$route.query.type)
-        formData.append('kabkota_id', this.user.kabkota_id)
-        formData.append('file', this.file)
+        // const formData = new FormData()
+        // formData.append('type', this.$route.query.type)
+        // formData.append('kabkota_id', this.user.kabkota_id)
+        // formData.append('file', this.file)
         // await uploadBansos(formData)
         Swal.fire({
           title: this.$t('label.beneficiaries-upload-start'),
@@ -244,6 +214,7 @@ export default {
         })
 
         this.loading = false
+        this.openUpload = false
       } catch (err) {
         this.loading = false
         if (err.response.status === 422) {
@@ -257,8 +228,9 @@ export default {
       }
     },
     handleChangeFile(file) {
+      console.log(file.raw.type)
       const isXlsx = file.raw.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-      const isXls = file.raw.type === ''
+      const isXls = file.raw.type === 'application/vnd.ms-excel'
       if (!isXlsx && !isXls) {
         Swal.fire({
           text: this.$t('errors.field_only_accepts_xlsx_xls'),
@@ -272,12 +244,17 @@ export default {
         this.file = file.raw
       }
     },
+    handleUploadRemove() {
+      this.$refs.importManual.clearFiles()
+      this.file = null
+    },
     onCloseUploadDialog() {
       this.clearUpload()
       this.openUpload = false
     },
     clearUpload() {
       this.$refs.importManual.clearFiles()
+      this.file = null
       this.openUpload = false
     }
   }
@@ -399,5 +376,13 @@ export default {
 .section-action-upload {
   padding-top: 1.5rem;
   padding-bottom: 1rem;
+}
+
+.btn-load-more {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  display: flex;
+  margin: 0 auto;
+  font-weight: bold;
 }
 </style>

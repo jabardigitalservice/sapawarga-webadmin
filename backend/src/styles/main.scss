@@ -314,6 +314,10 @@ $dark_gray: #889aa4;
   box-shadow: none
 }
 
+.dialog-guide .el-dialog__footer {
+  text-align: center;
+}
+
 .dialog-guide .el-card__body {
   border-radius: 0px !important;
 }
