@@ -111,13 +111,15 @@
         <el-button type="info" class="button-action" @click="back">Kembali</el-button>
         <el-button v-if="isVerval === false && beneficiaries.status_verification !== 1" type="primary" class="button-action" @click="updateForm('edit/' + beneficiaries.id)">Update Data</el-button>
         <el-button v-if="isVerval === false && beneficiaries.status_verification === 1" type="success" class="button-action" @click="updateForm('verification/' + beneficiaries.id)">Verifikasi Data</el-button>
-        <el-button v-if="beneficiaries.status_verification === 3" class="button-action" type="success" @click="validate(beneficiaries.id)">Setujui</el-button>
+        <el-button v-if="rolesKel && beneficiaries.status_verification === 3 || rolesKec && beneficiaries.status_verification === 5 || rolesKabkota && beneficiaries.status_verification === 7" class="button-action" type="success" @click="validate(beneficiaries.id)">Setujui</el-button>
       </div>
     </el-card>
   </div>
 </template>
 <script>
 import { update, fetchRecord, validateStaffKelBulk } from '@/api/beneficiaries'
+import checkPermission from '@/utils/permission'
+import { RolesUser } from '@/utils/constantVariable'
 
 export default {
   props: {
@@ -130,6 +132,9 @@ export default {
     return {
       imageNone: require('@/assets/none.png'),
       id: null,
+      rolesKel: checkPermission([RolesUser.STAFFKEL]),
+      rolesKec: checkPermission([RolesUser.STAFFKEC]),
+      rolesKabkota: checkPermission([RolesUser.STAFFKABKOTA]),
       beneficiaries: {
         image_ktp_url: null
       }
@@ -140,6 +145,7 @@ export default {
     this.getDetail(this.id)
   },
   methods: {
+    checkPermission,
     updateForm(value) {
       this.$router.push('/beneficiaries/' + value)
     },
