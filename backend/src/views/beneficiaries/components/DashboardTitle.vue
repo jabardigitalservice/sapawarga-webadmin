@@ -96,7 +96,7 @@ export default {
     return {
       rolesKel: checkPermission([RolesUser.STAFFKEL]),
       rolesKec: checkPermission([RolesUser.STAFFKEC]),
-      rolesKabkota: checkPermission([RolesUser.STAFFKABKOTA]),
+      rolesKabkota: checkPermission([RolesUser.STAFFKABKOTA])
     }
   },
   computed: {
