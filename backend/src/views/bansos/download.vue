@@ -414,14 +414,14 @@ export default {
     async exportData(params) {
       try {
         Loading.service({ fullScreen: true })
-
         const response = await exportBansos(params)
-        const dateNow = Date.now()
-        const fileName = `${this.$t(
-          'label.beneficiaries-download-bnba-document'
-        )} - ${moment(dateNow).format('D MMMM YYYY H:mm:ss')}.xlsx`
-        await FileSaver.saveAs(response, fileName)
-
+        if (response.status === 200) {
+          Swal.fire({
+            text: this.$t('label.beneficiaries-download-start'),
+            icon: 'success',
+            button: 'OK'
+          })
+        }
         Loading.service({ fullScreen: true }).close()
       } catch (error) {
         Loading.service({ fullScreen: true }).close()

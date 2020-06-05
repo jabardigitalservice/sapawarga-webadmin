@@ -986,6 +986,7 @@ export default {
     'beneficiaries-download-new-proposal': 'Usulan Baru',
     'beneficiaries-download-bnba-document': 'Dokumen BNBA Penerima Bansos',
     'beneficiaries-select-subdistrict-alert': 'Silakan Pilih Kecamatan',
+    'beneficiaries-download-start': 'Sedang proses download data. Data akan dikirimkan melalui email. mohon untuk cek email.',
 
     'beneficiaries-bnba-detail-popup-title': 'Detail Penerima Bantuan',
     'beneficiaries-document': 'Dokumen Pendukung'
