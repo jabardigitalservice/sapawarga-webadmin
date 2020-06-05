@@ -6,7 +6,7 @@
         <p v-else-if="beneficiaries.status_verification === 2" class="warn-content-danger">Status: {{ beneficiaries.status_verification_label }}</p>
         <p v-else-if="beneficiaries.status_verification === 1" class="warn-content-warning">Status: {{ beneficiaries.status_verification_label }}</p>
       </div>
-      <el-col :sm="24" :md="8" :lg="8">
+      <el-col class="side-col" :sm="24" :md="8" :lg="8">
         <div>
           <p class="preview-title">Informasi Penerima Bantuan</p>
         </div>
@@ -59,14 +59,14 @@
         </div>
         <div class="preview-content">
           <p>Penghasilan Sebelum COVID-19</p>
-          <p class="content">{{ beneficiaries.income_before ? beneficiaries.income_before : '-' }}</p>
+          <p class="content">{{ beneficiaries.income_before ? formatCurrency(beneficiaries.income_before, 'Rp. ') : '-' }}</p>
         </div>
         <div class="preview-content">
           <p>Penghasilan Sesudah COVID-19</p>
-          <p class="content">{{ beneficiaries.income_after ? beneficiaries.income_after : '-' }}</p>
+          <p class="content">{{ beneficiaries.income_after ? formatCurrency(beneficiaries.income_after, 'Rp. ') : '-' }}</p>
         </div>
       </el-col>
-      <el-col :sm="24" :md="8" :lg="8">
+      <el-col class="side-col" :sm="24" :md="8" :lg="8">
         <p class="preview-title">Domisili Saat Ini</p>
         <div class="preview-content">
           <p>Kabupaten/Kota</p>
@@ -95,8 +95,8 @@
       </el-col>
     </el-row>
     <el-row>
-      <p class="preview-title">Dokumen Pendukung</p>
-      <el-col :sm="24" :md="12" :lg="12">
+      <el-col class="side-col" :sm="24" :md="12" :lg="12">
+        <p class="preview-title">Dokumen Pendukung</p>
         <div class="preview-content">
           <p>Foto KTP</p>
           <img :src="beneficiaries.image_ktp_url === null ? imageNone : beneficiaries.image_ktp_url" alt="" width="350px" height="220px">
@@ -153,6 +153,7 @@ export default {
     updateForm(value) {
       this.$router.push('/beneficiaries/' + value)
     },
+
     getDetail(id) {
       this.loading = true
       fetchRecord(id).then(response => {
@@ -161,6 +162,7 @@ export default {
         this.loading = false
       })
     },
+
     async update(value) {
       if (value === 'reject') {
         this.beneficiaries.status_verification = 2
@@ -172,6 +174,7 @@ export default {
       await update(id, this.beneficiaries)
       this.$router.push('/beneficiaries/index')
     },
+
     back() {
       if (this.isVerval) {
         this.$router.go(-1)
@@ -179,6 +182,7 @@ export default {
         this.$emit('closeDialog', false)
       }
     },
+
     async validate(id) {
       try {
         await this.$confirm(this.$t('crud.approval-confirm'), 'Warning', {
@@ -197,12 +201,33 @@ export default {
       } catch (e) {
         console.log(e)
       }
+    },
+
+    formatCurrency(value, prefix) {
+      if (value) {
+        const number_string = value.toString()
+        const split = number_string.split(',')
+        const modulo = split[0].length % 3
+        let rupiah = split[0].substr(0, modulo)
+        const thousand = split[0].substr(modulo).match(/\d{3}/gi)
+
+        if (thousand) {
+          const separator = modulo ? '.' : ''
+          rupiah += separator + thousand.join('.')
+        }
+
+        rupiah = split[1] !== undefined ? rupiah + ',' + split[1] : rupiah
+        return prefix === undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '')
+      } else {
+        return 'Rp. 0'
+      }
     }
   }
 }
 </script>
 <style lang="scss" scoped>
   .preview-title {
+    font-size: 17px;
     font-weight: bold;
     color: #67C23A;
   }
@@ -242,5 +267,9 @@ export default {
     margin-bottom: 25px;
     color: #e6a23c;
     font-weight: 600;
+  }
+
+  .side-col {
+    padding-left: 35px;
   }
 </style>
