@@ -993,7 +993,12 @@ export default {
     'beneficiaries-document': 'Dokumen Pendukung',
     'beneficiaries-complaint-title': 'Daftar Aduan BNBA',
     'beneficiaries-complaint-total': 'Total Aduan',
-    'beneficiaries-complaint-detail': 'Detail Aduan'
+    'beneficiaries-complaint-detail': 'Detail Aduan',
+    'beneficiaries-complaint-detail-title': 'Detail Pengaduan',
+    'beneficiaries-complaint-detail-sub-title': 'Detail Orang yang Diadukan',
+    'beneficiaries-complaint-Identity': 'Identitas',
+    'beneficiaries-complaint-reason': 'Alasan Dilaporkan',
+    'beneficiaries-complaint-report': 'Data Pelapor'
   },
   news: {
     'news-url': 'URL Berita',

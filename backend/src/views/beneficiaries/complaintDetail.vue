@@ -2,23 +2,23 @@
   <div class="app-container">
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span class="title-detail">Detail Pengaduan</span>
+        <span class="title-detail">{{ $t('label.beneficiaries-complaint-detail-title') }}</span>
       </div>
       <div>
-        <span class="title-detail">Detail Orang yang Diadukan</span>
+        <span class="title-detail">{{ $t('label.beneficiaries-complaint-detail-sub-title') }}</span>
 
         <div class="pb-1">
           <div>
-            <p class="header-section">Identitas</p>
+            <p class="header-section">{{ $t('label.beneficiaries-complaint-Identity') }}</p>
           </div>
 
           <el-row :gutter="24">
             <el-col :xs="24" :sm="8" :md="6" :lg="4" :xl="4">
-              <p class="title-input">NIK</p>
+              <p class="title-input">{{ $t('label.beneficiaries-nik') }}</p>
               <span class="content-data">3200860009249665</span>
             </el-col>
             <el-col :xs="24" :sm="8" :md="6" :lg="4" :xl="4">
-              <p class="title-input">Nama</p>
+              <p class="title-input">{{ $t('label.name') }}</p>
               <span class="content-data">Agus Dadang</span>
             </el-col>
           </el-row>
@@ -26,35 +26,35 @@
 
         <div class="pb-1">
           <div>
-            <p class="header-section">Alamat</p>
+            <p class="header-section">{{ $t('label.address') }}</p>
           </div>
 
           <el-row :gutter="24" class="pb-0-5">
             <el-col :xs="24" :sm="8" :md="6" :lg="4" :xl="4">
-              <p class="title-input">Provinsi</p>
+              <p class="title-input">{{ $t('label.widget-province') }}</p>
               <span class="content-data">Jawa Barat</span>
             </el-col>
             <el-col :xs="24" :sm="8" :md="6" :lg="4" :xl="4">
-              <p class="title-input">Kota/Kabupaten</p>
+              <p class="title-input">{{ $t('label.beneficiaries-domicile-kabkota') }}</p>
               <span class="content-data">Agus Dadang</span>
             </el-col>
             <el-col :xs="24" :sm="8" :md="6" :lg="4" :xl="4">
-              <p class="title-input">Kecamatan</p>
+              <p class="title-input">{{ $t('label.beneficiaries-domicile-kecamatan') }}</p>
               <span class="content-data">Agus Dadang</span>
             </el-col>
           </el-row>
 
           <el-row :gutter="24">
             <el-col :xs="24" :sm="8" :md="6" :lg="4" :xl="4">
-              <p class="title-input">Kelurahan</p>
+              <p class="title-input">{{ $t('label.beneficiaries-domicile-kelurahan') }}</p>
               <span class="content-data">Cisaranten Bina Harapan</span>
             </el-col>
             <el-col :xs="24" :sm="8" :md="6" :lg="4" :xl="4">
-              <p class="title-input">RW</p>
+              <p class="title-input">{{ $t('label.area-rw') }}</p>
               <span class="content-data">001</span>
             </el-col>
             <el-col :xs="24" :sm="8" :md="6" :lg="4" :xl="4">
-              <p class="title-input">RT</p>
+              <p class="title-input">{{ $t('label.area-rt') }}</p>
               <span class="content-data">012</span>
             </el-col>
           </el-row>
@@ -62,7 +62,7 @@
 
         <div class="pb-1">
           <div>
-            <p class="header-section">Alasan Dilaporkan</p>
+            <p class="header-section">{{ $t('label.beneficiaries-complaint-reason') }}</p>
           </div>
 
           <span class="content-data">Sudah menerima bantuan lain</span>
@@ -71,24 +71,24 @@
 
       <!-- data Pelapor -->
       <div class="pt-2">
-        <span class="title-detail">Data Pelapor</span>
+        <span class="title-detail">{{ $t('label.beneficiaries-complaint-report') }}</span>
 
         <div class="pb-1">
           <div>
-            <p class="header-section">Identitas</p>
+            <p class="header-section">{{ $t('label.beneficiaries-complaint-Identity') }}</p>
           </div>
 
           <el-row :gutter="24">
             <el-col :xs="24" :sm="8" :md="6" :lg="4" :xl="4">
-              <p class="title-input">NIK</p>
+              <p class="title-input">{{ $t('label.beneficiaries-nik') }}</p>
               <span class="content-data">3200860009249665</span>
             </el-col>
             <el-col :xs="24" :sm="8" :md="6" :lg="4" :xl="4">
-              <p class="title-input">Nama</p>
+              <p class="title-input">{{ $t('label.name') }}</p>
               <span class="content-data">Agus Dadang</span>
             </el-col>
             <el-col :xs="24" :sm="8" :md="6" :lg="4" :xl="4">
-              <p class="title-input">No. Telepon</p>
+              <p class="title-input">{{ $t('users.users-phone') }}</p>
               <span class="content-data">0876562362323</span>
             </el-col>
           </el-row>
@@ -101,30 +101,30 @@
 
           <el-row :gutter="24" class="pb-0-5">
             <el-col :xs="24" :sm="8" :md="6" :lg="4" :xl="4">
-              <p class="title-input">Provinsi</p>
+              <p class="title-input">{{ $t('label.widget-province') }}</p>
               <span class="content-data">Jawa Barat</span>
             </el-col>
             <el-col :xs="24" :sm="8" :md="6" :lg="4" :xl="4">
-              <p class="title-input">Kota/Kabupaten</p>
+              <p class="title-input">{{ $t('label.beneficiaries-domicile-kabkota') }}</p>
               <span class="content-data">Agus Dadang</span>
             </el-col>
             <el-col :xs="24" :sm="8" :md="6" :lg="4" :xl="4">
-              <p class="title-input">Kecamatan</p>
+              <p class="title-input">{{ $t('label.beneficiaries-domicile-kecamatan') }}</p>
               <span class="content-data">Agus Dadang</span>
             </el-col>
           </el-row>
 
           <el-row :gutter="24">
             <el-col :xs="24" :sm="8" :md="6" :lg="4" :xl="4">
-              <p class="title-input">Kelurahan</p>
+              <p class="title-input">{{ $t('label.beneficiaries-domicile-kelurahan') }}</p>
               <span class="content-data">Cisaranten Bina Harapan</span>
             </el-col>
             <el-col :xs="24" :sm="8" :md="6" :lg="4" :xl="4">
-              <p class="title-input">RW</p>
+              <p class="title-input">{{ $t('label.area-rw') }}</p>
               <span class="content-data">001</span>
             </el-col>
             <el-col :xs="24" :sm="8" :md="6" :lg="4" :xl="4">
-              <p class="title-input">RT</p>
+              <p class="title-input">{{ $t('label.area-rt') }}</p>
               <span class="content-data">012</span>
             </el-col>
           </el-row>
