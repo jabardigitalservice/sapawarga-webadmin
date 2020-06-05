@@ -86,18 +86,18 @@
           </el-table-column> -->
           <el-table-column prop="data.approved" align="right" sortable="custom" :label="$t('label.beneficiaries-verified-rw')" min-width="180px">
             <template slot-scope="{row}">
-              <span v-if="row.data.approved" style="float: left">
-                ({{ formatNumber(percentage(row.data.approved, getTotalBenefeciaries(row.data))) }}%)
+              <span v-if="getApproved(row.data)" style="float: left">
+                ({{ formatNumber(percentage(getApproved(row.data), getTotalBenefeciaries(row.data))) }}%)
               </span>
-              {{ formatThousands(row.data.approved) }}
+              {{ formatThousands(getApproved(row.data)) }}
             </template>
           </el-table-column>
           <el-table-column prop="data.pending" align="right" sortable="custom" :label="$t('label.beneficiaries-unverified')" min-width="180px">
             <template slot-scope="{row}">
-              <span v-if="row.data.pending" style="float: left">
-                ({{ formatNumber(percentage(row.data.pending, getTotalBenefeciaries(row.data))) }}%)
+              <span v-if="getPending(row.data)" style="float: left">
+                ({{ formatNumber(percentage(getPending(row.data), getTotalBenefeciaries(row.data))) }}%)
               </span>
-              {{ formatThousands(row.data.pending) }}
+              {{ formatThousands(getPending(row.data)) }}
             </template>
           </el-table-column>
           <el-table-column prop="data.reject" align="right" sortable="custom" :label="$t('label.beneficiaries-reject')" min-width="180px">
@@ -224,6 +224,7 @@ export default {
     sortedList() {
       const prop = this.sort_prop
       const order = this.sort_order
+      const getApproved = this.getApproved
       const getPending = this.getPending
       const getReject = this.getReject
       const getTotalBenefeciaries = this.getTotalBenefeciaries
@@ -251,10 +252,10 @@ export default {
         //     return order === 'ascending' ? 1 : -1
         //   }
         if (prop === 'data.approved') {
-          if (percentage(a.data.approved, getTotalBenefeciaries(a.data)) < percentage(b.data.approved, getTotalBenefeciaries(b.data))) {
+          if (percentage(getApproved(a.data), getTotalBenefeciaries(a.data)) < percentage(getApproved(b.data), getTotalBenefeciaries(b.data))) {
             return order === 'ascending' ? -1 : 1
           }
-          if (percentage(a.data.approved, getTotalBenefeciaries(a.data)) > percentage(b.data.approved, getTotalBenefeciaries(b.data))) {
+          if (percentage(getApproved(a.data), getTotalBenefeciaries(a.data)) > percentage(getApproved(b.data), getTotalBenefeciaries(b.data))) {
             return order === 'ascending' ? 1 : -1
           }
         } else if (prop === 'data_baru.total') {
@@ -402,18 +403,28 @@ export default {
       //     return this.percentage(data.approved_kel, this.getTotalBenefeciaries(data))
       //   }
       // }
-      this.exportFields[this.$t('label.beneficiaries-verified-rw')] = 'data.approved'
+      this.exportFields[this.$t('label.beneficiaries-verified-rw')] = {
+        field: 'data',
+        callback: (data) => {
+          return this.getApproved(data)
+        }
+      }
       this.exportFields['Persentase Terverifikasi %'] = {
         field: 'data',
         callback: (data) => {
-          return this.formatNumber(this.percentage(data.approved, this.getTotalBenefeciaries(data)))
+          return this.formatNumber(this.percentage(this.getApproved(data), this.getTotalBenefeciaries(data)))
         }
       }
-      this.exportFields[this.$t('label.beneficiaries-unverified')] = 'data.pending'
+      this.exportFields[this.$t('label.beneficiaries-unverified')] = {
+        field: 'data',
+        callback: (data) => {
+          return this.getPending(data)
+        }
+      }
       this.exportFields['Persentase Belum Terverifikasi %'] = {
         field: 'data',
         callback: (data) => {
-          return this.formatNumber(this.percentage(data.pending, this.getTotalBenefeciaries(data)))
+          return this.formatNumber(this.percentage(this.getPending(data), this.getTotalBenefeciaries(data)))
         }
       }
       this.exportFields[this.$t('label.beneficiaries-reject')] = {
@@ -498,13 +509,19 @@ export default {
     },
 
     getApproved(data) {
-      return data.approved_kabkota + data.approved_kec + data.approved_kel + data.approved
+      return data.approved +
+        data.rejected_kel +
+        data.approved_kel +
+        data.rejected_kec +
+        data.approved_kec +
+        data.rejected_kabkota +
+        data.approved_kabkota
     },
     getPending(data) {
       return data.pending
     },
     getReject(data) {
-      return data.rejected_kabkota + data.rejected_kec + data.rejected_kel + data.rejected
+      return data.rejected
     },
     getTotalBenefeciaries(data) {
       return this.getApproved(data) + this.getPending(data) + this.getReject(data)
