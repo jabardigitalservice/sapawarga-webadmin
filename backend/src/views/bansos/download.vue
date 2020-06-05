@@ -146,8 +146,6 @@ import { fetchDashboardList } from '@/api/beneficiaries'
 import { exportBansos } from '@/api/bansos'
 import { mapGetters } from 'vuex'
 import checkPermission from '@/utils/permission'
-import FileSaver from 'file-saver'
-import moment from 'moment'
 import Swal from 'sweetalert2'
 import { Loading } from 'element-ui'
 
