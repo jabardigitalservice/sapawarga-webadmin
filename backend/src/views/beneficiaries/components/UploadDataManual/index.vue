@@ -155,7 +155,7 @@
       </div>
 
       <span slot="footer" class="dialog-footer-upload">
-        <el-button @click="onCloseUploadDialog">{{ $t('crud.cancel') }}</el-button>
+        <el-button class="mr-1" @click="onCloseUploadDialog">{{ $t('crud.cancel') }}</el-button>
         <el-button type="primary" @click="submitUpload">{{ $t('importDataManual.upload') }}</el-button>
       </span>
     </el-dialog>
