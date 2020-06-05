@@ -12,7 +12,7 @@
             <el-row class="pb-2 box-upload-info">
               <el-col :span="10">
                 <div>
-                  <img src="@/assets/upload-data.svg" alt="icon-upload" style="width:100%;">
+                  <img src="@/assets/upload-data.svg" alt="icon-upload" class="img-upload">
                 </div>
               </el-col>
               <el-col :span="14">
@@ -446,5 +446,9 @@ export default {
   right: -10px;
   top: -140px;
   z-index: 1;
+}
+
+.img-upload {
+  width: 100%;
 }
 </style>
