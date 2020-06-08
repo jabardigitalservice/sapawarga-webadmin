@@ -1000,6 +1000,7 @@ export default {
     'beneficiaries-download-new-proposal': 'Usulan Baru',
     'beneficiaries-download-bnba-document': 'Dokumen BNBA Penerima Bansos',
     'beneficiaries-select-subdistrict-alert': 'Silakan Pilih Kecamatan',
+    'beneficiaries-download-start': 'Sedang dalam proses men-download data. Data akan dikirimkan ke email yang sudah didaftarkan. Mohon untuk mengecek email masuk Anda.',
 
     'beneficiaries-bnba-detail-popup-title': 'Detail Penerima Bantuan',
     'beneficiaries-document': 'Dokumen Pendukung'
@@ -1049,7 +1050,7 @@ export default {
     'btn-download': 'Unduh Template Excel',
     'tbl-title': 'Riwayat Import Data Manual',
     'title-upload': 'Upload Data Input Manual',
-    'desc-upload': 'Untuk upload data input manual harus memakai format Excel (.xls)',
+    'desc-upload': 'Untuk upload data input manual harus memakai format Excel (.xlsx)',
     'upload-btn': 'IMPORT SEKARANG',
     'btn-choice': 'Pilih File yang akan diupload',
     'upload': 'Upload'

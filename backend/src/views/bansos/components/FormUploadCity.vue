@@ -7,11 +7,11 @@
           ref="importBansos"
           class="form-upload"
           :limit="1"
-          :before-close="clearUpload"
           :multiple="false"
           action
           :auto-upload="false"
           :on-change="handleChangeFile"
+          :on-remove="handleRemoveFile"
         >
           <div v-if="!file">
             <el-button
@@ -101,6 +101,10 @@ export default {
       } else {
         this.file = file.raw
       }
+    },
+    handleRemoveFile() {
+      this.clearUpload()
+      this.file = null
     },
     clearUpload() {
       this.$refs.importBansos.clearFiles()

@@ -20,7 +20,6 @@ export function exportBansos(query) {
   return request({
     url: `/beneficiaries-bnba/download`,
     method: 'get',
-    params: query,
-    responseType: 'blob'
+    params: query
   })
 }
