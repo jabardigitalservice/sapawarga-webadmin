@@ -80,7 +80,6 @@ import StatisticsVerval from './components/StatisticsVerval'
 import DashboardTitle from './components/DashboardTitle'
 import Pagination from '@/components/Pagination'
 import Preview from './components/Preview'
-import StatisticsVerval from './components/StatisticsVerval'
 import checkPermission from '@/utils/permission'
 import { RolesUser } from '@/utils/constantVariable'
 import ListFilter from './_listfilter'
@@ -129,8 +128,8 @@ export default {
       listQuery: {
         nik: null,
         name: null,
-        sort_by: 'nik',
-        sort_order: 'ascending',
+        sort_by: null,
+        sort_order: null,
         page: 1,
         limit: 10,
         status_verification: null,
@@ -170,8 +169,12 @@ export default {
       this.isDetail = true
     },
 
-    closeDetail() {
-      this.isDetail = false
+    closeDetail(value) {
+      if (value === 'reload') {
+        this.$router.push('/beneficiaries/approved')
+      } else {
+        this.isDetail = false
+      }
     },
 
     getList() {

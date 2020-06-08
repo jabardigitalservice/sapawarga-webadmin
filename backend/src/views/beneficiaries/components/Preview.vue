@@ -107,10 +107,10 @@
           <el-button type="info" class="button-action" @click="back">{{ $t('crud.back') }}</el-button>
           <el-button v-if="isVerval === false && beneficiaries.status_verification !== 1" type="primary" class="button-action" @click="updateForm('edit/' + beneficiaries.id)">{{ $t('crud.update-data') }}</el-button>
           <el-button v-if="isVerval === false && beneficiaries.status_verification === 1" type="success" class="button-action" @click="updateForm('verification/' + beneficiaries.id)">{{ $t('crud.verified') }}</el-button>
+          <el-button v-if="rolesKel && beneficiaries.status_verification === 3 || rolesKec && beneficiaries.status_verification === 5 || rolesKabkota && beneficiaries.status_verification === 7" class="button-action" type="success" @click="validate(beneficiaries.id)">{{ $t('crud.approved') }}</el-button>
         </div>
       </el-col>
     </el-row>
-        <el-button v-if="rolesKel && beneficiaries.status_verification === 3 || rolesKec && beneficiaries.status_verification === 5 || rolesKabkota && beneficiaries.status_verification === 7" class="button-action" type="success" @click="validate(beneficiaries.id)">Setujui</el-button>
   </div>
 </template>
 <script>
@@ -182,11 +182,7 @@ export default {
     },
 
     back() {
-      if (this.isVerval) {
-        this.$router.go(-1)
-      } else {
-        this.$emit('closeDialog', false)
-      }
+      this.$emit('closeDialog', false)
     },
 
     async validate(id) {
@@ -203,7 +199,8 @@ export default {
 
         this.$message.success(this.$t('crud.approval-success'))
 
-        this.$router.push('/beneficiaries/pending')
+        // this.$router.push('/beneficiaries/approved')
+        this.$emit('closeDialog', 'reload')
       } catch (e) {
         console.log(e)
       }
