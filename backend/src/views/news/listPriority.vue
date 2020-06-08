@@ -4,9 +4,11 @@
       <el-col :lg="24">
         <el-row style="margin: 10px 0px">
           <el-col :span="4" style="margin-left: 10px">
-            <el-button type="primary" :disabled="isDisabled" @click="dialogTableVisible = true">
-              {{ $t('news.priority-news-add-header') }}
-            </el-button>
+            <el-button
+              type="primary"
+              :disabled="isDisabled"
+              @click="dialogTableVisible = true"
+            >{{ $t('news.priority-news-add-header') }}</el-button>
           </el-col>
         </el-row>
         <div class="editor-container">
@@ -14,21 +16,17 @@
         </div>
         <el-row :gutter="10">
           <el-col :xs="6" :sm="3" :md="2">
-            <el-button type="primary" @click="onSaveChange">
-              {{ $t('crud.save-update') }}
-            </el-button>
+            <el-button type="primary" @click="onSaveChange">{{ $t('crud.save-update') }}</el-button>
           </el-col>
           <el-col :span="2" style="margin-left: 85px">
             <router-link :to="{ path: '/news' }">
-              <el-button type="primary">
-                {{ $t('crud.back') }}
-              </el-button>
+              <el-button type="primary">{{ $t('crud.back') }}</el-button>
             </router-link>
           </el-col>
         </el-row>
       </el-col>
     </el-row>
-    <el-dialog v-el-drag-dialog :visible.sync="dialogTableVisible" title="List Berita">
+    <el-dialog v-el-drag-dialog :visible.sync="dialogTableVisible" width="80%" title="List Berita">
       <el-row>
         <ListFilter
           :list-query.sync="listQuery"
@@ -43,9 +41,11 @@
           <el-table-column property="kabkota.name" label="Target Berita" />
           <el-table-column align="center" label="Actions">
             <template slot-scope="scope">
-              <el-button type="white" size="mini" @click="addBeritaPriority(scope.row), dialogTableVisible = false">
-                Tambah
-              </el-button>
+              <el-button
+                type="white"
+                size="mini"
+                @click="addBeritaPriority(scope.row), dialogTableVisible = false"
+              >Tambah</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -104,9 +104,7 @@ export default {
         return this.terms
       }
     },
-    ...mapGetters([
-      'user'
-    ])
+    ...mapGetters(['user'])
   },
 
   mounted() {
@@ -121,7 +119,7 @@ export default {
       const listPriorityQuery = {
         kabkota_id: this.user.kabkota_id ? this.user.kabkota_id : null
       }
-      await fetchListPriority(listPriorityQuery).then(async(response) => {
+      await fetchListPriority(listPriorityQuery).then(async response => {
         await response.data.forEach((item, index) => {
           if (item !== null) {
             item['seq'] = index + 1
@@ -142,7 +140,7 @@ export default {
     },
 
     getTableRowNumbering(index) {
-      return ((this.listQuery.page - 1) * this.listQuery.limit) + (index + 1)
+      return (this.listQuery.page - 1) * this.listQuery.limit + (index + 1)
     },
 
     resetFilter() {
@@ -168,7 +166,7 @@ export default {
       const kabkota_id = this.user.kabkota_id ? this.user.kabkota_id : null
       if (this.listPriority !== undefined) {
         this.listPriority.forEach((item, index) => {
-          data.push({ 'news_id': item.id, 'seq': index + 1 })
+          data.push({ news_id: item.id, seq: index + 1 })
         })
       }
 
@@ -179,8 +177,3 @@ export default {
   }
 }
 </script>
-<style>
-.el-dialog{
-  width: 80% !important;
-}
-</style>
