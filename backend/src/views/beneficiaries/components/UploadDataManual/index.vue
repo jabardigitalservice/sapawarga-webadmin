@@ -266,10 +266,7 @@ export default {
       }
     },
     handleChangeFile(file) {
-      console.log(file.raw.type)
-      const isXlsx =
-        file.raw.type ===
-        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+      const isXlsx = file.raw.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
       const isXls = file.raw.type === 'application/vnd.ms-excel'
       if (!isXlsx && !isXls) {
         Swal.fire({

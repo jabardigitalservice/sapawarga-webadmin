@@ -106,7 +106,7 @@ const bansosMenuRouter = {
       hidden: true,
       meta: {
         title: 'beneficiaries-detail',
-        roles: ['admin', 'staffKel']
+        roles: ['admin', 'staffKel', 'staffKec', 'staffKabkota']
       }
     },
     {
@@ -126,7 +126,7 @@ const bansosMenuRouter = {
       hidden: false,
       meta: {
         title: 'beneficiaries-pending',
-        roles: ['admin', 'staffKel']
+        roles: ['admin', 'staffKel', 'staffKec', 'staffKabkota']
       }
     },
     {
@@ -136,7 +136,7 @@ const bansosMenuRouter = {
       hidden: false,
       meta: {
         title: 'beneficiaries-approved',
-        roles: ['admin', 'staffKel']
+        roles: ['admin', 'staffKel', 'staffKec', 'staffKabkota']
       }
     }
   ]
