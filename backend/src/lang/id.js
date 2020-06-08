@@ -164,6 +164,8 @@ export default {
     'not-valid': 'Tidak',
     'serach-nik': 'Input NIK',
     'next-reject': 'Ya (Tolak)',
+    'update-data': 'Edit Data',
+    'approved': 'Setujui',
 
     'save-create': 'Simpan',
     'save-update': 'Simpan Perubahan',
@@ -890,8 +892,9 @@ export default {
     'beneficiaries-nik-invalid-format': 'Format NIK tidak sesuai',
     'beneficiaries-rt': 'RT',
     'beneficiaries-rw': 'RW',
-    'beneficiaries-income-before': 'Penghasilan Sebelum Covid',
-    'beneficiaries-income-after': 'Penghasilan Sesudah Covid',
+    'beneficiaries-kk': 'Nomor KK',
+    'beneficiaries-income-before': 'Penghasilan Sebelum COVID-19',
+    'beneficiaries-income-after': 'Penghasilan Sesudah COVID-19',
     'beneficiaries-verivication': 'Verifikasi Bansos',
     'beneficiaries-edit': 'Edit Bansos',
     'beneficiaries-detail': 'Detail Bansos',
@@ -905,7 +908,7 @@ export default {
     'beneficiaries-verified': 'Terverifikasi',
     'beneficiaries-unverified': 'Belum Terverifikasi',
     'beneficiaries-detail-bansos': 'Detail Calon Penerima Bantuan',
-    'beneficiaries-domicile-kabkota': 'Kota/Kabupaten',
+    'beneficiaries-domicile-kabkota': 'Kabupaten/Kota',
     'beneficiaries-domicile-kecamatan': 'Kecamatan',
     'beneficiaries-domicile-kelurahan': 'Kelurahan',
     'beneficiaries-total-family': 'Jumlah Anggota Keluarga',
@@ -1003,7 +1006,11 @@ export default {
     'beneficiaries-download-start': 'Sedang dalam proses men-download data. Data akan dikirimkan ke email yang sudah didaftarkan. Mohon untuk mengecek email masuk Anda.',
 
     'beneficiaries-bnba-detail-popup-title': 'Detail Penerima Bantuan',
-    'beneficiaries-document': 'Dokumen Pendukung'
+    'beneficiaries-document': 'Dokumen Pendukung',
+    'beneficiaries-info-personal': 'Informasi Penerima Bantuan',
+    'beneficiaries-info-income': 'Informasi Penghasilan',
+    'beneficiaries-job-status': 'Status Kedudukan dalam Pekerjaan',
+    'beneficiaries-info-domicile': 'Domisili Saat Ini'
   },
   news: {
     'news-url': 'URL Berita',
