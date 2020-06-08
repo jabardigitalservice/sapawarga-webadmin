@@ -134,13 +134,13 @@
             />
           </svg>
         </div>
-        <el-row :gutter="20" class="pb-2 box-upload-info">
-          <el-col :span="7">
+        <el-row :gutter="10" class="pb-2 box-upload-info">
+          <el-col :span="10">
             <div>
-              <img src="@/assets/upload-data.svg" alt="icon-upload">
+              <img src="@/assets/upload-data.svg" alt="icon-upload" class="img-upload">
             </div>
           </el-col>
-          <el-col :span="17">
+          <el-col :span="14">
             <div
               class="text-24 text-bold pl-1 line-height-29"
               v-html="$t('importDataManual.title-guide')"
@@ -447,5 +447,18 @@ export default {
 
 .img-upload {
   width: 100%;
+}
+
+.el-dialog.el-dialog--center.dialog-guide {
+  background: transparent;
+  box-shadow: none;
+}
+
+.dialog-guide .el-dialog__footer {
+  text-align: center;
+}
+
+.dialog-guide .el-card__body {
+  border-radius: 0px !important;
 }
 </style>
