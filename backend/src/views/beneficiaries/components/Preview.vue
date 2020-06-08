@@ -98,7 +98,7 @@
       <el-col class="side-col" :sm="24" :md="12" :lg="12">
         <p class="preview-title">{{ $t('label.beneficiaries-document') }}</p>
         <div class="preview-content">
-          <p>{{ $t('label.beneficiaries-image-ktp') }}</p>
+          <p>{{ $t('label.beneficiaries-image') }}</p>
           <img :src="beneficiaries.image_ktp_url === null ? imageNone : beneficiaries.image_ktp_url" alt="" width="350px" height="220px">
         </div>
       </el-col>
@@ -196,7 +196,6 @@ export default {
 
         this.$message.success(this.$t('crud.approval-success'))
 
-        // this.$router.push('/beneficiaries/approved')
         this.$emit('closeDialog', 'reload')
       } catch (e) {
         console.log(e)
