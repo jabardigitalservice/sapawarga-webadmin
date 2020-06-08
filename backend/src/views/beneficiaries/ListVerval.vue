@@ -54,7 +54,6 @@
           <el-button v-if="multipleSelection.length === 0" type="success" style="float: right; margin-right: 30px" @click="validateAll()">{{ $t('label.beneficiaries-validate-all') }}</el-button>
           <el-button v-if="multipleSelection.length > 0" type="success" style="float: right; margin-right: 50px" @click="multipleValidate()">{{ $t('label.beneficiaries-validate-select') }}</el-button>
         </div>
-
         <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
       </el-col>
     </el-row>
@@ -81,6 +80,9 @@ import StatisticsVerval from './components/StatisticsVerval'
 import DashboardTitle from './components/DashboardTitle'
 import Pagination from '@/components/Pagination'
 import Preview from './components/Preview'
+import StatisticsVerval from './components/StatisticsVerval'
+import checkPermission from '@/utils/permission'
+import { RolesUser } from '@/utils/constantVariable'
 import ListFilter from './_listfilter'
 import { mapGetters } from 'vuex'
 
@@ -141,7 +143,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['user'])
+    ...mapGetters(['user', 'roles'])
   },
   created() {
     this.getList()
@@ -174,12 +176,30 @@ export default {
 
     getList() {
       this.listLoading = true
-      if (this.listType === 'pending') {
-        this.listQuery.status_verification = 3
-      } else if (this.listType === 'approved') {
-        this.listQuery.status_verification = 5
-      } else if (this.listType === 'rejected') {
-        this.listQuery.status_verification = 2 || 4
+      if (checkPermission([RolesUser.STAFFKEL])) {
+        if (this.listType === 'pending') {
+          this.listQuery.status_verification = 3
+        } else if (this.listType === 'approved') {
+          this.listQuery.status_verification = 5
+        } else if (this.listType === 'rejected') {
+          this.listQuery.status_verification = 2 || 4
+        }
+      } else if (checkPermission([RolesUser.STAFFKEC])) {
+        if (this.listType === 'pending') {
+          this.listQuery.status_verification = 5
+        } else if (this.listType === 'approved') {
+          this.listQuery.status_verification = 7
+        } else if (this.listType === 'rejected') {
+          this.listQuery.status_verification = 2 || 4
+        }
+      } else if (checkPermission([RolesUser.STAFFKABKOTA])) {
+        if (this.listType === 'pending') {
+          this.listQuery.status_verification = 7
+        } else if (this.listType === 'approved') {
+          this.listQuery.status_verification = 9
+        } else if (this.listType === 'rejected') {
+          this.listQuery.status_verification = 2 || 4
+        }
       }
       fetchListVerval(this.listQuery).then(response => {
         this.list = response.data.items
@@ -203,6 +223,7 @@ export default {
         this.$message.success(this.$t('crud.approval-success'))
 
         this.getList()
+        this.getSummary()
       } catch (e) {
         console.log(e)
       }

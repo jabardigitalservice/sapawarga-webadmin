@@ -165,6 +165,7 @@ export default {
     'serach-nik': 'Input NIK',
     'next-reject': 'Ya (Tolak)',
     'update-data': 'Edit Data',
+    'approved': 'Setujui',
 
     'save-create': 'Simpan',
     'save-update': 'Simpan Perubahan',
@@ -453,7 +454,7 @@ export default {
     'description-not-valid-characters': 'Deskripsi mengandung karakter yang tidak diizinkan.',
 
     'max-file-upload': 'Jumlah file tidak boleh lebih dari {0}.',
-    'field_only_accepts_xlsx_xls': 'Hanya berkas dengan ekstensi ini yang diperbolehkan: xlsx dan xls.'
+    'field_only_accepts_xlsx_xls': 'Hanya file dengan ekstensi ini yang diperbolehkan: xlsx dan xls.'
 
   },
   navbar: {
@@ -942,8 +943,10 @@ export default {
     'beneficiaries-nondtks-option': 'Pilihan Non DTKS',
     'beneficiaries-upload-start': 'Proses uploading dimulai',
     'beneficiaries-upload-success': 'Data anda sekarang sedang diupload. Proses ini mungkin menghabiskan beberapa waktu hingga semua data berhasil tersimpan. Apabila terjadi gagal upload, kami akan mengirim pesan melalui Sapawarga atau email Anda. Riwayat proses upload Anda juga bisa diakses dimenu Daftar Riwayat Upload.',
-    'beneficiaries-add-file': 'Tambah File',
+    'beneficiaries-choose-file': 'Pilih File yang akan diupload',
+    'beneficiaries-upload-description': 'Hanya file dengan ekstensi ini yang diperbolehkan: xlsx dan xls.',
     'beneficiaries-upload-file': 'Upload',
+    'beneficiaries-import-start': 'Impor Dimulai',
     'beneficiaries-subdistrict-upload': 'Upload Data Alokasi Bantuan Per Kecamatan',
     'beneficiaries-city-upload': 'Upload Data Alokasi Bantuan Kota/Kabupaten',
     'beneficiaries-pkh': 'PKH',
@@ -968,12 +971,27 @@ export default {
     'beneficiaries-notes-display-verification': 'Halaman ini menampilkan Daftar calon penerima bantuan sosial di',
     'beneficiaries-note-verification-content': 'Di Halaman ini, Anda dapat melihat daftar warga calon penerima bantuan dan melakukan verifikasi calon penerima bantuan yang ada di Kelurahan Anda.',
     'beneficiaries-dashboard-alert': 'Proses Verifikasi dan Validasi Data Penerima Bansos PERIODE 2 belum dibuka!',
+    'beneficiaries-upload-allocation-data': 'Upload Data Alokasi Bantuan',
+
     'beneficiaries-note-approved-title': 'Data penerima bantuan sosial yang sudah disetujui Desa/Kelurahan',
     'beneficiaries-notes-display-approved': 'Halaman ini menampilkan data penerima bantuan sosial yang sudah disetujui oleh Desa/Kelurahan',
     'beneficiaries-note-approved-content': 'Data di bawah ini telah dipisahkan berdasarkan kategori data yang sudah disetujui Desa/Kelurahan. Data yang sudah disetujui Desa/Kelurahan merupakan data yang sudah diverifikasi RW dan mendapatkan persetujuan Desa/Kelurahan dan memenuhi kelayakan dalam menerima bantuan sosial.',
+    'beneficiaries-note-approved-title-kec': 'Data penerima bantuan sosial yang sudah disetujui Kecamatan',
+    'beneficiaries-notes-display-approved-kec': 'Halaman ini menampilkan data penerima bantuan sosial yang sudah disetujui oleh Kecamatan',
+    'beneficiaries-note-approved-content-kec': 'Data di bawah ini telah dipisahkan berdasarkan kategori data yang sudah disetujui Kecamatan. Data yang sudah disetujui Kecamatan merupakan data yang sudah diverifikasi RW dan mendapatkan persetujuan Desa/Kelurahan dan Kecamatan serta memenuhi kelayakan dalam menerima bantuan sosial.',
+    'beneficiaries-note-approved-title-kabkota': 'Data penerima bantuan sosial yang sudah disetujui Kabupaten/Kota',
+    'beneficiaries-notes-display-approved-kabkota': 'Halaman ini menampilkan data penerima bantuan sosial yang sudah disetujui oleh Kabupaten/Kota',
+    'beneficiaries-note-approved-content-kabkota': 'Data di bawah ini telah dipisahkan berdasarkan kategori data yang sudah disetujui Kabupaten/Kota. Data yang sudah disetujui Kabupaten/Kota merupakan data yang sudah diverifikasi RW dan mendapatkan persetujuan Desa/Kelurahan, Kecamatan dan Kabupaten/Kota serta memenuhi kelayakan dalam menerima bantuan sosial.',
+
     'beneficiaries-note-pending-title': 'Data penerima bantuan sosial yang belum disetujui Desa/Kelurahan',
     'beneficiaries-notes-display-pending': 'Halaman ini menampilkan data penerima bantuan sosial yang belum disetujui oleh Desa/Kelurahan',
     'beneficiaries-note-pending-content': 'Data di bawah ini telah dipisahkan berdasarkan kategori data yang belum disetujui Desa/Kelurahan. Data yang belum disetujui Desa/Kelurahan merupakan data yang sudah diverifikasi RW dan belum mendapatkan persetujuan Desa/Kelurahan untuk memenuhi kelayakan dalam menerima bantuan sosial.',
+    'beneficiaries-note-pending-title-kec': 'Data penerima bantuan sosial yang belum disetujui Kecamatan',
+    'beneficiaries-notes-display-pending-kec': 'Halaman ini menampilkan data penerima bantuan sosial yang belum disetujui oleh Kecamatan',
+    'beneficiaries-note-pending-content-kec': 'Data di bawah ini telah dipisahkan berdasarkan kategori data yang belum disetujui Kecamatan. Data yang belum disetujui Kecamatan merupakan data yang sudah diverifikasi RW dan telah mendapatkan persetujuan oleh Desa/Kelurahan tapi belum mendapatkan persetujuan Kecamatan untuk memenuhi kelayakan dalam menerima bantuan sosial.',
+    'beneficiaries-note-pending-title-kabkota': 'Data penerima bantuan sosial yang belum disetujui Kabupaten/Kota',
+    'beneficiaries-notes-display-pending-kabkota': 'Halaman ini menampilkan data penerima bantuan sosial yang belum disetujui oleh Kabupaten/Kota',
+    'beneficiaries-note-pending-content-kabkota': 'Data di bawah ini telah dipisahkan berdasarkan kategori data yang belum disetujui Kabupaten/Kota. Data yang belum disetujui Kabupaten/Kota merupakan data yang sudah diverifikasi RW dan telah mendapatkan persetujuan oleh Desa/Kelurahan dan Kecamatan tapi belum mendapatkan persetujuan Kabupaten/Kota untuk memenuhi kelayakan dalam menerima bantuan sosial.',
 
     'beneficiaries-download-search': 'Cari',
     'beneficiaries-download-list': 'Data',
@@ -985,6 +1003,7 @@ export default {
     'beneficiaries-download-new-proposal': 'Usulan Baru',
     'beneficiaries-download-bnba-document': 'Dokumen BNBA Penerima Bansos',
     'beneficiaries-select-subdistrict-alert': 'Silakan Pilih Kecamatan',
+    'beneficiaries-download-start': 'Sedang dalam proses men-download data. Data akan dikirimkan ke email yang sudah didaftarkan. Mohon untuk mengecek email masuk Anda.',
 
     'beneficiaries-bnba-detail-popup-title': 'Detail Penerima Bantuan',
     'beneficiaries-document': 'Dokumen Pendukung',
@@ -1038,7 +1057,7 @@ export default {
     'btn-download': 'Unduh Template Excel',
     'tbl-title': 'Riwayat Import Data Manual',
     'title-upload': 'Upload Data Input Manual',
-    'desc-upload': 'Untuk upload data input manual harus memakai format Excel (.xls)',
+    'desc-upload': 'Untuk upload data input manual harus memakai format Excel (.xlsx)',
     'upload-btn': 'IMPORT SEKARANG',
     'btn-choice': 'Pilih File yang akan diupload',
     'upload': 'Upload'

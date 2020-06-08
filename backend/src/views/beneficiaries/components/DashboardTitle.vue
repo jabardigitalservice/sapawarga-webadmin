@@ -22,22 +22,56 @@
       </div>
     </div>
     <div v-if="listType === 'approved'">
-      <h2 class="dashboard-title">{{ $t('label.beneficiaries-note-approved-title') }}</h2>
-      <div class="warn-content-warning">
-        <p class="title"><span><i class="el-icon-warning" style="color: rgba(226, 194, 124, 0.938)" /></span><span> {{ $t('label.beneficiaries-notes-display-approved') }} </span></p>
-        <p class="content"> {{ $t('label.beneficiaries-note-approved-content') }} </p>
+      <div v-if="rolesKel">
+        <h2 class="dashboard-title">{{ $t('label.beneficiaries-note-approved-title') }}</h2>
+        <div class="warn-content-warning">
+          <p class="title"><span><i class="el-icon-warning" style="color: rgba(226, 194, 124, 0.938)" /></span><span> {{ $t('label.beneficiaries-notes-display-approved') }} </span></p>
+          <p class="content"> {{ $t('label.beneficiaries-note-approved-content') }} </p>
+        </div>
+      </div>
+      <div v-if="rolesKec">
+        <h2 class="dashboard-title">{{ $t('label.beneficiaries-note-approved-title-kec') }}</h2>
+        <div class="warn-content-warning">
+          <p class="title"><span><i class="el-icon-warning" style="color: rgba(226, 194, 124, 0.938)" /></span><span> {{ $t('label.beneficiaries-notes-display-approved-kec') }} </span></p>
+          <p class="content"> {{ $t('label.beneficiaries-note-approved-content-kec') }} </p>
+        </div>
+      </div>
+      <div v-if="rolesKabkota">
+        <h2 class="dashboard-title">{{ $t('label.beneficiaries-note-approved-title-kabkota') }}</h2>
+        <div class="warn-content-warning">
+          <p class="title"><span><i class="el-icon-warning" style="color: rgba(226, 194, 124, 0.938)" /></span><span> {{ $t('label.beneficiaries-notes-display-approved-kabkota') }} </span></p>
+          <p class="content"> {{ $t('label.beneficiaries-note-approved-content-kabkota') }} </p>
+        </div>
       </div>
     </div>
     <div v-if="listType === 'pending'">
-      <h2 class="dashboard-title">{{ $t('label.beneficiaries-note-pending-title') }}</h2>
-      <div class="warn-content-warning">
-        <p class="title"><span><i class="el-icon-warning" style="color: rgba(226, 194, 124, 0.938)" /></span><span> {{ $t('label.beneficiaries-notes-display-pending') }} </span></p>
-        <p class="content"> {{ $t('label.beneficiaries-note-pending-content') }} </p>
+      <div v-if="rolesKel">
+        <h2 class="dashboard-title">{{ $t('label.beneficiaries-note-pending-title') }}</h2>
+        <div class="warn-content-warning">
+          <p class="title"><span><i class="el-icon-warning" style="color: rgba(226, 194, 124, 0.938)" /></span><span> {{ $t('label.beneficiaries-notes-display-pending') }} </span></p>
+          <p class="content"> {{ $t('label.beneficiaries-note-pending-content') }} </p>
+        </div>
+      </div>
+      <div v-if="rolesKec">
+        <h2 class="dashboard-title">{{ $t('label.beneficiaries-note-pending-title-kec') }}</h2>
+        <div class="warn-content-warning">
+          <p class="title"><span><i class="el-icon-warning" style="color: rgba(226, 194, 124, 0.938)" /></span><span> {{ $t('label.beneficiaries-notes-display-pending-kec') }} </span></p>
+          <p class="content"> {{ $t('label.beneficiaries-note-pending-content-kec') }} </p>
+        </div>
+      </div>
+      <div v-if="rolesKabkota">
+        <h2 class="dashboard-title">{{ $t('label.beneficiaries-note-pending-title-kabkota') }}</h2>
+        <div class="warn-content-warning">
+          <p class="title"><span><i class="el-icon-warning" style="color: rgba(226, 194, 124, 0.938)" /></span><span> {{ $t('label.beneficiaries-notes-display-pending-kabkota') }} </span></p>
+          <p class="content"> {{ $t('label.beneficiaries-note-pending-content-kabkota') }} </p>
+        </div>
       </div>
     </div>
   </div>
 </template>
 <script>
+import { RolesUser } from '@/utils/constantVariable'
+import checkPermission from '@/utils/permission'
 import { mapGetters } from 'vuex'
 export default {
   props: {
@@ -56,6 +90,13 @@ export default {
     listType: {
       type: String,
       default: null
+    }
+  },
+  data() {
+    return {
+      rolesKel: checkPermission([RolesUser.STAFFKEL]),
+      rolesKec: checkPermission([RolesUser.STAFFKEC]),
+      rolesKabkota: checkPermission([RolesUser.STAFFKABKOTA])
     }
   },
   computed: {
@@ -83,6 +124,7 @@ export default {
 
     .content {
       padding-left: 1.5rem;
+      line-height: 1.4;
     }
 
     .link {
