@@ -1,4 +1,7 @@
+import beneficiaries from './modules/beneficiaries'
+
 export default {
+  beneficiaries,
   route: {
     'dashboard': 'Dashboard',
     'profile': 'Profil',
