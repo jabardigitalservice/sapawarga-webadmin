@@ -1003,7 +1003,8 @@ export default {
     'beneficiaries-download-new-proposal': 'Usulan Baru',
     'beneficiaries-download-bnba-document': 'Dokumen BNBA Penerima Bansos',
     'beneficiaries-select-subdistrict-alert': 'Silakan Pilih Kecamatan',
-    'beneficiaries-download-start': 'Sedang dalam proses men-download data. Data akan dikirimkan ke email yang sudah didaftarkan. Mohon untuk mengecek email masuk Anda.',
+    'beneficiaries-download-start-title-alert': 'Terima Kasih Sudah Mengunduh!',
+    'beneficiaries-download-start-description-alert': 'Data sedang dalam proses export dan akan dikirim ke email yang Anda daftarkan. Mohon cek kotak masuk email Anda dalam 1x24 jam. Apabila Anda belum menerima email setelah rentang waktu tersebut, mohon hubungi hotline Sapawarga di 081212124203.',
 
     'beneficiaries-bnba-detail-popup-title': 'Detail Penerima Bantuan',
     'beneficiaries-document': 'Dokumen Pendukung',
