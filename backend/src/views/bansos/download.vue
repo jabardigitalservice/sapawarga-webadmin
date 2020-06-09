@@ -415,7 +415,10 @@ export default {
         const response = await exportBansos(params)
         if (response.status === 200) {
           Swal.fire({
-            text: this.$t('label.beneficiaries-download-start'),
+            title: this.$t('label.beneficiaries-download-start-title-alert'),
+            text: this.$t(
+              'label.beneficiaries-download-start-description-alert'
+            ),
             icon: 'success',
             button: 'OK'
           })

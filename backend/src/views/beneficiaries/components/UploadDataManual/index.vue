@@ -111,6 +111,7 @@
       width="35%"
       custom-class="dialog-guide"
       center
+      class="show-dialog-guide"
     >
       <el-card
         shadow="never"
@@ -266,7 +267,9 @@ export default {
       }
     },
     handleChangeFile(file) {
-      const isXlsx = file.raw.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+      const isXlsx =
+        file.raw.type ===
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
       const isXls = file.raw.type === 'application/vnd.ms-excel'
       if (!isXlsx && !isXls) {
         Swal.fire({
@@ -460,5 +463,9 @@ export default {
 
 .dialog-guide .el-card__body {
   border-radius: 0px !important;
+}
+
+.show-dialog-guide {
+  margin-top: -100px !important;
 }
 </style>
