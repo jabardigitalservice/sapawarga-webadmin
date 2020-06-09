@@ -69,37 +69,56 @@
           </div>
 
           <el-table
-            :data="tableData"
+            v-loading="loadingVervalList"
+            :data="sortedList"
             stripe
             :header-row-style="{'color': '#000', 'font-weight': 'bold' }"
             height="260"
             style="width: 100%"
+            @sort-change="changeSort"
           >
+            <el-table-column type="index" align="center" :index="getTableRowNumbering" width="50" />
             <el-table-column
-              type="index"
-              align="center"
-              label="NO"
-              :index="getTableRowNumbering"
-              width="50"
+              prop="original_filename"
+              sortable="custom"
+              :label="$t('importDataManual.history-import-file-name')"
             />
-            <el-table-column prop="namaFile" sortable="true" label="NAMA FILE" />
-            <el-table-column prop="status" sortable="true" label="STATUS" width="100" />
-            <el-table-column prop="date" sortable="true" label="WAKTU UPLOAD" />
-            <el-table-column label="AKSI" width="80">
-              <template slot-scope="scope">
-                <el-button
-                  size="mini"
-                  type="primary"
-                  icon="el-icon-view"
-                  @click="handleEdit(scope.$index, scope.row)"
-                />
+            <el-table-column
+              prop="status_detail"
+              sortable="custom"
+              :label="$t('importDataManual.history-import-status')"
+              width="100"
+            />
+            <el-table-column
+              prop="created_at"
+              sortable="custom"
+              :label="$t('importDataManual.history-import-created-at')"
+            >
+              <template slot-scope="{row}">{{ row.created_at | moment('D MMMM YYYY H:mm') }}</template>
+            </el-table-column>
+            <el-table-column :label="$t('importDataManual.history-import-action')" width="80">
+              <template slot-scope="{row}">
+                <a v-if="row.status === 20 || row.status === 21" :href="row.file_url">
+                  <el-tooltip
+                    :content="$t('label.beneficiaries-download-invalid-file')"
+                    placement="top"
+                  >
+                    <el-button type="warning" size="mini">
+                      <i class="el-icon-download el-icon-right" />
+                    </el-button>
+                  </el-tooltip>
+                </a>
               </template>
             </el-table-column>
-            <el-button slot="append" type="text" class="btn-load-more">
-              Tampilkan lebih banyak
-              <i class="el-icon-arrow-down" />
-            </el-button>
           </el-table>
+
+          <pagination
+            v-show="total>0"
+            :total="total"
+            :page.sync="listQuery.page"
+            :limit.sync="listQuery.limit"
+            @pagination="getVervalUploadList"
+          />
         </el-card>
       </el-col>
     </el-row>
@@ -156,14 +175,14 @@
             size="medium"
             class="bg-sw-green text-white text-16 border-radius-8 border-green text-bold p-2"
             @click="openUpload = true"
-          >{{ $t('importDataManual.upload-btn') }}</el-button>
+          >{{ $t('importDataManual.import-btn') }}</el-button>
         </el-row>
       </el-card>
     </el-dialog>
 
     <!-- upload file -->
     <el-dialog
-      :title="$t('importDataManual.title-upload')"
+      :title="$t('importDataManual.title-import')"
       :visible.sync="openUpload"
       width="30%"
       :show-close="false"
@@ -171,7 +190,7 @@
       custom-class="dialog-guide"
     >
       <div>
-        <div style="color:#828282">{{ $t('importDataManual.desc-upload') }}</div>
+        <div style="color:#828282">{{ $t('importDataManual.desc-import') }}</div>
         <el-upload
           ref="importManual"
           style="text-align:center; padding-top: 1rem"
@@ -189,14 +208,14 @@
               icon="el-icon-paperclip"
               plain
               style="font-weight: bold; padding: 1rem; padding-left: 2rem; padding-right: 2rem"
-            >{{ $t('importDataManual.btn-choice') }}</el-button>
+            >{{ $t('importDataManual.btn-import-choice') }}</el-button>
           </div>
         </el-upload>
       </div>
 
       <span slot="footer" class="dialog-footer-upload">
         <el-button class="mr-1" @click="onCloseUploadDialog">{{ $t('crud.cancel') }}</el-button>
-        <el-button type="primary" @click="submitUpload">{{ $t('importDataManual.upload') }}</el-button>
+        <el-button type="primary" @click="submitUpload">{{ $t('importDataManual.import') }}</el-button>
       </span>
     </el-dialog>
   </div>
@@ -204,12 +223,17 @@
 
 <script>
 import Swal from 'sweetalert2'
+import { fetchVervalUploadList } from '@/api/beneficiaries'
 import { UrlDownloadImportData } from '@/utils/constantVariable'
+import Pagination from '@/components/Pagination'
+
 export default {
+  components: { Pagination },
   data() {
     return {
       loading: false,
       openGuide: false,
+      total: 0,
       openUpload: false,
       tableData: [],
       file: null,
@@ -218,12 +242,80 @@ export default {
         date: null,
         page: 1,
         limit: 10
+      },
+      vervalUploadList: null,
+      loadingVervalList: true,
+      sort_prop: 'data.approved',
+      sort_order: 'descending'
+    }
+  },
+  computed: {
+    sortedList() {
+      const prop = this.sort_prop
+      const order = this.sort_order
+      function compare(a, b) {
+        if (a[prop] < b[prop]) {
+          return order === 'ascending' ? -1 : 1
+        }
+        if (a[prop] > b[prop]) {
+          return order === 'ascending' ? 1 : -1
+        }
+        return 0
+      }
+      if (this.vervalUploadList) {
+        return this.vervalUploadList.map(x => x).sort(compare)
+      } else {
+        return []
       }
     }
   },
+  created() {
+    this.getVervalUploadList()
+  },
   methods: {
+    async getVervalUploadList() {
+      this.loadingVervalList = true
+      const response = await fetchVervalUploadList(this.listQuery)
+      const data = []
+      response.data.items.map(value => {
+        const fileUrl =
+          value.status === 20
+            ? value.invalid_file_path_url
+            : value.status === 21
+              ? value.file_path_url
+              : ''
+
+        const statusDetail = this.getStatus(value.status)
+
+        data.push({
+          original_filename: value.original_filename,
+          status_detail: statusDetail,
+          status: value.status,
+          created_at: value.created_at,
+          file_url: fileUrl
+        })
+      })
+
+      this.vervalUploadList = data
+      this.loadingVervalList = false
+      this.total = response.data._meta.totalCount
+    },
+    getStatus(statusId) {
+      switch (statusId) {
+        case 0:
+          return this.$t('importDataManual.history-import-status-start')
+        case 10:
+          return this.$t('importDataManual.history-import-status-success')
+        case 20:
+          return this.$t(
+            'importDataManual.history-import-status-upload-failed'
+          )
+        case 21:
+          return this.$t('importDataManual.history-import-status-invalid-file')
+      }
+    },
     getTableRowNumbering(index) {
-      return index + 1
+      return (this.listQuery.page - 1) * this.listQuery.limit + (index + 1)
     },
     handleCloseUpload(done) {
       this.clearUpload()
@@ -235,21 +327,11 @@ export default {
     async submitUpload() {
       try {
         this.loading = true
-
-        // const formData = new FormData()
-        // formData.append('type', this.$route.query.type)
-        // formData.append('kabkota_id', this.user.kabkota_id)
-        // formData.append('file', this.file)
-        // await uploadBansos(formData)
         Swal.fire({
           title: this.$t('label.beneficiaries-upload-start'),
           text: this.$t('label.beneficiaries-upload-success'),
           icon: 'success',
           button: 'OK'
-        }).then(action => {
-          if (action) {
-            // this.$router.push('/bansos/upload')
-          }
         })
 
         this.loading = false
@@ -296,7 +378,14 @@ export default {
       this.$refs.importManual.clearFiles()
       this.file = null
       this.openUpload = false
+    },
+    changeSort(e) {
+      this.sort_prop = e.prop
+      this.sort_order = e.order
     }
+  },
+  getCreatedAt(data) {
+    return data.created_at
   }
 }
 </script>

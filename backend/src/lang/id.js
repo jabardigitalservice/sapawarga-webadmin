@@ -1050,7 +1050,7 @@ export default {
   },
   importDataManual: {
     'title': 'Import manual data calon penerima Bantuan <br> Sosial',
-    'title-guide': 'Panduan Input Data Calon Penerima Bantuan <br> Sosial',
+    'title-guide': 'Panduan Import Data Calon Penerima Bantuan <br> Sosial',
     'desc-guide': '<ol> <li><b>Download<b /> template file Excel.xlsx untuk melihat format Input Data</b></li> <li>Mengisi kolom dengan data yang benar, kolom berwarna hijau wajib untuk diisi.</li> <li>Save dengan format .xlsx</li> <li>Pilih file Excel.xlsx yang akan diupload</li> <li>klik tombol Upload</li> </ol>',
     'desc': 'Sekarang Anda dapat melakukan input calon penerima bantuan sosial secara manual, sehingga dapat membantu kami lebih baik lagi untuk memperbaiki perlayanan di Sapawarga',
     'btn-import': 'IMPORT SEKARANG',
@@ -1061,7 +1061,23 @@ export default {
     'desc-upload': 'Untuk upload data input manual harus memakai format Excel (.xlsx)',
     'upload-btn': 'IMPORT SEKARANG',
     'btn-choice': 'Pilih File yang akan diupload',
-    'upload': 'Upload'
+    'upload': 'Upload',
+
+    'title-import': 'Import Data Input Manual',
+    'desc-import': 'Untuk import data input manual harus memakai format Excel (.xlsx)',
+    'import-btn': 'IMPORT SEKARANG',
+    'btn-import-choice': 'Pilih File yang akan diimport',
+    'import': 'Import',
+
+    'history-import-file-name': 'Nama FIle',
+    'history-import-status': 'Status',
+    'history-import-created-at': 'Waktu Upload',
+    'history-import-action': 'Aksi',
+
+    'history-import-status-start': 'Impor Dimulai',
+    'history-import-status-success': 'Sukses',
+    'history-import-status-upload-failed': 'Gagal Upload',
+    'history-import-status-invalid-file': 'File Tidak Sesuai Template'
 
   }
 }
