@@ -145,3 +145,11 @@ export function exportExcel(query) {
     responseType: 'blob'
   })
 }
+
+export function fetchVervalUploadList(query) {
+  return request({
+    url: '/beneficiaries-verval-upload',
+    method: 'get',
+    params: query
+  })
+}

@@ -81,12 +81,13 @@
           <div class="text item">
             <el-table
               v-loading="loading"
-              :data="list"
+              :data="sortedList"
               border
               fit
               highlight-current-row
               style="width: 100%"
               :row-class-name="tableRowClassName"
+              @sort-change="changeSort"
             >
               <el-table-column
                 type="index"
@@ -169,7 +170,30 @@ export default {
         page: 1,
         limit: 10
       },
-      beneficiariesTypeList: null
+      beneficiariesTypeList: null,
+
+      sort_prop: 'data.approved',
+      sort_order: 'descending'
+    }
+  },
+  computed: {
+    sortedList() {
+      const prop = this.sort_prop
+      const order = this.sort_order
+      function compare(a, b) {
+        if (a[prop] < b[prop]) {
+          return order === 'ascending' ? -1 : 1
+        }
+        if (a[prop] > b[prop]) {
+          return order === 'ascending' ? 1 : -1
+        }
+        return 0
+      }
+      if (this.list) {
+        return this.list.map(x => x).sort(compare)
+      } else {
+        return []
+      }
     }
   },
   created() {
@@ -231,6 +255,10 @@ export default {
         : row.status === '21'
           ? 'warning-row'
           : ''
+    },
+    changeSort(e) {
+      this.sort_prop = e.prop
+      this.sort_order = e.order
     }
   }
 }
