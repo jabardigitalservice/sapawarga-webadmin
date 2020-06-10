@@ -68,4 +68,4 @@ export const rolesWidget = {
   'staffKelOPD': ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel', 'staffOPD']
 }
 
-export const UrlDownloadImportData = 'https://d30fftvvk7uhqa.cloudfront.net/attachment/Template_Data_Manual.xlsx'
+export const UrlDownloadImportData = `${process.env.VUE_APP_S3_URL}attachment/Template_Data_Manual.xlsx`
