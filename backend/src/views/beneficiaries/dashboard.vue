@@ -78,30 +78,6 @@
               >{{ row.name }}</span>
             </template>
           </el-table-column>
-          <!-- <el-table-column prop="data.approved_kabkota" align="right" sortable="custom" :label="$t('label.beneficiaries-verified-kabkota')" min-width="180px">
-            <template slot-scope="{row}">
-              <span v-if="row.data.approved_kabkota" style="float: left">
-                ({{ formatNumber(percentage(row.data.approved_kabkota, getTotalBenefeciaries(row.data))) }}%)
-              </span>
-              {{ formatThousands(row.data.approved_kabkota) }}
-            </template>
-          </el-table-column>
-          <el-table-column prop="data.approved_kec" align="right" sortable="custom" :label="$t('label.beneficiaries-verified-kec')" min-width="180px">
-            <template slot-scope="{row}">
-              <span v-if="row.data.approved_kec" style="float: left">
-                ({{ formatNumber(percentage(row.data.approved_kec, getTotalBenefeciaries(row.data))) }}%)
-              </span>
-              {{ formatThousands(row.data.approved_kec) }}
-            </template>
-          </el-table-column>
-          <el-table-column prop="data.approved_kel" align="right" sortable="custom" :label="$t('label.beneficiaries-verified-kel')" min-width="180px">
-            <template slot-scope="{row}">
-              <span v-if="row.data.approved_kel" style="float: left">
-                ({{ formatNumber(percentage(row.data.approved_kel, getTotalBenefeciaries(row.data))) }}%)
-              </span>
-              {{ formatThousands(row.data.approved_kel) }}
-            </template>
-          </el-table-column>-->
           <el-table-column
             prop="data.approved"
             align="right"
@@ -274,82 +250,34 @@ export default {
       const getReject = this.getReject
       const getTotalBenefeciaries = this.getTotalBenefeciaries
       const percentage = this.percentage
+      const getCompareOrder = this.getCompareOrder
       function compare(a, b) {
-        // if (prop === 'data.approved_kabkota') {
-        //   if (percentage(a.data.approved_kabkota, getTotalBenefeciaries(a.data)) < percentage(b.data.approved_kabkota, getTotalBenefeciaries(b.data))) {
-        //     return order === 'ascending' ? -1 : 1
-        //   }
-        //   if (percentage(a.data.approved_kabkota, getTotalBenefeciaries(a.data)) > percentage(b.data.approved_kabkota, getTotalBenefeciaries(b.data))) {
-        //     return order === 'ascending' ? 1 : -1
-        //   }
-        // } else if (prop === 'data.approved_kec') {
-        //   if (percentage(a.data.approved_kec, getTotalBenefeciaries(a.data)) < percentage(b.data.approved_kec, getTotalBenefeciaries(b.data))) {
-        //     return order === 'ascending' ? -1 : 1
-        //   }
-        //   if (percentage(a.data.approved_kec, getTotalBenefeciaries(a.data)) > percentage(b.data.approved_kec, getTotalBenefeciaries(b.data))) {
-        //     return order === 'ascending' ? 1 : -1
-        //   }
-        // } else if (prop === 'data.approved_kel') {
-        //   if (percentage(a.data.approved_kel, getTotalBenefeciaries(a.data)) < percentage(b.data.approved_kel, getTotalBenefeciaries(b.data))) {
-        //     return order === 'ascending' ? -1 : 1
-        //   }
-        //   if (percentage(a.data.approved_kel, getTotalBenefeciaries(a.data)) > percentage(b.data.approved_kel, getTotalBenefeciaries(b.data))) {
-        //     return order === 'ascending' ? 1 : -1
-        //   }
         if (prop === 'data.approved') {
-          if (
-            percentage(getApproved(a.data), getTotalBenefeciaries(a.data)) <
-            percentage(getApproved(b.data), getTotalBenefeciaries(b.data))
-          ) {
-            return order === 'ascending' ? -1 : 1
-          }
-          if (
-            percentage(getApproved(a.data), getTotalBenefeciaries(a.data)) >
-            percentage(getApproved(b.data), getTotalBenefeciaries(b.data))
-          ) {
-            return order === 'ascending' ? 1 : -1
-          }
+          return getCompareOrder(
+            percentage(getApproved(a.data), getTotalBenefeciaries(a.data)),
+            percentage(getApproved(b.data), getTotalBenefeciaries(b.data)),
+            order
+          )
         } else if (prop === 'data_baru.total') {
           var a_data_baru_total = a.data_baru ? a.data_baru.total || 0 : 0
           var b_data_baru_total = b.data_baru ? b.data_baru.total || 0 : 0
-          if (
-            percentage(a_data_baru_total, getTotalBenefeciaries(a.data)) <
-            percentage(b_data_baru_total, getTotalBenefeciaries(b.data))
-          ) {
-            return order === 'ascending' ? -1 : 1
-          }
-          if (
-            percentage(a_data_baru_total, getTotalBenefeciaries(a.data)) >
-            percentage(b_data_baru_total, getTotalBenefeciaries(b.data))
-          ) {
-            return order === 'ascending' ? 1 : -1
-          }
+          return getCompareOrder(
+            percentage(a_data_baru_total, getTotalBenefeciaries(a.data)),
+            percentage(b_data_baru_total, getTotalBenefeciaries(b.data)),
+            order
+          )
         } else if (prop === 'data.pending') {
-          if (
-            percentage(getPending(a.data), getTotalBenefeciaries(a.data)) <
-            percentage(getPending(b.data), getTotalBenefeciaries(b.data))
-          ) {
-            return order === 'ascending' ? -1 : 1
-          }
-          if (
-            percentage(getPending(a.data), getTotalBenefeciaries(a.data)) >
-            percentage(getPending(b.data), getTotalBenefeciaries(b.data))
-          ) {
-            return order === 'ascending' ? 1 : -1
-          }
+          return getCompareOrder(
+            percentage(getPending(a.data), getTotalBenefeciaries(a.data)),
+            percentage(getPending(b.data), getTotalBenefeciaries(b.data)),
+            order
+          )
         } else if (prop === 'data.reject') {
-          if (
-            percentage(getReject(a.data), getTotalBenefeciaries(a.data)) <
-            percentage(getReject(b.data), getTotalBenefeciaries(b.data))
-          ) {
-            return order === 'ascending' ? -1 : 1
-          }
-          if (
-            percentage(getReject(a.data), getTotalBenefeciaries(a.data)) >
-            percentage(getReject(b.data), getTotalBenefeciaries(b.data))
-          ) {
-            return order === 'ascending' ? 1 : -1
-          }
+          return getCompareOrder(
+            percentage(getReject(a.data), getTotalBenefeciaries(a.data)),
+            percentage(getReject(b.data), getTotalBenefeciaries(b.data)),
+            order
+          )
         } else {
           if (a[prop] < b[prop]) {
             return order === 'ascending' ? -1 : 1
@@ -376,6 +304,14 @@ export default {
   methods: {
     checkPermission,
     formatNumber,
+    getCompareOrder(data1, data2, order) {
+      if (data1 < data2) {
+        return order === 'ascending' ? -1 : 1
+      }
+      if (data1 > data2) {
+        return order === 'ascending' ? 1 : -1
+      }
+    },
     percentage(val, denom) {
       if (denom) {
         return (val / denom) * 100
