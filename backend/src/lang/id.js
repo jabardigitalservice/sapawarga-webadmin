@@ -1051,7 +1051,7 @@ export default {
   importDataManual: {
     'title': 'Import manual data calon penerima Bantuan <br> Sosial',
     'title-guide': 'Panduan Import Data Calon Penerima Bantuan <br> Sosial',
-    'desc-guide': '<ol> <li><b>Download<b /> template file Excel.xlsx untuk melihat format Input Data</b></li> <li>Mengisi kolom dengan data yang benar, kolom berwarna hijau wajib untuk diisi.</li> <li>Save dengan format .xlsx</li> <li>Pilih file Excel.xlsx yang akan diupload</li> <li>klik tombol Upload</li> </ol>',
+    'desc-guide': '<ol> <li><b>Download<b /> file template berformat Excel (.xlsx) untuk melihat format input data.</b></li> <li>Isi kolom dengan data yang benar. Kolom berwarna hijau WAJIB diisi.</li> <li>Save file dengan format .xlsx.</li> <li>Pilih file .xlsx yang akan diunggah.</li> <li>Klik tombol import.</li> </ol>',
     'desc': 'Sekarang Anda dapat melakukan input calon penerima bantuan sosial secara manual, sehingga dapat membantu kami lebih baik lagi untuk memperbaiki perlayanan di Sapawarga',
     'btn-import': 'IMPORT SEKARANG',
     'btn-guide': 'LIHAT PANDUAN',

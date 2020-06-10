@@ -165,7 +165,6 @@
         </el-table>
       </el-col>
     </el-row>
-    {{ roles }}
   </div>
 </template>
 
