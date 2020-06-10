@@ -173,7 +173,8 @@ import { formatNumber } from '@/utils/formatNumber'
 import { fetchDashboardSummary, fetchDashboardList } from '@/api/beneficiaries'
 import { RolesUser } from '@/utils/constantVariable'
 import { mapGetters } from 'vuex'
-// import DashboardStatistics from './components/DashboardStatistics' // component di hidden untuk sementara
+// component di hidden untuk sementara
+// import DashboardStatistics from './components/DashboardStatistics'
 import UploadDataManual from './components/UploadDataManual/index'
 import checkPermission from '@/utils/permission'
 import InputFilterAreaBps from '@/components/InputFilterAreaBps'
@@ -184,7 +185,8 @@ export default {
   components: {
     InputFilterAreaBps,
     JsonExcel,
-    // DashboardStatistics, // component di hidden untuk sementara
+    // component di hidden untuk sementara
+    // DashboardStatistics,
     UploadDataManual,
     DashboardTitle
   },
