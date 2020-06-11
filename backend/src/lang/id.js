@@ -133,6 +133,8 @@ export default {
     'beneficiaries-approved': 'Disetujui',
     'beneficiaries-rejected': 'Ditolak',
     'beneficiaries-pending': 'Belum Disetujui',
+    'benebeneficiaries-complaint': 'Aduan',
+    'benebeneficiaries-complaint-detail': 'Detail Aduan',
 
     'bansos-download': 'Unduh Dokumen',
     'bansos-upload': 'Unggah Dokumen',
@@ -1008,6 +1010,15 @@ export default {
 
     'beneficiaries-bnba-detail-popup-title': 'Detail Penerima Bantuan',
     'beneficiaries-document': 'Dokumen Pendukung',
+    'beneficiaries-complaint-title': 'Daftar Aduan BNBA',
+    'beneficiaries-complaint-total': 'Total Aduan',
+    'beneficiaries-complaint-detail': 'Detail Aduan',
+    'beneficiaries-complaint-detail-title': 'Detail Pengaduan',
+    'beneficiaries-complaint-detail-sub-title': 'Detail Orang yang Diadukan',
+    'beneficiaries-complaint-Identity': 'Identitas',
+    'beneficiaries-complaint-reason': 'Alasan Dilaporkan',
+    'beneficiaries-complaint-report': 'Data Pelapor',
+
     'beneficiaries-info-personal': 'Informasi Penerima Bantuan',
     'beneficiaries-info-income': 'Informasi Penghasilan',
     'beneficiaries-job-status': 'Status Kedudukan dalam Pekerjaan',

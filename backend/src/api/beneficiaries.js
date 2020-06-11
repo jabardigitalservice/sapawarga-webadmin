@@ -161,3 +161,18 @@ export function vervalUpload(data) {
     data
   })
 }
+
+export function fetchListComplaint(query) {
+  return request({
+    url: '/beneficiaries-complain',
+    method: 'get',
+    params: query
+  })
+}
+
+export function fetchDetailComplaint(id) {
+  return request({
+    url: `/beneficiaries-complain/${id}`,
+    method: 'get'
+  })
+}
