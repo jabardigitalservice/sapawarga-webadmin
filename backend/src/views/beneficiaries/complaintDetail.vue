@@ -32,7 +32,7 @@
           <el-row :gutter="24" class="pb-0-5">
             <el-col :xs="24" :sm="8" :md="6" :lg="4" :xl="4">
               <p class="title-input">{{ $t('label.widget-province') }}</p>
-              <span class="content-data">{{ data.beneficiary.province.name }}</span>
+              <span class="content-data">{{ data.beneficiary.province ? data.beneficiary.province.name : '' }}</span>
             </el-col>
             <el-col :xs="24" :sm="8" :md="6" :lg="4" :xl="4">
               <p class="title-input">{{ $t('label.beneficiaries-domicile-kabkota') }}</p>
@@ -158,7 +158,6 @@ export default {
       this.isLoading = true
       fetchDetailComplaint(id).then(response => {
         this.data = response.data
-        console.log(this.data)
         this.isLoading = false
       })
     }
