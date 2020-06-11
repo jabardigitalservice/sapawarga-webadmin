@@ -154,6 +154,14 @@ export function fetchVervalUploadList(query) {
   })
 }
 
+export function vervalUpload(data) {
+  return request({
+    url: '/beneficiaries-verval-upload/upload',
+    method: 'post',
+    data
+  })
+}
+
 export function fetchListComplaint(query) {
   return request({
     url: '/beneficiaries-complain',
