@@ -133,6 +133,7 @@ export default {
     'beneficiaries-approved': 'Disetujui',
     'beneficiaries-rejected': 'Ditolak',
     'beneficiaries-pending': 'Belum Disetujui',
+    'beneficiaries-monitoring-upload': 'Monitoring Upload',
 
     'bansos-download': 'Unduh Dokumen',
     'bansos-upload': 'Unggah Dokumen',
@@ -1011,7 +1012,14 @@ export default {
     'beneficiaries-info-personal': 'Informasi Penerima Bantuan',
     'beneficiaries-info-income': 'Informasi Penghasilan',
     'beneficiaries-job-status': 'Status Kedudukan dalam Pekerjaan',
-    'beneficiaries-info-domicile': 'Domisili Saat Ini'
+    'beneficiaries-info-domicile': 'Domisili Saat Ini',
+
+    'beneficiaries-monitoring-table-title': 'Daftar Data BNBA di Kabupaten Sumedang',
+    'beneficiaries-monitoring-city': 'Kabupaten/Kota',
+    'beneficiaries-monitoring-bansos-type': 'DTKS/NON DTKS',
+    'beneficiaries-monitoring-last-update': 'Pembaharuan Terakhir',
+    'beneficiaries-monitoring-action': 'Aksi',
+    'beneficiaries-monitoring-download': 'Unduh'
   },
   news: {
     'news-url': 'URL Berita',
