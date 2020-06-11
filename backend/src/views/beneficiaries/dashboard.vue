@@ -10,7 +10,7 @@
 
         <DashboardStatistics
           :is-loading="isLoadingSummary"
-          :summery="dataSummary"
+          :summary="dataSummary"
           :filter="filter"
         />
 

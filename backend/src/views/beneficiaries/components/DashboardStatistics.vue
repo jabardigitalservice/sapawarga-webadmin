@@ -11,8 +11,8 @@
           element-loading-spinner="el-icon-loading"
         />
 
-        <div v-if="!isLoading" class="stat-count color-sw-green">{{ summery.approved_kabkota ? formatNumber(summery.approved_kabkota) : '-' }}</div>
-        <div v-if="!isLoading" class="stat-count color-sw-green">{{ formatNumber(percentage(summery.approved_kabkota)) }} %</div>
+        <div v-if="!isLoading" class="stat-count color-sw-green">{{ summary.approved_kabkota ? formatNumber(summary.approved_kabkota) : '-' }}</div>
+        <div v-if="!isLoading" class="stat-count color-sw-green">{{ formatNumber(percentage(summary.approved_kabkota)) }} %</div>
       </div>
     </el-col>
     <el-col :xs="24" :sm="8" :md="6" :lg="6" :xl="6">
@@ -25,8 +25,8 @@
           element-loading-spinner="el-icon-loading"
         />
 
-        <div v-if="!isLoading" class="stat-count color-sw-green">{{ summery.approved_kec ? formatNumber(summery.approved_kec) : '-' }}</div>
-        <div v-if="!isLoading" class="stat-count color-sw-green">{{ formatNumber(percentage(summery.approved_kec)) }} %</div>
+        <div v-if="!isLoading" class="stat-count color-sw-green">{{ summary.approved_kec ? formatNumber(summary.approved_kec) : '-' }}</div>
+        <div v-if="!isLoading" class="stat-count color-sw-green">{{ formatNumber(percentage(summary.approved_kec)) }} %</div>
       </div>
     </el-col>
     <el-col :xs="24" :sm="8" :md="6" :lg="6" :xl="6">
@@ -39,8 +39,8 @@
           element-loading-spinner="el-icon-loading"
         />
 
-        <div v-if="!isLoading" class="stat-count color-sw-green">{{ summery.approved_kel ? formatNumber(summery.approved_kel) : '-' }}</div>
-        <div v-if="!isLoading" class="stat-count color-sw-green">{{ formatNumber(percentage(summery.approved_kel)) }} %</div>
+        <div v-if="!isLoading" class="stat-count color-sw-green">{{ summary.approved_kel ? formatNumber(summary.approved_kel) : '-' }}</div>
+        <div v-if="!isLoading" class="stat-count color-sw-green">{{ formatNumber(percentage(summary.approved_kel)) }} %</div>
       </div>
     </el-col>
     <el-col :xs="24" :sm="8" :md="6" :lg="6" :xl="6">
@@ -53,8 +53,8 @@
           element-loading-spinner="el-icon-loading"
         />
 
-        <div v-if="!isLoading" class="stat-count color-sw-green">{{ summery.approved ? formatNumber(summery.approved) : '-' }}</div>
-        <div v-if="!isLoading" class="stat-count color-sw-green">{{ formatNumber(percentage(summery.approved)) }} %</div>
+        <div v-if="!isLoading" class="stat-count color-sw-green">{{ summary.approved ? formatNumber(summary.approved) : '-' }}</div>
+        <div v-if="!isLoading" class="stat-count color-sw-green">{{ formatNumber(percentage(summary.approved)) }} %</div>
       </div>
     </el-col>-->
     <el-col :xs="24" :sm="8" :md="6" :lg="4" :xl="4">
@@ -85,7 +85,7 @@
         >{{ getApproved ? formatNumber(getApproved) : '-' }}</span>
         <!-- untuk sementara di hide -->
         <!-- <span v-if="!isLoading" class="stat-count color-sw-green" style="float: right">{{ formatNumber(percentage(getApproved)) }} %</span> -->
-        <!-- <el-progress class="progress" :text-inside="true" color="#27AE60" :stroke-width="18" :percentage="summery && summery.approved ? parseFloat(formatNumber(percentage(getApproved))) : 0" /> -->
+        <!-- <el-progress class="progress" :text-inside="true" color="#27AE60" :stroke-width="18" :percentage="summary && summary.approved ? parseFloat(formatNumber(percentage(getApproved))) : 0" /> -->
       </div>
     </el-col>
     <el-col :xs="24" :sm="8" :md="6" :lg="5" :xl="5">
@@ -111,7 +111,7 @@
           :text-inside="true"
           color="#F2994A"
           :stroke-width="18"
-          :percentage="summery && summery.pending ? parseFloat(formatNumber(percentage(getPending))) : 0"
+          :percentage="summary && summary.pending ? parseFloat(formatNumber(percentage(getPending))) : 0"
         />-->
       </div>
     </el-col>
@@ -136,7 +136,7 @@
           :text-inside="true"
           color="#EB5757"
           :stroke-width="18"
-          :percentage="summery && summery.rejected ? parseFloat(formatNumber(percentage(getReject))) : 0"
+          :percentage="summary && summary.rejected ? parseFloat(formatNumber(percentage(getReject))) : 0"
         />-->
       </div>
     </el-col>
@@ -149,18 +149,18 @@
         <span
           v-if="!isLoading"
           class="stat-count color-sw-blue"
-        >{{ summery.baru && summery.baru.total ? formatNumber(summery.baru.total) : '-' }}</span>
+        >{{ summary.baru && summary.baru.total ? formatNumber(summary.baru.total) : '-' }}</span>
         <!-- untuk sementara di hide -->
         <!-- <span
           v-if="!isLoading"
           class="stat-count color-sw-blue"
           style="float: right"
-        >{{ summery.baru ? formatNumber(percentage(summery.baru.total)) : '' }} %</span>
+        >{{ summary.baru ? formatNumber(percentage(summary.baru.total)) : '' }} %</span>
         <el-progress
           class="progress"
           :text-inside="true"
           :stroke-width="18"
-          :percentage="summery && summery.baru ? parseFloat(formatNumber(percentage(summery.baru.total))) : 0"
+          :percentage="summary && summary.baru ? parseFloat(formatNumber(percentage(summary.baru.total))) : 0"
         />-->
       </div>
     </el-col>
@@ -171,11 +171,11 @@
 import { formatNumber } from '@/utils/formatNumber'
 export default {
   props: {
-    summery: {
+    summary: {
       type: Object,
       default: () => {}
     },
-    summeryBaru: {
+    summaryBaru: {
       type: Object,
       default: () => {}
     },
@@ -191,20 +191,20 @@ export default {
   computed: {
     getApproved() {
       return (
-        this.summery.approved +
-        this.summery.rejected_kel +
-        this.summery.approved_kel +
-        this.summery.rejected_kec +
-        this.summery.approved_kec +
-        this.summery.rejected_kabkota +
-        this.summery.approved_kabkota
+        this.summary.approved +
+        this.summary.rejected_kel +
+        this.summary.approved_kel +
+        this.summary.rejected_kec +
+        this.summary.approved_kec +
+        this.summary.rejected_kabkota +
+        this.summary.approved_kabkota
       )
     },
     getPending() {
-      return this.summery.pending
+      return this.summary.pending
     },
     getReject() {
-      return this.summery.rejected
+      return this.summary.rejected
     },
     getTotalBenefeciaries() {
       return this.getApproved + this.getPending + this.getReject
