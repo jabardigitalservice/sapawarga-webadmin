@@ -8,25 +8,25 @@
         <div class="grid-content">
           <div class="stat-title">{{ $t('label.beneficiaries-complaint-total') }}</div>
           <!-- show loading -->
-          <!-- <div
-            v-loading="isLoading"
+          <div
+            v-loading="isLoadingList"
             class="icon-loading"
             element-loading-spinner="el-icon-loading"
-          /> -->
+          />
           <!-- show data -->
-          <div class="total color-sw-green">213</div>
+          <div v-if="!isLoadingList" class="total color-sw-green">{{ total }}</div>
         </div>
       </el-col>
     </el-row>
 
-    <ListFilter :list-query.sync="listQuery" />
+    <ListFilter :list-query.sync="listQuery" @submit-search="getList" @reset-search="resetFilter" />
 
     <el-table
-      :data="tableData"
+      v-loading="isLoadingList"
+      :data="list"
       border
       highlight-current-row
       style="width: 100%"
-      :header-row-style="{'color': '#000' }"
     >
       <el-table-column
         type="index"
@@ -35,29 +35,29 @@
         width="50"
       />
       <el-table-column
-        prop="name"
+        prop="beneficiary.name"
         label="Nama Lengkap"
       />
       <el-table-column
-        prop="nik"
+        prop="beneficiary.nik"
         label="NIK"
       />
       <el-table-column
-        prop="rt"
+        prop="beneficiary.rt"
         label="RT"
         width="50"
       />
       <el-table-column
-        prop="rw"
+        prop="domicile_rt.rw"
         label="RW"
         width="50"
       />
       <el-table-column
-        prop="address"
+        prop="domicile_rt.address"
         label="Alamat"
       />
       <el-table-column
-        prop="reason"
+        prop="notes_reason"
         label="Alasan Dilaporkan"
       />
       <el-table-column
@@ -79,7 +79,7 @@
       </el-table-column>
     </el-table>
 
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" />
+    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
   </div>
 </template>
 
@@ -87,10 +87,14 @@
 import { mapGetters } from 'vuex'
 import ListFilter from './_listFilterComplaint'
 import Pagination from '@/components/Pagination'
+import { fetchListComplaint } from '@/api/beneficiaries'
 export default {
   components: { ListFilter, Pagination },
   data() {
     return {
+      isLoadingList: true,
+      list: null,
+      total: 0,
       tableData: [{
         id: 1,
         name: 'aaa',
@@ -100,15 +104,13 @@ export default {
         address: 'address',
         reason: 'reason'
       }],
-      total: 1,
       listQuery: {
         nik: null,
         name: null,
-        rt: null,
-        rw: null,
-        status_verification: null,
+        domicile_rt: null,
+        domicile_rw: null,
         sort_by: 'nik',
-        sort_order: 'ascending',
+        // sort_order: 'ascending',
         page: 1,
         limit: 10
       }
@@ -117,9 +119,25 @@ export default {
   computed: {
     ...mapGetters(['user'])
   },
+  created() {
+    this.getList()
+  },
   methods: {
+    getList() {
+      this.isLoadingList = true
+      fetchListComplaint(this.listQuery).then(response => {
+        this.list = response.data.items
+        this.total = response.data._meta.totalCount
+        this.isLoadingList = false
+        console.log(this.list)
+      })
+    },
     getTableRowNumbering(index) {
       return (index + 1)
+    },
+    resetFilter() {
+      Object.assign(this.$data.listQuery, this.$options.data().listQuery)
+      this.getList()
     }
   }
 }

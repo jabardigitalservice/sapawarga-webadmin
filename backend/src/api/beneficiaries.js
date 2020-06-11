@@ -153,3 +153,11 @@ export function fetchVervalUploadList(query) {
     params: query
   })
 }
+
+export function fetchListComplaint(query) {
+  return request({
+    url: '/beneficiaries-complain',
+    method: 'get',
+    params: query
+  })
+}
