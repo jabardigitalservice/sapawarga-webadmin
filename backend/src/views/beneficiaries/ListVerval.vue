@@ -41,11 +41,9 @@
 
           <el-table-column align="center" :label="$t('label.actions')" width="200px">
             <template slot-scope="scope">
-              <router-link :to="'/beneficiaries/detail-verval/' +scope.row.id">
-                <el-tooltip :content="$t('label.beneficiaries-detail')" placement="top">
-                  <el-button type="primary" icon="el-icon-view" size="small" />
-                </el-tooltip>
-              </router-link>
+              <el-tooltip :content="$t('label.beneficiaries-detail')" placement="top">
+                <el-button type="primary" icon="el-icon-view" size="small" @click="getDetail(scope.row.id)" />
+              </el-tooltip>
               <el-tooltip v-if="listType === 'pending'" :content="$t('label.beneficiaries-validate')" placement="top">
                 <el-button type="success" icon="el-icon-circle-check" size="small" :disabled="multipleSelection.length > 0" @click="validate(scope.row.id)" />
               </el-tooltip>
@@ -56,23 +54,45 @@
           <el-button v-if="multipleSelection.length === 0" type="success" style="float: right; margin-right: 30px" @click="validateAll()">{{ $t('label.beneficiaries-validate-all') }}</el-button>
           <el-button v-if="multipleSelection.length > 0" type="success" style="float: right; margin-right: 50px" @click="multipleValidate()">{{ $t('label.beneficiaries-validate-select') }}</el-button>
         </div>
-
         <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
       </el-col>
     </el-row>
+    <el-dialog
+      :visible.sync="isDetail"
+      width="80%"
+      :close-on-click-modal="false"
+      custom-class="dialog-custome"
+      :modal-append-to-body="false"
+      :append-to-body="true"
+      top="5vh"
+      style="margin-bottom: 30px"
+    >
+      <span slot="title" class="dialog-title detail-title" style="margin: 0; padding: 0">Detail Penerima Bantuan</span>
+      <hr class="line-separator">
+      <Preview :id-detail="idDetail" :is-verval="true" @closeDialog="closeDetail" />
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import { fetchSummaryVerval, fetchListVerval, validateStaffKelBulk } from '@/api/beneficiaries'
+import StatisticsVerval from './components/StatisticsVerval'
 import DashboardTitle from './components/DashboardTitle'
 import Pagination from '@/components/Pagination'
-import StatisticsVerval from './components/StatisticsVerval'
+import Preview from './components/Preview'
+import checkPermission from '@/utils/permission'
+import { RolesUser } from '@/utils/constantVariable'
 import ListFilter from './_listfilter'
 import { mapGetters } from 'vuex'
 
 export default {
-  components: { Pagination, StatisticsVerval, ListFilter, DashboardTitle },
+  components: {
+    StatisticsVerval,
+    DashboardTitle,
+    Pagination,
+    ListFilter,
+    Preview
+  },
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -96,6 +116,8 @@ export default {
       dialogVisible: false,
       isLoadingSummary: true,
       dataSummary: null,
+      isDetail: false,
+      idDetail: null,
       listLoading: true,
       multipleSelection: [],
       status: {
@@ -106,8 +128,8 @@ export default {
       listQuery: {
         nik: null,
         name: null,
-        sort_by: 'nik',
-        sort_order: 'ascending',
+        sort_by: null,
+        sort_order: null,
         page: 1,
         limit: 10,
         status_verification: null,
@@ -120,7 +142,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['user'])
+    ...mapGetters(['user', 'roles'])
   },
   created() {
     this.getList()
@@ -142,14 +164,45 @@ export default {
         this.isLoadingSummary = false
       })
     },
+    getDetail(value) {
+      this.idDetail = value
+      this.isDetail = true
+    },
+
+    closeDetail(value) {
+      if (value === 'reload') {
+        this.$router.push('/beneficiaries/approved')
+      } else {
+        this.isDetail = false
+      }
+    },
+
     getList() {
       this.listLoading = true
-      if (this.listType === 'pending') {
-        this.listQuery.status_verification = 3
-      } else if (this.listType === 'approved') {
-        this.listQuery.status_verification = 5
-      } else if (this.listType === 'rejected') {
-        this.listQuery.status_verification = 2 || 4
+      if (checkPermission([RolesUser.STAFFKEL])) {
+        if (this.listType === 'pending') {
+          this.listQuery.status_verification = 3
+        } else if (this.listType === 'approved') {
+          this.listQuery.status_verification = 5
+        } else if (this.listType === 'rejected') {
+          this.listQuery.status_verification = 2 || 4
+        }
+      } else if (checkPermission([RolesUser.STAFFKEC])) {
+        if (this.listType === 'pending') {
+          this.listQuery.status_verification = 5
+        } else if (this.listType === 'approved') {
+          this.listQuery.status_verification = 7
+        } else if (this.listType === 'rejected') {
+          this.listQuery.status_verification = 2 || 4
+        }
+      } else if (checkPermission([RolesUser.STAFFKABKOTA])) {
+        if (this.listType === 'pending') {
+          this.listQuery.status_verification = 7
+        } else if (this.listType === 'approved') {
+          this.listQuery.status_verification = 9
+        } else if (this.listType === 'rejected') {
+          this.listQuery.status_verification = 2 || 4
+        }
       }
       fetchListVerval(this.listQuery).then(response => {
         this.list = response.data.items
@@ -173,6 +226,7 @@ export default {
         this.$message.success(this.$t('crud.approval-success'))
 
         this.getList()
+        this.getSummary()
       } catch (e) {
         console.log(e)
       }
@@ -232,6 +286,21 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+  .line-separator {
+    margin: 0 -20px;
+    border: .1px solid #e6ebf5;
+  }
+
+  .dialog-custome {
+    background: transparent;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .detail-title {
+    color: #606266;
+  }
   .dialog-title {
     font-weight: bold;
     text-align: left;

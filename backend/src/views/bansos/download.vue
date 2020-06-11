@@ -146,8 +146,6 @@ import { fetchDashboardList } from '@/api/beneficiaries'
 import { exportBansos } from '@/api/bansos'
 import { mapGetters } from 'vuex'
 import checkPermission from '@/utils/permission'
-import FileSaver from 'file-saver'
-import moment from 'moment'
 import Swal from 'sweetalert2'
 import { Loading } from 'element-ui'
 
@@ -407,21 +405,25 @@ export default {
     selectChange(data) {
       const result = []
       data.map(item => {
-        result.push(item.code_bps)
+        const codeBps = item.code_bps !== '' ? item.code_bps : 0
+        result.push(codeBps)
       })
       this.selectionQuery.kode_kec = result.join()
     },
     async exportData(params) {
       try {
         Loading.service({ fullScreen: true })
-
         const response = await exportBansos(params)
-        const dateNow = Date.now()
-        const fileName = `${this.$t(
-          'label.beneficiaries-download-bnba-document'
-        )} - ${moment(dateNow).format('D MMMM YYYY H:mm:ss')}.xlsx`
-        await FileSaver.saveAs(response, fileName)
-
+        if (response.status === 200) {
+          Swal.fire({
+            title: this.$t('label.beneficiaries-download-start-title-alert'),
+            text: this.$t(
+              'label.beneficiaries-download-start-description-alert'
+            ),
+            icon: 'success',
+            button: 'OK'
+          })
+        }
         Loading.service({ fullScreen: true }).close()
       } catch (error) {
         Loading.service({ fullScreen: true }).close()

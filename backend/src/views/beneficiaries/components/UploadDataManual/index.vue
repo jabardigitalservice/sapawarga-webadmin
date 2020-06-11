@@ -1,96 +1,124 @@
 <template>
   <div>
     <el-row :gutter="20" class="pb-2">
-
       <!-- section box import data manual -->
       <el-col :span="8" style="position:relative">
         <div>
-          <el-card shadow="never" class="section-box-upload" :body-style="{'border-radius': '8px','background-color': '#FF834E', 'color': '#fff' }">
-            <el-row :gutter="20" class="pb-2 box-upload-info">
-              <el-col :span="7">
+          <el-card
+            shadow="never"
+            class="section-box-upload"
+            :body-style="{'border-radius': '8px','background-color': '#FF834E', 'color': '#fff' }"
+          >
+            <el-row class="pb-2 box-upload-info">
+              <el-col :span="10">
                 <div>
-                  <img src="@/assets/upload-data.svg" alt="icon-upload">
+                  <img src="@/assets/upload-data.svg" alt="icon-upload" class="img-upload">
                 </div>
               </el-col>
-              <el-col :span="17"><div class="text-24 text-bold pl-1 line-height-29" v-html="$t('importDataManual.title')" /></el-col>
+              <el-col :span="14">
+                <div
+                  class="text-24 text-bold pl-1 line-height-29"
+                  v-html="$t('importDataManual.title')"
+                />
+              </el-col>
             </el-row>
 
-            <div class="text-14" style="line-height: 150%;">
-              {{ $t('importDataManual.desc') }}
-            </div>
+            <div class="text-14" style="line-height: 150%;">{{ $t('importDataManual.desc') }}</div>
 
-            <el-row class="section-action-upload">
-              <el-button size="medium" class="bg-sw-green text-white text-16 border-radius-8 border-green text-bold p-2 mr-1" @click="openUpload = true">{{ $t('importDataManual.btn-import') }}</el-button>
-              <el-button size="medium" class="bg-transparant text-white text-16 border-radius-8 border-none text-bold p-2 border-2" @click="openGuide = true">{{ $t('importDataManual.btn-guide') }}</el-button>
+            <el-row :gutter="10" class="section-action-upload">
+              <el-col :span="12">
+                <el-button
+                  size="small"
+                  class="bg-sw-green text-white border-radius-8 border-green text-bold p-2 mr-1 btn-import"
+                  @click="openUpload = true"
+                >{{ $t('importDataManual.btn-import') }}</el-button>
+              </el-col>
+              <el-col :span="12">
+                <img src="@/assets/bg-upload-manual.png" alt="bg-upload" class="bg-image-upload">
+                <el-button
+                  size="small"
+                  class="bg-transparant text-white border-radius-8 border-none text-bold p-2 border-2 btn-guide"
+                  @click="openGuide = true"
+                >{{ $t('importDataManual.btn-guide') }}</el-button>
+              </el-col>
             </el-row>
           </el-card>
-        </div>
-        <div class="bg-upload">
-          <img src="@/assets/bg-upload-manual.png" alt="bg-upload">
         </div>
       </el-col>
 
       <!-- section table -->
       <el-col :span="16">
-        <el-card shadow="never" class="section-box-table border-radius-8" :body-style="{'border-radius': '8px' }">
+        <el-card
+          shadow="never"
+          class="section-box-table border-radius-8"
+          :body-style="{'border-radius': '8px' }"
+        >
           <div class="title-table">
-            <el-row :gutter="20">
+            <el-row>
               <el-col :span="12">
-                <div class="text-22 text-bold">
-                  {{ $t('importDataManual.tbl-title') }}
-                </div>
+                <div class="text-22 text-bold">{{ $t('importDataManual.tbl-title') }}</div>
               </el-col>
-              <el-col :span="6" :offset="6" style="text-align:end">
-                <el-button size="medium" class="text-16 border-orange text-orange border-radius-8" @click="downloadSample()"> {{ $t('importDataManual.btn-download') }}</el-button>
+              <el-col :span="12">
+                <el-button
+                  size="medium"
+                  class="text-16 border-orange text-orange border-radius-8 btn-export"
+                  @click="downloadSample()"
+                >{{ $t('importDataManual.btn-download') }}</el-button>
               </el-col>
             </el-row>
           </div>
 
           <el-table
-            :data="tableData"
+            v-loading="loadingVervalList"
+            :data="sortedList"
             stripe
             :header-row-style="{'color': '#000', 'font-weight': 'bold' }"
             height="260"
             style="width: 100%"
+            @sort-change="changeSort"
           >
+            <el-table-column type="index" align="center" :index="getTableRowNumbering" width="50" />
             <el-table-column
-              type="index"
-              align="center"
-              label="NO"
-              :index="getTableRowNumbering"
-              width="50"
+              prop="original_filename"
+              sortable="custom"
+              :label="$t('importDataManual.history-import-file-name')"
             />
             <el-table-column
-              prop="namaFile"
-              sortable="true"
-              label="NAMA FILE"
-            />
-            <el-table-column
-              prop="status"
-              sortable="true"
-              label="STATUS"
+              prop="status_detail"
+              sortable="custom"
+              :label="$t('importDataManual.history-import-status')"
               width="100"
             />
             <el-table-column
-              prop="date"
-              sortable="true"
-              label="WAKTU UPLOAD"
-            />
-            <el-table-column
-              label="AKSI"
-              width="80"
+              prop="created_at"
+              sortable="custom"
+              :label="$t('importDataManual.history-import-created-at')"
             >
-              <template slot-scope="scope">
-                <el-button
-                  size="mini"
-                  type="primary"
-                  icon="el-icon-view"
-                  @click="handleEdit(scope.$index, scope.row)"
-                />
+              <template slot-scope="{row}">{{ row.created_at | moment('D MMMM YYYY H:mm') }}</template>
+            </el-table-column>
+            <el-table-column :label="$t('importDataManual.history-import-action')" width="80">
+              <template slot-scope="{row}">
+                <a v-if="row.status === 20 || row.status === 21" :href="row.file_url">
+                  <el-tooltip
+                    :content="$t('label.beneficiaries-download-invalid-file')"
+                    placement="top"
+                  >
+                    <el-button type="warning" size="mini">
+                      <i class="el-icon-download el-icon-right" />
+                    </el-button>
+                  </el-tooltip>
+                </a>
               </template>
             </el-table-column>
-            <el-button slot="append" type="text" class="btn-load-more">Tampilkan lebih banyak <i class="el-icon-arrow-down" /></el-button>
           </el-table>
+
+          <pagination
+            v-show="total>0"
+            :total="total"
+            :page.sync="listQuery.page"
+            :limit.sync="listQuery.limit"
+            @pagination="getVervalUploadList"
+          />
         </el-card>
       </el-col>
     </el-row>
@@ -102,33 +130,59 @@
       width="35%"
       custom-class="dialog-guide"
       center
+      class="show-dialog-guide"
     >
-      <el-card shadow="never" class="section-box-upload" :body-style="{'border-radius': '8px','background-color': '#FF834E', 'color': '#fff', 'position': 'relative' }">
-        <div style="position: absolute; right: 20px; z-index: 2; cursor: pointer" @click="openGuide = false">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M6.99974 5.58623L11.9497 0.63623L13.3637 2.05023L8.41374 7.00023L13.3637 11.9502L11.9497 13.3642L6.99974 8.41423L2.04974 13.3642L0.635742 11.9502L5.58574 7.00023L0.635742 2.05023L2.04974 0.63623L6.99974 5.58623Z" fill="white" />
+      <el-card
+        shadow="never"
+        class="section-box-upload"
+        :body-style="{'border-radius': '8px','background-color': '#FF834E', 'color': '#fff', 'position': 'relative' }"
+      >
+        <div
+          style="position: absolute; right: 20px; z-index: 2; cursor: pointer"
+          @click="openGuide = false"
+        >
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 14 14"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M6.99974 5.58623L11.9497 0.63623L13.3637 2.05023L8.41374 7.00023L13.3637 11.9502L11.9497 13.3642L6.99974 8.41423L2.04974 13.3642L0.635742 11.9502L5.58574 7.00023L0.635742 2.05023L2.04974 0.63623L6.99974 5.58623Z"
+              fill="white"
+            />
           </svg>
         </div>
-        <el-row :gutter="20" class="pb-2 box-upload-info">
-          <el-col :span="7">
+        <el-row :gutter="10" class="pb-2 box-upload-info">
+          <el-col :span="10">
             <div>
-              <img src="@/assets/upload-data.svg" alt="icon-upload">
+              <img src="@/assets/upload-data.svg" alt="icon-upload" class="img-upload">
             </div>
           </el-col>
-          <el-col :span="17"><div class="text-24 text-bold pl-1 line-height-29" v-html="$t('importDataManual.title-guide')" /></el-col>
+          <el-col :span="14">
+            <div
+              class="text-24 text-bold pl-1 line-height-29"
+              v-html="$t('importDataManual.title-guide')"
+            />
+          </el-col>
         </el-row>
 
         <div class="text-14" style="line-height: 150%;" v-html="$t('importDataManual.desc-guide')" />
 
         <el-row class="section-action-upload" style="text-align:center">
-          <el-button size="medium" class="bg-sw-green text-white text-16 border-radius-8 border-green text-bold p-2" @click="openUpload = true">{{ $t('importDataManual.upload-btn') }}</el-button>
+          <el-button
+            size="medium"
+            class="bg-sw-green text-white text-16 border-radius-8 border-green text-bold p-2"
+            @click="openUpload = true"
+          >{{ $t('importDataManual.import-btn') }}</el-button>
         </el-row>
       </el-card>
     </el-dialog>
 
     <!-- upload file -->
     <el-dialog
-      :title="$t('importDataManual.title-upload')"
+      :title="$t('importDataManual.title-import')"
       :visible.sync="openUpload"
       width="30%"
       :show-close="false"
@@ -136,41 +190,50 @@
       custom-class="dialog-guide"
     >
       <div>
-        <div style="color:#828282">{{ $t('importDataManual.desc-upload') }}</div>
+        <div style="color:#828282">{{ $t('importDataManual.desc-import') }}</div>
         <el-upload
           ref="importManual"
           style="text-align:center; padding-top: 1rem"
           :limit="1"
           :before-close="clearUpload"
           :multiple="false"
-          action=""
+          action
           :auto-upload="false"
           :on-remove="handleUploadRemove"
           :on-change="handleChangeFile"
         >
           <div v-if="!file">
-            <el-button type="primary" icon="el-icon-paperclip" plain style="font-weight: bold; padding: 1rem; padding-left: 2rem; padding-right: 2rem">{{ $t('importDataManual.btn-choice') }}</el-button>
+            <el-button
+              type="primary"
+              icon="el-icon-paperclip"
+              plain
+              style="font-weight: bold; padding: 1rem; padding-left: 2rem; padding-right: 2rem"
+            >{{ $t('importDataManual.btn-import-choice') }}</el-button>
           </div>
         </el-upload>
       </div>
 
       <span slot="footer" class="dialog-footer-upload">
         <el-button class="mr-1" @click="onCloseUploadDialog">{{ $t('crud.cancel') }}</el-button>
-        <el-button type="primary" @click="submitUpload">{{ $t('importDataManual.upload') }}</el-button>
+        <el-button type="primary" @click="submitUpload">{{ $t('importDataManual.import') }}</el-button>
       </span>
     </el-dialog>
   </div>
-
 </template>
 
 <script>
 import Swal from 'sweetalert2'
+import { fetchVervalUploadList } from '@/api/beneficiaries'
 import { UrlDownloadImportData } from '@/utils/constantVariable'
+import Pagination from '@/components/Pagination'
+
 export default {
+  components: { Pagination },
   data() {
     return {
       loading: false,
       openGuide: false,
+      total: 0,
       openUpload: false,
       tableData: [],
       file: null,
@@ -179,12 +242,80 @@ export default {
         date: null,
         page: 1,
         limit: 10
+      },
+      vervalUploadList: null,
+      loadingVervalList: true,
+      sort_prop: 'data.approved',
+      sort_order: 'descending'
+    }
+  },
+  computed: {
+    sortedList() {
+      const prop = this.sort_prop
+      const order = this.sort_order
+      function compare(a, b) {
+        if (a[prop] < b[prop]) {
+          return order === 'ascending' ? -1 : 1
+        }
+        if (a[prop] > b[prop]) {
+          return order === 'ascending' ? 1 : -1
+        }
+        return 0
+      }
+      if (this.vervalUploadList) {
+        return this.vervalUploadList.map(x => x).sort(compare)
+      } else {
+        return []
       }
     }
   },
+  created() {
+    this.getVervalUploadList()
+  },
   methods: {
+    async getVervalUploadList() {
+      this.loadingVervalList = true
+      const response = await fetchVervalUploadList(this.listQuery)
+      const data = []
+      response.data.items.map(value => {
+        const fileUrl =
+          value.status === 20
+            ? value.invalid_file_path_url
+            : value.status === 21
+              ? value.file_path_url
+              : ''
+
+        const statusDetail = this.getStatus(value.status)
+
+        data.push({
+          original_filename: value.original_filename,
+          status_detail: statusDetail,
+          status: value.status,
+          created_at: value.created_at,
+          file_url: fileUrl
+        })
+      })
+
+      this.vervalUploadList = data
+      this.loadingVervalList = false
+      this.total = response.data._meta.totalCount
+    },
+    getStatus(statusId) {
+      switch (statusId) {
+        case 0:
+          return this.$t('importDataManual.history-import-status-start')
+        case 10:
+          return this.$t('importDataManual.history-import-status-success')
+        case 20:
+          return this.$t(
+            'importDataManual.history-import-status-upload-failed'
+          )
+        case 21:
+          return this.$t('importDataManual.history-import-status-invalid-file')
+      }
+    },
     getTableRowNumbering(index) {
-      return (index + 1)
+      return (this.listQuery.page - 1) * this.listQuery.limit + (index + 1)
     },
     handleCloseUpload(done) {
       this.clearUpload()
@@ -196,21 +327,11 @@ export default {
     async submitUpload() {
       try {
         this.loading = true
-
-        // const formData = new FormData()
-        // formData.append('type', this.$route.query.type)
-        // formData.append('kabkota_id', this.user.kabkota_id)
-        // formData.append('file', this.file)
-        // await uploadBansos(formData)
         Swal.fire({
           title: this.$t('label.beneficiaries-upload-start'),
           text: this.$t('label.beneficiaries-upload-success'),
           icon: 'success',
           button: 'OK'
-        }).then((action) => {
-          if (action) {
-            // this.$router.push('/bansos/upload')
-          }
         })
 
         this.loading = false
@@ -228,8 +349,9 @@ export default {
       }
     },
     handleChangeFile(file) {
-      console.log(file.raw.type)
-      const isXlsx = file.raw.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+      const isXlsx =
+        file.raw.type ===
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
       const isXls = file.raw.type === 'application/vnd.ms-excel'
       if (!isXlsx && !isXls) {
         Swal.fire({
@@ -256,13 +378,19 @@ export default {
       this.$refs.importManual.clearFiles()
       this.file = null
       this.openUpload = false
+    },
+    changeSort(e) {
+      this.sort_prop = e.prop
+      this.sort_order = e.order
     }
+  },
+  getCreatedAt(data) {
+    return data.created_at
   }
 }
 </script>
 
 <style lang="scss" scoped>
-
 // dialog
 .dialog-footer-upload {
   text-align: center;
@@ -270,21 +398,21 @@ export default {
 
 .title-table {
   padding-bottom: 1rem;
-  border-bottom: 1px solid #E0E0E0;
+  border-bottom: 1px solid #e0e0e0;
 }
 
 .color-sw-green {
-  color: #02964D;
+  color: #02964d;
 }
 
 .bg-sw-green {
-  background-color: #02964D;
+  background-color: #02964d;
 }
 
 .bg-upload {
-    position: absolute;
-    bottom: 0;
-    right: 0;
+  position: absolute;
+  bottom: 0;
+  right: 0;
 }
 
 .line-height-29 {
@@ -300,7 +428,7 @@ export default {
 }
 
 .text-orange {
-  color: #FF9A08;
+  color: #ff9a08;
 }
 
 .mr-1 {
@@ -316,15 +444,15 @@ export default {
 }
 
 .border-green {
-  border: 2px solid #02964D;
+  border: 2px solid #02964d;
 }
 
 .border-orange {
-  border: 2px solid #FF9A08;
+  border: 2px solid #ff9a08;
 }
 
 .border-2 {
-  border: 2px solid #FFFFFF;
+  border: 2px solid #ffffff;
 }
 
 .pl-1 {
@@ -340,7 +468,7 @@ export default {
 }
 
 .bg-orange-upload {
-  background-color: #FF834E;
+  background-color: #ff834e;
 }
 
 .text-24 {
@@ -384,5 +512,49 @@ export default {
   display: flex;
   margin: 0 auto;
   font-weight: bold;
+}
+
+.btn-export {
+  float: right;
+}
+
+.btn-import {
+  float: left;
+  width: 100%;
+  font-size: 11px;
+}
+
+.btn-guide {
+  float: right;
+  width: 100%;
+  font-size: 11px;
+}
+
+.bg-image-upload {
+  position: absolute;
+  right: -10px;
+  top: -140px;
+  z-index: 1;
+}
+
+.img-upload {
+  width: 100%;
+}
+
+.el-dialog.el-dialog--center.dialog-guide {
+  background: transparent;
+  box-shadow: none;
+}
+
+.dialog-guide .el-dialog__footer {
+  text-align: center;
+}
+
+.dialog-guide .el-card__body {
+  border-radius: 0px !important;
+}
+
+.show-dialog-guide {
+  margin-top: -100px !important;
 }
 </style>

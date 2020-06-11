@@ -166,6 +166,8 @@ export default {
     'not-valid': 'Tidak',
     'serach-nik': 'Input NIK',
     'next-reject': 'Ya (Tolak)',
+    'update-data': 'Edit Data',
+    'approved': 'Setujui',
 
     'save-create': 'Simpan',
     'save-update': 'Simpan Perubahan',
@@ -892,8 +894,9 @@ export default {
     'beneficiaries-nik-invalid-format': 'Format NIK tidak sesuai',
     'beneficiaries-rt': 'RT',
     'beneficiaries-rw': 'RW',
-    'beneficiaries-income-before': 'Penghasilan Sebelum Covid',
-    'beneficiaries-income-after': 'Penghasilan Sesudah Covid',
+    'beneficiaries-kk': 'Nomor KK',
+    'beneficiaries-income-before': 'Penghasilan Sebelum COVID-19',
+    'beneficiaries-income-after': 'Penghasilan Sesudah COVID-19',
     'beneficiaries-verivication': 'Verifikasi Bansos',
     'beneficiaries-edit': 'Edit Bansos',
     'beneficiaries-detail': 'Detail Bansos',
@@ -907,7 +910,7 @@ export default {
     'beneficiaries-verified': 'Terverifikasi',
     'beneficiaries-unverified': 'Belum Terverifikasi',
     'beneficiaries-detail-bansos': 'Detail Calon Penerima Bantuan',
-    'beneficiaries-domicile-kabkota': 'Kota/Kabupaten',
+    'beneficiaries-domicile-kabkota': 'Kabupaten/Kota',
     'beneficiaries-domicile-kecamatan': 'Kecamatan',
     'beneficiaries-domicile-kelurahan': 'Kelurahan',
     'beneficiaries-total-family': 'Jumlah Anggota Keluarga',
@@ -971,12 +974,26 @@ export default {
     'beneficiaries-note-verification-content': 'Di Halaman ini, Anda dapat melihat daftar warga calon penerima bantuan dan melakukan verifikasi calon penerima bantuan yang ada di Kelurahan Anda.',
     'beneficiaries-dashboard-alert': 'Proses Verifikasi dan Validasi Data Penerima Bansos PERIODE 2 belum dibuka!',
     'beneficiaries-upload-allocation-data': 'Upload Data Alokasi Bantuan',
+
     'beneficiaries-note-approved-title': 'Data penerima bantuan sosial yang sudah disetujui Desa/Kelurahan',
     'beneficiaries-notes-display-approved': 'Halaman ini menampilkan data penerima bantuan sosial yang sudah disetujui oleh Desa/Kelurahan',
     'beneficiaries-note-approved-content': 'Data di bawah ini telah dipisahkan berdasarkan kategori data yang sudah disetujui Desa/Kelurahan. Data yang sudah disetujui Desa/Kelurahan merupakan data yang sudah diverifikasi RW dan mendapatkan persetujuan Desa/Kelurahan dan memenuhi kelayakan dalam menerima bantuan sosial.',
+    'beneficiaries-note-approved-title-kec': 'Data penerima bantuan sosial yang sudah disetujui Kecamatan',
+    'beneficiaries-notes-display-approved-kec': 'Halaman ini menampilkan data penerima bantuan sosial yang sudah disetujui oleh Kecamatan',
+    'beneficiaries-note-approved-content-kec': 'Data di bawah ini telah dipisahkan berdasarkan kategori data yang sudah disetujui Kecamatan. Data yang sudah disetujui Kecamatan merupakan data yang sudah diverifikasi RW dan mendapatkan persetujuan Desa/Kelurahan dan Kecamatan serta memenuhi kelayakan dalam menerima bantuan sosial.',
+    'beneficiaries-note-approved-title-kabkota': 'Data penerima bantuan sosial yang sudah disetujui Kabupaten/Kota',
+    'beneficiaries-notes-display-approved-kabkota': 'Halaman ini menampilkan data penerima bantuan sosial yang sudah disetujui oleh Kabupaten/Kota',
+    'beneficiaries-note-approved-content-kabkota': 'Data di bawah ini telah dipisahkan berdasarkan kategori data yang sudah disetujui Kabupaten/Kota. Data yang sudah disetujui Kabupaten/Kota merupakan data yang sudah diverifikasi RW dan mendapatkan persetujuan Desa/Kelurahan, Kecamatan dan Kabupaten/Kota serta memenuhi kelayakan dalam menerima bantuan sosial.',
+
     'beneficiaries-note-pending-title': 'Data penerima bantuan sosial yang belum disetujui Desa/Kelurahan',
     'beneficiaries-notes-display-pending': 'Halaman ini menampilkan data penerima bantuan sosial yang belum disetujui oleh Desa/Kelurahan',
     'beneficiaries-note-pending-content': 'Data di bawah ini telah dipisahkan berdasarkan kategori data yang belum disetujui Desa/Kelurahan. Data yang belum disetujui Desa/Kelurahan merupakan data yang sudah diverifikasi RW dan belum mendapatkan persetujuan Desa/Kelurahan untuk memenuhi kelayakan dalam menerima bantuan sosial.',
+    'beneficiaries-note-pending-title-kec': 'Data penerima bantuan sosial yang belum disetujui Kecamatan',
+    'beneficiaries-notes-display-pending-kec': 'Halaman ini menampilkan data penerima bantuan sosial yang belum disetujui oleh Kecamatan',
+    'beneficiaries-note-pending-content-kec': 'Data di bawah ini telah dipisahkan berdasarkan kategori data yang belum disetujui Kecamatan. Data yang belum disetujui Kecamatan merupakan data yang sudah diverifikasi RW dan telah mendapatkan persetujuan oleh Desa/Kelurahan tapi belum mendapatkan persetujuan Kecamatan untuk memenuhi kelayakan dalam menerima bantuan sosial.',
+    'beneficiaries-note-pending-title-kabkota': 'Data penerima bantuan sosial yang belum disetujui Kabupaten/Kota',
+    'beneficiaries-notes-display-pending-kabkota': 'Halaman ini menampilkan data penerima bantuan sosial yang belum disetujui oleh Kabupaten/Kota',
+    'beneficiaries-note-pending-content-kabkota': 'Data di bawah ini telah dipisahkan berdasarkan kategori data yang belum disetujui Kabupaten/Kota. Data yang belum disetujui Kabupaten/Kota merupakan data yang sudah diverifikasi RW dan telah mendapatkan persetujuan oleh Desa/Kelurahan dan Kecamatan tapi belum mendapatkan persetujuan Kabupaten/Kota untuk memenuhi kelayakan dalam menerima bantuan sosial.',
 
     'beneficiaries-download-search': 'Cari',
     'beneficiaries-download-list': 'Data',
@@ -988,6 +1005,8 @@ export default {
     'beneficiaries-download-new-proposal': 'Usulan Baru',
     'beneficiaries-download-bnba-document': 'Dokumen BNBA Penerima Bansos',
     'beneficiaries-select-subdistrict-alert': 'Silakan Pilih Kecamatan',
+    'beneficiaries-download-start-title-alert': 'Terima Kasih Sudah Mengunduh!',
+    'beneficiaries-download-start-description-alert': 'Data akan dikirim ke e-mail yang Anda daftarkan. Mohon cek kotak masuk e-mail Anda. Apabila belum menerima e-mail setelah 1x24 jam, hubungi hotline Sapawarga di 081212124203.',
 
     'beneficiaries-bnba-detail-popup-title': 'Detail Penerima Bantuan',
     'beneficiaries-document': 'Dokumen Pendukung',
@@ -998,7 +1017,12 @@ export default {
     'beneficiaries-complaint-detail-sub-title': 'Detail Orang yang Diadukan',
     'beneficiaries-complaint-Identity': 'Identitas',
     'beneficiaries-complaint-reason': 'Alasan Dilaporkan',
-    'beneficiaries-complaint-report': 'Data Pelapor'
+    'beneficiaries-complaint-report': 'Data Pelapor',
+
+    'beneficiaries-info-personal': 'Informasi Penerima Bantuan',
+    'beneficiaries-info-income': 'Informasi Penghasilan',
+    'beneficiaries-job-status': 'Status Kedudukan dalam Pekerjaan',
+    'beneficiaries-info-domicile': 'Domisili Saat Ini'
   },
   news: {
     'news-url': 'URL Berita',
@@ -1036,19 +1060,35 @@ export default {
     'news-content-invalid': 'Konten Berita yang diisi tidak valid'
   },
   importDataManual: {
-    'title': 'Import manual data calon penerima Bantuan <br> Sosial',
-    'title-guide': 'Panduan Input Data Calon Penerima Bantuan <br> Sosial',
-    'desc-guide': '<ol> <li><b>Download<b /> template file Excel.xlsx untuk melihat format Input Data</b></li> <li>Mengisi kolom dengan data yang benar, kolom berwarna hijau wajib untuk diisi.</li> <li>Save dengan format .xlsx</li> <li>Pilih file Excel.xlsx yang akan diupload</li> <li>klik tombol Upload</li> </ol>',
+    'title': 'Impor manual data calon penerima Bantuan <br> Sosial',
+    'title-guide': 'Panduan Impor Data Calon Penerima Bantuan <br> Sosial',
+    'desc-guide': '<ol> <li><b>Download<b /> file template berformat Excel (.xlsx) untuk melihat format input data.</b></li> <li>Isi kolom dengan data yang benar. Kolom berwarna hijau WAJIB diisi.</li> <li>Save file dengan format .xlsx.</li> <li>Pilih file .xlsx yang akan diunggah.</li> <li>Klik tombol import.</li> </ol>',
     'desc': 'Sekarang Anda dapat melakukan input calon penerima bantuan sosial secara manual, sehingga dapat membantu kami lebih baik lagi untuk memperbaiki perlayanan di Sapawarga',
-    'btn-import': 'IMPORT SEKARANG',
+    'btn-import': 'IMPOR SEKARANG',
     'btn-guide': 'LIHAT PANDUAN',
     'btn-download': 'Unduh Template Excel',
-    'tbl-title': 'Riwayat Import Data Manual',
+    'tbl-title': 'Riwayat Impor Data Manual',
     'title-upload': 'Upload Data Input Manual',
-    'desc-upload': 'Untuk upload data input manual harus memakai format Excel (.xls)',
-    'upload-btn': 'IMPORT SEKARANG',
+    'desc-upload': 'Untuk upload data input manual harus memakai format Excel (.xlsx)',
+    'upload-btn': 'IMPOR SEKARANG',
     'btn-choice': 'Pilih File yang akan diupload',
-    'upload': 'Upload'
+    'upload': 'Upload',
+
+    'title-import': 'Impor Data Input Manual',
+    'desc-import': 'Untuk impor data input manual harus memakai format Excel (.xlsx)',
+    'import-btn': 'IMPOR SEKARANG',
+    'btn-import-choice': 'Pilih File yang akan diimpor',
+    'import': 'Impor',
+
+    'history-import-file-name': 'Nama FIle',
+    'history-import-status': 'Status',
+    'history-import-created-at': 'Waktu Impor',
+    'history-import-action': 'Aksi',
+
+    'history-import-status-start': 'Impor Dimulai',
+    'history-import-status-success': 'Sukses',
+    'history-import-status-upload-failed': 'Gagal Upload',
+    'history-import-status-invalid-file': 'File Tidak Sesuai Template'
 
   }
 }

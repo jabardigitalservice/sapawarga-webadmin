@@ -3,13 +3,12 @@
     <el-row>
       <el-col :lg="24">
         <DashboardTitle :is-dashboard="true" />
-        <div>
+        <!-- component dashboard statistik di hidden untuk sementara -->
+        <!-- <div>
           <el-button type="primary" class="button-step">Tahap 1</el-button>
           <el-button class="button-step" @click="open">Tahap 2</el-button>
         </div>
-        <!-- {{ user }} -->
-        <!-- show statistics -->
-        <DashboardStatistics :is-loading="isLoadingSummary" :summery="dataSummary" :filter="filter" />
+        <DashboardStatistics :is-loading="isLoadingSummary" :summery="dataSummary" :filter="filter" />-->
 
         <!-- upload data manual -->
         <UploadDataManual v-if="checkPermission([RolesUser.STAFFKABKOTA, RolesUser.STAFFKEC])" />
@@ -17,9 +16,7 @@
         <el-card class="box-card" style="margin-bottom: 10px">
           <el-form>
             <el-row :gutter="10">
-              <el-col v-if="!roles" :xs="{span:24, tag:'mb-10'}" :sm="24" :md="3">
-                Filter Data
-              </el-col>
+              <el-col v-if="!roles" :xs="{span:24, tag:'mb-10'}" :sm="24" :md="3">Filter Data</el-col>
               <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="12">
                 <input-filter-area-bps
                   :parent-id="filterAreaParentId"
@@ -48,80 +45,102 @@
           </el-form>
         </el-card>
 
-        <button v-if="prevFilter.length" class="el-button el-button--primary el-button--small" @click="backDetail(prevFilter)">
-          <i class="el-icon-arrow-left" /> Kembali ke Data {{ prevFilter.length-1 ? prevFilter[prevFilter.length-2].name : 'Utama' }}
+        <button
+          v-if="prevFilter.length"
+          class="el-button el-button--primary el-button--small"
+          @click="backDetail(prevFilter)"
+        >
+          <i class="el-icon-arrow-left" />
+          Kembali ke Data {{ prevFilter.length-1 ? prevFilter[prevFilter.length-2].name : 'Utama' }}
         </button>
         <h3>Rekap Data {{ prevFilter.length ? prevFilter[prevFilter.length-1].name : '' }}</h3>
-        <el-table v-loading="listLoading" :data="sortedList" border stripe highlight-current-row style="width: 100%" @sort-change="changeSort">
+        <el-table
+          v-loading="listLoading"
+          :data="sortedList"
+          border
+          stripe
+          highlight-current-row
+          style="width: 100%"
+          @sort-change="changeSort"
+        >
           <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
 
-          <el-table-column prop="name" sortable="custom" :label="areaLabelByFilter" min-width="200px">
+          <el-table-column
+            prop="name"
+            sortable="custom"
+            :label="areaLabelByFilter"
+            min-width="200px"
+          >
             <template slot-scope="{row}">
-              <span style="cursor: pointer; color: blue" @click="openDetail(row.code_bps, row.rw, row.name, row)">{{ row.name }}</span>
+              <span
+                style="cursor: pointer; color: blue"
+                @click="openDetail(row.code_bps, row.rw, row.name, row)"
+              >{{ row.name }}</span>
             </template>
           </el-table-column>
-          <!-- <el-table-column prop="data.approved_kabkota" align="right" sortable="custom" :label="$t('label.beneficiaries-verified-kabkota')" min-width="180px">
+          <el-table-column
+            prop="data.approved"
+            align="right"
+            sortable="custom"
+            :label="$t('label.beneficiaries-verified-rw')"
+            min-width="180px"
+          >
             <template slot-scope="{row}">
-              <span v-if="row.data.approved_kabkota" style="float: left">
-                ({{ formatNumber(percentage(row.data.approved_kabkota, getTotalBenefeciaries(row.data))) }}%)
-              </span>
-              {{ formatThousands(row.data.approved_kabkota) }}
-            </template>
-          </el-table-column>
-          <el-table-column prop="data.approved_kec" align="right" sortable="custom" :label="$t('label.beneficiaries-verified-kec')" min-width="180px">
-            <template slot-scope="{row}">
-              <span v-if="row.data.approved_kec" style="float: left">
-                ({{ formatNumber(percentage(row.data.approved_kec, getTotalBenefeciaries(row.data))) }}%)
-              </span>
-              {{ formatThousands(row.data.approved_kec) }}
-            </template>
-          </el-table-column>
-          <el-table-column prop="data.approved_kel" align="right" sortable="custom" :label="$t('label.beneficiaries-verified-kel')" min-width="180px">
-            <template slot-scope="{row}">
-              <span v-if="row.data.approved_kel" style="float: left">
-                ({{ formatNumber(percentage(row.data.approved_kel, getTotalBenefeciaries(row.data))) }}%)
-              </span>
-              {{ formatThousands(row.data.approved_kel) }}
-            </template>
-          </el-table-column> -->
-          <el-table-column prop="data.approved" align="right" sortable="custom" :label="$t('label.beneficiaries-verified-rw')" min-width="180px">
-            <template slot-scope="{row}">
-              <span v-if="getApproved(row.data)" style="float: left">
-                ({{ formatNumber(percentage(getApproved(row.data), getTotalBenefeciaries(row.data))) }}%)
-              </span>
+              <span
+                v-if="getApproved(row.data)"
+                style="float: left"
+              >({{ formatNumber(percentage(getApproved(row.data), getTotalBenefeciaries(row.data))) }}%)</span>
               {{ formatThousands(getApproved(row.data)) }}
             </template>
           </el-table-column>
-          <el-table-column prop="data.pending" align="right" sortable="custom" :label="$t('label.beneficiaries-unverified')" min-width="180px">
+          <el-table-column
+            prop="data.pending"
+            align="right"
+            sortable="custom"
+            :label="$t('label.beneficiaries-unverified')"
+            min-width="180px"
+          >
             <template slot-scope="{row}">
-              <span v-if="getPending(row.data)" style="float: left">
-                ({{ formatNumber(percentage(getPending(row.data), getTotalBenefeciaries(row.data))) }}%)
-              </span>
+              <span
+                v-if="getPending(row.data)"
+                style="float: left"
+              >({{ formatNumber(percentage(getPending(row.data), getTotalBenefeciaries(row.data))) }}%)</span>
               {{ formatThousands(getPending(row.data)) }}
             </template>
           </el-table-column>
-          <el-table-column prop="data.reject" align="right" sortable="custom" :label="$t('label.beneficiaries-reject')" min-width="180px">
+          <el-table-column
+            prop="data.reject"
+            align="right"
+            sortable="custom"
+            :label="$t('label.beneficiaries-reject')"
+            min-width="180px"
+          >
             <template slot-scope="{row}">
-              <span v-if="getReject(row.data)" style="float: left">
-                ({{ formatNumber(percentage(getReject(row.data), getTotalBenefeciaries(row.data))) }}%)
-              </span>
+              <span
+                v-if="getReject(row.data)"
+                style="float: left"
+              >({{ formatNumber(percentage(getReject(row.data), getTotalBenefeciaries(row.data))) }}%)</span>
               {{ formatThousands(getReject(row.data)) }}
             </template>
           </el-table-column>
-          <el-table-column prop="data_baru.total" align="right" sortable="custom" :label="$t('label.beneficiaries-newdata')" min-width="180px">
+          <el-table-column
+            prop="data_baru.total"
+            align="right"
+            sortable="custom"
+            :label="$t('label.beneficiaries-newdata')"
+            min-width="180px"
+          >
             <template slot-scope="{row}">
-              <span v-if="row.data_baru && row.data_baru.total" style="float: left">
-                ({{ formatNumber(percentage(row.data_baru.total, getTotalBenefeciaries(row.data))) }}%)
-              </span>
+              <span
+                v-if="row.data_baru && row.data_baru.total"
+                style="float: left"
+              >({{ formatNumber(percentage(row.data_baru.total, getTotalBenefeciaries(row.data))) }}%)</span>
               {{ row.data_baru ? formatThousands(row.data_baru.total) : '-' }}
             </template>
           </el-table-column>
-
         </el-table>
-
       </el-col>
     </el-row>
-    {{ roles }}
   </div>
 </template>
 
@@ -130,7 +149,8 @@ import { formatNumber } from '@/utils/formatNumber'
 import { fetchDashboardSummary, fetchDashboardList } from '@/api/beneficiaries'
 import { RolesUser } from '@/utils/constantVariable'
 import { mapGetters } from 'vuex'
-import DashboardStatistics from './components/DashboardStatistics'
+// component di hidden untuk sementara
+// import DashboardStatistics from './components/DashboardStatistics'
 import UploadDataManual from './components/UploadDataManual/index'
 import checkPermission from '@/utils/permission'
 import InputFilterAreaBps from '@/components/InputFilterAreaBps'
@@ -141,7 +161,8 @@ export default {
   components: {
     InputFilterAreaBps,
     JsonExcel,
-    DashboardStatistics,
+    // component di hidden untuk sementara
+    // DashboardStatistics,
     UploadDataManual,
     DashboardTitle
   },
@@ -229,58 +250,34 @@ export default {
       const getReject = this.getReject
       const getTotalBenefeciaries = this.getTotalBenefeciaries
       const percentage = this.percentage
+      const getCompareOrder = this.getCompareOrder
       function compare(a, b) {
-        // if (prop === 'data.approved_kabkota') {
-        //   if (percentage(a.data.approved_kabkota, getTotalBenefeciaries(a.data)) < percentage(b.data.approved_kabkota, getTotalBenefeciaries(b.data))) {
-        //     return order === 'ascending' ? -1 : 1
-        //   }
-        //   if (percentage(a.data.approved_kabkota, getTotalBenefeciaries(a.data)) > percentage(b.data.approved_kabkota, getTotalBenefeciaries(b.data))) {
-        //     return order === 'ascending' ? 1 : -1
-        //   }
-        // } else if (prop === 'data.approved_kec') {
-        //   if (percentage(a.data.approved_kec, getTotalBenefeciaries(a.data)) < percentage(b.data.approved_kec, getTotalBenefeciaries(b.data))) {
-        //     return order === 'ascending' ? -1 : 1
-        //   }
-        //   if (percentage(a.data.approved_kec, getTotalBenefeciaries(a.data)) > percentage(b.data.approved_kec, getTotalBenefeciaries(b.data))) {
-        //     return order === 'ascending' ? 1 : -1
-        //   }
-        // } else if (prop === 'data.approved_kel') {
-        //   if (percentage(a.data.approved_kel, getTotalBenefeciaries(a.data)) < percentage(b.data.approved_kel, getTotalBenefeciaries(b.data))) {
-        //     return order === 'ascending' ? -1 : 1
-        //   }
-        //   if (percentage(a.data.approved_kel, getTotalBenefeciaries(a.data)) > percentage(b.data.approved_kel, getTotalBenefeciaries(b.data))) {
-        //     return order === 'ascending' ? 1 : -1
-        //   }
         if (prop === 'data.approved') {
-          if (percentage(getApproved(a.data), getTotalBenefeciaries(a.data)) < percentage(getApproved(b.data), getTotalBenefeciaries(b.data))) {
-            return order === 'ascending' ? -1 : 1
-          }
-          if (percentage(getApproved(a.data), getTotalBenefeciaries(a.data)) > percentage(getApproved(b.data), getTotalBenefeciaries(b.data))) {
-            return order === 'ascending' ? 1 : -1
-          }
+          return getCompareOrder(
+            percentage(getApproved(a.data), getTotalBenefeciaries(a.data)),
+            percentage(getApproved(b.data), getTotalBenefeciaries(b.data)),
+            order
+          )
         } else if (prop === 'data_baru.total') {
           var a_data_baru_total = a.data_baru ? a.data_baru.total || 0 : 0
           var b_data_baru_total = b.data_baru ? b.data_baru.total || 0 : 0
-          if (percentage(a_data_baru_total, getTotalBenefeciaries(a.data)) < percentage(b_data_baru_total, getTotalBenefeciaries(b.data))) {
-            return order === 'ascending' ? -1 : 1
-          }
-          if (percentage(a_data_baru_total, getTotalBenefeciaries(a.data)) > percentage(b_data_baru_total, getTotalBenefeciaries(b.data))) {
-            return order === 'ascending' ? 1 : -1
-          }
+          return getCompareOrder(
+            percentage(a_data_baru_total, getTotalBenefeciaries(a.data)),
+            percentage(b_data_baru_total, getTotalBenefeciaries(b.data)),
+            order
+          )
         } else if (prop === 'data.pending') {
-          if (percentage(getPending(a.data), getTotalBenefeciaries(a.data)) < percentage(getPending(b.data), getTotalBenefeciaries(b.data))) {
-            return order === 'ascending' ? -1 : 1
-          }
-          if (percentage(getPending(a.data), getTotalBenefeciaries(a.data)) > percentage(getPending(b.data), getTotalBenefeciaries(b.data))) {
-            return order === 'ascending' ? 1 : -1
-          }
+          return getCompareOrder(
+            percentage(getPending(a.data), getTotalBenefeciaries(a.data)),
+            percentage(getPending(b.data), getTotalBenefeciaries(b.data)),
+            order
+          )
         } else if (prop === 'data.reject') {
-          if (percentage(getReject(a.data), getTotalBenefeciaries(a.data)) < percentage(getReject(b.data), getTotalBenefeciaries(b.data))) {
-            return order === 'ascending' ? -1 : 1
-          }
-          if (percentage(getReject(a.data), getTotalBenefeciaries(a.data)) > percentage(getReject(b.data), getTotalBenefeciaries(b.data))) {
-            return order === 'ascending' ? 1 : -1
-          }
+          return getCompareOrder(
+            percentage(getReject(a.data), getTotalBenefeciaries(a.data)),
+            percentage(getReject(b.data), getTotalBenefeciaries(b.data)),
+            order
+          )
         } else {
           if (a[prop] < b[prop]) {
             return order === 'ascending' ? -1 : 1
@@ -292,7 +289,7 @@ export default {
         return 0
       }
       if (this.list) {
-        return this.list.map((x) => x).sort(compare)
+        return this.list.map(x => x).sort(compare)
       } else {
         return []
       }
@@ -307,14 +304,25 @@ export default {
   methods: {
     checkPermission,
     formatNumber,
+    getCompareOrder(data1, data2, order) {
+      if (data1 < data2) {
+        return order === 'ascending' ? -1 : 1
+      }
+      if (data1 > data2) {
+        return order === 'ascending' ? 1 : -1
+      }
+    },
     percentage(val, denom) {
       if (denom) {
-        return val / denom * 100
+        return (val / denom) * 100
       }
       return 0
     },
     resetParams() {
-      if (this.user.roles_active.id === 'staffProv' || this.user.roles_active.id === 'admin') {
+      if (
+        this.user.roles_active.id === 'staffProv' ||
+        this.user.roles_active.id === 'admin'
+      ) {
         this.filter.type = 'provinsi'
         this.filter.code_bps = '32'
       }
@@ -405,44 +413,65 @@ export default {
       // }
       this.exportFields[this.$t('label.beneficiaries-verified-rw')] = {
         field: 'data',
-        callback: (data) => {
+        callback: data => {
           return this.getApproved(data)
         }
       }
       this.exportFields['Persentase Terverifikasi %'] = {
         field: 'data',
-        callback: (data) => {
-          return this.formatNumber(this.percentage(this.getApproved(data), this.getTotalBenefeciaries(data)))
+        callback: data => {
+          return this.formatNumber(
+            this.percentage(
+              this.getApproved(data),
+              this.getTotalBenefeciaries(data)
+            )
+          )
         }
       }
       this.exportFields[this.$t('label.beneficiaries-unverified')] = {
         field: 'data',
-        callback: (data) => {
+        callback: data => {
           return this.getPending(data)
         }
       }
       this.exportFields['Persentase Belum Terverifikasi %'] = {
         field: 'data',
-        callback: (data) => {
-          return this.formatNumber(this.percentage(this.getPending(data), this.getTotalBenefeciaries(data)))
+        callback: data => {
+          return this.formatNumber(
+            this.percentage(
+              this.getPending(data),
+              this.getTotalBenefeciaries(data)
+            )
+          )
         }
       }
       this.exportFields[this.$t('label.beneficiaries-reject')] = {
         field: 'data',
-        callback: (data) => {
+        callback: data => {
           return this.getReject(data)
         }
       }
       this.exportFields['Persentase Ditolak %'] = {
         field: 'data',
-        callback: (data) => {
-          return this.formatNumber(this.percentage(this.getReject(data), this.getTotalBenefeciaries(data)))
+        callback: data => {
+          return this.formatNumber(
+            this.percentage(
+              this.getReject(data),
+              this.getTotalBenefeciaries(data)
+            )
+          )
         }
       }
-      this.exportFields[this.$t('label.beneficiaries-newdata')] = 'data_baru.total'
+      this.exportFields[this.$t('label.beneficiaries-newdata')] =
+        'data_baru.total'
       this.exportFields['Persentase Data Usulan Baru %'] = {
-        callback: (row) => {
-          return this.formatNumber(this.percentage(row.data_baru.total, this.getTotalBenefeciaries(row.data)))
+        callback: row => {
+          return this.formatNumber(
+            this.percentage(
+              row.data_baru.total,
+              this.getTotalBenefeciaries(row.data)
+            )
+          )
         }
       }
     },
@@ -453,7 +482,7 @@ export default {
     },
 
     getTableRowNumbering(index) {
-      return (index + 1)
+      return index + 1
     },
 
     formatThousands(value, prefix) {
@@ -509,13 +538,15 @@ export default {
     },
 
     getApproved(data) {
-      return data.approved +
+      return (
+        data.approved +
         data.rejected_kel +
         data.approved_kel +
         data.rejected_kec +
         data.approved_kec +
         data.rejected_kabkota +
         data.approved_kabkota
+      )
     },
     getPending(data) {
       return data.pending
@@ -524,7 +555,9 @@ export default {
       return data.rejected
     },
     getTotalBenefeciaries(data) {
-      return this.getApproved(data) + this.getPending(data) + this.getReject(data)
+      return (
+        this.getApproved(data) + this.getPending(data) + this.getReject(data)
+      )
     },
     open() {
       this.$alert(this.$t('label.beneficiaries-dashboard-alert'), {
@@ -536,7 +569,7 @@ export default {
 }
 </script>
 <style lang="scss" scope>
-  .button-step {
-    padding: 13px 40px;
-  }
+.button-step {
+  padding: 13px 40px;
+}
 </style>

@@ -63,11 +63,9 @@
 
           <el-table-column header-align="center" :label="$t('label.actions')" width="200px" :cell-style="marginLeft">
             <template slot-scope="scope">
-              <router-link :to="'/beneficiaries/detail/' +scope.row.id">
-                <el-tooltip :content="$t('label.beneficiaries-detail')" placement="top">
-                  <el-button type="primary" icon="el-icon-view" size="small" />
-                </el-tooltip>
-              </router-link>
+              <el-tooltip :content="$t('label.beneficiaries-detail')" placement="top">
+                <el-button type="primary" icon="el-icon-view" size="small" @click="getDetail(scope.row.id)" />
+              </el-tooltip>
               <el-tooltip v-if="scope.row.status_verification !== 1" :content="$t('label.beneficiaries-edit')" placement="top">
                 <el-button type="warning" icon="el-icon-edit" size="small" @click="accessBlock('edit/' + scope.row.id)" />
               </el-tooltip>
@@ -116,6 +114,20 @@
         <span slot="title" class="dialog-title">Perbaharui Data Domisili Calon Penerima Bantuan</span>
         <FormPersonal :beneficiaries="beneficiaries" :is-edit-domicile="true" :is-edit="true" :is-create="false" :disable-field="false" @closeDialog="closeDialog" />
       </el-dialog>
+      <el-dialog
+        :visible.sync="isDetail"
+        width="80%"
+        :close-on-click-modal="false"
+        custom-class="dialog-custome"
+        :modal-append-to-body="false"
+        :append-to-body="true"
+        top="5vh"
+        style="margin-bottom: 30px"
+      >
+        <span slot="title" class="dialog-title detail-title" style="margin: 0; padding: 0">Detail Penerima Bantuan</span>
+        <hr class="line-separator">
+        <Preview :id-detail="idDetail" @closeDialog="closeDetail" />
+      </el-dialog>
     </el-row>
   </div>
 </template>
@@ -126,6 +138,7 @@ import DashboardTitle from './components/DashboardTitle'
 import { RolesUser } from '@/utils/constantVariable'
 import UploadDataManual from './components/UploadDataManual/index'
 import FormPersonal from './components/FormPersonal'
+import Preview from './components/Preview'
 import Pagination from '@/components/Pagination'
 import Statistics from './components/Statistics'
 import ListFilter from './_listfilter'
@@ -133,7 +146,15 @@ import checkPermission from '@/utils/permission'
 import { mapGetters } from 'vuex'
 
 export default {
-  components: { Pagination, Statistics, ListFilter, FormPersonal, DashboardTitle, UploadDataManual },
+  components: {
+    Preview,
+    Pagination,
+    Statistics,
+    ListFilter,
+    FormPersonal,
+    DashboardTitle,
+    UploadDataManual
+  },
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -157,7 +178,9 @@ export default {
       total: 0,
       dialogVisible: false,
       isEditDomicile: false,
+      isDetail: false,
       isLoadingSummary: true,
+      idDetail: null,
       dataSummary: null,
       listLoading: true,
       beneficiaries: null,
@@ -219,6 +242,15 @@ export default {
 
     closeDialog(value) {
       this.isEditDomicile = value
+    },
+
+    getDetail(value) {
+      this.isDetail = true
+      this.idDetail = value
+    },
+
+    closeDetail() {
+      this.isDetail = false
     },
 
     accessBlock(value) {
@@ -285,6 +317,22 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+  .line-separator {
+    margin: 0 -20px;
+    border: .1px solid #e6ebf5;
+  }
+
+  .dialog-custome {
+    background: transparent;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .detail-title {
+    color: #606266;
+  }
+
   .dialog-title {
     font-weight: bold;
     text-align: left;
