@@ -3,12 +3,16 @@
     <el-row>
       <el-col :lg="24">
         <DashboardTitle :is-dashboard="true" />
-        <!-- component dashboard statistik di hidden untuk sementara -->
         <!-- <div>
           <el-button type="primary" class="button-step">Tahap 1</el-button>
           <el-button class="button-step" @click="open">Tahap 2</el-button>
-        </div>
-        <DashboardStatistics :is-loading="isLoadingSummary" :summery="dataSummary" :filter="filter" />-->
+        </div>-->
+
+        <DashboardStatistics
+          :is-loading="isLoadingSummary"
+          :summery="dataSummary"
+          :filter="filter"
+        />
 
         <!-- upload data manual -->
         <UploadDataManual v-if="checkPermission([RolesUser.STAFFKABKOTA, RolesUser.STAFFKEC])" />
@@ -149,8 +153,7 @@ import { formatNumber } from '@/utils/formatNumber'
 import { fetchDashboardSummary, fetchDashboardList } from '@/api/beneficiaries'
 import { RolesUser } from '@/utils/constantVariable'
 import { mapGetters } from 'vuex'
-// component di hidden untuk sementara
-// import DashboardStatistics from './components/DashboardStatistics'
+import DashboardStatistics from './components/DashboardStatistics'
 import UploadDataManual from './components/UploadDataManual/index'
 import checkPermission from '@/utils/permission'
 import InputFilterAreaBps from '@/components/InputFilterAreaBps'
@@ -161,8 +164,7 @@ export default {
   components: {
     InputFilterAreaBps,
     JsonExcel,
-    // component di hidden untuk sementara
-    // DashboardStatistics,
+    DashboardStatistics,
     UploadDataManual,
     DashboardTitle
   },

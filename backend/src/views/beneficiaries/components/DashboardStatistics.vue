@@ -1,5 +1,6 @@
 <template>
   <el-row :gutter="24">
+    <!-- untuk sementara di hide -->
     <!-- <el-col :xs="24" :sm="8" :md="6" :lg="6" :xl="6">
       <div class="grid-content">
         <div class="stat-title">APPROVAL KAB/KOTA</div>
@@ -55,78 +56,112 @@
         <div v-if="!isLoading" class="stat-count color-sw-green">{{ summery.approved ? formatNumber(summery.approved) : '-' }}</div>
         <div v-if="!isLoading" class="stat-count color-sw-green">{{ formatNumber(percentage(summery.approved)) }} %</div>
       </div>
-    </el-col> -->
+    </el-col>-->
     <el-col :xs="24" :sm="8" :md="6" :lg="4" :xl="4">
       <div class="grid-content">
-        <div class="stat-title">TOTAL PENERIMA</div>
-        <!-- show loading -->
         <div
-          v-loading="isLoading"
-          class="icon-loading"
-          element-loading-spinner="el-icon-loading"
-        />
+          class="stat-title"
+        >{{ $t('label.beneficiaries-dashboard-total-recipient').toUpperCase() }}</div>
+        <!-- show loading -->
+        <div v-loading="isLoading" class="icon-loading" element-loading-spinner="el-icon-loading" />
         <!-- show data -->
-        <div v-if="!isLoading" class="total color-sw-blue">{{ getTotalBenefeciaries ? formatNumber(getTotalBenefeciaries) : '-' }}</div>
+        <div
+          v-if="!isLoading"
+          class="total color-sw-blue"
+        >{{ getTotalBenefeciaries ? formatNumber(getTotalBenefeciaries) : '-' }}</div>
       </div>
     </el-col>
     <el-col :xs="24" :sm="8" :md="6" :lg="5" :xl="5">
       <div class="grid-content">
-        <div class="stat-title shadow">TERVERIFIKASI</div>
-        <!-- show loading -->
         <div
-          v-loading="isLoading"
-          class="icon-loading"
-          element-loading-spinner="el-icon-loading"
-        />
+          class="stat-title shadow"
+        >{{ $t('label.beneficiaries-dashboard-verified').toUpperCase() }}</div>
+        <!-- show loading -->
+        <div v-loading="isLoading" class="icon-loading" element-loading-spinner="el-icon-loading" />
         <!-- show data -->
-        <span v-if="!isLoading" class="stat-count color-sw-green">{{ getApproved ? formatNumber(getApproved) : '-' }}</span>
-        <span v-if="!isLoading" class="stat-count color-sw-green" style="float: right">{{ formatNumber(percentage(getApproved)) }} %</span>
-        <el-progress class="progress" :text-inside="true" color="#27AE60" :stroke-width="18" :percentage="summery && summery.approved ? parseFloat(formatNumber(percentage(getApproved))) : 0" />
+        <span
+          v-if="!isLoading"
+          class="stat-count color-sw-green"
+        >{{ getApproved ? formatNumber(getApproved) : '-' }}</span>
+        <!-- untuk sementara di hide -->
+        <!-- <span v-if="!isLoading" class="stat-count color-sw-green" style="float: right">{{ formatNumber(percentage(getApproved)) }} %</span> -->
+        <!-- <el-progress class="progress" :text-inside="true" color="#27AE60" :stroke-width="18" :percentage="summery && summery.approved ? parseFloat(formatNumber(percentage(getApproved))) : 0" /> -->
       </div>
     </el-col>
     <el-col :xs="24" :sm="8" :md="6" :lg="5" :xl="5">
       <div class="grid-content">
-        <div class="stat-title shadow">BELUM TERVERIFIKASI</div>
-        <!-- show loading -->
         <div
-          v-loading="isLoading"
-          class="icon-loading"
-          element-loading-spinner="el-icon-loading"
-        />
+          class="stat-title shadow"
+        >{{ $t('label.beneficiaries-dashboard-not-verified').toUpperCase() }}</div>
+        <!-- show loading -->
+        <div v-loading="isLoading" class="icon-loading" element-loading-spinner="el-icon-loading" />
         <!-- show data -->
-        <span v-if="!isLoading" class="stat-count color-sw-orange">{{ getPending ? formatNumber(getPending) : '-' }}</span>
-        <span v-if="!isLoading" class="stat-count color-sw-orange" style="float: right">{{ formatNumber(percentage(getPending)) }} %</span>
-        <el-progress class="progress" :text-inside="true" color="#F2994A" :stroke-width="18" :percentage="summery && summery.pending ? parseFloat(formatNumber(percentage(getPending))) : 0" />
+        <span
+          v-if="!isLoading"
+          class="stat-count color-sw-orange"
+        >{{ getPending ? formatNumber(getPending) : '-' }}</span>
+        <!-- untuk sementara di hide -->
+        <!-- <span
+          v-if="!isLoading"
+          class="stat-count color-sw-orange"
+          style="float: right"
+        >{{ formatNumber(percentage(getPending)) }} %</span>
+        <el-progress
+          class="progress"
+          :text-inside="true"
+          color="#F2994A"
+          :stroke-width="18"
+          :percentage="summery && summery.pending ? parseFloat(formatNumber(percentage(getPending))) : 0"
+        />-->
       </div>
     </el-col>
     <el-col :xs="24" :sm="8" :md="6" :lg="5" :xl="5">
       <div class="grid-content">
-        <div class="stat-title">DITOLAK</div>
+        <div class="stat-title">{{ $t('label.beneficiaries-dashboard-rejected').toUpperCase() }}</div>
         <!-- show loading -->
-        <div
-          v-loading="isLoading"
-          class="icon-loading"
-          element-loading-spinner="el-icon-loading"
-        />
+        <div v-loading="isLoading" class="icon-loading" element-loading-spinner="el-icon-loading" />
         <!-- show data -->
-        <span v-if="!isLoading" class="stat-count color-sw-red">{{ getReject ? formatNumber(getReject) : '-' }}</span>
-        <span v-if="!isLoading" class="stat-count color-sw-red" style="float: right">{{ formatNumber(percentage(getReject)) }} %</span>
-        <el-progress class="progress" :text-inside="true" color="#EB5757" :stroke-width="18" :percentage="summery && summery.rejected ? parseFloat(formatNumber(percentage(getReject))) : 0" />
+        <span
+          v-if="!isLoading"
+          class="stat-count color-sw-red"
+        >{{ getReject ? formatNumber(getReject) : '-' }}</span>
+        <!-- untuk sementara di hide -->
+        <!-- <span
+          v-if="!isLoading"
+          class="stat-count color-sw-red"
+          style="float: right"
+        >{{ formatNumber(percentage(getReject)) }} %</span>
+        <el-progress
+          class="progress"
+          :text-inside="true"
+          color="#EB5757"
+          :stroke-width="18"
+          :percentage="summery && summery.rejected ? parseFloat(formatNumber(percentage(getReject))) : 0"
+        />-->
       </div>
     </el-col>
     <el-col :xs="24" :sm="8" :md="6" :lg="5" :xl="5">
       <div class="grid-content">
-        <div class="stat-title">DATA USULAN BARU</div>
+        <div class="stat-title">{{ $t('label.beneficiaries-dashboard-new-proposal').toUpperCase() }}</div>
         <!-- show loading -->
-        <div
-          v-loading="isLoading"
-          class="icon-loading"
-          element-loading-spinner="el-icon-loading"
-        />
+        <div v-loading="isLoading" class="icon-loading" element-loading-spinner="el-icon-loading" />
         <!-- show data -->
-        <span v-if="!isLoading" class="stat-count color-sw-blue">{{ summery.baru && summery.baru.total ? formatNumber(summery.baru.total) : '-' }}</span>
-        <span v-if="!isLoading" class="stat-count color-sw-blue" style="float: right">{{ summery.baru ? formatNumber(percentage(summery.baru.total)) : '' }} %</span>
-        <el-progress class="progress" :text-inside="true" :stroke-width="18" :percentage="summery && summery.baru ? parseFloat(formatNumber(percentage(summery.baru.total))) : 0" />
+        <span
+          v-if="!isLoading"
+          class="stat-count color-sw-blue"
+        >{{ summery.baru && summery.baru.total ? formatNumber(summery.baru.total) : '-' }}</span>
+        <!-- untuk sementara di hide -->
+        <!-- <span
+          v-if="!isLoading"
+          class="stat-count color-sw-blue"
+          style="float: right"
+        >{{ summery.baru ? formatNumber(percentage(summery.baru.total)) : '' }} %</span>
+        <el-progress
+          class="progress"
+          :text-inside="true"
+          :stroke-width="18"
+          :percentage="summery && summery.baru ? parseFloat(formatNumber(percentage(summery.baru.total))) : 0"
+        />-->
       </div>
     </el-col>
   </el-row>
@@ -155,13 +190,15 @@ export default {
   },
   computed: {
     getApproved() {
-      return this.summery.approved +
+      return (
+        this.summery.approved +
         this.summery.rejected_kel +
         this.summery.approved_kel +
         this.summery.rejected_kec +
         this.summery.approved_kec +
         this.summery.rejected_kabkota +
         this.summery.approved_kabkota
+      )
     },
     getPending() {
       return this.summery.pending
@@ -176,7 +213,7 @@ export default {
   methods: {
     percentage(val) {
       if (this.getTotalBenefeciaries && val) {
-        return val / this.getTotalBenefeciaries * 100
+        return (val / this.getTotalBenefeciaries) * 100
       }
       return 0
     },
@@ -200,7 +237,7 @@ export default {
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.04);
   padding: 15px;
   background: #ffff;
-  border: 1px solid #E1E5EE;
+  border: 1px solid #e1e5ee;
   box-sizing: border-box;
   border-radius: 8px;
 }
@@ -212,23 +249,22 @@ export default {
 .total {
   font-size: 28px;
   font-weight: bolder;
-  padding: 14px 0;
 }
 .stat-count {
   font-size: 20px;
   font-weight: bolder;
 }
 .color-sw-green {
-  color: #27AE60;
+  color: #27ae60;
 }
 .color-sw-orange {
-  color: #F2994A;
+  color: #f2994a;
 }
 .color-sw-red {
-  color: #EB5757;
+  color: #eb5757;
 }
 .color-sw-blue {
-  color: #2D9CDB;
+  color: #2d9cdb;
 }
 
 .progress {
