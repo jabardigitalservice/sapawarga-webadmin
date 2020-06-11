@@ -110,7 +110,6 @@ export default {
         domicile_rt: null,
         domicile_rw: null,
         sort_by: 'nik',
-        // sort_order: 'ascending',
         page: 1,
         limit: 10
       }
@@ -129,7 +128,6 @@ export default {
         this.list = response.data.items
         this.total = response.data._meta.totalCount
         this.isLoadingList = false
-        console.log(this.list)
       })
     },
     getTableRowNumbering(index) {

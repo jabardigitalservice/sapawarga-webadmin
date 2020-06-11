@@ -1,10 +1,10 @@
 <template>
   <div class="app-container">
-    <el-card class="box-card">
+    <el-card v-if="!isLoading" class="box-card">
       <div slot="header" class="clearfix">
         <span class="title-detail">{{ $t('label.beneficiaries-complaint-detail-title') }}</span>
       </div>
-      <div>
+      <div v-if="data.beneficiary">
         <span class="title-detail">{{ $t('label.beneficiaries-complaint-detail-sub-title') }}</span>
 
         <div class="pb-1">
@@ -15,11 +15,11 @@
           <el-row :gutter="24">
             <el-col :xs="24" :sm="8" :md="6" :lg="4" :xl="4">
               <p class="title-input">{{ $t('label.beneficiaries-nik') }}</p>
-              <span class="content-data">3200860009249665</span>
+              <span class="content-data">{{ data.beneficiary.nik }}</span>
             </el-col>
             <el-col :xs="24" :sm="8" :md="6" :lg="4" :xl="4">
               <p class="title-input">{{ $t('label.name') }}</p>
-              <span class="content-data">Agus Dadang</span>
+              <span class="content-data">{{ data.beneficiary.name }}</span>
             </el-col>
           </el-row>
         </div>
@@ -32,30 +32,30 @@
           <el-row :gutter="24" class="pb-0-5">
             <el-col :xs="24" :sm="8" :md="6" :lg="4" :xl="4">
               <p class="title-input">{{ $t('label.widget-province') }}</p>
-              <span class="content-data">Jawa Barat</span>
+              <span class="content-data">{{ data.beneficiary.province.name }}</span>
             </el-col>
             <el-col :xs="24" :sm="8" :md="6" :lg="4" :xl="4">
               <p class="title-input">{{ $t('label.beneficiaries-domicile-kabkota') }}</p>
-              <span class="content-data">Agus Dadang</span>
+              <span class="content-data">{{ data.beneficiary.domicile_kabkota_name.name }}</span>
             </el-col>
             <el-col :xs="24" :sm="8" :md="6" :lg="4" :xl="4">
               <p class="title-input">{{ $t('label.beneficiaries-domicile-kecamatan') }}</p>
-              <span class="content-data">Agus Dadang</span>
+              <span class="content-data">{{ data.beneficiary.domicile_kec_name.name }}</span>
             </el-col>
           </el-row>
 
           <el-row :gutter="24">
             <el-col :xs="24" :sm="8" :md="6" :lg="4" :xl="4">
               <p class="title-input">{{ $t('label.beneficiaries-domicile-kelurahan') }}</p>
-              <span class="content-data">Cisaranten Bina Harapan</span>
+              <span class="content-data">{{ data.beneficiary.domicile_kel_name.name }}</span>
             </el-col>
             <el-col :xs="24" :sm="8" :md="6" :lg="4" :xl="4">
               <p class="title-input">{{ $t('label.area-rw') }}</p>
-              <span class="content-data">001</span>
+              <span class="content-data">{{ data.beneficiary.domicile_rw }}</span>
             </el-col>
             <el-col :xs="24" :sm="8" :md="6" :lg="4" :xl="4">
               <p class="title-input">{{ $t('label.area-rt') }}</p>
-              <span class="content-data">012</span>
+              <span class="content-data">{{ data.beneficiary.domicile_rw }}</span>
             </el-col>
           </el-row>
         </div>
@@ -65,7 +65,7 @@
             <p class="header-section">{{ $t('label.beneficiaries-complaint-reason') }}</p>
           </div>
 
-          <span class="content-data">Sudah menerima bantuan lain</span>
+          <span class="content-data">{{ data.notes_reason }}</span>
         </div>
       </div>
 
@@ -81,15 +81,15 @@
           <el-row :gutter="24">
             <el-col :xs="24" :sm="8" :md="6" :lg="4" :xl="4">
               <p class="title-input">{{ $t('label.beneficiaries-nik') }}</p>
-              <span class="content-data">3200860009249665</span>
+              <span class="content-data">{{ data.nik }}</span>
             </el-col>
             <el-col :xs="24" :sm="8" :md="6" :lg="4" :xl="4">
               <p class="title-input">{{ $t('label.name') }}</p>
-              <span class="content-data">Agus Dadang</span>
+              <span class="content-data">{{ data.name }}</span>
             </el-col>
             <el-col :xs="24" :sm="8" :md="6" :lg="4" :xl="4">
               <p class="title-input">{{ $t('users.users-phone') }}</p>
-              <span class="content-data">0876562362323</span>
+              <span class="content-data">{{ data.phone }}</span>
             </el-col>
           </el-row>
         </div>
@@ -106,26 +106,26 @@
             </el-col>
             <el-col :xs="24" :sm="8" :md="6" :lg="4" :xl="4">
               <p class="title-input">{{ $t('label.beneficiaries-domicile-kabkota') }}</p>
-              <span class="content-data">Agus Dadang</span>
+              <span class="content-data">{{ data.kabkota_bps_name }}</span>
             </el-col>
             <el-col :xs="24" :sm="8" :md="6" :lg="4" :xl="4">
               <p class="title-input">{{ $t('label.beneficiaries-domicile-kecamatan') }}</p>
-              <span class="content-data">Agus Dadang</span>
+              <span class="content-data">{{ data.kec_bps_name }}</span>
             </el-col>
           </el-row>
 
           <el-row :gutter="24">
             <el-col :xs="24" :sm="8" :md="6" :lg="4" :xl="4">
               <p class="title-input">{{ $t('label.beneficiaries-domicile-kelurahan') }}</p>
-              <span class="content-data">Cisaranten Bina Harapan</span>
+              <span class="content-data">{{ data.kel_bps_name }}</span>
             </el-col>
             <el-col :xs="24" :sm="8" :md="6" :lg="4" :xl="4">
               <p class="title-input">{{ $t('label.area-rw') }}</p>
-              <span class="content-data">001</span>
+              <span class="content-data">{{ data.rw }}</span>
             </el-col>
             <el-col :xs="24" :sm="8" :md="6" :lg="4" :xl="4">
               <p class="title-input">{{ $t('label.area-rt') }}</p>
-              <span class="content-data">012</span>
+              <span class="content-data">{{ data.rt }}</span>
             </el-col>
           </el-row>
         </div>
@@ -141,8 +141,28 @@
 </template>
 
 <script>
+import { fetchDetailComplaint } from '@/api/beneficiaries'
 export default {
-
+  data() {
+    return {
+      isLoading: true,
+      data: null
+    }
+  },
+  created() {
+    const id = this.$route.params && this.$route.params.id
+    this.getDetail(id)
+  },
+  methods: {
+    getDetail(id) {
+      this.isLoading = true
+      fetchDetailComplaint(id).then(response => {
+        this.data = response.data
+        console.log(this.data)
+        this.isLoading = false
+      })
+    }
+  }
 }
 </script>
 

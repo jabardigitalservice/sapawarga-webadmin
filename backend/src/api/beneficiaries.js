@@ -161,3 +161,10 @@ export function fetchListComplaint(query) {
     params: query
   })
 }
+
+export function fetchDetailComplaint(id) {
+  return request({
+    url: `/beneficiaries-complain/${id}`,
+    method: 'get'
+  })
+}
