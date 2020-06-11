@@ -153,3 +153,11 @@ export function fetchVervalUploadList(query) {
     params: query
   })
 }
+
+export function vervalUpload(data) {
+  return request({
+    url: '/beneficiaries-verval-upload/upload',
+    method: 'post',
+    data
+  })
+}
