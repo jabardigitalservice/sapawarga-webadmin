@@ -1022,7 +1022,13 @@ export default {
     'beneficiaries-info-personal': 'Informasi Penerima Bantuan',
     'beneficiaries-info-income': 'Informasi Penghasilan',
     'beneficiaries-job-status': 'Status Kedudukan dalam Pekerjaan',
-    'beneficiaries-info-domicile': 'Domisili Saat Ini'
+    'beneficiaries-info-domicile': 'Domisili Saat Ini',
+
+    'beneficiaries-dashboard-verified': 'Terverifikasi',
+    'beneficiaries-dashboard-not-verified': 'Belum Terverifikasi',
+    'beneficiaries-dashboard-rejected': 'Ditolak',
+    'beneficiaries-dashboard-new-proposal': 'Data Usulan Baru',
+    'beneficiaries-dashboard-total-recipient': 'Total Penerima'
   },
   news: {
     'news-url': 'URL Berita',
