@@ -158,7 +158,7 @@ const bansosMenuRouter = {
         title: 'beneficiaries-detail',
         roles: ['admin', 'staffKel']
       }
-    },
+    }
   ]
 }
 
