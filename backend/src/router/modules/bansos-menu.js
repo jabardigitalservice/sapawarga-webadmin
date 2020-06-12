@@ -140,6 +140,26 @@ const bansosMenuRouter = {
       }
     },
     {
+      name: 'beneficiaries-complaint',
+      path: '/beneficiaries/complaint',
+      component: () => import('@/views/beneficiaries/complaint'),
+      hidden: false,
+      meta: {
+        title: 'benebeneficiaries-complaint',
+        roles: ['admin', 'staffKel']
+      }
+    },
+    {
+      name: 'benebeneficiaries-complaint-detail',
+      path: '/beneficiaries/complaint/detail/:id',
+      component: () => import('@/views/beneficiaries/complaintDetail'),
+      hidden: true,
+      meta: {
+        title: 'beneficiaries-detail',
+        roles: ['admin', 'staffKel']
+      }
+    },
+    {
       name: 'beneficiaries-monitoring-upload',
       path: '/beneficiaries/monitoring-upload',
       component: () => import('@/views/beneficiaries/monitoringUpload'),

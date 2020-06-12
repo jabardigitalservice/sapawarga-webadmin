@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-loading.fullScreen.lock="loading">
     <el-row :gutter="20" class="pb-2">
       <!-- section box import data manual -->
       <el-col :span="8" style="position:relative">
@@ -71,10 +71,12 @@
           <el-table
             v-loading="loadingVervalList"
             :data="sortedList"
-            stripe
+            border
+            fit
             :header-row-style="{'color': '#000', 'font-weight': 'bold' }"
             height="260"
             style="width: 100%"
+            :row-class-name="tableRowClassName"
             @sort-change="changeSort"
           >
             <el-table-column type="index" align="center" :index="getTableRowNumbering" width="50" />
@@ -84,11 +86,14 @@
               :label="$t('importDataManual.history-import-file-name')"
             />
             <el-table-column
-              prop="status_detail"
+              prop="notes"
               sortable="custom"
               :label="$t('importDataManual.history-import-status')"
-              width="100"
-            />
+            >
+              <template slot-scope="{row}">
+                <span :class="statusClassName(row)">{{ row.notes }}</span>
+              </template>
+            </el-table-column>
             <el-table-column
               prop="created_at"
               sortable="custom"
@@ -186,7 +191,7 @@
       :visible.sync="openUpload"
       width="30%"
       :show-close="false"
-      :before-close="handleCloseUpload"
+      :close-on-click-modal="false"
       custom-class="dialog-guide"
     >
       <div>
@@ -223,7 +228,7 @@
 
 <script>
 import Swal from 'sweetalert2'
-import { fetchVervalUploadList } from '@/api/beneficiaries'
+import { fetchVervalUploadList, vervalUpload } from '@/api/beneficiaries'
 import { UrlDownloadImportData } from '@/utils/constantVariable'
 import Pagination from '@/components/Pagination'
 
@@ -284,13 +289,14 @@ export default {
             : value.status === 21
               ? value.file_path_url
               : ''
-
-        const statusDetail = this.getStatus(value.status)
-
+        const notes =
+          value.status === 0
+            ? this.$t('label.beneficiaries-import-start')
+            : value.notes
         data.push({
           original_filename: value.original_filename,
-          status_detail: statusDetail,
           status: value.status,
+          notes: notes,
           created_at: value.created_at,
           file_url: fileUrl
         })
@@ -300,26 +306,8 @@ export default {
       this.loadingVervalList = false
       this.total = response.data._meta.totalCount
     },
-    getStatus(statusId) {
-      switch (statusId) {
-        case 0:
-          return this.$t('importDataManual.history-import-status-start')
-        case 10:
-          return this.$t('importDataManual.history-import-status-success')
-        case 20:
-          return this.$t(
-            'importDataManual.history-import-status-upload-failed'
-          )
-        case 21:
-          return this.$t('importDataManual.history-import-status-invalid-file')
-      }
-    },
     getTableRowNumbering(index) {
       return (this.listQuery.page - 1) * this.listQuery.limit + (index + 1)
-    },
-    handleCloseUpload(done) {
-      this.clearUpload()
-      done()
     },
     downloadSample() {
       window.open(UrlDownloadImportData)
@@ -327,15 +315,25 @@ export default {
     async submitUpload() {
       try {
         this.loading = true
+        this.openUpload = false
+        const formData = new FormData()
+
+        formData.append('file', this.file)
+        await vervalUpload(formData)
+
+        this.clearUpload()
+        this.loading = false
+
         Swal.fire({
           title: this.$t('label.beneficiaries-upload-start'),
           text: this.$t('label.beneficiaries-upload-success'),
           icon: 'success',
           button: 'OK'
+        }).then(action => {
+          if (action) {
+            this.getVervalUploadList()
+          }
         })
-
-        this.loading = false
-        this.openUpload = false
       } catch (err) {
         this.loading = false
         if (err.response.status === 422) {
@@ -382,6 +380,16 @@ export default {
     changeSort(e) {
       this.sort_prop = e.prop
       this.sort_order = e.order
+    },
+    statusClassName(row) {
+      return row.status === 10 ? 'success-status' : ''
+    },
+    tableRowClassName({ row, rowIndex }) {
+      return row.status === 20
+        ? 'danger-row'
+        : row.status === 21
+          ? 'warning-row'
+          : ''
     }
   },
   getCreatedAt(data) {
@@ -556,5 +564,21 @@ export default {
 
 .show-dialog-guide {
   margin-top: -100px !important;
+}
+
+.success-status {
+  color: #67c23a;
+}
+
+.el-table .warning-row {
+  background: rgb(250, 236, 216);
+}
+
+.el-table .danger-row {
+  background: rgb(253, 226, 226);
+}
+
+.hover-row > td {
+  background-color: initial !important;
 }
 </style>
