@@ -176,3 +176,12 @@ export function fetchDetailComplaint(id) {
     method: 'get'
   })
 }
+
+export function fetchBeneficieriesBnbaList(query) {
+  return request({
+    url: '/beneficieries-bnba/index',
+    method: 'get',
+    params: query
+  })
+}
+

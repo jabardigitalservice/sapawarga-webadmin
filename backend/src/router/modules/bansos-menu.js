@@ -158,6 +158,16 @@ const bansosMenuRouter = {
         title: 'beneficiaries-detail',
         roles: ['admin', 'staffKel']
       }
+    },
+    {
+      name: 'beneficiaries-monitoring-upload',
+      path: '/beneficiaries/monitoring-upload',
+      component: () => import('@/views/beneficiaries/monitoringUpload'),
+      hidden: false,
+      meta: {
+        title: 'beneficiaries-monitoring-upload',
+        roles: ['admin', 'staffProv']
+      }
     }
   ]
 }

@@ -135,6 +135,7 @@ export default {
     'beneficiaries-pending': 'Belum Disetujui',
     'benebeneficiaries-complaint': 'Aduan',
     'benebeneficiaries-complaint-detail': 'Detail Aduan',
+    'beneficiaries-monitoring-upload': 'Monitoring Upload',
 
     'bansos-download': 'Unduh Dokumen',
     'bansos-upload': 'Unggah Dokumen',
@@ -1028,7 +1029,17 @@ export default {
     'beneficiaries-dashboard-not-verified': 'Belum Terverifikasi',
     'beneficiaries-dashboard-rejected': 'Ditolak',
     'beneficiaries-dashboard-new-proposal': 'Data Usulan Baru',
-    'beneficiaries-dashboard-total-recipient': 'Total Penerima'
+    'beneficiaries-dashboard-total-recipient': 'Total Penerima',
+
+    'beneficiaries-monitoring-table-title': 'Daftar Data BNBA di Kabupaten Sumedang',
+    'beneficiaries-monitoring-city': 'Kabupaten/Kota',
+    'beneficiaries-monitoring-bansos-type': 'DTKS/NON DTKS',
+    'beneficiaries-monitoring-last-update': 'Pembaharuan Terakhir',
+    'beneficiaries-monitoring-action': 'Aksi',
+    'beneficiaries-monitoring-download': 'Unduh',
+    'beneficiaries-monitoring-main-title': 'Monitoring Upload Data BNBA Kabupaten/Kota',
+    'beneficiaries-monitoring-info': 'Jika anda menginginkan data BNBA keseluruhan Provinsi Jawa Barat, atau untuk mendapatkan data BNBA lebih dari satu Kapubaten/Kota, Anda dapat menghubungi admin Sapawarga.',
+    'beneficiaries-monitoring-choose': 'Pilih'
   },
   news: {
     'news-url': 'URL Berita',
