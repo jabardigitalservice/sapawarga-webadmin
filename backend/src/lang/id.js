@@ -1019,7 +1019,10 @@ export default {
     'beneficiaries-monitoring-bansos-type': 'DTKS/NON DTKS',
     'beneficiaries-monitoring-last-update': 'Pembaharuan Terakhir',
     'beneficiaries-monitoring-action': 'Aksi',
-    'beneficiaries-monitoring-download': 'Unduh'
+    'beneficiaries-monitoring-download': 'Unduh',
+    'beneficiaries-monitoring-main-title': 'Monitoring Upload Data BNBA Kabupaten/Kota',
+    'beneficiaries-monitoring-info': 'Jika anda menginginkan data BNBA keseluruhan Provinsi Jawa Barat, atau untuk mendapatkan data BNBA lebih dari satu Kapubaten/Kota, Anda dapat menghubungi admin Sapawarga.',
+    'beneficiaries-monitoring-choose': 'Pilih'
   },
   news: {
     'news-url': 'URL Berita',
