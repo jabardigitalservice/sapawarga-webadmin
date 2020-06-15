@@ -192,9 +192,9 @@ export function fetchDetailComplaint(id) {
   })
 }
 
-export function fetchBeneficieriesBnbaList(query) {
+export function fetchBeneficieriesMonitoringBnbaList(query) {
   return request({
-    url: '/beneficieries-bnba/index',
+    url: '/beneficiaries-bnba/monitoring',
     method: 'get',
     params: query
   })
