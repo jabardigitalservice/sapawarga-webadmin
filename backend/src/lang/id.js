@@ -136,6 +136,9 @@ export default {
     'beneficiaries-approved': 'Disetujui',
     'beneficiaries-rejected': 'Ditolak',
     'beneficiaries-pending': 'Belum Disetujui',
+    'benebeneficiaries-complaint': 'Aduan',
+    'benebeneficiaries-complaint-detail': 'Detail Aduan',
+    'beneficiaries-monitoring-upload': 'Monitoring Upload',
 
     'bansos-download': 'Unduh Dokumen',
     'bansos-upload': 'Unggah Dokumen',
@@ -1011,10 +1014,35 @@ export default {
 
     'beneficiaries-bnba-detail-popup-title': 'Detail Penerima Bantuan',
     'beneficiaries-document': 'Dokumen Pendukung',
+    'beneficiaries-complaint-title': 'Daftar Aduan BNBA',
+    'beneficiaries-complaint-total': 'Total Aduan',
+    'beneficiaries-complaint-detail': 'Detail Aduan',
+    'beneficiaries-complaint-detail-title': 'Detail Pengaduan',
+    'beneficiaries-complaint-detail-sub-title': 'Detail Orang yang Diadukan',
+    'beneficiaries-complaint-Identity': 'Identitas',
+    'beneficiaries-complaint-reason': 'Alasan Dilaporkan',
+    'beneficiaries-complaint-report': 'Data Pelapor',
+
     'beneficiaries-info-personal': 'Informasi Penerima Bantuan',
     'beneficiaries-info-income': 'Informasi Penghasilan',
     'beneficiaries-job-status': 'Status Kedudukan dalam Pekerjaan',
-    'beneficiaries-info-domicile': 'Domisili Saat Ini'
+    'beneficiaries-info-domicile': 'Domisili Saat Ini',
+
+    'beneficiaries-dashboard-verified': 'Terverifikasi',
+    'beneficiaries-dashboard-not-verified': 'Belum Terverifikasi',
+    'beneficiaries-dashboard-rejected': 'Ditolak',
+    'beneficiaries-dashboard-new-proposal': 'Data Usulan Baru',
+    'beneficiaries-dashboard-total-recipient': 'Total Penerima',
+
+    'beneficiaries-monitoring-table-title': 'Daftar Data BNBA di Kabupaten Sumedang',
+    'beneficiaries-monitoring-city': 'Kabupaten/Kota',
+    'beneficiaries-monitoring-bansos-type': 'DTKS/NON DTKS',
+    'beneficiaries-monitoring-last-update': 'Pembaharuan Terakhir',
+    'beneficiaries-monitoring-action': 'Aksi',
+    'beneficiaries-monitoring-download': 'Unduh',
+    'beneficiaries-monitoring-main-title': 'Monitoring Upload Data BNBA Kabupaten/Kota',
+    'beneficiaries-monitoring-info': 'Jika anda menginginkan data BNBA keseluruhan Provinsi Jawa Barat, atau untuk mendapatkan data BNBA lebih dari satu Kapubaten/Kota, Anda dapat menghubungi admin Sapawarga.',
+    'beneficiaries-monitoring-choose': 'Pilih'
   },
   news: {
     'news-url': 'URL Berita',
@@ -1052,19 +1080,35 @@ export default {
     'news-content-invalid': 'Konten Berita yang diisi tidak valid'
   },
   importDataManual: {
-    'title': 'Import manual data calon penerima Bantuan <br> Sosial',
-    'title-guide': 'Panduan Input Data Calon Penerima Bantuan <br> Sosial',
-    'desc-guide': '<ol> <li><b>Download<b /> template file Excel.xlsx untuk melihat format Input Data</b></li> <li>Mengisi kolom dengan data yang benar, kolom berwarna hijau wajib untuk diisi.</li> <li>Save dengan format .xlsx</li> <li>Pilih file Excel.xlsx yang akan diupload</li> <li>klik tombol Upload</li> </ol>',
+    'title': 'Impor manual data calon penerima Bantuan <br> Sosial',
+    'title-guide': 'Panduan Impor Data Calon Penerima Bantuan <br> Sosial',
+    'desc-guide': '<ol> <li><b>Download<b /> file template berformat Excel (.xlsx) untuk melihat format input data.</b></li> <li>Isi kolom dengan data yang benar. Kolom berwarna hijau WAJIB diisi.</li> <li>Save file dengan format .xlsx.</li> <li>Pilih file .xlsx yang akan diunggah.</li> <li>Klik tombol import.</li> </ol>',
     'desc': 'Sekarang Anda dapat melakukan input calon penerima bantuan sosial secara manual, sehingga dapat membantu kami lebih baik lagi untuk memperbaiki perlayanan di Sapawarga',
-    'btn-import': 'IMPORT SEKARANG',
+    'btn-import': 'IMPOR SEKARANG',
     'btn-guide': 'LIHAT PANDUAN',
     'btn-download': 'Unduh Template Excel',
-    'tbl-title': 'Riwayat Import Data Manual',
+    'tbl-title': 'Riwayat Impor Data Manual',
     'title-upload': 'Upload Data Input Manual',
     'desc-upload': 'Untuk upload data input manual harus memakai format Excel (.xlsx)',
-    'upload-btn': 'IMPORT SEKARANG',
+    'upload-btn': 'IMPOR SEKARANG',
     'btn-choice': 'Pilih File yang akan diupload',
-    'upload': 'Upload'
+    'upload': 'Upload',
+
+    'title-import': 'Impor Data Input Manual',
+    'desc-import': 'Untuk impor data input manual harus memakai format Excel (.xlsx)',
+    'import-btn': 'IMPOR SEKARANG',
+    'btn-import-choice': 'Pilih File yang akan diimpor',
+    'import': 'Impor',
+
+    'history-import-file-name': 'Nama FIle',
+    'history-import-status': 'Status',
+    'history-import-created-at': 'Waktu Impor',
+    'history-import-action': 'Aksi',
+
+    'history-import-status-start': 'Impor Dimulai',
+    'history-import-status-success': 'Sukses',
+    'history-import-status-upload-failed': 'Gagal Upload',
+    'history-import-status-invalid-file': 'File Tidak Sesuai Template'
 
   }
 }

@@ -51,5 +51,10 @@ spec:
                 configMapKeyRef:
                   name: sapawarga-webadmin-config-env
                   key: VUE_APP_ANALYTICS_ID
+            - name: VUE_APP_S3_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: sapawarga-webadmin-config-env
+                  key: VUE_APP_S3_URL
       imagePullSecrets:
         - name: regcred

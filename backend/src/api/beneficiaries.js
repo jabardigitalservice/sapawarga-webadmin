@@ -160,3 +160,43 @@ export function exportExcel(query) {
     responseType: 'blob'
   })
 }
+
+export function fetchVervalUploadList(query) {
+  return request({
+    url: '/beneficiaries-verval-upload',
+    method: 'get',
+    params: query
+  })
+}
+
+export function vervalUpload(data) {
+  return request({
+    url: '/beneficiaries-verval-upload/upload',
+    method: 'post',
+    data
+  })
+}
+
+export function fetchListComplaint(query) {
+  return request({
+    url: '/beneficiaries-complain',
+    method: 'get',
+    params: query
+  })
+}
+
+export function fetchDetailComplaint(id) {
+  return request({
+    url: `/beneficiaries-complain/${id}`,
+    method: 'get'
+  })
+}
+
+export function fetchBeneficieriesBnbaList(query) {
+  return request({
+    url: '/beneficieries-bnba/index',
+    method: 'get',
+    params: query
+  })
+}
+

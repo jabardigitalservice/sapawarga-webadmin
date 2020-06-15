@@ -405,7 +405,8 @@ export default {
     selectChange(data) {
       const result = []
       data.map(item => {
-        result.push(item.code_bps)
+        const codeBps = item.code_bps !== '' ? item.code_bps : 0
+        result.push(codeBps)
       })
       this.selectionQuery.kode_kec = result.join()
     },
