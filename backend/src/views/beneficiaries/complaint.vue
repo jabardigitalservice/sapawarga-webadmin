@@ -25,6 +25,7 @@
       v-loading="isLoadingList"
       :data="list"
       border
+      stripe
       highlight-current-row
       style="width: 100%"
     >
@@ -131,7 +132,7 @@ export default {
       })
     },
     getTableRowNumbering(index) {
-      return (index + 1)
+      return ((this.listQuery.page - 1) * this.listQuery.limit) + (index + 1)
     },
     resetFilter() {
       Object.assign(this.$data.listQuery, this.$options.data().listQuery)
