@@ -36,25 +36,25 @@
         width="50"
       />
       <el-table-column
-        prop="beneficiary.name"
+        prop="beneficiary_bnba.nama_krt"
         label="Nama Lengkap"
       />
       <el-table-column
-        prop="beneficiary.nik"
+        prop="beneficiary_bnba.nik"
         label="NIK"
       />
       <el-table-column
-        prop="beneficiary.rt"
+        prop="beneficiary_bnba.rt"
         label="RT"
         width="50"
       />
       <el-table-column
-        prop="domicile_rt.rw"
+        prop="beneficiary_bnba.rw"
         label="RW"
         width="50"
       />
       <el-table-column
-        prop="domicile_rt.address"
+        prop="beneficiary_bnba.alamat"
         label="Alamat"
       />
       <el-table-column

@@ -4,7 +4,7 @@
       <div slot="header" class="clearfix">
         <span class="title-detail">{{ $t('label.beneficiaries-complaint-detail-title') }}</span>
       </div>
-      <div v-if="data.beneficiary">
+      <div v-if="data.beneficiary_bnba">
         <span class="title-detail">{{ $t('label.beneficiaries-complaint-detail-sub-title') }}</span>
 
         <div class="pb-1">
@@ -15,11 +15,11 @@
           <el-row :gutter="24">
             <el-col :xs="24" :sm="8" :md="6" :lg="4" :xl="4">
               <p class="title-input">{{ $t('label.beneficiaries-nik') }}</p>
-              <span class="content-data">{{ data.beneficiary.nik }}</span>
+              <span class="content-data">{{ data.beneficiary_bnba.nik }}</span>
             </el-col>
             <el-col :xs="24" :sm="8" :md="6" :lg="4" :xl="4">
               <p class="title-input">{{ $t('label.name') }}</p>
-              <span class="content-data">{{ data.beneficiary.name }}</span>
+              <span class="content-data">{{ data.beneficiary_bnba.nama_krt }}</span>
             </el-col>
           </el-row>
         </div>
@@ -32,30 +32,30 @@
           <el-row :gutter="24" class="pb-0-5">
             <el-col :xs="24" :sm="8" :md="6" :lg="4" :xl="4">
               <p class="title-input">{{ $t('label.widget-province') }}</p>
-              <span class="content-data">{{ data.beneficiary.province ? data.beneficiary.province.name : '' }}</span>
+              <span class="content-data">Jawa Barat</span>
             </el-col>
             <el-col :xs="24" :sm="8" :md="6" :lg="4" :xl="4">
               <p class="title-input">{{ $t('label.beneficiaries-domicile-kabkota') }}</p>
-              <span class="content-data">{{ data.beneficiary.domicile_kabkota_name.name }}</span>
+              <span class="content-data">{{ data.beneficiary_bnba.nama_kab }}</span>
             </el-col>
             <el-col :xs="24" :sm="8" :md="6" :lg="4" :xl="4">
               <p class="title-input">{{ $t('label.beneficiaries-domicile-kecamatan') }}</p>
-              <span class="content-data">{{ data.beneficiary.domicile_kec_name.name }}</span>
+              <span class="content-data">{{ data.beneficiary_bnba.nama_kec }}</span>
             </el-col>
           </el-row>
 
           <el-row :gutter="24">
             <el-col :xs="24" :sm="8" :md="6" :lg="4" :xl="4">
               <p class="title-input">{{ $t('label.beneficiaries-domicile-kelurahan') }}</p>
-              <span class="content-data">{{ data.beneficiary.domicile_kel_name.name }}</span>
+              <span class="content-data">{{ data.beneficiary_bnba.nama_kel }}</span>
             </el-col>
             <el-col :xs="24" :sm="8" :md="6" :lg="4" :xl="4">
               <p class="title-input">{{ $t('label.area-rw') }}</p>
-              <span class="content-data">{{ data.beneficiary.domicile_rw }}</span>
+              <span class="content-data">{{ data.beneficiary_bnba.rw }}</span>
             </el-col>
             <el-col :xs="24" :sm="8" :md="6" :lg="4" :xl="4">
               <p class="title-input">{{ $t('label.area-rt') }}</p>
-              <span class="content-data">{{ data.beneficiary.domicile_rw }}</span>
+              <span class="content-data">{{ data.beneficiary_bnba.rt }}</span>
             </el-col>
           </el-row>
         </div>
