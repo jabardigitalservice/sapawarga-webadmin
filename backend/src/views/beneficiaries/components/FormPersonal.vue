@@ -396,7 +396,6 @@ export default {
         } else if (this.isEdit && this.isNikChange && this.isKKChange && this.isAddress) {
           // ini untuk validasi nik, kk, address
           this.validateNikAndKKandAddress(2)
-
         } else {
           this.$emit('nextStep', 1)
         }
