@@ -86,6 +86,21 @@ export function checkNik(id) {
   })
 }
 
+export function validateKK(id) {
+  return request({
+    url: `/beneficiaries/check-exist-kk/${id}`,
+    method: 'get'
+  })
+}
+
+export function checkAddress(data) {
+  return request({
+    url: 'beneficiaries/check-address',
+    method: 'post',
+    data
+  })
+}
+
 export function fetchRecord(id) {
   return request({
     url: `/beneficiaries/${id}`,

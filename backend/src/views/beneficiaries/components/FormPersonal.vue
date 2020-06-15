@@ -112,7 +112,7 @@
 </template>
 <script>
 import { getKecamatanBpsList, getKelurahanBpsList, getKabkotaList } from '@/api/areas'
-import { update, fetchNik, checkNik } from '@/api/beneficiaries'
+import { update, fetchNik, checkNik, validateKK, checkAddress } from '@/api/beneficiaries'
 
 export default {
   props: {
@@ -146,6 +146,8 @@ export default {
     return {
       loading: false,
       isNikChange: false,
+      isKKChange: false,
+      isAddress: false,
       isAutomatedNik: true,
       staticAutomated: true,
       disableField: false,
@@ -295,6 +297,21 @@ export default {
     'beneficiaries.nik'(value1, value2) {
       if (value1) this.isNikChange = true
     },
+    'beneficiaries.no_kk'(value1, value2) {
+      if (value1) this.isKKChange = true
+    },
+    'beneficiaries.name'(value1, value2) {
+      if (value1) this.isAddress = true
+    },
+    'beneficiaries.domicile_rt'(value1, value2) {
+      if (value1) this.isAddress = true
+    },
+    'beneficiaries.domicile_rw'(value1, value2) {
+      if (value1) this.isAddress = true
+    },
+    'beneficiaries.domicile_address'(value1, value2) {
+      if (value1) this.isAddress = true
+    },
     'beneficiaries.kabkota'(value1, value2) {
       if (this.isCreate) {
         this.beneficiaries.kecamatan = null
@@ -354,21 +371,32 @@ export default {
       }
 
       if (this.isCreate && this.beneficiaries.is_have_ktp === 1) {
-        this.checkNikSapawarga()
+        this.checkValidate(1)
+      } else if (this.isEdit && this.isAddress) {
+        this.validateAddress(1)
       } else if (this.isEdit && this.beneficiaries.is_nik_valid === 0) {
         if (this.isEdit && this.isNikChange) {
           if (this.beneficiaries.nik && this.beneficiaries.nik.length < 16) {
             this.$message.error(this.$t('beneficiaries.nik-min'))
             return
           }
-          checkNik(this.beneficiaries.nik).then(response => {
-            if (response.data === true) {
-              this.$message.error('NIK ' + this.beneficiaries.nik + ' sudah terdaftar')
-              return
-            } else {
-              this.$emit('nextStep', 2)
-            }
-          })
+          this.checkNikSapawarga(2)
+        } else if (this.isEdit && this.isKKChange) {
+          // konfirmasi tambahin minimal 16 karakter
+          this.validateKK(2)
+        } else if (this.isEdit && this.isKKChange && this.isNikChange) {
+          // konfirmasi tambahin minimal 16 karakter
+          this.checkValidate(2)
+        } else if (this.isEdit && this.isNikChange && this.isAddress) {
+          // ini untuk validasi nik dan address
+          this.validateNikAndAddress(2)
+        } else if (this.isEdit && this.isKKChange && this.isAddress) {
+          // ini untuk validasi kk dan address
+          this.validateKKAndAddress(2)
+        } else if (this.isEdit && this.isNikChange && this.isKKChange && this.isAddress) {
+          // ini untuk validasi nik, kk, address
+          this.validateNikAndKKandAddress(2)
+
         } else {
           this.$emit('nextStep', 1)
         }
@@ -378,14 +406,22 @@ export default {
             this.$message.error(this.$t('beneficiaries.nik-min'))
             return
           }
-          checkNik(this.beneficiaries.nik).then(response => {
-            if (response.data === true) {
-              this.$message.error('NIK ' + this.beneficiaries.nik + ' sudah terdaftar')
-              return
-            } else {
-              this.$emit('nextStep', 1)
-            }
-          })
+          this.checkNikSapawarga(1)
+        } else if (this.isEdit && this.isKKChange) {
+          // konfirmasi tambahin minimal 16 karakter
+          this.validateKK(1)
+        } else if (this.isEdit && this.isKKChange && this.isNikChange) {
+          // konfirmasi tambahin minimal 16 karakter
+          this.checkValidate(1)
+        } else if (this.isEdit && this.isNikChange && this.isAddress) {
+          // ini untuk validasi nik dan address
+          this.validateNikAndAddress(1)
+        } else if (this.isEdit && this.isKKChange && this.isAddress) {
+          // ini untuk validasi kk dan address
+          this.validateKKAndAddress(1)
+        } else if (this.isEdit && this.isNikChange && this.isKKChange && this.isAddress) {
+          // ini untuk validasi nik, kk, address
+          this.validateNikAndKKandAddress(1)
         } else {
           this.$emit('nextStep', 1)
         }
@@ -431,14 +467,103 @@ export default {
         this.kelList = response.data.items
       })
     },
-    checkNikSapawarga() {
+    checkNikSapawarga(value) {
       checkNik(this.beneficiaries.nik).then(response => {
         if (response.data === true) {
           this.$message.error('NIK ' + this.beneficiaries.nik + ' sudah terdaftar')
           this.$refs.beneficiaries.resetFields()
           return
         } else {
-          this.$emit('nextStep', 1)
+          this.$emit('nextStep', value)
+        }
+      })
+    },
+    validateKK(value) {
+      validateKK(this.beneficiaries.no_kk).then(response => {
+        if (response.data === true) {
+          this.$message.error('Nomor KK ' + this.beneficiaries.no_kk + ' sudah terdaftar')
+          this.$refs.beneficiaries.resetFields()
+          return
+        } else {
+          this.$emit('nextStep', value)
+        }
+      })
+    },
+    checkValidate(value) {
+      checkNik(this.beneficiaries.nik).then(response => {
+        if (response.data === true) {
+          this.$message.error('NIK ' + this.beneficiaries.nik + ' sudah terdaftar')
+          this.$refs.beneficiaries.resetFields()
+          return
+        } else {
+          validateKK(this.beneficiaries.no_kk).then(response => {
+            if (response.data === true) {
+              this.$message.error('Nomor KK ' + this.beneficiaries.no_kk + ' sudah terdaftar')
+              this.$refs.beneficiaries.resetFields()
+              return
+            } else {
+              this.$emit('nextStep', value)
+            }
+          })
+        }
+      })
+    },
+    async validateAddress(value) {
+      const data = {
+        name: this.beneficiaries.name,
+        domicile_province_bps_id: this.beneficiaries.domicile_province_bps_id,
+        domicile_kabkota_bps_id: this.beneficiaries.domicile_kabkota_bps_id,
+        domicile_kec_bps_id: this.beneficiaries.domicile_kec_bps_id,
+        domicile_kel_bps_id: this.beneficiaries.domicile_kel_bps_id,
+        domicile_rt: this.beneficiaries.domicile_rt,
+        domicile_rw: this.beneficiaries.domicile_rw,
+        domicile_address: this.beneficiaries.domicile_address
+      }
+      try {
+        await checkAddress(data)
+        this.$emit('nextStep', value)
+      } catch {
+        this.$message.error(this.$t('beneficiaries.validate-name-address'))
+      }
+    },
+    validateKKAndAddress(value) {
+      validateKK(this.beneficiaries.no_kk).then(response => {
+        if (response.data === true) {
+          this.$message.error('Nomor KK ' + this.beneficiaries.no_kk + ' sudah terdaftar')
+          this.$refs.beneficiaries.resetFields()
+          return
+        } else {
+          this.validateAddress(value)
+        }
+      })
+    },
+    validateNikAndAddress(value) {
+      checkNik(this.beneficiaries.nik).then(response => {
+        if (response.data === true) {
+          this.$message.error('NIK ' + this.beneficiaries.nik + ' sudah terdaftar')
+          this.$refs.beneficiaries.resetFields()
+          return
+        } else {
+          this.validateAddress(value)
+        }
+      })
+    },
+    validateNikAndKKandAddress(value) {
+      checkNik(this.beneficiaries.nik).then(response => {
+        if (response.data === true) {
+          this.$message.error('NIK ' + this.beneficiaries.nik + ' sudah terdaftar')
+          this.$refs.beneficiaries.resetFields()
+          return
+        } else {
+          validateKK(this.beneficiaries.no_kk).then(response => {
+            if (response.data === true) {
+              this.$message.error('Nomor KK ' + this.beneficiaries.no_kk + ' sudah terdaftar')
+              this.$refs.beneficiaries.resetFields()
+              return
+            } else {
+              this.validateAddress(value)
+            }
+          })
         }
       })
     },

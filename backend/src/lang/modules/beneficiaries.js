@@ -16,6 +16,7 @@ const beneficiaries = {
   'verification-area-note': 'Berikut adalah data calon penerima bantuan yang ada di wilayah',
   'is-data-true': 'Apakah benar informasi calon penerima bantuan ini berdomisili di desa Anda?',
   'guide': 'Masukan NIK atau Nomor KTP warga yang akan didaftarkan sebagai calon penerima bantuan sosial terdampak covid di Desa/Kelurahan Anda.',
+  'domicile': 'Masukan informasi mengenai domisili saat ini.',
 
   'kec': 'Kecamatan',
   'province': 'Provinsi',
@@ -38,7 +39,8 @@ const beneficiaries = {
   'province-required': 'Provinsi harus diisi',
   'kabkota-required': 'Kabupaten/Kota harus diisi',
   'name-min': 'Nama lengkap harus lebih dari 2 karakter',
-  'nik-unregistered': 'NIK tidak terdaftar di Disdukcapil'
+  'nik-unregistered': 'NIK tidak terdaftar di Disdukcapil',
+  'validate-name-address': 'Nama dan alamat yang dimasukan telah terdaftar'
 
 }
 
