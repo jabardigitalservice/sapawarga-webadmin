@@ -93,6 +93,13 @@ Object.keys(filters).forEach(key => {
 
 Vue.config.productionTip = false
 
+// unregister service worker
+navigator.serviceWorker.getRegistrations().then(function(registrations) {
+  for (const registration of registrations) {
+    registration.unregister()
+  }
+})
+
 new Vue({
   el: '#app',
   router,
