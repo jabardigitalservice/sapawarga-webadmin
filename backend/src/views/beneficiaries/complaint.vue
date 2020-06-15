@@ -108,8 +108,8 @@ export default {
       listQuery: {
         nik: null,
         name: null,
-        domicile_rt: null,
-        domicile_rw: null,
+        rt: null,
+        rw: null,
         sort_by: 'nik',
         page: 1,
         limit: 10
