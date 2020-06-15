@@ -11,16 +11,15 @@
           <el-select
             v-model="citySelected"
             filterable
-            clearable
+            :clearable="true"
             :placeholder="$t('label.beneficiaries-monitoring-city')"
             style="width: 100%"
-            :return-object="true"
           >
             <el-option
               v-for="item in kabkotaOptions"
               :key="item.value"
               :label="item.label"
-              :value="item.value"
+              :value="item"
             />
           </el-select>
         </el-col>
@@ -28,9 +27,10 @@
           <el-select
             v-model="bansosTypeSelected"
             filterable
-            clearable
+            :clearable="true"
             :placeholder="$t('label.beneficiaries-monitoring-bansos-type')"
             style="width: 100%"
+            @clear="clearedBansosType"
           >
             <el-option
               v-for="item in beneficiariesTypeList"
@@ -52,12 +52,13 @@
       <el-col :span="24">
         <el-card class="box-card green">
           <div slot="header">
-            <span>{{ `${$t('label.beneficiaries-monitoring-table-title')}` }}</span>
+            <span>{{ $t('label.beneficiaries-monitoring-table-title') }}</span>
+            <span>{{ cityName }}</span>
           </div>
           <div class="text item">
             <el-table
               v-loading="loading"
-              :data="list"
+              :data="sortedList"
               border
               stripe
               highlight-current-row
@@ -72,44 +73,49 @@
                 :index="getTableRowNumbering"
               />
               <el-table-column
-                prop="address"
+                prop="name"
                 sortable="custom"
                 :label="$t('label.beneficiaries-monitoring-city').toUpperCase()"
-                width="400"
               />
               <el-table-column
-                prop="bansos_type"
+                prop="type"
                 sortable="custom"
                 :label="$t('label.beneficiaries-monitoring-bansos-type').toUpperCase()"
-                width="180"
-              />
+              >
+                <template slot-scope="{row}">{{ row.type.toUpperCase() }}</template>
+              </el-table-column>
+              <!-- todo: tampilkan tanggal permbaharuan -->
               <el-table-column
-                prop="date"
+                prop="last_update"
                 sortable="custom"
                 :label="$t('label.beneficiaries-monitoring-last-update').toUpperCase()"
                 align="center"
-                width="180"
               />
               <el-table-column
                 align="center"
                 :label="$t('label.beneficiaries-monitoring-action').toUpperCase()"
                 width="200"
               >
-                <template>
-                  <a href="#">
-                    <el-tooltip
-                      :content="$t('label.beneficiaries-monitoring-download')"
-                      placement="top"
-                    >
-                      <el-button type="success" size="mini">
-                        <i class="el-icon-download el-icon-right" />
-                        {{ $t('label.beneficiaries-monitoring-download') }}
-                      </el-button>
-                    </el-tooltip>
-                  </a>
+                <template slot-scope="{row}">
+                  <el-tooltip
+                    :content="$t('label.beneficiaries-monitoring-download')"
+                    placement="top"
+                  >
+                    <el-button type="success" size="mini" @click="downloadBeneficiariesBnba(row)">
+                      <i class="el-icon-download el-icon-right" />
+                      {{ $t('label.beneficiaries-monitoring-download') }}
+                    </el-button>
+                  </el-tooltip>
                 </template>
               </el-table-column>
             </el-table>
+            <pagination
+              v-show="total>0"
+              :total="total"
+              :page.sync="listQuery.page"
+              :limit.sync="listQuery.limit"
+              @pagination="getList"
+            />
           </div>
         </el-card>
       </el-col>
@@ -119,14 +125,14 @@
 
 <script>
 import { getKabkotaList } from '@/api/areas'
-// todo: uncomment code di bawah ini jika api sudah ready
-// import { fetchBeneficieriesBnbaList } from '@/api/beneficiaries'
+import { fetchBeneficieriesMonitoringBnbaList } from '@/api/beneficiaries'
 import DashboardTitle from './components/DashboardTitle'
-import BeneficiariesType from '../bansos/statics/beneficiariesType'
+import Pagination from '@/components/Pagination'
 
 export default {
   components: {
-    DashboardTitle
+    DashboardTitle,
+    Pagination
   },
   data() {
     return {
@@ -134,36 +140,21 @@ export default {
       kabkotaOptions: null,
       citySelected: null,
       bansosTypeSelected: null,
-      // todo: hapus data dummy ini jika api sudah ready
-      list: [
-        {
-          date: '2016-05-03',
-          bansos_type: 'DTKS',
-          address: 'Sumedang'
-        },
-        {
-          date: '2016-05-02',
-          bansos_type: 'NON DTKS',
-          address: 'Sumedang'
-        },
-        {
-          date: '2016-05-04',
-          bansos_type: 'DTKS',
-          address: 'Sumedang'
-        },
-        {
-          date: '2016-05-01',
-          bansos_type: 'NON DTKS',
-          address: 'Sumedang'
-        }
-      ],
+      total: 0,
+      list: null,
       listQuery: {
         page: 1,
-        limit: 10
+        limit: 10,
+        kode_kab: null,
+        bansos_type: null
       },
       sort_prop: 'data.approved',
       sort_order: 'descending',
-      beneficiariesTypeList: null
+      beneficiariesTypeList: [
+        { value: 'dtks', label: 'DTKS' },
+        { value: 'non-dtks', label: 'NON DTKS' }
+      ],
+      cityName: null
     }
   },
   computed: {
@@ -189,34 +180,26 @@ export default {
   created() {
     this.getList()
     this.getKabkotaOptions()
-    this.getBeneficiariesTypeList()
   },
   methods: {
-    async getBeneficiariesTypeList() {
-      const beneficiariesType = new BeneficiariesType()
-      const data = await beneficiariesType.getAll()
-      this.beneficiariesTypeList = data.map(item => {
-        return {
-          value: item.id,
-          label: `${item.type.toUpperCase().replace('_', ' ')} - ${item.name}`
-        }
-      })
+    async getList() {
+      this.loading = true
+      const response = await fetchBeneficieriesMonitoringBnbaList(
+        this.listQuery
+      )
+      this.list = response.data.items
+      this.total = response.data._meta.totalCount
+      this.loading = false
     },
     async getKabkotaOptions() {
       this.kabkotaOptions = []
       const { data } = await getKabkotaList(true)
       this.kabkotaOptions = data.items.map(item => {
         return {
-          value: item.id,
+          value: item.code_bps,
           label: item.name
         }
       })
-    },
-    async getList() {
-      this.loading = true
-      // todo: uncomment code dibawah ini jika api sudah ready
-      // const response = await fetchBeneficieriesBnbaList(this.listQuery);
-      this.loading = false
     },
     getTableRowNumbering(index) {
       return (this.listQuery.page - 1) * this.listQuery.limit + (index + 1)
@@ -226,7 +209,16 @@ export default {
       this.sort_order = e.order
     },
     handleFilter() {
-      // todo: request data ke api
+      this.cityName = this.citySelected.label
+      this.listQuery.kode_kab = this.citySelected.value
+      this.listQuery.bansos_type = this.bansosTypeSelected
+      this.getList()
+    },
+    clearedBansosType() {
+      this.bansosTypeSelected = null
+    },
+    downloadBeneficiariesBnba(data) {
+      // todo: download data bnba per kabupaten
     }
   }
 }

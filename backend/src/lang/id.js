@@ -1035,7 +1035,7 @@ export default {
     'beneficiaries-dashboard-new-proposal': 'Data Usulan Baru',
     'beneficiaries-dashboard-total-recipient': 'Total Penerima',
 
-    'beneficiaries-monitoring-table-title': 'Daftar Data BNBA di Kabupaten Sumedang',
+    'beneficiaries-monitoring-table-title': 'Daftar Data BNBA',
     'beneficiaries-monitoring-city': 'Kabupaten/Kota',
     'beneficiaries-monitoring-bansos-type': 'DTKS/NON DTKS',
     'beneficiaries-monitoring-last-update': 'Pembaharuan Terakhir',
