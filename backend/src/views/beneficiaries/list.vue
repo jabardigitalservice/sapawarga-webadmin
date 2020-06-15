@@ -146,8 +146,7 @@ export default {
     Statistics,
     ListFilter,
     FormPersonal,
-    DashboardTitle,
-    UploadDataManual
+    DashboardTitle
   },
   filters: {
     statusFilter(status) {

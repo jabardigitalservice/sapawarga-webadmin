@@ -114,7 +114,9 @@
   </div>
 </template>
 <script>
-import { update, fetchRecord } from '@/api/beneficiaries'
+import { update, fetchRecord, validateStaffKelBulk } from '@/api/beneficiaries'
+import checkPermission from '@/utils/permission'
+import { RolesUser } from '@/utils/constantVariable'
 
 export default {
   props: {
@@ -153,6 +155,7 @@ export default {
   },
 
   methods: {
+    checkPermission,
     updateForm(value) {
       this.$router.push('/beneficiaries/' + value)
     },
