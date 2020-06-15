@@ -220,7 +220,9 @@ export default {
         const notes =
           value.status === '0'
             ? this.$t('label.beneficiaries-import-start')
-            : value.notes
+            : value.status === '-1'
+              ? this.$t('label.beneficiaries-upload-error-process')
+              : value.notes
 
         data.push({
           bansos_type: this.getTitle(value.bansos_type),

@@ -978,6 +978,7 @@ export default {
     'beneficiaries-note-verification-content': 'Di Halaman ini, Anda dapat melihat daftar warga calon penerima bantuan dan melakukan verifikasi calon penerima bantuan yang ada di Kelurahan Anda.',
     'beneficiaries-dashboard-alert': 'Proses Verifikasi dan Validasi Data Penerima Bansos PERIODE 2 belum dibuka!',
     'beneficiaries-upload-allocation-data': 'Upload Data Alokasi Bantuan',
+    'beneficiaries-upload-error-process': 'Server sedang sibuk. Silakan ulangi beberapa saat lagi. Jika masih ada kendala, hubungi hotline Sapawarga di 081212124203',
 
     'beneficiaries-note-approved-title': 'Data penerima bantuan sosial yang sudah disetujui Desa/Kelurahan',
     'beneficiaries-notes-display-approved': 'Halaman ini menampilkan data penerima bantuan sosial yang sudah disetujui oleh Desa/Kelurahan',

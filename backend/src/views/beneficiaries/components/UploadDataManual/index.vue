@@ -292,7 +292,9 @@ export default {
         const notes =
           value.status === 0
             ? this.$t('label.beneficiaries-import-start')
-            : value.notes
+            : value.status === -1
+              ? this.$t('label.beneficiaries-upload-error-process')
+              : value.notes
         data.push({
           original_filename: value.original_filename,
           status: value.status,
