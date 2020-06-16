@@ -227,7 +227,6 @@ export default {
         }
         this.loading = true
         const response = await downloadBeneficiariesBnba(params)
-        console.log(response.status)
         if (response.status === 200) {
           Swal.fire({
             title: this.$t('label.beneficiaries-download-start-title-alert'),
