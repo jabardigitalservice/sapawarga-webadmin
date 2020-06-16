@@ -138,7 +138,7 @@ export default {
     'beneficiaries-pending': 'Belum Disetujui',
     'benebeneficiaries-complaint': 'Aduan',
     'benebeneficiaries-complaint-detail': 'Detail Aduan',
-    'beneficiaries-monitoring-upload': 'Monitoring Upload',
+    'beneficiaries-download-allocation': 'Unduh Alokasi',
 
     'bansos-download': 'Unduh Dokumen',
     'bansos-upload': 'Unggah Dokumen',

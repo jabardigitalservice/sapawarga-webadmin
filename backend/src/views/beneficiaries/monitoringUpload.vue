@@ -101,7 +101,7 @@
                     :content="$t('label.beneficiaries-monitoring-download')"
                     placement="top"
                   >
-                    <el-button type="success" size="mini" @click="downloadBeneficiariesBnba(row)">
+                    <el-button type="success" size="mini" @click="handleDownload(row)">
                       <i class="el-icon-download el-icon-right" />
                       {{ $t('label.beneficiaries-monitoring-download') }}
                     </el-button>
@@ -125,9 +125,13 @@
 
 <script>
 import { getKabkotaList } from '@/api/areas'
-import { fetchBeneficieriesMonitoringBnbaList } from '@/api/beneficiaries'
+import {
+  fetchBeneficiariesBnbaList,
+  downloadBeneficiariesBnba
+} from '@/api/beneficiaries'
 import DashboardTitle from './components/DashboardTitle'
 import Pagination from '@/components/Pagination'
+import Swal from 'sweetalert2'
 
 export default {
   components: {
@@ -184,9 +188,7 @@ export default {
   methods: {
     async getList() {
       this.loading = true
-      const response = await fetchBeneficieriesMonitoringBnbaList(
-        this.listQuery
-      )
+      const response = await fetchBeneficiariesBnbaList(this.listQuery)
       this.list = response.data.items
       this.total = response.data._meta.totalCount
       this.loading = false
@@ -217,8 +219,28 @@ export default {
     clearedBansosType() {
       this.bansosTypeSelected = null
     },
-    downloadBeneficiariesBnba(data) {
-      // todo: download data bnba per kabupaten
+    async handleDownload(data) {
+      try {
+        const params = {
+          kode_kab: data.code_bps,
+          bansos_type: data.type
+        }
+        this.loading = true
+        const response = await downloadBeneficiariesBnba(params)
+        if (response.status === 200) {
+          Swal.fire({
+            title: this.$t('label.beneficiaries-download-start-title-alert'),
+            text: this.$t(
+              'label.beneficiaries-download-start-description-alert'
+            ),
+            icon: 'success',
+            button: 'OK'
+          })
+        }
+        this.loading = false
+      } catch (error) {
+        this.loading = false
+      }
     }
   }
 }

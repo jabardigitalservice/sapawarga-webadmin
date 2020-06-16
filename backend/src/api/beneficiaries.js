@@ -152,15 +152,6 @@ export function validateStaffKelBulk(id) {
   })
 }
 
-export function exportExcel(query) {
-  return request({
-    url: `/beneficiaries-bnba/download`,
-    method: 'get',
-    params: query,
-    responseType: 'blob'
-  })
-}
-
 export function fetchVervalUploadList(query) {
   return request({
     url: '/beneficiaries-verval-upload',
@@ -192,9 +183,17 @@ export function fetchDetailComplaint(id) {
   })
 }
 
-export function fetchBeneficieriesMonitoringBnbaList(query) {
+export function fetchBeneficiariesBnbaList(query) {
   return request({
     url: '/beneficiaries-bnba/monitoring',
+    method: 'get',
+    params: query
+  })
+}
+
+export function downloadBeneficiariesBnba(query) {
+  return request({
+    url: '/beneficiaries-bnba/download',
     method: 'get',
     params: query
   })
