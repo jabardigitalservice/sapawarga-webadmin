@@ -271,10 +271,6 @@ export default {
             validator: checkStartNumber,
             trigger: 'blur'
           },
-          {
-            validator: checkStartNumber,
-            trigger: 'blur'
-          }
         ],
         domicile_rt: [
           {
