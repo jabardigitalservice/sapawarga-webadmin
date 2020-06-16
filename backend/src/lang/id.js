@@ -460,7 +460,8 @@ export default {
     'description-not-valid-characters': 'Deskripsi mengandung karakter yang tidak diizinkan.',
 
     'max-file-upload': 'Jumlah file tidak boleh lebih dari {0}.',
-    'field_only_accepts_xlsx_xls': 'Hanya file dengan ekstensi ini yang diperbolehkan: xlsx dan xls.'
+    'field_only_accepts_xlsx_xls': 'Hanya file dengan ekstensi ini yang diperbolehkan: xlsx dan xls.',
+    'field_only_accepts_xlsx': 'Hanya file dengan ekstensi ini yang diperbolehkan: xlsx.'
 
   },
   navbar: {

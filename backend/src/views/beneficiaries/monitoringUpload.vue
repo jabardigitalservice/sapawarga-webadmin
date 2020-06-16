@@ -84,13 +84,15 @@
               >
                 <template slot-scope="{row}">{{ row.type.toUpperCase() }}</template>
               </el-table-column>
-              <!-- todo: tampilkan tanggal permbaharuan -->
               <el-table-column
                 prop="last_update"
                 sortable="custom"
                 :label="$t('label.beneficiaries-monitoring-last-update').toUpperCase()"
-                align="center"
-              />
+              >
+                <template
+                  slot-scope="{row}"
+                >{{ Number(row.last_update) | moment('D MMMM YYYY H:mm') }}</template>
+              </el-table-column>
               <el-table-column
                 align="center"
                 :label="$t('label.beneficiaries-monitoring-action').toUpperCase()"

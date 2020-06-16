@@ -352,10 +352,9 @@ export default {
       const isXlsx =
         file.raw.type ===
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-      const isXls = file.raw.type === 'application/vnd.ms-excel'
-      if (!isXlsx && !isXls) {
+      if (!isXlsx) {
         Swal.fire({
-          text: this.$t('errors.field_only_accepts_xlsx_xls'),
+          text: this.$t('errors.field_only_accepts_xlsx'),
           icon: 'error',
           button: 'OK'
         })
