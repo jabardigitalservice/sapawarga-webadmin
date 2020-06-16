@@ -20,7 +20,7 @@ import broadcastRouter from './modules/broadcast'
 import bansosMenuRouter from './modules/bansos-menu'
 import allocationMenuRouter from './modules/allocation-menu'
 import listAllocationMenuRouter from './modules/listAllocation-menu'
-import downloadAllocationMenuRouter from './modules/download-allcation-menu'
+import downloadAllocationMenuRouter from './modules/download-allocation-menu'
 
 /* Router Modules for Leader */
 import aspirationLeaderMenuRouter from './modules/LeaderMenu/aspiration-leader-menu'
