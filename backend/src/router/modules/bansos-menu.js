@@ -13,16 +13,6 @@ const bansosMenuRouter = {
   active: false,
   children: [
     {
-      name: 'beneficiaries-manage',
-      path: '/beneficiaries/index',
-      component: () => import('@/views/beneficiaries/list'),
-      hidden: false,
-      meta: {
-        title: 'beneficiaries-list',
-        roles: ['admin', 'staffKel']
-      }
-    },
-    {
       name: 'beneficiaries-dashboard',
       path: '/beneficiaries/dashboard',
       component: () => import('@/views/beneficiaries/dashboard'),
@@ -32,31 +22,13 @@ const bansosMenuRouter = {
       }
     },
     {
-      name: 'beneficiaries-manage-bnba',
-      path: '/beneficiaries/manage-bnba',
-      component: () => import('@/views/beneficiaries/list-bnba'),
+      name: 'beneficiaries-manage',
+      path: '/beneficiaries/index',
+      component: () => import('@/views/beneficiaries/list'),
       hidden: false,
       meta: {
-        title: 'beneficiaries-manage-bnba',
-        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']
-      }
-    },
-    {
-      name: 'bansos-download',
-      path: '/bansos/download',
-      component: () => import('@/views/bansos/download'),
-      meta: {
-        title: 'bansos-download',
-        roles: ['admin', 'staffKabkota']
-      }
-    },
-    {
-      name: 'bansos-upload',
-      path: '/bansos/upload',
-      component: () => import('@/views/bansos/upload'),
-      meta: {
-        title: 'bansos-upload',
-        roles: ['admin', 'staffKabkota']
+        title: 'beneficiaries-list',
+        roles: ['admin', 'staffKel']
       }
     },
     {
@@ -157,16 +129,6 @@ const bansosMenuRouter = {
       meta: {
         title: 'beneficiaries-detail',
         roles: ['admin', 'staffKel']
-      }
-    },
-    {
-      name: 'beneficiaries-monitoring-upload',
-      path: '/beneficiaries/monitoring-upload',
-      component: () => import('@/views/beneficiaries/monitoringUpload'),
-      hidden: false,
-      meta: {
-        title: 'beneficiaries-download-allocation',
-        roles: ['admin', 'staffProv']
       }
     }
   ]
