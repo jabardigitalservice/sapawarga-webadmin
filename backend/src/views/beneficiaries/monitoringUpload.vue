@@ -88,7 +88,6 @@
                 prop="last_update"
                 sortable="custom"
                 :label="$t('label.beneficiaries-monitoring-last-update').toUpperCase()"
-                align="center"
               >
                 <template
                   slot-scope="{row}"
