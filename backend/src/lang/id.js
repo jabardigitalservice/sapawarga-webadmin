@@ -126,19 +126,19 @@ export default {
 
     'beneficiaries-manage': 'Bantuan Sosial',
     'beneficiaries-manage-bnba': 'Daftar BNBA Tahap 1',
-    'beneficiaries-list': 'Verifikasi Data Bansos',
+    'beneficiaries-list': 'Verifikasi Data',
     'beneficiaries-create': 'Tambah Bansos',
     'beneficiaries-detail': 'Detail Bansos',
     'beneficiaries-edit': 'Edit Bansos',
     'beneficiaries-preview': 'Ringkasan',
     'beneficiaries-verification': 'Verifikasi Bansos',
-    'beneficiaries-dashboard-verification': 'Dashboard Verifikasi',
+    'beneficiaries-dashboard-verification': 'Dashboard',
     'beneficiaries-approved': 'Disetujui',
     'beneficiaries-rejected': 'Ditolak',
     'beneficiaries-pending': 'Belum Disetujui',
     'benebeneficiaries-complaint': 'Aduan',
     'benebeneficiaries-complaint-detail': 'Detail Aduan',
-    'beneficiaries-download-allocation': 'Unduh Alokasi',
+    'beneficiaries-monitoring-upload': 'Unduh Alokasi',
 
     'bansos-download': 'Unduh Dokumen',
     'bansos-upload': 'Unggah Dokumen',
@@ -148,7 +148,10 @@ export default {
     'questionnaire': 'Kuesioner',
     'notification-user': 'Notifikasi Pengguna',
     'configuration-menu': 'Konfigurasi',
-    'bansos-menu': 'Bantuan Sosial'
+    'bansos-menu': 'Verifikasi & Validasi',
+
+    'allocation-menu': 'Alokasi',
+    'list-allocation-menu': 'Daftar Alokasi'
   },
   crud: {
     'list-empty': 'Belum ada data.',
