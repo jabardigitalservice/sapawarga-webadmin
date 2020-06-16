@@ -18,7 +18,7 @@ export function uploadBansosList(query) {
 
 export function exportBansos(query) {
   return request({
-    url: `/beneficiaries-bnba/download`,
+    url: `/beneficiaries/download`,
     method: 'get',
     params: query
   })
