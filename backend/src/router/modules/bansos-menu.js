@@ -165,7 +165,7 @@ const bansosMenuRouter = {
       component: () => import('@/views/beneficiaries/monitoringUpload'),
       hidden: false,
       meta: {
-        title: 'beneficiaries-monitoring-upload',
+        title: 'beneficiaries-download-allocation',
         roles: ['admin', 'staffProv']
       }
     }
