@@ -14,7 +14,7 @@ const listAllocationMenuRouter = {
   children: [
     {
       name: 'beneficiaries-manage-bnba',
-      path: '/beneficiaries/manage-bnba',
+      path: '/beneficiaries/list-allocation',
       component: () => import('@/views/beneficiaries/list-bnba'),
       hidden: false,
       meta: {

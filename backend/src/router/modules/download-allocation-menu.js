@@ -15,7 +15,7 @@ const downloadAllocationMenuRouter = {
 
     {
       name: 'beneficiaries-monitoring-upload',
-      path: '/beneficiaries/monitoring-upload',
+      path: '/beneficiaries/download-allocation',
       component: () => import('@/views/beneficiaries/monitoringUpload'),
       hidden: false,
       meta: {
