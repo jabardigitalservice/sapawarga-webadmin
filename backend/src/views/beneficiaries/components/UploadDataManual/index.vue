@@ -397,7 +397,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 // dialog
 .dialog-footer-upload {
   text-align: center;
