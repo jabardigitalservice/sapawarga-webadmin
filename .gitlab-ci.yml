@@ -60,6 +60,7 @@ build_image:
     - versioning
   before_script:
     - export VERSION=$(cat ./version)
+    - export COMPOSE_HTTP_TIMEOUT=600
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
     - cp .env-template .env
@@ -85,6 +86,7 @@ test_webadmin:
     - versioning
   before_script:
     - export VERSION=$(cat ./version)
+    - export COMPOSE_HTTP_TIMEOUT=600
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - apk add --no-cache py-pip python-dev libffi-dev openssl-dev gcc libc-dev make
     - pip install docker-compose
@@ -122,6 +124,7 @@ release_all:
     - versioning
   before_script:
     - export VERSION=$(cat ./version)
+    - export COMPOSE_HTTP_TIMEOUT=600
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - echo $VERSION
   script:
