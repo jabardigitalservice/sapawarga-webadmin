@@ -337,13 +337,16 @@ export default {
         return
       }
 
-      try {
-        await update(id, this.beneficiaries)
-      } catch (error) {
-        console.log(error)
+      await this.validateNoKk()
+      await this.validateNameAddress()
+      if (this.validKk && this.validAddress) {
+        try {
+          await update(id, this.beneficiaries)
+          this.$emit('closeDialog', false)
+        } catch (error) {
+          console.log(error)
+        }
       }
-
-      this.$emit('closeDialog', false)
     },
     async next() {
       const valid = await this.$refs.beneficiaries.validate()
@@ -368,7 +371,8 @@ export default {
           this.$emit('nextStep', 2)
         }
       } else {
-        this.$emit('nextStep', 1)
+        await this.validateNoKk()
+        if (this.validKk) this.$emit('nextStep', 1)
       }
     },
 
@@ -447,8 +451,8 @@ export default {
       }
       await checkAddress(data).then(response => {
         this.validAddress = true
-      }).catch(error => {
-        console.log(error)
+      }).catch(() => {
+        this.$message.error(this.$t('beneficiaries.validate-name-address'))
       })
     },
 
