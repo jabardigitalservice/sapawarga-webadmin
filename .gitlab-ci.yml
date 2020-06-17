@@ -82,7 +82,6 @@ test_webadmin:
     - versioning
   before_script:
     - export VERSION=$(cat ./version)
-    - export COMPOSE_HTTP_TIMEOUT=600
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
     - cp .env-template .env
