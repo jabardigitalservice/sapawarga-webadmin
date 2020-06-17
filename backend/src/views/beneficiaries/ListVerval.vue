@@ -4,7 +4,7 @@
       <el-col :lg="24">
         <el-dropdown v-model="tahap" trigger="click" placement="bottom-end" split-button type="primary" style="margin-top: 15px; display: block; float: right ">
           Tampilkan Tahap: <b>Tahap 1</b>
-          <el-dropdown-menu slot="dropdown" v-for="item in tahapoption" :key="item.value">
+          <el-dropdown-menu v-for="item in tahapoption" slot="dropdown" :key="item.value">
             <el-dropdown-item>{{ item.label }}</el-dropdown-item>
             <!-- <el-dropdown-item>Action 2</el-dropdown-item>
             <el-dropdown-item>Action 3</el-dropdown-item>
