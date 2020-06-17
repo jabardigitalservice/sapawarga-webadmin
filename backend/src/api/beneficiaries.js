@@ -79,25 +79,27 @@ export function fetchNik(id) {
   })
 }
 
-export function checkNik(id) {
+export function checkNik(data) {
   return request({
-    url: `/beneficiaries/check-exist-nik/${id}`,
-    method: 'get'
+    url: `/beneficiaries/check-nik`,
+    method: 'get',
+    params: data
   })
 }
 
-export function validateKK(id) {
+export function validateKK(data) {
   return request({
-    url: `/beneficiaries/check-exist-kk/${id}`,
-    method: 'get'
+    url: `/beneficiaries/check-kk`,
+    method: 'get',
+    params: data
   })
 }
 
 export function checkAddress(data) {
   return request({
     url: 'beneficiaries/check-address',
-    method: 'post',
-    data
+    method: 'get',
+    params: data
   })
 }
 

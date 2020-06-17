@@ -145,12 +145,12 @@ export default {
     }
     return {
       loading: false,
-      isNikChange: false,
-      isKKChange: false,
-      isAddress: false,
       isAutomatedNik: true,
       staticAutomated: true,
       disableField: false,
+      validAddress: false,
+      validNik: false,
+      validKk: false,
       kabkotaList: null,
       kecList: null,
       kelList: null,
@@ -294,24 +294,6 @@ export default {
     }
   },
   watch: {
-    'beneficiaries.nik'(value1, value2) {
-      if (value1) this.isNikChange = true
-    },
-    'beneficiaries.no_kk'(value1, value2) {
-      if (value1) this.isKKChange = true
-    },
-    'beneficiaries.name'(value1, value2) {
-      if (value1) this.isAddress = true
-    },
-    'beneficiaries.domicile_rt'(value1, value2) {
-      if (value1) this.isAddress = true
-    },
-    'beneficiaries.domicile_rw'(value1, value2) {
-      if (value1) this.isAddress = true
-    },
-    'beneficiaries.domicile_address'(value1, value2) {
-      if (value1) this.isAddress = true
-    },
     'beneficiaries.kabkota'(value1, value2) {
       if (this.isCreate) {
         this.beneficiaries.kecamatan = null
@@ -355,13 +337,16 @@ export default {
         return
       }
 
-      try {
-        await update(id, this.beneficiaries)
-      } catch (error) {
-        console.log(error)
+      await this.validateNoKk()
+      await this.validateNameAddress()
+      if (this.validKk && this.validAddress) {
+        try {
+          await update(id, this.beneficiaries)
+          this.$emit('closeDialog', false)
+        } catch (error) {
+          console.log(error)
+        }
       }
-
-      this.$emit('closeDialog', false)
     },
     async next() {
       const valid = await this.$refs.beneficiaries.validate()
@@ -371,61 +356,23 @@ export default {
       }
 
       if (this.isCreate && this.beneficiaries.is_have_ktp === 1) {
-        this.checkValidate(1)
-      } else if (this.isEdit && this.isAddress) {
-        this.validateAddress(1)
-      } else if (this.isEdit && this.beneficiaries.is_nik_valid === 0) {
-        if (this.isEdit && this.isNikChange) {
-          if (this.beneficiaries.nik && this.beneficiaries.nik.length < 16) {
-            this.$message.error(this.$t('beneficiaries.nik-min'))
-            return
-          }
-          this.checkNikSapawarga(2)
-        } else if (this.isEdit && this.isKKChange) {
-          // konfirmasi tambahin minimal 16 karakter
-          this.validateKK(2)
-        } else if (this.isEdit && this.isKKChange && this.isNikChange) {
-          // konfirmasi tambahin minimal 16 karakter
-          this.checkValidate(2)
-        } else if (this.isEdit && this.isNikChange && this.isAddress) {
-          // ini untuk validasi nik dan address
-          this.validateNikAndAddress(2)
-        } else if (this.isEdit && this.isKKChange && this.isAddress) {
-          // ini untuk validasi kk dan address
-          this.validateKKAndAddress(2)
-        } else if (this.isEdit && this.isNikChange && this.isKKChange && this.isAddress) {
-          // ini untuk validasi nik, kk, address
-          this.validateNikAndKKandAddress(2)
-        } else {
+        await this.validateNik()
+        await this.validateNoKk()
+        if (this.validNik && this.validKk) {
           this.$emit('nextStep', 1)
         }
-      } else if (this.isEdit && this.beneficiaries.is_nik_valid === 1) {
-        if (this.isEdit && this.isNikChange) {
-          if (this.beneficiaries.nik && this.beneficiaries.nik.length < 16) {
-            this.$message.error(this.$t('beneficiaries.nik-min'))
-            return
-          }
-          this.checkNikSapawarga(1)
-        } else if (this.isEdit && this.isKKChange) {
-          // konfirmasi tambahin minimal 16 karakter
-          this.validateKK(1)
-        } else if (this.isEdit && this.isKKChange && this.isNikChange) {
-          // konfirmasi tambahin minimal 16 karakter
-          this.checkValidate(1)
-        } else if (this.isEdit && this.isNikChange && this.isAddress) {
-          // ini untuk validasi nik dan address
-          this.validateNikAndAddress(1)
-        } else if (this.isEdit && this.isKKChange && this.isAddress) {
-          // ini untuk validasi kk dan address
-          this.validateKKAndAddress(1)
-        } else if (this.isEdit && this.isNikChange && this.isKKChange && this.isAddress) {
-          // ini untuk validasi nik, kk, address
-          this.validateNikAndKKandAddress(1)
-        } else {
+      } else if (this.isEdit) {
+        await this.validateNik()
+        await this.validateNoKk()
+        await this.validateNameAddress()
+        if (this.validNik && this.validKk && this.validAddress && this.beneficiaries.is_nik_valid === 1) {
           this.$emit('nextStep', 1)
+        } else if (this.validNik && this.validKk && this.validAddress && this.beneficiaries.is_nik_valid === 0) {
+          this.$emit('nextStep', 2)
         }
       } else {
-        this.$emit('nextStep', 1)
+        await this.validateNoKk()
+        if (this.validKk) this.$emit('nextStep', 1)
       }
     },
 
@@ -436,6 +383,7 @@ export default {
 
       return true
     },
+
     async rejectData() {
       const id = await this.$route.params && this.$route.params.id
       const prompt = await this.$prompt(this.$t('beneficiaries.excuse'), this.$t('beneficiaries.reject-bansos'), {
@@ -451,6 +399,7 @@ export default {
       this.$message.info(this.$t('beneficiaries.status-success'))
       this.$router.push('/beneficiaries/index')
     },
+
     getArea() {
       getKabkotaList().then(response => {
         this.kabkotaList = response.data.items
@@ -466,51 +415,33 @@ export default {
         this.kelList = response.data.items
       })
     },
-    checkNikSapawarga(value) {
-      checkNik(this.beneficiaries.nik).then(response => {
-        if (response.data === true) {
-          this.$message.error('NIK ' + this.beneficiaries.nik + ' sudah terdaftar')
-          this.$refs.beneficiaries.resetFields()
-          return
-        } else {
-          this.$emit('nextStep', value)
-        }
-      })
-    },
-    validateKK(value) {
-      validateKK(this.beneficiaries.no_kk).then(response => {
-        if (response.data === true) {
-          this.$message.error('Nomor KK ' + this.beneficiaries.no_kk + ' sudah terdaftar')
-          this.$refs.beneficiaries.resetFields()
-          return
-        } else {
-          this.$emit('nextStep', value)
-        }
-      })
-    },
-    checkValidate(value) {
-      checkNik(this.beneficiaries.nik).then(response => {
-        if (response.data === true) {
-          this.$message.error('NIK ' + this.beneficiaries.nik + ' sudah terdaftar')
-          this.$refs.beneficiaries.resetFields()
-          return
-        } else {
-          validateKK(this.beneficiaries.no_kk).then(response => {
-            if (response.data === true) {
-              this.$message.error('Nomor KK ' + this.beneficiaries.no_kk + ' sudah terdaftar')
-              this.$refs.beneficiaries.resetFields()
-              return
-            } else {
-              this.$emit('nextStep', value)
-            }
-          })
-        }
-      })
-    },
-    async validateAddress(value) {
+
+    async validateNik() {
       const data = {
+        id: this.beneficiaries.id,
+        nik: this.beneficiaries.nik
+      }
+      await checkNik(data).then(response => {
+        this.validNik = true
+      }).catch(error => {
+        this.$message.error(error.response.data.data.nik[0])
+      })
+    },
+    async validateNoKk() {
+      const data = {
+        id: this.beneficiaries.id,
+        no_kk: this.beneficiaries.no_kk
+      }
+      await validateKK(data).then(response => {
+        this.validKk = true
+      }).catch(error => {
+        this.$message.error(error.response.data.data.no_kk[0])
+      })
+    },
+    async validateNameAddress() {
+      const data = {
+        id: this.beneficiaries.id,
         name: this.beneficiaries.name,
-        domicile_province_bps_id: this.beneficiaries.domicile_province_bps_id,
         domicile_kabkota_bps_id: this.beneficiaries.domicile_kabkota_bps_id,
         domicile_kec_bps_id: this.beneficiaries.domicile_kec_bps_id,
         domicile_kel_bps_id: this.beneficiaries.domicile_kel_bps_id,
@@ -518,54 +449,13 @@ export default {
         domicile_rw: this.beneficiaries.domicile_rw,
         domicile_address: this.beneficiaries.domicile_address
       }
-      try {
-        await checkAddress(data)
-        this.$emit('nextStep', value)
-      } catch {
+      await checkAddress(data).then(response => {
+        this.validAddress = true
+      }).catch(() => {
         this.$message.error(this.$t('beneficiaries.validate-name-address'))
-      }
-    },
-    validateKKAndAddress(value) {
-      validateKK(this.beneficiaries.no_kk).then(response => {
-        if (response.data === true) {
-          this.$message.error('Nomor KK ' + this.beneficiaries.no_kk + ' sudah terdaftar')
-          this.$refs.beneficiaries.resetFields()
-          return
-        } else {
-          this.validateAddress(value)
-        }
       })
     },
-    validateNikAndAddress(value) {
-      checkNik(this.beneficiaries.nik).then(response => {
-        if (response.data === true) {
-          this.$message.error('NIK ' + this.beneficiaries.nik + ' sudah terdaftar')
-          this.$refs.beneficiaries.resetFields()
-          return
-        } else {
-          this.validateAddress(value)
-        }
-      })
-    },
-    validateNikAndKKandAddress(value) {
-      checkNik(this.beneficiaries.nik).then(response => {
-        if (response.data === true) {
-          this.$message.error('NIK ' + this.beneficiaries.nik + ' sudah terdaftar')
-          this.$refs.beneficiaries.resetFields()
-          return
-        } else {
-          validateKK(this.beneficiaries.no_kk).then(response => {
-            if (response.data === true) {
-              this.$message.error('Nomor KK ' + this.beneficiaries.no_kk + ' sudah terdaftar')
-              this.$refs.beneficiaries.resetFields()
-              return
-            } else {
-              this.validateAddress(value)
-            }
-          })
-        }
-      })
-    },
+
     getNik(item) {
       this.loading = true
       checkNik(this.beneficiaries.nik).then(response => {
