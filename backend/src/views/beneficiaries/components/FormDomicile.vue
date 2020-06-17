@@ -237,8 +237,8 @@ export default {
       }
 
       const data = {
+        id: this.beneficiaries.id,
         name: this.beneficiaries.name,
-        domicile_province_bps_id: this.beneficiaries.domicile_province_bps_id,
         domicile_kabkota_bps_id: this.beneficiaries.domicile_kabkota_bps_id,
         domicile_kec_bps_id: this.beneficiaries.domicile_kec_bps_id,
         domicile_kel_bps_id: this.beneficiaries.domicile_kel_bps_id,
