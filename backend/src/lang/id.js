@@ -463,7 +463,6 @@ export default {
     'description-not-valid-characters': 'Deskripsi mengandung karakter yang tidak diizinkan.',
 
     'max-file-upload': 'Jumlah file tidak boleh lebih dari {0}.',
-    'field_only_accepts_xlsx_xls': 'Hanya file dengan ekstensi ini yang diperbolehkan: xlsx dan xls.',
     'field_only_accepts_xlsx': 'Hanya file dengan ekstensi ini yang diperbolehkan: xlsx.'
 
   },
@@ -954,7 +953,7 @@ export default {
     'beneficiaries-upload-start': 'Proses uploading dimulai',
     'beneficiaries-upload-success': 'Data anda sekarang sedang diupload. Proses ini mungkin menghabiskan beberapa waktu hingga semua data berhasil tersimpan. Apabila terjadi gagal upload, kami akan mengirim pesan melalui Sapawarga atau email Anda. Riwayat proses upload Anda juga bisa diakses dimenu Daftar Riwayat Upload.',
     'beneficiaries-choose-file': 'Pilih File yang akan diupload',
-    'beneficiaries-upload-description': 'Hanya file dengan ekstensi ini yang diperbolehkan: xlsx dan xls.',
+    'beneficiaries-upload-description': 'Hanya file dengan ekstensi ini yang diperbolehkan: xlsx.',
     'beneficiaries-upload-file': 'Upload',
     'beneficiaries-import-start': 'Impor Dimulai',
     'beneficiaries-subdistrict-upload': 'Upload Data Alokasi Bantuan Per Kecamatan',

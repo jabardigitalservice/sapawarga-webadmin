@@ -349,10 +349,10 @@ export default {
       }
     },
     handleChangeFile(file) {
-      const isXlsx =
-        file.raw.type ===
-        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-      if (!isXlsx) {
+      const fileExtension = file.name.replace(/^.*\./, '')
+      if (fileExtension === 'xlsx') {
+        this.file = file.raw
+      } else {
         Swal.fire({
           text: this.$t('errors.field_only_accepts_xlsx'),
           icon: 'error',
@@ -361,8 +361,6 @@ export default {
         this.clearUpload()
         this.openUpload = false
         this.openGuide = false
-      } else {
-        this.file = file.raw
       }
     },
     handleUploadRemove() {
