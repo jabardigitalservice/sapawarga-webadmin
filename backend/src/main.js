@@ -24,9 +24,8 @@ Object.defineProperty(Vue.prototype, '_', { value: _ })
 import App from './App'
 import store from './store'
 import router from './router'
-import './registerServiceWorker'
 
-import './registerServiceWorker' // init PWA / register Service Worker
+// import './registerServiceWorker' // init PWA / register Service Worker
 
 import i18n from './lang' // Internationalization
 import './icons' // icon
@@ -72,7 +71,8 @@ Vue.use(L)
 
 // analytic
 Vue.use(VueAnalytics, {
-  id: process.env.VUE_APP_ANALYTICS_ID
+  id: process.env.VUE_APP_ANALYTICS_ID,
+  router
 })
 
 // register global utility filters.
@@ -81,6 +81,13 @@ Object.keys(filters).forEach(key => {
 })
 
 Vue.config.productionTip = false
+
+// unregister service worker
+navigator.serviceWorker.getRegistrations().then(function(registrations) {
+  for (const registration of registrations) {
+    registration.unregister()
+  }
+})
 
 new Vue({
   el: '#app',

@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard-editor-container">
-
+    <admin-headline-news />
     <h3>{{ $t('dashboard.dashboard-aspiration') }}</h3>
 
     <el-row :gutter="8">
@@ -50,6 +50,7 @@ import Category from './components/Category'
 import MapData from './components/MapData'
 import Polling from './components/Polling'
 import TopNews from './components/TopNews'
+import AdminHeadlineNews from '@/components/AdminHeadlineNews'
 
 export default {
   name: 'DashboardAdmin',
@@ -59,7 +60,8 @@ export default {
     Approval,
     MapData,
     Polling,
-    TopNews
+    TopNews,
+    AdminHeadlineNews
   },
   data() {
     return {

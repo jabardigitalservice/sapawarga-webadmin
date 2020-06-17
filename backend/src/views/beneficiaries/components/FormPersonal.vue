@@ -10,19 +10,38 @@
       :model="beneficiaries"
       :rules="rules"
       :status-icon="true"
-      label-width="150px"
+      label-width="250px"
       label-position="left"
     >
-      <el-form-item label="NIK" prop="nik">
+      <el-form-item v-if="isCreate" label="Apakah warga ini memiliki NIK/Nomor KTP?" prop="is_have_ktp">
+        <el-radio-group v-model="beneficiaries.is_have_ktp">
+          <el-radio class="label-check" :label="1">Ya</el-radio>
+          <el-radio class="label-check" :label="0">Tidak punya</el-radio>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item v-if="isCreate && beneficiaries.is_have_ktp === 1" label="NIK" prop="nik">
         <el-input v-model="beneficiaries.nik" type="number" placeholder="NIK" :disabled="disableField" />
       </el-form-item>
-      <el-form-item v-if="isAutomatedNik" class="button-search-nik">
-        <el-button class="button-action" type="primary" @click="getNik(beneficiaries.nik)">{{ this.$t('crud.serach-nik') }}</el-button>
+      <el-form-item v-if="!isCreate" label="NIK">
+        <el-input v-model="beneficiaries.nik" type="number" placeholder="NIK" :disabled="disableField" />
       </el-form-item>
-      <el-form-item v-if="!isAutomatedNik" label="Nama" prop="name">
+      <el-form-item label="Nama Lengkap" prop="name">
         <el-input v-model="beneficiaries.name" placeholder="Nama Lengkap" :disabled="disableField" />
       </el-form-item>
-      <el-form-item v-if="!isAutomatedNik && isCreate" label="Kabupaten/Kota" prop="kabkota" class="block">
+      <el-form-item v-if="isCreate && beneficiaries.is_have_ktp === 0" label="Alasan tidak punya NIK/Nomor KTP" prop="notes_nik_empty">
+        <el-input v-model="beneficiaries.notes_nik_empty" type="textarea" rows="3" placeholder="Alasan tidak punya KTP" />
+      </el-form-item>
+      <el-form-item v-if="isAutomatedNik && isCreate" label="Provinsi" prop="province_bps_id">
+        <el-select v-model="beneficiaries.province_bps_id" style="width:100%" :disabled="disableField">
+          <el-option
+            v-for="item in proviceList"
+            :key="item.code_bps"
+            :label="item.name"
+            :value="item.code_bps"
+          />
+        </el-select>
+      </el-form-item>
+      <el-form-item v-if="isAutomatedNik && isCreate" label="Kabupaten/Kota" prop="kabkota" class="block">
         <el-select v-model="beneficiaries.kabkota" value-key="code_bps" filterable style="width:100%" :disabled="disableField">
           <el-option
             v-for="item in kabkotaList"
@@ -32,7 +51,7 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item v-if=" !isAutomatedNik && isCreate" label="Kecamatan" prop="kecamatan" class="block">
+      <el-form-item v-if="isAutomatedNik && isCreate" label="Kecamatan" prop="kecamatan" class="block">
         <el-select v-model="beneficiaries.kecamatan" value-key="code_bps" filterable style="width:100%" :disabled="disableField">
           <el-option
             v-for="item in kecList"
@@ -42,7 +61,7 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item v-if="!isAutomatedNik && isCreate" label="Kelurahan" prop="kelurahan" class="block">
+      <el-form-item v-if="isAutomatedNik && isCreate" label="Kelurahan" prop="kelurahan" class="block">
         <el-select v-model="beneficiaries.kelurahan" value-key="code_bps" filterable style="width:100%" :disabled="disableField">
           <el-option
             v-for="item in kelList"
@@ -52,25 +71,38 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item v-if="!isAutomatedNik && !isCreate" label="Alamat" prop="domicile_address">
+      <el-form-item v-if="!isCreate" label="Alamat" prop="domicile_address">
         <el-input v-model="beneficiaries.domicile_address" placeholder="Alamat" :disabled="disableField" />
       </el-form-item>
-      <el-form-item v-if="!isAutomatedNik && !isCreate" label="RW" prop="domicile_rw">
+      <el-form-item v-if="!isCreate && !isEdit" label="RW">
         <el-input v-model="beneficiaries.domicile_rw" type="number" placeholder="RW" :disabled="disableField" />
       </el-form-item>
-      <el-form-item v-if="!isAutomatedNik && !isCreate" label="RT" prop="domicile_rt">
+      <el-form-item v-if="isEdit" label="RW" prop="domicile_rw">
+        <el-input v-model="beneficiaries.domicile_rw" type="number" placeholder="RW" />
+      </el-form-item>
+      <el-form-item v-if="isEdit" label="RT" prop="domicile_rt">
         <el-input v-model="beneficiaries.domicile_rt" type="number" placeholder="RT" :disabled="disableField" />
       </el-form-item>
-      <el-form-item v-if="!isAutomatedNik && isCreate" label="RW" prop="rw">
+      <el-form-item v-if="!isCreate && !isEdit" label="RT">
+        <el-input v-model="beneficiaries.domicile_rt" type="number" placeholder="RT" :disabled="disableField" />
+      </el-form-item>
+      <el-form-item v-if="isAutomatedNik && isCreate" label="Alamat" prop="address">
+        <el-input v-model="beneficiaries.address" placeholder="Alamat" :disabled="disableField" />
+      </el-form-item>
+      <el-form-item v-if="isAutomatedNik && isCreate" label="RW" prop="rw">
         <el-input v-model="beneficiaries.rw" type="number" placeholder="RW" :disabled="disableField" />
       </el-form-item>
-      <el-form-item v-if="!isAutomatedNik && isCreate" label="RT" prop="rt">
+      <el-form-item v-if="isAutomatedNik && isCreate" label="RT" prop="rt">
         <el-input v-model="beneficiaries.rt" type="number" placeholder="RT" :disabled="disableField" />
       </el-form-item>
-      <el-form-item class="ml-min-40 form-button">
+      <el-form-item v-if="isEditDomicile" class="ml-min-40 form-button">
         <div v-if="!isCreate">Apakah benar informasi calon penerima bantuan ini berdomisili di desa Anda?</div>
-        <el-button v-if="!isCreate" class="button-action" type="primary" plain @click="rejectData">{{ $t('crud.not-valid') }}</el-button>
-        <el-button v-if="!isAutomatedNik" class="button-action" type="primary" @click="next"> {{ $t('crud.next') }}</el-button>
+        <el-button class="button-action" type="primary" @click="updateDomicile(beneficiaries.id)"> {{ $t('crud.save-create') }}</el-button>
+      </el-form-item>
+      <el-form-item v-else class="ml-min-40 form-button">
+        <div v-if="!isCreate">Apakah benar informasi calon penerima bantuan ini berdomisili di desa Anda?</div>
+        <el-button v-if="!isCreate" class="button-action" type="danger" @click="rejectData">{{ $t('crud.not-valid') }}</el-button>
+        <el-button class="button-action" type="primary" @click="next"> {{ $t('crud.next') }}</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -88,6 +120,14 @@ export default {
     isCreate: {
       type: Boolean,
       default: false
+    },
+    isEdit: {
+      type: Boolean,
+      default: false
+    },
+    isEditDomicile: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -102,51 +142,75 @@ export default {
     }
     return {
       loading: false,
+      isNikChange: false,
       isAutomatedNik: true,
       staticAutomated: true,
       disableField: false,
       kabkotaList: null,
       kecList: null,
       kelList: null,
+      proviceList: [
+        {
+          name: 'JAWA BARAT',
+          code_bps: 32
+        }
+      ],
       rules: {
         name: [
           {
             required: true,
             message: 'Nama harus diisi',
-            trigger: 'blur'
+            trigger: 'input'
           }
         ],
         nik: [
           {
             required: true,
             message: 'NIK harus diisi',
-            trigger: 'blur'
+            trigger: 'input'
+          },
+          {
+            min: 16,
+            message: 'NIK harus 16 karakter',
+            trigger: 'input'
+          },
+          {
+            max: 16,
+            message: 'NIK harus 16 karakter',
+            trigger: 'input'
+          }
+        ],
+        province_bps_id: [
+          {
+            required: true,
+            message: 'Provinsi harus diisi',
+            trigger: 'change'
           }
         ],
         kabkota: [
           {
-            required: false,
+            required: true,
             message: 'Kabupaten/Kota harus diisi',
             trigger: 'change'
           }
         ],
         kecamatan: [
           {
-            required: false,
+            required: true,
             message: 'Kecamatan harus diisi',
             trigger: 'change'
           }
         ],
         kelurahan: [
           {
-            required: false,
+            required: true,
             message: 'Kelurahan harus diisi',
             trigger: 'change'
           }
         ],
         rw: [
           {
-            required: false,
+            required: true,
             message: 'RW harus diisi',
             trigger: 'blur'
           },
@@ -157,12 +221,19 @@ export default {
         ],
         rt: [
           {
-            required: false,
+            required: true,
             message: 'RT harus diisi',
             trigger: 'blur'
           },
           {
             validator: checkStartNumber,
+            trigger: 'blur'
+          }
+        ],
+        address: [
+          {
+            required: true,
+            message: 'Alamat harus diisi',
             trigger: 'blur'
           }
         ],
@@ -175,62 +246,91 @@ export default {
         ],
         domicile_rw: [
           {
-            required: false,
+            required: true,
             message: 'RW harus diisi',
+            trigger: 'blur'
+          },
+          {
+            validator: checkStartNumber,
             trigger: 'blur'
           }
         ],
         domicile_rt: [
           {
-            required: false,
+            required: true,
             message: 'RT harus diisi',
             trigger: 'blur'
+          },
+          {
+            validator: checkStartNumber,
+            trigger: 'blur'
+          }
+        ],
+        notes_nik_empty: [
+          {
+            required: true,
+            message: 'Alasan harus diisi',
+            trigger: 'input'
           }
         ]
       }
     }
   },
   watch: {
+    'beneficiaries.nik'(value1, value2) {
+      if (value1) this.isNikChange = true
+    },
     'beneficiaries.kabkota'(value1, value2) {
-      if (this.isCreate && !this.staticAutomated) {
-        if (value1 !== value2) {
-          this.beneficiaries.kecamatan = null
-          this.beneficiaries.kelurahan = null
-          this.beneficiaries.kabkota_id = value1.id
-          this.beneficiaries.kabkota_bps_id = value1.code_bps
-          this.getKecamatan(value1.code_bps)
-        }
+      if (this.isCreate) {
+        this.beneficiaries.kecamatan = null
+        this.beneficiaries.kelurahan = null
+        this.beneficiaries.kabkota_id = value1.id
+        this.beneficiaries.kabkota_bps_id = value1.code_bps
+        this.getKecamatan(value1.code_bps)
       }
     },
     'beneficiaries.kecamatan'(value1, value2) {
-      if (this.isCreate && !this.staticAutomated) {
-        if (value1 !== value2) {
-          this.beneficiaries.kelurahan = null
-          this.getKelurahan(value1.code_bps)
-          this.beneficiaries.kec_id = value1.id
-          this.beneficiaries.kec_bps_id = value1.code_bps
-        }
+      if (this.isCreate) {
+        this.beneficiaries.kelurahan = null
+        this.getKelurahan(value1.code_bps)
+        this.beneficiaries.kec_id = value1.id
+        this.beneficiaries.kec_bps_id = value1.code_bps
       }
     },
     'beneficiaries.kelurahan'(value1, value2) {
-      if (this.isCreate && !this.staticAutomated) {
-        if (value1 !== value2) {
-          this.beneficiaries.kel_id = value1.id
-          this.beneficiaries.kel_bps_id = value1.code_bps
-        }
+      if (this.isCreate) {
+        this.beneficiaries.kel_id = value1.id
+        this.beneficiaries.kel_bps_id = value1.code_bps
       }
     }
   },
   async mounted() {
-    if (this.isCreate === false) {
-      this.isAutomatedNik = false
+    if (this.isCreate === false && this.isEdit === false) {
       this.disableField = true
+    } else if (this.isEdit === true) {
+      this.disableField = false
     }
+    this.isAutomatedNik = false
     this.getArea()
     if (this.beneficiaries.kabkota_id !== null) this.getKecamatan(this.beneficiaries.kabkota_bps_id)
     if (this.beneficiaries.kec_id !== null) this.getKelurahan(this.beneficiaries.kec_bps_id)
   },
   methods: {
+    async updateDomicile(id) {
+      const valid = await this.$refs.beneficiaries.validate()
+
+      if (!valid) {
+        return
+      }
+
+      try {
+        await update(id, this.beneficiaries)
+      } catch (error) {
+        console.log(error)
+      }
+
+      this.$emit('closeDialog', false)
+    },
     async next() {
       const valid = await this.$refs.beneficiaries.validate()
 
@@ -238,16 +338,64 @@ export default {
         return
       }
 
-      this.$emit('nextStep', 1)
+      if (this.isCreate && this.beneficiaries.is_have_ktp === 1) {
+        this.checkNikSapawarga()
+      } else if (this.isEdit && this.beneficiaries.is_nik_valid === 0) {
+        if (this.isEdit && this.isNikChange) {
+          if (this.beneficiaries.nik && this.beneficiaries.nik.length < 16) {
+            this.$message.error('NIK harus 16 karakter')
+            return
+          }
+          checkNik(this.beneficiaries.nik).then(response => {
+            if (response.data === true) {
+              this.$message.error('NIK ' + this.beneficiaries.nik + ' sudah terdaftar')
+              return
+            } else {
+              this.$emit('nextStep', 2)
+            }
+          })
+        } else {
+          this.$emit('nextStep', 1)
+        }
+      } else if (this.isEdit && this.beneficiaries.is_nik_valid === 1) {
+        if (this.isEdit && this.isNikChange) {
+          if (this.beneficiaries.nik && this.beneficiaries.nik.length < 16) {
+            this.$message.error('NIK harus 16 karakter')
+            return
+          }
+          checkNik(this.beneficiaries.nik).then(response => {
+            if (response.data === true) {
+              this.$message.error('NIK ' + this.beneficiaries.nik + ' sudah terdaftar')
+              return
+            } else {
+              this.$emit('nextStep', 1)
+            }
+          })
+        } else {
+          this.$emit('nextStep', 1)
+        }
+      } else {
+        this.$emit('nextStep', 1)
+      }
+    },
+
+    validateInput(input) {
+      if (_.isEmpty(input)) {
+        return 'Catatan harus diisi.'
+      }
+
+      return true
     },
     async rejectData() {
       const id = await this.$route.params && this.$route.params.id
-      await this.$confirm(this.$t('message.confirmation-reject-data-bansos'), 'Peringatan', {
-        confirmButtonText: this.$t('common.confirm'),
+      const prompt = await this.$prompt('Berikan alasan penolakan', 'Tolak penerima bantuan untuk warga ini?', {
+        confirmButtonText: this.$t('common.send'),
         cancelButtonText: this.$t('common.cancel'),
-        type: 'warning'
+        inputPlaceholder: 'Tuliskan catatan disini',
+        inputValidator: this.validateInput
       })
-      delete this.beneficiaries.nik
+
+      this.beneficiaries.notes_rejected = prompt.value
       this.beneficiaries.status_verification = 2
       await update(id, this.beneficiaries)
       this.$message.info('Status berhasil diubah')
@@ -266,6 +414,17 @@ export default {
     getKelurahan(value) {
       getKelurahanBpsList(value).then(response => {
         this.kelList = response.data.items
+      })
+    },
+    checkNikSapawarga() {
+      checkNik(this.beneficiaries.nik).then(response => {
+        if (response.data === true) {
+          this.$message.error('NIK ' + this.beneficiaries.nik + ' sudah terdaftar')
+          this.$refs.beneficiaries.resetFields()
+          return
+        } else {
+          this.$emit('nextStep', 1)
+        }
       })
     },
     getNik(item) {
