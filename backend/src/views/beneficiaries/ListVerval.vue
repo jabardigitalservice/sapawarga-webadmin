@@ -2,6 +2,18 @@
   <div class="app-container">
     <el-row>
       <el-col :lg="24">
+        <el-dropdown v-model="tahap" trigger="click" placement="bottom-end" split-button type="primary" style="margin-top: 15px; display: block; float: right ">
+          Tampilkan Tahap: <b>Tahap 1</b>
+          <el-dropdown-menu slot="dropdown" v-for="item in tahapoption" :key="item.value">
+            <el-dropdown-item>{{ item.label }}</el-dropdown-item>
+            <!-- <el-dropdown-item>Action 2</el-dropdown-item>
+            <el-dropdown-item>Action 3</el-dropdown-item>
+            <el-dropdown-item>Action 4</el-dropdown-item> -->
+          </el-dropdown-menu>
+        </el-dropdown>
+
+        {{ tahap }}
+
         <DashboardTitle :list-type="listType" />
 
         <!-- show statistics -->
@@ -119,7 +131,26 @@ export default {
       isDetail: false,
       idDetail: null,
       listLoading: true,
+      tahap: 1,
       multipleSelection: [],
+      tahapOptions: [
+        {
+          value: 1,
+          label: 'Tahap 1'
+        },
+        {
+          value: 2,
+          label: 'Tahap 2'
+        },
+        {
+          value: 3,
+          label: 'Tahap 3'
+        },
+        {
+          value: 4,
+          label: 'Tahap 4'
+        }
+      ],
       status: {
         DRAFT: 0,
         SCHEDULED: 5,
