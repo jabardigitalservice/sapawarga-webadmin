@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="mt-1">
     <el-table v-loading="listLoading" :data="list" border highlight-current-row style="width: 100%" :row-style="tableRowClassName" @sort-change="changeSort">
       <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
 
@@ -38,7 +38,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column header-align="center" :label="$t('label.actions')">
+      <el-table-column align="center" :label="$t('label.actions')">
         <template slot-scope="scope">
           <el-tooltip :content="$t('label.beneficiaries-detail')" placement="top">
             <el-button type="primary" icon="el-icon-view" size="small" @click="getDetail(scope.row.id)" />
@@ -70,24 +70,24 @@ export default {
       return statusMap[status]
     }
   },
-  //   props: {
-  //     list: {
-  //       type: Object,
-  //       default: null
-  //     },
-  //     listLoading: {
-  //       type: Boolean,
-  //       default: true
-  //     },
-  //     total: {
-  //       type: Number,
-  //       default: 0
-  //     },
-  //     listQuery: {
-  //       type: Object,
-  //       default: null
-  //     }
-  //   },
+  props: {
+    //   list: {
+    //     type: Object,
+    //     default: null
+    //   },
+    //   listLoading: {
+    //     type: Boolean,
+    //     default: true
+    //   },
+    //   total: {
+    //     type: Number,
+    //     default: 0
+    //   },
+    listQueryDomicile: {
+      type: Object,
+      default: null
+    }
+  },
   data() {
     return {
       list: null,
@@ -109,6 +109,8 @@ export default {
     formatCurrency,
     getList() {
       this.listLoading = true
+      Object.assign(this.listQuery, this.listQueryDomicile)
+      console.log(this.listQuery)
       fetchList(this.listQuery).then(response => {
         this.list = response.data.items
         this.total = response.data._meta.totalCount
@@ -142,6 +144,8 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="scss" scoped>
+  .mt-1 {
+    margin-top: 1rem;
+  }
 </style>

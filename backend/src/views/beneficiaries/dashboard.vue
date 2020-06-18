@@ -57,94 +57,100 @@
           <i class="el-icon-arrow-left" />
           Kembali ke Data {{ prevFilter.length-1 ? prevFilter[prevFilter.length-2].name : 'Utama' }}
         </button>
-        <h3>Rekap Data {{ prevFilter.length ? prevFilter[prevFilter.length-1].name : '' }}</h3>
-        <el-table
-          v-loading="listLoading"
-          :data="sortedList"
-          border
-          stripe
-          highlight-current-row
-          style="width: 100%"
-          @sort-change="changeSort"
-        >
-          <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
 
-          <el-table-column
-            prop="name"
-            sortable="custom"
-            :label="areaLabelByFilter"
-            min-width="200px"
+        <template v-if="!isLoadListUser">
+          <h3>Rekap Data {{ prevFilter.length ? prevFilter[prevFilter.length-1].name : '' }}</h3>
+          <el-table
+            v-loading="listLoading"
+            :data="sortedList"
+            border
+            stripe
+            highlight-current-row
+            style="width: 100%"
+            @sort-change="changeSort"
           >
-            <template slot-scope="{row}">
-              <span
-                style="cursor: pointer; color: blue"
-                @click="openDetail(row.code_bps, row.rw, row.name, row)"
-              >{{ row.name }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column
-            prop="data.approved"
-            align="right"
-            sortable="custom"
-            :label="$t('label.beneficiaries-verified-rw')"
-            min-width="180px"
-          >
-            <template slot-scope="{row}">
-              <span
-                v-if="getApproved(row.data)"
-                style="float: left"
-              >({{ formatNumber(percentage(getApproved(row.data), getTotalBenefeciaries(row.data))) }}%)</span>
-              {{ formatThousands(getApproved(row.data)) }}
-            </template>
-          </el-table-column>
-          <el-table-column
-            prop="data.pending"
-            align="right"
-            sortable="custom"
-            :label="$t('label.beneficiaries-unverified')"
-            min-width="180px"
-          >
-            <template slot-scope="{row}">
-              <span
-                v-if="getPending(row.data)"
-                style="float: left"
-              >({{ formatNumber(percentage(getPending(row.data), getTotalBenefeciaries(row.data))) }}%)</span>
-              {{ formatThousands(getPending(row.data)) }}
-            </template>
-          </el-table-column>
-          <el-table-column
-            prop="data.reject"
-            align="right"
-            sortable="custom"
-            :label="$t('label.beneficiaries-reject')"
-            min-width="180px"
-          >
-            <template slot-scope="{row}">
-              <span
-                v-if="getReject(row.data)"
-                style="float: left"
-              >({{ formatNumber(percentage(getReject(row.data), getTotalBenefeciaries(row.data))) }}%)</span>
-              {{ formatThousands(getReject(row.data)) }}
-            </template>
-          </el-table-column>
-          <el-table-column
-            prop="data_baru.total"
-            align="right"
-            sortable="custom"
-            :label="$t('label.beneficiaries-newdata')"
-            min-width="180px"
-          >
-            <template slot-scope="{row}">
-              <span
-                v-if="row.data_baru && row.data_baru.total"
-                style="float: left"
-              >({{ formatNumber(percentage(row.data_baru.total, getTotalBenefeciaries(row.data))) }}%)</span>
-              {{ row.data_baru ? formatThousands(row.data_baru.total) : '-' }}
-            </template>
-          </el-table-column>
-        </el-table>
+            <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
 
-        <ListUserVerification v-if="isLoadListUser" />
+            <el-table-column
+              prop="name"
+              sortable="custom"
+              :label="areaLabelByFilter"
+              min-width="200px"
+            >
+              <template slot-scope="{row}">
+                <span
+                  style="cursor: pointer; color: blue"
+                  @click="openDetail(row.code_bps, row.rw, row.name, row)"
+                >{{ row.name }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column
+              prop="data.approved"
+              align="right"
+              sortable="custom"
+              :label="$t('label.beneficiaries-verified-rw')"
+              min-width="180px"
+            >
+              <template slot-scope="{row}">
+                <span
+                  v-if="getApproved(row.data)"
+                  style="float: left"
+                >({{ formatNumber(percentage(getApproved(row.data), getTotalBenefeciaries(row.data))) }}%)</span>
+                {{ formatThousands(getApproved(row.data)) }}
+              </template>
+            </el-table-column>
+            <el-table-column
+              prop="data.pending"
+              align="right"
+              sortable="custom"
+              :label="$t('label.beneficiaries-unverified')"
+              min-width="180px"
+            >
+              <template slot-scope="{row}">
+                <span
+                  v-if="getPending(row.data)"
+                  style="float: left"
+                >({{ formatNumber(percentage(getPending(row.data), getTotalBenefeciaries(row.data))) }}%)</span>
+                {{ formatThousands(getPending(row.data)) }}
+              </template>
+            </el-table-column>
+            <el-table-column
+              prop="data.reject"
+              align="right"
+              sortable="custom"
+              :label="$t('label.beneficiaries-reject')"
+              min-width="180px"
+            >
+              <template slot-scope="{row}">
+                <span
+                  v-if="getReject(row.data)"
+                  style="float: left"
+                >({{ formatNumber(percentage(getReject(row.data), getTotalBenefeciaries(row.data))) }}%)</span>
+                {{ formatThousands(getReject(row.data)) }}
+              </template>
+            </el-table-column>
+            <el-table-column
+              prop="data_baru.total"
+              align="right"
+              sortable="custom"
+              :label="$t('label.beneficiaries-newdata')"
+              min-width="180px"
+            >
+              <template slot-scope="{row}">
+                <span
+                  v-if="row.data_baru && row.data_baru.total"
+                  style="float: left"
+                >({{ formatNumber(percentage(row.data_baru.total, getTotalBenefeciaries(row.data))) }}%)</span>
+                {{ row.data_baru ? formatThousands(row.data_baru.total) : '-' }}
+              </template>
+            </el-table-column>
+          </el-table>
+        </template>
+
+        <template v-else>
+          <!-- show list users -->
+          <ListUserVerification :list-query-domicile="listQueryUsers" />
+        </template>
       </el-col>
     </el-row>
   </div>
@@ -216,7 +222,13 @@ export default {
       exportFields: {},
       sort_prop: 'data.approved',
       sort_order: 'descending',
-      isLoadListUser: false
+      isLoadListUser: false,
+      listQueryUsers: {
+        domicile_kec_bps_id: null,
+        domicile_kel_bps_id: null,
+        domicile_rw: null,
+        domicile_rt: null
+      }
     }
   },
   computed: {
@@ -361,12 +373,21 @@ export default {
         this.filter.type = 'kabkota'
       } else if (this.filter.type === 'kabkota') {
         this.filter.type = 'kec'
+        // set list query users
+        this.listQueryUsers.domicile_kec_bps_id = code_bps
       } else if (this.filter.type === 'kec') {
         this.filter.type = 'kel'
+        // set list query users
+        this.listQueryUsers.domicile_kel_bps_id = code_bps || 'no_data'
       } else if (this.filter.type === 'kel') {
         this.filter.type = 'rw'
+        // set list query users
+        this.listQueryUsers.domicile_rw = rw || 'no_data'
       } else if (this.filter.type === 'rw') {
+        // show list users
         this.isLoadListUser = true
+        // set list query users
+        this.listQueryUsers.domicile_rt = row.rt || 'no_data'
       } else {
         return
       }
@@ -376,6 +397,7 @@ export default {
     },
     backDetail(value) {
       if (this.prevFilter.length) {
+        this.isLoadListUser = false
         this.filter = this.prevFilter.pop()
         this.getSummary()
         this.getList()
