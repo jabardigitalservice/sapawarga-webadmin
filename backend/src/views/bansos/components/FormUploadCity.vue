@@ -69,7 +69,7 @@ export default {
           button: 'OK'
         }).then(action => {
           if (action) {
-            this.$router.push('/bansos/upload')
+            this.$router.push('/allocation/upload')
           }
         })
 

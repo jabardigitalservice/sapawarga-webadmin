@@ -18,7 +18,7 @@ const listAllocationMenuRouter = {
       component: () => import('@/views/beneficiaries/list-bnba'),
       hidden: false,
       meta: {
-        title: 'list-allocation-menu',
+        title: 'list-bnba-menu',
         roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']
       }
     }
