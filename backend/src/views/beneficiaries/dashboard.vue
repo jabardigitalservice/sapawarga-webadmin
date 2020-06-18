@@ -352,10 +352,14 @@ export default {
       if (this.user.kecamatan) {
         this.filter.type = 'kec'
         this.filter.code_bps = this.user.kecamatan.code_bps
+        // set list query users
+        this.listQueryUsers.domicile_kec_bps_id = this.user.kecamatan.code_bps
       }
       if (this.user.kelurahan) {
         this.filter.type = 'kel'
         this.filter.code_bps = this.user.kelurahan.code_bps
+        // set list query users
+        this.listQueryUsers.domicile_kel_bps_id = this.user.kelurahan.code_bps
       }
     },
     openDetail(code_bps, rw, name, row) {
