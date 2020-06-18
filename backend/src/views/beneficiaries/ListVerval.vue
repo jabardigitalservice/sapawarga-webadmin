@@ -2,17 +2,13 @@
   <div class="app-container">
     <el-row>
       <el-col :lg="24">
-        <el-dropdown v-model="tahap" trigger="click" placement="bottom-end" split-button type="primary" style="margin-top: 15px; display: block; float: right ">
-          Tampilkan Tahap: <b>Tahap 1</b>
-          <el-dropdown-menu v-for="item in tahapoption" slot="dropdown" :key="item.value">
-            <el-dropdown-item>{{ item.label }}</el-dropdown-item>
-            <!-- <el-dropdown-item>Action 2</el-dropdown-item>
-            <el-dropdown-item>Action 3</el-dropdown-item>
-            <el-dropdown-item>Action 4</el-dropdown-item> -->
+        <el-dropdown size="large" trigger="click" placement="bottom-end" split-button type="primary" class="dropdown" @command="handleCommand">
+          {{ $t('beneficiaries.show-stage') }} <b>{{ tahapDisplay }}</b>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item :command="{label: $t('beneficiaries.stage1'), value: 1}">{{ $t('beneficiaries.stage1') }}</el-dropdown-item>
+            <el-dropdown-item :command="{label: $t('beneficiaries.stage2'), value: 2}">{{ $t('beneficiaries.stage2') }}</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-
-        {{ tahap }}
 
         <DashboardTitle :list-type="listType" />
 
@@ -131,26 +127,8 @@ export default {
       isDetail: false,
       idDetail: null,
       listLoading: true,
-      tahap: 1,
+      tahapDisplay: null,
       multipleSelection: [],
-      tahapOptions: [
-        {
-          value: 1,
-          label: 'Tahap 1'
-        },
-        {
-          value: 2,
-          label: 'Tahap 2'
-        },
-        {
-          value: 3,
-          label: 'Tahap 3'
-        },
-        {
-          value: 4,
-          label: 'Tahap 4'
-        }
-      ],
       status: {
         DRAFT: 0,
         SCHEDULED: 5,
@@ -163,6 +141,7 @@ export default {
         sort_order: null,
         page: 1,
         limit: 10,
+        tahap: null,
         status_verification: null,
         domicile_kabkota_bps_id: null,
         domicile_kec_bps_id: null,
@@ -176,11 +155,20 @@ export default {
     ...mapGetters(['user', 'roles'])
   },
   created() {
+    this.tahapDisplay = this.$t('beneficiaries.stage2')
+    this.listQuery.tahap = 2
     this.getList()
     this.getSummary()
   },
 
   methods: {
+    handleCommand(command) {
+      this.listQuery.tahap = command.value
+      this.tahapDisplay = command.label
+      this.getList()
+      this.getSummary()
+    },
+
     // get summary statistics
     getSummary() {
       const querySummary = {
@@ -369,5 +357,12 @@ export default {
       cursor: pointer;
       color: white !important;
     }
+  }
+
+  .dropdown {
+    margin-top: 15px;
+    margin-bottom: 100px;
+    display: block;
+    float: right;
   }
 </style>
