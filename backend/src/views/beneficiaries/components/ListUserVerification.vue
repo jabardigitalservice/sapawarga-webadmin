@@ -71,18 +71,6 @@ export default {
     }
   },
   props: {
-    //   list: {
-    //     type: Object,
-    //     default: null
-    //   },
-    //   listLoading: {
-    //     type: Boolean,
-    //     default: true
-    //   },
-    //   total: {
-    //     type: Number,
-    //     default: 0
-    //   },
     listQueryDomicile: {
       type: Object,
       default: null
