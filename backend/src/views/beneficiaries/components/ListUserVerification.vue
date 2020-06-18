@@ -88,7 +88,6 @@ export default {
     }
   },
   created() {
-    console.log('list is load')
     this.getList()
   },
   methods: {
