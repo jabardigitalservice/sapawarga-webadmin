@@ -151,7 +151,8 @@ export default {
     'bansos-menu': 'Verifikasi & Validasi',
 
     'allocation-menu': 'Alokasi',
-    'list-allocation-menu': 'Daftar Alokasi'
+    'list-allocation-menu': 'Daftar Alokasi',
+    'list-bnba-menu': 'Daftar BNBA'
   },
   crud: {
     'list-empty': 'Belum ada data.',
