@@ -2,7 +2,16 @@
   <div class="app-container">
     <el-row>
       <el-col :lg="24">
+        <el-dropdown size="large" trigger="click" placement="bottom-end" split-button type="primary" class="dropdown" @command="handleCommand">
+          {{ $t('beneficiaries.show-stage') }} <b>{{ tahapDisplay }}</b>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item :command="{label: $t('beneficiaries.stage1'), value: 1}">Tahap 1</el-dropdown-item>
+            <el-dropdown-item :command="{label: $t('beneficiaries.stage2'), value: 2}">Tahap 2</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+
         <DashboardTitle :is-verification="true" />
+
         <div class="warn-content-warning">
           <p class="title">Pengumuman</p>
           <p>Proses verifikasi dan validasi (verval) data penerima bansos via Sapawarga PERIODE 2 kembali dibuka mulai Senin, 11 Mei 2020! <span class="link" @click="dialogVisible = true">Lihat Info Selengkapnya</span></p>
@@ -184,6 +193,7 @@ export default {
       dataSummary: null,
       listLoading: true,
       beneficiaries: null,
+      tahapDisplay: null,
       status: {
         DRAFT: 0,
         SCHEDULED: 5,
@@ -196,6 +206,7 @@ export default {
         sort_order: 'ascending',
         page: 1,
         limit: 10,
+        tahap: 2,
         status_verification: null,
         domicile_kabkota_bps_id: null,
         domicile_kec_bps_id: null,
@@ -209,12 +220,21 @@ export default {
     ...mapGetters(['user'])
   },
   created() {
+    this.tahapDisplay = this.$t('beneficiaries.stage2')
+    this.listQuery.tahap = 2
     this.getList()
     this.getSummary()
   },
 
   methods: {
     checkPermission,
+    handleCommand(command) {
+      this.listQuery.tahap = command.value
+      this.tahapDisplay = command.label
+      this.getList()
+      this.getSummary()
+    },
+
     tableRowClassName({ row, rowIndex }) {
       const invalidRt = row.domicile_rt === '' || row.domicile_rt === null
       const invalidRw = row.domicile_rw === '' || row.domicile_rw === null
@@ -370,5 +390,12 @@ export default {
       cursor: pointer;
       color: white !important;
     }
+  }
+
+  .dropdown {
+    margin-top: 15px;
+    margin-bottom: 100px;
+    display: block;
+    float: right;
   }
 </style>
