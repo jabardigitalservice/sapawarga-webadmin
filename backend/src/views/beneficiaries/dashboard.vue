@@ -143,6 +143,8 @@
             </template>
           </el-table-column>
         </el-table>
+
+        <ListUserVerification v-if="isLoadListUser" />
       </el-col>
     </el-row>
   </div>
@@ -159,6 +161,7 @@ import checkPermission from '@/utils/permission'
 import InputFilterAreaBps from '@/components/InputFilterAreaBps'
 import JsonExcel from 'vue-json-excel'
 import DashboardTitle from './components/DashboardTitle'
+import ListUserVerification from './components/ListUserVerification'
 
 export default {
   components: {
@@ -166,7 +169,8 @@ export default {
     JsonExcel,
     DashboardStatistics,
     UploadDataManual,
-    DashboardTitle
+    DashboardTitle,
+    ListUserVerification
   },
   filters: {
     statusFilter(status) {
@@ -211,7 +215,8 @@ export default {
       prevFilter: [],
       exportFields: {},
       sort_prop: 'data.approved',
-      sort_order: 'descending'
+      sort_order: 'descending',
+      isLoadListUser: false
     }
   },
   computed: {
@@ -342,6 +347,8 @@ export default {
       }
     },
     openDetail(code_bps, rw, name, row) {
+      this.isLoadListUser = false
+
       const prevFilter = {
         code_bps: this.filter.code_bps,
         type: this.filter.type,
@@ -358,6 +365,8 @@ export default {
         this.filter.type = 'kel'
       } else if (this.filter.type === 'kel') {
         this.filter.type = 'rw'
+      } else if (this.filter.type === 'rw') {
+        this.isLoadListUser = true
       } else {
         return
       }
