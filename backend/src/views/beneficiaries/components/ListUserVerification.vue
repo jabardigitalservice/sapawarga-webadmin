@@ -1,6 +1,6 @@
 <template>
   <div class="mt-1">
-    <el-table v-loading="listLoading" :data="list" border highlight-current-row style="width: 100%" :row-style="tableRowClassName" @sort-change="changeSort">
+    <el-table v-loading="listLoading" :data="list" border highlight-current-row style="width: 100%" :row-style="tableRowClassName">
       <el-table-column type="index" width="50" align="center" :index="getTableRowNumbering" />
 
       <el-table-column prop="name" sortable="custom" :label="$t('label.beneficiaries-name')" min-width="200px" />
@@ -83,9 +83,7 @@ export default {
       listLoading: true,
       listQuery: {
         page: 1,
-        limit: 10,
-        sort_by: 'nik',
-        sort_order: 'ascending'
+        limit: 10
       }
     }
   },
@@ -118,11 +116,6 @@ export default {
     },
     getTableRowNumbering(index) {
       return ((this.listQuery.page - 1) * this.listQuery.limit) + (index + 1)
-    },
-    changeSort(e) {
-      this.listQuery.sort_by = e.prop
-      this.listQuery.sort_order = e.order
-    //   this.getList()
     },
     getDetail(value) {
       console.log(value)
