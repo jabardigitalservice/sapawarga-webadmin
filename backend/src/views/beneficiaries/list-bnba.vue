@@ -2,6 +2,7 @@
   <div class="app-container">
     <el-row>
       <el-col :lg="24">
+        <ListFilterStep :list-query.sync="listQuery" @handle-change-step="getList" />
         <DashboardTitle :is-bnba="true" />
         <!-- show statistics -->
         <StatisticsBnba :is-loading="isLoadingSummary" :summery="dataSummary" />
@@ -84,11 +85,12 @@ import i18n from '@/lang'
 import StatisticsBnba from './components/StatisticsBnba'
 import ModalDetailBnba from './components/ModalDetailBnba'
 import ListFilterBnba from './_listfilterbnba'
+import ListFilterStep from './_listFilterStep'
 import DashboardTitle from './components/DashboardTitle'
 import { mapGetters } from 'vuex'
 
 export default {
-  components: { Pagination, StatisticsBnba, ListFilterBnba, ModalDetailBnba, DashboardTitle },
+  components: { Pagination, StatisticsBnba, ListFilterBnba, ModalDetailBnba, DashboardTitle, ListFilterStep },
   filters: {
     tipeBansosFilter(status) {
       const statusMap = {
@@ -138,7 +140,8 @@ export default {
         kode_kec: null,
         kode_kel: null,
         rw: null,
-        rt: null
+        rt: null,
+        tahap: null
       }
     }
   },
