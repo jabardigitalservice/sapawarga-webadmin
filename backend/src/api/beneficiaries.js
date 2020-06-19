@@ -201,3 +201,11 @@ export function downloadBeneficiariesBnba(query) {
   })
 }
 
+export function fetchCurrentTahap(query) {
+  return request({
+    url: '/beneficiaries/current-tahap',
+    method: 'get',
+    params: query
+  })
+}
+
