@@ -247,11 +247,11 @@ export default {
   font-size: 15px;
 }
 .total {
-  font-size: 28px;
+  font-size: 24px;
   font-weight: bolder;
 }
 .stat-count {
-  font-size: 20px;
+  font-size: 24px;
   font-weight: bolder;
 }
 .color-sw-green {
