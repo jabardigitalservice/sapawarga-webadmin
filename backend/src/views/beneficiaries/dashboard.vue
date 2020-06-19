@@ -17,37 +17,43 @@
         <!-- upload data manual -->
         <UploadDataManual v-if="checkPermission([RolesUser.STAFFKABKOTA, RolesUser.STAFFKEC])" />
 
-        <el-card class="box-card" style="margin-bottom: 10px">
-          <el-form>
-            <el-row :gutter="10">
-              <el-col v-if="!roles" :xs="{span:24, tag:'mb-10'}" :sm="24" :md="3">Filter Data</el-col>
-              <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="12">
-                <input-filter-area-bps
-                  :parent-id="filterAreaParentId"
-                  :kabkota-id="listQuery.kode_kab"
-                  :kec-id="listQuery.kode_kec"
-                  :kel-id="listQuery.kode_kel"
-                  @changeKabkota="changeKabkota"
-                  @changeKecamatan="changeKecamatan"
-                  @changeKelurahan="changeKelurahan"
-                />
-              </el-col>
-              <el-col :xs="{ span:24, tag:'mb-10' }" :sm="24" :md="3">
-                <json-excel
-                  class="btn btn-default"
-                  :data="sortedList"
-                  :fields="exportFields"
-                  worksheet="Data"
-                  name="sapawarga-dashboard-bansos.xls"
-                >
-                  <button class="el-button el-button--success el-button--small">
-                    <i class="el-icon-download" /> Export Data
-                  </button>
-                </json-excel>
-              </el-col>
-            </el-row>
-          </el-form>
-        </el-card>
+        <template v-if="!isLoadListUser">
+          <el-card class="box-card" style="margin-bottom: 10px">
+            <el-form>
+              <el-row :gutter="10">
+                <el-col v-if="!roles" :xs="{span:24, tag:'mb-10'}" :sm="24" :md="3">Filter Data</el-col>
+                <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="12">
+                  <input-filter-area-bps
+                    :parent-id="filterAreaParentId"
+                    :kabkota-id="listQuery.kode_kab"
+                    :kec-id="listQuery.kode_kec"
+                    :kel-id="listQuery.kode_kel"
+                    @changeKabkota="changeKabkota"
+                    @changeKecamatan="changeKecamatan"
+                    @changeKelurahan="changeKelurahan"
+                  />
+                </el-col>
+                <el-col :xs="{ span:24, tag:'mb-10' }" :sm="24" :md="3">
+                  <json-excel
+                    class="btn btn-default"
+                    :data="sortedList"
+                    :fields="exportFields"
+                    worksheet="Data"
+                    name="sapawarga-dashboard-bansos.xls"
+                  >
+                    <button class="el-button el-button--success el-button--small">
+                      <i class="el-icon-download" /> Export Data
+                    </button>
+                  </json-excel>
+                </el-col>
+              </el-row>
+            </el-form>
+          </el-card>
+        </template>
+
+        <template v-else>
+          <ListFilterUsers :list-query.sync="listQueryUsers" @submit-search="getListUsers" @reset-search="resetFilterUsers" />
+        </template>
 
         <button
           v-if="prevFilter.length"
@@ -149,7 +155,7 @@
 
         <template v-else>
           <!-- show list users -->
-          <ListUserVerification :list-query-domicile="listQueryUsers" />
+          <ListUserVerification ref="listUserVerification" :list-query-domicile="listQueryUsers" />
         </template>
       </el-col>
     </el-row>
@@ -168,6 +174,7 @@ import InputFilterAreaBps from '@/components/InputFilterAreaBps'
 import JsonExcel from 'vue-json-excel'
 import DashboardTitle from './components/DashboardTitle'
 import ListUserVerification from './components/ListUserVerification'
+import ListFilterUsers from './components/_listFilterUsers'
 
 export default {
   components: {
@@ -176,7 +183,8 @@ export default {
     DashboardStatistics,
     UploadDataManual,
     DashboardTitle,
-    ListUserVerification
+    ListUserVerification,
+    ListFilterUsers
   },
   filters: {
     statusFilter(status) {
@@ -224,6 +232,7 @@ export default {
       sort_order: 'descending',
       isLoadListUser: false,
       listQueryUsers: {
+        nik: null,
         domicile_kec_bps_id: null,
         domicile_kel_bps_id: null,
         domicile_rw: null,
@@ -422,6 +431,13 @@ export default {
         this.listLoading = false
         this.loadExportFields()
       })
+    },
+    getListUsers() {
+      this.$refs.listUserVerification.getList()
+    },
+    resetFilterUsers() {
+      this.listQueryUsers.nik = null
+      this.$refs.listUserVerification.getList()
     },
 
     loadExportFields() {

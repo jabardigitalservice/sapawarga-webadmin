@@ -95,7 +95,6 @@ export default {
     getList() {
       this.listLoading = true
       Object.assign(this.listQuery, this.listQueryDomicile)
-      console.log(this.listQuery)
       fetchList(this.listQuery).then(response => {
         this.list = response.data.items
         this.total = response.data._meta.totalCount
