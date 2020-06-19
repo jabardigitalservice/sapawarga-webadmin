@@ -5,7 +5,7 @@
       <el-col :span="8">
         <el-row no-gutter class="tahap-filter">
           <el-col :span="16">
-            <div class="tahap-title">{{ $t('label.beneficiaries-show-tahap') }}</div>
+            <div class="tahap-title">{{ $t('label.beneficiaries-show-stage') }}</div>
           </el-col>
           <el-col :span="8">
             <el-select v-model="currentTahap" @change="handleChangeTahap($event)">
@@ -36,8 +36,8 @@ export default {
     return {
       currentTahap: null,
       tahapList: [
-        { value: '1', label: 'TAHAP 1' },
-        { value: '2', label: 'TAHAP 2' }
+        { value: 1, label: this.$t('label.beneficiaries-first-stage') },
+        { value: 2, label: this.$t('label.beneficiaries-second-stage') }
       ]
     }
   },

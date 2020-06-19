@@ -1048,7 +1048,9 @@ export default {
     'beneficiaries-monitoring-main-title': 'Monitoring Upload Data BNBA Kabupaten/Kota',
     'beneficiaries-monitoring-info': 'Jika anda menginginkan data BNBA keseluruhan Provinsi Jawa Barat, atau untuk mendapatkan data BNBA lebih dari satu Kapubaten/Kota, Anda dapat menghubungi admin Sapawarga.',
     'beneficiaries-monitoring-choose': 'Pilih',
-    'beneficiaries-show-tahap': 'Tampilkan Tahap:'
+    'beneficiaries-show-stage': 'Tampilkan Tahap:',
+    'beneficiaries-first-stage': 'Tahap 1',
+    'beneficiaries-second-stage': 'Tahap 2'
   },
   news: {
     'news-url': 'URL Berita',
