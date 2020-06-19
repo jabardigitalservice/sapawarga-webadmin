@@ -48,6 +48,22 @@
     </el-table>
 
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
+
+    <!-- show dialog detail -->
+    <el-dialog
+      :visible.sync="isDetail"
+      width="80%"
+      :close-on-click-modal="false"
+      custom-class="dialog-custome"
+      :modal-append-to-body="false"
+      :append-to-body="true"
+      top="5vh"
+      style="margin-bottom: 30px"
+    >
+      <span slot="title" class="dialog-title detail-title" style="margin: 0; padding: 0">Detail Penerima Bantuan</span>
+      <hr class="line-separator">
+      <Preview :id-detail="idDetail" @closeDialog="closeDetail" />
+    </el-dialog>
   </div>
 </template>
 
@@ -55,10 +71,12 @@
 import { fetchList } from '@/api/beneficiaries'
 import Pagination from '@/components/Pagination'
 import { formatCurrency } from '@/utils/formatNumber'
+import Preview from './Preview'
 
 export default {
   components: {
-    Pagination
+    Pagination,
+    Preview
   },
   filters: {
     statusFilter(status) {
@@ -78,6 +96,7 @@ export default {
   },
   data() {
     return {
+      isDetail: false,
       list: null,
       total: 0,
       listLoading: true,
@@ -116,7 +135,12 @@ export default {
       return ((this.listQuery.page - 1) * this.listQuery.limit) + (index + 1)
     },
     getDetail(value) {
-      console.log(value)
+      this.isDetail = true
+      this.idDetail = value
+    },
+
+    closeDetail() {
+      this.isDetail = false
     }
   }
 
