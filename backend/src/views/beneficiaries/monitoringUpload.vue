@@ -2,6 +2,7 @@
   <div class="app-container">
     <el-row>
       <el-col :span="24">
+        <ListFilterTahap :list-query.sync="listQuery" @handle-change-tahap="getList" />
         <DashboardTitle :is-monitoring-bnba="true" />
       </el-col>
     </el-row>
@@ -14,6 +15,7 @@
             :clearable="true"
             :placeholder="$t('label.beneficiaries-monitoring-city')"
             style="width: 100%"
+            @clear="clearedCity"
           >
             <el-option
               v-for="item in kabkotaOptions"
@@ -134,11 +136,13 @@ import {
 import DashboardTitle from './components/DashboardTitle'
 import Pagination from '@/components/Pagination'
 import Swal from 'sweetalert2'
+import ListFilterTahap from './_listFilterTahap'
 
 export default {
   components: {
     DashboardTitle,
-    Pagination
+    Pagination,
+    ListFilterTahap
   },
   data() {
     return {
@@ -152,7 +156,8 @@ export default {
         page: 1,
         limit: 10,
         kode_kab: null,
-        bansos_type: null
+        bansos_type: null,
+        tahap_bantuan: null
       },
       sort_prop: 'data.approved',
       sort_order: 'descending',
@@ -189,6 +194,7 @@ export default {
   },
   methods: {
     async getList() {
+      this.listQuery.tahap_bantuan = this.listQuery.tahap
       this.loading = true
       const response = await fetchBeneficiariesBnbaList(this.listQuery)
       this.list = response.data.items
@@ -213,19 +219,25 @@ export default {
       this.sort_order = e.order
     },
     handleFilter() {
-      this.cityName = this.citySelected.label
-      this.listQuery.kode_kab = this.citySelected.value
+      if (this.citySelected) {
+        this.cityName = this.citySelected.label
+        this.listQuery.kode_kab = this.citySelected.value
+      }
       this.listQuery.bansos_type = this.bansosTypeSelected
       this.getList()
     },
     clearedBansosType() {
-      this.bansosTypeSelected = null
+      this.listQuery.bansos_type = null
+    },
+    clearedCity() {
+      this.listQuery.kode_kab = null
     },
     async handleDownload(data) {
       try {
         const params = {
           kode_kab: data.code_bps,
-          bansos_type: data.type
+          bansos_type: data.type,
+          tahap_bantuan: this.listQuery.tahap
         }
         this.loading = true
         const response = await downloadBeneficiariesBnba(params)
