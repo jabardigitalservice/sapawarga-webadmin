@@ -2,11 +2,14 @@
   <div class="app-container">
     <el-row>
       <el-col :lg="24">
+        <el-dropdown size="large" trigger="click" placement="bottom-end" split-button type="primary" class="dropdown" @command="handleCommand">
+          {{ $t('beneficiaries.show-stage') }} <b>{{ tahapDisplay }}</b>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item :command="{label: $t('beneficiaries.stage1'), value: 1}">Tahap 1</el-dropdown-item>
+            <el-dropdown-item :command="{label: $t('beneficiaries.stage2'), value: 2}">Tahap 2</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
         <DashboardTitle :is-dashboard="true" />
-        <!-- <div>
-          <el-button type="primary" class="button-step">Tahap 1</el-button>
-          <el-button class="button-step" @click="open">Tahap 2</el-button>
-        </div>-->
 
         <DashboardStatistics
           :is-loading="isLoadingSummary"
@@ -192,6 +195,7 @@ export default {
       isLoadingSummary: true,
       dataSummary: null,
       listLoading: true,
+      tahapDisplay: null,
       roles: checkPermission(['staffKel']),
       status: {
         DRAFT: 0,
@@ -199,6 +203,7 @@ export default {
         PUBLISHED: 10
       },
       filter: {
+        tahap: null,
         type: null,
         code_bps: null,
         rw: null
@@ -298,6 +303,8 @@ export default {
     }
   },
   created() {
+    this.tahapDisplay = this.$t('beneficiaries.stage2')
+    this.filter.tahap = 2
     this.resetParams()
     this.getList()
     this.getSummary()
@@ -306,6 +313,12 @@ export default {
   methods: {
     checkPermission,
     formatNumber,
+    handleCommand(command) {
+      this.filter.tahap = command.value
+      this.tahapDisplay = command.label
+      this.getList()
+      this.getSummary()
+    },
     getCompareOrder(data1, data2, order) {
       if (data1 < data2) {
         return order === 'ascending' ? -1 : 1
@@ -573,5 +586,11 @@ export default {
 <style lang="scss" scope>
 .button-step {
   padding: 13px 40px;
+}
+.dropdown {
+  margin-top: 15px;
+  margin-bottom: 100px;
+  display: block;
+  float: right;
 }
 </style>
