@@ -5,8 +5,8 @@
         <el-dropdown size="large" trigger="click" placement="bottom-end" split-button type="primary" class="dropdown" @command="handleCommand">
           {{ $t('beneficiaries.show-stage') }} <b>{{ tahapDisplay }}</b>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item :command="{label: $t('beneficiaries.stage1'), value: 1}">Tahap 1</el-dropdown-item>
-            <el-dropdown-item :command="{label: $t('beneficiaries.stage2'), value: 2}">Tahap 2</el-dropdown-item>
+            <el-dropdown-item :command="{label: $t('beneficiaries.stage1'), value: 1}">{{ $t('beneficiaries.stage1') }}</el-dropdown-item>
+            <el-dropdown-item :command="{label: $t('beneficiaries.stage2'), value: 2}">{{ $t('beneficiaries.stage2') }}</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
         <DashboardTitle :is-dashboard="true" />
