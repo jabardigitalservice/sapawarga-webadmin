@@ -2,6 +2,14 @@
   <div class="app-container">
     <el-row>
       <el-col :lg="24">
+        <el-dropdown size="large" trigger="click" placement="bottom-end" split-button type="primary" class="dropdown" @command="handleCommand">
+          {{ $t('beneficiaries.show-stage') }} <b>{{ tahapDisplay }}</b>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item :command="{label: $t('beneficiaries.stage1'), value: 1}">{{ $t('beneficiaries.stage1') }}</el-dropdown-item>
+            <el-dropdown-item :command="{label: $t('beneficiaries.stage2'), value: 2}">{{ $t('beneficiaries.stage2') }}</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+
         <DashboardTitle :list-type="listType" />
 
         <!-- show statistics -->
@@ -119,6 +127,7 @@ export default {
       isDetail: false,
       idDetail: null,
       listLoading: true,
+      tahapDisplay: null,
       multipleSelection: [],
       status: {
         DRAFT: 0,
@@ -132,6 +141,7 @@ export default {
         sort_order: null,
         page: 1,
         limit: 10,
+        tahap: null,
         status_verification: null,
         domicile_kabkota_bps_id: null,
         domicile_kec_bps_id: null,
@@ -145,14 +155,24 @@ export default {
     ...mapGetters(['user', 'roles'])
   },
   created() {
+    this.tahapDisplay = this.$t('beneficiaries.stage2')
+    this.listQuery.tahap = 2
     this.getList()
-    this.getSummary()
+    this.getSummary(2)
   },
 
   methods: {
+    handleCommand(command) {
+      this.listQuery.tahap = command.value
+      this.tahapDisplay = command.label
+      this.getList()
+      this.getSummary(command.value)
+    },
+
     // get summary statistics
-    getSummary() {
+    getSummary(value) {
       const querySummary = {
+        tahap: value,
         domicile_kabkota_bps_id: this.user.kabkota ? this.user.kabkota.code_bps : null,
         domicile_kec_bps_id: this.user.kecamatan ? this.user.kecamatan.code_bps : null,
         domicile_kel_bps_id: this.user.kelurahan ? this.user.kelurahan.code_bps : null
@@ -338,5 +358,12 @@ export default {
       cursor: pointer;
       color: white !important;
     }
+  }
+
+  .dropdown {
+    margin-top: 15px;
+    margin-bottom: 100px;
+    display: block;
+    float: right;
   }
 </style>
