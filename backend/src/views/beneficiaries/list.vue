@@ -223,7 +223,7 @@ export default {
     this.tahapDisplay = this.$t('beneficiaries.stage2')
     this.listQuery.tahap = 2
     this.getList()
-    this.getSummary()
+    this.getSummary(2)
   },
 
   methods: {
@@ -232,7 +232,7 @@ export default {
       this.listQuery.tahap = command.value
       this.tahapDisplay = command.label
       this.getList()
-      this.getSummary()
+      this.getSummary(command.value)
     },
 
     tableRowClassName({ row, rowIndex }) {
@@ -277,8 +277,9 @@ export default {
       this.$router.push('/beneficiaries/' + value)
     },
     // get summary statistics
-    getSummary() {
+    getSummary(value) {
       const querySummary = {
+        tahap: value,
         domicile_kabkota_bps_id: this.user.kabkota ? this.user.kabkota.code_bps : null,
         domicile_kec_bps_id: this.user.kecamatan ? this.user.kecamatan.code_bps : null,
         domicile_kel_bps_id: this.user.kelurahan ? this.user.kelurahan.code_bps : null
