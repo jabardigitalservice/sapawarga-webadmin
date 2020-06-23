@@ -557,6 +557,7 @@ export default {
   label: {
     'notes': 'Catatan:',
     'sapawarga': 'sapawarga',
+    'ask-admin': 'Tanya Admin',
     'call-admin': 'Hubungi Admin',
     'maximum-size-image': 'Maximum upload file size: 5 Mb.',
     'maximum-dimension-image': 'Ukuran maksimal 1280x720 piksel (Landscape)',
