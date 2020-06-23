@@ -557,9 +557,12 @@ export default {
   label: {
     'notes': 'Catatan:',
     'sapawarga': 'sapawarga',
+    'ask-admin': 'Tanya Admin',
+    'call-admin': 'Hubungi Admin',
     'maximum-size-image': 'Maximum upload file size: 5 Mb.',
     'maximum-dimension-image': 'Ukuran maksimal 1280x720 piksel (Landscape)',
     'maximum-dimension-image-pop': 'Ukuran maksimal 720x1280 piksel (Portrait)',
+    'call-admin-text': 'Ada Kesulitan? Anda dapat mengajukan pertanyaan melalui kanal Whatsapp Kami!',
 
     'name': 'Nama',
     'role': 'Peran',

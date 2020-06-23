@@ -11,6 +11,15 @@
       <right-panel v-if="showSettings">
         <settings />
       </right-panel>
+      <el-button
+        round
+        class="button-call-admin"
+        size="large"
+        @click="callAdmin()"
+      >
+        <svg-icon icon-class="whatsapp" />
+        {{ $t('label.ask-admin') }}
+      </el-button>
     </div>
   </div>
 </template>
@@ -52,6 +61,10 @@ export default {
   methods: {
     handleClickOutside() {
       this.$store.dispatch('app/closeSideBar', { withoutAnimation: false })
+    },
+    callAdmin() {
+      const link = 'https://s.id/HotlineSW'
+      window.open(link, '_blank')
     }
   }
 }
@@ -98,5 +111,16 @@ export default {
 
   .mobile .fixed-header {
     width: 100%;
+  }
+  .button-call-admin {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 999;
+    background: #219653;
+    color: white;
+  }
+  .button-call-admin:hover {
+    background: #41b674;
   }
 </style>
