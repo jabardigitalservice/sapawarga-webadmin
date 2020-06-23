@@ -2,7 +2,14 @@
   <div class="app-container">
     <el-row>
       <el-col :lg="24">
-        <ListFilterTahap :list-query.sync="listQuery" @handle-change-tahap="getList" />
+        <el-dropdown size="large" trigger="click" placement="bottom-end" split-button type="primary" class="dropdown" @command="handleCommand">
+          {{ $t('beneficiaries.show-stage') }} <b>{{ tahapDisplay }}</b>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item :command="{label: $t('beneficiaries.stage1'), value: 1}">{{ $t('beneficiaries.stage1') }}</el-dropdown-item>
+            <el-dropdown-item :command="{label: $t('beneficiaries.stage2'), value: 2}">{{ $t('beneficiaries.stage2') }}</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+
         <DashboardTitle :is-bnba="true" />
         <!-- show statistics -->
         <StatisticsBnba :is-loading="isLoadingSummary" :summery="dataSummary" />
@@ -85,12 +92,11 @@ import i18n from '@/lang'
 import StatisticsBnba from './components/StatisticsBnba'
 import ModalDetailBnba from './components/ModalDetailBnba'
 import ListFilterBnba from './_listfilterbnba'
-import ListFilterTahap from './_listFilterTahap'
 import DashboardTitle from './components/DashboardTitle'
 import { mapGetters } from 'vuex'
 
 export default {
-  components: { Pagination, StatisticsBnba, ListFilterBnba, ModalDetailBnba, DashboardTitle, ListFilterTahap },
+  components: { Pagination, StatisticsBnba, ListFilterBnba, ModalDetailBnba, DashboardTitle },
   filters: {
     tipeBansosFilter(status) {
       const statusMap = {
@@ -112,6 +118,7 @@ export default {
       default: null
     }
   },
+
   data() {
     return {
       display: false,
@@ -120,6 +127,7 @@ export default {
       isLoadingSummary: true,
       dataSummary: null,
       listLoading: true,
+      tahapDisplay: null,
       modalDetailBnbaVisible: false,
       selectedRow: null,
       status: {
@@ -130,8 +138,8 @@ export default {
       listQuery: {
         nik: null,
         nama_krt: null,
-        sort_by: 'nik',
-        sort_order: 'ascending',
+        sort_by: null,
+        sort_order: null,
         page: 1,
         limit: 10,
         id_tipe_bansos: null,
@@ -164,10 +172,18 @@ export default {
     this.listQuery.kode_kab = this.user.kabkota ? this.user.kabkota.code_bps : null
     this.listQuery.kode_kec = this.user.kecamatan ? this.user.kecamatan.code_bps : null
     this.listQuery.kode_kel = this.user.kelurahan ? this.user.kelurahan.code_bps : null
+    this.tahapDisplay = this.$t('beneficiaries.stage2')
+    this.listQuery.tahap = 2
     this.getList()
   },
 
   methods: {
+    handleCommand(command) {
+      this.listQuery.tahap = command.value
+      this.tahapDisplay = command.label
+      this.getList()
+    },
+
     displayFilter(value) {
       if (value.id_tipe_bansos === '1') {
         this.listQuery.name_tipe_bansos = this.$t('label.beneficiaries-pkh')
@@ -262,5 +278,12 @@ export default {
   .dialog-content {
     font-size: 16px;
     line-height: 25px;
+  }
+
+  .dropdown {
+    margin-top: 15px;
+    margin-bottom: 100px;
+    display: block;
+    float: right;
   }
 </style>
