@@ -9,9 +9,7 @@
       label-position="left"
     >
       <div class="title-container">
-        <!-- <h3 class="title">{{ $t('login.title') }}</h3> -->
         <img :src="logo" alt="LOGO">
-        <!-- <lang-select class="set-language"/> -->
       </div>
 
       <el-form-item prop="username">
@@ -55,7 +53,7 @@
       >{{ $t('label.login') }}</el-button>
 
       <hr class="line-separator">
-      <!-- <h4>{{ $t('label.login-forgot-password') }} <span class="contact-admin" @click="onClickChat(phone)">{{ phone }}</span></h4> -->
+
       <h5 class="warning-text">{{ $t('label.call-admin-text') }}</h5>
       <el-button
         size="large"
@@ -159,11 +157,6 @@ export default {
           return false
         }
       })
-    },
-
-    onClickChat(phone) {
-      const url_link = 'https://wa.me/' + phone.replace(/^0+/, '62')
-      window.open(url_link, '_blank')
     },
 
     callAdmin() {
