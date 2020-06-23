@@ -53,7 +53,16 @@
         style="width:100%"
         @click.native.prevent="handleLogin"
       >{{ $t('label.login') }}</el-button>
-      <h4>{{ $t('label.login-forgot-password') }} <span class="contact-admin" @click="onClickChat(phone)">{{ phone }}</span></h4>
+
+      <hr class="line-separator">
+      <!-- <h4>{{ $t('label.login-forgot-password') }} <span class="contact-admin" @click="onClickChat(phone)">{{ phone }}</span></h4> -->
+      <h5 class="warning-text">{{ $t('label.call-admin-text') }}</h5>
+      <el-button
+        size="large"
+        type="success"
+        style="width:100%"
+        @click="callAdmin()"
+      >{{ $t('label.call-admin') }}</el-button>
     </el-form>
   </div>
 </template>
@@ -155,8 +164,27 @@ export default {
     onClickChat(phone) {
       const url_link = 'https://wa.me/' + phone.replace(/^0+/, '62')
       window.open(url_link, '_blank')
+    },
+
+    callAdmin() {
+      const link = 'https://s.id/HotlineSW'
+      window.open(link, '_blank')
     }
 
   }
 }
 </script>
+<style lang="scss" scoped>
+.line-separator {
+  margin: 25px 0;
+  height:1px;
+  border-width:0;
+  background-color:rgba(15, 15, 15, 0.2)
+}
+.title-container {
+  margin-top: -50px;
+}
+.warning-text {
+  line-height: 20px;
+}
+</style>
