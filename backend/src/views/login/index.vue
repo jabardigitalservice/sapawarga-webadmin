@@ -56,11 +56,14 @@
 
       <h5 class="warning-text">{{ $t('label.call-admin-text') }}</h5>
       <el-button
+        class="button-call-admin"
         size="large"
-        type="success"
         style="width:100%"
         @click="callAdmin()"
-      >{{ $t('label.call-admin') }}</el-button>
+      >
+        <svg-icon icon-class="whatsapp" />
+        {{ $t('label.call-admin') }}
+      </el-button>
     </el-form>
   </div>
 </template>
@@ -172,12 +175,22 @@ export default {
   margin: 25px 0;
   height:1px;
   border-width:0;
-  background-color:rgba(15, 15, 15, 0.2)
+  background-color: #E0E0E0;
 }
 .title-container {
   margin-top: -50px;
 }
 .warning-text {
+  color: #000000;
+  font-size: 15px;
   line-height: 20px;
+  word-spacing: 3px;
+}
+.button-call-admin {
+  background: #219653;
+  color: white;
+}
+.button-call-admin:hover {
+  background: #41b674;
 }
 </style>
