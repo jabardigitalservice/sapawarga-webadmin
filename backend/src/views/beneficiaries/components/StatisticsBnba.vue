@@ -1,8 +1,8 @@
 <template>
   <el-row :gutter="24">
-    <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
+    <el-col v-for="(data, name) in summary" :key="name" :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
       <div class="grid-content">
-        <div class="stat-title">{{ $t('label.beneficiaries-pkh') }}</div>
+        <div class="stat-title">{{ name }}</div>
         <!-- show loading -->
         <div
           v-loading="isLoading"
@@ -10,98 +10,7 @@
           element-loading-spinner="el-icon-loading"
         />
         <!-- show data -->
-        <div v-if="!isLoading" class="stat-count color-sw-green">{{ summery.pkh ? formatNumber(summery.pkh) : '-' }}</div>
-      </div>
-    </el-col>
-    <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
-      <div class="grid-content">
-        <div class="stat-title">{{ $t('label.beneficiaries-bpnt-basicfood') }}</div>
-        <!-- show loading -->
-        <div
-          v-loading="isLoading"
-          class="icon-loading stat-count"
-          element-loading-spinner="el-icon-loading"
-        />
-        <!-- show data -->
-        <div v-if="!isLoading" class="stat-count color-sw-green">{{ summery.bpnt ? formatNumber(summery.bpnt) : '-' }}</div>
-      </div>
-    </el-col>
-    <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
-      <div class="grid-content">
-        <div class="stat-title">{{ $t('label.beneficiaries-bpnt-expansion') }}</div>
-        <!-- show loading -->
-        <div
-          v-loading="isLoading"
-          class="icon-loading stat-count"
-          element-loading-spinner="el-icon-loading"
-        />
-        <!-- show data -->
-        <div v-if="!isLoading" class="stat-count color-sw-green">{{ summery.bpnt_perluasan ? formatNumber(summery.bpnt_perluasan) : '-' }}</div>
-      </div>
-    </el-col>
-    <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
-      <div class="grid-content">
-        <div class="stat-title">{{ $t('label.beneficiaries-kemensos') }}</div>
-        <!-- show loading -->
-        <div
-          v-loading="isLoading"
-          class="icon-loading stat-count"
-          element-loading-spinner="el-icon-loading"
-        />
-        <!-- show data -->
-        <div v-if="!isLoading" class="stat-count color-sw-green">{{ summery.bansos_tunai_kemensos ? formatNumber(summery.bansos_tunai_kemensos) : '-' }}</div>
-      </div>
-    </el-col>
-    <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
-      <div class="grid-content">
-        <div class="stat-title">{{ $t('label.beneficiaries-president') }}</div>
-        <!-- show loading -->
-        <div
-          v-loading="isLoading"
-          class="icon-loading stat-count"
-          element-loading-spinner="el-icon-loading"
-        />
-        <!-- show data -->
-        <div v-if="!isLoading" class="stat-count color-sw-green">{{ summery.bansos_presiden_sembako_bodebek ? formatNumber(summery.bansos_presiden_sembako_bodebek) : '-' }}</div>
-      </div>
-    </el-col>
-    <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
-      <div class="grid-content">
-        <div class="stat-title">{{ $t('label.beneficiaries-province') }}</div>
-        <!-- show loading -->
-        <div
-          v-loading="isLoading"
-          class="icon-loading stat-count"
-          element-loading-spinner="el-icon-loading"
-        />
-        <!-- show data -->
-        <div v-if="!isLoading" class="stat-count color-sw-green">{{ summery.bansos_provinsi ? formatNumber(summery.bansos_provinsi) : '-' }}</div>
-      </div>
-    </el-col>
-    <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
-      <div class="grid-content">
-        <div class="stat-title">{{ $t('label.beneficiaries-village-fund') }}</div>
-        <!-- show loading -->
-        <div
-          v-loading="isLoading"
-          class="icon-loading stat-count"
-          element-loading-spinner="el-icon-loading"
-        />
-        <!-- show data -->
-        <div v-if="!isLoading" class="stat-count color-sw-green">{{ summery.dana_desa ? formatNumber(summery.dana_desa) : '-' }}</div>
-      </div>
-    </el-col>
-    <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
-      <div class="grid-content">
-        <div class="stat-title">{{ $t('label.beneficiaries-city') }}</div>
-        <!-- show loading -->
-        <div
-          v-loading="isLoading"
-          class="icon-loading stat-count"
-          element-loading-spinner="el-icon-loading"
-        />
-        <!-- show data -->
-        <div v-if="!isLoading" class="stat-count color-sw-green">{{ summery.bansos_kabkota ? formatNumber(summery.bansos_kabkota) : '-' }}</div>
+        <div v-if="!isLoading" class="stat-count color-sw-green">{{ data ? formatNumber(data) : '-' }}</div>
       </div>
     </el-col>
   </el-row>
@@ -111,49 +20,13 @@
 import { formatNumber } from '@/utils/formatNumber'
 export default {
   props: {
-    summery: {
-      type: Object,
-      default: () => {}
-    },
-    filter: {
+    summary: {
       type: Object,
       default: () => {}
     },
     isLoading: {
       type: Boolean,
       default: false
-    }
-  },
-  computed: {
-    getApproved() {
-      if (this.filter.type === 'provinsi' || this.filter.type === 'kabkota') {
-        return this.summery.approved_kabkota
-      }
-      if (this.filter.type === 'kec') {
-        return this.summery.approved_kabkota + this.summery.approved_kec
-      }
-      if (this.filter.type === 'kel') {
-        return this.summery.approved_kabkota + this.summery.approved_kec + this.summery.approved
-      }
-      return this.summery.approved_kabkota + this.summery.approved_kec + this.summery.approved
-    },
-    getPending() {
-      if (this.filter.type === 'provinsi' || this.filter.type === 'kabkota') {
-        return this.summery.approved_kec + this.summery.approved + this.summery.pending
-      }
-      if (this.filter.type === 'kec') {
-        return this.summery.approved + this.summery.pending
-      }
-      if (this.filter.type === 'kel') {
-        return this.summery.pending
-      }
-      return this.summery.pending
-    },
-    getReject() {
-      return this.summery.rejected_kabkota + this.summery.rejected_kec + this.summery.rejected
-    },
-    getTotalBenefeciaries() {
-      return this.getApproved + this.getPending + this.getReject
     }
   },
   methods: {

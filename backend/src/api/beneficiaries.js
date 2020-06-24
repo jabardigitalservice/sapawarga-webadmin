@@ -34,7 +34,7 @@ export function fetchDashboardList(query) {
 
 export function fetchBnbaTahapSatuSummary(query) {
   return request({
-    url: '/beneficiaries-bnba-tahap-satu/summary',
+    url: '/beneficiaries-bnba/summary',
     method: 'get',
     params: query
   })
@@ -42,7 +42,7 @@ export function fetchBnbaTahapSatuSummary(query) {
 
 export function fetchBnbaTahapSatuList(query) {
   return request({
-    url: '/beneficiaries-bnba-tahap-satu',
+    url: '/beneficiaries-bnba',
     method: 'get',
     params: query
   })
@@ -112,7 +112,7 @@ export function fetchRecord(id) {
 
 export function fetchRecordBnba(id) {
   return request({
-    url: `/beneficiaries-bnba-tahap-satu/${id}`,
+    url: `/beneficiaries-bnba/${id}`,
     method: 'get'
   })
 }
