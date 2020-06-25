@@ -2,7 +2,13 @@
   <div class="app-container">
     <el-row>
       <el-col :span="24">
-        <ListFilterTahap :list-query.sync="listQuery" @handle-change-tahap="getList" />
+        <el-dropdown size="large" trigger="click" placement="bottom-end" split-button type="primary" class="dropdown" @command="handleCommand">
+          {{ $t('beneficiaries.show-stage') }} <b>{{ tahapDisplay }}</b>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item :command="{label: $t('beneficiaries.stage1'), value: 1}">{{ $t('beneficiaries.stage1') }}</el-dropdown-item>
+            <el-dropdown-item :command="{label: $t('beneficiaries.stage2'), value: 2}">{{ $t('beneficiaries.stage2') }}</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
         <DashboardTitle :is-monitoring-bnba="true" />
       </el-col>
     </el-row>
@@ -136,17 +142,16 @@ import {
 import DashboardTitle from './components/DashboardTitle'
 import Pagination from '@/components/Pagination'
 import Swal from 'sweetalert2'
-import ListFilterTahap from './_listFilterTahap'
 
 export default {
   components: {
     DashboardTitle,
-    Pagination,
-    ListFilterTahap
+    Pagination
   },
   data() {
     return {
       loading: false,
+      tahapDisplay: null,
       kabkotaOptions: null,
       citySelected: null,
       bansosTypeSelected: null,
@@ -189,10 +194,17 @@ export default {
     }
   },
   created() {
+    this.tahapDisplay = this.$t('beneficiaries.stage2')
+    this.listQuery.tahap = 2
     this.getList()
     this.getKabkotaOptions()
   },
   methods: {
+    handleCommand(command) {
+      this.listQuery.tahap = command.value
+      this.tahapDisplay = command.label
+      this.getList()
+    },
     async getList() {
       this.listQuery.tahap_bantuan = this.listQuery.tahap
       this.loading = true
@@ -259,4 +271,11 @@ export default {
   }
 }
 </script>
-
+<style lang="scss" scoped>
+  .dropdown {
+    margin-top: 15px;
+    margin-bottom: 100px;
+    display: block;
+    float: right;
+  }
+</style>
