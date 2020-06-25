@@ -11,15 +11,20 @@
       <right-panel v-if="showSettings">
         <settings />
       </right-panel>
-      <el-button
-        round
-        class="button-call-admin"
-        size="large"
-        @click="callAdmin()"
-      >
-        <svg-icon icon-class="whatsapp" />
-        {{ $t('label.ask-admin') }}
-      </el-button>
+      <div>
+        <el-tooltip placement="top" effect="light">
+          <div slot="content" class="hotline-tooltip">{{ $t('label.hotline-tooltip-welcome') }} <br> {{ $t('label.hotline-tooltip-help') }}</div>
+          <el-button
+            round
+            class="button-call-admin"
+            size="large"
+            @click="callAdmin()"
+          >
+            <svg-icon icon-class="whatsapp" />
+            {{ $t('label.ask-admin') }}
+          </el-button>
+        </el-tooltip>
+      </div>
     </div>
   </div>
 </template>
@@ -122,5 +127,8 @@ export default {
   }
   .button-call-admin:hover {
     background: #41b674;
+  }
+  .hotline-tooltip {
+    font-size: 16px;
   }
 </style>
