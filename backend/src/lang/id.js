@@ -563,6 +563,8 @@ export default {
     'maximum-dimension-image': 'Ukuran maksimal 1280x720 piksel (Landscape)',
     'maximum-dimension-image-pop': 'Ukuran maksimal 720x1280 piksel (Portrait)',
     'call-admin-text': 'Ada Kesulitan? Anda dapat mengajukan pertanyaan melalui kanal Whatsapp Kami!',
+    'hotline-tooltip-welcome': 'Selamat datang di Sapawarga,',
+    'hotline-tooltip-help': 'ada yang bisa Kami bantu?',
 
     'name': 'Nama',
     'role': 'Peran',
