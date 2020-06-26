@@ -5,7 +5,7 @@
         <DashboardTitle :is-verification="true" />
         <div class="warn-content-warning">
           <p class="title">Pengumuman</p>
-          <p>Proses verifikasi dan validasi (verval) data penerima bansos via Sapawarga PERIODE 2 kembali dibuka mulai Senin, 11 Mei 2020! <span class="link" @click="dialogVisible = true">Lihat Info Selengkapnya</span></p>
+          <p>Proses verval data penerima bansos tahap II telah DITUTUP. Terima kasih telah melakukan verval. Pantau perkembangan data di <span class="link" @click="goSolidaritasWeb">solidaritas.jabarprov.go.id.</span></p>
         </div>
         <el-row style="margin: 10px 0px">
           <el-col :span="12">
@@ -83,21 +83,12 @@
         width="50%"
         center
       >
-        <span slot="title" class="dialog-title">Sampurasun Pemerintah Desa, Ketua RW, PLD, PSM, dan Karang Taruna!</span>
-        <p class="dialog-content space">Proses verifikasi dan validasi (verval) data penerima bansos via Sapawarga PERIODE 2 kembali dibuka mulai Senin, 11 Mei 2020!</p>
-        <p class="dialog-content space"><b>Berikut merupakan peningkatan fitur dan kemudahan yang dapat digunakan oleh pengguna pada proses verval bansos di periode kedua : </b></p>
-        <p class="dialog-content space">1. Pemerintah Desa atau Ketua RW dapat mengupdate/merubah status calon penerima bansos (dari ditolak menjadi terverifikasi, atau sebaliknya).</p>
-        <p class="dialog-content space">2. Pembenahan terhadap permasalahan terkait KTP ganda dan data tersasar.</p>
-        <p class="dialog-content space">3. Pengakomodasian pendaftaran penerima bansos non-KTP.</p>
-        <p class="dialog-content space">4. Penyelesaian permasalahan error 422,413,504, dan 408 pada Admin Sapawarga tingkat desa dan aplikasi Sapawarga Ketua RW.</p>
-        <p class="dialog-content space">Demikian pengumuman kami, dimohon agar maklum.</p>
-        <p class="dialog-content space" style="margin-bottom: 30px">Mari dukung proses verifikasi dan validasi data penerima bantuan sosial melalui Sapawarga untuk pelayanan dan proses pemberian bansos yang lebih baik.</p>
-        <p class="dialog-content space" style="margin-bottom: 30px">Hormat kami,</p>
-        <p class="dialog-content"><b>Tim Sapawarga,</b></p>
-        <p class="dialog-content" style="margin-top:-12px">Pemerintah Provinsi Jawa Barat</p>
-        <p class="dialog-content">Hotline (Hanya Whatsapp)</p>
-        <p class="dialog-content" style="margin-top:-12px">+62 812-2008-2668</p>
-        <p class="dialog-content link"><a href="https://s.id/HotlineSW" style="color:blue">https://s.id/HotlineSW</a></p>
+        <span slot="title" class="dialog-title">Terima kasih sudah verval data penerima bansos di Sapawarga!</span>
+        <p class="dialog-content space">Dengan ini kami memberitakan bahwa proses verval tahap II telah DITUTUP.</p>
+        <p class="dialog-content space">Kerja keras Anda akan menjadi rezeki bagi warga yang membutuhkan bantuan di masa pandemi ini. Data sedang kami proses. Mohon menunggu dan pantau terus perkembangan data penerima bansos di situs web <span class="link" @click="goSolidaritasWeb">solidaritas.jabarprov.go.id.</span></p>
+        <p class="dialog-content space">Bersama kita bisa tangani pandemi.</p>
+        <p class="dialog-content space">Salam,</p>
+        <p class="dialog-content"><b>Tim Sapawarga</b></p>
         <span slot="footer" class="dialog-footer">
           <el-button type="success" @click="dialogVisible = false">Tutup</el-button>
         </span>
@@ -222,6 +213,10 @@ export default {
       return 'padding-left: 50px'
     },
 
+    goSolidaritasWeb() {
+      window.open('https://solidaritas.jabarprov.go.id/', '_blank')
+    },
+
     exitDialog() {
       this.getList()
     },
@@ -245,7 +240,8 @@ export default {
     },
 
     accessBlock(value) {
-      this.$router.push('/beneficiaries/' + value)
+      // this.$router.push('/beneficiaries/' + value)
+      this.dialogVisible = true
     },
     // get summary statistics
     getSummary() {
@@ -334,9 +330,6 @@ export default {
   .dialog-content {
     padding: 0 10px;
     font-size: 16px;
-    .space {
-      line-height: 25px;
-    }
     .link {
       color: blue !important;
     }
@@ -355,11 +348,13 @@ export default {
     .title {
       font-weight: 600;
     }
-
-    .link {
-      text-decoration: underline;
-      cursor: pointer;
-      color: white !important;
-    }
+  }
+  .link {
+    text-decoration: underline;
+    cursor: pointer;
+    color: white !important;
+  }
+  .space {
+    line-height: 25px;
   }
 </style>
