@@ -209,3 +209,18 @@ export function fetchCurrentTahap(query) {
   })
 }
 
+export function fetchDownloadStatusBnba(query) {
+  return request({
+    url: '/beneficiaries-bnba/download-status',
+    method: 'get',
+    params: query
+  })
+}
+
+export function fetchDownloadStatus(query) {
+  return request({
+    url: '/beneficiaries/download-status',
+    method: 'get',
+    params: query
+  })
+}
