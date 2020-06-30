@@ -44,9 +44,9 @@
                     worksheet="Data"
                     name="sapawarga-dashboard-bansos.xls"
                   >
-                    <button class="el-button el-button--success el-button--small">
-                      <i class="el-icon-download" /> Export Data
-                    </button>
+                    <el-button type="success" icon="el-icon-download">
+                      Export Data
+                    </el-button>
                   </json-excel>
                 </el-col>
               </el-row>
