@@ -9,7 +9,12 @@
       </el-button>
     </el-row>
 
-    <h3>{{ `${ $t('label.beneficiaries-download-search') } ${ areaLabelByFilter }` }}</h3>
+    <span>
+      <h3>{{ `${ $t('label.beneficiaries-download-search') } ${ areaLabelByFilter }` }}</h3>
+      <span style="margin-left: 75%">
+        <el-button type="success" plain @click="dialogTableVisible = true">{{ $t('beneficiaries.download-history') }}</el-button>
+      </span>
+    </span>
 
     <el-row>
       <el-card class="box-card" style="margin-bottom: 10px" :xs="24">
@@ -137,6 +142,10 @@
         </el-card>
       </el-col>
     </el-row>
+    <el-dialog width="70%" :visible.sync="dialogTableVisible">
+      <span slot="title" class="dialog-title">{{ $t('beneficiaries.download-history-verval') }}</span>
+      <DialogDownloadHistory :source="'verval'" />
+    </el-dialog>
   </div>
 </template>
 
@@ -148,10 +157,13 @@ import { mapGetters } from 'vuex'
 import checkPermission from '@/utils/permission'
 import Swal from 'sweetalert2'
 import { Loading } from 'element-ui'
+import DialogDownloadHistory from '../beneficiaries/components/DialogDownloadHistory'
 
 export default {
+  components: { DialogDownloadHistory },
   data() {
     return {
+      dialogTableVisible: false,
       fullScreenLoading: false,
       list: null,
       total: 0,
@@ -448,3 +460,13 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+  .dialog-title {
+    font-weight: bold;
+    text-align: left;
+    font-size: 22px;
+    float: left;
+    padding: 20px;
+    margin-bottom: 15px;
+  }
+</style>

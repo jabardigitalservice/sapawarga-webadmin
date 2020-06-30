@@ -121,7 +121,7 @@ export default {
     position: fixed;
     right: 20px;
     bottom: 20px;
-    z-index: 999;
+    z-index: 9999;
     background: #219653;
     color: white;
   }
