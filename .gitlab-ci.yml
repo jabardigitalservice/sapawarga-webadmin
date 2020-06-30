@@ -25,6 +25,8 @@ code_quality:
   stage: code_quality
   only:
     - merge_requests
+    - develop
+    - master
   services:
     - docker:stable-dind
   variables:

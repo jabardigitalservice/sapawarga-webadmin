@@ -224,3 +224,10 @@ export function fetchDownloadStatus(query) {
     params: query
   })
 }
+
+export function downloadBeneficiariesVerval() {
+  return request({
+    url: '/beneficiaries/download',
+    method: 'get'
+  })
+}
