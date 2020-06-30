@@ -56,13 +56,24 @@
             {{ $t('crud.reset') }}
           </el-button>
         </el-col>
+        <template v-if="roles">
+          <el-col :xs="24" :sm="24" :md="7">
+            <el-button
+              size="medium"
+              class="text-16 border-orange text-orange border-radius-8 btn-export"
+              @click="downloadVerval"
+            >{{ $t('label.beneficiaries-download-verval') }}</el-button>
+          </el-col>
+        </template>
       </el-row>
     </el-form>
   </el-card>
 </template>
 
 <script>
+import { downloadBeneficiariesVerval } from '@/api/beneficiaries'
 import InputFilterAreaBps from '@/components/InputFilterAreaBps'
+import Swal from 'sweetalert2'
 
 import checkPermission from '@/utils/permission'
 
@@ -98,6 +109,10 @@ export default {
         return parseInt(authUser.kecamatan.code_bps)
       }
 
+      if (checkPermission(['staffKel'])) {
+        return parseInt(authUser.kelurahan.code_bps)
+      }
+
       return null
     }
   },
@@ -123,8 +138,27 @@ export default {
 
     changeKelurahan(id) {
       this.listQuery.domicile_kel_bps_id = id
+    },
+
+    async downloadVerval() {
+      const response = await downloadBeneficiariesVerval()
+      if (response.status === 200) {
+        Swal.fire({
+          title: this.$t('label.beneficiaries-download-start-title-alert'),
+          text: this.$t(
+            'label.beneficiaries-download-start-description-alert'
+          ),
+          icon: 'success',
+          button: 'OK'
+        })
+      }
     }
   }
 }
 </script>
 
+<style lang="scss" scoped>
+  .float-right {
+    float: right;
+  }
+</style>

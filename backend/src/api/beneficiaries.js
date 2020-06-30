@@ -209,3 +209,10 @@ export function fetchCurrentTahap(query) {
   })
 }
 
+export function downloadBeneficiariesVerval() {
+  return request({
+    url: '/beneficiaries/download',
+    method: 'get'
+  })
+}
+
