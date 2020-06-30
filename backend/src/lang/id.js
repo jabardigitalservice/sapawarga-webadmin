@@ -1055,7 +1055,8 @@ export default {
     'beneficiaries-monitoring-choose': 'Pilih',
     'beneficiaries-show-stage': 'Tampilkan Tahap:',
     'beneficiaries-first-stage': 'Tahap 1',
-    'beneficiaries-second-stage': 'Tahap 2'
+    'beneficiaries-second-stage': 'Tahap 2',
+    'beneficiaries-download-verval': 'Unduh Verval'
   },
   news: {
     'news-url': 'URL Berita',
