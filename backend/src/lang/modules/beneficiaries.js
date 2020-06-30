@@ -18,6 +18,8 @@ const beneficiaries = {
   'excuse': 'Berikan alasan penolakan',
   'status-success': 'Status berhasil diubah',
   'nik-note': 'Alasan tidak punya NIK/Nomor KTP',
+  'download-history-verval': 'Riwayat Unduh Verval',
+  'download-history-location': 'Riwayat Unduh Lokasi',
   'is-have-nik': 'Apakah warga ini memiliki NIK/Nomor KTP?',
   'reject-bansos': 'Tolak penerima bantuan untuk warga ini?',
   'verification-area-note': 'Berikut adalah data calon penerima bantuan yang ada di wilayah',
