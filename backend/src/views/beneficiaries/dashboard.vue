@@ -24,18 +24,20 @@
           <el-card class="box-card" style="margin-bottom: 10px">
             <el-form>
               <el-row :gutter="10">
-                <el-col v-if="!roles" :xs="{span:24, tag:'mb-10'}" :sm="24" :md="3">Filter Data</el-col>
-                <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="12">
-                  <input-filter-area-bps
-                    :parent-id="filterAreaParentId"
-                    :kabkota-id="listQuery.kode_kab"
-                    :kec-id="listQuery.kode_kec"
-                    :kel-id="listQuery.kode_kel"
-                    @changeKabkota="changeKabkota"
-                    @changeKecamatan="changeKecamatan"
-                    @changeKelurahan="changeKelurahan"
-                  />
-                </el-col>
+                <template v-if="!roles">
+                  <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="3">Filter Data</el-col>
+                  <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="12">
+                    <input-filter-area-bps
+                      :parent-id="filterAreaParentId"
+                      :kabkota-id="listQuery.kode_kab"
+                      :kec-id="listQuery.kode_kec"
+                      :kel-id="listQuery.kode_kel"
+                      @changeKabkota="changeKabkota"
+                      @changeKecamatan="changeKecamatan"
+                      @changeKelurahan="changeKelurahan"
+                    />
+                  </el-col>
+                </template>
                 <el-col :xs="{ span:24, tag:'mb-10' }" :sm="24" :md="3">
                   <json-excel
                     class="btn btn-default"

@@ -9,12 +9,14 @@
       </el-button>
     </el-row>
 
-    <span>
-      <h3>{{ `${ $t('label.beneficiaries-download-search') } ${ areaLabelByFilter }` }}</h3>
-      <span style="margin-left: 75%">
-        <el-button type="success" plain @click="dialogTableVisible = true">{{ $t('beneficiaries.download-history') }}</el-button>
-      </span>
-    </span>
+    <el-row>
+      <el-col :sm="24" :md="12">
+        <h3>{{ `${ $t('label.beneficiaries-download-search') } ${ areaLabelByFilter }` }}</h3>
+      </el-col>
+      <el-col :sm="24" :md="12">
+        <el-button class="button-history" type="success" plain @click="dialogTableVisible = true">{{ $t('beneficiaries.download-history') }}</el-button>
+      </el-col>
+    </el-row>
 
     <el-row>
       <el-card class="box-card" style="margin-bottom: 10px" :xs="24">
@@ -468,5 +470,11 @@ export default {
     float: left;
     padding: 20px;
     margin-bottom: 15px;
+  }
+
+  .button-history {
+    display: block;
+    float: right;
+    margin: 10px 0;
   }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-table :data="data" stripe>
+    <el-table v-loading="listLoading" :data="data" stripe>
       <el-table-column
         type="index"
         sortable="custom"
@@ -48,7 +48,8 @@ export default {
   },
   data() {
     return {
-      data: null
+      data: null,
+      listLoading: false
     }
   },
   created() {
@@ -59,11 +60,13 @@ export default {
       return index + 1
     },
     async getDataStatus() {
+      this.listLoading = true
       const params = {
         limit: 10
       }
       const response = this.source === 'bnba' ? await fetchDownloadStatusBnba(params) : await fetchDownloadStatus(params)
       this.data = response.data.items
+      this.listLoading = false
     }
   }
 }
