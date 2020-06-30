@@ -58,10 +58,13 @@
     </el-form>
     <el-row style="margin-top: 10px">
       <el-col :span="24">
-        <el-card class="box-card green">
+        <el-card class="box-card">
           <div slot="header">
             <span>{{ $t('label.beneficiaries-monitoring-table-title') }}</span>
             <span>{{ cityName }}</span>
+            <span style="margin-left: 75%">
+              <el-button type="success" plain @click="dialogTableVisible = true">{{ $t('beneficiaries.download-history') }}</el-button>
+            </span>
           </div>
           <div class="text item">
             <el-table
@@ -128,6 +131,10 @@
             />
           </div>
         </el-card>
+        <el-dialog width="70%" :visible.sync="dialogTableVisible">
+          <span slot="title" class="dialog-title">{{ $t('beneficiaries.download-history-location') }}</span>
+          <DialogDownloadHistory :source="'bnba'" />
+        </el-dialog>
       </el-col>
     </el-row>
   </div>
@@ -140,11 +147,13 @@ import {
   downloadBeneficiariesBnba
 } from '@/api/beneficiaries'
 import DashboardTitle from './components/DashboardTitle'
+import DialogDownloadHistory from './components/DialogDownloadHistory'
 import Pagination from '@/components/Pagination'
 import Swal from 'sweetalert2'
 
 export default {
   components: {
+    DialogDownloadHistory,
     DashboardTitle,
     Pagination
   },
@@ -155,6 +164,8 @@ export default {
       kabkotaOptions: null,
       citySelected: null,
       bansosTypeSelected: null,
+      dialogTableVisible: false,
+      dataDownloadHistory: null,
       total: 0,
       list: null,
       listQuery: {
@@ -277,5 +288,13 @@ export default {
     margin-bottom: 100px;
     display: block;
     float: right;
+  }
+  .dialog-title {
+    font-weight: bold;
+    text-align: left;
+    font-size: 22px;
+    float: left;
+    padding: 20px;
+    margin-bottom: 15px;
   }
 </style>
