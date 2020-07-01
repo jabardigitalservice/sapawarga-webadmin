@@ -114,7 +114,6 @@ const bansosMenuRouter = {
     {
       name: 'beneficiaries-approved',
       path: '/beneficiaries/download-verval',
-      // component: () => import('@/views/beneficiaries/downloadVerval'),
       component: () => import('@/views/bansos/download'),
       hidden: false,
       meta: {
