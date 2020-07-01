@@ -228,6 +228,8 @@ export default {
       this.listQuery.kode_kab = this.user.kabkota ? this.user.kabkota.code_bps : null
       this.listQuery.kode_kec = this.user.kecamatan ? this.user.kecamatan.code_bps : null
       this.listQuery.kode_kel = this.user.kelurahan ? this.user.kelurahan.code_bps : null
+      this.tahapDisplay = this.$t('beneficiaries.stage2')
+      this.listQuery.tahap = 2
       this.getList()
     },
 
