@@ -86,7 +86,7 @@
 </template>
 
 <script>
-import { fetchBnbaTahapSatuSummary, fetchBnbaTahapSatuList } from '@/api/beneficiaries'
+import { fetchBnbaTahapSatuSummary, fetchBnbaTahapSatuList, fetchCurrentTahap } from '@/api/beneficiaries'
 import Pagination from '@/components/Pagination'
 import i18n from '@/lang'
 import StatisticsBnba from './components/StatisticsBnba'
@@ -168,12 +168,11 @@ export default {
       return this.listQuery.kode_kab && this.listQuery.kode_kec && this.listQuery.kode_kel
     }
   },
-  created() {
+  async created() {
     this.listQuery.kode_kab = this.user.kabkota ? this.user.kabkota.code_bps : null
     this.listQuery.kode_kec = this.user.kecamatan ? this.user.kecamatan.code_bps : null
     this.listQuery.kode_kel = this.user.kelurahan ? this.user.kelurahan.code_bps : null
-    this.tahapDisplay = this.$t('beneficiaries.stage2')
-    this.listQuery.tahap = 2
+    await this.getTahap()
     this.getList()
   },
 
@@ -212,25 +211,31 @@ export default {
         this.isLoadingSummary = false
       })
     },
-    getList() {
+    async getList() {
       this.getSummary()
       this.listLoading = true
-      fetchBnbaTahapSatuList(this.listQuery).then(response => {
+      await fetchBnbaTahapSatuList(this.listQuery).then(response => {
         this.list = response.data.items
         this.total = response.data._meta.totalCount
         this.listLoading = false
       })
     },
 
-    resetFilter() {
+    async resetFilter() {
       this.display = false
       Object.assign(this.$data.listQuery, this.$options.data().listQuery)
       this.listQuery.kode_kab = this.user.kabkota ? this.user.kabkota.code_bps : null
       this.listQuery.kode_kec = this.user.kecamatan ? this.user.kecamatan.code_bps : null
       this.listQuery.kode_kel = this.user.kelurahan ? this.user.kelurahan.code_bps : null
-      this.tahapDisplay = this.$t('beneficiaries.stage2')
-      this.listQuery.tahap = 2
+      await this.getTahap()
       this.getList()
+    },
+
+    async getTahap() {
+      await fetchCurrentTahap().then(response => {
+        this.listQuery.tahap = response.data.current_tahap_bnba
+        this.tahapDisplay = this.$t('beneficiaries.stage') + this.listQuery.tahap
+      })
     },
 
     getTableRowNumbering(index) {

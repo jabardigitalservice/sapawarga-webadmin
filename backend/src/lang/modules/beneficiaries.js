@@ -5,6 +5,7 @@ const beneficiaries = {
   'link': 'Link',
   'nik-yes': 'Ya',
   'kk': 'Nomor KK',
+  'stage': 'Tahap ',
   'stage1': 'Tahap 1',
   'stage2': 'Tahap 2',
   'address': 'Alamat',
