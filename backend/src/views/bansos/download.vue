@@ -1,6 +1,6 @@
 <template>
   <div v-loading.fullScreen.lock="fullScreenLoading" class="app-container">
-    <el-row v-if="user.roles_active.id === 'staffKabkota'">
+    <el-row v-if="user.roles_active.id === 'staffKabkota' || user.roles_active.id === 'staffKec'">
       <el-button type="text" @click="exportAll">
         <img
           src="https://firebasestorage.googleapis.com/v0/b/sapawarga-app.appspot.com/o/admin-banner-01.png?alt=media&token=2c606be5-7378-40ca-b147-f19b8b8539ea"
@@ -14,7 +14,7 @@
         <h3>{{ `${ $t('label.beneficiaries-download-search') } ${ areaLabelByFilter }` }}</h3>
       </el-col>
       <el-col :sm="24" :md="12">
-        <el-button class="button-history" type="success" plain @click="dialogTableVisible = true">{{ $t('beneficiaries.download-history') }}</el-button>
+        <el-button class="button-history float-right" type="success" plain @click="dialogTableVisible = true">{{ $t('beneficiaries.download-history') }}</el-button>
       </el-col>
     </el-row>
 
@@ -41,8 +41,9 @@
               <el-col :xs="24" :md="21">
                 <span>{{ `${ $t('label.beneficiaries-download-list') } ${ areaLabelByFilter }` }}</span>
               </el-col>
-              <el-col v-if="user.roles_active.id === 'staffKabkota'" :xs="24" :md="3">
+              <el-col v-if="user.roles_active.id === 'staffKabkota' || user.roles_active.id === 'staffKec'" :xs="24" :md="3">
                 <el-button
+                  class="float-right"
                   type="success"
                   plain
                   icon="el-icon-download"
@@ -449,7 +450,7 @@ export default {
         this.exportData(params)
       } else {
         Swal.fire({
-          text: this.$t('label.beneficiaries-select-subdistrict-alert'),
+          text: `${this.$t('label.beneficiaries-select-region-alert')} ${this.areaLabelByFilter}`,
           icon: 'warning',
           button: 'OK'
         })
@@ -474,7 +475,10 @@ export default {
 
   .button-history {
     display: block;
-    float: right;
     margin: 10px 0;
+  }
+
+  .float-right {
+    float: right;
   }
 </style>
