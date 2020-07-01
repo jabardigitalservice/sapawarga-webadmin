@@ -112,6 +112,16 @@ const bansosMenuRouter = {
       }
     },
     {
+      name: 'beneficiaries-download-verval',
+      path: '/beneficiaries/download-verval',
+      component: () => import('@/views/bansos/download'),
+      hidden: false,
+      meta: {
+        title: 'bansos-download-verval',
+        roles: ['staffKec']
+      }
+    },
+    {
       name: 'beneficiaries-complaint',
       path: '/beneficiaries/complaint',
       component: () => import('@/views/beneficiaries/complaint'),

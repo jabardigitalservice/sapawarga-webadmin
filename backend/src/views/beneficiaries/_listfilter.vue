@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import { downloadBeneficiariesVerval } from '@/api/beneficiaries'
+import { exportBansos } from '@/api/bansos'
 import InputFilterAreaBps from '@/components/InputFilterAreaBps'
 import Swal from 'sweetalert2'
 
@@ -141,7 +141,7 @@ export default {
     },
 
     async downloadVerval() {
-      const response = await downloadBeneficiariesVerval()
+      const response = await exportBansos()
       if (response.status === 200) {
         Swal.fire({
           title: this.$t('label.beneficiaries-download-start-title-alert'),
