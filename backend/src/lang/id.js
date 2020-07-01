@@ -142,6 +142,7 @@ export default {
 
     'bansos-download': 'Unduh Dokumen',
     'bansos-upload': 'Unggah Dokumen',
+    'bansos-download-verval': 'Unduh Verval',
 
     'information': 'Informasi',
     'aspiration': 'Aspirasi',

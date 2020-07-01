@@ -112,12 +112,12 @@ const bansosMenuRouter = {
       }
     },
     {
-      name: 'beneficiaries-approved',
+      name: 'beneficiaries-download-verval',
       path: '/beneficiaries/download-verval',
       component: () => import('@/views/bansos/download'),
       hidden: false,
       meta: {
-        title: 'Unduh Verval',
+        title: 'bansos-download-verval',
         roles: ['staffKec']
       }
     },
