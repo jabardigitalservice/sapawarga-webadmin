@@ -1,13 +1,13 @@
 <template>
   <div v-loading.fullScreen.lock="fullScreenLoading" class="app-container">
-    <el-row v-if="user.roles_active.id === 'staffKabkota' || user.roles_active.id === 'staffKec'">
+    <!-- <el-row v-if="user.roles_active.id === 'staffKabkota' || user.roles_active.id === 'staffKec'">
       <el-button type="text" @click="exportAll">
         <img
           src="https://firebasestorage.googleapis.com/v0/b/sapawarga-app.appspot.com/o/admin-banner-01.png?alt=media&token=2c606be5-7378-40ca-b147-f19b8b8539ea"
           width="100%"
         >
       </el-button>
-    </el-row>
+    </el-row> -->
 
     <el-row>
       <el-col :sm="24" :md="12">
@@ -154,7 +154,7 @@
 
 <script>
 import { formatNumber } from '@/utils/formatNumber'
-import { fetchDashboardList } from '@/api/beneficiaries'
+import { fetchDashboardList, fetchCurrentTahap } from '@/api/beneficiaries'
 import { exportBansos } from '@/api/bansos'
 import { mapGetters } from 'vuex'
 import checkPermission from '@/utils/permission'
@@ -192,7 +192,8 @@ export default {
       sort_prop: 'data.approved',
       sort_order: 'descending',
       selectionQuery: {
-        kode_kec: null
+        kode_kec: null,
+        tahap: null
       }
     }
   },
@@ -346,6 +347,7 @@ export default {
   },
   created() {
     this.resetParams()
+    this.getCurrentTahap()
     this.getList()
   },
   methods: {
@@ -459,6 +461,12 @@ export default {
     exportAll() {
       const params = null
       this.exportData(params)
+    },
+
+    // get current tahap
+    async getCurrentTahap() {
+      const response = await fetchCurrentTahap()
+      this.selectionQuery.tahap = Number(response.data.current_tahap_bnba)
     }
   }
 }

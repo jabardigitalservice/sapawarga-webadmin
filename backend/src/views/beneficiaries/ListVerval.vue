@@ -15,7 +15,7 @@
         <!-- show statistics -->
         <StatisticsVerval :is-loading="isLoadingSummary" :is-verval="true" :list-type="listType" :summery="dataSummary" />
 
-        <ListFilter :list-query.sync="listQuery" :is-verval="true" @submit-search="getList" @reset-search="resetFilter" />
+        <ListFilter :list-query.sync="listQuery" :is-verval="true" :is-download-verval="false" @submit-search="getList" @reset-search="resetFilter" />
 
         <el-table ref="multipleTable" v-loading="listLoading" :data="list" border stripe highlight-current-row style="width: 100%" @selection-change="handleSelectionChange" @sort-change="changeSort">
           <el-table-column v-if="listType === 'pending'" type="selection" width="55" align="center" />
