@@ -56,15 +56,6 @@
             {{ $t('crud.reset') }}
           </el-button>
         </el-col>
-        <template v-if="roles">
-          <el-col :xs="24" :sm="24" :md="7">
-            <el-button
-              size="medium"
-              class="text-16 border-orange text-orange border-radius-8 btn-export"
-              @click="downloadVerval"
-            >{{ $t('label.beneficiaries-download-verval') }}</el-button>
-          </el-col>
-        </template>
       </el-row>
     </el-form>
   </el-card>
