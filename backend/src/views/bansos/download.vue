@@ -154,7 +154,7 @@
 
 <script>
 import { formatNumber } from '@/utils/formatNumber'
-import { fetchDashboardList } from '@/api/beneficiaries'
+import { fetchDashboardList, fetchCurrentTahap } from '@/api/beneficiaries'
 import { exportBansos } from '@/api/bansos'
 import { mapGetters } from 'vuex'
 import checkPermission from '@/utils/permission'
@@ -192,7 +192,8 @@ export default {
       sort_prop: 'data.approved',
       sort_order: 'descending',
       selectionQuery: {
-        kode_kec: null
+        kode_kec: null,
+        tahap: null
       }
     }
   },
@@ -346,6 +347,7 @@ export default {
   },
   created() {
     this.resetParams()
+    this.getCurrentTahap()
     this.getList()
   },
   methods: {
@@ -459,6 +461,12 @@ export default {
     exportAll() {
       const params = null
       this.exportData(params)
+    },
+
+    // get current tahap
+    async getCurrentTahap() {
+      const response = await fetchCurrentTahap()
+      this.selectionQuery.tahap = Number(response.data.current_tahap_bnba)
     }
   }
 }
