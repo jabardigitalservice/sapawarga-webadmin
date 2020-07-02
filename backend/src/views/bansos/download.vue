@@ -1,13 +1,13 @@
 <template>
   <div v-loading.fullScreen.lock="fullScreenLoading" class="app-container">
-    <el-row v-if="user.roles_active.id === 'staffKabkota' || user.roles_active.id === 'staffKec'">
+    <!-- <el-row v-if="user.roles_active.id === 'staffKabkota' || user.roles_active.id === 'staffKec'">
       <el-button type="text" @click="exportAll">
         <img
           src="https://firebasestorage.googleapis.com/v0/b/sapawarga-app.appspot.com/o/admin-banner-01.png?alt=media&token=2c606be5-7378-40ca-b147-f19b8b8539ea"
           width="100%"
         >
       </el-button>
-    </el-row>
+    </el-row> -->
 
     <el-row>
       <el-col :sm="24" :md="12">
