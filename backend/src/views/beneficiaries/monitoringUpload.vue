@@ -60,11 +60,15 @@
       <el-col :span="24">
         <el-card class="box-card">
           <div slot="header">
-            <span>{{ $t('label.beneficiaries-monitoring-table-title') }}</span>
-            <span>{{ cityName }}</span>
-            <span style="margin-left: 75%">
-              <el-button type="success" plain @click="dialogTableVisible = true">{{ $t('beneficiaries.download-history') }}</el-button>
-            </span>
+            <el-row>
+              <el-col :span="12" style="margin-top: 10px">
+                <span>{{ $t('label.beneficiaries-monitoring-table-title') }}</span>
+                <span>{{ cityName }}</span>
+              </el-col>
+              <el-col :span="12">
+                <el-button style="float: right;" type="success" plain @click="dialogTableVisible = true">{{ $t('beneficiaries.download-history') }}</el-button>
+              </el-col>
+            </el-row>
           </div>
           <div class="text item">
             <el-table
