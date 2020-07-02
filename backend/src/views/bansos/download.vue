@@ -193,7 +193,7 @@ export default {
       sort_order: 'descending',
       selectionQuery: {
         kode_kec: null,
-        tahap: null
+        tahap_bantuan: null
       }
     }
   },
@@ -466,7 +466,7 @@ export default {
     // get current tahap
     async getCurrentTahap() {
       const response = await fetchCurrentTahap()
-      this.selectionQuery.tahap = Number(response.data.current_tahap_bnba)
+      this.selectionQuery.tahap_bantuan = Number(response.data.current_tahap_bnba)
     }
   }
 }
