@@ -100,7 +100,7 @@ export default {
     return {
       roles: checkPermission(['staffKel']),
       queryDownload: {
-        tahap: null
+        tahap_bantuan: null
       }
     }
   },
@@ -150,7 +150,7 @@ export default {
 
     async downloadVerval() {
       // set state tahap
-      this.queryDownload.tahap = this.listQuery.tahap
+      this.queryDownload.tahap_bantuan = this.listQuery.tahap
       const response = await exportBansos(this.queryDownload)
       if (response.status === 200) {
         Swal.fire({
