@@ -56,6 +56,16 @@
             {{ $t('crud.reset') }}
           </el-button>
         </el-col>
+        <template v-if="roles && isDownloadVerval">
+          <el-col :xs="24" :sm="24" :md="7">
+            <el-button
+              size="medium"
+              class="text-16 border-orange text-orange border-radius-8 btn-export"
+              @click="downloadVerval"
+            >{{ $t('label.beneficiaries-download-verval') }}</el-button>
+          </el-col>
+        </template>
+
       </el-row>
     </el-form>
   </el-card>
@@ -79,12 +89,19 @@ export default {
     isVerval: {
       type: Boolean,
       default: false
+    },
+    isDownloadVerval: {
+      type: Boolean,
+      default: true
     }
   },
 
   data() {
     return {
-      roles: checkPermission(['staffKel'])
+      roles: checkPermission(['staffKel']),
+      queryDownload: {
+        tahap: null
+      }
     }
   },
 
@@ -132,7 +149,9 @@ export default {
     },
 
     async downloadVerval() {
-      const response = await exportBansos()
+      // set state tahap
+      this.queryDownload.tahap = this.listQuery.tahap
+      const response = await exportBansos(this.queryDownload)
       if (response.status === 200) {
         Swal.fire({
           title: this.$t('label.beneficiaries-download-start-title-alert'),
