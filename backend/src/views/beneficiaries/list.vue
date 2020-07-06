@@ -5,8 +5,7 @@
         <el-dropdown size="large" trigger="click" placement="bottom-end" split-button type="primary" class="dropdown" @command="handleCommand">
           {{ $t('beneficiaries.show-stage') }} <b>{{ tahapDisplay }}</b>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item :command="{label: $t('beneficiaries.stage1'), value: 1}">{{ $t('beneficiaries.stage1') }}</el-dropdown-item>
-            <el-dropdown-item :command="{label: $t('beneficiaries.stage2'), value: 2}">{{ $t('beneficiaries.stage2') }}</el-dropdown-item>
+            <el-dropdown-item v-for="item in listTahap" :key="item.value" :command="{label: item.label, value: item.value}">{{ item.label }}</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
 
@@ -137,7 +136,7 @@
 </template>
 
 <script>
-import { fetchSummary, fetchList } from '@/api/beneficiaries'
+import { fetchSummary, fetchList, fetchCurrentTahap } from '@/api/beneficiaries'
 import DashboardTitle from './components/DashboardTitle'
 import { RolesUser, CODE_BPS_SUMEDANG } from '@/utils/constantVariable'
 import UploadDataManual from './components/UploadDataManual/index'
@@ -187,6 +186,7 @@ export default {
       isLoadingSummary: true,
       idDetail: null,
       dataSummary: null,
+      listTahap: [],
       listLoading: true,
       beneficiaries: null,
       tahapDisplay: null,
@@ -215,11 +215,10 @@ export default {
   computed: {
     ...mapGetters(['user'])
   },
-  created() {
-    this.tahapDisplay = this.$t('beneficiaries.stage2')
-    this.listQuery.tahap = 2
+  async created() {
+    await this.getStep()
     this.getList()
-    this.getSummary(2)
+    this.getSummary(this.listQuery.tahap)
   },
 
   methods: {
@@ -298,6 +297,20 @@ export default {
         this.list = response.data.items
         this.total = response.data._meta.totalCount
         this.listLoading = false
+      })
+    },
+
+    async getStep() {
+      await fetchCurrentTahap().then(response => {
+        this.listQuery.tahap = response.data.current_tahap_verval
+        this.tahapDisplay = this.$t('beneficiaries.stage') + this.listQuery.tahap
+        for (let i = 1; i <= this.listQuery.tahap; i++) {
+          const data = {
+            value: i,
+            label: this.$t('beneficiaries.stage') + i
+          }
+          this.listTahap.push(data)
+        }
       })
     },
 

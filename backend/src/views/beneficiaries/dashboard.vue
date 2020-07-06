@@ -5,10 +5,10 @@
         <el-dropdown size="large" trigger="click" placement="bottom-end" split-button type="primary" class="dropdown" @command="handleCommand">
           {{ $t('beneficiaries.show-stage') }} <b>{{ tahapDisplay }}</b>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item :command="{label: $t('beneficiaries.stage1'), value: 1}">{{ $t('beneficiaries.stage1') }}</el-dropdown-item>
-            <el-dropdown-item :command="{label: $t('beneficiaries.stage2'), value: 2}">{{ $t('beneficiaries.stage2') }}</el-dropdown-item>
+            <el-dropdown-item v-for="item in listTahap" :key="item.value" :command="{label: item.label, value: item.value}">{{ item.label }}</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
+
         <DashboardTitle :is-dashboard="true" />
 
         <DashboardStatistics
@@ -169,7 +169,7 @@
 
 <script>
 import { formatNumber } from '@/utils/formatNumber'
-import { fetchDashboardSummary, fetchDashboardList } from '@/api/beneficiaries'
+import { fetchDashboardSummary, fetchDashboardList, fetchCurrentTahap } from '@/api/beneficiaries'
 import { RolesUser } from '@/utils/constantVariable'
 import { mapGetters } from 'vuex'
 import DashboardStatistics from './components/DashboardStatistics'
@@ -215,6 +215,7 @@ export default {
       isLoadingSummary: true,
       dataSummary: null,
       listLoading: true,
+      listTahap: [],
       tahapDisplay: null,
       roles: checkPermission(['staffKel']),
       status: {
@@ -330,9 +331,8 @@ export default {
       }
     }
   },
-  created() {
-    this.tahapDisplay = this.$t('beneficiaries.stage2')
-    this.filter.tahap = 2
+  async created() {
+    await this.getStep()
     this.resetParams()
     this.getList()
     this.getSummary()
@@ -347,6 +347,21 @@ export default {
       this.getList()
       this.getSummary()
     },
+
+    async getStep() {
+      await fetchCurrentTahap().then(response => {
+        this.filter.tahap = response.data.current_tahap_verval
+        this.tahapDisplay = this.$t('beneficiaries.stage') + this.filter.tahap
+        for (let i = 1; i <= this.filter.tahap; i++) {
+          const data = {
+            value: i,
+            label: this.$t('beneficiaries.stage') + i
+          }
+          this.listTahap.push(data)
+        }
+      })
+    },
+
     getCompareOrder(data1, data2, order) {
       if (data1 < data2) {
         return order === 'ascending' ? -1 : 1
