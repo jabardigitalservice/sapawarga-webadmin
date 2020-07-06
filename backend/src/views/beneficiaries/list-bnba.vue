@@ -5,8 +5,7 @@
         <el-dropdown size="large" trigger="click" placement="bottom-end" split-button type="primary" class="dropdown" @command="handleCommand">
           {{ $t('beneficiaries.show-stage') }} <b>{{ tahapDisplay }}</b>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item :command="{label: $t('beneficiaries.stage1'), value: 1}">{{ $t('beneficiaries.stage1') }}</el-dropdown-item>
-            <el-dropdown-item :command="{label: $t('beneficiaries.stage2'), value: 2}">{{ $t('beneficiaries.stage2') }}</el-dropdown-item>
+            <el-dropdown-item v-for="item in listTahap" :key="item.value" :command="{label: item.label, value: item.value}">{{ item.label }}</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
 
@@ -127,6 +126,7 @@ export default {
       isLoadingSummary: true,
       dataSummary: null,
       listLoading: true,
+      listTahap: [],
       tahapDisplay: null,
       modalDetailBnbaVisible: false,
       selectedRow: null,
@@ -172,7 +172,7 @@ export default {
     this.listQuery.kode_kab = this.user.kabkota ? this.user.kabkota.code_bps : null
     this.listQuery.kode_kec = this.user.kecamatan ? this.user.kecamatan.code_bps : null
     this.listQuery.kode_kel = this.user.kelurahan ? this.user.kelurahan.code_bps : null
-    await this.getTahap()
+    await this.getStep()
     this.getList()
   },
 
@@ -227,14 +227,21 @@ export default {
       this.listQuery.kode_kab = this.user.kabkota ? this.user.kabkota.code_bps : null
       this.listQuery.kode_kec = this.user.kecamatan ? this.user.kecamatan.code_bps : null
       this.listQuery.kode_kel = this.user.kelurahan ? this.user.kelurahan.code_bps : null
-      await this.getTahap()
+      await this.getStep()
       this.getList()
     },
 
-    async getTahap() {
+    async getStep() {
       await fetchCurrentTahap().then(response => {
         this.listQuery.tahap = response.data.current_tahap_bnba
         this.tahapDisplay = this.$t('beneficiaries.stage') + this.listQuery.tahap
+        for (let i = 1; i <= this.listQuery.tahap; i++) {
+          const data = {
+            value: i,
+            label: this.$t('beneficiaries.stage') + i
+          }
+          this.listTahap.push(data)
+        }
       })
     },
 
