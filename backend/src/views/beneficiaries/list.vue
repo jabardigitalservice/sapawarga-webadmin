@@ -16,13 +16,16 @@
           <p class="title">Pengumuman</p>
           <p>Proses verval data penerima bansos tahap II telah DITUTUP. Terima kasih telah melakukan verval. Pantau perkembangan data di <span class="link" @click="goSolidaritasWeb">solidaritas.jabarprov.go.id.</span></p>
         </div>
-        <el-row style="margin: 10px 0px">
-          <el-col :span="12">
-            <el-button type="primary" size="small" icon="el-icon-plus" @click="accessBlock('create')">
-              {{ $t('route.beneficiaries-create') }}
-            </el-button>
-          </el-col>
-        </el-row>
+
+        <template v-if="user.kabkota.code_bps !== CODE_BPS_SUMEDANG">
+          <el-row style="margin: 10px 0px">
+            <el-col :span="12">
+              <el-button type="primary" size="small" icon="el-icon-plus" @click="accessBlock('create')">
+                {{ $t('route.beneficiaries-create') }}
+              </el-button>
+            </el-col>
+          </el-row>
+        </template>
 
         <!-- show statistics -->
         <Statistics :is-loading="isLoadingSummary" :summery="dataSummary" />
@@ -135,7 +138,7 @@
 <script>
 import { fetchSummary, fetchList } from '@/api/beneficiaries'
 import DashboardTitle from './components/DashboardTitle'
-import { RolesUser } from '@/utils/constantVariable'
+import { RolesUser, CODE_BPS_SUMEDANG } from '@/utils/constantVariable'
 import UploadDataManual from './components/UploadDataManual/index'
 import FormPersonal from './components/FormPersonal'
 import Preview from './components/Preview'
@@ -174,6 +177,7 @@ export default {
   data() {
     return {
       RolesUser,
+      CODE_BPS_SUMEDANG,
       list: null,
       total: 0,
       dialogVisible: false,
