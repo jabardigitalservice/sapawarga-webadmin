@@ -18,7 +18,7 @@ import notifikasiuserMenuRouter from './modules/notification-user-menu'
 import configurationMenuRouter from './modules/configuration-menu'
 import broadcastRouter from './modules/broadcast'
 import bansosMenuRouter from './modules/bansos-menu'
-import allocationMenuRouter from './modules/allocation-menu'
+// import allocationMenuRouter from './modules/allocation-menu'
 import listAllocationMenuRouter from './modules/listAllocation-menu'
 import downloadAllocationMenuRouter from './modules/download-allocation-menu'
 
@@ -170,7 +170,34 @@ export const asyncRoutes = [
     active: false
   },
   bansosMenuRouter,
-  allocationMenuRouter,
+  // route allocationMenuRouter comment for a while
+  // allocationMenuRouter,
+
+  // add menu download verval for kabkota
+  {
+    name: 'allocation-menu',
+    path: 'allocation-menu',
+    component: Layout,
+    redirect: 'noredirect',
+    meta: {
+      title: 'allocation-menu',
+      roles: ['admin', 'staffKabkota'],
+      icon: 'example'
+    },
+    active: false,
+    children: [
+      {
+        name: 'beneficiaries-download-verval',
+        path: '/beneficiaries/download-verval',
+        component: () => import('@/views/bansos/download'),
+        hidden: false,
+        meta: {
+          title: 'bansos-download-verval',
+          roles: ['staffKabkota']
+        }
+      }
+    ]
+  },
   listAllocationMenuRouter,
   downloadAllocationMenuRouter,
   // title
