@@ -67,3 +67,7 @@ export const rolesWidget = {
   'pimpinan': ['admin', 'staffProv', 'pimpinan'],
   'staffKelOPD': ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel', 'staffOPD']
 }
+
+export const UrlDownloadImportData = `${process.env.VUE_APP_S3_URL}attachment/Template_Data_Manual.xlsx`
+
+export const CODE_BPS_SUMEDANG = '3211'

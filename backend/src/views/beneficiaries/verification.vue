@@ -156,6 +156,7 @@ export default {
       dialogVisible: false,
       beneficiaries: {
         nik: null,
+        no_kk: null,
         name: null,
         provinsi: null,
         kabkota: null,

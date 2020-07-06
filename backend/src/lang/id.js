@@ -1,4 +1,7 @@
+import beneficiaries from './modules/beneficiaries'
+
 export default {
+  beneficiaries,
   route: {
     'dashboard': 'Dashboard',
     'profile': 'Profil',
@@ -123,23 +126,34 @@ export default {
 
     'beneficiaries-manage': 'Bantuan Sosial',
     'beneficiaries-manage-bnba': 'Daftar BNBA Tahap 1',
-    'beneficiaries-list': 'Verifikasi Data Bansos',
+    'beneficiaries-list': 'Verifikasi Data',
     'beneficiaries-create': 'Tambah Bansos',
     'beneficiaries-detail': 'Detail Bansos',
     'beneficiaries-edit': 'Edit Bansos',
     'beneficiaries-preview': 'Ringkasan',
     'beneficiaries-verification': 'Verifikasi Bansos',
-    'beneficiaries-dashboard-verification': 'Dashboard Verifikasi',
+    'beneficiaries-dashboard-verification': 'Dashboard',
+    'beneficiaries-approved': 'Disetujui',
+    'beneficiaries-rejected': 'Ditolak',
+    'beneficiaries-pending': 'Belum Disetujui',
+    'benebeneficiaries-complaint': 'Aduan',
+    'benebeneficiaries-complaint-detail': 'Detail Aduan',
+    'beneficiaries-monitoring-upload': 'Unduh Alokasi',
 
     'bansos-download': 'Unduh Dokumen',
     'bansos-upload': 'Unggah Dokumen',
+    'bansos-download-verval': 'Unduh Verval',
 
     'information': 'Informasi',
     'aspiration': 'Aspirasi',
     'questionnaire': 'Kuesioner',
     'notification-user': 'Notifikasi Pengguna',
     'configuration-menu': 'Konfigurasi',
-    'bansos-menu': 'Bantuan Sosial'
+    'bansos-menu': 'Verifikasi & Validasi',
+
+    'allocation-menu': 'Alokasi',
+    'list-allocation-menu': 'Daftar Alokasi',
+    'list-bnba-menu': 'Daftar BNBA'
   },
   crud: {
     'list-empty': 'Belum ada data.',
@@ -175,6 +189,7 @@ export default {
     'save-newsImportant': 'Tambah Info Penting',
     'save-gamification': 'Tambah Gamification',
     'save-verified': 'Simpan dan Verifikasi',
+    'save-approved': 'Simpan dan Setujui',
 
     'back-to-list': 'Kembali ke Daftar',
     'send-polling': 'Publikasikan Polling',
@@ -217,6 +232,8 @@ export default {
     'unpublish-confirm': 'Anda yakin ingin membatalkan usulan ini?',
     'publish-success': 'Usulan berhasil dipublikasikan',
     'unpublish-success': 'Usulan berhasil di batalkan',
+    'approval-confirm': 'Anda yakin akan menyetujui warga ini sebagai penerima bantuan?',
+    'approval-success': 'Warga berhasil disetujui',
 
     'delete-confirm': 'Anda yakin ingin menghapus data ini?',
     'delete-success': 'Data berhasil dihapus.',
@@ -232,7 +249,8 @@ export default {
 
     'news-selected': 'Berita sudah dipilih',
     'gamification-send-success': 'Gamification berhasil dibuat',
-    '': 'Batalkan'
+    '': 'Batalkan',
+    'export': 'Export'
 
   },
   common: {
@@ -446,7 +464,8 @@ export default {
     'description-max-1000-characters': 'Deskripsi maksimal 1000 Karakter.',
     'description-not-valid-characters': 'Deskripsi mengandung karakter yang tidak diizinkan.',
 
-    'max-file-upload': 'Jumlah file tidak boleh lebih dari {0}.'
+    'max-file-upload': 'Jumlah file tidak boleh lebih dari {0}.',
+    'field_only_accepts_xlsx': 'Hanya file dengan ekstensi ini yang diperbolehkan: xlsx.'
 
   },
   navbar: {
@@ -539,9 +558,14 @@ export default {
   label: {
     'notes': 'Catatan:',
     'sapawarga': 'sapawarga',
+    'ask-admin': 'Tanya Admin',
+    'call-admin': 'Hubungi Admin',
     'maximum-size-image': 'Maximum upload file size: 5 Mb.',
     'maximum-dimension-image': 'Ukuran maksimal 1280x720 piksel (Landscape)',
     'maximum-dimension-image-pop': 'Ukuran maksimal 720x1280 piksel (Portrait)',
+    'call-admin-text': 'Ada Kesulitan? Anda dapat mengajukan pertanyaan melalui kanal Whatsapp Kami!',
+    'hotline-tooltip-welcome': 'Selamat datang di Sapawarga,',
+    'hotline-tooltip-help': 'ada yang bisa Kami bantu?',
 
     'name': 'Nama',
     'role': 'Peran',
@@ -881,6 +905,7 @@ export default {
     'beneficiaries-familyhead-name': 'Nama Kepala Keluarga',
     'beneficiaries-status': 'Status',
     'beneficiaries-nik': 'NIK',
+    'beneficiaries-nik-invalid-format': 'Format NIK tidak sesuai',
     'beneficiaries-rt': 'RT',
     'beneficiaries-rw': 'RW',
     'beneficiaries-kk': 'Nomor KK',
@@ -890,7 +915,8 @@ export default {
     'beneficiaries-edit': 'Edit Bansos',
     'beneficiaries-detail': 'Detail Bansos',
     'beneficiaries-reject': 'Ditolak',
-    'beneficiaries-newdata': 'Data Baru',
+    'beneficiaries-validate': 'Setujui Bansos',
+    'beneficiaries-newdata': 'Data Usulan Baru',
     'beneficiaries-verified-kabkota': 'Approval Kab/Kota',
     'beneficiaries-verified-kec': 'Approval Kec',
     'beneficiaries-verified-kel': 'Approval Kel/Desa',
@@ -923,26 +949,30 @@ export default {
     'beneficiaries': 'Pintu Bantuan',
     'beneficiaries-upload-target': 'Target Upload',
     'beneficiaries-upload-status': 'Status',
+    'beneficiaries-upload-filename': 'Nama File',
     'beneficiaries-upload-date': 'Tanggal Upload',
     'beneficiaries-upload-view': 'Lihat',
-    'beneficiaries-file-download': 'Download',
+    'beneficiaries-download-invalid-file': 'Unduh Data Gagal',
     'beneficiaries-upload-option': 'Pilih pintu bantuan untuk upload data BNBA',
     'beneficiaries-upload-info': 'Sebelum meng-upload data BNBA DTKS dan non-DTKS, mohon pilah data berdasarkan alokasi sesuai pintu bantuan. Untuk Upload data, tekan salah satu tombol di bawah sesuai alokasi pintu bantuan yang akan diupload.',
     'beneficiaries-dtks-option': 'Pilihan DTKS',
     'beneficiaries-nondtks-option': 'Pilihan Non DTKS',
-    'beneficiaries-upload-success': 'Dokumen berhasil dikirim',
-    'beneficiaries-add-file': 'Tambah File',
+    'beneficiaries-upload-start': 'Proses uploading dimulai',
+    'beneficiaries-upload-success': 'Data anda sekarang sedang diupload. Proses ini mungkin menghabiskan beberapa waktu hingga semua data berhasil tersimpan. Apabila terjadi gagal upload, kami akan mengirim pesan melalui Sapawarga atau email Anda. Riwayat proses upload Anda juga bisa diakses dimenu Daftar Riwayat Upload.',
+    'beneficiaries-choose-file': 'Pilih File yang akan diupload',
+    'beneficiaries-upload-description': 'Hanya file dengan ekstensi ini yang diperbolehkan: xlsx.',
     'beneficiaries-upload-file': 'Upload',
+    'beneficiaries-import-start': 'Impor Dimulai',
     'beneficiaries-subdistrict-upload': 'Upload Data Alokasi Bantuan Per Kecamatan',
     'beneficiaries-city-upload': 'Upload Data Alokasi Bantuan Kota/Kabupaten',
     'beneficiaries-pkh': 'PKH',
-    'beneficiaries-bpnt-basicfood': 'BPNT (Program Sembako)',
-    'beneficiaries-bpnt-expansion': 'BPNT Perluasan',
-    'beneficiaries-kemensos': 'Bansos Tunai Kemensos',
-    'beneficiaries-president': 'Bansos Presiden Sembako',
-    'beneficiaries-province': 'Bansos Provinsi',
-    'beneficiaries-village-fund': 'Bansos Dana Desa',
-    'beneficiaries-city': 'Bansos Kota/Kabupaten',
+    'beneficiaries-bpnt-basicfood': 'KARTU SEMBAKO',
+    'beneficiaries-bpnt-expansion': 'KARTU SEMBAKO PERLUASAN',
+    'beneficiaries-kemensos': 'BANSOS TUNAI KEMENSOS',
+    'beneficiaries-president': 'BANSOS SEMBAKO PRESIDEN',
+    'beneficiaries-province': 'BANSOS PROVINSI',
+    'beneficiaries-village-fund': 'DANA DESA',
+    'beneficiaries-city': 'BANSOS KABUPATEN/KOTA',
     'beneficiaries-statistic-title': 'Statistik Data Penerima Bantuan Sosial via Sapawarga',
     'beneficiaries-notes-display': 'Halaman ini menampilkan data Calon Penerima Bantuan Sosial di',
     'beneficiaries-note-jabar': 'Provinsi Jawa Barat',
@@ -950,13 +980,15 @@ export default {
     'beneficiaries-note-kec': 'tingkat Kecamatan',
     'beneficiaries-note-kel': 'tingkat Desa/Kelurahan',
     'beneficiaries-note-content': 'Data di bawah ini telah dipisahkan berdasarkan kategori yang telah ditentukan. Untuk melihat detail dari setiap Kategori yang ada, Anda dapat memilih salah satu kategori di bawah ini.',
-    'beneficiaries-note-bnba-title': 'Daftar BNBA Tahap 1',
+    'beneficiaries-note-bnba-title': 'Daftar BNBA Penerima Bansos Menurut Alokasi Pintu Bantuan',
     'beneficiaries-notes-display-bnba': 'Halaman ini menampilkan Daftar BNBA penerima bantuan sosial di',
     'beneficiaries-note-bnba-content': 'Di halaman ini, Anda dapat melihat detail penerima dan melihat total penerima berdasarkan pintu bantuan yang ada.',
     'beneficiaries-note-verification-title': 'Daftar Verifikasi Data Bantuan Sosial',
     'beneficiaries-notes-display-verification': 'Halaman ini menampilkan Daftar calon penerima bantuan sosial di',
     'beneficiaries-note-verification-content': 'Di Halaman ini, Anda dapat melihat daftar warga calon penerima bantuan dan melakukan verifikasi calon penerima bantuan yang ada di Kelurahan Anda.',
     'beneficiaries-dashboard-alert': 'Proses Verifikasi dan Validasi Data Penerima Bansos PERIODE 2 belum dibuka!',
+    'beneficiaries-upload-allocation-data': 'Upload Data Alokasi Bantuan',
+    'beneficiaries-upload-error-process': 'Server sedang sibuk. Silakan ulangi beberapa saat lagi. Jika masih ada kendala, hubungi hotline Sapawarga di 081212124203',
 
     'beneficiaries-note-approved-title': 'Data penerima bantuan sosial yang sudah disetujui Desa/Kelurahan',
     'beneficiaries-notes-display-approved': 'Halaman ini menampilkan data penerima bantuan sosial yang sudah disetujui oleh Desa/Kelurahan',
@@ -987,15 +1019,45 @@ export default {
     'beneficiaries-download-rejected': 'Ditolak',
     'beneficiaries-download-new-proposal': 'Usulan Baru',
     'beneficiaries-download-bnba-document': 'Dokumen BNBA Penerima Bansos',
-    'beneficiaries-select-subdistrict-alert': 'Silakan Pilih Kecamatan',
-    'beneficiaries-download-start': 'Sedang dalam proses men-download data. Data akan dikirimkan ke email yang sudah didaftarkan. Mohon untuk mengecek email masuk Anda.',
+    'beneficiaries-select-region-alert': 'Silakan Pilih',
+    'beneficiaries-download-start-title-alert': 'Terima Kasih Sudah Mengunduh!',
+    'beneficiaries-download-start-description-alert': 'Data akan dikirim ke e-mail yang Anda daftarkan. Mohon cek kotak masuk e-mail Anda. Apabila belum menerima e-mail setelah 1x24 jam, hubungi hotline Sapawarga di 081212124203.',
 
     'beneficiaries-bnba-detail-popup-title': 'Detail Penerima Bantuan',
     'beneficiaries-document': 'Dokumen Pendukung',
+    'beneficiaries-complaint-title': 'Daftar Aduan BNBA',
+    'beneficiaries-complaint-total': 'Total Aduan',
+    'beneficiaries-complaint-detail': 'Detail Aduan',
+    'beneficiaries-complaint-detail-title': 'Detail Pengaduan',
+    'beneficiaries-complaint-detail-sub-title': 'Detail Orang yang Diadukan',
+    'beneficiaries-complaint-Identity': 'Identitas',
+    'beneficiaries-complaint-reason': 'Alasan Dilaporkan',
+    'beneficiaries-complaint-report': 'Data Pelapor',
+
     'beneficiaries-info-personal': 'Informasi Penerima Bantuan',
     'beneficiaries-info-income': 'Informasi Penghasilan',
     'beneficiaries-job-status': 'Status Kedudukan dalam Pekerjaan',
-    'beneficiaries-info-domicile': 'Domisili Saat Ini'
+    'beneficiaries-info-domicile': 'Domisili Saat Ini',
+
+    'beneficiaries-dashboard-verified': 'Terverifikasi',
+    'beneficiaries-dashboard-not-verified': 'Belum Terverifikasi',
+    'beneficiaries-dashboard-rejected': 'Ditolak',
+    'beneficiaries-dashboard-new-proposal': 'Data Usulan Baru',
+    'beneficiaries-dashboard-total-recipient': 'Total Penerima',
+
+    'beneficiaries-monitoring-table-title': 'Daftar Data BNBA',
+    'beneficiaries-monitoring-city': 'Kabupaten/Kota',
+    'beneficiaries-monitoring-bansos-type': 'DTKS/NON DTKS',
+    'beneficiaries-monitoring-last-update': 'Pembaharuan Terakhir',
+    'beneficiaries-monitoring-action': 'Aksi',
+    'beneficiaries-monitoring-download': 'Unduh',
+    'beneficiaries-monitoring-main-title': 'Monitoring Upload Data BNBA Kabupaten/Kota',
+    'beneficiaries-monitoring-info': 'Jika anda menginginkan data BNBA keseluruhan Provinsi Jawa Barat, atau untuk mendapatkan data BNBA lebih dari satu Kapubaten/Kota, Anda dapat menghubungi admin Sapawarga.',
+    'beneficiaries-monitoring-choose': 'Pilih',
+    'beneficiaries-show-stage': 'Tampilkan Tahap:',
+    'beneficiaries-first-stage': 'Tahap 1',
+    'beneficiaries-second-stage': 'Tahap 2',
+    'beneficiaries-download-verval': 'Unduh Verval'
   },
   news: {
     'news-url': 'URL Berita',
@@ -1031,5 +1093,37 @@ export default {
     'news-status-required': 'Status Berita harus diisi',
     'news-content-required': 'Konten Berita harus diisi',
     'news-content-invalid': 'Konten Berita yang diisi tidak valid'
+  },
+  importDataManual: {
+    'title': 'Impor manual data calon penerima Bantuan <br> Sosial',
+    'title-guide': 'Panduan Impor Data Calon Penerima Bantuan <br> Sosial',
+    'desc-guide': '<ol> <li><b>Download<b /> file template berformat Excel (.xlsx) untuk melihat format input data.</b></li> <li>Isi kolom dengan data yang benar. Kolom berwarna hijau WAJIB diisi.</li> <li>Save file dengan format .xlsx.</li> <li>Pilih file .xlsx yang akan diunggah.</li> <li>Klik tombol import.</li> </ol>',
+    'desc': 'Sekarang Anda dapat melakukan input calon penerima bantuan sosial secara manual, sehingga dapat membantu kami lebih baik lagi untuk memperbaiki perlayanan di Sapawarga',
+    'btn-import': 'IMPOR SEKARANG',
+    'btn-guide': 'LIHAT PANDUAN',
+    'btn-download': 'Unduh Template Excel',
+    'tbl-title': 'Riwayat Impor Data Manual',
+    'title-upload': 'Upload Data Input Manual',
+    'desc-upload': 'Untuk upload data input manual harus memakai format Excel (.xlsx)',
+    'upload-btn': 'IMPOR SEKARANG',
+    'btn-choice': 'Pilih File yang akan diupload',
+    'upload': 'Upload',
+
+    'title-import': 'Impor Data Input Manual',
+    'desc-import': 'Untuk impor data input manual harus memakai format Excel (.xlsx)',
+    'import-btn': 'IMPOR SEKARANG',
+    'btn-import-choice': 'Pilih File yang akan diimpor',
+    'import': 'Impor',
+
+    'history-import-file-name': 'Nama FIle',
+    'history-import-status': 'Status',
+    'history-import-created-at': 'Waktu Impor',
+    'history-import-action': 'Aksi',
+
+    'history-import-status-start': 'Impor Dimulai',
+    'history-import-status-success': 'Sukses',
+    'history-import-status-upload-failed': 'Gagal Upload',
+    'history-import-status-invalid-file': 'File Tidak Sesuai Template'
+
   }
 }

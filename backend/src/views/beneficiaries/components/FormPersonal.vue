@@ -1,8 +1,8 @@
 <template>
   <div class="components-container">
     <div class="warning">
-      <p v-if="isCreate" class="caution">Masukan NIK atau Nomor KTP warga yang akan didaftarkan sebagai calon penerima bantuan sosial terdampak covid di Desa/Kelurahan Anda.</p>
-      <p v-else class="caution">Berikut adalah data calon penerima bantuan yang ada di wilayah Desa/Kelurahan <span v-if="beneficiaries.domicile_kel_name !== null">{{ beneficiaries.domicile_kel_name.name }}</span> Kec. <span v-if="beneficiaries.domicile_kec_name !== null">{{ beneficiaries.domicile_kec_name.name }}</span> Kota/Kabupaten <span v-if="beneficiaries.domicile_kabkota_name !== null">{{ beneficiaries.domicile_kabkota_name.name }}</span> </p>
+      <p v-if="isCreate" class="caution">{{ $t('beneficiaries.guide') }}</p>
+      <p v-else class="caution">{{ $t('beneficiaries.verification-area-note') }} {{ $t('beneficiaries.kel') }} <span v-if="beneficiaries.domicile_kel_name !== null">{{ beneficiaries.domicile_kel_name.name }}</span> {{ $t('beneficiaries.kec') }} <span v-if="beneficiaries.domicile_kec_name !== null">{{ beneficiaries.domicile_kec_name.name }}</span> {{ $t('beneficiaries.kabkota') }} <span v-if="beneficiaries.domicile_kabkota_name !== null">{{ beneficiaries.domicile_kabkota_name.name }}</span> </p>
     </div>
     <el-form
       ref="beneficiaries"
@@ -13,25 +13,28 @@
       label-width="250px"
       label-position="left"
     >
-      <el-form-item v-if="isCreate" label="Apakah warga ini memiliki NIK/Nomor KTP?" prop="is_have_ktp">
+      <el-form-item v-if="isCreate" :label="$t('beneficiaries.is-have-nik')" prop="is_have_ktp">
         <el-radio-group v-model="beneficiaries.is_have_ktp">
-          <el-radio class="label-check" :label="1">Ya</el-radio>
-          <el-radio class="label-check" :label="0">Tidak punya</el-radio>
+          <el-radio class="label-check" :label="1">{{ $t('beneficiaries.nik-yes') }}</el-radio>
+          <el-radio class="label-check" :label="0">{{ $t('beneficiaries.nik-no') }}</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item v-if="isCreate && beneficiaries.is_have_ktp === 1" label="NIK" prop="nik">
+      <el-form-item v-if="isCreate && beneficiaries.is_have_ktp === 1" :label="$t('beneficiaries.nik')" prop="nik">
         <el-input v-model="beneficiaries.nik" type="number" placeholder="NIK" :disabled="disableField" />
       </el-form-item>
-      <el-form-item v-if="!isCreate" label="NIK">
-        <el-input v-model="beneficiaries.nik" type="number" placeholder="NIK" :disabled="disableField" />
+      <el-form-item v-if="!isCreate && !isEditDomicile" label="NIK">
+        <el-input v-model="beneficiaries.nik" type="number" :placeholder="$t('beneficiaries.nik')" :disabled="disableField" />
       </el-form-item>
-      <el-form-item label="Nama Lengkap" prop="name">
-        <el-input v-model="beneficiaries.name" placeholder="Nama Lengkap" :disabled="disableField" />
+      <el-form-item v-if="!isCreate || beneficiaries.is_have_ktp === 1" :label="$t('beneficiaries.kk')" prop="no_kk">
+        <el-input v-model="beneficiaries.no_kk" type="number" :placeholder="$t('beneficiaries.kk')" />
       </el-form-item>
-      <el-form-item v-if="isCreate && beneficiaries.is_have_ktp === 0" label="Alasan tidak punya NIK/Nomor KTP" prop="notes_nik_empty">
-        <el-input v-model="beneficiaries.notes_nik_empty" type="textarea" rows="3" placeholder="Alasan tidak punya KTP" />
+      <el-form-item :label="$t('beneficiaries.full-name')" prop="name">
+        <el-input v-model="beneficiaries.name" :placeholder="$t('beneficiaries.full-name')" :disabled="disableField" />
       </el-form-item>
-      <el-form-item v-if="isAutomatedNik && isCreate" label="Provinsi" prop="province_bps_id">
+      <el-form-item v-if="isCreate && beneficiaries.is_have_ktp === 0" :label="$t('beneficiaries.nik-note')" prop="notes_nik_empty">
+        <el-input v-model="beneficiaries.notes_nik_empty" type="textarea" rows="3" :placeholder="$t('beneficiaries.nik-note')" />
+      </el-form-item>
+      <el-form-item v-if="isAutomatedNik && isCreate" :label="$t('beneficiaries.province')" prop="province_bps_id">
         <el-select v-model="beneficiaries.province_bps_id" style="width:100%" :disabled="disableField">
           <el-option
             v-for="item in proviceList"
@@ -41,7 +44,7 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item v-if="isAutomatedNik && isCreate" label="Kabupaten/Kota" prop="kabkota" class="block">
+      <el-form-item v-if="isAutomatedNik && isCreate" :label="$t('beneficiaries.kabkota')" prop="kabkota" class="block">
         <el-select v-model="beneficiaries.kabkota" value-key="code_bps" filterable style="width:100%" :disabled="disableField">
           <el-option
             v-for="item in kabkotaList"
@@ -51,7 +54,7 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item v-if="isAutomatedNik && isCreate" label="Kecamatan" prop="kecamatan" class="block">
+      <el-form-item v-if="isAutomatedNik && isCreate" :label="$t('beneficiaries.kec')" prop="kecamatan" class="block">
         <el-select v-model="beneficiaries.kecamatan" value-key="code_bps" filterable style="width:100%" :disabled="disableField">
           <el-option
             v-for="item in kecList"
@@ -61,7 +64,7 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item v-if="isAutomatedNik && isCreate" label="Kelurahan" prop="kelurahan" class="block">
+      <el-form-item v-if="isAutomatedNik && isCreate" :label="$t('beneficiaries.kel')" prop="kelurahan" class="block">
         <el-select v-model="beneficiaries.kelurahan" value-key="code_bps" filterable style="width:100%" :disabled="disableField">
           <el-option
             v-for="item in kelList"
@@ -71,36 +74,36 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item v-if="!isCreate" label="Alamat" prop="domicile_address">
+      <el-form-item v-if="!isCreate" :label="$t('beneficiaries.address')" prop="domicile_address">
         <el-input v-model="beneficiaries.domicile_address" placeholder="Alamat" :disabled="disableField" />
       </el-form-item>
-      <el-form-item v-if="!isCreate && !isEdit" label="RW">
-        <el-input v-model="beneficiaries.domicile_rw" type="number" placeholder="RW" :disabled="disableField" />
+      <el-form-item v-if="!isCreate && !isEdit" :label="$t('beneficiaries.rw')">
+        <el-input v-model="beneficiaries.domicile_rw" type="number" :placeholder="$t('beneficiaries.rw')" :disabled="disableField" />
       </el-form-item>
-      <el-form-item v-if="isEdit" label="RW" prop="domicile_rw">
-        <el-input v-model="beneficiaries.domicile_rw" type="number" placeholder="RW" />
+      <el-form-item v-if="isEdit" :label="$t('beneficiaries.rw')" prop="domicile_rw">
+        <el-input v-model="beneficiaries.domicile_rw" type="number" :placeholder="$t('beneficiaries.rw')" />
       </el-form-item>
-      <el-form-item v-if="isEdit" label="RT" prop="domicile_rt">
-        <el-input v-model="beneficiaries.domicile_rt" type="number" placeholder="RT" :disabled="disableField" />
+      <el-form-item v-if="isEdit" :label="$t('beneficiaries.rt')" prop="domicile_rt">
+        <el-input v-model="beneficiaries.domicile_rt" type="number" :placeholder="$t('beneficiaries.rt')" :disabled="disableField" />
       </el-form-item>
-      <el-form-item v-if="!isCreate && !isEdit" label="RT">
-        <el-input v-model="beneficiaries.domicile_rt" type="number" placeholder="RT" :disabled="disableField" />
+      <el-form-item v-if="!isCreate && !isEdit" :label="$t('beneficiaries.rt')">
+        <el-input v-model="beneficiaries.domicile_rt" type="number" :placeholder="$t('beneficiaries.rt')" :disabled="disableField" />
       </el-form-item>
-      <el-form-item v-if="isAutomatedNik && isCreate" label="Alamat" prop="address">
-        <el-input v-model="beneficiaries.address" placeholder="Alamat" :disabled="disableField" />
+      <el-form-item v-if="isAutomatedNik && isCreate" :label="$t('beneficiaries.address')" prop="address">
+        <el-input v-model="beneficiaries.address" :placeholder="$t('beneficiaries.address')" :disabled="disableField" />
       </el-form-item>
-      <el-form-item v-if="isAutomatedNik && isCreate" label="RW" prop="rw">
-        <el-input v-model="beneficiaries.rw" type="number" placeholder="RW" :disabled="disableField" />
+      <el-form-item v-if="isAutomatedNik && isCreate" :label="$t('beneficiaries.rw')" prop="rw">
+        <el-input v-model="beneficiaries.rw" type="number" :placeholder="$t('beneficiaries.rw')" :disabled="disableField" />
       </el-form-item>
-      <el-form-item v-if="isAutomatedNik && isCreate" label="RT" prop="rt">
-        <el-input v-model="beneficiaries.rt" type="number" placeholder="RT" :disabled="disableField" />
+      <el-form-item v-if="isAutomatedNik && isCreate" :label="$t('beneficiaries.rt')" prop="rt">
+        <el-input v-model="beneficiaries.rt" type="number" :placeholder="$t('beneficiaries.rt')" :disabled="disableField" />
       </el-form-item>
       <el-form-item v-if="isEditDomicile" class="ml-min-40 form-button">
-        <div v-if="!isCreate">Apakah benar informasi calon penerima bantuan ini berdomisili di desa Anda?</div>
+        <div v-if="!isCreate">{{ $t('beneficiaries.is-data-true') }}</div>
         <el-button class="button-action" type="primary" @click="updateDomicile(beneficiaries.id)"> {{ $t('crud.save-create') }}</el-button>
       </el-form-item>
       <el-form-item v-else class="ml-min-40 form-button">
-        <div v-if="!isCreate">Apakah benar informasi calon penerima bantuan ini berdomisili di desa Anda?</div>
+        <div v-if="!isCreate">{{ $t('beneficiaries.is-data-true') }}</div>
         <el-button v-if="!isCreate" class="button-action" type="danger" @click="rejectData">{{ $t('crud.not-valid') }}</el-button>
         <el-button class="button-action" type="primary" @click="next"> {{ $t('crud.next') }}</el-button>
       </el-form-item>
@@ -109,7 +112,7 @@
 </template>
 <script>
 import { getKecamatanBpsList, getKelurahanBpsList, getKabkotaList } from '@/api/areas'
-import { update, fetchNik, checkNik } from '@/api/beneficiaries'
+import { update, fetchNik, checkNik, validateKK, checkAddress } from '@/api/beneficiaries'
 
 export default {
   props: {
@@ -142,16 +145,18 @@ export default {
     }
     return {
       loading: false,
-      isNikChange: false,
       isAutomatedNik: true,
       staticAutomated: true,
       disableField: false,
+      validAddress: false,
+      validNik: false,
+      validKk: false,
       kabkotaList: null,
       kecList: null,
       kelList: null,
       proviceList: [
         {
-          name: 'JAWA BARAT',
+          name: this.$t('beneficiaries.province-jabar'),
           code_bps: 32
         }
       ],
@@ -159,59 +164,71 @@ export default {
         name: [
           {
             required: true,
-            message: 'Nama harus diisi',
+            message: this.$t('beneficiaries.name-required'),
+            trigger: 'input'
+          },
+          {
+            min: 3,
+            message: this.$t('beneficiaries.name-min'),
             trigger: 'input'
           }
         ],
         nik: [
           {
             required: true,
-            message: 'NIK harus diisi',
+            message: this.$t('beneficiaries.nik-required'),
             trigger: 'input'
           },
           {
             min: 16,
-            message: 'NIK harus 16 karakter',
+            message: this.$t('beneficiaries.nik-min'),
             trigger: 'input'
           },
           {
             max: 16,
-            message: 'NIK harus 16 karakter',
+            message: this.$t('beneficiaries.nik-min'),
+            trigger: 'input'
+          }
+        ],
+        no_kk: [
+          {
+            required: true,
+            message: this.$t('beneficiaries.kk-required'),
             trigger: 'input'
           }
         ],
         province_bps_id: [
           {
             required: true,
-            message: 'Provinsi harus diisi',
+            message: this.$t('beneficiaries.province-required'),
             trigger: 'change'
           }
         ],
         kabkota: [
           {
             required: true,
-            message: 'Kabupaten/Kota harus diisi',
+            message: this.$t('beneficiaries.kabkota-required'),
             trigger: 'change'
           }
         ],
         kecamatan: [
           {
             required: true,
-            message: 'Kecamatan harus diisi',
+            message: this.$t('beneficiaries.kec-required'),
             trigger: 'change'
           }
         ],
         kelurahan: [
           {
             required: true,
-            message: 'Kelurahan harus diisi',
+            message: this.$t('beneficiaries.kel-required'),
             trigger: 'change'
           }
         ],
         rw: [
           {
             required: true,
-            message: 'RW harus diisi',
+            message: this.$t('beneficiaries.rw-required'),
             trigger: 'blur'
           },
           {
@@ -222,7 +239,7 @@ export default {
         rt: [
           {
             required: true,
-            message: 'RT harus diisi',
+            message: this.$t('beneficiaries.rt-required'),
             trigger: 'blur'
           },
           {
@@ -233,21 +250,21 @@ export default {
         address: [
           {
             required: true,
-            message: 'Alamat harus diisi',
+            message: this.$t('beneficiaries.address-required'),
             trigger: 'blur'
           }
         ],
         domicile_address: [
           {
             required: true,
-            message: 'Alamat harus diisi',
+            message: this.$t('beneficiaries.address-required'),
             trigger: 'blur'
           }
         ],
         domicile_rw: [
           {
             required: true,
-            message: 'RW harus diisi',
+            message: this.$t('beneficiaries.rw-required'),
             trigger: 'blur'
           },
           {
@@ -258,7 +275,7 @@ export default {
         domicile_rt: [
           {
             required: true,
-            message: 'RT harus diisi',
+            message: this.$t('beneficiaries.rt-required'),
             trigger: 'blur'
           },
           {
@@ -269,7 +286,7 @@ export default {
         notes_nik_empty: [
           {
             required: true,
-            message: 'Alasan harus diisi',
+            message: this.$t('beneficiaries.excuse-required'),
             trigger: 'input'
           }
         ]
@@ -277,9 +294,6 @@ export default {
     }
   },
   watch: {
-    'beneficiaries.nik'(value1, value2) {
-      if (value1) this.isNikChange = true
-    },
     'beneficiaries.kabkota'(value1, value2) {
       if (this.isCreate) {
         this.beneficiaries.kecamatan = null
@@ -323,13 +337,16 @@ export default {
         return
       }
 
-      try {
-        await update(id, this.beneficiaries)
-      } catch (error) {
-        console.log(error)
+      await this.validateNoKk()
+      await this.validateNameAddress()
+      if (this.validKk && this.validAddress) {
+        try {
+          await update(id, this.beneficiaries)
+          this.$emit('closeDialog', false)
+        } catch (error) {
+          console.log(error)
+        }
       }
-
-      this.$emit('closeDialog', false)
     },
     async next() {
       const valid = await this.$refs.beneficiaries.validate()
@@ -339,68 +356,50 @@ export default {
       }
 
       if (this.isCreate && this.beneficiaries.is_have_ktp === 1) {
-        this.checkNikSapawarga()
-      } else if (this.isEdit && this.beneficiaries.is_nik_valid === 0) {
-        if (this.isEdit && this.isNikChange) {
-          if (this.beneficiaries.nik && this.beneficiaries.nik.length < 16) {
-            this.$message.error('NIK harus 16 karakter')
-            return
-          }
-          checkNik(this.beneficiaries.nik).then(response => {
-            if (response.data === true) {
-              this.$message.error('NIK ' + this.beneficiaries.nik + ' sudah terdaftar')
-              return
-            } else {
-              this.$emit('nextStep', 2)
-            }
-          })
-        } else {
+        await this.validateNik()
+        await this.validateNoKk()
+        if (this.validNik && this.validKk) {
           this.$emit('nextStep', 1)
         }
-      } else if (this.isEdit && this.beneficiaries.is_nik_valid === 1) {
-        if (this.isEdit && this.isNikChange) {
-          if (this.beneficiaries.nik && this.beneficiaries.nik.length < 16) {
-            this.$message.error('NIK harus 16 karakter')
-            return
-          }
-          checkNik(this.beneficiaries.nik).then(response => {
-            if (response.data === true) {
-              this.$message.error('NIK ' + this.beneficiaries.nik + ' sudah terdaftar')
-              return
-            } else {
-              this.$emit('nextStep', 1)
-            }
-          })
-        } else {
+      } else if (this.isEdit) {
+        await this.validateNik()
+        await this.validateNoKk()
+        await this.validateNameAddress()
+        if (this.validNik && this.validKk && this.validAddress && this.beneficiaries.is_nik_valid === 1) {
           this.$emit('nextStep', 1)
+        } else if (this.validNik && this.validKk && this.validAddress && this.beneficiaries.is_nik_valid === 0) {
+          this.$emit('nextStep', 2)
         }
       } else {
-        this.$emit('nextStep', 1)
+        await this.validateNoKk()
+        if (this.validKk) this.$emit('nextStep', 1)
       }
     },
 
     validateInput(input) {
       if (_.isEmpty(input)) {
-        return 'Catatan harus diisi.'
+        return this.$t('beneficiaries.note-required')
       }
 
       return true
     },
+
     async rejectData() {
       const id = await this.$route.params && this.$route.params.id
-      const prompt = await this.$prompt('Berikan alasan penolakan', 'Tolak penerima bantuan untuk warga ini?', {
+      const prompt = await this.$prompt(this.$t('beneficiaries.excuse'), this.$t('beneficiaries.reject-bansos'), {
         confirmButtonText: this.$t('common.send'),
         cancelButtonText: this.$t('common.cancel'),
-        inputPlaceholder: 'Tuliskan catatan disini',
+        inputPlaceholder: this.$t('beneficiaries.notes'),
         inputValidator: this.validateInput
       })
 
       this.beneficiaries.notes_rejected = prompt.value
       this.beneficiaries.status_verification = 2
       await update(id, this.beneficiaries)
-      this.$message.info('Status berhasil diubah')
+      this.$message.info(this.$t('beneficiaries.status-success'))
       this.$router.push('/beneficiaries/index')
     },
+
     getArea() {
       getKabkotaList().then(response => {
         this.kabkotaList = response.data.items
@@ -416,17 +415,47 @@ export default {
         this.kelList = response.data.items
       })
     },
-    checkNikSapawarga() {
-      checkNik(this.beneficiaries.nik).then(response => {
-        if (response.data === true) {
-          this.$message.error('NIK ' + this.beneficiaries.nik + ' sudah terdaftar')
-          this.$refs.beneficiaries.resetFields()
-          return
-        } else {
-          this.$emit('nextStep', 1)
-        }
+
+    async validateNik() {
+      const data = {
+        id: this.beneficiaries.id,
+        nik: this.beneficiaries.nik
+      }
+      await checkNik(data).then(response => {
+        this.validNik = true
+      }).catch(error => {
+        this.$message.error(error.response.data.data.nik[0])
       })
     },
+    async validateNoKk() {
+      const data = {
+        id: this.beneficiaries.id,
+        no_kk: this.beneficiaries.no_kk
+      }
+      await validateKK(data).then(response => {
+        this.validKk = true
+      }).catch(error => {
+        this.$message.error(error.response.data.data.no_kk[0])
+      })
+    },
+    async validateNameAddress() {
+      const data = {
+        id: this.beneficiaries.id,
+        name: this.beneficiaries.name,
+        domicile_kabkota_bps_id: this.beneficiaries.domicile_kabkota_bps_id,
+        domicile_kec_bps_id: this.beneficiaries.domicile_kec_bps_id,
+        domicile_kel_bps_id: this.beneficiaries.domicile_kel_bps_id,
+        domicile_rt: this.beneficiaries.domicile_rt,
+        domicile_rw: this.beneficiaries.domicile_rw,
+        domicile_address: this.beneficiaries.domicile_address
+      }
+      await checkAddress(data).then(response => {
+        this.validAddress = true
+      }).catch(() => {
+        this.$message.error(this.$t('beneficiaries.validate-name-address'))
+      })
+    },
+
     getNik(item) {
       this.loading = true
       checkNik(this.beneficiaries.nik).then(response => {
@@ -444,7 +473,7 @@ export default {
             this.loading = false
           }).catch(err => {
             console.log(err)
-            this.$message.error('NIK tidak terdaftar di Disdukcapil.')
+            this.$message.error(this.$t('beneficiaries.nik-unregistered'))
             this.isAutomatedNik = true
             this.loading = false
           })

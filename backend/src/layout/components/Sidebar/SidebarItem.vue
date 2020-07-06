@@ -1,7 +1,20 @@
 <template>
   <div v-if="!item.hidden" class="menu-wrapper">
     <template v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children||onlyOneChild.noShowingChildren)&&!item.alwaysShow">
-      <app-link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
+
+      <!-- create custom title -->
+      <div v-if="onlyOneChild.meta && !isAction">
+        <el-menu-item
+          class="title-sidebar"
+        >
+          <item
+            :icon="setIcon(onlyOneChild.meta.icon||(item.meta&&item.meta.icon))"
+            :title="generateTitle(onlyOneChild.meta.title)"
+          />
+        </el-menu-item>
+      </div>
+
+      <app-link v-if="onlyOneChild.meta && isAction === true" :to="resolvePath(onlyOneChild.path)">
         <el-menu-item
           :index="resolvePath(onlyOneChild.path)"
           :class="{'submenu-title-noDropdown':!isNest}"
@@ -65,6 +78,10 @@ export default {
     basePath: {
       type: String,
       default: ''
+    },
+    isAction: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
@@ -150,3 +167,10 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+  .title-sidebar {
+    font-weight: bold;
+    pointer-events: none;
+  }
+</style>

@@ -12,7 +12,7 @@
             <el-input v-model="listQuery.nik" placeholder="NIK" />
           </el-form-item>
         </el-col>
-        <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="3">
+        <el-col v-if="!isVerval" :xs="{span:24, tag:'mb-10'}" :sm="24" :md="3">
           <el-form-item style="margin-bottom: 0">
             <el-select
               v-model="listQuery.status_verification"
@@ -56,13 +56,25 @@
             {{ $t('crud.reset') }}
           </el-button>
         </el-col>
+        <template v-if="roles && isDownloadVerval">
+          <el-col :xs="24" :sm="24" :md="7">
+            <el-button
+              size="medium"
+              class="text-16 border-orange text-orange border-radius-8 btn-export"
+              @click="downloadVerval"
+            >{{ $t('label.beneficiaries-download-verval') }}</el-button>
+          </el-col>
+        </template>
+
       </el-row>
     </el-form>
   </el-card>
 </template>
 
 <script>
+import { exportBansos } from '@/api/bansos'
 import InputFilterAreaBps from '@/components/InputFilterAreaBps'
+import Swal from 'sweetalert2'
 
 import checkPermission from '@/utils/permission'
 
@@ -73,12 +85,23 @@ export default {
     listQuery: {
       type: Object,
       default: null
+    },
+    isVerval: {
+      type: Boolean,
+      default: false
+    },
+    isDownloadVerval: {
+      type: Boolean,
+      default: true
     }
   },
 
   data() {
     return {
-      roles: checkPermission(['staffKel'])
+      roles: checkPermission(['staffKel']),
+      queryDownload: {
+        tahap_bantuan: null
+      }
     }
   },
 
@@ -92,6 +115,10 @@ export default {
 
       if (checkPermission(['staffKec'])) {
         return parseInt(authUser.kecamatan.code_bps)
+      }
+
+      if (checkPermission(['staffKel'])) {
+        return parseInt(authUser.kelurahan.code_bps)
       }
 
       return null
@@ -119,8 +146,29 @@ export default {
 
     changeKelurahan(id) {
       this.listQuery.domicile_kel_bps_id = id
+    },
+
+    async downloadVerval() {
+      // set state tahap
+      this.queryDownload.tahap_bantuan = this.listQuery.tahap
+      const response = await exportBansos(this.queryDownload)
+      if (response.status === 200) {
+        Swal.fire({
+          title: this.$t('label.beneficiaries-download-start-title-alert'),
+          text: this.$t(
+            'label.beneficiaries-download-start-description-alert'
+          ),
+          icon: 'success',
+          button: 'OK'
+        })
+      }
     }
   }
 }
 </script>
 
+<style lang="scss" scoped>
+  .float-right {
+    float: right;
+  }
+</style>
