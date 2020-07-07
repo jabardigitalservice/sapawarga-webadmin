@@ -179,6 +179,7 @@ export default {
       RolesUser,
       CODE_BPS_SUMEDANG,
       list: null,
+      listTahap: [],
       total: 0,
       dialogVisible: false,
       isEditDomicile: false,
@@ -186,7 +187,6 @@ export default {
       isLoadingSummary: true,
       idDetail: null,
       dataSummary: null,
-      listTahap: [],
       listLoading: true,
       beneficiaries: null,
       tahapDisplay: null,
@@ -202,7 +202,7 @@ export default {
         sort_order: 'ascending',
         page: 1,
         limit: 10,
-        tahap: 2,
+        tahap: null,
         status_verification: null,
         domicile_kabkota_bps_id: null,
         domicile_kec_bps_id: null,
@@ -216,18 +216,21 @@ export default {
     ...mapGetters(['user'])
   },
   async created() {
+    // this.tahapDisplay = this.$t('beneficiaries.stage2')
+    // this.listQuery.tahap = 2
     await this.getStep()
     this.getList()
-    this.getSummary(this.listQuery.tahap)
+    this.getSummary()
   },
 
   methods: {
     checkPermission,
     handleCommand(command) {
       this.listQuery.tahap = command.value
+      console.log(this.listQuery.tahap)
       this.tahapDisplay = command.label
       this.getList()
-      this.getSummary(command.value)
+      this.getSummary()
     },
 
     tableRowClassName({ row, rowIndex }) {
@@ -277,9 +280,9 @@ export default {
       this.dialogVisible = true
     },
     // get summary statistics
-    getSummary(value) {
+    getSummary() {
       const querySummary = {
-        tahap: value,
+        tahap: this.listQuery.tahap,
         domicile_kabkota_bps_id: this.user.kabkota ? this.user.kabkota.code_bps : null,
         domicile_kec_bps_id: this.user.kecamatan ? this.user.kecamatan.code_bps : null,
         domicile_kel_bps_id: this.user.kelurahan ? this.user.kelurahan.code_bps : null
@@ -300,22 +303,12 @@ export default {
       })
     },
 
-    async getStep() {
-      await fetchCurrentTahap().then(response => {
-        this.listQuery.tahap = response.data.current_tahap_verval
-        this.tahapDisplay = this.$t('beneficiaries.stage') + this.listQuery.tahap
-        for (let i = 1; i <= this.listQuery.tahap; i++) {
-          const data = {
-            value: i,
-            label: this.$t('beneficiaries.stage') + i
-          }
-          this.listTahap.push(data)
-        }
-      })
-    },
-
     resetFilter() {
+      const tahap = this.listQuery.tahap
       Object.assign(this.$data.listQuery, this.$options.data().listQuery)
+
+      // set tahap
+      this.listQuery.tahap = tahap
       this.getList()
     },
 
@@ -347,6 +340,20 @@ export default {
       this.listQuery.sort_by = e.prop
       this.listQuery.sort_order = e.order
       this.getList()
+    },
+
+    async getStep() {
+      await fetchCurrentTahap().then(response => {
+        this.listQuery.tahap = response.data.current_tahap_bnba
+        this.tahapDisplay = this.$t('beneficiaries.stage') + this.listQuery.tahap
+        for (let i = 1; i <= this.listQuery.tahap; i++) {
+          const data = {
+            value: i,
+            label: this.$t('beneficiaries.stage') + i
+          }
+          this.listTahap.push(data)
+        }
+      })
     }
   }
 }
