@@ -97,6 +97,7 @@ export default {
   data() {
     return {
       isDetail: false,
+      idDetail: null,
       list: null,
       total: 0,
       listLoading: true,
