@@ -349,7 +349,7 @@ export default {
       this.getList()
       this.getSummary()
 
-      if (this.getListUsers) {
+      if (this.$refs.listUserVerification) {
         this.getListUsers()
       }
     },
