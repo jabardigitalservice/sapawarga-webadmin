@@ -216,8 +216,6 @@ export default {
     ...mapGetters(['user'])
   },
   async created() {
-    // this.tahapDisplay = this.$t('beneficiaries.stage2')
-    // this.listQuery.tahap = 2
     await this.getStep()
     this.getList()
     this.getSummary()
