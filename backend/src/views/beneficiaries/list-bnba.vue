@@ -223,11 +223,15 @@ export default {
 
     async resetFilter() {
       this.display = false
+      const tahap = this.listQuery.tahap
+
       Object.assign(this.$data.listQuery, this.$options.data().listQuery)
       this.listQuery.kode_kab = this.user.kabkota ? this.user.kabkota.code_bps : null
       this.listQuery.kode_kec = this.user.kecamatan ? this.user.kecamatan.code_bps : null
       this.listQuery.kode_kel = this.user.kelurahan ? this.user.kelurahan.code_bps : null
-      await this.getStep()
+
+      // set tahap
+      this.listQuery.tahap = tahap
       this.getList()
     },
 
