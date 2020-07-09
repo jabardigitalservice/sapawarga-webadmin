@@ -225,7 +225,6 @@ export default {
     checkPermission,
     handleCommand(command) {
       this.listQuery.tahap = command.value
-      console.log(this.listQuery.tahap)
       this.tahapDisplay = command.label
       this.getList()
       this.getSummary()
