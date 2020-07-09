@@ -244,7 +244,8 @@ export default {
         domicile_kec_bps_id: null,
         domicile_kel_bps_id: null,
         domicile_rw: null,
-        domicile_rt: null
+        domicile_rt: null,
+        tahap: null
       }
     }
   },
@@ -342,14 +343,20 @@ export default {
     checkPermission,
     formatNumber,
     handleCommand(command) {
+      this.listQueryUsers.tahap = command.value
       this.filter.tahap = command.value
       this.tahapDisplay = command.label
       this.getList()
       this.getSummary()
+
+      if (this.$refs.listUserVerification) {
+        this.getListUsers()
+      }
     },
 
     async getStep() {
       await fetchCurrentTahap().then(response => {
+        this.listQueryUsers.tahap = response.data.current_tahap_verval
         this.filter.tahap = response.data.current_tahap_verval
         this.tahapDisplay = this.$t('beneficiaries.stage') + this.filter.tahap
         for (let i = 1; i <= this.filter.tahap; i++) {
@@ -408,7 +415,8 @@ export default {
         code_bps: this.filter.code_bps,
         type: this.filter.type,
         rw: this.filter.rw,
-        name: name
+        name: name,
+        tahap: this.filter.tahap
       }
       this.filter.code_bps = code_bps
       this.filter.rw = rw
