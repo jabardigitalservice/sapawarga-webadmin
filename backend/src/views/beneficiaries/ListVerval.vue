@@ -266,7 +266,11 @@ export default {
     },
 
     resetFilter() {
+      const tahap = this.listQuery.tahap
       Object.assign(this.$data.listQuery, this.$options.data().listQuery)
+
+      // set tahap
+      this.listQuery.tahap = tahap
       this.getList()
     },
 
