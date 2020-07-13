@@ -341,7 +341,7 @@ export default {
 
     async getStep() {
       await fetchCurrentTahap().then(response => {
-        this.listQuery.tahap = response.data.current_tahap_bnba
+        this.listQuery.tahap = response.data.current_tahap_verval
         this.tahapDisplay = this.$t('beneficiaries.stage') + this.listQuery.tahap
         for (let i = 1; i <= this.listQuery.tahap; i++) {
           const data = {
