@@ -259,14 +259,18 @@ export default {
         this.$message.success(this.$t('crud.approval-success'))
 
         this.getList()
-        this.getSummary()
+        this.getSummary(this.listQuery.tahap)
       } catch (e) {
         console.log(e)
       }
     },
 
     resetFilter() {
+      const tahap = this.listQuery.tahap
       Object.assign(this.$data.listQuery, this.$options.data().listQuery)
+
+      // set tahap
+      this.listQuery.tahap = tahap
       this.getList()
     },
 
