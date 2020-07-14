@@ -11,10 +11,10 @@
 
         <DashboardTitle :is-verification="true" />
 
-        <div class="warn-content-warning">
+        <!-- <div class="warn-content-warning">
           <p class="title">Pengumuman</p>
           <p>Proses verval data penerima bansos tahap II telah DITUTUP. Terima kasih telah melakukan verval. Pantau perkembangan data di <span class="link" @click="goSolidaritasWeb">solidaritas.jabarprov.go.id.</span></p>
-        </div>
+        </div> -->
 
         <template v-if="user.kabkota.code_bps !== CODE_BPS_SUMEDANG">
           <el-row style="margin: 10px 0px">
@@ -389,18 +389,18 @@ export default {
   .footer {
     padding-top: 10px;
   }
-  .warn-content-warning {
-    background: #2b823d;
-    border-radius: 5px;
-    padding: 1.5rem;
-    word-spacing: .05rem;
-    color: white;
-    margin-bottom: 25px;
+  // .warn-content-warning {
+  //   background: #2b823d;
+  //   border-radius: 5px;
+  //   padding: 1.5rem;
+  //   word-spacing: .05rem;
+  //   color: white;
+  //   margin-bottom: 25px;
 
-    .title {
-      font-weight: 600;
-    }
-  }
+  //   .title {
+  //     font-weight: 600;
+  //   }
+  // }
   .link {
     text-decoration: underline;
     cursor: pointer;
