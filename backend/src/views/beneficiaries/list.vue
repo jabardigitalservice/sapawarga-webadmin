@@ -275,8 +275,8 @@ export default {
     },
 
     accessBlock(value) {
-      // this.$router.push('/beneficiaries/' + value)
-      this.dialogVisible = true
+      this.$router.push('/beneficiaries/' + value)
+      // this.dialogVisible = true
     },
     // get summary statistics
     getSummary() {
