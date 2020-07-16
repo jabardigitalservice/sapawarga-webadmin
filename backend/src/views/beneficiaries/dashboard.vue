@@ -18,7 +18,9 @@
         />
 
         <!-- upload data manual -->
-        <UploadDataManual v-if="checkPermission([RolesUser.STAFFKABKOTA, RolesUser.STAFFKEC])" />
+        <template v-if="user.kabkota.code_bps !== CODE_BPS_SUMEDANG">
+          <UploadDataManual v-if="checkPermission([RolesUser.STAFFKABKOTA, RolesUser.STAFFKEC])" />
+        </template>
 
         <template v-if="!isLoadListUser">
           <el-card class="box-card" style="margin-bottom: 10px">
@@ -170,7 +172,7 @@
 <script>
 import { formatNumber } from '@/utils/formatNumber'
 import { fetchDashboardSummary, fetchDashboardList, fetchCurrentTahap } from '@/api/beneficiaries'
-import { RolesUser } from '@/utils/constantVariable'
+import { RolesUser, CODE_BPS_SUMEDANG } from '@/utils/constantVariable'
 import { mapGetters } from 'vuex'
 import DashboardStatistics from './components/DashboardStatistics'
 import UploadDataManual from './components/UploadDataManual/index'
@@ -209,6 +211,7 @@ export default {
   },
   data() {
     return {
+      CODE_BPS_SUMEDANG,
       RolesUser,
       list: null,
       total: 0,
