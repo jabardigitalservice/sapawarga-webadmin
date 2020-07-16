@@ -98,7 +98,7 @@ const bansosMenuRouter = {
       hidden: false,
       meta: {
         title: 'beneficiaries-pending',
-        roles: ['admin', 'staffKel', 'staffKec', 'staffKabkota']
+        roles: ['admin']
       }
     },
     {
@@ -108,7 +108,7 @@ const bansosMenuRouter = {
       hidden: false,
       meta: {
         title: 'beneficiaries-approved',
-        roles: ['admin', 'staffKel', 'staffKec', 'staffKabkota']
+        roles: ['admin']
       }
     },
     {
