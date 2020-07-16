@@ -30,7 +30,9 @@
         <Statistics :is-loading="isLoadingSummary" :summery="dataSummary" />
 
         <!-- upload data manual -->
-        <UploadDataManual v-if="checkPermission([RolesUser.STAFFKEL ])" />
+        <template v-if="user.kabkota.code_bps !== CODE_BPS_SUMEDANG">
+          <UploadDataManual v-if="checkPermission([RolesUser.STAFFKEL ])" />
+        </template>
 
         <ListFilter :list-query.sync="listQuery" @submit-search="getList" @reset-search="resetFilter" />
 
