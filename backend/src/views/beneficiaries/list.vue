@@ -80,7 +80,7 @@
                 <el-button type="primary" icon="el-icon-view" size="small" @click="getDetail(scope.row.id)" />
               </el-tooltip>
               <el-tooltip v-if="scope.row.status_verification !== 1" :content="$t('label.beneficiaries-edit')" placement="top">
-                <el-button type="warning" icon="el-icon-edit" size="small" @click="accessBlock('edit/' + scope.row.id)" />
+                <el-button v-if="user.kabkota.code_bps !== CODE_BPS_SUMEDANG" type="warning" icon="el-icon-edit" size="small" @click="accessBlock('edit/' + scope.row.id)" />
               </el-tooltip>
               <el-tooltip v-else :content="$t('label.beneficiaries-validate')" placement="top">
                 <el-button v-if="user.kabkota.code_bps !== CODE_BPS_SUMEDANG" type="success" icon="el-icon-circle-check" size="small" :disabled="scope.row.status_verification !== 1" @click="accessBlock('verification/' + scope.row.id)" />
