@@ -83,7 +83,7 @@
                 <el-button type="warning" icon="el-icon-edit" size="small" @click="accessBlock('edit/' + scope.row.id)" />
               </el-tooltip>
               <el-tooltip v-else :content="$t('label.beneficiaries-validate')" placement="top">
-                <el-button type="success" icon="el-icon-circle-check" size="small" :disabled="scope.row.status_verification !== 1" @click="accessBlock('verification/' + scope.row.id)" />
+                <el-button v-if="user.kabkota.code_bps !== CODE_BPS_SUMEDANG" type="success" icon="el-icon-circle-check" size="small" :disabled="scope.row.status_verification !== 1" @click="accessBlock('verification/' + scope.row.id)" />
               </el-tooltip>
               <el-tooltip v-if="scope.row.status_verification === 1 && scope.row.domicile_rt === '' || scope.row.domicile_rt === null || scope.row.domicile_rw === '' || scope.row.domicile_rw === null || scope.row.domicile_address === '' || scope.row.domicile_address === null || scope.row.name === '' || scope.row.name === null" :content="$t('label.beneficiaries-uncomplete-domicile')" placement="top">
                 <!-- <el-button type="info" icon="el-icon-edit-outline" size="small" :disabled="scope.row.status_verification !== 1" @click="updateDomicile(scope.row)" /> -->
