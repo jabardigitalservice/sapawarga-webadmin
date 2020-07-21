@@ -153,7 +153,8 @@ export default {
 
     'allocation-menu': 'Alokasi',
     'list-allocation-menu': 'Daftar Alokasi',
-    'list-bnba-menu': 'Daftar BNBA'
+    'list-bnba-menu': 'Daftar BNBA',
+    'download-upload-menu': 'Unduh & Unggah BNBA'
   },
   crud: {
     'list-empty': 'Belum ada data.',
