@@ -23,8 +23,8 @@ export default {
     return {
       link: null,
       bannerData: [
-        `${PREFIX_FIREBASE_STORAGE}banners%2Fbanner-1.png?alt=media&token=f8575a3e-8f16-491e-8d5b-ca78ca715c31`,
-        `${PREFIX_FIREBASE_STORAGE}banners%2Fbanner-2.png?alt=media&token=d9472add-eafd-4c6d-87ee-c61c8f701d7d`
+        `${PREFIX_FIREBASE_STORAGE}banners%2Fbanner-1.png?alt=media`,
+        `${PREFIX_FIREBASE_STORAGE}banners%2Fbanner-2.png?alt=media`
       ]
     }
   },
