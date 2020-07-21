@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-row v-if="user.roles_active.id === 'staffKabkota'">
+    <el-row>
       <el-carousel indicator-position="outside" :autoplay="true" trigger="click">
         <el-carousel-item v-for="(item, index) in bannerData" :key="index">
           <img :src="item" class="multiple-images">
