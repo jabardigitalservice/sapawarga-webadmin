@@ -988,7 +988,7 @@ export default {
     'beneficiaries-note-verification-content': 'Di Halaman ini, Anda dapat melihat daftar warga calon penerima bantuan dan melakukan verifikasi calon penerima bantuan yang ada di Kelurahan Anda.',
     'beneficiaries-dashboard-alert': 'Proses Verifikasi dan Validasi Data Penerima Bansos PERIODE 2 belum dibuka!',
     'beneficiaries-upload-allocation-data': 'Upload Data Alokasi Bantuan',
-    'beneficiaries-upload-error-process': 'Server sedang sibuk. Silakan ulangi beberapa saat lagi. Jika masih ada kendala, hubungi hotline Sapawarga di 081212124203',
+    'beneficiaries-upload-error-process': 'Server sedang sibuk. Silakan ulangi beberapa saat lagi. Jika masih ada kendala, hubungi hotline Sapawarga di +62 812-2008-2668',
 
     'beneficiaries-note-approved-title': 'Data penerima bantuan sosial yang sudah disetujui Desa/Kelurahan',
     'beneficiaries-notes-display-approved': 'Halaman ini menampilkan data penerima bantuan sosial yang sudah disetujui oleh Desa/Kelurahan',
@@ -1021,7 +1021,7 @@ export default {
     'beneficiaries-download-bnba-document': 'Dokumen BNBA Penerima Bansos',
     'beneficiaries-select-region-alert': 'Silakan Pilih',
     'beneficiaries-download-start-title-alert': 'Terima Kasih Sudah Mengunduh!',
-    'beneficiaries-download-start-description-alert': 'Data akan dikirim ke e-mail yang Anda daftarkan. Mohon cek kotak masuk e-mail Anda. Apabila belum menerima e-mail setelah 1x24 jam, hubungi hotline Sapawarga di 081212124203.',
+    'beneficiaries-download-start-description-alert': 'Data akan dikirim ke e-mail yang Anda daftarkan. Mohon cek kotak masuk e-mail Anda. Apabila belum menerima e-mail setelah 1x24 jam, hubungi hotline Sapawarga di +62 812-2008-2668.',
 
     'beneficiaries-bnba-detail-popup-title': 'Detail Penerima Bantuan',
     'beneficiaries-document': 'Dokumen Pendukung',
