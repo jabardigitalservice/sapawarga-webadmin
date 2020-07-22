@@ -18,7 +18,8 @@
         />
 
         <!-- upload data manual -->
-        <template v-if="user.kabkota.code_bps !== CODE_BPS_SUMEDANG">
+        <!-- check if user.kabkota.code_bps is not equal CODE_BPS_SUMEDANG OR if role STAFFKABKOTA AND user kabkota equal CODE_BPS_SUMEDANG -->
+        <template v-if="user.kabkota.code_bps !== CODE_BPS_SUMEDANG || (checkPermission([RolesUser.STAFFKABKOTA]) && user.kabkota.code_bps === CODE_BPS_SUMEDANG)">
           <UploadDataManual v-if="checkPermission([RolesUser.STAFFKABKOTA, RolesUser.STAFFKEC])" />
         </template>
 
