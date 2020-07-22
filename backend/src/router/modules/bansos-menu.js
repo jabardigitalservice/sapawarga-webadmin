@@ -128,7 +128,7 @@ const bansosMenuRouter = {
       hidden: false,
       meta: {
         title: 'benebeneficiaries-complaint',
-        roles: ['admin', 'staffKel']
+        roles: ['admin', 'staffKel', 'staffKabkota']
       }
     },
     {
