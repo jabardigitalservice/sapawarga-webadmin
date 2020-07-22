@@ -12,7 +12,7 @@
         <p class="content">
           <ol>
             <li>Unduh dan BNBA usulan</li>
-            <li>Cek email 1x24 jam apabila tidak terkirim hubungi WA: 08XXXXX</li>
+            <li>Cek email 1x24 jam apabila tidak terkirim hubungi WA: 081212124203</li>
             <li>Buka file excel dan silahkan isi verval di kolom Berikan Bantuan, apabila tidak layak mendapat bantuan, isi dikolom tersebut dengan isi: "tidak"</li>
             <li>Save dengan format, nama kab/kota dan tanggal, misal: Kab bandung 170720</li>
             <li>Unggah data hasil verifikasi</li>
@@ -25,23 +25,62 @@
         <el-button size="large" name="button-download" type="primary" style="width: 100%; padding: 50px; font-weight: bold; font-size: 1.2rem" @click="downloadFile">Unduh Data BNBA Usulan</el-button>
       </el-col>
       <el-col :xs="24" :sm="24" :lg="12">
-        <el-button size="large" name="button-upload" type="warning" style="width: 100%; padding: 50px; font-weight: bold; font-size: 1.2rem" @click="uploadFile">Unggah Data Hasil Verifikasi Manual</el-button>
+        <el-upload
+          ref="uploadVervalManual"
+          class="upload-container"
+          :limit="1"
+          :multiple="false"
+          action
+          :auto-upload="false"
+          :on-change="handleChangeFile"
+          :on-remove="handleRemoveFile"
+        >
+          <el-button size="large" name="button-upload" type="warning" style="width: 100%; padding: 50px; font-weight: bold; font-size: 1.2rem">Unggah Data Hasil Verifikasi Manual</el-button>
+        </el-upload>
       </el-col>
     </el-row>
+    <br>
+    <br>
+    <UploadTable ref="uploadTable" />
   </div>
 </template>
 
 <script>
 import Swal from 'sweetalert2'
 import { Loading } from 'element-ui'
-import { exportBansos } from '@/api/bansos'
+import { exportBansos, uploadBansos } from '@/api/bansos'
+import UploadTable from './components/UploadTable'
 export default {
-
+  components: {
+    UploadTable
+  },
   data() {
     return {
+      file: null
     }
   },
   methods: {
+    handleChangeFile(file) {
+      const fileExtension = file.name.replace(/^.*\./, '')
+      if (fileExtension === 'xlsx') {
+        this.file = file.raw
+        this.uploadFile()
+      } else {
+        Swal.fire({
+          text: this.$t('errors.field_only_accepts_xlsx'),
+          icon: 'error',
+          button: 'OK'
+        })
+        this.clearUpload()
+      }
+    },
+    handleRemoveFile() {
+      this.clearUpload()
+      this.file = null
+    },
+    clearUpload() {
+      this.$refs.uploadVervalManual.clearFiles()
+    },
     async downloadFile() {
       try {
         Loading.service({ fullScreen: true })
@@ -61,8 +100,36 @@ export default {
         Loading.service({ fullScreen: true }).close()
       }
     },
-    uploadFile() {
-      alert('upload')
+    async uploadFile() {
+      try {
+        this.loading = true
+
+        const formData = new FormData()
+        formData.append('file', this.file)
+        await uploadBansos(formData)
+        Swal.fire({
+          title: this.$t('label.beneficiaries-upload-start'),
+          text: this.$t('label.beneficiaries-upload-success'),
+          icon: 'success',
+          button: 'OK'
+        }).then(action => {
+          if (action) {
+            this.$refs.uploadTable.getList()
+          }
+        })
+
+        this.loading = false
+      } catch (err) {
+        this.loading = false
+        if (err.response.status === 422) {
+          Swal.fire({
+            text: err.response.data.data.file[0],
+            icon: 'error',
+            button: 'OK'
+          })
+        }
+        return err
+      }
     }
   }
 }
