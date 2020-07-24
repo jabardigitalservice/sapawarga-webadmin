@@ -198,6 +198,30 @@ export const asyncRoutes = [
       }
     ]
   },
+  {
+    name: 'download-upload-menu',
+    path: 'download-upload-menu',
+    component: Layout,
+    redirect: 'noredirect',
+    meta: {
+      title: 'download-upload-menu',
+      roles: ['admin', 'staffKabkota'],
+      icon: 'example'
+    },
+    active: false,
+    children: [
+      {
+        name: 'download-upload-menu',
+        path: '/beneficiaries/download-upload',
+        component: () => import('@/views/bansos/downloadUpload'),
+        hidden: false,
+        meta: {
+          title: 'download-upload-menu',
+          roles: ['staffKabkota']
+        }
+      }
+    ]
+  },
   listAllocationMenuRouter,
   downloadAllocationMenuRouter,
   // title
