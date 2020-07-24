@@ -12,7 +12,7 @@
         <p class="content">
           <ol>
             <li>Unduh dan BNBA usulan</li>
-            <li>Cek email 1x24 jam apabila tidak terkirim hubungi WA: 081212124203</li>
+            <li>Cek email 1x24 jam apabila tidak terkirim hubungi WA: +62 812-2008-2668</li>
             <li>Buka file excel dan silahkan isi verval di kolom Berikan Bantuan, apabila tidak layak mendapat bantuan, isi dikolom tersebut dengan isi: "tidak"</li>
             <li>Save dengan format, nama kab/kota dan tanggal, misal: Kab bandung 170720</li>
             <li>Unggah data hasil verifikasi</li>
@@ -24,7 +24,7 @@
       <el-col :xs="24" :sm="24" :lg="12">
         <el-button size="large" name="button-download" type="primary" style="width: 100%; padding: 50px; font-weight: bold; font-size: 1.2rem" @click="downloadFile">Unduh Data BNBA Usulan</el-button>
       </el-col>
-      <el-col :xs="24" :sm="24" :lg="12">
+      <!-- <el-col :xs="24" :sm="24" :lg="12">
         <el-upload
           ref="uploadVervalManual"
           class="upload-container"
@@ -37,11 +37,11 @@
         >
           <el-button size="large" name="button-upload" type="warning" style="width: 100%; padding: 50px; font-weight: bold; font-size: 1.2rem">Unggah Data Hasil Verifikasi Manual</el-button>
         </el-upload>
-      </el-col>
+      </el-col> -->
     </el-row>
     <br>
     <br>
-    <UploadTable ref="uploadTable" />
+    <!-- <UploadTable ref="uploadTable" /> -->
   </div>
 </template>
 
@@ -49,10 +49,10 @@
 import Swal from 'sweetalert2'
 import { Loading } from 'element-ui'
 import { exportBansos, uploadBansos } from '@/api/bansos'
-import UploadTable from './components/UploadTable'
+// import UploadTable from './components/UploadTable'
 export default {
   components: {
-    UploadTable
+    // UploadTable
   },
   data() {
     return {
