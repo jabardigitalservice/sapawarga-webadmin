@@ -48,7 +48,8 @@
 <script>
 import Swal from 'sweetalert2'
 import { Loading } from 'element-ui'
-import { exportBansos, uploadBansos } from '@/api/bansos'
+import { uploadBansos } from '@/api/bansos'
+import { downloadBeneficiariesBnba } from '@/api/beneficiaries'
 // import UploadTable from './components/UploadTable'
 export default {
   components: {
@@ -84,7 +85,7 @@ export default {
     async downloadFile() {
       try {
         Loading.service({ fullScreen: true })
-        const response = await exportBansos()
+        const response = await downloadBeneficiariesBnba()
         if (response.status === 200) {
           Swal.fire({
             title: this.$t('label.beneficiaries-download-start-title-alert'),
