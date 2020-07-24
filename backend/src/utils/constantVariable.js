@@ -71,3 +71,4 @@ export const rolesWidget = {
 export const UrlDownloadImportData = `${process.env.VUE_APP_S3_URL}attachment/Template_Data_Manual.xlsx`
 
 export const CODE_BPS_SUMEDANG = '3211'
+export const CODE_BPS_BANDUNG_BARAT = '3217'
