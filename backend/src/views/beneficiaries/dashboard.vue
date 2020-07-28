@@ -18,7 +18,7 @@
         />
 
         <!-- upload data manual -->
-        <template v-if="user.kabkota.code_bps !== CODE_BPS_SUMEDANG">
+        <template v-if="(user.kabkota !== null) && (user.kabkota.code_bps !== CODE_BPS_SUMEDANG)">
           <UploadDataManual v-if="checkPermission([RolesUser.STAFFKABKOTA, RolesUser.STAFFKEC])" />
         </template>
 
