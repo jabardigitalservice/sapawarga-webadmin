@@ -1059,7 +1059,8 @@ export default {
     'beneficiaries-first-stage': 'Tahap 1',
     'beneficiaries-second-stage': 'Tahap 2',
     'beneficiaries-download-verval': 'Unduh Verval',
-    'beneficiaries-bnba-upload': 'Proses unggah berhasil'
+    'beneficiaries-bnba-upload': 'Proses unggah berhasil',
+    'beneficiaries-history-upload': 'Riwayat Unggah BNBA'
   },
   news: {
     'news-url': 'URL Berita',

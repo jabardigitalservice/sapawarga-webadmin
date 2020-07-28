@@ -26,14 +26,13 @@
       </el-col>
       <el-col :xs="24" :sm="24" :lg="12">
         <el-upload
-          ref="uploadVervalManual"
+          ref="uploadBnbaManual"
           class="upload-container"
           :limit="1"
+          :auto-upload="false"
           :multiple="false"
           action
-          :auto-upload="true"
           :on-change="handleChangeFile"
-          :on-remove="handleRemoveFile"
         >
           <el-button size="large" name="button-upload" type="warning" style="width: 100%; padding: 50px; font-weight: bold; font-size: 1.2rem">Unggah Data Hasil Verifikasi Manual</el-button>
         </el-upload>
@@ -41,7 +40,7 @@
     </el-row>
     <br>
     <br>
-    <!-- <UploadTable ref="uploadTable" /> -->
+    <UploadTable ref="uploadTable" />
   </div>
 </template>
 
@@ -50,10 +49,10 @@ import Swal from 'sweetalert2'
 import { Loading } from 'element-ui'
 import { uploadBnba } from '@/api/beneficiaries'
 import { downloadBeneficiariesBnba } from '@/api/beneficiaries'
-// import UploadTable from './components/UploadTable'
+import UploadTable from './components/UploadTable'
 export default {
   components: {
-    // UploadTable
+    UploadTable
   },
   data() {
     return {
@@ -65,6 +64,7 @@ export default {
       const fileExtension = file.name.replace(/^.*\./, '')
       if (fileExtension === 'xlsx') {
         this.file = file.raw
+        console.log('masuk')
         this.uploadFile()
       } else {
         Swal.fire({
@@ -80,12 +80,15 @@ export default {
       this.file = null
     },
     clearUpload() {
-      this.$refs.uploadVervalManual.clearFiles()
+      this.$refs.uploadBnbaManual.clearFiles()
     },
     async downloadFile() {
       try {
         Loading.service({ fullScreen: true })
-        const response = await downloadBeneficiariesBnba()
+        const params = {
+          export_type: 'bnbawithcomplain'
+        }
+        const response = await downloadBeneficiariesBnba(params)
         if (response.status === 200) {
           Swal.fire({
             title: this.$t('label.beneficiaries-download-start-title-alert'),
@@ -114,7 +117,9 @@ export default {
           button: 'OK'
         }).then(action => {
           if (action) {
-            this.$refs.uploadTable.getList()
+            this.file = null
+            this.$refs.uploadBnbaManual.clearFiles()
+            this.$refs.uploadTable.getVervalUploadList()
           }
         })
 

@@ -232,3 +232,11 @@ export function uploadBnba(data) {
     data
   })
 }
+
+export function fetchUploadBnbaList(query) {
+  return request({
+    url: '/beneficiaries-bnba/upload-histories',
+    method: 'get',
+    params: query
+  })
+}
