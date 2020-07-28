@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <h1>{{ $t('label.beneficiaries-complaint-title') }}</h1>
-    <p>{{ `Berikut ini adalah daftar calon penerima yang diadukan di Kel/Desa ${user.kelurahan.name}, Kec. ${user.kecamatan.name}, Kab/Kota ${user.kabkota.name}` }}</p>
+    <p>Berikut ini adalah daftar calon penerima yang diadukan di {{ getRegion }}</p>
 
     <el-row :gutter="24">
       <el-col :xs="24" :sm="8" :md="6" :lg="4" :xl="4">
@@ -89,10 +89,13 @@ import { mapGetters } from 'vuex'
 import ListFilter from './_listFilterComplaint'
 import Pagination from '@/components/Pagination'
 import { fetchListComplaint } from '@/api/beneficiaries'
+import { RolesUser } from '@/utils/constantVariable'
+import checkPermission from '@/utils/permission'
 export default {
   components: { ListFilter, Pagination },
   data() {
     return {
+      RolesUser,
       isLoadingList: true,
       list: null,
       total: 0,
@@ -117,7 +120,18 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['user'])
+    ...mapGetters(['user']),
+    getRegion() {
+      let info = ''
+      if (checkPermission([this.RolesUser.STAFFKEL])) {
+        info = `Kel/Desa ${this.user.kelurahan.name}, Kec. ${this.user.kecamatan.name}, Kab/Kota ${this.user.kabkota.name}`
+      }
+
+      if (checkPermission([this.RolesUser.STAFFKABKOTA])) {
+        info = `Kab/Kota ${this.user.kabkota.name}`
+      }
+      return info
+    }
   },
   created() {
     this.getList()

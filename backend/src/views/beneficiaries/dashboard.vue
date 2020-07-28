@@ -18,9 +18,10 @@
         />
 
         <!-- upload data manual -->
-        <template v-if="(user.kabkota !== null) && (user.kabkota.code_bps !== CODE_BPS_SUMEDANG)">
+        <!-- check if user.kabkota.code_bps is not equal CODE_BPS_SUMEDANG OR if role STAFFKABKOTA AND user kabkota equal CODE_BPS_SUMEDANG -->
+        <!-- <template v-if="user.kabkota.code_bps !== CODE_BPS_SUMEDANG || (checkPermission([RolesUser.STAFFKABKOTA]) && user.kabkota.code_bps === CODE_BPS_SUMEDANG)">
           <UploadDataManual v-if="checkPermission([RolesUser.STAFFKABKOTA, RolesUser.STAFFKEC])" />
-        </template>
+        </template> -->
 
         <template v-if="!isLoadListUser">
           <el-card class="box-card" style="margin-bottom: 10px">
@@ -175,7 +176,7 @@ import { fetchDashboardSummary, fetchDashboardList, fetchCurrentTahap } from '@/
 import { RolesUser, CODE_BPS_SUMEDANG } from '@/utils/constantVariable'
 import { mapGetters } from 'vuex'
 import DashboardStatistics from './components/DashboardStatistics'
-import UploadDataManual from './components/UploadDataManual/index'
+// import UploadDataManual from './components/UploadDataManual/index'
 import checkPermission from '@/utils/permission'
 import InputFilterAreaBps from '@/components/InputFilterAreaBps'
 import JsonExcel from 'vue-json-excel'
@@ -188,7 +189,7 @@ export default {
     InputFilterAreaBps,
     JsonExcel,
     DashboardStatistics,
-    UploadDataManual,
+    // UploadDataManual,
     DashboardTitle,
     ListUserVerification,
     ListFilterUsers

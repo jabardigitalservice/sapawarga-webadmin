@@ -30,9 +30,9 @@
         <Statistics :is-loading="isLoadingSummary" :summery="dataSummary" />
 
         <!-- upload data manual -->
-        <template v-if="user.kabkota.code_bps !== CODE_BPS_SUMEDANG">
+        <!-- <template v-if="user.kabkota.code_bps === CODE_BPS_SUMEDANG">
           <UploadDataManual v-if="checkPermission([RolesUser.STAFFKEL ])" />
-        </template>
+        </template> -->
 
         <ListFilter :list-query.sync="listQuery" @submit-search="getList" @reset-search="resetFilter" />
 
@@ -101,7 +101,7 @@
         center
       >
         <span slot="title" class="dialog-title">Terima kasih sudah verval data penerima bansos di Sapawarga!</span>
-        <p class="dialog-content space">Dengan ini kami memberitakan bahwa proses verval tahap II telah DITUTUP.</p>
+        <p class="dialog-content space">Dengan ini kami memberitakan bahwa proses verval tahap III telah DITUTUP.</p>
         <p class="dialog-content space">Kerja keras Anda akan menjadi rezeki bagi warga yang membutuhkan bantuan di masa pandemi ini. Data sedang kami proses. Mohon menunggu dan pantau terus perkembangan data penerima bansos di situs web <span class="link" @click="goSolidaritasWeb">solidaritas.jabarprov.go.id.</span></p>
         <p class="dialog-content space">Bersama kita bisa tangani pandemi.</p>
         <p class="dialog-content space">Salam,</p>
@@ -141,7 +141,7 @@
 import { fetchSummary, fetchList, fetchCurrentTahap } from '@/api/beneficiaries'
 import DashboardTitle from './components/DashboardTitle'
 import { RolesUser, CODE_BPS_SUMEDANG } from '@/utils/constantVariable'
-import UploadDataManual from './components/UploadDataManual/index'
+// import UploadDataManual from './components/UploadDataManual/index'
 import FormPersonal from './components/FormPersonal'
 import Preview from './components/Preview'
 import Pagination from '@/components/Pagination'
@@ -157,8 +157,8 @@ export default {
     Statistics,
     ListFilter,
     FormPersonal,
-    DashboardTitle,
-    UploadDataManual
+    DashboardTitle
+    // UploadDataManual
   },
   filters: {
     statusFilter(status) {
@@ -275,8 +275,8 @@ export default {
     },
 
     accessBlock(value) {
-      this.$router.push('/beneficiaries/' + value)
-      // this.dialogVisible = true
+      // this.$router.push('/beneficiaries/' + value)
+      this.dialogVisible = true
     },
     // get summary statistics
     getSummary() {
