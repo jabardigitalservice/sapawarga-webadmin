@@ -46,7 +46,7 @@
 
     <el-dialog width="70%" :visible.sync="dialogTableVisible">
       <span slot="title" class="dialog-title">{{ $t('label.beneficiaries-history-download') }}</span>
-      <DialogDownloadHistory :source="'bnba'" :params="{export_type: 'bnbawithcomplain'}" />
+      <DialogDownloadHistory ref="dialogDownloadHistory" :source="'bnba'" :params="{export_type: 'bnbawithcomplain'}" />
     </el-dialog>
   </div>
 </template>
@@ -108,6 +108,8 @@ export default {
             icon: 'success',
             button: 'OK'
           })
+
+          this.$refs.dialogDownloadHistory.getDataStatus()
         }
         Loading.service({ fullScreen: true }).close()
       } catch (error) {
