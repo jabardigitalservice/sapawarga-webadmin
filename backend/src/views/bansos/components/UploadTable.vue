@@ -99,7 +99,6 @@ export default {
     async getVervalUploadList() {
       this.loadingVervalList = true
       const response = await fetchUploadBnbaList(this.listQuery)
-      console.log(response)
 
       this.vervalUploadList = response.data.items
       this.loadingVervalList = false
