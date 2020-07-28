@@ -148,7 +148,9 @@ export default {
     },
     showHistoryDownload() {
       this.dialogTableVisible = true
-      this.$refs.dialogDownloadHistory.getDataStatus()
+      if (this.$refs.dialogDownloadHistory) {
+        this.$refs.dialogDownloadHistory.getDataStatus()
+      }
     }
   }
 }
