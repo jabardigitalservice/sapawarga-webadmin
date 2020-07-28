@@ -39,8 +39,15 @@
       </el-col>
     </el-row>
     <br>
+    <el-button class="button-history float-right" type="success" plain @click="dialogTableVisible = true">{{ $t('label.beneficiaries-history-download') }}</el-button>
+    <br>
     <br>
     <UploadTable ref="uploadTable" />
+
+    <el-dialog width="70%" :visible.sync="dialogTableVisible">
+      <span slot="title" class="dialog-title">{{ $t('label.beneficiaries-history-download') }}</span>
+      <DialogDownloadHistory :source="'bnba'" :params="{export_type: 'bnbawithcomplain'}" />
+    </el-dialog>
   </div>
 </template>
 
@@ -50,12 +57,15 @@ import { Loading } from 'element-ui'
 import { uploadBnba } from '@/api/beneficiaries'
 import { downloadBeneficiariesBnba } from '@/api/beneficiaries'
 import UploadTable from './components/UploadTable'
+import DialogDownloadHistory from '../beneficiaries/components/DialogDownloadHistory'
 export default {
   components: {
-    UploadTable
+    UploadTable,
+    DialogDownloadHistory
   },
   data() {
     return {
+      dialogTableVisible: false,
       file: null
     }
   },
