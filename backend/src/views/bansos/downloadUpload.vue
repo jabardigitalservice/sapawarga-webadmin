@@ -24,20 +24,20 @@
       <el-col :xs="24" :sm="24" :lg="12">
         <el-button size="large" name="button-download" type="primary" style="width: 100%; padding: 50px; font-weight: bold; font-size: 1.2rem" @click="downloadFile">Unduh Data BNBA Usulan</el-button>
       </el-col>
-      <!-- <el-col :xs="24" :sm="24" :lg="12">
+      <el-col :xs="24" :sm="24" :lg="12">
         <el-upload
           ref="uploadVervalManual"
           class="upload-container"
           :limit="1"
           :multiple="false"
           action
-          :auto-upload="false"
+          :auto-upload="true"
           :on-change="handleChangeFile"
           :on-remove="handleRemoveFile"
         >
           <el-button size="large" name="button-upload" type="warning" style="width: 100%; padding: 50px; font-weight: bold; font-size: 1.2rem">Unggah Data Hasil Verifikasi Manual</el-button>
         </el-upload>
-      </el-col> -->
+      </el-col>
     </el-row>
     <br>
     <br>
@@ -48,7 +48,7 @@
 <script>
 import Swal from 'sweetalert2'
 import { Loading } from 'element-ui'
-import { uploadBansos } from '@/api/bansos'
+import { uploadBnba } from '@/api/beneficiaries'
 import { downloadBeneficiariesBnba } from '@/api/beneficiaries'
 // import UploadTable from './components/UploadTable'
 export default {
@@ -107,10 +107,9 @@ export default {
 
         const formData = new FormData()
         formData.append('file', this.file)
-        await uploadBansos(formData)
+        await uploadBnba(formData)
         Swal.fire({
-          title: this.$t('label.beneficiaries-upload-start'),
-          text: this.$t('label.beneficiaries-upload-success'),
+          title: this.$t('label.beneficiaries-bnba-upload'),
           icon: 'success',
           button: 'OK'
         }).then(action => {

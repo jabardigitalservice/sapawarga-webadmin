@@ -225,3 +225,10 @@ export function fetchDownloadStatus(query) {
   })
 }
 
+export function uploadBnba(data) {
+  return request({
+    url: '/beneficiaries-bnba/upload',
+    method: 'post',
+    data
+  })
+}
