@@ -53,8 +53,6 @@
 </template>
 
 <script>
-// import { fetchVervalUploadList, fetchUploadBnbaList } from '@/api/beneficiaries'
-// import { fetchVervalUploadList } from '@/api/beneficiaries'
 import { fetchUploadBnbaList } from '@/api/beneficiaries'
 import Pagination from '@/components/Pagination'
 export default {
@@ -100,7 +98,6 @@ export default {
   methods: {
     async getVervalUploadList() {
       this.loadingVervalList = true
-      // const response = await fetchVervalUploadList(this.listQuery)
       const response = await fetchUploadBnbaList(this.listQuery)
       console.log(response)
 
