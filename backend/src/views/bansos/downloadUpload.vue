@@ -39,7 +39,7 @@
       </el-col>
     </el-row>
     <br>
-    <el-button class="button-history float-right" type="success" plain @click="dialogTableVisible = true">{{ $t('label.beneficiaries-history-download') }}</el-button>
+    <el-button class="button-history float-right" type="success" plain @click="showHistoryDownload">{{ $t('label.beneficiaries-history-download') }}</el-button>
     <br>
     <br>
     <UploadTable ref="uploadTable" />
@@ -108,8 +108,6 @@ export default {
             icon: 'success',
             button: 'OK'
           })
-
-          this.$refs.dialogDownloadHistory.getDataStatus()
         }
         Loading.service({ fullScreen: true }).close()
       } catch (error) {
@@ -147,6 +145,10 @@ export default {
         }
         return err
       }
+    },
+    showHistoryDownload() {
+      this.dialogTableVisible = true
+      this.$refs.dialogDownloadHistory.getDataStatus()
     }
   }
 }
