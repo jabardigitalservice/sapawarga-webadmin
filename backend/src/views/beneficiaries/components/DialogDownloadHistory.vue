@@ -44,6 +44,10 @@ export default {
     source: {
       type: String,
       default: null
+    },
+    params: {
+      type: Object,
+      default: null
     }
   },
   data() {
@@ -64,7 +68,9 @@ export default {
       const params = {
         limit: 10
       }
-      const response = this.source === 'bnba' ? await fetchDownloadStatusBnba(params) : await fetchDownloadStatus(params)
+      const paramsFinal = Object.assign(params, this.params)
+
+      const response = this.source === 'bnba' ? await fetchDownloadStatusBnba(paramsFinal) : await fetchDownloadStatus(paramsFinal)
       this.data = response.data.items
       this.listLoading = false
     }

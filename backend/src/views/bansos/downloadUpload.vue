@@ -24,39 +24,48 @@
       <el-col :xs="24" :sm="24" :lg="12">
         <el-button size="large" name="button-download" type="primary" style="width: 100%; padding: 50px; font-weight: bold; font-size: 1.2rem" @click="downloadFile">Unduh Data BNBA Usulan</el-button>
       </el-col>
-      <!-- <el-col :xs="24" :sm="24" :lg="12">
+      <el-col :xs="24" :sm="24" :lg="12">
         <el-upload
-          ref="uploadVervalManual"
+          ref="uploadBnbaManual"
           class="upload-container"
           :limit="1"
+          :auto-upload="false"
           :multiple="false"
           action
-          :auto-upload="false"
           :on-change="handleChangeFile"
-          :on-remove="handleRemoveFile"
         >
           <el-button size="large" name="button-upload" type="warning" style="width: 100%; padding: 50px; font-weight: bold; font-size: 1.2rem">Unggah Data Hasil Verifikasi Manual</el-button>
         </el-upload>
-      </el-col> -->
+      </el-col>
     </el-row>
     <br>
+    <el-button class="button-history float-right" type="success" plain @click="showHistoryDownload">{{ $t('label.beneficiaries-history-download') }}</el-button>
     <br>
-    <!-- <UploadTable ref="uploadTable" /> -->
+    <br>
+    <UploadTable ref="uploadTable" />
+
+    <el-dialog width="70%" :visible.sync="dialogTableVisible">
+      <span slot="title" class="dialog-title">{{ $t('label.beneficiaries-history-download') }}</span>
+      <DialogDownloadHistory ref="dialogDownloadHistory" :source="'bnba'" :params="{export_type: 'bnbawithcomplain'}" />
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import Swal from 'sweetalert2'
 import { Loading } from 'element-ui'
-import { uploadBansos } from '@/api/bansos'
+import { uploadBnba } from '@/api/beneficiaries'
 import { downloadBeneficiariesBnba } from '@/api/beneficiaries'
-// import UploadTable from './components/UploadTable'
+import UploadTable from './components/UploadTable'
+import DialogDownloadHistory from '../beneficiaries/components/DialogDownloadHistory'
 export default {
   components: {
-    // UploadTable
+    UploadTable,
+    DialogDownloadHistory
   },
   data() {
     return {
+      dialogTableVisible: false,
       file: null
     }
   },
@@ -65,6 +74,7 @@ export default {
       const fileExtension = file.name.replace(/^.*\./, '')
       if (fileExtension === 'xlsx') {
         this.file = file.raw
+        console.log('masuk')
         this.uploadFile()
       } else {
         Swal.fire({
@@ -80,12 +90,15 @@ export default {
       this.file = null
     },
     clearUpload() {
-      this.$refs.uploadVervalManual.clearFiles()
+      this.$refs.uploadBnbaManual.clearFiles()
     },
     async downloadFile() {
       try {
         Loading.service({ fullScreen: true })
-        const response = await downloadBeneficiariesBnba()
+        const params = {
+          export_type: 'bnbawithcomplain'
+        }
+        const response = await downloadBeneficiariesBnba(params)
         if (response.status === 200) {
           Swal.fire({
             title: this.$t('label.beneficiaries-download-start-title-alert'),
@@ -107,15 +120,16 @@ export default {
 
         const formData = new FormData()
         formData.append('file', this.file)
-        await uploadBansos(formData)
+        await uploadBnba(formData)
         Swal.fire({
-          title: this.$t('label.beneficiaries-upload-start'),
-          text: this.$t('label.beneficiaries-upload-success'),
+          title: this.$t('label.beneficiaries-bnba-upload'),
           icon: 'success',
           button: 'OK'
         }).then(action => {
           if (action) {
-            this.$refs.uploadTable.getList()
+            this.file = null
+            this.$refs.uploadBnbaManual.clearFiles()
+            this.$refs.uploadTable.getVervalUploadList()
           }
         })
 
@@ -130,6 +144,12 @@ export default {
           })
         }
         return err
+      }
+    },
+    showHistoryDownload() {
+      this.dialogTableVisible = true
+      if (this.$refs.dialogDownloadHistory) {
+        this.$refs.dialogDownloadHistory.getDataStatus()
       }
     }
   }
