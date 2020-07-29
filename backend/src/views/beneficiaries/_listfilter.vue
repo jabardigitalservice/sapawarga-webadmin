@@ -48,7 +48,7 @@
             <el-input v-model="listQuery.domicile_rt_like" placeholder="RT" :disabled="listQuery.kel_id === null && !roles" />
           </el-form-item>
         </el-col>
-        <el-col :xs="24" :sm="24" :md="4">
+        <el-col :xs="24" :sm="24" :md="6">
           <el-button type="primary" size="small" @click="submitSearch">
             {{ $t('crud.search') }}
           </el-button>
@@ -57,12 +57,18 @@
           </el-button>
         </el-col>
         <template v-if="roles && isDownloadVerval">
-          <el-col :xs="24" :sm="24" :md="7">
+          <el-col :xs="24" :sm="24" :md="2">
             <el-button
               size="medium"
               class="text-16 border-orange text-orange border-radius-8 btn-export"
               @click="downloadVerval"
             >{{ $t('label.beneficiaries-download-verval') }}</el-button>
+          </el-col>
+        </template>
+
+        <template v-if="roles">
+          <el-col :xs="24" :sm="24" :md="3">
+            <el-button class="button-history float-right" type="success" plain>{{ $t('label.beneficiaries-history-download') }}</el-button>
           </el-col>
         </template>
 
