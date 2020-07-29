@@ -1061,7 +1061,9 @@ export default {
     'beneficiaries-download-verval': 'Unduh Verval',
     'beneficiaries-bnba-upload': 'Proses unggah berhasil',
     'beneficiaries-history-upload': 'Riwayat Unggah BNBA',
-    'beneficiaries-history-download': 'Riwayat Unduh BNBA'
+    'beneficiaries-history-download-bnba': 'Riwayat Unduh BNBA',
+    'beneficiaries-history-download': 'Riwayat Unduh',
+    'beneficiaries-history-download-verval': 'Riwayat Unduh Verval'
   },
   news: {
     'news-url': 'URL Berita',
