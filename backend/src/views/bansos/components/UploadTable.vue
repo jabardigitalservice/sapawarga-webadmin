@@ -112,7 +112,7 @@ export default {
       this.sort_order = e.order
     },
     statusClassName(row) {
-      return row.status === 1 ? 'success-status' : ''
+      return row.status === 1 ? 'success-status' : 'danger-status'
     },
     tableRowClassName({ row, rowIndex }) {
       return row.status === 20
@@ -128,7 +128,7 @@ export default {
           label = this.$t('importDataManual.history-import-status-success')
           break
         default:
-          label = ''
+          label = this.$t('label.beneficiaries-upload-failure-template')
           break
       }
       return label
@@ -153,6 +153,10 @@ export default {
 
 .success-status {
   color: #67c23a;
+}
+
+.danger-status {
+  color: #ff4949;
 }
 
 .el-table .warning-row {
