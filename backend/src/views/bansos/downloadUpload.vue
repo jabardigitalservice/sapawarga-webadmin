@@ -39,13 +39,13 @@
       </el-col>
     </el-row>
     <br>
-    <el-button class="button-history float-right" type="success" plain @click="showHistoryDownload">{{ $t('label.beneficiaries-history-download') }}</el-button>
+    <el-button class="button-history float-right" type="success" plain @click="showHistoryDownload">{{ $t('label.beneficiaries-history-download-bnba') }}</el-button>
     <br>
     <br>
     <UploadTable ref="uploadTable" />
 
     <el-dialog width="70%" :visible.sync="dialogTableVisible">
-      <span slot="title" class="dialog-title">{{ $t('label.beneficiaries-history-download') }}</span>
+      <span slot="title" class="dialog-title">{{ $t('label.beneficiaries-history-download-bnba') }}</span>
       <DialogDownloadHistory ref="dialogDownloadHistory" :source="'bnba'" :params="{export_type: 'bnbawithcomplain'}" />
     </el-dialog>
   </div>

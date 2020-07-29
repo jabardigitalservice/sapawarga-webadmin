@@ -1061,7 +1061,9 @@ export default {
     'beneficiaries-download-verval': 'Unduh Verval',
     'beneficiaries-bnba-upload': 'Proses unggah berhasil',
     'beneficiaries-history-upload': 'Riwayat Unggah BNBA',
-    'beneficiaries-history-download': 'Riwayat Unduh BNBA',
+    'beneficiaries-history-download-bnba': 'Riwayat Unduh BNBA',
+    'beneficiaries-history-download': 'Riwayat Unduh',
+    'beneficiaries-history-download-verval': 'Riwayat Unduh Verval',
     'beneficiaries-download-bnba': 'Unduh Data BNBA Usulan',
     'beneficiaries-upload-bnba': 'Unggah Data BNBA'
   },
