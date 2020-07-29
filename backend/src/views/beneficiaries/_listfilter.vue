@@ -28,7 +28,7 @@
               </el-select>
             </el-form-item>
           </el-col>
-          <el-col v-if="!roles" :xs="{span:24, tag:'mb-10'}" :sm="24" :md="5">
+          <el-col v-if="!roles" :xs="{span:24, tag:'mb-10'}" :sm="24" :md="3">
             <input-filter-area-bps
               :parent-id="filterAreaParentId"
               :kabkota-id="listQuery.domicile_kabkota_bps_id"
@@ -49,7 +49,7 @@
               <el-input v-model="listQuery.domicile_rt_like" placeholder="RT" :disabled="listQuery.kel_id === null && !roles" />
             </el-form-item>
           </el-col>
-          <el-col :xs="24" :sm="24" :md="2">
+          <el-col :xs="24" :sm="24" :md="3">
             <el-button type="primary" size="small" @click="submitSearch">
               {{ $t('crud.search') }}
             </el-button>
@@ -57,8 +57,9 @@
               {{ $t('crud.reset') }}
             </el-button>
           </el-col>
+
           <template v-if="roles && isDownloadVerval">
-            <el-col :xs="24" :sm="24" :md="2">
+            <el-col :xs="24" :sm="24" :md="3" :xl="2" style="float: right">
               <el-button
                 size="medium"
                 class="text-16 border-orange text-orange border-radius-8 btn-export"
@@ -68,7 +69,7 @@
           </template>
 
           <template v-if="roles">
-            <el-col :xs="24" :sm="24" :md="2">
+            <el-col :xs="24" :sm="24" :md="3" :xl="2" style="float: right">
               <el-button class="button-history float-right" type="success" plain @click="showHistoryDownload">{{ $t('label.beneficiaries-history-download') }}</el-button>
             </el-col>
           </template>
