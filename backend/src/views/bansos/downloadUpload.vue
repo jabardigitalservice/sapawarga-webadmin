@@ -22,7 +22,7 @@
     </div>
     <el-row :gutter="24">
       <el-col :xs="24" :sm="24" :lg="12">
-        <el-button size="large" name="button-download" type="primary" style="width: 100%; padding: 50px; font-weight: bold; font-size: 1.2rem" @click="downloadFile">Unduh Data BNBA Usulan</el-button>
+        <el-button size="large" name="button-download" type="primary" style="width: 100%; padding: 50px; font-weight: bold; font-size: 1.2rem" @click="downloadFile">{{ $t('label.beneficiaries-download-bnba') }}</el-button>
       </el-col>
       <el-col :xs="24" :sm="24" :lg="12">
         <el-upload
@@ -34,7 +34,7 @@
           action
           :on-change="handleChangeFile"
         >
-          <el-button size="large" name="button-upload" type="warning" style="width: 100%; padding: 50px; font-weight: bold; font-size: 1.2rem">Unggah Data Hasil Verifikasi Manual</el-button>
+          <el-button size="large" name="button-upload" type="warning" style="width: 100%; padding: 50px; font-weight: bold; font-size: 1.2rem">{{ $t('label.beneficiaries-upload-bnba') }}</el-button>
         </el-upload>
       </el-col>
     </el-row>
