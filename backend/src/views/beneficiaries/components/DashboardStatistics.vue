@@ -61,7 +61,7 @@
       <div class="grid-content">
         <div
           class="stat-title"
-        >{{ $t('label.beneficiaries-dashboard-total-recipient').toUpperCase() }}</div>
+        >{{ $t('label.beneficiaries-dashboard-total-regulations').toUpperCase() }}</div>
         <!-- show loading -->
         <div v-loading="isLoading" class="icon-loading" element-loading-spinner="el-icon-loading" />
         <!-- show data -->

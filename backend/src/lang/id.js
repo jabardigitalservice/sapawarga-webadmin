@@ -1040,11 +1040,11 @@ export default {
     'beneficiaries-job-status': 'Status Kedudukan dalam Pekerjaan',
     'beneficiaries-info-domicile': 'Domisili Saat Ini',
 
-    'beneficiaries-dashboard-verified': 'Terverifikasi',
-    'beneficiaries-dashboard-not-verified': 'Belum Terverifikasi',
-    'beneficiaries-dashboard-rejected': 'Ditolak',
-    'beneficiaries-dashboard-new-proposal': 'Data Usulan Baru',
-    'beneficiaries-dashboard-total-recipient': 'Total Penerima',
+    'beneficiaries-dashboard-verified': 'Usulan Terverifikasi',
+    'beneficiaries-dashboard-not-verified': 'Usulan Belum Terverifikasi',
+    'beneficiaries-dashboard-rejected': 'Usulan Ditolak',
+    'beneficiaries-dashboard-new-proposal': 'Usulan Baru',
+    'beneficiaries-dashboard-total-regulations': 'Total Usulan Terdaftar',
 
     'beneficiaries-monitoring-table-title': 'Daftar Data BNBA',
     'beneficiaries-monitoring-city': 'Kabupaten/Kota',
