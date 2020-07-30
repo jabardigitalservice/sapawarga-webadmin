@@ -62,7 +62,7 @@
             <el-col :xs="24" :sm="24" :md="3" :xl="2" style="float: right">
               <el-button
                 size="medium"
-                class="text-16 border-orange text-orange border-radius-8 btn-export"
+                class="border-orange text-orange btn-export"
                 @click="downloadVerval"
               >{{ $t('label.beneficiaries-download-verval') }}</el-button>
             </el-col>
@@ -70,7 +70,7 @@
 
           <template v-if="roles">
             <el-col :xs="24" :sm="24" :md="3" :xl="2" style="float: right">
-              <el-button class="button-history float-right" type="success" plain @click="showHistoryDownload">{{ $t('label.beneficiaries-history-download') }}</el-button>
+              <el-button class="border-green button-history float-right" type="success" plain @click="showHistoryDownload">{{ $t('label.beneficiaries-history-download') }}</el-button>
             </el-col>
           </template>
 
@@ -193,4 +193,8 @@ export default {
   .float-right {
     float: right;
   }
+
+.border-green {
+  border: 2px solid #13ce66;
+}
 </style>
