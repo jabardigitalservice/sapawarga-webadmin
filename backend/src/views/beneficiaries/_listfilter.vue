@@ -49,7 +49,7 @@
               <el-input v-model="listQuery.domicile_rt_like" placeholder="RT" :disabled="listQuery.kel_id === null && !roles" />
             </el-form-item>
           </el-col>
-          <el-col :xs="24" :sm="24" :md="3">
+          <el-col :xs="{span:24, tag:'mb-10'}" :sm="24" :md="3">
             <el-button type="primary" size="small" @click="submitSearch">
               {{ $t('crud.search') }}
             </el-button>
@@ -58,21 +58,19 @@
             </el-button>
           </el-col>
 
-          <template v-if="roles && isDownloadVerval">
-            <el-col :xs="24" :sm="24" :md="3" :xl="2" style="float: right">
+          <el-col :xs="24" :sm="24" :md="8" :xl="8" class="section-verval">
+            <template v-if="roles && isDownloadVerval">
               <el-button
                 size="medium"
-                class="border-orange text-orange btn-export"
+                class="border-orange text-orange"
                 @click="downloadVerval"
               >{{ $t('label.beneficiaries-download-verval') }}</el-button>
-            </el-col>
-          </template>
+            </template>
 
-          <template v-if="roles">
-            <el-col :xs="24" :sm="24" :md="3" :xl="2" style="float: right">
-              <el-button class="border-green button-history float-right" type="success" plain @click="showHistoryDownload">{{ $t('label.beneficiaries-history-download') }}</el-button>
-            </el-col>
-          </template>
+            <template v-if="roles">
+              <el-button class="border-green" type="success" plain @click="showHistoryDownload">{{ $t('label.beneficiaries-history-download') }}</el-button>
+            </template>
+          </el-col>
 
         </el-row>
       </el-form>
@@ -196,5 +194,9 @@ export default {
 
 .border-green {
   border: 2px solid #13ce66;
+}
+
+.section-verval {
+  text-align: end;
 }
 </style>
