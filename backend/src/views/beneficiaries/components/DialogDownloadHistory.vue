@@ -9,9 +9,9 @@
         label="No"
         :index="getTableRowNumbering"
       />
-      <el-table-column property="start_at" :label="$t('beneficiaries.download-date')" width="200">
+      <el-table-column property="created_at" :label="$t('beneficiaries.download-date')" width="200">
         <template slot-scope="{row}">
-          {{ row.start_at | moment('D MMMM YYYY, HH:mm') }}
+          {{ row.created_at | moment('D MMMM YYYY, HH:mm') }}
         </template>
       </el-table-column>
       <el-table-column property="name" :label="$t('label.beneficiaries-upload-status')" width="250">
