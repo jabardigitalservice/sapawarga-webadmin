@@ -14,7 +14,7 @@ const beneficiaries = {
   'print-date': 'Tanggal Cetak',
   'show-stage': 'Tampilkan Tahap:',
   'notes': 'Tuliskan catatan disini',
-  'download-date': 'Tanggal Download',
+  'download-date': 'Tanggal Unduh',
   'download-history': 'Riwayat Unduh',
   'excuse': 'Berikan alasan penolakan',
   'status-success': 'Status berhasil diubah',

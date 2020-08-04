@@ -30,9 +30,7 @@
         <Statistics :is-loading="isLoadingSummary" :summery="dataSummary" />
 
         <!-- upload data manual -->
-        <!-- <template v-if="user.kabkota.code_bps === CODE_BPS_SUMEDANG">
-          <UploadDataManual v-if="checkPermission([RolesUser.STAFFKEL ])" />
-        </template> -->
+        <UploadDataManual v-if="checkPermission([RolesUser.STAFFKEL ])" />
 
         <ListFilter :list-query.sync="listQuery" @submit-search="getList" @reset-search="resetFilter" />
 
@@ -141,7 +139,7 @@
 import { fetchSummary, fetchList, fetchCurrentTahap } from '@/api/beneficiaries'
 import DashboardTitle from './components/DashboardTitle'
 import { RolesUser, CODE_BPS_SUMEDANG } from '@/utils/constantVariable'
-// import UploadDataManual from './components/UploadDataManual/index'
+import UploadDataManual from './components/UploadDataManual/index'
 import FormPersonal from './components/FormPersonal'
 import Preview from './components/Preview'
 import Pagination from '@/components/Pagination'
@@ -157,8 +155,8 @@ export default {
     Statistics,
     ListFilter,
     FormPersonal,
-    DashboardTitle
-    // UploadDataManual
+    DashboardTitle,
+    UploadDataManual
   },
   filters: {
     statusFilter(status) {

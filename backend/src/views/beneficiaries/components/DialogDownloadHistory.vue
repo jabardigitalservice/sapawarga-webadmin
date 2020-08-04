@@ -9,14 +9,14 @@
         label="No"
         :index="getTableRowNumbering"
       />
-      <el-table-column property="start_at" :label="$t('beneficiaries.download-date')" width="200">
+      <el-table-column property="created_at" :label="$t('beneficiaries.download-date')" width="200">
         <template slot-scope="{row}">
-          {{ row.start_at | moment('D MMMM YYYY, HH:mm') }}
+          {{ row.created_at | moment('D MMMM YYYY, HH:mm') }}
         </template>
       </el-table-column>
       <el-table-column property="name" :label="$t('label.beneficiaries-upload-status')" width="250">
         <template slot-scope="{row}">
-          <el-progress :percentage="(isNaN(row.aggregate.total_row_processed * 100 / row.aggregate.total_row_count) === true) ? 100 : parseInt(row.aggregate.total_row_processed * 100 / row.aggregate.total_row_count)" />
+          <el-progress :percentage="row.start_at === null ? 0 : (isNaN(row.aggregate.total_row_processed * 100 / row.aggregate.total_row_count) === true) ? 100 : parseInt(row.aggregate.total_row_processed * 100 / row.aggregate.total_row_count)" />
         </template>
       </el-table-column>
       <el-table-column property="done_at" :label="$t('beneficiaries.print-date')" width="200">

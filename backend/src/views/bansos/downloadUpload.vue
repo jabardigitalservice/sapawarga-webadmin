@@ -11,7 +11,7 @@
         </p>
         <p class="content">
           <ol>
-            <li>Unduh dan BNBA usulan</li>
+            <li>Unduh dan Unggah BNBA usulan</li>
             <li>Cek email 1x24 jam apabila tidak terkirim hubungi WA: +62 812-2008-2668</li>
             <li>Buka file excel dan silahkan isi verval di kolom Berikan Bantuan, apabila tidak layak mendapat bantuan, isi dikolom tersebut dengan isi: "tidak"</li>
             <li>Save dengan format, nama kab/kota dan tanggal, misal: Kab bandung 170720</li>
