@@ -28,7 +28,7 @@
     </el-col>
     <el-col v-if="!isVerval" :xs="20" :sm="10" :md="6" :lg="6" :xl="6">
       <div class="grid-content">
-        <div class="stat-title">TERVERIFIKASI</div>
+        <div class="stat-title">{{ $t('label.beneficiaries-dashboard-verified').toUpperCase() }}</div>
         <!-- show loading -->
         <div
           v-loading="isLoading"
@@ -41,7 +41,7 @@
     </el-col>
     <el-col v-if="!isVerval" :xs="20" :sm="10" :md="6" :lg="6" :xl="6">
       <div class="grid-content">
-        <div class="stat-title shadow">BELUM TERVERIFIKASI</div>
+        <div class="stat-title shadow">{{ $t('label.beneficiaries-dashboard-not-verified').toUpperCase() }}</div>
         <!-- show loading -->
         <div
           v-loading="isLoading"
@@ -54,7 +54,7 @@
     </el-col>
     <el-col v-if="!isVerval || (isVerval && listType === 'rejected')" :xs="20" :sm="10" :md="6" :lg="6" :xl="6">
       <div class="grid-content">
-        <div class="stat-title">DITOLAK</div>
+        <div class="stat-title">{{ $t('label.beneficiaries-dashboard-rejected').toUpperCase() }}</div>
         <!-- show loading -->
         <div
           v-loading="isLoading"
@@ -67,7 +67,7 @@
     </el-col>
     <el-col v-if="!isVerval || (isVerval && listType === null)" :xs="20" :sm="10" :md="6" :lg="6" :xl="6">
       <div class="grid-content">
-        <div class="stat-title">SEMUA DATA PENERIMA BANTUAN</div>
+        <div class="stat-title">{{ $t('label.beneficiaries-dashboard-total-regulations').toUpperCase() }}</div>
         <!-- show loading -->
         <div
           v-loading="isLoading"
