@@ -80,17 +80,6 @@
                 :label="$t('label.beneficiaries-monitoring-action').toUpperCase()"
                 width="200"
               >
-                <!-- <template slot-scope="{row}">
-                  <el-tooltip
-                    :content="$t('label.beneficiaries-monitoring-download')"
-                    placement="top"
-                  >
-                    <el-button type="success" size="mini" @click="handleDownload(row)">
-                      <i class="el-icon-download el-icon-right" />
-                      {{ $t('label.beneficiaries-monitoring-download') }}
-                    </el-button>
-                  </el-tooltip>
-                </template> -->
                 <template slot-scope="{row}">
                   <el-tooltip
                     :content="$t('label.beneficiaries-monitoring-download')"
