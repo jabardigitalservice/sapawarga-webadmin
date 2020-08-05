@@ -139,7 +139,7 @@ export default {
     'benebeneficiaries-complaint': 'Aduan',
     'benebeneficiaries-complaint-detail': 'Detail Aduan',
     'beneficiaries-monitoring-upload': 'Unduh Alokasi',
-    'beneficiaries-monitoring-bnba': 'Monitoring BNBA \nBanProv',
+    'beneficiaries-monitoring-bnba': 'Monitoring BanProv',
 
     'bansos-download': 'Unduh Dokumen',
     'bansos-upload': 'Unggah Dokumen',
