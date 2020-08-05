@@ -41,7 +41,7 @@ export default {
 
   methods: {
     async getUrlDownload() {
-      const code = this.user.kabkota.code_bps
+      const code = this.user.kabkota ? this.user.kabkota.code_bps : ''
 
       this.link = await getLink(code)
     }
