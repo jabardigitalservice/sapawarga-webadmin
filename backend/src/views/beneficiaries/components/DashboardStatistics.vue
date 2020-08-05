@@ -65,6 +65,7 @@
         <!-- show loading -->
         <div v-loading="isLoading" class="icon-loading" element-loading-spinner="el-icon-loading" />
         <!-- show data -->
+        <div class="show-explanation color-sw-blue">Lihat Penjelasan</div>
         <div
           v-if="!isLoading"
           class="total color-sw-blue"
@@ -79,6 +80,7 @@
         <!-- show loading -->
         <div v-loading="isLoading" class="icon-loading" element-loading-spinner="el-icon-loading" />
         <!-- show data -->
+        <div class="show-explanation color-sw-blue">Lihat Penjelasan</div>
         <span
           v-if="!isLoading"
           class="stat-count color-sw-green"
@@ -96,6 +98,7 @@
         <!-- show loading -->
         <div v-loading="isLoading" class="icon-loading" element-loading-spinner="el-icon-loading" />
         <!-- show data -->
+        <div class="show-explanation color-sw-blue">Lihat Penjelasan</div>
         <span
           v-if="!isLoading"
           class="stat-count color-sw-orange"
@@ -121,6 +124,7 @@
         <!-- show loading -->
         <div v-loading="isLoading" class="icon-loading" element-loading-spinner="el-icon-loading" />
         <!-- show data -->
+        <div class="show-explanation color-sw-blue">Lihat Penjelasan</div>
         <span
           v-if="!isLoading"
           class="stat-count color-sw-red"
@@ -146,6 +150,7 @@
         <!-- show loading -->
         <div v-loading="isLoading" class="icon-loading" element-loading-spinner="el-icon-loading" />
         <!-- show data -->
+        <div class="show-explanation color-sw-blue">Lihat Penjelasan</div>
         <span
           v-if="!isLoading"
           class="stat-count color-sw-blue"
@@ -242,7 +247,7 @@ export default {
   border-radius: 8px;
 }
 .stat-title {
-  margin-bottom: 13px;
+  margin-bottom: 8px;
   font-weight: bold;
   font-size: 15px;
 }
@@ -266,8 +271,12 @@ export default {
 .color-sw-blue {
   color: #2d9cdb;
 }
-
 .progress {
   margin-top: 15px;
+}
+.show-explanation {
+  margin-bottom: 18px;
+  font-size: 14px;
+  text-decoration: underline;
 }
 </style>
