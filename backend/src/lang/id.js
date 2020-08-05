@@ -139,6 +139,7 @@ export default {
     'benebeneficiaries-complaint': 'Aduan',
     'benebeneficiaries-complaint-detail': 'Detail Aduan',
     'beneficiaries-monitoring-upload': 'Unduh Alokasi',
+    'beneficiaries-monitoring-bnba': 'Monitoring BanProv',
 
     'bansos-download': 'Unduh Dokumen',
     'bansos-upload': 'Unggah Dokumen',
@@ -1053,6 +1054,7 @@ export default {
     'beneficiaries-monitoring-action': 'Aksi',
     'beneficiaries-monitoring-download': 'Unduh',
     'beneficiaries-monitoring-main-title': 'Monitoring Upload Data BNBA Kabupaten/Kota',
+    'beneficiaries-monitoring-bnba-title': 'Monitoring BNBA Kabupaten/Kota',
     'beneficiaries-monitoring-info': 'Jika anda menginginkan data BNBA keseluruhan Provinsi Jawa Barat, atau untuk mendapatkan data BNBA lebih dari satu Kapubaten/Kota, Anda dapat menghubungi admin Sapawarga.',
     'beneficiaries-monitoring-choose': 'Pilih',
     'beneficiaries-show-stage': 'Tampilkan Tahap:',
