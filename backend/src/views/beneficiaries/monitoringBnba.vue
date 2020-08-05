@@ -133,7 +133,7 @@ export default {
       listQuery: {
         page: 1,
         limit: 10,
-        kode_kab: null
+        kabkota_name: null
       },
       sort_prop: 'data.approved',
       sort_order: 'descending',
@@ -192,7 +192,7 @@ export default {
     handleFilter() {
       if (this.citySelected) {
         this.cityName = this.citySelected.label
-        this.listQuery.kode_kab = this.citySelected.value
+        this.listQuery.kabkota_name = this.citySelected.label
       }
       this.getList()
     },
@@ -200,7 +200,7 @@ export default {
       this.listQuery.bansos_type = null
     },
     clearedCity() {
-      this.listQuery.kode_kab = null
+      this.listQuery.kabkota_name = null
     }
   }
 }
