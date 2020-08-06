@@ -85,7 +85,13 @@
                     :content="$t('label.beneficiaries-monitoring-download')"
                     placement="top"
                   >
-                    <a :href="row.final_url" target="_blank" rel="noopener noreferrer">{{ row.final_url || '-' }}</a>
+                    <a :href="row.final_url" target="_blank" rel="noopener noreferrer">
+                      <el-button
+                        type="success"
+                        plain
+                        icon="el-icon-download"
+                      >{{ $t('label.beneficiaries-monitoring-download') }}</el-button>
+                    </a>
                   </el-tooltip></template>
               </el-table-column>
             </el-table>
