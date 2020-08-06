@@ -67,7 +67,7 @@
           <div v-loading="isLoading" class="icon-loading" element-loading-spinner="el-icon-loading" />
           <!-- show data -->
           <div class="show-explanation color-sw-blue">
-            <el-button type="text" class="no-padding underline" @click="openDialog(1)">Lihat Penjelasan</el-button>
+            <el-button type="text" class="no-padding underline" @click="openDialog(1)">{{ $t('label.beneficiaries-explanation') }}</el-button>
           </div>
           <div
             v-if="!isLoading"
@@ -84,7 +84,7 @@
           <div v-loading="isLoading" class="icon-loading" element-loading-spinner="el-icon-loading" />
           <!-- show data -->
           <div class="show-explanation color-sw-blue">
-            <el-button type="text" class="no-padding underline" @click="openDialog(2)">Lihat Penjelasan</el-button>
+            <el-button type="text" class="no-padding underline" @click="openDialog(2)">{{ $t('label.beneficiaries-explanation') }}</el-button>
           </div>
           <span
             v-if="!isLoading"
@@ -104,7 +104,7 @@
           <div v-loading="isLoading" class="icon-loading" element-loading-spinner="el-icon-loading" />
           <!-- show data -->
           <div class="show-explanation color-sw-blue">
-            <el-button type="text" class="no-padding underline" @click="openDialog(3)">Lihat Penjelasan</el-button>
+            <el-button type="text" class="no-padding underline" @click="openDialog(3)">{{ $t('label.beneficiaries-explanation') }}</el-button>
           </div>
           <span
             v-if="!isLoading"
@@ -132,7 +132,7 @@
           <div v-loading="isLoading" class="icon-loading" element-loading-spinner="el-icon-loading" />
           <!-- show data -->
           <div class="show-explanation color-sw-blue">
-            <el-button type="text" class="no-padding underline" @click="openDialog(4)">Lihat Penjelasan</el-button>
+            <el-button type="text" class="no-padding underline" @click="openDialog(4)">{{ $t('label.beneficiaries-explanation') }}</el-button>
           </div>
           <span
             v-if="!isLoading"
@@ -160,7 +160,7 @@
           <div v-loading="isLoading" class="icon-loading" element-loading-spinner="el-icon-loading" />
           <!-- show data -->
           <div class="show-explanation color-sw-blue">
-            <el-button type="text" class="no-padding underline" @click="openDialog(5)">Lihat Penjelasan</el-button>
+            <el-button type="text" class="no-padding underline" @click="openDialog(5)">{{ $t('label.beneficiaries-explanation') }}</el-button>
           </div>
           <span
             v-if="!isLoading"
@@ -182,7 +182,7 @@
       </el-col>
     </el-row>
     <el-dialog width="40%" custom-class="dialog-explanation" :show-close="false" :visible.sync="dialogTableVisible">
-      <span slot="title" class="dialog-title-explanation">Keterangan Usulan</span>
+      <span slot="title" class="dialog-title-explanation">{{ $t('label.beneficiaries-description-proposal') }}</span>
       <DialogExplanation :id="idexplanationSelected" @close="dialogTableVisible = false" />
     </el-dialog>
   </div>
