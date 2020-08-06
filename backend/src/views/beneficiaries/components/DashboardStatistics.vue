@@ -1,7 +1,8 @@
 <template>
-  <el-row :gutter="24">
-    <!-- untuk sementara di hide -->
-    <!-- <el-col :xs="24" :sm="8" :md="6" :lg="6" :xl="6">
+  <div>
+    <el-row :gutter="24">
+      <!-- untuk sementara di hide -->
+      <!-- <el-col :xs="24" :sm="8" :md="6" :lg="6" :xl="6">
       <div class="grid-content">
         <div class="stat-title">APPROVAL KAB/KOTA</div>
 
@@ -57,52 +58,58 @@
         <div v-if="!isLoading" class="stat-count color-sw-green">{{ formatNumber(percentage(summary.approved)) }} %</div>
       </div>
     </el-col>-->
-    <el-col :xs="24" :sm="8" :md="6" :lg="4" :xl="4">
-      <div class="grid-content">
-        <div
-          class="stat-title"
-        >{{ $t('label.beneficiaries-dashboard-total-regulations').toUpperCase() }}</div>
-        <!-- show loading -->
-        <div v-loading="isLoading" class="icon-loading" element-loading-spinner="el-icon-loading" />
-        <!-- show data -->
-        <div class="show-explanation color-sw-blue">Lihat Penjelasan</div>
-        <div
-          v-if="!isLoading"
-          class="total color-sw-blue"
-        >{{ getTotalBenefeciaries ? formatNumber(getTotalBenefeciaries) : '-' }}</div>
-      </div>
-    </el-col>
-    <el-col :xs="24" :sm="8" :md="6" :lg="5" :xl="5">
-      <div class="grid-content">
-        <div
-          class="stat-title shadow"
-        >{{ $t('label.beneficiaries-dashboard-verified').toUpperCase() }}</div>
-        <!-- show loading -->
-        <div v-loading="isLoading" class="icon-loading" element-loading-spinner="el-icon-loading" />
-        <!-- show data -->
-        <div class="show-explanation color-sw-blue">Lihat Penjelasan</div>
-        <span
-          v-if="!isLoading"
-          class="stat-count color-sw-green"
-        >{{ getApproved ? formatNumber(getApproved) : '-' }}</span>
+      <el-col :xs="24" :sm="8" :md="6" :lg="4" :xl="4">
+        <div class="grid-content">
+          <div
+            class="stat-title"
+          >{{ $t('label.beneficiaries-dashboard-total-regulations').toUpperCase() }}</div>
+          <!-- show loading -->
+          <div v-loading="isLoading" class="icon-loading" element-loading-spinner="el-icon-loading" />
+          <!-- show data -->
+          <div class="show-explanation color-sw-blue">
+            <el-button type="text" class="no-padding underline" @click="openDialog(1)">Lihat Penjelasan</el-button>
+          </div>
+          <div
+            v-if="!isLoading"
+            class="total color-sw-blue"
+          >{{ getTotalBenefeciaries ? formatNumber(getTotalBenefeciaries) : '-' }}</div>
+        </div>
+      </el-col>
+      <el-col :xs="24" :sm="8" :md="6" :lg="5" :xl="5">
+        <div class="grid-content">
+          <div
+            class="stat-title shadow"
+          >{{ $t('label.beneficiaries-dashboard-verified').toUpperCase() }}</div>
+          <!-- show loading -->
+          <div v-loading="isLoading" class="icon-loading" element-loading-spinner="el-icon-loading" />
+          <!-- show data -->
+          <div class="show-explanation color-sw-blue">
+            <el-button type="text" class="no-padding underline" @click="openDialog(2)">Lihat Penjelasan</el-button>
+          </div>
+          <span
+            v-if="!isLoading"
+            class="stat-count color-sw-green"
+          >{{ getApproved ? formatNumber(getApproved) : '-' }}</span>
         <!-- untuk sementara di hide -->
         <!-- <span v-if="!isLoading" class="stat-count color-sw-green" style="float: right">{{ formatNumber(percentage(getApproved)) }} %</span> -->
         <!-- <el-progress class="progress" :text-inside="true" color="#27AE60" :stroke-width="18" :percentage="summary && summary.approved ? parseFloat(formatNumber(percentage(getApproved))) : 0" /> -->
-      </div>
-    </el-col>
-    <el-col :xs="24" :sm="8" :md="6" :lg="5" :xl="5">
-      <div class="grid-content">
-        <div
-          class="stat-title shadow"
-        >{{ $t('label.beneficiaries-dashboard-not-verified').toUpperCase() }}</div>
-        <!-- show loading -->
-        <div v-loading="isLoading" class="icon-loading" element-loading-spinner="el-icon-loading" />
-        <!-- show data -->
-        <div class="show-explanation color-sw-blue">Lihat Penjelasan</div>
-        <span
-          v-if="!isLoading"
-          class="stat-count color-sw-orange"
-        >{{ getPending ? formatNumber(getPending) : '-' }}</span>
+        </div>
+      </el-col>
+      <el-col :xs="24" :sm="8" :md="6" :lg="5" :xl="5">
+        <div class="grid-content">
+          <div
+            class="stat-title shadow"
+          >{{ $t('label.beneficiaries-dashboard-not-verified').toUpperCase() }}</div>
+          <!-- show loading -->
+          <div v-loading="isLoading" class="icon-loading" element-loading-spinner="el-icon-loading" />
+          <!-- show data -->
+          <div class="show-explanation color-sw-blue">
+            <el-button type="text" class="no-padding underline" @click="openDialog(3)">Lihat Penjelasan</el-button>
+          </div>
+          <span
+            v-if="!isLoading"
+            class="stat-count color-sw-orange"
+          >{{ getPending ? formatNumber(getPending) : '-' }}</span>
         <!-- untuk sementara di hide -->
         <!-- <span
           v-if="!isLoading"
@@ -116,19 +123,21 @@
           :stroke-width="18"
           :percentage="summary && summary.pending ? parseFloat(formatNumber(percentage(getPending))) : 0"
         />-->
-      </div>
-    </el-col>
-    <el-col :xs="24" :sm="8" :md="6" :lg="5" :xl="5">
-      <div class="grid-content">
-        <div class="stat-title">{{ $t('label.beneficiaries-dashboard-rejected').toUpperCase() }}</div>
-        <!-- show loading -->
-        <div v-loading="isLoading" class="icon-loading" element-loading-spinner="el-icon-loading" />
-        <!-- show data -->
-        <div class="show-explanation color-sw-blue">Lihat Penjelasan</div>
-        <span
-          v-if="!isLoading"
-          class="stat-count color-sw-red"
-        >{{ getReject ? formatNumber(getReject) : '-' }}</span>
+        </div>
+      </el-col>
+      <el-col :xs="24" :sm="8" :md="6" :lg="5" :xl="5">
+        <div class="grid-content">
+          <div class="stat-title">{{ $t('label.beneficiaries-dashboard-rejected').toUpperCase() }}</div>
+          <!-- show loading -->
+          <div v-loading="isLoading" class="icon-loading" element-loading-spinner="el-icon-loading" />
+          <!-- show data -->
+          <div class="show-explanation color-sw-blue">
+            <el-button type="text" class="no-padding underline" @click="openDialog(4)">Lihat Penjelasan</el-button>
+          </div>
+          <span
+            v-if="!isLoading"
+            class="stat-count color-sw-red"
+          >{{ getReject ? formatNumber(getReject) : '-' }}</span>
         <!-- untuk sementara di hide -->
         <!-- <span
           v-if="!isLoading"
@@ -142,19 +151,21 @@
           :stroke-width="18"
           :percentage="summary && summary.rejected ? parseFloat(formatNumber(percentage(getReject))) : 0"
         />-->
-      </div>
-    </el-col>
-    <el-col :xs="24" :sm="8" :md="6" :lg="5" :xl="5">
-      <div class="grid-content">
-        <div class="stat-title">{{ $t('label.beneficiaries-dashboard-new-proposal').toUpperCase() }}</div>
-        <!-- show loading -->
-        <div v-loading="isLoading" class="icon-loading" element-loading-spinner="el-icon-loading" />
-        <!-- show data -->
-        <div class="show-explanation color-sw-blue">Lihat Penjelasan</div>
-        <span
-          v-if="!isLoading"
-          class="stat-count color-sw-blue"
-        >{{ summary.baru && summary.baru.total ? formatNumber(summary.baru.total) : '-' }}</span>
+        </div>
+      </el-col>
+      <el-col :xs="24" :sm="8" :md="6" :lg="5" :xl="5">
+        <div class="grid-content">
+          <div class="stat-title">{{ $t('label.beneficiaries-dashboard-new-proposal').toUpperCase() }}</div>
+          <!-- show loading -->
+          <div v-loading="isLoading" class="icon-loading" element-loading-spinner="el-icon-loading" />
+          <!-- show data -->
+          <div class="show-explanation color-sw-blue">
+            <el-button type="text" class="no-padding underline" @click="openDialog(5)">Lihat Penjelasan</el-button>
+          </div>
+          <span
+            v-if="!isLoading"
+            class="stat-count color-sw-blue"
+          >{{ summary.baru && summary.baru.total ? formatNumber(summary.baru.total) : '-' }}</span>
         <!-- untuk sementara di hide -->
         <!-- <span
           v-if="!isLoading"
@@ -167,14 +178,21 @@
           :stroke-width="18"
           :percentage="summary && summary.baru ? parseFloat(formatNumber(percentage(summary.baru.total))) : 0"
         />-->
-      </div>
-    </el-col>
-  </el-row>
+        </div>
+      </el-col>
+    </el-row>
+    <el-dialog width="40%" custom-class="dialog-explanation" :show-close="false" :visible.sync="dialogTableVisible">
+      <span slot="title" class="dialog-title-explanation">Keterangan Usulan</span>
+      <DialogExplanation :id="idexplanationSelected" @close="dialogTableVisible = false" />
+    </el-dialog>
+  </div>
 </template>
 
 <script>
 import { formatNumber } from '@/utils/formatNumber'
+import DialogExplanation from './DialogExplanation'
 export default {
+  components: { DialogExplanation },
   props: {
     summary: {
       type: Object,
@@ -191,6 +209,12 @@ export default {
     isLoading: {
       type: Boolean,
       default: false
+    }
+  },
+  data() {
+    return {
+      dialogTableVisible: false,
+      idexplanationSelected: null
     }
   },
   computed: {
@@ -221,6 +245,10 @@ export default {
         return (val / this.getTotalBenefeciaries) * 100
       }
       return 0
+    },
+    openDialog(value) {
+      this.dialogTableVisible = true
+      this.idexplanationSelected = value
     },
     formatNumber
   }
@@ -277,6 +305,14 @@ export default {
 .show-explanation {
   margin-bottom: 18px;
   font-size: 14px;
+}
+.underline {
   text-decoration: underline;
+}
+.no-padding {
+  padding: 0px;
+}
+.dialog-title-explanation {
+  font-weight: bold;
 }
 </style>
