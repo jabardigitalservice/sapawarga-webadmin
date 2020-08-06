@@ -196,6 +196,7 @@ export default {
     },
     clearedCity() {
       this.listQuery.kabkota_name = null
+      this.getList()
     }
   }
 }
