@@ -1,9 +1,14 @@
 <template>
   <div>
-    <el-row v-if="user.roles_active.id === 'staffKabkota'">
-      <a :href="link" target="_blank">
+    <el-row>
+      <el-carousel indicator-position="outside" :autoplay="true" trigger="click">
+        <el-carousel-item v-for="(item, index) in bannerData" :key="index">
+          <img :src="item" class="multiple-images">
+        </el-carousel-item>
+      </el-carousel>
+      <!-- <a :href="link" target="_blank">
         <img src="https://firebasestorage.googleapis.com/v0/b/sapawarga-app.appspot.com/o/admin-banner-01.png?alt=media&token=2c606be5-7378-40ca-b147-f19b8b8539ea" width="100%">
-      </a>
+      </a> -->
     </el-row>
   </div>
 </template>
@@ -11,11 +16,16 @@
 <script>
 import { mapGetters } from 'vuex'
 import { getLink } from '@/api/temporary'
+import { PREFIX_FIREBASE_STORAGE } from '@/utils/constantVariable'
 
 export default {
   data() {
     return {
-      link: null
+      link: null,
+      bannerData: [
+        `${PREFIX_FIREBASE_STORAGE}banners%2Fbanner-1.png?alt=media`,
+        `${PREFIX_FIREBASE_STORAGE}banners%2Fbanner-2.png?alt=media`
+      ]
     }
   },
 
@@ -31,7 +41,7 @@ export default {
 
   methods: {
     async getUrlDownload() {
-      const code = this.user.kabkota.code_bps
+      const code = this.user.kabkota ? this.user.kabkota.code_bps : ''
 
       this.link = await getLink(code)
     }
@@ -47,5 +57,12 @@ export default {
 }
 #headline-news .el-card__body {
   background-color: #FDF6EC;
+}
+.multiple-images {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border-radius: 7px;
+  margin: auto;
 }
 </style>

@@ -18,10 +18,7 @@
         />
 
         <!-- upload data manual -->
-        <!-- check if user.kabkota.code_bps is not equal CODE_BPS_SUMEDANG OR if role STAFFKABKOTA AND user kabkota equal CODE_BPS_SUMEDANG -->
-        <!-- <template v-if="user.kabkota.code_bps !== CODE_BPS_SUMEDANG || (checkPermission([RolesUser.STAFFKABKOTA]) && user.kabkota.code_bps === CODE_BPS_SUMEDANG)">
-          <UploadDataManual v-if="checkPermission([RolesUser.STAFFKABKOTA, RolesUser.STAFFKEC])" />
-        </template> -->
+        <!-- <UploadDataManual v-if="checkPermission([RolesUser.STAFFKABKOTA, RolesUser.STAFFKEC])" /> -->
 
         <template v-if="!isLoadListUser">
           <el-card class="box-card" style="margin-bottom: 10px">

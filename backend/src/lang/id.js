@@ -139,6 +139,7 @@ export default {
     'benebeneficiaries-complaint': 'Aduan',
     'benebeneficiaries-complaint-detail': 'Detail Aduan',
     'beneficiaries-monitoring-upload': 'Unduh Alokasi',
+    'beneficiaries-monitoring-bnba': 'Monitoring BanProv',
 
     'bansos-download': 'Unduh Dokumen',
     'bansos-upload': 'Unggah Dokumen',
@@ -153,7 +154,8 @@ export default {
 
     'allocation-menu': 'Alokasi',
     'list-allocation-menu': 'Daftar Alokasi',
-    'list-bnba-menu': 'Daftar BNBA'
+    'list-bnba-menu': 'Daftar BNBA',
+    'download-upload-menu': 'Unduh & Unggah BNBA'
   },
   crud: {
     'list-empty': 'Belum ada data.',
@@ -1039,11 +1041,11 @@ export default {
     'beneficiaries-job-status': 'Status Kedudukan dalam Pekerjaan',
     'beneficiaries-info-domicile': 'Domisili Saat Ini',
 
-    'beneficiaries-dashboard-verified': 'Terverifikasi',
-    'beneficiaries-dashboard-not-verified': 'Belum Terverifikasi',
-    'beneficiaries-dashboard-rejected': 'Ditolak',
-    'beneficiaries-dashboard-new-proposal': 'Data Usulan Baru',
-    'beneficiaries-dashboard-total-recipient': 'Total Penerima',
+    'beneficiaries-dashboard-verified': 'Usulan Terverifikasi',
+    'beneficiaries-dashboard-not-verified': 'Usulan Belum Terverifikasi',
+    'beneficiaries-dashboard-rejected': 'Usulan Ditolak',
+    'beneficiaries-dashboard-new-proposal': 'Usulan Baru',
+    'beneficiaries-dashboard-total-regulations': 'Total Usulan Terdaftar',
 
     'beneficiaries-monitoring-table-title': 'Daftar Data BNBA',
     'beneficiaries-monitoring-city': 'Kabupaten/Kota',
@@ -1052,12 +1054,23 @@ export default {
     'beneficiaries-monitoring-action': 'Aksi',
     'beneficiaries-monitoring-download': 'Unduh',
     'beneficiaries-monitoring-main-title': 'Monitoring Upload Data BNBA Kabupaten/Kota',
+    'beneficiaries-monitoring-bnba-title': 'Monitoring BNBA Banprov Kabupaten/Kota',
     'beneficiaries-monitoring-info': 'Jika anda menginginkan data BNBA keseluruhan Provinsi Jawa Barat, atau untuk mendapatkan data BNBA lebih dari satu Kapubaten/Kota, Anda dapat menghubungi admin Sapawarga.',
     'beneficiaries-monitoring-choose': 'Pilih',
     'beneficiaries-show-stage': 'Tampilkan Tahap:',
     'beneficiaries-first-stage': 'Tahap 1',
     'beneficiaries-second-stage': 'Tahap 2',
-    'beneficiaries-download-verval': 'Unduh Verval'
+    'beneficiaries-download-verval': 'Unduh Verval',
+    'beneficiaries-bnba-upload': 'Proses unggah berhasil',
+    'beneficiaries-history-upload': 'Riwayat Unggah BNBA',
+    'beneficiaries-history-download-bnba': 'Riwayat Unduh BNBA',
+    'beneficiaries-history-download': 'Riwayat Unduh',
+    'beneficiaries-history-download-verval': 'Riwayat Unduh Verval',
+    'beneficiaries-download-bnba': 'Unduh Data BNBA Usulan',
+    'beneficiaries-upload-bnba': 'Unggah Data BNBA',
+    'beneficiaries-upload-failure-template': 'gagal (template tidak sesuai)',
+    'beneficiaries-explanation': 'Lihat Penjelasan',
+    'beneficiaries-description-proposal': 'Keterangan Usulan'
   },
   news: {
     'news-url': 'URL Berita',

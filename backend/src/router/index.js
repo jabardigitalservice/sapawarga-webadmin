@@ -21,6 +21,7 @@ import bansosMenuRouter from './modules/bansos-menu'
 // import allocationMenuRouter from './modules/allocation-menu'
 import listAllocationMenuRouter from './modules/listAllocation-menu'
 import downloadAllocationMenuRouter from './modules/download-allocation-menu'
+import monitoringBnbaMenuRouter from './modules/monitoringBnba'
 
 /* Router Modules for Leader */
 import aspirationLeaderMenuRouter from './modules/LeaderMenu/aspiration-leader-menu'
@@ -198,8 +199,33 @@ export const asyncRoutes = [
       }
     ]
   },
+  // {
+  //   name: 'download-upload-menu',
+  //   path: 'download-upload-menu',
+  //   component: Layout,
+  //   redirect: 'noredirect',
+  //   meta: {
+  //     title: 'download-upload-menu',
+  //     roles: ['admin', 'staffKabkota'],
+  //     icon: 'example'
+  //   },
+  //   active: false,
+  //   children: [
+  //     {
+  //       name: 'download-upload-menu',
+  //       path: '/beneficiaries/download-upload',
+  //       component: () => import('@/views/bansos/downloadUpload'),
+  //       hidden: false,
+  //       meta: {
+  //         title: 'download-upload-menu',
+  //         roles: ['staffKabkota']
+  //       }
+  //     }
+  //   ]
+  // },
   listAllocationMenuRouter,
   downloadAllocationMenuRouter,
+  monitoringBnbaMenuRouter,
   // title
   {
     name: 'KELOLA SAPAWARGA',
