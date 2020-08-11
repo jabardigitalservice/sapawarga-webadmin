@@ -30,6 +30,7 @@ import surveyLeaderMenuRouter from './modules/LeaderMenu/survey-leader-menu'
 import newsLeaderMenuRouter from './modules/LeaderMenu/news-leader-menu'
 import newsHoaxLeaderMenuRouter from './modules/LeaderMenu/newsHoax-leader-menu'
 import qnaLeaderMenuRouter from './modules/LeaderMenu/qna-leader-menu'
+import { KAB_KOTA_ACCESS_BNBA } from '@/utils/constantVariable'
 
 /** note: sub-menu only appear when children.length>=1
  *  detail see  https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -206,7 +207,7 @@ export const asyncRoutes = [
     redirect: 'noredirect',
     meta: {
       title: 'download-upload-menu',
-      roles: ['admin', 'staffKabkota'],
+      roles: KAB_KOTA_ACCESS_BNBA,
       icon: 'example'
     },
     active: false,
@@ -218,7 +219,7 @@ export const asyncRoutes = [
         hidden: false,
         meta: {
           title: 'download-upload-menu',
-          roles: ['staffKabkota']
+          roles: KAB_KOTA_ACCESS_BNBA
         }
       }
     ]
