@@ -74,6 +74,7 @@ export const CODE_BPS_SUMEDANG = '3211'
 
 export const PREFIX_FIREBASE_STORAGE = 'https://firebasestorage.googleapis.com/v0/b/sapawarga-app.appspot.com/o/'
 
+// add kabkota code_bps
 export const KAB_KOTA_ACCESS_BNBA = [
   'admin',
   '3279', // kota banjar
