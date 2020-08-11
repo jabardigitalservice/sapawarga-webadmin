@@ -25,27 +25,27 @@ export default {
         {
           id: 1,
           title: 'Total Usulan Terdaftar:',
-          description: 'Total Usulan Terdaftar: Total data calon penerima bansos yang terdaftar untuk melalui proses verifikasi, validasi dan pemadanan lanjutan. Terdiri dari data usulan terverifikasi, disetujui oleh, dan usulan baru.'
+          description: 'Data usulan yang siap didaftarkan sebagai calon penerima bansos. Data ini tidak sama dengan data penerima bansos, karena masih harus melewati penyaringan administrasi.'
         },
         {
           id: 2,
           title: 'Usulan Terverifikasi:',
-          description: 'Data yang telah memenuhi syarat administrasi sehingga dapat diproses sebagai calon penerima bansos provinsi (Usulan Terdaftar)'
+          description: 'Data yang telah memenuhi syarat dan ketentuan sehingga dapat masuk dalam dalam Usulan Terdaftar untuk diajukan sebagai calon penerima bansos.'
         },
         {
           id: 3,
           title: 'Usulan Belum Terverifikasi:',
-          description: 'Data usulan manual pada yang belum sesuai dengan syarat administrasi sehingga perlu diverifikasi'
+          description: 'Data usulan manual pada awal tahap sebelumnya yang dianggap belum sesuai dengan syarat dan ketentuan standar data, sehingga perlu melalui proses verifikasi.'
         },
         {
           id: 4,
           title: 'Usulan Ditolak:',
-          description: 'Data yang dianggap tidak layak untuk didaftarkan sebagai calon penerima bansos provinsi (Usulan Terdaftar)'
+          description: 'Data yang dianggap tidak memenuhi syarat dan ketentuan.'
         },
         {
           id: 5,
           title: 'Usulan Baru:',
-          description: 'Data usulan tambahan yang diinput oleh RW dan Pemerintah Desa via Sapawarga yang memenuhi syarat administrasi sehingga dapat didaftarkan sebagai calon penerima bansos provinsi (Usulan Terdaftar)'
+          description: 'Data usulan baru via Sapawarga yang telah memenuhi syarat dan ketentuan sehingga dapat masuk dalam Usulan Terdaftar untuk diajukan sebagai calon penerima bansos.'
         },
         {
           id: 6,
