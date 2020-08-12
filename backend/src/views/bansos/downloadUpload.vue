@@ -3,21 +3,37 @@
     <div>
       <h2 class="dashboard-title">Unduh dan Unggah BNBA</h2>
       <div class="warn-content-warning">
-        <p class="title">
-          <span>
-            <i class="el-icon-warning" style="color: rgba(226, 194, 124, 0.938)" />
-          </span>
-          <span>Panduan Penggunaan:</span>
-        </p>
-        <p class="content">
-          <ol>
-            <li>Unduh dan Unggah BNBA usulan</li>
-            <li>Cek email 1x24 jam apabila tidak terkirim hubungi WA: +62 812-2008-2668</li>
-            <li>Buka file excel dan silahkan isi verval di kolom Berikan Bantuan, apabila tidak layak mendapat bantuan, isi dikolom tersebut dengan isi: "tidak"</li>
-            <li>Save dengan format, nama kab/kota dan tanggal, misal: Kab bandung 170720</li>
-            <li>Unggah data hasil verifikasi</li>
-          </ol>
-        </p>
+        <div>
+          <p class="title">
+            <span>
+              <i class="el-icon-warning" style="color: rgba(226, 194, 124, 0.938)" />
+            </span>
+            <span>Panduan Penggunaan:</span>
+          </p>
+          <p class="content">
+            <ol>
+              <li>Unduh dan Unggah BNBA usulan</li>
+              <li>Cek email 1x24 jam apabila tidak terkirim hubungi WA: +62 812-2008-2668</li>
+              <li>Buka file excel dan silahkan isi verval di kolom Berikan Bantuan, apabila tidak layak mendapat bantuan, isi dikolom tersebut dengan isi: "tidak"</li>
+              <li>Save dengan format, nama kab/kota dan tanggal, misal: Kab bandung 170720</li>
+              <li>Unggah data hasil verifikasi</li>
+            </ol>
+          </p>
+        </div>
+        <div>
+          <p class="title">
+            <span>
+              <i class="el-icon-warning" style="color: rgba(226, 194, 124, 0.938)" />
+            </span>
+            <span>Informasi Penting</span>
+          </p>
+          <p class="content">
+            <ul>
+              <li>{{ $t('label.beneficiaries-download-anomaly') + getCurrentStep }}</li>
+              <el-button name="button-download" class="mt-10" type="primary" @click="downloadCleansing"> {{ $t('label.beneficiaries-btn-anomaly') + getCurrentStep }}</el-button>
+            </ul>
+          </p>
+        </div>
       </div>
     </div>
     <el-row :gutter="24">
@@ -54,8 +70,8 @@
 <script>
 import Swal from 'sweetalert2'
 import { Loading } from 'element-ui'
-import { uploadBnba } from '@/api/beneficiaries'
-import { downloadBeneficiariesBnba } from '@/api/beneficiaries'
+import { uploadBnba, fetchCurrentTahap } from '@/api/beneficiaries'
+import { downloadBeneficiariesBnba, downloadBeneficiariesBnbaAnomaly } from '@/api/beneficiaries'
 import UploadTable from './components/UploadTable'
 import DialogDownloadHistory from '../beneficiaries/components/DialogDownloadHistory'
 export default {
@@ -66,10 +82,24 @@ export default {
   data() {
     return {
       dialogTableVisible: false,
-      file: null
+      file: null,
+      current_step: null
     }
   },
+  computed: {
+    getCurrentStep() {
+      return this.current_step ? this.current_step : '-'
+    }
+  },
+  created() {
+    this.getStep()
+  },
   methods: {
+    async getStep() {
+      await fetchCurrentTahap().then(response => {
+        this.current_step = response.data.current_tahap_bnba
+      })
+    },
     handleChangeFile(file) {
       const fileExtension = file.name.replace(/^.*\./, '')
       if (fileExtension === 'xlsx') {
@@ -151,6 +181,23 @@ export default {
       if (this.$refs.dialogDownloadHistory) {
         this.$refs.dialogDownloadHistory.getDataStatus()
       }
+    },
+    async downloadCleansing() {
+      try {
+        Loading.service({ fullScreen: true })
+        const response = await downloadBeneficiariesBnbaAnomaly()
+        if (response.status === 200) {
+          Swal.fire({
+            title: this.$t('label.beneficiaries-download-start-title-alert'),
+            icon: 'success',
+            button: 'OK'
+          })
+          window.open(response.data.url)
+        }
+        Loading.service({ fullScreen: true }).close()
+      } catch (error) {
+        Loading.service({ fullScreen: true }).close()
+      }
     }
   }
 }
@@ -187,6 +234,10 @@ export default {
 
   .btn-download-upload {
     font-weight: bold;
+  }
+
+  .mt-10 {
+    margin-top: 10px;
   }
 }
 </style>
