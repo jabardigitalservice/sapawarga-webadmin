@@ -29,8 +29,8 @@
           </p>
           <p class="content">
             <ul>
-              <li>{{ $t('label.beneficiaries-download-anomaly') + getCurrentStep }}</li>
-              <el-button name="button-download" class="mt-10" type="primary" @click="downloadCleansing"> {{ $t('label.beneficiaries-btn-anomaly') + getCurrentStep }}</el-button>
+              <li>{{ `${ $t('label.beneficiaries-download-anomaly') } ${getCurrentStep}` }}</li>
+              <el-button name="button-download" class="mt-10" type="primary" @click="downloadCleansing"> {{ `${ $t('label.beneficiaries-btn-anomaly') } ${ getCurrentStep }` }}</el-button>
             </ul>
           </p>
         </div>
