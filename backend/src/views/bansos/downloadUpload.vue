@@ -20,7 +20,7 @@
             </ol>
           </p>
         </div>
-        <div>
+        <!-- <div>
           <p class="title">
             <span>
               <i class="el-icon-warning" style="color: rgba(226, 194, 124, 0.938)" />
@@ -33,7 +33,7 @@
               <el-button name="button-download" class="mt-10" type="primary" @click="downloadCleansing"> {{ `${ $t('label.beneficiaries-btn-anomaly') } ${ getCurrentStep }` }}</el-button>
             </ul>
           </p>
-        </div>
+        </div> -->
       </div>
     </div>
     <el-row :gutter="24">
