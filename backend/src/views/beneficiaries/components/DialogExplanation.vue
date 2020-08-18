@@ -24,28 +24,28 @@ export default {
       items: [
         {
           id: 1,
-          title: 'Total Usulan Terdaftar:',
-          description: 'Total Usulan Terdaftar: Total data calon penerima bansos yang terdaftar untuk melalui proses verifikasi, validasi dan pemadanan lanjutan. Terdiri dari data usulan terverifikasi, disetujui oleh, dan usulan baru.'
+          title: 'Total Usulan:',
+          description: 'Seluruh data yang ada di dalam aplikasi Sapawarga diantaranya data Usulan Terverifikasi, Belum Terverifikasi, dan Ditolak.'
         },
         {
           id: 2,
           title: 'Usulan Terverifikasi:',
-          description: 'Data yang telah memenuhi syarat administrasi sehingga dapat diproses sebagai calon penerima bansos provinsi (Usulan Terdaftar)'
+          description: 'Data yang telah memenuhi syarat dan ketentuan sehingga dapat diajukan sebagai calon penerima bansos, Usulan Baru termasuk di dalam data ini. Data ini tidak sama dengan data BNBA penerima bansos, karena masih harus melewati pemadanan dan penyaringan administrasi.'
         },
         {
           id: 3,
           title: 'Usulan Belum Terverifikasi:',
-          description: 'Data usulan manual pada yang belum sesuai dengan syarat administrasi sehingga perlu diverifikasi'
+          description: 'Data usulan manual pada tahap sebelumnya yang dianggap belum sesuai dengan syarat dan ketentuan standar data, sehingga perlu melalui proses verifikasi.'
         },
         {
           id: 4,
           title: 'Usulan Ditolak:',
-          description: 'Data yang dianggap tidak layak untuk didaftarkan sebagai calon penerima bansos provinsi (Usulan Terdaftar)'
+          description: 'Data yang dianggap tidak memenuhi syarat dan ketentuan berdasarkan keterangan RW atau Pemerintah Desa.'
         },
         {
           id: 5,
           title: 'Usulan Baru:',
-          description: 'Data usulan tambahan yang diinput oleh RW dan Pemerintah Desa via Sapawarga yang memenuhi syarat administrasi sehingga dapat didaftarkan sebagai calon penerima bansos provinsi (Usulan Terdaftar)'
+          description: 'Data Usulan Baru via Sapawarga yang telah memenuhi syarat dan ketentuan sehingga dapat diajukan sebagai calon penerima bansos, data ini merupakan bagian dari Usulan Terverifikasi. Data ini tidak sama dengan data BNBA penerima bansos, karena masih harus melewati pemadanan dan penyaringan administrasi.'
         },
         {
           id: 6,

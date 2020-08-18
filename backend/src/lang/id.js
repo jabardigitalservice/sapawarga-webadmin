@@ -1070,7 +1070,9 @@ export default {
     'beneficiaries-upload-bnba': 'Unggah Data BNBA',
     'beneficiaries-upload-failure-template': 'gagal (template tidak sesuai)',
     'beneficiaries-explanation': 'Lihat Penjelasan',
-    'beneficiaries-description-proposal': 'Keterangan Usulan'
+    'beneficiaries-description-proposal': 'Keterangan Usulan',
+    'beneficiaries-download-anomaly': 'Unduh file dibawah untuk mengetahui proses cleansing dan analisis data anomali tahap',
+    'beneficiaries-btn-anomaly': 'Analisis Cleansing Data Tahap'
   },
   news: {
     'news-url': 'URL Berita',

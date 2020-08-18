@@ -240,3 +240,11 @@ export function fetchUploadBnbaList(query) {
     params: query
   })
 }
+
+export function downloadBeneficiariesBnbaAnomaly(query) {
+  return request({
+    url: '/beneficiaries-bnba/anomaly-download',
+    method: 'get',
+    params: query
+  })
+}

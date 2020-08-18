@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row>
-      <el-carousel indicator-position="outside" :autoplay="true" trigger="click">
+      <el-carousel height="430px" indicator-position="outside" :autoplay="true" trigger="click">
         <el-carousel-item v-for="(item, index) in bannerData" :key="index">
           <img :src="item" class="multiple-images">
         </el-carousel-item>
