@@ -13,7 +13,8 @@
           <p class="content">
             <ol>
               <li>Unduh dan Unggah BNBA usulan</li>
-              <li>Cek email 1x24 jam apabila tidak terkirim hubungi WA: +62 812-2008-2668</li>
+              <li>Cek email 1x24 jam apabila tidak terkirim.
+                <a :href="HOTLINE_SW" target="_blank" rel="noopener noreferrer" class="hotline-link">Klik disini</a> untuk menghubungi admin</li>
               <li>Buka file excel dan silahkan isi verval di kolom Berikan Bantuan, apabila tidak layak mendapat bantuan, isi dikolom tersebut dengan isi: "tidak"</li>
               <li>Save dengan format, nama kab/kota dan tanggal, misal: Kab bandung 170720</li>
               <li>Unggah data hasil verifikasi</li>
@@ -70,6 +71,7 @@
 <script>
 import Swal from 'sweetalert2'
 import { Loading } from 'element-ui'
+import { HOTLINE_SW } from '@/utils/constantVariable'
 import { uploadBnba, fetchCurrentTahap } from '@/api/beneficiaries'
 import { downloadBeneficiariesBnba, downloadBeneficiariesBnbaAnomaly } from '@/api/beneficiaries'
 import UploadTable from './components/UploadTable'
@@ -81,6 +83,7 @@ export default {
   },
   data() {
     return {
+      HOTLINE_SW,
       dialogTableVisible: false,
       file: null,
       current_step: null
@@ -238,6 +241,10 @@ export default {
 
   .mt-10 {
     margin-top: 10px;
+  }
+
+  .hotline-link {
+    color: #1890ff;
   }
 }
 </style>
