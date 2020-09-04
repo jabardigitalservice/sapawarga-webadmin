@@ -187,7 +187,7 @@ export function fetchDetailComplaint(id) {
 
 export function fetchBeneficiariesBnbaList(query) {
   return request({
-    url: '/beneficiaries-bnba/monitoring',
+    url: '/beneficiaries-bnba-monitoring-uploads',
     method: 'get',
     params: query
   })
