@@ -66,7 +66,7 @@
                 <span>{{ cityName }}</span>
               </el-col>
               <el-col :span="12">
-                <el-button style="float: right;" type="success" plain @click="dialogTableVisible = true">{{ $t('beneficiaries.download-history') }}</el-button>
+                <el-button style="float: right;" type="success" plain @click="dialogTableVisible = true">'{{ $t('beneficiaries.download-history') }}'</el-button>
               </el-col>
             </el-row>
           </div>
@@ -88,25 +88,25 @@
                 :index="getTableRowNumbering"
               />
               <el-table-column
-                prop="name"
+                prop="kabkota_name"
                 sortable="custom"
                 :label="$t('label.beneficiaries-monitoring-city').toUpperCase()"
               />
               <el-table-column
-                prop="type"
+                prop="is_dtks"
                 sortable="custom"
                 :label="$t('label.beneficiaries-monitoring-bansos-type').toUpperCase()"
               >
-                <template slot-scope="{row}">{{ row.type.toUpperCase() }}</template>
+                <template slot-scope="{row}">{{ row.is_dtks === 1 ? 'DTKS' : 'NON DTKS' }}</template>
               </el-table-column>
               <el-table-column
-                prop="last_update"
+                prop="last_updated"
                 sortable="custom"
                 :label="$t('label.beneficiaries-monitoring-last-update').toUpperCase()"
               >
                 <template
                   slot-scope="{row}"
-                >{{ Number(row.last_update) | moment('D MMMM YYYY H:mm') }}</template>
+                >{{ row.last_updated ? parsingDatetime(Number(row.last_updated)) : '-' }}</template>
               </el-table-column>
               <el-table-column
                 align="center"
@@ -146,6 +146,7 @@
 
 <script>
 import { getKabkotaList } from '@/api/areas'
+import { parsingDatetime } from '@/utils/datetimeToString'
 import {
   fetchBeneficiariesBnbaList,
   downloadBeneficiariesBnba
@@ -175,15 +176,15 @@ export default {
       listQuery: {
         page: 1,
         limit: 10,
-        kode_kab: null,
-        bansos_type: null,
+        code_bps: null,
+        is_dtks: null,
         tahap_bantuan: null
       },
       sort_prop: 'data.approved',
       sort_order: 'descending',
       beneficiariesTypeList: [
-        { value: 'dtks', label: 'DTKS' },
-        { value: 'non-dtks', label: 'NON DTKS' }
+        { value: 1, label: 'DTKS' },
+        { value: 0, label: 'NON DTKS' }
       ],
       cityName: null
     }
@@ -248,22 +249,23 @@ export default {
     handleFilter() {
       if (this.citySelected) {
         this.cityName = this.citySelected.label
-        this.listQuery.kode_kab = this.citySelected.value
+        console.log(this.citySelected)
+        this.listQuery.code_bps = this.citySelected.value
       }
-      this.listQuery.bansos_type = this.bansosTypeSelected
+      this.listQuery.is_dtks = this.bansosTypeSelected
       this.getList()
     },
     clearedBansosType() {
-      this.listQuery.bansos_type = null
+      this.listQuery.is_dtks = null
     },
     clearedCity() {
-      this.listQuery.kode_kab = null
+      this.listQuery.code_bps = null
     },
     async handleDownload(data) {
       try {
         const params = {
-          kode_kab: data.code_bps,
-          bansos_type: data.type,
+          code_bps: data.code_bps,
+          is_dtks: data.is_dtks,
           tahap_bantuan: this.listQuery.tahap
         }
         this.loading = true
@@ -282,7 +284,8 @@ export default {
       } catch (error) {
         this.loading = false
       }
-    }
+    },
+    parsingDatetime
   }
 }
 </script>
