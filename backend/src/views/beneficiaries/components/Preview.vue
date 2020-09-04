@@ -24,15 +24,15 @@
         </div>
         <div class="preview-content">
           <p>{{ $t('label.beneficiaries-domicile-kabkota') }}</p>
-          <p class="content">{{ beneficiaries.kabkota ? beneficiaries.kabkota.name : '-' }}</p>
+          <p class="content">{{ beneficiaries.domicile_kabkota_name || '-' }}</p>
         </div>
         <div class="preview-content">
           <p>{{ $t('label.beneficiaries-domicile-kecamatan') }}</p>
-          <p class="content">{{ beneficiaries.kecamatan ? beneficiaries.kecamatan.name : '-' }}</p>
+          <p class="content">{{ beneficiaries.domicile_kec_name || '-' }}</p>
         </div>
         <div class="preview-content">
           <p>{{ $t('label.beneficiaries-domicile-kelurahan') }}</p>
-          <p class="content">{{ beneficiaries.kelurahan ? beneficiaries.kelurahan.name : '-' }}</p>
+          <p class="content">{{ beneficiaries.domicile_kel_name || '-' }}</p>
         </div>
         <div class="preview-content">
           <p>{{ $t('label.beneficiaries-rw') }}</p>
@@ -70,15 +70,15 @@
         <p class="preview-title">{{ $t('label.beneficiaries-info-domicile') }}</p>
         <div class="preview-content">
           <p>{{ $t('label.beneficiaries-domicile-kabkota') }}</p>
-          <p class="content">{{ beneficiaries.domicile_kabkota_name ? beneficiaries.domicile_kabkota_name.name : '-' }}</p>
+          <p class="content">{{ beneficiaries.domicile_kabkota_name || '-' }}</p>
         </div>
         <div class="preview-content">
           <p>{{ $t('label.beneficiaries-domicile-kecamatan') }}</p>
-          <p class="content">{{ beneficiaries.domicile_kec_name ? beneficiaries.domicile_kec_name.name : '-' }}</p>
+          <p class="content">{{ beneficiaries.domicile_kec_name || '-' }}</p>
         </div>
         <div class="preview-content">
           <p>{{ $t('label.beneficiaries-domicile-kelurahan') }}</p>
-          <p class="content">{{ beneficiaries.domicile_kel_name ? beneficiaries.domicile_kel_name.name : '-' }}</p>
+          <p class="content">{{ beneficiaries.domicile_kel_name || '-' }}</p>
         </div>
         <div class="preview-content">
           <p>{{ $t('label.beneficiaries-rw') }}</p>
