@@ -249,7 +249,6 @@ export default {
     handleFilter() {
       if (this.citySelected) {
         this.cityName = this.citySelected.label
-        console.log(this.citySelected)
         this.listQuery.code_bps = this.citySelected.value
       }
       this.listQuery.is_dtks = this.bansosTypeSelected
