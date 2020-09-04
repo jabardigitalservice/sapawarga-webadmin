@@ -263,8 +263,8 @@ export default {
     async handleDownload(data) {
       try {
         const params = {
-          code_bps: data.code_bps,
-          is_dtks: data.is_dtks,
+          kode_kab: data.code_bps,
+          bansos_type: data.is_dtks === 1 ? 'dtks' : 'non-dtks',
           tahap_bantuan: this.listQuery.tahap
         }
         this.loading = true
