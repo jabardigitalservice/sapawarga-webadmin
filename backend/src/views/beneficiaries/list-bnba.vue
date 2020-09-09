@@ -2,9 +2,16 @@
   <div class="app-container">
     <el-row>
       <el-col :lg="24">
+        <el-dropdown size="large" trigger="click" placement="bottom-end" split-button type="primary" class="dropdown" @command="handleCommand">
+          {{ $t('beneficiaries.show-stage') }} <b>{{ tahapDisplay }}</b>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item v-for="item in listTahap" :key="item.value" :command="{label: item.label, value: item.value}">{{ item.label }}</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+
         <DashboardTitle :is-bnba="true" />
         <!-- show statistics -->
-        <StatisticsBnba :is-loading="isLoadingSummary" :summery="dataSummary" />
+        <StatisticsBnba :is-loading="isLoadingSummary" :summary="dataSummary" />
 
         <ListFilterBnba :list-query.sync="listQuery" @display-search="displayFilter" @submit-search="getList" @reset-search="resetFilter" />
         <p v-if="display">DATA BERDASARKAN FILTER <span v-if="listQuery.nik">NIK <b>{{ listQuery.nik }}</b>,</span> <span v-if="listQuery.nama_krt">NAMA <b>{{ listQuery.nama_krt }}</b>,</span> <span v-if="listQuery.id_tipe_bansos">PINTU BANTUAN <b>{{ listQuery.name_tipe_bansos }}</b></span></p>
@@ -21,7 +28,7 @@
           <el-table-column prop="nik" sortable="custom" :label="$t('label.beneficiaries-nik')" min-width="175px">
             <template slot-scope="{row}">
               {{ row.nik }}
-              <div v-if="row.is_nik_valid === 0" slot="reference" class="name-wrapper">
+              <div v-if="row.nik === null || row.nik === '' || row.nik && row.nik.length !== 16" slot="reference" class="name-wrapper">
                 <el-tag size="medium" type="danger">Format NIK tidak sesuai</el-tag>
               </div>
             </template>
@@ -51,7 +58,7 @@
             </template>
           </el-table-column>
 
-          <el-table-column prop="id_tipe_bansos" class-name="status-col" sortable="custom" :label="'Bantuan'" min-width="150px">
+          <el-table-column prop="id_tipe_bansos" class-name="status-col" sortable="custom" :label="'Bantuan'" min-width="175px">
             <template slot-scope="{row}">
               {{ row.id_tipe_bansos | tipeBansosFilter }}
             </template>
@@ -72,28 +79,15 @@
 
         <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
       </el-col>
-      <el-dialog
-        :visible.sync="dialogVisible"
-        width="50%"
-        center
-      >
-        <span slot="title" class="dialog-title">Sampurasun, Wargi Jabar!</span>
-        <p class="dialog-content">Sehubungan dengan berakhirnya proses verifikasi dan validasi bansos Non DTKS Sapawarga pada periode pertama di bulan April, atas permintaan Pemerintah Kabupaten Sumedang melalui sekretaris Daerah, maka fitur verifikasi dan validasi bansos Non DTKS Sapawarga akan kami <b>tutup sementara.</b> Fitur akan kami buka kembali menjelang proses verifikasi dan validasi bansos Non DTKS Sapawarga pada periode kedua bulan Mei. Tanggal pembukaan kembali fitur akan kami umumkan segera.
-        </p>
-        <p class="dialog-content">Terima kasih telah saling membantu wargi Jabar yang membutuhkan dengan melakukan proses verifikasi dan validasi menggunakan aplikasi Sapawarga.</p>
-        <p>Tim Sapawarga</p>
-        <span slot="footer" class="dialog-footer">
-          <el-button type="success" @click="dialogVisible = false">Tutup</el-button>
-        </span>
-      </el-dialog>
     </el-row>
     <ModalDetailBnba :rowdata="selectedRow" @close="closeDialog" />
   </div>
 </template>
 
 <script>
-import { fetchBnbaTahapSatuSummary, fetchBnbaTahapSatuList } from '@/api/beneficiaries'
+import { fetchBnbaTahapSatuSummary, fetchBnbaTahapSatuList, fetchCurrentTahap } from '@/api/beneficiaries'
 import Pagination from '@/components/Pagination'
+import i18n from '@/lang'
 import StatisticsBnba from './components/StatisticsBnba'
 import ModalDetailBnba from './components/ModalDetailBnba'
 import ListFilterBnba from './_listfilterbnba'
@@ -105,14 +99,14 @@ export default {
   filters: {
     tipeBansosFilter(status) {
       const statusMap = {
-        '1': 'PKH',
-        '2': 'BPNT',
-        '3': 'BPNT Perluasan',
-        '4': 'Bansos Tunai (Kemensos)',
-        '5': 'Bansos Presiden Sembako (BODEBEK)',
-        '6': 'Bansos Provinsi',
-        '7': 'Dana Desa',
-        '8': 'Bansos Kabupaten/Kota'
+        '1': i18n.t('label.beneficiaries-pkh'),
+        '2': i18n.t('label.beneficiaries-bpnt-basicfood'),
+        '3': i18n.t('label.beneficiaries-bpnt-expansion'),
+        '4': i18n.t('label.beneficiaries-kemensos'),
+        '5': i18n.t('label.beneficiaries-president'),
+        '6': i18n.t('label.beneficiaries-province'),
+        '7': i18n.t('label.beneficiaries-village-fund'),
+        '8': i18n.t('label.beneficiaries-city')
       }
       return statusMap[status]
     }
@@ -123,15 +117,17 @@ export default {
       default: null
     }
   },
+
   data() {
     return {
       display: false,
       list: null,
       total: 0,
-      dialogVisible: false,
       isLoadingSummary: true,
       dataSummary: null,
       listLoading: true,
+      listTahap: [],
+      tahapDisplay: null,
       modalDetailBnbaVisible: false,
       selectedRow: null,
       status: {
@@ -142,8 +138,8 @@ export default {
       listQuery: {
         nik: null,
         nama_krt: null,
-        sort_by: 'nik',
-        sort_order: 'ascending',
+        sort_by: null,
+        sort_order: null,
         page: 1,
         limit: 10,
         id_tipe_bansos: null,
@@ -152,7 +148,8 @@ export default {
         kode_kec: null,
         kode_kel: null,
         rw: null,
-        rt: null
+        rt: null,
+        tahap: null
       }
     }
   },
@@ -171,29 +168,38 @@ export default {
       return this.listQuery.kode_kab && this.listQuery.kode_kec && this.listQuery.kode_kel
     }
   },
-  created() {
+  async created() {
     this.listQuery.kode_kab = this.user.kabkota ? this.user.kabkota.code_bps : null
     this.listQuery.kode_kec = this.user.kecamatan ? this.user.kecamatan.code_bps : null
     this.listQuery.kode_kel = this.user.kelurahan ? this.user.kelurahan.code_bps : null
+    await this.getStep()
     this.getList()
   },
 
   methods: {
+    handleCommand(command) {
+      this.listQuery.tahap = command.value
+      this.tahapDisplay = command.label
+      this.getList()
+    },
+
     displayFilter(value) {
       if (value.id_tipe_bansos === '1') {
-        this.listQuery.name_tipe_bansos = 'PKH'
+        this.listQuery.name_tipe_bansos = this.$t('label.beneficiaries-pkh')
       } else if (value.id_tipe_bansos === '2') {
-        this.listQuery.name_tipe_bansos = 'BNPT'
+        this.listQuery.name_tipe_bansos = this.$t('label.beneficiaries-bpnt-basicfood')
       } else if (value.id_tipe_bansos === '3') {
-        this.listQuery.name_tipe_bansos = 'BPNT Perluasan'
+        this.listQuery.name_tipe_bansos = this.$t('label.beneficiaries-bpnt-expansion')
       } else if (value.id_tipe_bansos === '4') {
-        this.listQuery.name_tipe_bansos = 'Bansos Tunai (Kemensos)'
+        this.listQuery.name_tipe_bansos = this.$t('label.beneficiaries-kemensos')
       } else if (value.id_tipe_bansos === '5') {
-        this.listQuery.name_tipe_bansos = 'Bansos Presiden Sembako (BODEBEK)'
+        this.listQuery.name_tipe_bansos = this.$t('label.beneficiaries-president')
       } else if (value.id_tipe_bansos === '6') {
-        this.listQuery.name_tipe_bansos = 'Bansos Provinsi'
+        this.listQuery.name_tipe_bansos = this.$t('label.beneficiaries-province')
       } else if (value.id_tipe_bansos === '7') {
-        this.listQuery.name_tipe_bansos = 'Dana Desa'
+        this.listQuery.name_tipe_bansos = this.$t('label.beneficiaries-village-fund')
+      } else if (value.id_tipe_bansos === '8') {
+        this.listQuery.name_tipe_bansos = this.$t('label.beneficiaries-city')
       }
       this.display = true
     },
@@ -205,23 +211,42 @@ export default {
         this.isLoadingSummary = false
       })
     },
-    getList() {
+    async getList() {
       this.getSummary()
       this.listLoading = true
-      fetchBnbaTahapSatuList(this.listQuery).then(response => {
+      await fetchBnbaTahapSatuList(this.listQuery).then(response => {
         this.list = response.data.items
         this.total = response.data._meta.totalCount
         this.listLoading = false
       })
     },
 
-    resetFilter() {
+    async resetFilter() {
       this.display = false
+      const tahap = this.listQuery.tahap
+
       Object.assign(this.$data.listQuery, this.$options.data().listQuery)
       this.listQuery.kode_kab = this.user.kabkota ? this.user.kabkota.code_bps : null
       this.listQuery.kode_kec = this.user.kecamatan ? this.user.kecamatan.code_bps : null
       this.listQuery.kode_kel = this.user.kelurahan ? this.user.kelurahan.code_bps : null
+
+      // set tahap
+      this.listQuery.tahap = tahap
       this.getList()
+    },
+
+    async getStep() {
+      await fetchCurrentTahap().then(response => {
+        this.listQuery.tahap = response.data.current_tahap_bnba
+        this.tahapDisplay = this.$t('beneficiaries.stage') + this.listQuery.tahap
+        for (let i = 1; i <= this.listQuery.tahap; i++) {
+          const data = {
+            value: i,
+            label: this.$t('beneficiaries.stage') + i
+          }
+          this.listTahap.push(data)
+        }
+      })
     },
 
     getTableRowNumbering(index) {
@@ -271,5 +296,12 @@ export default {
   .dialog-content {
     font-size: 16px;
     line-height: 25px;
+  }
+
+  .dropdown {
+    margin-top: 15px;
+    margin-bottom: 100px;
+    display: block;
+    float: right;
   }
 </style>

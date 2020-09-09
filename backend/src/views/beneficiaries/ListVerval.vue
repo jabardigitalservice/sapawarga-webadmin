@@ -2,12 +2,19 @@
   <div class="app-container">
     <el-row>
       <el-col :lg="24">
+        <el-dropdown size="large" trigger="click" placement="bottom-end" split-button type="primary" class="dropdown" @command="handleCommand">
+          {{ $t('beneficiaries.show-stage') }} <b>{{ tahapDisplay }}</b>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item v-for="item in listTahap" :key="item.value" :command="{label: item.label, value: item.value}">{{ item.label }}</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+
         <DashboardTitle :list-type="listType" />
 
         <!-- show statistics -->
         <StatisticsVerval :is-loading="isLoadingSummary" :is-verval="true" :list-type="listType" :summery="dataSummary" />
 
-        <ListFilter :list-query.sync="listQuery" :is-verval="true" @submit-search="getList" @reset-search="resetFilter" />
+        <ListFilter :list-query.sync="listQuery" :is-verval="true" :is-download-verval="false" @submit-search="getList" @reset-search="resetFilter" />
 
         <el-table ref="multipleTable" v-loading="listLoading" :data="list" border stripe highlight-current-row style="width: 100%" @selection-change="handleSelectionChange" @sort-change="changeSort">
           <el-table-column v-if="listType === 'pending'" type="selection" width="55" align="center" />
@@ -75,7 +82,7 @@
 </template>
 
 <script>
-import { fetchSummaryVerval, fetchListVerval, validateStaffKelBulk } from '@/api/beneficiaries'
+import { fetchSummaryVerval, fetchListVerval, validateStaffKelBulk, fetchCurrentTahap } from '@/api/beneficiaries'
 import StatisticsVerval from './components/StatisticsVerval'
 import DashboardTitle from './components/DashboardTitle'
 import Pagination from '@/components/Pagination'
@@ -118,7 +125,9 @@ export default {
       dataSummary: null,
       isDetail: false,
       idDetail: null,
+      listTahap: [],
       listLoading: true,
+      tahapDisplay: null,
       multipleSelection: [],
       status: {
         DRAFT: 0,
@@ -132,6 +141,7 @@ export default {
         sort_order: null,
         page: 1,
         limit: 10,
+        tahap: null,
         status_verification: null,
         domicile_kabkota_bps_id: null,
         domicile_kec_bps_id: null,
@@ -144,15 +154,38 @@ export default {
   computed: {
     ...mapGetters(['user', 'roles'])
   },
-  created() {
+  async created() {
+    await this.getStep()
     this.getList()
-    this.getSummary()
+    this.getSummary(this.listQuery.tahap)
   },
 
   methods: {
+    handleCommand(command) {
+      this.listQuery.tahap = command.value
+      this.tahapDisplay = command.label
+      this.getList()
+      this.getSummary(command.value)
+    },
+
+    async getStep() {
+      await fetchCurrentTahap().then(response => {
+        this.listQuery.tahap = response.data.current_tahap_verval
+        this.tahapDisplay = this.$t('beneficiaries.stage') + this.listQuery.tahap
+        for (let i = 1; i <= this.listQuery.tahap; i++) {
+          const data = {
+            value: i,
+            label: this.$t('beneficiaries.stage') + i
+          }
+          this.listTahap.push(data)
+        }
+      })
+    },
+
     // get summary statistics
-    getSummary() {
+    getSummary(value) {
       const querySummary = {
+        tahap: value,
         domicile_kabkota_bps_id: this.user.kabkota ? this.user.kabkota.code_bps : null,
         domicile_kec_bps_id: this.user.kecamatan ? this.user.kecamatan.code_bps : null,
         domicile_kel_bps_id: this.user.kelurahan ? this.user.kelurahan.code_bps : null
@@ -226,14 +259,18 @@ export default {
         this.$message.success(this.$t('crud.approval-success'))
 
         this.getList()
-        this.getSummary()
+        this.getSummary(this.listQuery.tahap)
       } catch (e) {
         console.log(e)
       }
     },
 
     resetFilter() {
+      const tahap = this.listQuery.tahap
       Object.assign(this.$data.listQuery, this.$options.data().listQuery)
+
+      // set tahap
+      this.listQuery.tahap = tahap
       this.getList()
     },
 
@@ -338,5 +375,12 @@ export default {
       cursor: pointer;
       color: white !important;
     }
+  }
+
+  .dropdown {
+    margin-top: 15px;
+    margin-bottom: 100px;
+    display: block;
+    float: right;
   }
 </style>

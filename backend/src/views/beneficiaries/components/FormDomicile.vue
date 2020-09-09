@@ -1,7 +1,7 @@
 <template>
   <div class="components-container">
     <div class="warning">
-      <p class="caution">Masukan informasi mengenai domisili saat ini.</p>
+      <p class="caution">{{ $t('beneficiaries.domicile') }}</p>
     </div>
     <el-form
       ref="beneficiaries"
@@ -70,6 +70,7 @@
 </template>
 <script>
 import { getKecamatanBpsList, getKelurahanBpsList, getKabkotaList } from '@/api/areas'
+import { checkAddress } from '@/api/beneficiaries'
 import checkPermission from '@/utils/permission'
 
 export default {
@@ -234,7 +235,23 @@ export default {
       if (!valid) {
         return
       }
-      this.$emit('nextStep', 1)
+
+      const data = {
+        id: this.beneficiaries.id,
+        name: this.beneficiaries.name,
+        domicile_kabkota_bps_id: this.beneficiaries.domicile_kabkota_bps_id,
+        domicile_kec_bps_id: this.beneficiaries.domicile_kec_bps_id,
+        domicile_kel_bps_id: this.beneficiaries.domicile_kel_bps_id,
+        domicile_rt: this.beneficiaries.domicile_rt,
+        domicile_rw: this.beneficiaries.domicile_rw,
+        domicile_address: this.beneficiaries.domicile_address
+      }
+
+      checkAddress(data).then(() => {
+        this.$emit('nextStep', 1)
+      }).catch(() => {
+        this.$message.error(this.$t('beneficiaries.validate-name-address'))
+      })
     },
     open() {
       this.disableField = false

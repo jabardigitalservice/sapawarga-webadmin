@@ -2,21 +2,35 @@
   <div class="app-container">
     <el-row>
       <el-col :lg="24">
+        <el-dropdown size="large" trigger="click" placement="bottom-end" split-button type="primary" class="dropdown" @command="handleCommand">
+          {{ $t('beneficiaries.show-stage') }} <b>{{ tahapDisplay }}</b>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item v-for="item in listTahap" :key="item.value" :command="{label: item.label, value: item.value}">{{ item.label }}</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+
         <DashboardTitle :is-verification="true" />
-        <div class="warn-content-warning">
+
+        <!-- <div class="warn-content-warning">
           <p class="title">Pengumuman</p>
           <p>Proses verval data penerima bansos tahap II telah DITUTUP. Terima kasih telah melakukan verval. Pantau perkembangan data di <span class="link" @click="goSolidaritasWeb">solidaritas.jabarprov.go.id.</span></p>
-        </div>
-        <el-row style="margin: 10px 0px">
-          <el-col :span="12">
-            <el-button type="primary" size="small" icon="el-icon-plus" @click="accessBlock('create')">
-              {{ $t('route.beneficiaries-create') }}
-            </el-button>
-          </el-col>
-        </el-row>
+        </div> -->
+
+        <template v-if="user.kabkota.code_bps !== CODE_BPS_SUMEDANG">
+          <el-row style="margin: 10px 0px">
+            <el-col :span="12">
+              <el-button type="primary" size="small" icon="el-icon-plus" @click="accessBlock('create')">
+                {{ $t('route.beneficiaries-create') }}
+              </el-button>
+            </el-col>
+          </el-row>
+        </template>
 
         <!-- show statistics -->
         <Statistics :is-loading="isLoadingSummary" :summery="dataSummary" />
+
+        <!-- upload data manual -->
+        <!-- <UploadDataManual v-if="checkPermission([RolesUser.STAFFKEL ])" /> -->
 
         <ListFilter :list-query.sync="listQuery" @submit-search="getList" @reset-search="resetFilter" />
 
@@ -58,19 +72,20 @@
             </template>
           </el-table-column>
 
-          <el-table-column align="left" :label="$t('label.actions')" width="200px" :cell-style="marginLeft">
+          <el-table-column header-align="center" :label="$t('label.actions')" width="200px" :cell-style="marginLeft">
             <template slot-scope="scope">
               <el-tooltip :content="$t('label.beneficiaries-detail')" placement="top">
                 <el-button type="primary" icon="el-icon-view" size="small" @click="getDetail(scope.row.id)" />
               </el-tooltip>
               <el-tooltip v-if="scope.row.status_verification !== 1" :content="$t('label.beneficiaries-edit')" placement="top">
-                <el-button type="warning" icon="el-icon-edit" size="small" @click="accessBlock('edit/' + scope.row.id)" />
+                <el-button v-if="user.kabkota.code_bps !== CODE_BPS_SUMEDANG" type="warning" icon="el-icon-edit" size="small" @click="accessBlock('edit/' + scope.row.id)" />
               </el-tooltip>
-              <el-tooltip v-else :content="$t('label.beneficiaries-verivication')" placement="top">
-                <el-button type="success" icon="el-icon-circle-check" size="small" :disabled="scope.row.status_verification !== 1" @click="accessBlock('verification/' + scope.row.id)" />
+              <el-tooltip v-else :content="$t('label.beneficiaries-validate')" placement="top">
+                <el-button v-if="user.kabkota.code_bps !== CODE_BPS_SUMEDANG" type="success" icon="el-icon-circle-check" size="small" :disabled="scope.row.status_verification !== 1" @click="accessBlock('verification/' + scope.row.id)" />
               </el-tooltip>
               <el-tooltip v-if="scope.row.status_verification === 1 && scope.row.domicile_rt === '' || scope.row.domicile_rt === null || scope.row.domicile_rw === '' || scope.row.domicile_rw === null || scope.row.domicile_address === '' || scope.row.domicile_address === null || scope.row.name === '' || scope.row.name === null" :content="$t('label.beneficiaries-uncomplete-domicile')" placement="top">
-                <el-button type="info" icon="el-icon-edit-outline" size="small" :disabled="scope.row.status_verification !== 1" @click="updateDomicile(scope.row)" />
+                <!-- <el-button type="info" icon="el-icon-edit-outline" size="small" :disabled="scope.row.status_verification !== 1" @click="updateDomicile(scope.row)" /> -->
+                <el-button type="info" icon="el-icon-edit-outline" size="small" :disabled="scope.row.status_verification !== 1" @click="accessBlock()" />
               </el-tooltip>
             </template>
           </el-table-column>
@@ -84,7 +99,7 @@
         center
       >
         <span slot="title" class="dialog-title">Terima kasih sudah verval data penerima bansos di Sapawarga!</span>
-        <p class="dialog-content space">Dengan ini kami memberitakan bahwa proses verval tahap II telah DITUTUP.</p>
+        <p class="dialog-content space">Dengan ini kami memberitakan bahwa proses verval tahap III telah DITUTUP.</p>
         <p class="dialog-content space">Kerja keras Anda akan menjadi rezeki bagi warga yang membutuhkan bantuan di masa pandemi ini. Data sedang kami proses. Mohon menunggu dan pantau terus perkembangan data penerima bansos di situs web <span class="link" @click="goSolidaritasWeb">solidaritas.jabarprov.go.id.</span></p>
         <p class="dialog-content space">Bersama kita bisa tangani pandemi.</p>
         <p class="dialog-content space">Salam,</p>
@@ -121,13 +136,16 @@
 </template>
 
 <script>
-import { fetchSummary, fetchList } from '@/api/beneficiaries'
+import { fetchSummary, fetchList, fetchCurrentTahap } from '@/api/beneficiaries'
 import DashboardTitle from './components/DashboardTitle'
+import { RolesUser, CODE_BPS_SUMEDANG } from '@/utils/constantVariable'
+// import UploadDataManual from './components/UploadDataManual/index'
 import FormPersonal from './components/FormPersonal'
 import Preview from './components/Preview'
 import Pagination from '@/components/Pagination'
 import Statistics from './components/Statistics'
 import ListFilter from './_listfilter'
+import checkPermission from '@/utils/permission'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -135,6 +153,7 @@ export default {
     Preview,
     Pagination,
     Statistics,
+    // UploadDataManual,
     ListFilter,
     FormPersonal,
     DashboardTitle
@@ -157,7 +176,10 @@ export default {
   },
   data() {
     return {
+      RolesUser,
+      CODE_BPS_SUMEDANG,
       list: null,
+      listTahap: [],
       total: 0,
       dialogVisible: false,
       isEditDomicile: false,
@@ -167,6 +189,7 @@ export default {
       dataSummary: null,
       listLoading: true,
       beneficiaries: null,
+      tahapDisplay: null,
       status: {
         DRAFT: 0,
         SCHEDULED: 5,
@@ -179,6 +202,7 @@ export default {
         sort_order: 'ascending',
         page: 1,
         limit: 10,
+        tahap: null,
         status_verification: null,
         domicile_kabkota_bps_id: null,
         domicile_kec_bps_id: null,
@@ -191,12 +215,21 @@ export default {
   computed: {
     ...mapGetters(['user'])
   },
-  created() {
+  async created() {
+    await this.getStep()
     this.getList()
     this.getSummary()
   },
 
   methods: {
+    checkPermission,
+    handleCommand(command) {
+      this.listQuery.tahap = command.value
+      this.tahapDisplay = command.label
+      this.getList()
+      this.getSummary()
+    },
+
     tableRowClassName({ row, rowIndex }) {
       const invalidRt = row.domicile_rt === '' || row.domicile_rt === null
       const invalidRw = row.domicile_rw === '' || row.domicile_rw === null
@@ -246,6 +279,7 @@ export default {
     // get summary statistics
     getSummary() {
       const querySummary = {
+        tahap: this.listQuery.tahap,
         domicile_kabkota_bps_id: this.user.kabkota ? this.user.kabkota.code_bps : null,
         domicile_kec_bps_id: this.user.kecamatan ? this.user.kecamatan.code_bps : null,
         domicile_kel_bps_id: this.user.kelurahan ? this.user.kelurahan.code_bps : null
@@ -267,7 +301,11 @@ export default {
     },
 
     resetFilter() {
+      const tahap = this.listQuery.tahap
       Object.assign(this.$data.listQuery, this.$options.data().listQuery)
+
+      // set tahap
+      this.listQuery.tahap = tahap
       this.getList()
     },
 
@@ -299,6 +337,20 @@ export default {
       this.listQuery.sort_by = e.prop
       this.listQuery.sort_order = e.order
       this.getList()
+    },
+
+    async getStep() {
+      await fetchCurrentTahap().then(response => {
+        this.listQuery.tahap = response.data.current_tahap_verval
+        this.tahapDisplay = this.$t('beneficiaries.stage') + this.listQuery.tahap
+        for (let i = 1; i <= this.listQuery.tahap; i++) {
+          const data = {
+            value: i,
+            label: this.$t('beneficiaries.stage') + i
+          }
+          this.listTahap.push(data)
+        }
+      })
     }
   }
 }
@@ -337,18 +389,18 @@ export default {
   .footer {
     padding-top: 10px;
   }
-  .warn-content-warning {
-    background: #2b823d;
-    border-radius: 5px;
-    padding: 1.5rem;
-    word-spacing: .05rem;
-    color: white;
-    margin-bottom: 25px;
+  // .warn-content-warning {
+  //   background: #2b823d;
+  //   border-radius: 5px;
+  //   padding: 1.5rem;
+  //   word-spacing: .05rem;
+  //   color: white;
+  //   margin-bottom: 25px;
 
-    .title {
-      font-weight: 600;
-    }
-  }
+  //   .title {
+  //     font-weight: 600;
+  //   }
+  // }
   .link {
     text-decoration: underline;
     cursor: pointer;
@@ -356,5 +408,12 @@ export default {
   }
   .space {
     line-height: 25px;
+  }
+
+  .dropdown {
+    margin-top: 15px;
+    margin-bottom: 100px;
+    display: block;
+    float: right;
   }
 </style>

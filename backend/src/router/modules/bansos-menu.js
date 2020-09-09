@@ -18,7 +18,7 @@ const bansosMenuRouter = {
       component: () => import('@/views/beneficiaries/dashboard'),
       meta: {
         title: 'beneficiaries-dashboard-verification',
-        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec']
+        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']
       }
     },
     {
@@ -29,34 +29,6 @@ const bansosMenuRouter = {
       meta: {
         title: 'beneficiaries-list',
         roles: ['admin', 'staffKel']
-      }
-    },
-    {
-      name: 'beneficiaries-manage-bnba',
-      path: '/beneficiaries/manage-bnba',
-      component: () => import('@/views/beneficiaries/list-bnba'),
-      hidden: false,
-      meta: {
-        title: 'beneficiaries-manage-bnba',
-        roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']
-      }
-    },
-    {
-      name: 'bansos-download',
-      path: '/bansos/download',
-      component: () => import('@/views/bansos/download'),
-      meta: {
-        title: 'bansos-download',
-        roles: ['admin', 'staffKabkota']
-      }
-    },
-    {
-      name: 'bansos-upload',
-      path: '/bansos/upload',
-      component: () => import('@/views/bansos/upload'),
-      meta: {
-        title: 'bansos-upload',
-        roles: ['admin', 'staffKabkota']
       }
     },
     {
@@ -100,6 +72,16 @@ const bansosMenuRouter = {
       }
     },
     {
+      name: 'beneficiaries-detail',
+      path: '/beneficiaries/detail-verval/:id',
+      component: () => import('@/views/beneficiaries/detailVerval'),
+      hidden: true,
+      meta: {
+        title: 'beneficiaries-detail',
+        roles: ['admin', 'staffKel', 'staffKec', 'staffKabkota']
+      }
+    },
+    {
       name: 'beneficiaries-verification',
       path: '/beneficiaries/verification/:id',
       component: () => import('@/views/beneficiaries/verification'),
@@ -107,6 +89,56 @@ const bansosMenuRouter = {
       meta: {
         title: 'beneficiaries-verification',
         roles: ['admin', 'staffKel']
+      }
+    },
+    {
+      name: 'beneficiaries-pending',
+      path: '/beneficiaries/pending',
+      component: () => import('@/views/beneficiaries/pending'),
+      hidden: false,
+      meta: {
+        title: 'beneficiaries-pending',
+        roles: ['admin']
+      }
+    },
+    {
+      name: 'beneficiaries-approved',
+      path: '/beneficiaries/approved',
+      component: () => import('@/views/beneficiaries/approved'),
+      hidden: false,
+      meta: {
+        title: 'beneficiaries-approved',
+        roles: ['admin']
+      }
+    },
+    {
+      name: 'beneficiaries-download-verval',
+      path: '/beneficiaries/download-verval',
+      component: () => import('@/views/bansos/download'),
+      hidden: false,
+      meta: {
+        title: 'bansos-download-verval',
+        roles: ['staffKec']
+      }
+    },
+    {
+      name: 'beneficiaries-complaint',
+      path: '/beneficiaries/complaint',
+      component: () => import('@/views/beneficiaries/complaint'),
+      hidden: false,
+      meta: {
+        title: 'benebeneficiaries-complaint',
+        roles: ['admin', 'staffKel', 'staffKabkota']
+      }
+    },
+    {
+      name: 'benebeneficiaries-complaint-detail',
+      path: '/beneficiaries/complaint/detail/:id',
+      component: () => import('@/views/beneficiaries/complaintDetail'),
+      hidden: true,
+      meta: {
+        title: 'beneficiaries-detail',
+        roles: ['admin', 'staffKel', 'staffKabkota']
       }
     }
   ]

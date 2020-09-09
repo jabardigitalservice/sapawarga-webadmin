@@ -9,9 +9,7 @@
       label-position="left"
     >
       <div class="title-container">
-        <!-- <h3 class="title">{{ $t('login.title') }}</h3> -->
         <img :src="logo" alt="LOGO">
-        <!-- <lang-select class="set-language"/> -->
       </div>
 
       <el-form-item prop="username">
@@ -53,7 +51,19 @@
         style="width:100%"
         @click.native.prevent="handleLogin"
       >{{ $t('label.login') }}</el-button>
-      <h4>{{ $t('label.login-forgot-password') }} <span class="contact-admin" @click="onClickChat(phone)">{{ phone }}</span></h4>
+
+      <hr class="line-separator">
+
+      <h5 class="warning-text">{{ $t('label.call-admin-text') }}</h5>
+      <el-button
+        class="button-call-admin"
+        size="large"
+        style="width:100%"
+        @click="callAdmin()"
+      >
+        <svg-icon icon-class="whatsapp" />
+        {{ $t('label.call-admin') }}
+      </el-button>
     </el-form>
   </div>
 </template>
@@ -152,11 +162,35 @@ export default {
       })
     },
 
-    onClickChat(phone) {
-      const url_link = 'https://wa.me/' + phone.replace(/^0+/, '62')
-      window.open(url_link, '_blank')
+    callAdmin() {
+      const link = 'https://s.id/HotlineSW'
+      window.open(link, '_blank')
     }
 
   }
 }
 </script>
+<style lang="scss" scoped>
+.line-separator {
+  margin: 25px 0;
+  height:1px;
+  border-width:0;
+  background-color: #E0E0E0;
+}
+.title-container {
+  margin-top: -50px;
+}
+.warning-text {
+  color: #000000;
+  font-size: 15px;
+  line-height: 20px;
+  word-spacing: 3px;
+}
+.button-call-admin {
+  background: #219653;
+  color: white;
+}
+.button-call-admin:hover {
+  background: #41b674;
+}
+</style>

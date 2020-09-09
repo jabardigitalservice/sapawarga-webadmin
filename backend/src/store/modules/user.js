@@ -3,6 +3,7 @@ import { login, getInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 import { Message, MessageBox } from 'element-ui'
+// import { RolesUser } from '@/utils/constantVariable'
 
 const state = {
   id: Cookies.get('userID') || null,
@@ -106,6 +107,15 @@ const actions = {
           const { id, name, role_label, role_id, photo_url } = data
 
           const roles = [role_id] // @TODO sebaiknya bisa multiple dan switch roles
+
+          // if (role_id === RolesUser.STAFFKABKOTA) {
+          //   // set kabkota code BPS
+          //   const kabkotaCodeBps = data.kabkota ? data.kabkota.code_bps : null
+
+          //   // concat roles id & kabkota code BPS need to selected whitelist access user by code_bps from constant
+          //   // KAB_KOTA_ACCESS_BNBA for feature download & upload BNBA
+          //   roles = roles.concat([kabkotaCodeBps])
+          // }
 
           // roles must be a non-empty array
           if (!roles || roles.length <= 0) {

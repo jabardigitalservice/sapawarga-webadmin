@@ -17,6 +17,7 @@
           :item="route"
           :base-path="route.path"
           :is-active.sync="route.active"
+          :is-action="route.action"
         />
       </el-menu>
     </el-scrollbar>

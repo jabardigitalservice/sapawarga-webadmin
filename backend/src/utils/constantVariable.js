@@ -67,3 +67,27 @@ export const rolesWidget = {
   'pimpinan': ['admin', 'staffProv', 'pimpinan'],
   'staffKelOPD': ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel', 'staffOPD']
 }
+
+export const UrlDownloadImportData = `${process.env.VUE_APP_S3_URL}attachment/Template_Data_Manual.xlsx`
+
+export const CODE_BPS_SUMEDANG = '3211'
+
+export const PREFIX_FIREBASE_STORAGE = 'https://firebasestorage.googleapis.com/v0/b/sapawarga-app.appspot.com/o/'
+
+export const HOTLINE_SW = 'https://s.id/HotlineSW'
+
+// add kabkota code_bps
+// export const KAB_KOTA_ACCESS_BNBA = [
+//   'admin',
+//   '3279', // kota banjar
+//   '3277', // kota cimahi
+//   '3274', // kota cirebon
+//   '3272', // kota sukabumi
+//   '3276', // kota depok
+//   '3214', // kab. purwakarta
+//   '3275', // kota bekasi
+//   '3271', // kota bogor
+//   '3211', // kab. sumedang
+//   '3218', // kab. pangandaran
+//   '3215' // kab. karawang
+// ]
