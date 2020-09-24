@@ -38,6 +38,7 @@
             :kabkota-id="listQuery.kode_kab"
             :kec-id="listQuery.kode_kec"
             :kel-id="listQuery.kode_kel"
+            :is-bnba-staffprov="true"
             @changeKabkota="changeKabkota"
             @changeKecamatan="changeKecamatan"
             @changeKelurahan="changeKelurahan"
@@ -70,6 +71,7 @@
 import InputFilterAreaBps from '@/components/InputFilterAreaBps'
 
 import checkPermission from '@/utils/permission'
+import { RolesUser, CODE_BPS_BANDUNG } from '@/utils/constantVariable'
 
 export default {
   components: { InputFilterAreaBps },
@@ -83,6 +85,8 @@ export default {
 
   data() {
     return {
+      CODE_BPS_BANDUNG,
+      RolesUser,
       roles: checkPermission(['staffKel'])
     }
   },
@@ -97,6 +101,10 @@ export default {
 
       if (checkPermission(['staffKec'])) {
         return parseInt(authUser.kecamatan.code_bps)
+      }
+
+      if (checkPermission([this.RolesUser.ADMIN, this.RolesUser.STAFFPROV])) {
+        return parseInt(CODE_BPS_BANDUNG)
       }
 
       return null
