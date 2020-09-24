@@ -90,15 +90,15 @@ export default {
           },
           {
             title: this.$t('label.beneficiaries-domicile-kabkota'),
-            content: domicile_kabkota_name ? domicile_kabkota_name.name : '-'
+            content: domicile_kabkota_name || '-'
           },
           {
             title: this.$t('label.beneficiaries-domicile-kecamatan'),
-            content: domicile_kec_name ? domicile_kec_name.name : '-'
+            content: domicile_kec_name || '-'
           },
           {
             title: this.$t('label.beneficiaries-domicile-kelurahan'),
-            content: domicile_kel_name ? domicile_kel_name.name : '-'
+            content: domicile_kel_name || '-'
           },
           {
             title: this.$t('label.beneficiaries-rw'),

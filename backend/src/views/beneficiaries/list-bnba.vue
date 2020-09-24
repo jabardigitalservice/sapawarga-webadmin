@@ -18,6 +18,12 @@
         <el-table v-loading="listLoading" :data="list" border stripe highlight-current-row style="width: 100%" @sort-change="changeSort">
           <el-table-column type="index" width="50" align="right" :index="getTableRowNumbering" />
 
+          <el-table-column prop="id_tipe_bansos" class-name="status-col" sortable="custom" :label="'Pintu Bantuan'" min-width="200px">
+            <template slot-scope="{row}">
+              {{ row.id_tipe_bansos | tipeBansosFilter }}
+            </template>
+          </el-table-column>
+
           <el-table-column prop="nama_krt" sortable="custom" :label="$t('label.beneficiaries-familyhead-name')" min-width="200px">
             <template slot-scope="{row}">
               <a @click="selectedRow = row">
@@ -55,12 +61,6 @@
             <template slot-scope="{row}">
               <span style="float: left">Rp.</span>
               {{ formatCurrency(row.penghasilan_setelah_covid) }}
-            </template>
-          </el-table-column>
-
-          <el-table-column prop="id_tipe_bansos" class-name="status-col" sortable="custom" :label="'Bantuan'" min-width="175px">
-            <template slot-scope="{row}">
-              {{ row.id_tipe_bansos | tipeBansosFilter }}
             </template>
           </el-table-column>
 

@@ -153,6 +153,12 @@ export default {
       try {
         if (this.isCreate) {
           this.beneficiaries.status = 10
+          // mapping body data
+          const body = this.beneficiaries
+          body.domicile_kabkota_name = this.beneficiaries.domicile_kabkota_name.name
+          body.domicile_kec_name = this.beneficiaries.domicile_kec_name.name
+          body.domicile_kel_name = this.beneficiaries.domicile_kel_name.name
+
           await create(this.beneficiaries)
         } else {
           await update(id, this.beneficiaries)

@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sapawarga-webadmin
+  namespace: sapawarga
+  labels:
+    app: sapawarga-webadmin
+spec:
+  selector:
+    matchLabels:
+      app: sapawarga-webadmin
+  template:
+    metadata:
+      labels:
+        app: sapawarga-webadmin
+    spec:
+      # disable mount service account default #
+      automountServiceAccountToken: false
+      containers:
+        - name: webadmin
+          image: registry.gitlab.com/jdsteam/sapa-warga/sapawarga-webadmin:%VERSION%
+          ports:
+            - containerPort: 80
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: sapawarga-webadmin-config-env
+      imagePullSecrets:
+        - name: regcred
