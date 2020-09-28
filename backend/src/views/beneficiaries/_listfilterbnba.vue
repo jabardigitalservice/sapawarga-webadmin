@@ -125,17 +125,14 @@ export default {
 
     changeKabkota(id) {
       this.listQuery.kode_kab = id
-      this.submitSearch()
     },
 
     changeKecamatan(id) {
       this.listQuery.kode_kec = id
-      this.submitSearch()
     },
 
     changeKelurahan(id) {
       this.listQuery.kode_kel = id
-      this.submitSearch()
     }
   }
 }
