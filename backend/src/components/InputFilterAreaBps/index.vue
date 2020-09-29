@@ -91,6 +91,11 @@ export default {
     parentId: {
       type: Number,
       default: null
+    },
+
+    isBnbaStaffprov: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -242,7 +247,7 @@ export default {
     init() {
       this.getKabkotaOptions()
 
-      if (this.enableKabkota === false) {
+      if (this.enableKabkota === false || this.isBnbaStaffprov) {
         this.getKecamatanOptions(this.parentId)
       }
 

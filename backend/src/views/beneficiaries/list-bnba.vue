@@ -93,6 +93,8 @@ import ModalDetailBnba from './components/ModalDetailBnba'
 import ListFilterBnba from './_listfilterbnba'
 import DashboardTitle from './components/DashboardTitle'
 import { mapGetters } from 'vuex'
+import checkPermission from '@/utils/permission'
+import { RolesUser, CODE_BPS_BANDUNG } from '@/utils/constantVariable'
 
 export default {
   components: { Pagination, StatisticsBnba, ListFilterBnba, ModalDetailBnba, DashboardTitle },
@@ -120,6 +122,8 @@ export default {
 
   data() {
     return {
+      CODE_BPS_BANDUNG,
+      RolesUser,
       display: false,
       list: null,
       total: 0,
@@ -166,10 +170,13 @@ export default {
     },
     isFilterKel() {
       return this.listQuery.kode_kab && this.listQuery.kode_kec && this.listQuery.kode_kel
+    },
+    isStaffProv() {
+      return checkPermission([this.RolesUser.ADMIN, this.RolesUser.STAFFPROV])
     }
   },
   async created() {
-    this.listQuery.kode_kab = this.user.kabkota ? this.user.kabkota.code_bps : null
+    this.listQuery.kode_kab = this.user.kabkota ? this.user.kabkota.code_bps : this.isStaffProv ? CODE_BPS_BANDUNG : null
     this.listQuery.kode_kec = this.user.kecamatan ? this.user.kecamatan.code_bps : null
     this.listQuery.kode_kel = this.user.kelurahan ? this.user.kelurahan.code_bps : null
     await this.getStep()
@@ -226,7 +233,7 @@ export default {
       const tahap = this.listQuery.tahap
 
       Object.assign(this.$data.listQuery, this.$options.data().listQuery)
-      this.listQuery.kode_kab = this.user.kabkota ? this.user.kabkota.code_bps : null
+      this.listQuery.kode_kab = this.user.kabkota ? this.user.kabkota.code_bps : this.isStaffProv ? CODE_BPS_BANDUNG : null
       this.listQuery.kode_kec = this.user.kecamatan ? this.user.kecamatan.code_bps : null
       this.listQuery.kode_kel = this.user.kelurahan ? this.user.kelurahan.code_bps : null
 
@@ -281,7 +288,9 @@ export default {
 
     closeDialog() {
       this.selectedRow = null
-    }
+    },
+
+    checkPermission
   }
 }
 </script>
