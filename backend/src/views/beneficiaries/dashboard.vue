@@ -469,7 +469,6 @@ export default {
       this.listLoading = true
       fetchDashboardList(this.filter).then(response => {
         this.list = response.data
-        console.log(this.list)
         this.listLoading = false
         this.loadExportFields()
       })
