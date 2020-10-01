@@ -90,7 +90,7 @@
             >
               <template slot-scope="{row}">
                 <span
-                  style="cursor: pointer; color: blue"
+                  :class="{'btn-action':row.code_bps !== ''}"
                   @click="openDetail(row.code_bps, row.rw, row.name, row)"
                 >{{ row.name }}</span>
               </template>
@@ -410,6 +410,8 @@ export default {
       }
     },
     openDetail(code_bps, rw, name, row) {
+      if (code_bps === '') return
+
       this.isLoadListUser = false
 
       const prevFilter = {
@@ -467,6 +469,7 @@ export default {
       this.listLoading = true
       fetchDashboardList(this.filter).then(response => {
         this.list = response.data
+        console.log(this.list)
         this.listLoading = false
         this.loadExportFields()
       })
@@ -669,5 +672,9 @@ export default {
   margin-bottom: 100px;
   display: block;
   float: right;
+}
+.btn-action {
+  cursor: pointer;
+  color: blue;
 }
 </style>
