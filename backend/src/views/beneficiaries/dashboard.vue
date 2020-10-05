@@ -18,7 +18,7 @@
         />
 
         <!-- upload data manual -->
-        <!-- <UploadDataManual v-if="checkPermission([RolesUser.STAFFKABKOTA, RolesUser.STAFFKEC])" /> -->
+        <UploadDataManual v-if="checkPermission([RolesUser.STAFFKABKOTA, RolesUser.STAFFKEC])" />
 
         <template v-if="!isLoadListUser">
           <el-card class="box-card" style="margin-bottom: 10px">
@@ -173,7 +173,7 @@ import { fetchDashboardSummary, fetchDashboardList, fetchCurrentTahap } from '@/
 import { RolesUser, CODE_BPS_SUMEDANG } from '@/utils/constantVariable'
 import { mapGetters } from 'vuex'
 import DashboardStatistics from './components/DashboardStatistics'
-// import UploadDataManual from './components/UploadDataManual/index'
+import UploadDataManual from './components/UploadDataManual/index'
 import checkPermission from '@/utils/permission'
 import InputFilterAreaBps from '@/components/InputFilterAreaBps'
 import JsonExcel from 'vue-json-excel'
@@ -186,7 +186,7 @@ export default {
     InputFilterAreaBps,
     JsonExcel,
     DashboardStatistics,
-    // UploadDataManual,
+    UploadDataManual,
     DashboardTitle,
     ListUserVerification,
     ListFilterUsers
