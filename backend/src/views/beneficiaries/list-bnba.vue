@@ -320,9 +320,6 @@ export default {
 
       try {
         Loading.service({ fullScreen: true })
-        // const params = {
-        //   export_type: 'bnbawithcomplain'
-        // }
         const response = await downloadBeneficiariesBnba(this.listQuery)
         if (response.status === 200) {
           Swal.fire({
