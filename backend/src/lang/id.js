@@ -1072,7 +1072,8 @@ export default {
     'beneficiaries-explanation': 'Lihat Penjelasan',
     'beneficiaries-description-proposal': 'Keterangan Usulan',
     'beneficiaries-download-anomaly': 'Unduh file dibawah untuk mengetahui proses cleansing dan analisis data anomali tahap',
-    'beneficiaries-btn-anomaly': 'Analisis Cleansing Data Tahap'
+    'beneficiaries-btn-anomaly': 'Analisis Cleansing Data Tahap',
+    'beneficiaries-bnba-download': 'Unduh BNBA'
   },
   news: {
     'news-url': 'URL Berita',

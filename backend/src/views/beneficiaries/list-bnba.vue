@@ -15,6 +15,22 @@
 
         <ListFilterBnba :list-query.sync="listQuery" @display-search="displayFilter" @submit-search="getList" @reset-search="resetFilter" />
         <p v-if="display">DATA BERDASARKAN FILTER <span v-if="listQuery.nik">NIK <b>{{ listQuery.nik }}</b>,</span> <span v-if="listQuery.nama_krt">NAMA <b>{{ listQuery.nama_krt }}</b>,</span> <span v-if="listQuery.id_tipe_bansos">PINTU BANTUAN <b>{{ listQuery.name_tipe_bansos }}</b></span></p>
+
+        <!-- section download -->
+        <div class="section-download">
+          <el-button
+            type="success"
+            plain
+            @click="dialogTableVisible = true"
+          >{{ $t('label.beneficiaries-history-download') }}</el-button>
+          <el-button
+            type="success"
+            plain
+            icon="el-icon-download"
+            @click="downloadBnba"
+          >{{ $t('label.beneficiaries-bnba-download') }}</el-button>
+        </div>
+
         <el-table v-loading="listLoading" :data="list" border stripe highlight-current-row style="width: 100%" @sort-change="changeSort">
           <el-table-column type="index" width="50" align="right" :index="getTableRowNumbering" />
 
@@ -81,23 +97,32 @@
       </el-col>
     </el-row>
     <ModalDetailBnba :rowdata="selectedRow" @close="closeDialog" />
+
+    <!-- dialog history download -->
+    <el-dialog width="70%" :visible.sync="dialogTableVisible">
+      <span slot="title" class="dialog-title">{{ $t('beneficiaries.download-history-verval') }}</span>
+      <DialogDownloadHistory :source="'bnba'" />
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import { fetchBnbaTahapSatuSummary, fetchBnbaTahapSatuList, fetchCurrentTahap } from '@/api/beneficiaries'
+import { fetchBnbaTahapSatuSummary, fetchBnbaTahapSatuList, fetchCurrentTahap, downloadBeneficiariesBnba } from '@/api/beneficiaries'
 import Pagination from '@/components/Pagination'
 import i18n from '@/lang'
 import StatisticsBnba from './components/StatisticsBnba'
 import ModalDetailBnba from './components/ModalDetailBnba'
+import DialogDownloadHistory from './components/DialogDownloadHistory'
 import ListFilterBnba from './_listfilterbnba'
 import DashboardTitle from './components/DashboardTitle'
 import { mapGetters } from 'vuex'
 import checkPermission from '@/utils/permission'
 import { RolesUser, CODE_BPS_BANDUNG } from '@/utils/constantVariable'
+import { Loading } from 'element-ui'
+import Swal from 'sweetalert2'
 
 export default {
-  components: { Pagination, StatisticsBnba, ListFilterBnba, ModalDetailBnba, DashboardTitle },
+  components: { Pagination, StatisticsBnba, ListFilterBnba, ModalDetailBnba, DashboardTitle, DialogDownloadHistory },
   filters: {
     tipeBansosFilter(status) {
       const statusMap = {
@@ -122,6 +147,7 @@ export default {
 
   data() {
     return {
+      dialogTableVisible: false,
       CODE_BPS_BANDUNG,
       RolesUser,
       display: false,
@@ -289,7 +315,27 @@ export default {
     closeDialog() {
       this.selectedRow = null
     },
+    async downloadBnba() {
+      if (!this.listQuery.kode_kab) return
 
+      try {
+        Loading.service({ fullScreen: true })
+        const response = await downloadBeneficiariesBnba(this.listQuery)
+        if (response.status === 200) {
+          Swal.fire({
+            title: this.$t('label.beneficiaries-download-start-title-alert'),
+            text: this.$t(
+              'label.beneficiaries-download-start-description-alert'
+            ),
+            icon: 'success',
+            button: 'OK'
+          })
+        }
+        Loading.service({ fullScreen: true }).close()
+      } catch (error) {
+        Loading.service({ fullScreen: true }).close()
+      }
+    },
     checkPermission
   }
 }
@@ -312,5 +358,11 @@ export default {
     margin-bottom: 100px;
     display: block;
     float: right;
+  }
+
+  .section-download {
+    float: right;
+    padding-bottom: 1rem;
+    padding-top: 0.5rem;
   }
 </style>
