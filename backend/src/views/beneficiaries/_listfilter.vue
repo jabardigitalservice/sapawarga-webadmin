@@ -58,7 +58,7 @@
             </el-button>
           </el-col>
 
-          <el-col :xs="24" :sm="24" :md="8" :xl="8" class="section-verval">
+          <el-col :xs="24" :sm="24" :md="24" :xl="11" class="section-verval">
             <template v-if="roles && isDownloadVerval">
               <el-button
                 size="medium"
@@ -68,7 +68,8 @@
             </template>
 
             <template v-if="roles">
-              <el-button class="border-green" type="success" plain @click="showHistoryDownload">{{ $t('label.beneficiaries-history-download') }}</el-button>
+              <el-button class="border-green mr-1" type="success" plain @click="showHistoryDownload">{{ $t('label.beneficiaries-history-download') }}</el-button>
+              <el-button v-if="listType === 'pending'" :disabled="selectionLength === 0" class="border-green" type="success" plain @click="multipleValidate">{{ $t('label.beneficiaries-validate-select') }}</el-button>
             </template>
           </el-col>
 
@@ -106,6 +107,14 @@ export default {
     isDownloadVerval: {
       type: Boolean,
       default: true
+    },
+    listType: {
+      type: String,
+      default: null
+    },
+    selectionLength: {
+      type: Number,
+      default: 0
     }
   },
 
@@ -182,6 +191,9 @@ export default {
       if (this.$refs.dialogDownloadHistoryVerval) {
         this.$refs.dialogDownloadHistoryVerval.getDataStatus()
       }
+    },
+    multipleValidate() {
+      this.$emit('multiple-validate')
     }
   }
 }
@@ -198,5 +210,9 @@ export default {
 
 .section-verval {
   text-align: end;
+}
+
+.mr-1 {
+  margin-right: 5px;
 }
 </style>
