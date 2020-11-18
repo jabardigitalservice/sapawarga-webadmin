@@ -73,8 +73,6 @@ export const UrlDownloadImportData = `${process.env.VUE_APP_S3_URL}attachment/Te
 export const CODE_BPS_SUMEDANG = '3211'
 export const CODE_BPS_BANDUNG = '3273'
 
-export const PREFIX_FIREBASE_STORAGE = 'https://firebasestorage.googleapis.com/v0/b/sapawarga-app.appspot.com/o/'
-
 export const HOTLINE_SW = 'https://s.id/HotlineSW'
 
 // add kabkota code_bps
@@ -92,3 +90,7 @@ export const HOTLINE_SW = 'https://s.id/HotlineSW'
 //   '3218', // kab. pangandaran
 //   '3215' // kab. karawang
 // ]
+
+export const RemoteConfigKey = Object.freeze({
+  BANNERS: 'banners'
+})
