@@ -101,9 +101,7 @@ export default {
   methods: {
     initRemoteConfig() {
       RemoteConfig.ensureInitialized()
-        .then(() => {
-          this.getDataRemote()
-        })
+        .then(() => {})
         .catch((_) => {})
 
       RemoteConfig.fetchAndActivate()

@@ -5,8 +5,9 @@
         <el-carousel-item v-for="(item, index) in banners" :key="index">
           <img
             loading="lazy"
-            :src="item"
+            :src="item.source"
             class="multiple-images"
+            @click="openBanner(item.link)"
           >
         </el-carousel-item>
       </el-carousel>
@@ -42,6 +43,12 @@ export default {
       const code = this.user.kabkota ? this.user.kabkota.code_bps : ''
 
       this.link = await getLink(code)
+    },
+    openBanner(link) {
+      if (!link) {
+        return
+      }
+      window.open(link)
     }
   }
 }
@@ -62,5 +69,6 @@ export default {
   display: block;
   border-radius: 7px;
   margin: auto;
+  cursor: pointer;
 }
 </style>
