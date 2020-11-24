@@ -374,5 +374,6 @@ export default {
     margin-bottom: 100px;
     display: block;
     float: right;
+    z-index: 1;
   }
 </style>
