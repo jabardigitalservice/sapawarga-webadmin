@@ -934,7 +934,6 @@ export default {
     'beneficiaries-image-ktp': 'Foto KTP',
     'beneficiaries-image-kk': 'Foto Kepala Keluarga',
     'beneficiaries-image': 'Foto',
-    'beneficiaries-validate-all': 'Setujui Semua',
     'beneficiaries-validate-select': 'Setujui',
     'beneficiaries-uncomplete-domicile': 'Lengkapi Domisili',
 

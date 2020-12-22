@@ -14,7 +14,7 @@
         <!-- show statistics -->
         <StatisticsVerval :is-loading="isLoadingSummary" :is-verval="true" :list-type="listType" :summery="dataSummary" />
 
-        <ListFilter :list-query.sync="listQuery" :is-verval="true" :is-download-verval="false" @submit-search="getList" @reset-search="resetFilter" />
+        <ListFilter :list-query.sync="listQuery" :is-verval="true" :is-download-verval="false" :list-type="listType" :selection-length="multipleSelection.length" @submit-search="getList" @reset-search="resetFilter" @multiple-validate="multipleValidate" />
 
         <el-table ref="multipleTable" v-loading="listLoading" :data="list" border stripe highlight-current-row style="width: 100%" @selection-change="handleSelectionChange" @sort-change="changeSort">
           <el-table-column v-if="listType === 'pending'" type="selection" width="55" align="center" />
@@ -57,10 +57,6 @@
             </template>
           </el-table-column>
         </el-table>
-        <div v-if="listType === 'pending'" style="margin-top: 20px">
-          <el-button v-if="multipleSelection.length === 0" type="success" style="float: right; margin-right: 30px" @click="validateAll()">{{ $t('label.beneficiaries-validate-all') }}</el-button>
-          <el-button v-if="multipleSelection.length > 0" type="success" style="float: right; margin-right: 50px" @click="multipleValidate()">{{ $t('label.beneficiaries-validate-select') }}</el-button>
-        </div>
         <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
       </el-col>
     </el-row>
@@ -314,10 +310,6 @@ export default {
 
     multipleValidate() {
       this.validate(this.multipleSelection.map(element => (element.id)))
-    },
-
-    validateAll() {
-      this.validate(this.list.map(element => (element.id)))
     }
   }
 }
@@ -382,5 +374,6 @@ export default {
     margin-bottom: 100px;
     display: block;
     float: right;
+    z-index: 1;
   }
 </style>

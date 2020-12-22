@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+const pkg = require('../../package.json')
 
 Vue.use(Router)
 
@@ -293,7 +294,7 @@ router.beforeEach((to, from, next) => {
       // If a route with a title was found, set the document (page) title to that value.
       if (nearestWithTitle) document.title = taged[1]
     } else {
-      document.title = 'sapawarga-administrator'
+      document.title = pkg.name
     }
   }
   next()

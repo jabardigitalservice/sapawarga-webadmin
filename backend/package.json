@@ -1,5 +1,5 @@
 {
-  "name": "sapawarga-administrator",
+  "name": "sapawarga",
   "version": "4.0.0",
   "description": "A magical vue admin. An out-of-box UI solution for enterprise applications. Newest development stack of vue. Lots of awesome features",
   "author": "Pan <panfree23@gmail.com>",
@@ -39,6 +39,7 @@
     "echarts": "4.2.1",
     "element-ui": "2.7.0",
     "file-saver": "2.0.1",
+    "firebase": "^8.0.2",
     "fuse.js": "3.4.4",
     "html-webpack-plugin": "^4.0.0-alpha",
     "js-cookie": "2.2.0",
@@ -75,6 +76,7 @@
     "vue-splitpane": "1.0.4",
     "vue-the-mask": "^0.11.1",
     "vuedraggable": "2.20.0",
+    "vuefire": "^2.2.4",
     "vuex": "3.1.0",
     "xlsx": "0.14.1"
   },

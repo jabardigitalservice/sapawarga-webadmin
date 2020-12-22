@@ -2,13 +2,15 @@
   <div>
     <el-row>
       <el-carousel height="430px" indicator-position="outside" :autoplay="true" trigger="click">
-        <el-carousel-item v-for="(item, index) in bannerData" :key="index">
-          <img :src="item" class="multiple-images">
+        <el-carousel-item v-for="(item, index) in banners" :key="index">
+          <img
+            loading="lazy"
+            :src="item.source"
+            class="multiple-images"
+            @click="openBanner(item.link)"
+          >
         </el-carousel-item>
       </el-carousel>
-      <!-- <a :href="link" target="_blank">
-        <img src="https://firebasestorage.googleapis.com/v0/b/sapawarga-app.appspot.com/o/admin-banner-01.png?alt=media&token=2c606be5-7378-40ca-b147-f19b8b8539ea" width="100%">
-      </a> -->
     </el-row>
   </div>
 </template>
@@ -16,27 +18,24 @@
 <script>
 import { mapGetters } from 'vuex'
 import { getLink } from '@/api/temporary'
-import { PREFIX_FIREBASE_STORAGE } from '@/utils/constantVariable'
 
 export default {
   data() {
     return {
       link: null,
-      bannerData: [
-        `${PREFIX_FIREBASE_STORAGE}banners%2Fbanner-1.png?alt=media`,
-        `${PREFIX_FIREBASE_STORAGE}banners%2Fbanner-2.png?alt=media`
-      ]
+      bannerData: []
     }
   },
 
   computed: {
     ...mapGetters([
-      'user'
+      'user',
+      'banners'
     ])
   },
 
   mounted() {
-    this.getUrlDownload()
+    // this.getUrlDownload()
   },
 
   methods: {
@@ -44,6 +43,12 @@ export default {
       const code = this.user.kabkota ? this.user.kabkota.code_bps : ''
 
       this.link = await getLink(code)
+    },
+    openBanner(link) {
+      if (!link) {
+        return
+      }
+      window.open(link)
     }
   }
 }
@@ -64,5 +69,6 @@ export default {
   display: block;
   border-radius: 7px;
   margin: auto;
+  cursor: pointer;
 }
 </style>
