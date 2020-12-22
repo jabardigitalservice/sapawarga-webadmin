@@ -15,7 +15,7 @@ spec:
           ports:
             - containerPort: 80
           imagePullPolicy: IfNotPresent
-          nvFrom:
+          envFrom:
             - configMapRef:
                 name: sapawarga-webadmin-config-env
       imagePullSecrets:
