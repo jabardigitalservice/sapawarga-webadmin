@@ -1,16 +1,18 @@
-FROM node:10.16-alpine as build
+FROM node:12.16-alpine as build
 
-# Create app folder
 RUN mkdir /app
 WORKDIR /app
 
-COPY backend/package*.json ./
-RUN npm install
-COPY . .
-RUN npm run build
+RUN apk update && apk upgrade && \
+	apk add --no-cache git
+
+COPY . /app
+
+RUN yarn install
+RUN yarn global add @vue/cli && yarn build
 
 # production stage
-FROM nginx:stable-alpine
-COPY --from=build-stage /app/dist /usr/share/nginx/html
+FROM nginx:1.21.0
+COPY --from=build /app/dist /usr/share/nginx/html
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
