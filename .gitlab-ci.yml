@@ -81,7 +81,7 @@ build_image:
     - sed -i "s/%FIREBASE_MEASUREMENT_ID%/${FIREBASE_MEASUREMENT_ID}/g" .env
 
     - docker build -t $CI_REGISTRY/jdsteam/sapa-warga/sapawarga-webadmin -f backend/Dockerfile .
-    - docker push $CI_REGISTRY/jdsteam/sapa-warga/sapawarga-webadmin:${VERSION}
+    - docker push $CI_REGISTRY/jdsteam/sapa-warga/sapawarga-webadmin:$VERSION
     
 
 
