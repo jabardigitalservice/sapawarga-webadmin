@@ -4,7 +4,7 @@ FROM node:10.16-alpine as build
 RUN mkdir /app
 WORKDIR /app
 
-COPY package*.json ./
+COPY backend/package*.json ./
 RUN npm install
 COPY . .
 RUN npm run build
