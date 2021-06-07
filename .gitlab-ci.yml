@@ -83,9 +83,6 @@ build_image:
     - docker build -t $CI_REGISTRY/jdsteam/sapa-warga/sapawarga-webadmin:$VERSION -f backend/Dockerfile .
     - docker push $CI_REGISTRY/jdsteam/sapa-warga/sapawarga-webadmin:$VERSION
     
-    
-
-
 test_webadmin:
   image: node:12.16-alpine
   stage: test
@@ -112,10 +109,10 @@ test_webadmin:
     - sed -i "s/%FIREBASE_MESSAGING_SENDER_ID%/${FIREBASE_MESSAGING_SENDER_ID}/g" .env
     - sed -i "s/%FIREBASE_APP_ID%/${FIREBASE_APP_ID}/g" .env
     - sed -i "s/%FIREBASE_MEASUREMENT_ID%/${FIREBASE_MEASUREMENT_ID}/g" .env
-    - npm install --progress=false
-    - npm run build
-    - npm run lint
-    - npm run test:unit
+    - npm install --progress=false --prefix backend/
+    - npm run build --prefix backend/
+    - npm run lint --prefix backend/
+    - npm run test:unit --prefix backend/
 
   artifacts:
     untracked: false
