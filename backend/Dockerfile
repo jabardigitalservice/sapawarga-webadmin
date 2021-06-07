@@ -13,6 +13,6 @@ RUN yarn global add @vue/cli && yarn build
 
 # production stage
 FROM nginx:1.21.0
-COPY --from=build /app/dist /usr/share/nginx/html
+COPY --from=build /app/backend/dist /usr/share/nginx/html
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
