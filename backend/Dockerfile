@@ -1,12 +1,12 @@
 FROM node:12.16-alpine as build
 
 RUN mkdir /app
-WORKDIR /app
+COPY . /app
+WORKDIR /app/backend
 
 RUN apk update && apk upgrade && \
 	apk add --no-cache git
 
-COPY . /app
 
 RUN yarn install
 RUN yarn global add @vue/cli && yarn build
