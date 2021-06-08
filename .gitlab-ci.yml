@@ -110,7 +110,7 @@ test_webadmin:
     - sed -i "s/%FIREBASE_MESSAGING_SENDER_ID%/${FIREBASE_MESSAGING_SENDER_ID}/g" .env
     - sed -i "s/%FIREBASE_APP_ID%/${FIREBASE_APP_ID}/g" .env
     - sed -i "s/%FIREBASE_MEASUREMENT_ID%/${FIREBASE_MEASUREMENT_ID}/g" .env
-    - cd backend/ && yarn global add eslint && yarn lint && yarn test:unit
+    - cd backend/ && yarn global add eslint eslint-plugin-vue && yarn lint && yarn test:unit
     #- cd backend/ && npm install -g eslint && npm install eslint-plugin-vue@latest --save-dev && npm run lint && npm run test:unit
 
   artifacts:
