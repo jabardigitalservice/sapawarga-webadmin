@@ -45,43 +45,43 @@ code_quality:
       codequality: gl-code-quality-report.json
     expire_in: 1 week
 
-build_image:
-  image: docker:20.10.7
-  stage: build
-  only:
-    - branches
-  services:
-    - docker:dind
-  variables:
-    DOCKER_DRIVER: overlay2
-  dependencies:
-    - versioning
-  before_script:
-    - export VERSION=$(cat ./version)
-    - export COMPOSE_HTTP_TIMEOUT=600
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-  script:
-    - cp .env-template .env
-    - sed -i "s/%NODE_ENV%/production/g" .env
-    - sed -i "s/%VUE_APP_BASE_API%/${VUE_APP_BASE_API}/g" .env
-    - sed -i "s/%SENTRY_DSN_API%/${SENTRY_DSN_API}/g" .env
-    - sed -i "s/%GOOGLE_MAPS_WEB_API_KEY%/${GOOGLE_MAPS_WEB_API_KEY}/g" .env
-    - sed -i "s/%VUE_APP_PHONE%/${VUE_APP_PHONE}/g" .env
-    - sed -i "s/%VUE_APP_ANALYTICS_ID%/${VUE_APP_ANALYTICS_ID}/g" .env
-    - sed -i "s/%VUE_APP_S3_URL%/${VUE_APP_S3_URL}/g" .env
+#build_image:
+#  image: docker:20.10.7
+#  stage: build
+ # only:
+ #   - branches
+ # services:
+ #   - docker:dind
+ # variables:
+ #   DOCKER_DRIVER: overlay2
+ # dependencies:
+ #   - versioning
+ # before_script:
+ #   - export VERSION=$(cat ./version)
+ #   - export COMPOSE_HTTP_TIMEOUT=600
+ #   - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+ # script:
+ #   - cp .env-template .env
+ #   - sed -i "s/%NODE_ENV%/production/g" .env
+ #   - sed -i "s/%VUE_APP_BASE_API%/${VUE_APP_BASE_API}/g" .env
+ #   - sed -i "s/%SENTRY_DSN_API%/${SENTRY_DSN_API}/g" .env
+ #   - sed -i "s/%GOOGLE_MAPS_WEB_API_KEY%/${GOOGLE_MAPS_WEB_API_KEY}/g" .env
+ #   - sed -i "s/%VUE_APP_PHONE%/${VUE_APP_PHONE}/g" .env
+ #   - sed -i "s/%VUE_APP_ANALYTICS_ID%/${VUE_APP_ANALYTICS_ID}/g" .env
+ #   - sed -i "s/%VUE_APP_S3_URL%/${VUE_APP_S3_URL}/g" .env
 
     # firebase credentials
-    - sed -i "s/%FIREBASE_API_KEY%/${FIREBASE_API_KEY}/g" .env
-    - sed -i "s/%FIREBASE_AUTH_DOMAIN%/${FIREBASE_AUTH_DOMAIN}/g" .env
-    - sed -i "s/%FIREBASE_STORAGE_BUCKET%/${FIREBASE_STORAGE_BUCKET}/g" .env
-    - sed -i "s/%FIREBASE_DB_URL%/${FIREBASE_DB_URL}/g" .env
-    - sed -i "s/%FIREBASE_PROJECT_ID%/${FIREBASE_PROJECT_ID}/g" .env
-    - sed -i "s/%FIREBASE_MESSAGING_SENDER_ID%/${FIREBASE_MESSAGING_SENDER_ID}/g" .env
-    - sed -i "s/%FIREBASE_APP_ID%/${FIREBASE_APP_ID}/g" .env
-    - sed -i "s/%FIREBASE_MEASUREMENT_ID%/${FIREBASE_MEASUREMENT_ID}/g" .env
+ #   - sed -i "s/%FIREBASE_API_KEY%/${FIREBASE_API_KEY}/g" .env
+ #   - sed -i "s/%FIREBASE_AUTH_DOMAIN%/${FIREBASE_AUTH_DOMAIN}/g" .env
+ #   - sed -i "s/%FIREBASE_STORAGE_BUCKET%/${FIREBASE_STORAGE_BUCKET}/g" .env
+ #   - sed -i "s/%FIREBASE_DB_URL%/${FIREBASE_DB_URL}/g" .env
+ #   - sed -i "s/%FIREBASE_PROJECT_ID%/${FIREBASE_PROJECT_ID}/g" .env
+ #   - sed -i "s/%FIREBASE_MESSAGING_SENDER_ID%/${FIREBASE_MESSAGING_SENDER_ID}/g" .env
+ #   - sed -i "s/%FIREBASE_APP_ID%/${FIREBASE_APP_ID}/g" .env
+ #   - sed -i "s/%FIREBASE_MEASUREMENT_ID%/${FIREBASE_MEASUREMENT_ID}/g" .env
 
-    - docker build -t $CI_REGISTRY/jdsteam/sapa-warga/sapawarga-webadmin:$VERSION -f backend/Dockerfile .
-    - docker push $CI_REGISTRY/jdsteam/sapa-warga/sapawarga-webadmin:$VERSION
+ #   - docker build -t $CI_REGISTRY/jdsteam/sapa-warga/sapawarga-webadmin:$VERSION -f backend/Dockerfile .
+ #   - docker push $CI_REGISTRY/jdsteam/sapa-warga/sapawarga-webadmin:$VERSION
     
 test_webadmin:
   image: node:12.16-alpine
@@ -91,6 +91,7 @@ test_webadmin:
   dependencies:
     - versioning
   script:
+    - ls -la
     - cp .env-template .env
     - sed -i "s/%NODE_ENV%/development/g" .env
     - sed -i "s/%VUE_APP_BASE_API%/${VUE_APP_BASE_API}/g" .env
