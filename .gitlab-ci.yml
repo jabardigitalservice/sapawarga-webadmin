@@ -110,7 +110,7 @@ test_webadmin:
     - sed -i "s/%FIREBASE_MESSAGING_SENDER_ID%/${FIREBASE_MESSAGING_SENDER_ID}/g" .env
     - sed -i "s/%FIREBASE_APP_ID%/${FIREBASE_APP_ID}/g" .env
     - sed -i "s/%FIREBASE_MEASUREMENT_ID%/${FIREBASE_MEASUREMENT_ID}/g" .env
-    - cd backend/ && npm install --progress=false && npm run build && npm run lint && npm run test:unit
+    - cd backend/ && yarn install --progress=false && yarn build
 
   artifacts:
     untracked: false
