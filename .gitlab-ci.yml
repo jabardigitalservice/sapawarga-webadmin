@@ -115,12 +115,11 @@ test_webadmin:
   #  - sed -i "s/%FIREBASE_MEASUREMENT_ID%/${FIREBASE_MEASUREMENT_ID}/g" .env
   #  - cd backend/ && npm install -g eslint && npm install eslint-plugin-vue@latest --save-dev && yarn lint && yarn test:unit
   #  - cd backend/ && npm install -g @vue/cli@latest && npm install -g eslint && npm install eslint-plugin-vue@latest --save-dev && npm run lint && npm run test -- --coverage --updateSnapshot
-  #  artifacts:
-  #  untracked: false
-  #  expire_in: 7 days
-  #  paths:
-  #   - backend/coverage/
-  #    - dist/
+  artifacts:
+     untracked: false
+     expire_in: 7 days
+     paths:
+      - backend/tests/coverage/
 
 deploy_staging_jabarcloud:
   image: dtzar/helm-kubectl:3.3.1
