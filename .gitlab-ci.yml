@@ -111,7 +111,7 @@ test_webadmin:
     - sed -i "s/%FIREBASE_APP_ID%/${FIREBASE_APP_ID}/g" .env
     - sed -i "s/%FIREBASE_MEASUREMENT_ID%/${FIREBASE_MEASUREMENT_ID}/g" .env
     #- cd backend/ && npm install -g eslint && npm install eslint-plugin-vue@latest --save-dev && yarn lint && yarn test:unit
-    - cd backend/ && npm install -g @vue/cli@latest && npm install -g eslint && npm install eslint-plugin-vue@latest --save-dev && npm run lint && vue-cli-service test:unit -u
+    - cd backend/ && npm install -g @vue/cli@latest && npm install -g eslint && npm install eslint-plugin-vue@latest --save-dev && npm run lint && npm run test -- --coverage --updateSnapshot
   artifacts:
     untracked: false
     expire_in: 7 days
