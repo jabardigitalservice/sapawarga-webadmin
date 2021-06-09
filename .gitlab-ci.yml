@@ -92,7 +92,8 @@ test_webadmin:
     - versioning
   script:
     - apk update && apk add --no-cache git
-    - cd backend/ && npm run lint && npm run test:unit
+    #- cd backend/ && npm run lint && npm run test:unit
+    - cd backend/ && yarn install && yarn lint && yarn test:unit
   #  - apk update && apk add --no-cache git
   #  - cp .env-template .env
   #  - sed -i "s/%NODE_ENV%/development/g" .env
