@@ -5,7 +5,7 @@
         <AttachmentPhotoUpload
           type="news_important"
           :initial-url="newsImportant.image_path_url"
-          :list-information="[this.$t('label.maximum-dimension-image'), this.$t('label.maximum-size-image')]"
+          :list-information="[$t('label.maximum-dimension-image'), $t('label.maximum-size-image')]"
           style="margin-bottom: 25px"
           @onUpload="photoUploaded"
         />

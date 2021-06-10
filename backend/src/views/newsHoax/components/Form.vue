@@ -5,7 +5,7 @@
         <AttachmentPhotoUpload
           type="news_hoax_photo"
           :initial-url="news.cover_path_url"
-          :list-information="[this.$t('label.maximum-dimension-image')]"
+          :list-information="[$t('label.maximum-dimension-image')]"
           style="margin-bottom: 25px"
           name="news_photo"
           @onUpload="photoUploaded"

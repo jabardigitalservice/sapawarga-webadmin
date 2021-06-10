@@ -39,7 +39,7 @@ describe('News Hoax List', () => {
 })
 
 describe('News Hoax detail', () => {
-  it('show news detail', async() => {
+  it('show news detail', () => {
     const router = new VueRouter()
     newsHoaxDetailFixture.data.title = null
     newsHoaxDetailFixture.data.category = null
@@ -74,12 +74,12 @@ describe('News Hoax detail', () => {
       }
     ]
 
-    const wrapper = await shallowMount(NewsHoaxDetail, {
+    const wrapper = shallowMount(NewsHoaxDetail, {
       localVue,
       router,
       i18n
     })
-    await flushPromises()
+    flushPromises()
 
     // strip the content
     expDataNews[3].content = wrapper.vm.strip(newsHoaxDetailFixture.data.content)

@@ -13,7 +13,7 @@ versioning:
   before_script:
     - apk add git
   script:
-    - export VERSION=$(git describe --tags)
+    - export VERSION=$CI_BUILD_REF
     - echo $VERSION > version
     - cat version
   artifacts:
@@ -46,7 +46,7 @@ code_quality:
     expire_in: 1 week
 
 build_image:
-  image: docker/compose:latest
+  image: docker:20.10.7
   stage: build
   only:
     - branches
@@ -69,7 +69,6 @@ build_image:
     - sed -i "s/%VUE_APP_PHONE%/${VUE_APP_PHONE}/g" .env
     - sed -i "s/%VUE_APP_ANALYTICS_ID%/${VUE_APP_ANALYTICS_ID}/g" .env
     - sed -i "s/%VUE_APP_S3_URL%/${VUE_APP_S3_URL}/g" .env
-
     # firebase credentials
     - sed -i "s/%FIREBASE_API_KEY%/${FIREBASE_API_KEY}/g" .env
     - sed -i "s/%FIREBASE_AUTH_DOMAIN%/${FIREBASE_AUTH_DOMAIN}/g" .env
@@ -79,116 +78,24 @@ build_image:
     - sed -i "s/%FIREBASE_MESSAGING_SENDER_ID%/${FIREBASE_MESSAGING_SENDER_ID}/g" .env
     - sed -i "s/%FIREBASE_APP_ID%/${FIREBASE_APP_ID}/g" .env
     - sed -i "s/%FIREBASE_MEASUREMENT_ID%/${FIREBASE_MEASUREMENT_ID}/g" .env
-
-    - docker-compose build
-    - docker images
-    - docker-compose push
-
-
+    - docker build -t $CI_REGISTRY/jdsteam/sapa-warga/sapawarga-webadmin:$VERSION -f backend/Dockerfile .
+    - docker push $CI_REGISTRY/jdsteam/sapa-warga/sapawarga-webadmin:$VERSION
+    
 test_webadmin:
-  image: docker/compose:latest
+  image: node:12.16-alpine
   stage: test
   only:
     - branches
-  services:
-    - docker:dind
   dependencies:
     - versioning
-  before_script:
-    - export VERSION=$(cat ./version)
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
-    - cp .env-template .env
-    - sed -i "s/%NODE_ENV%/development/g" .env
-    - sed -i "s/%VUE_APP_BASE_API%/${VUE_APP_BASE_API}/g" .env
-    - sed -i "s/%SENTRY_DSN_API%/${SENTRY_DSN_API}/g" .env
-    - sed -i "s/%GOOGLE_MAPS_WEB_API_KEY%/${GOOGLE_MAPS_WEB_API_KEY}/g" .env
-    - sed -i "s/%VUE_APP_PHONE%/${VUE_APP_PHONE}/g" .env
-    - sed -i "s/%VUE_APP_ANALYTICS_ID%/${VUE_APP_ANALYTICS_ID}/g" .env
-    - sed -i "s/%VUE_APP_S3_URL%/${VUE_APP_S3_URL}/g" .env
-
-    # firebase credentials
-    - sed -i "s/%FIREBASE_API_KEY%/${FIREBASE_API_KEY}/g" .env
-    - sed -i "s/%FIREBASE_AUTH_DOMAIN%/${FIREBASE_AUTH_DOMAIN}/g" .env
-    - sed -i "s/%FIREBASE_STORAGE_BUCKET%/${FIREBASE_STORAGE_BUCKET}/g" .env
-    - sed -i "s/%FIREBASE_DB_URL%/${FIREBASE_DB_URL}/g" .env
-    - sed -i "s/%FIREBASE_PROJECT_ID%/${FIREBASE_PROJECT_ID}/g" .env
-    - sed -i "s/%FIREBASE_MESSAGING_SENDER_ID%/${FIREBASE_MESSAGING_SENDER_ID}/g" .env
-    - sed -i "s/%FIREBASE_APP_ID%/${FIREBASE_APP_ID}/g" .env
-    - sed -i "s/%FIREBASE_MEASUREMENT_ID%/${FIREBASE_MEASUREMENT_ID}/g" .env
-              
-    - docker-compose pull
-    - docker images
-    - COMPOSE_HTTP_TIMEOUT=500 docker-compose up -d
-    - sleep 60
-    - docker ps
-    - docker-compose exec -T app npm run lint
-    - docker-compose exec -T app npm run test:unit
+    - apk update && apk add --no-cache git
+    - cd backend/ && yarn install && yarn lint && yarn test:unit -u --detectOpenHandles
   artifacts:
-    untracked: false
-    expire_in: 7 days
-    paths:
-      - coverage/
-
-
-release_all:
-  image: tiangolo/docker-with-compose
-  stage: release
-  services:
-    - docker:dind
-  only:
-    - develop
-    - master
-  dependencies:
-    - versioning
-  before_script:
-    - export VERSION=$(cat ./version)
-    - export COMPOSE_HTTP_TIMEOUT=600
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    - echo $VERSION
-  script:
-    - cp .env-template .env
-    - sed -i "s/%NODE_ENV%/development/g" .env
-    - sed -i "s/%VUE_APP_BASE_API%/${VUE_APP_BASE_API}/g" .env
-    - sed -i "s/%SENTRY_DSN_API%/${SENTRY_DSN_API}/g" .env
-    - sed -i "s/%GOOGLE_MAPS_WEB_API_KEY%/${GOOGLE_MAPS_WEB_API_KEY}/g" .env
-    - sed -i "s/%VUE_APP_PHONE%/${VUE_APP_PHONE}/g" .env
-    - sed -i "s/%VUE_APP_ANALYTICS_ID%/${VUE_APP_ANALYTICS_ID}/g" .env
-    - sed -i "s/%VUE_APP_S3_URL%/${VUE_APP_S3_URL}/g" .env
-
-    # firebase credentials
-    - sed -i "s/%FIREBASE_API_KEY%/${FIREBASE_API_KEY}/g" .env
-    - sed -i "s/%FIREBASE_AUTH_DOMAIN%/${FIREBASE_AUTH_DOMAIN}/g" .env
-    - sed -i "s/%FIREBASE_STORAGE_BUCKET%/${FIREBASE_STORAGE_BUCKET}/g" .env
-    - sed -i "s/%FIREBASE_DB_URL%/${FIREBASE_DB_URL}/g" .env
-    - sed -i "s/%FIREBASE_PROJECT_ID%/${FIREBASE_PROJECT_ID}/g" .env
-    - sed -i "s/%FIREBASE_MESSAGING_SENDER_ID%/${FIREBASE_MESSAGING_SENDER_ID}/g" .env
-    - sed -i "s/%FIREBASE_APP_ID%/${FIREBASE_APP_ID}/g" .env
-    - sed -i "s/%FIREBASE_MEASUREMENT_ID%/${FIREBASE_MEASUREMENT_ID}/g" .env
-
-    - docker-compose pull
-    - docker images
-    - docker push registry.gitlab.com/jdsteam/sapa-warga/sapawarga-webadmin:${VERSION}
-
-# deploy_staging:
-#   image: docker:stable
-#   stage: deploy_staging
-#   only:
-#     - develop
-#   dependencies:
-#     - versioning
-#   before_script:
-#     - export VERSION=$(cat ./version)
-#     - 'which ssh-agent || ( apk update && apk add openssh-client )'
-#     - mkdir -p ~/.ssh
-#     - eval $(ssh-agent -s)
-#     - chmod 400 $SSH_STAGING_KEY_PRIVATE_AWS
-#     - ssh-add $SSH_STAGING_KEY_PRIVATE_AWS
-#   script:
-#     - ssh -o StrictHostKeyChecking=no ${SSH_STAGING_USERNAME_AWS}@${STAGING_HOST_AWS} "docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY"
-#     - ssh -o StrictHostKeyChecking=no ${SSH_STAGING_USERNAME_AWS}@${STAGING_HOST_AWS} "export VERSION=${VERSION} && cd /home/ubuntu/projects/sapawarga-webadmin && sudo git pull && sudo -E docker-compose -f docker-compose-dev.yml pull && sudo -E docker-compose -f docker-compose-dev.yml down && sudo -E -f docker-compose-dev.yml docker-compose up -d"
-#     - ssh -o StrictHostKeyChecking=no ${SSH_STAGING_USERNAME_AWS}@${STAGING_HOST_AWS} "sudo docker ps"
-#     - ssh -o StrictHostKeyChecking=no ${SSH_STAGING_USERNAME_AWS}@${STAGING_HOST_AWS} "sudo docker image prune -a -f"
+     untracked: false
+     expire_in: 7 days
+     paths:
+      - backend/tests/
 
 deploy_staging_jabarcloud:
   image: dtzar/helm-kubectl:3.3.1
