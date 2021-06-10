@@ -13,7 +13,7 @@ versioning:
   before_script:
     - apk add git
   script:
-    - export VERSION=$(git describe --tags)
+    - export VERSION=$CI_BUILD_REF
     - echo $VERSION > version
     - cat version
   artifacts:
