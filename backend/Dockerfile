@@ -1,39 +1,18 @@
-FROM node:10.16-alpine as build
+FROM node:12.16-alpine as build
 
-# Create app folder
 RUN mkdir /app
-WORKDIR /app
-
-# Install git, nginx, nano, bash
-RUN apk update && apk upgrade && \
-	apk add --no-cache git nginx bash
-
-# Copy all files to app folder
 COPY . /app
+WORKDIR /app/backend
 
-# Add configuration files
-COPY image-files/ /
-RUN chmod 700 /usr/local/bin/docker-entrypoint.sh
+RUN apk update && apk upgrade && \
+	apk add --no-cache git
 
-# Install app dependencies
+
 RUN yarn install
+RUN yarn global add @vue/cli && yarn build
 
-# Build app
-ARG VUE_APP_NODE_ENV
-ARG VUE_APP_BASE_API
-ARG VUE_APP_VERSION
-ARG VUE_APP_GOOGLE_API_KEY
-ARG VUE_APP_SENTRY_DSN
-ARG VUE_APP_ERROR_ENVIRONMENT
-ENV VUE_APP_NODE_ENV $VUE_APP_NODE_ENV
-ENV VUE_APP_BASE_API $VUE_APP_BASE_API
-ENV VUE_APP_VERSION $VUE_APP_VERSION
-ENV VUE_APP_GOOGLE_API_KEY $VUE_APP_GOOGLE_API_KEY
-ENV VUE_APP_SENTRY_DSN $VUE_APP_SENTRY_DSN
-ENV VUE_APP_ERROR_ENVIRONMENT $VUE_APP_ERROR_ENVIRONMENT
-
-RUN yarn build
-
-# Expose port 80
+# production stage
+FROM nginx:1.21.0
+COPY --from=build /app/backend/dist /usr/share/nginx/html
 EXPOSE 80
-ENTRYPOINT ["docker-entrypoint.sh"]
+CMD ["nginx", "-g", "daemon off;"]
