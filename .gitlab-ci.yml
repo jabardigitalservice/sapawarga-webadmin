@@ -124,7 +124,7 @@ deploy_staging_jabarcloud:
     - sed -i "s/%VUE_APP_NODE_ENV%/${VUE_APP_NODE_ENV}/g" kubernetes/webadmin-variables.yaml
 
     # Vue app base api to staging
-    - sed -i "s/%VUE_APP_BASE_API%/${EKS_VUE_APP_BASE_API_STAGING}/g" kubernetes/webadmin-variables.yaml
+    - sed -i "s/%VUE_APP_BASE_API%/${VUE_APP_BASE_API}/g" kubernetes/webadmin-variables.yaml
     - sed -i "s/%dockerconfigjson%/${dockerconfigjson}/g" kubernetes/webadmin-variables.yaml
     - sed -i "s/%SENTRY_DSN_API%/${SENTRY_DSN_API}/g" kubernetes/webadmin-variables.yaml
     - sed -i "s/%APP_ERROR_ENVIRONMENT%/${APP_ERROR_ENVIRONMENT}/g" kubernetes/webadmin-variables.yaml
