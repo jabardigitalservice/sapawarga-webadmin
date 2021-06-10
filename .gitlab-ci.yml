@@ -51,7 +51,7 @@ build_image:
   only:
     - develop
   environment:
-    - staging
+    name: staging
   services:
     - docker:dind
   variables:
