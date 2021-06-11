@@ -45,14 +45,9 @@ code_quality:
       codequality: gl-code-quality-report.json
     expire_in: 1 week
 
-build_image:
+.build_job_template: &build_config
   image: docker:20.10.7
   stage: build
-  only:
-    - develop
-    - master
-  environment:
-    name: staging
   services:
     - docker:dind
   variables:
@@ -83,6 +78,21 @@ build_image:
     - sed -i "s/%FIREBASE_MEASUREMENT_ID%/${FIREBASE_MEASUREMENT_ID}/g" .env
     - docker build -t $CI_REGISTRY/jdsteam/sapa-warga/sapawarga-webadmin:$VERSION -f backend/Dockerfile .
     - docker push $CI_REGISTRY/jdsteam/sapa-warga/sapawarga-webadmin:$VERSION
+
+build_image_staging:
+  <<: *build_config
+  only:
+    - develop
+  environment:
+    name: staging
+
+build_image_prod:
+  <<: *build_config
+  only:
+    - master
+  environment:
+    name: production
+
     
 test_webadmin:
   image: node:12.16-alpine
