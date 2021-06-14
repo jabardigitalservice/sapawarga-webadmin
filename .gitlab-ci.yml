@@ -67,14 +67,15 @@ code_quality:
       --build-arg VUE_APP_PHONE=$VUE_APP_PHONE  
       --build-arg VUE_APP_ANALYTICS_ID=$VUE_APP_ANALYTICS_ID  
       --build-arg VUE_APP_S3_URL=$VUE_APP_S3_URL  
-      --build-arg FIREBASE_API_KEY=$FIREBASE_API_KEY  
-      --build-arg FIREBASE_AUTH_DOMAIN=$FIREBASE_AUTH_DOMAIN  
-      --build-arg FIREBASE_STORAGE_BUCKET=$FIREBASE_STORAGE_BUCKET  
-      --build-arg FIREBASE_DB_URL=$FIREBASE_DB_URL  
-      --build-arg FIREBASE_PROJECT_ID=$FIREBASE_PROJECT_ID  
-      --build-arg FIREBASE_MESSAGING_SENDER_ID=$FIREBASE_MESSAGING_SENDER_ID  
-      --build-arg FIREBASE_APP_ID=$FIREBASE_APP_ID  
-      --build-arg FIREBASE_MEASUREMENT_ID=$FIREBASE_MEASUREMENT_ID  
+      --build-arg VUE_APP_FIREBASE_API_KEY=$VUE_APP_FIREBASE_API_KEY  
+      --build-arg VUE_APP_FIREBASE_AUTH_DOMAIN=$VUE_APP_FIREBASE_AUTH_DOMAIN  
+      --build-arg VUE_APP_FIREBASE_STORAGE_BUCKET=$VUE_APP_FIREBASE_STORAGE_BUCKET  
+      --build-arg VUE_APP_FIREBASE_DB_URL=$VUE_APP_FIREBASE_DB_URL  
+      --build-arg VUE_APP_FIREBASE_PROJECT_ID=$VUE_APP_FIREBASE_PROJECT_ID  
+      --build-arg VUE_APP_FIREBASE_MESSAGING_SENDER_ID=$VUE_APP_FIREBASE_MESSAGING_SENDER_ID  
+      --build-arg VUE_APP_FIREBASE_APP_ID=$VUE_APP_FIREBASE_APP_ID  
+      --build-arg VUE_APP_FIREBASE_MEASUREMENT_ID=$VUE_APP_FIREBASE_MEASUREMENT_ID
+      --build-arg VUE_APP_ERROR_ENVIRONMENT=$VUE_APP_ERROR_ENVIRONMENT   
       --tag $CI_REGISTRY/jdsteam/sapa-warga/sapawarga-webadmin:$VERSION -f backend/Dockerfile .
     - docker push $CI_REGISTRY/jdsteam/sapa-warga/sapawarga-webadmin:$VERSION
 
@@ -127,38 +128,12 @@ deploy_staging_jabarcloud:
     - kubectl config set-cluster $cluster_name --insecure-skip-tls-verify=true
 
   script:
-    # Copy template samples #
-    - cp kubernetes/webadmin-variables-sample.yaml kubernetes/webadmin-variables.yaml
-    # Add ENV for apps # VUE_APP_NODE_ENV
-    - sed -i "s/%VUE_APP_VERSION%/${VERSION}/g" kubernetes/webadmin-variables.yaml
-    - sed -i "s/%VUE_APP_NODE_ENV%/${VUE_APP_NODE_ENV}/g" kubernetes/webadmin-variables.yaml
-
-    # Vue app base api to staging
-    - sed -i "s/%VUE_APP_BASE_API%/${VUE_APP_BASE_API}/g" kubernetes/webadmin-variables.yaml
-    - sed -i "s/%dockerconfigjson%/${dockerconfigjson}/g" kubernetes/webadmin-variables.yaml
-    - sed -i "s/%SENTRY_DSN_API%/${SENTRY_DSN_API}/g" kubernetes/webadmin-variables.yaml
-    - sed -i "s/%APP_ERROR_ENVIRONMENT%/${APP_ERROR_ENVIRONMENT}/g" kubernetes/webadmin-variables.yaml
-    - sed -i "s/%VERSION%/${VERSION}/g" kubernetes/webadmin-deployment-staging.yaml
-    - sed -i "s/%VUE_APP_PHONE%/${VUE_APP_PHONE}/g" kubernetes/webadmin-variables.yaml
-    - sed -i "s/%VUE_APP_ANALYTICS_ID%/${VUE_APP_ANALYTICS_ID}/g" kubernetes/webadmin-variables.yaml
-    - sed -i "s/%VUE_APP_S3_URL%/${VUE_APP_S3_URL}/g" kubernetes/webadmin-variables.yaml
-
-    # firebase credentials
-    - sed -i "s/%FIREBASE_API_KEY%/${FIREBASE_API_KEY}/g" kubernetes/webadmin-variables.yaml
-    - sed -i "s/%FIREBASE_AUTH_DOMAIN%/${FIREBASE_AUTH_DOMAIN}/g" kubernetes/webadmin-variables.yaml
-    - sed -i "s/%FIREBASE_STORAGE_BUCKET%/${FIREBASE_STORAGE_BUCKET}/g" kubernetes/webadmin-variables.yaml
-    - sed -i "s/%FIREBASE_DB_URL%/${FIREBASE_DB_URL}/g" kubernetes/webadmin-variables.yaml
-    - sed -i "s/%FIREBASE_PROJECT_ID%/${FIREBASE_PROJECT_ID}/g" kubernetes/webadmin-variables.yaml
-    - sed -i "s/%FIREBASE_MESSAGING_SENDER_ID%/${FIREBASE_MESSAGING_SENDER_ID}/g" kubernetes/webadmin-variables.yaml
-    - sed -i "s/%FIREBASE_APP_ID%/${FIREBASE_APP_ID}/g" kubernetes/webadmin-variables.yaml
-    - sed -i "s/%FIREBASE_MEASUREMENT_ID%/${FIREBASE_MEASUREMENT_ID}/g" kubernetes/webadmin-variables.yaml
-
     - kubectl create --dry-run=client --validate -f kubernetes/webadmin-variables.yaml
         -f kubernetes/webadmin-deployment-staging.yaml
-        -f kubernetes/webadmin-service.yaml # mode development
+        -f kubernetes/webadmin-service.yaml
     - kubectl apply -f kubernetes/webadmin-variables.yaml
         -f kubernetes/webadmin-deployment-staging.yaml
-        -f kubernetes/webadmin-service.yaml # mode development
+        -f kubernetes/webadmin-service.yaml 
 
 deploy_prod_eks:
   stage: deploy_prod
@@ -179,28 +154,6 @@ deploy_prod_eks:
     - kubectl config use-context default
 
   script:
-    - cp kubernetes/webadmin-variables-sample.yaml kubernetes/webadmin-variables.yaml
-    - sed -i "s/%VUE_APP_VERSION%/${VERSION}/g" kubernetes/webadmin-variables.yaml
-    - sed -i "s/%VUE_APP_NODE_ENV%/${VUE_APP_NODE_ENV}/g" kubernetes/webadmin-variables.yaml
-    - sed -i "s/%VUE_APP_BASE_API%/${EKS_VUE_APP_BASE_API}/g" kubernetes/webadmin-variables.yaml
-    - sed -i "s/%dockerconfigjson%/${dockerconfigjson}/g" kubernetes/webadmin-variables.yaml
-    - sed -i "s/%SENTRY_DSN_API%/${SENTRY_DSN_API}/g" kubernetes/webadmin-variables.yaml
-    - sed -i "s/%APP_ERROR_ENVIRONMENT%/${APP_ERROR_ENVIRONMENT}/g" kubernetes/webadmin-variables.yaml
-    - sed -i "s/%VERSION%/${VERSION}/g" kubernetes/webadmin-deployment.yaml
-    - sed -i "s/%VUE_APP_PHONE%/${VUE_APP_PHONE}/g" kubernetes/webadmin-variables.yaml
-    - sed -i "s/%VUE_APP_ANALYTICS_ID%/${VUE_APP_ANALYTICS_ID}/g" kubernetes/webadmin-variables.yaml
-    - sed -i "s/%VUE_APP_S3_URL%/${VUE_APP_S3_URL}/g" kubernetes/webadmin-variables.yaml
-
-    # firebase credentials
-    - sed -i "s/%FIREBASE_API_KEY%/${FIREBASE_API_KEY}/g" kubernetes/webadmin-variables.yaml
-    - sed -i "s/%FIREBASE_AUTH_DOMAIN%/${FIREBASE_AUTH_DOMAIN}/g" kubernetes/webadmin-variables.yaml
-    - sed -i "s/%FIREBASE_STORAGE_BUCKET%/${FIREBASE_STORAGE_BUCKET}/g" kubernetes/webadmin-variables.yaml
-    - sed -i "s/%FIREBASE_DB_URL%/${FIREBASE_DB_URL}/g" kubernetes/webadmin-variables.yaml
-    - sed -i "s/%FIREBASE_PROJECT_ID%/${FIREBASE_PROJECT_ID}/g" kubernetes/webadmin-variables.yaml
-    - sed -i "s/%FIREBASE_MESSAGING_SENDER_ID%/${FIREBASE_MESSAGING_SENDER_ID}/g" kubernetes/webadmin-variables.yaml
-    - sed -i "s/%FIREBASE_APP_ID%/${FIREBASE_APP_ID}/g" kubernetes/webadmin-variables.yaml
-    - sed -i "s/%FIREBASE_MEASUREMENT_ID%/${FIREBASE_MEASUREMENT_ID}/g" kubernetes/webadmin-variables.yaml
-
     - kubectl create --dry-run --validate -f kubernetes/webadmin-variables.yaml
         -f kubernetes/webadmin-deployment.yaml
         -f kubernetes/webadmin-service.yaml
