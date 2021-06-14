@@ -128,11 +128,9 @@ deploy_staging_jabarcloud:
     - kubectl config set-cluster $cluster_name --insecure-skip-tls-verify=true
 
   script:
-    - kubectl create --dry-run=client --validate -f kubernetes/webadmin-variables.yaml
-        -f kubernetes/webadmin-deployment-staging.yaml
+    - kubectl create --dry-run=client --validate -f kubernetes/webadmin-deployment-staging.yaml
         -f kubernetes/webadmin-service.yaml
-    - kubectl apply -f kubernetes/webadmin-variables.yaml
-        -f kubernetes/webadmin-deployment-staging.yaml
+    - kubectl apply -f kubernetes/webadmin-deployment-staging.yaml
         -f kubernetes/webadmin-service.yaml 
 
 deploy_prod_eks:
@@ -154,9 +152,7 @@ deploy_prod_eks:
     - kubectl config use-context default
 
   script:
-    - kubectl create --dry-run --validate -f kubernetes/webadmin-variables.yaml
-        -f kubernetes/webadmin-deployment.yaml
+    - kubectl create --dry-run --validate -f kubernetes/webadmin-deployment.yaml
         -f kubernetes/webadmin-service.yaml
-    - kubectl apply -f kubernetes/webadmin-variables.yaml
-        -f kubernetes/webadmin-deployment.yaml
+    - kubectl apply -f kubernetes/webadmin-deployment.yaml
         -f kubernetes/webadmin-service.yaml
