@@ -76,7 +76,6 @@ code_quality:
       --build-arg FIREBASE_APP_ID=$FIREBASE_APP_ID  
       --build-arg FIREBASE_MEASUREMENT_ID=$FIREBASE_MEASUREMENT_ID  
       --tag $CI_REGISTRY/jdsteam/sapa-warga/sapawarga-webadmin:$VERSION -f backend/Dockerfile .
-    #- docker build -t $CI_REGISTRY/jdsteam/sapa-warga/sapawarga-webadmin:$VERSION -f backend/Dockerfile .
     - docker push $CI_REGISTRY/jdsteam/sapa-warga/sapawarga-webadmin:$VERSION
 
 build_image_staging:
