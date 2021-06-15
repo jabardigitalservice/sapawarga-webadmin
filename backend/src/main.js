@@ -41,8 +41,6 @@ import * as Integrations from '@sentry/integrations'
 
 import VueCurrencyFilter from 'vue-currency-filter'
 
-import { firestorePlugin } from 'vuefire'
-
 if (process.env.VUE_APP_NODE_ENV === 'production') {
   Sentry.init({
     environment: process.env.VUE_APP_ERROR_ENVIRONMENT,
@@ -94,8 +92,6 @@ Object.keys(filters).forEach(key => {
 })
 
 Vue.config.productionTip = false
-
-Vue.use(firestorePlugin)
 
 // unregister service worker
 navigator.serviceWorker.getRegistrations().then(function(registrations) {

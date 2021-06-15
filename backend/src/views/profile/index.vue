@@ -1,6 +1,5 @@
 <template>
   <div v-loading.fullScreen.lock="loading" class="app-container">
-    <admin-headline-news />
     <p class="warn-content">Profile Admin</p>
     <el-row :gutter="10">
       <el-col class="col-left" :xs="24" :sm="24" :md="24" :lg="7" :xl="7">
@@ -62,15 +61,11 @@
 
 <script>
 import PhotoBox from '@/components/PhotoBox'
-import AdminHeadlineNews from '@/components/AdminHeadlineNews'
 
 import { getInfo } from '@/api/user'
 
-import { RemoteConfig } from '@/utils/firebase/remoteConfig'
-import { RemoteConfigKey } from '@/utils/constantVariable'
-
 export default {
-  components: { PhotoBox, AdminHeadlineNews },
+  components: { PhotoBox },
   data() {
     return {
       loading: false,
@@ -94,30 +89,10 @@ export default {
   },
 
   created() {
-    this.initRemoteConfig()
     this.getDetail()
   },
 
   methods: {
-    initRemoteConfig() {
-      RemoteConfig.ensureInitialized()
-        .then(() => {})
-        .catch((_) => {})
-
-      RemoteConfig.fetchAndActivate()
-        .then(() => {
-          this.getDataRemote()
-        })
-        .catch((_) => {})
-    },
-    async getDataRemote() {
-      this.loading = true
-      const data = await RemoteConfig.getValue(RemoteConfigKey.BANNERS)
-      const dataRemote = JSON.parse(data._value)
-
-      this.$store.dispatch('remoteConfig/addBanners', dataRemote)
-      this.loading = false
-    },
     getDetail() {
       getInfo().then(response => {
         const {

@@ -90,7 +90,3 @@ export const HOTLINE_SW = 'https://s.id/HotlineSW'
 //   '3218', // kab. pangandaran
 //   '3215' // kab. karawang
 // ]
-
-export const RemoteConfigKey = Object.freeze({
-  BANNERS: 'banners'
-})
