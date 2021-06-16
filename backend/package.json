@@ -15,7 +15,8 @@
     "new": "plop",
     "preview": "node build/index.js --preview",
     "svgo": "svgo -f src/icons/svg --config=src/icons/svgo.yml",
-    "test:ci": "npm run lint && npm run test:unit",
+    "test:unit:update": "vue-cli-service test:unit -u",
+    "test:ci": "npm run lint && npm run test:unit -- -u",
     "test:unit:watch": "vue-cli-service test:unit --watchAll"
   },
   "dependencies": {
@@ -39,7 +40,6 @@
     "echarts": "4.2.1",
     "element-ui": "2.7.0",
     "file-saver": "2.0.1",
-    "firebase": "^8.0.2",
     "fuse.js": "3.4.4",
     "html-webpack-plugin": "^4.0.0-alpha",
     "js-cookie": "2.2.0",
@@ -77,7 +77,6 @@
     "vue-splitpane": "1.0.4",
     "vue-the-mask": "^0.11.1",
     "vuedraggable": "2.20.0",
-    "vuefire": "^2.2.4",
     "vuex": "3.1.0",
     "xlsx": "0.14.1"
   },

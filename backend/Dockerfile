@@ -1,39 +1,35 @@
-FROM node:10.16-alpine as build
+# build stage
+FROM node:12.16-alpine as build
 
-# Create app folder
-RUN mkdir /app
-WORKDIR /app
 
-# Install git, nginx, nano, bash
-RUN apk update && apk upgrade && \
-	apk add --no-cache git nginx bash
-
-# Copy all files to app folder
-COPY . /app
-
-# Add configuration files
-COPY image-files/ /
-RUN chmod 700 /usr/local/bin/docker-entrypoint.sh
-
-# Install app dependencies
-RUN yarn install
-
-# Build app
-ARG VUE_APP_NODE_ENV
-ARG VUE_APP_BASE_API
-ARG VUE_APP_VERSION
-ARG VUE_APP_GOOGLE_API_KEY
-ARG VUE_APP_SENTRY_DSN
+ARG VUE_APP_BASE_API 
+ARG SENTRY_DSN_API 
+ARG GOOGLE_MAPS_WEB_API_KEY 
+ARG VUE_APP_PHONE 
+ARG VUE_APP_ANALYTICS_ID 
+ARG VUE_APP_S3_URL 
 ARG VUE_APP_ERROR_ENVIRONMENT
-ENV VUE_APP_NODE_ENV $VUE_APP_NODE_ENV
-ENV VUE_APP_BASE_API $VUE_APP_BASE_API
-ENV VUE_APP_VERSION $VUE_APP_VERSION
-ENV VUE_APP_GOOGLE_API_KEY $VUE_APP_GOOGLE_API_KEY
-ENV VUE_APP_SENTRY_DSN $VUE_APP_SENTRY_DSN
-ENV VUE_APP_ERROR_ENVIRONMENT $VUE_APP_ERROR_ENVIRONMENT
 
-RUN yarn build
+ENV VUE_APP_BASE_API=${VUE_APP_BASE_API}
+ENV SENTRY_DSN_API=${SENTRY_DSN_API}
+ENV GOOGLE_MAPS_WEB_API_KEY=${GOOGLE_MAPS_WEB_API_KEY}
+ENV VUE_APP_PHONE=${VUE_APP_PHONE}
+ENV VUE_APP_ANALYTICS_ID=${VUE_APP_ANALYTICS_ID}
+ENV VUE_APP_S3_URL=${VUE_APP_S3_URL}
+ENV VUE_APP_ERROR_ENVIRONMENT=${VUE_APP_ERROR_ENVIRONMENT}
 
-# Expose port 80
+RUN mkdir /app
+COPY . /app
+WORKDIR /app/backend
+
+RUN apk update && apk upgrade && \
+	apk add --no-cache git
+
+RUN yarn install
+RUN yarn global add @vue/cli && yarn build
+
+# production stage
+FROM nginx:1.21.0
+COPY --from=build /app/backend/dist /usr/share/nginx/html
 EXPOSE 80
-ENTRYPOINT ["docker-entrypoint.sh"]
+CMD ["nginx", "-g", "daemon off;"]

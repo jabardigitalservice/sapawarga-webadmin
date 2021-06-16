@@ -21,7 +21,7 @@ spec:
           image: registry.gitlab.com/jdsteam/sapa-warga/sapawarga-webadmin:%VERSION%
           ports:
             - containerPort: 80
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           envFrom:
             - configMapRef:
                 name: sapawarga-webadmin-config-env
