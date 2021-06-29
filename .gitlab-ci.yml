@@ -71,6 +71,36 @@ code_quality:
       --tag $CI_REGISTRY/jdsteam/sapa-warga/sapawarga-webadmin:$VERSION -f backend/Dockerfile .
     - docker push $CI_REGISTRY/jdsteam/sapa-warga/sapawarga-webadmin:$VERSION
 
+build_image_istio:
+  only:
+    - develop-istio
+  image: docker:20.10.7
+  stage: build
+  services:
+    - docker:dind
+  environment:
+    name: staging
+  variables:
+    DOCKER_DRIVER: overlay2
+  dependencies:
+    - versioning
+  before_script:
+    - export VERSION=$(cat ./version)
+    - export COMPOSE_HTTP_TIMEOUT=600
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:
+    - > 
+      docker build --build-arg NODE_ENV=production  
+      --build-arg VUE_APP_BASE_API="https://sapawarga-istio.digitalservice.id/api/v1"
+      --build-arg SENTRY_DSN_API=$SENTRY_DSN_API  
+      --build-arg GOOGLE_MAPS_WEB_API_KEY=$GOOGLE_MAPS_WEB_API_KEY  
+      --build-arg VUE_APP_PHONE=$VUE_APP_PHONE  
+      --build-arg VUE_APP_ANALYTICS_ID=$VUE_APP_ANALYTICS_ID  
+      --build-arg VUE_APP_S3_URL=$VUE_APP_S3_URL
+      --build-arg VUE_APP_ERROR_ENVIRONMENT=$VUE_APP_ERROR_ENVIRONMENT   
+      --tag $CI_REGISTRY/jdsteam/sapa-warga/sapawarga-webadmin-istio:$VERSION -f backend/Dockerfile .
+    - docker push $CI_REGISTRY/jdsteam/sapa-warga/sapawarga-webadmin-istio:$VERSION
+  
 build_image_staging:
   <<: *build_config
   only:
