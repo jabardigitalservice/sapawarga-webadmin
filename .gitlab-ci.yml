@@ -98,8 +98,8 @@ build_image_istio:
       --build-arg VUE_APP_ANALYTICS_ID=$VUE_APP_ANALYTICS_ID  
       --build-arg VUE_APP_S3_URL=$VUE_APP_S3_URL
       --build-arg VUE_APP_ERROR_ENVIRONMENT=$VUE_APP_ERROR_ENVIRONMENT   
-      --tag $CI_REGISTRY/jdsteam/sapa-warga/sapawarga-webadmin-istio:$VERSION -f backend/Dockerfile .
-    - docker push $CI_REGISTRY/jdsteam/sapa-warga/sapawarga-webadmin-istio:$VERSION
+      --tag $CI_REGISTRY/jdsteam/sapa-warga/sapawarga-webadmin/webadmin-istio:$VERSION -f backend/Dockerfile .
+    - docker push $CI_REGISTRY/jdsteam/sapa-warga/sapawarga-webadmin/webadmin-istio:$VERSION
   
 build_image_staging:
   <<: *build_config
