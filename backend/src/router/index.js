@@ -18,11 +18,6 @@ import pollingsurveyMenuRouter from './modules/polling-survey-menu'
 import notifikasiuserMenuRouter from './modules/notification-user-menu'
 import configurationMenuRouter from './modules/configuration-menu'
 import broadcastRouter from './modules/broadcast'
-import bansosMenuRouter from './modules/bansos-menu'
-// import allocationMenuRouter from './modules/allocation-menu'
-import listAllocationMenuRouter from './modules/listAllocation-menu'
-import downloadAllocationMenuRouter from './modules/download-allocation-menu'
-import monitoringBnbaMenuRouter from './modules/monitoringBnba'
 
 /* Router Modules for Leader */
 import aspirationLeaderMenuRouter from './modules/LeaderMenu/aspiration-leader-menu'
@@ -158,76 +153,6 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
-  // title
-  {
-    name: 'BANTUAN SOSIAL',
-    // add object 'action' to disable click
-    action: false,
-    path: 'no-route-title-bansos',
-    component: Layout,
-    redirect: 'noredirect',
-    meta: {
-      title: 'BANTUAN SOSIAL',
-      roles: ['admin', 'staffProv', 'staffKabkota', 'staffKec', 'staffKel']
-    },
-    active: false
-  },
-  bansosMenuRouter,
-  // route allocationMenuRouter comment for a while
-  // allocationMenuRouter,
-
-  // add menu download verval for kabkota
-  {
-    name: 'allocation-menu',
-    path: 'allocation-menu',
-    component: Layout,
-    redirect: 'noredirect',
-    meta: {
-      title: 'allocation-menu',
-      roles: ['admin', 'staffKabkota'],
-      icon: 'example'
-    },
-    active: false,
-    children: [
-      {
-        name: 'beneficiaries-download-verval',
-        path: '/beneficiaries/download-verval',
-        component: () => import('@/views/bansos/download'),
-        hidden: false,
-        meta: {
-          title: 'bansos-download-verval',
-          roles: ['staffKabkota']
-        }
-      }
-    ]
-  },
-  // {
-  //   name: 'download-upload-menu',
-  //   path: 'download-upload-menu',
-  //   component: Layout,
-  //   redirect: 'noredirect',
-  //   meta: {
-  //     title: 'download-upload-menu',
-  //     roles: ['admin', 'staffKabkota'],
-  //     icon: 'example'
-  //   },
-  //   active: false,
-  //   children: [
-  //     {
-  //       name: 'download-upload-menu',
-  //       path: '/beneficiaries/download-upload',
-  //       component: () => import('@/views/bansos/downloadUpload'),
-  //       hidden: false,
-  //       meta: {
-  //         title: 'download-upload-menu',
-  //         roles: ['staffKabkota']
-  //       }
-  //     }
-  //   ]
-  // },
-  listAllocationMenuRouter,
-  downloadAllocationMenuRouter,
-  monitoringBnbaMenuRouter,
   // title
   {
     name: 'KELOLA SAPAWARGA',
