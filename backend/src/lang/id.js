@@ -307,7 +307,8 @@ export default {
     'users-profile-complete': 'Lengkap',
     'users-profile-incomplete': 'Tidak Lengkap',
     'users-filter-hide': 'Sembunyikan Filter',
-    'users-filter-add': 'Tambah Filter'
+    'users-filter-add': 'Tambah Filter',
+    'user-update-password': 'Update Password'
 
   },
   popup: {

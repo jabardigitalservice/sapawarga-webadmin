@@ -50,24 +50,27 @@
         <ListFilter :list-query.sync="listQuery" @submit-search="getList" @reset-search="resetFilter" />
 
         <el-table v-loading="listLoading" :data="list" border stripe fit highlight-current-row style="width: 100%" @sort-change="changeSort">
-          <el-table-column type="index" min-width="50" align="center" :index="getTableRowNumbering" />
+          <el-table-column type="index" fixed min-width="50" align="center" :index="getTableRowNumbering" />
 
-          <el-table-column prop="name" sortable="custom" :label="$t('users.users-fullname')" min-width="120" />
+          <el-table-column prop="name" fixed sortable="custom" :label="$t('users.users-fullname')" min-width="175" />
 
-          <el-table-column prop="username" sortable="custom" :label="$t('users.users-username')" min-width="100" />
+          <el-table-column prop="username" sortable="custom" :label="$t('users.users-username')" min-width="175" />
 
-          <el-table-column :label="$t('users.users-place')" min-width="150">
+          <el-table-column :label="$t('users.users-place')" min-width="250">
             <template slot-scope="{row}">
               {{ getKedudukan(row) }}
             </template>
           </el-table-column>
 
-          <el-table-column v-if="checkPermission(['admin', 'staffProv'])" prop="last_access_at" :formatter="formatterCell" sortable="custom" :label="$t('users.users-last-access')" min-width="120" />
+          <el-table-column prop="phone" min-width="165" sortable="custom" :label="$t('users.users-telp')" />
 
-          <el-table-column prop="phone" min-width="120" sortable="custom" :label="$t('users.users-telp')" />
-          <el-table-column prop="role_label" min-width="150" label="Role" />
+          <el-table-column prop="role_label" min-width="175" label="Role" />
 
-          <el-table-column prop="status" sortable="custom" class-name="status-col" :label="$t('users.users-status')" min-width="120px">
+          <el-table-column v-if="checkPermission(['admin', 'staffProv'])" prop="last_access_at" :formatter="formatterCell" sortable="custom" :label="$t('users.users-last-access')" min-width="175" />
+
+          <el-table-column prop="password_updated_at" sortable="custom" :formatter="formatterCell" min-width="175" :label="$t('users.user-update-password')" />
+
+          <el-table-column prop="status" sortable="custom" class-name="status-col" :label="$t('users.users-status')" min-width="175">
             <template slot-scope="{row}">
               <el-tag :type="row.status | statusFilter">
                 {{ row.status_label }}
@@ -75,9 +78,7 @@
             </template>
           </el-table-column>
 
-          <el-table-column prop="password_updated_at" :formatter="formatterCell" min-width="150" label="Update Password" />
-
-          <el-table-column align="center" :label="$t('users.users-actions')" min-width="240px">
+          <el-table-column align="center" fixed="right" :label="$t('users.users-actions')" min-width="240px">
             <template slot-scope="scope">
               <router-link :to="'/user/detail/'+scope.row.id">
                 <el-tooltip content="Lihat Pengguna" placement="top">
