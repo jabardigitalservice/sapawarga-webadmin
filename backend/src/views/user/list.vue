@@ -75,6 +75,8 @@
             </template>
           </el-table-column>
 
+          <el-table-column prop="password_updated_at" :formatter="formatterCell" min-width="150" label="Update Password" />
+
           <el-table-column align="center" :label="$t('users.users-actions')" min-width="240px">
             <template slot-scope="scope">
               <router-link :to="'/user/detail/'+scope.row.id">
