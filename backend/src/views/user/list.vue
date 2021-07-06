@@ -408,6 +408,7 @@ export default {
     -webkit-transition: .1s;
     transition: .1s;
     font-weight: 400;
+    user-select: none;
     -moz-user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
