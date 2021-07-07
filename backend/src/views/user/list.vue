@@ -68,7 +68,7 @@
 
           <el-table-column v-if="checkPermission(['admin', 'staffProv'])" prop="last_access_at" :formatter="formatterCell" sortable="custom" :label="$t('users.users-last-access')" min-width="175" />
 
-          <el-table-column prop="username_updated_at" sortable="custom" :formatter="formatterCell" min-width="175" :label="$t('users.user-update-user')" />
+          <el-table-column prop="username_updated_at" sortable="custom" :formatter="formatterCell" min-width="175" :label="$t('users.users-update-user')" />
 
           <el-table-column prop="status" sortable="custom" class-name="status-col" :label="$t('users.users-status')" min-width="175">
             <template slot-scope="{row}">

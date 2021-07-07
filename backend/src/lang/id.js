@@ -308,7 +308,7 @@ export default {
     'users-profile-incomplete': 'Tidak Lengkap',
     'users-filter-hide': 'Sembunyikan Filter',
     'users-filter-add': 'Tambah Filter',
-    'user-update-user': 'Update Username & Nomor Telp'
+    'users-update-user': 'Update Username & Nomor Telp'
 
   },
   popup: {
