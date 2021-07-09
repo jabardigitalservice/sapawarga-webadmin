@@ -91,7 +91,7 @@ build_image_istio:
   script:
     - > 
       docker build --build-arg NODE_ENV=production  
-      --build-arg VUE_APP_BASE_API="https://sapawarga-istio.digitalservice.id/api/v1"
+      --build-arg VUE_APP_BASE_API="https://sapawarga-istio.digitalservice.id/api"
       --build-arg SENTRY_DSN_API=$SENTRY_DSN_API  
       --build-arg GOOGLE_MAPS_WEB_API_KEY=$GOOGLE_MAPS_WEB_API_KEY  
       --build-arg VUE_APP_PHONE=$VUE_APP_PHONE  
