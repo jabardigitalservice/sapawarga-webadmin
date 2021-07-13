@@ -1,6 +1,7 @@
+/* eslint-disable no-undef */
 import flushPromises from 'flush-promises'
 // import nock from 'nock'
-import { fetchList, fetchRecord, create } from '@/api/newsChannels'
+// import { fetchList, fetchRecord, create } from '@/api/newsChannels'
 
 beforeEach(() => {
   jest.resetModules()
